@@ -13,8 +13,9 @@
         "npm": "1.1.x"
     },
     "scripts": {
-        "start": "brunch watch --server",
-        "test": "brunch test"
+        // "start": "brunch watch --server",
+        // "test": "brunch test",
+        "postinstall": "brunch build -c config-release.coffee"
     },
     "dependencies": {
         "javascript-brunch": "> 1.0 < 1.5",
@@ -34,5 +35,5 @@
         "sinon": "1.4.2",
         "sinon-chai": "2.1.2"
     },
-    "postinstall": "brunch build -c config-release.coffee"
+
 }
