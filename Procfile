@@ -1,1 +1,1 @@
-web: brunch w -s -c config-release.coffee
+web: node app.js

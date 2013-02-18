@@ -12,7 +12,8 @@ app.use(express.static __dirname+'/public')
 
 
 exports.startServer = (port, path, callback) ->
-  console.log "startServer on port: #{port}, path #{path}"
+  p = process.env.PORT || port
 
-  app.listen port
-  console.log "Listening on port: #{port}"
+  console.log "startServer on port: #{p}, path #{path}"
+
+  app.listen p

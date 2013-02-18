@@ -23,6 +23,8 @@
         "uglify-js-brunch": "> 1.0 < 1.5",
         "clean-css-brunch": "> 1.0 < 1.5",
 
+        "brunch": "1.x",
+
         "express": "3.x"
     },
     "devDependencies": {
@@ -30,5 +32,6 @@
         "chai": "1.2.0",
         "sinon": "1.4.2",
         "sinon-chai": "2.1.2"
-    }
+    },
+    "postinstall": "brunch build -c config-release.coffee"
 }
