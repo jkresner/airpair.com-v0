@@ -21,5 +21,5 @@ app.get('/become-an-expert', function(req, res) {
 app.use(express["static"](__dirname + '/public'));
 
 p = process.env.PORT || 500;
-console.log("startServer on port: " + p + ", path " + path);
+console.log("startServer on port: " + p);
 app.listen(p);
