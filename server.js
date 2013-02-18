@@ -1,35 +1,25 @@
-(function() {
-  var app, express;
+express = require('express');
 
-  console.log("in app.coffee");
+app = express();
 
-  express = require('express');
+app.get('/', function(req, res) {
+  return res.redirect("http://codereview.airpair.co/");
+});
 
-  app = express();
+app.get('/index', function(req, res) {
+  return res.sendfile('./public/index.html');
+});
 
-  app.get('/', function(req, res) {
-    return res.redirect("http://codereview.airpair.co/");
-  });
+app.get('/admin', function(req, res) {
+  return res.sendfile('./public/admin.html');
+});
 
-  app.get('/index', function(req, res) {
-    return res.sendfile('./public/index.html');
-  });
+app.get('/become-an-expert', function(req, res) {
+  return res.sendfile('./public/beexpert.html');
+});
 
-  app.get('/admin', function(req, res) {
-    return res.sendfile('./public/admin.html');
-  });
+app.use(express["static"](__dirname + '/public'));
 
-  app.get('/become-an-expert', function(req, res) {
-    return res.sendfile('./public/beexpert.html');
-  });
-
-  app.use(express["static"](__dirname + '/public'));
-
-  exports.startServer = function(port, path, callback) {
-    var p;
-    p = process.env.PORT || port;
-    console.log("startServer on port: " + p + ", path " + path);
-    return app.listen(p);
-  };
-
-}).call(this);
+p = process.env.PORT || 500;
+console.log("startServer on port: " + p + ", path " + path);
+app.listen(p);

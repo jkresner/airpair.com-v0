@@ -1,6 +1,6 @@
 {config} = require './config'
 
-config.server.port = 1337
+config.server.port = 5000
 
 config.files.javascripts.joinTo =
   # we exclude the stubs field in the release build
