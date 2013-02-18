@@ -2,6 +2,12 @@
 
 exports.config =
 
+  server:
+    path: 'app.coffee'
+    port: 3333
+    base: '/'
+    run: yes
+
   coffeelint:
     pattern: /^app\/.*\.coffee$/
     options:
@@ -40,3 +46,5 @@ exports.config =
 
     templates:
       joinTo: 'javascripts/app.js'
+
+

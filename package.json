@@ -1,12 +1,12 @@
 {
     "author": "Jonathon Kresner",
-    "name": "badass-backbone-brunch",
-    "description": "Brunch app skeleton with Bootstrap + Backbone + Custom Backbone Classes",
+    "name": "airpair.co",
+    "description": "site hosted at airpair.co",
     "version": "0.0.1",
-    "homepage": "https://github.com/jkresner/badass-brunch",
+    "homepage": "http://airpair.co/",
     "repository": {
         "type": "git",
-        "url": "git@github.com:jkresner/badass-brunch.git"
+        "url": "git@github.com:jkresner/airpair.co.git"
     },
     "engines": {
         "node": "~0.6.10 || 0.8 || 0.9"
@@ -18,13 +18,12 @@
     "dependencies": {
         "javascript-brunch": "> 1.0 < 1.5",
         "coffee-script-brunch": "> 1.0 < 1.5",
-
         "css-brunch": "> 1.0 < 1.5",
-
         "handlebars-brunch": "> 1.0 < 1.5",
-
         "uglify-js-brunch": "> 1.0 < 1.5",
-        "clean-css-brunch": "> 1.0 < 1.5"
+        "clean-css-brunch": "> 1.0 < 1.5",
+
+        "express": "3.x"
     },
     "devDependencies": {
         "mocha": "0.14.0",
