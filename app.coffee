@@ -12,5 +12,7 @@ app.use(express.static __dirname+'/public')
 
 
 exports.startServer = (port, path, callback) ->
+  console.log "startServer on port: #{port}, path #{path}"
+
   app.listen port
-  console.log 'Listening on port: #{port}'
+  console.log "Listening on port: #{port}"
