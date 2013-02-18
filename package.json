@@ -13,8 +13,6 @@
         "npm": "1.1.x"
     },
     "scripts": {
-        // "start": "brunch watch --server",
-        // "test": "brunch test",
         "postinstall": "brunch build -c config-release.coffee"
     },
     "dependencies": {
