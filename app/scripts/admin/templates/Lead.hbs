@@ -1,0 +1,90 @@
+<a href="#">back</a>
+
+<fieldset>
+  <legend>Lead</legend>
+
+  <label for="leadId"><span id="leadId">#{{ id }}</span><label>
+
+  <label for="status" style="display:inline-block;margin-left:140px">
+    {{! <span id="status"> status </span> }}
+    <select id="status">
+      <option>Open</option>
+      <option>Closed</option>
+    </select>
+  </label>
+
+  <hr />
+
+  {{#each contacts }}
+
+  <div class="control-group">
+    <label class="control-label" for="contactName">Name</label>
+    <div class="controls">
+      <input type="text" id="contactName" name="name" placeholder="Full name" value="{{ name }}" data-error-style="inline">
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label" for="contactTitle">Title</label>
+    <div class="controls">
+      <input type="text" id="contactTitle" name="title" placeholder="Title" value="{{ title }}" data-error-style="inline">
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label" for="contactEmail">Email</label>
+    <div class="controls">
+      <input type="text" id="contactEmail" name="email" placeholder="Email" value="{{ email }}" data-error-style="inline">
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label" for="contactEmail">Phone</label>
+    <div class="controls">
+      <input type="text" id="contactEmail" name="phone" placeholder="Phone" value="{{ phone }}" data-error-style="inline">
+    </div>
+  </div>
+
+  {{/each }}
+
+  <hr />
+
+  <div class="control-group">
+    <label class="control-label" for="skills">Skills</label>
+    <div class="controls">
+      <input type="text" id="skills" name="skills" placeholder="Skills" value="{{ skillList }}" data-error-style="inline" style="width:100%">
+    </div>
+  </div>
+
+  <div class="control-group">
+    <label class="control-label" for="contactName">Brief</label>
+    <div class="controls">
+      <textarea id="contactName" name="brief" data-error-style="inline" style="width:100%">{{ brief }}</textarea>
+    </div>
+  </div>
+
+
+  <hr />
+
+  <h4>Suggestions</h4>
+
+  <table id="suggested" class="table table-striped">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Contacted</th>
+        <th>Status</th>
+        <th>Schedule</th>
+      </tr>
+    </thead>
+    <tbody>
+    {{#each suggested }}
+      <tr>
+        <td>{{ dev.name}}</td>
+        <td>{{ contacted }}</td>
+        <td>{{ status }}</td>
+        <td>{{ availabilty }}</td>
+      </tr>
+    {{/each}}
+    </tbody>
+  </table>
+
+
+</fieldset>

@@ -2,18 +2,19 @@ d = @stubs.dates
 @stubs.developers = {}
 
 
-aDev = (fname, lname, github, so, blog, skills) ->
-  firstName:          fname
-  lastName:           lname
-  githubUrl:          github
-  stackoverflowUrl:   so
-  blogUrl:            blog
-  skills:             skills
 
+aDev= (id, name, email, rate, gh, so, blog, skills) ->
+  id:           id
+  name:         name
+  email:        email
+  gh:           gh
+  so:           so
+  blog:         blog
+  rate:         rate
+  skills:       skills
 
 @stubs.developers.jsdevs = [
-  aDev 'Jonathon', 'Kresner', '/jkresner', '/users/178211/jonathon-kresner', 'http://hackerpreneurialism.com', ['backbone.js','coffeescript','c#','brunch']
-  aDev 'John', 'Davison', '/jcdavison', '/users/1345135/john', 'http://www.johncdavison.com/', ['ruby','ruby-on-rails']
+  @jkresner = aDev 900001, 'Jonathon Kresner', 'jkresner@gmail.com', 'jkresner', '178211/jonathon-kresner', 'hackerpreneurialism.com', '$40p.h.', [@backbone,@coffee,@brunch]
+  @jcdavison = aDev 900002, 'John Davison', 'johncdavison@gmail.com', 'jcdavison', '1345135/john', 'johncdavison.com', '-', [@ror]
+  @focusaurus = aDev 900003, 'Peter Lyons', 'pete@peterlyons.com', 'focusaurus', '266795/peter-lyons', 'peterlyons.com', '-', [@node,@javascript,@backbone,@coffee,@express,@bdd,@mocha]
 ]
-
-
