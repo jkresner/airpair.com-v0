@@ -1,6 +1,7 @@
+console.log "in app.coffee"
+
 express = require 'express'
 app = express()
-
 
 app.get '/', (req, res) -> res.redirect "http://codereview.airpair.co/"
 app.get '/index', (req, res) -> res.sendfile './public/index.html'
