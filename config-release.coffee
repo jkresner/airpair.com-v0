@@ -1,5 +1,7 @@
 {config} = require './config'
 
+config.server.port: 80
+
 config.files.javascripts.joinTo =
   # we exclude the stubs field in the release build
   'javascripts/app.js': /^app(\/|\\)(?!stubs)/

@@ -9,7 +9,7 @@
         "url": "git@github.com:jkresner/airpair.co.git"
     },
     "engines": {
-        "node": "~0.6.10 || 0.8 || 0.9"
+        "node": "0.8.19"
     },
     "scripts": {
         "start": "brunch watch --server",
