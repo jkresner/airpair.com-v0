@@ -41,3 +41,11 @@ have all this extra functionality that never gets used.</p>
   type) and be able to configure and launch all their intranet crawling AND use
 search/visualizations in one place.</p>
 """;
+
+module.exports.vero = """
+1. Coverage: are our specs really testing the most important things
+2. Rails controllers: some of our controllers have become out of hand. Getting some feedback on
+refactoring these would be great.
+3. Rails performance: anything from ensuring we have the correct indexes to the right architecture.
+As Chris said we've made some decisions that we believe were correct, but we need another set of eyes ;)
+"""

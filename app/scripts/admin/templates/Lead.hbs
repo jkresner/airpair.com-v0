@@ -16,35 +16,37 @@
   <hr />
 
   {{#each contacts }}
-
-  <div class="control-group">
-    <label class="control-label" for="contactName">Name</label>
-    <div class="controls">
-      <input type="text" id="contactName" name="name" placeholder="Full name" value="{{ name }}" data-error-style="inline">
+  <div style="width:48%;float:left">
+    <div class="control-group">
+      <label class="control-label" for="contactName">Name</label>
+      <div class="controls">
+        <input type="text" id="contactName" name="name" placeholder="Full name" value="{{ name }}" data-error-style="inline">
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="contactTitle">Title</label>
+      <div class="controls">
+        <input type="text" id="contactTitle" name="title" placeholder="Title" value="{{ title }}" data-error-style="inline">
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="contactEmail">Email</label>
+      <div class="controls">
+        <input type="text" id="contactEmail" name="email" placeholder="Email" value="{{ email }}" data-error-style="inline">
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="contactEmail">Phone</label>
+      <div class="controls">
+        <input type="text" id="contactEmail" name="phone" placeholder="Phone" value="{{ phone }}" data-error-style="inline">
+      </div>
     </div>
   </div>
-  <div class="control-group">
-    <label class="control-label" for="contactTitle">Title</label>
-    <div class="controls">
-      <input type="text" id="contactTitle" name="title" placeholder="Title" value="{{ title }}" data-error-style="inline">
-    </div>
-  </div>
-  <div class="control-group">
-    <label class="control-label" for="contactEmail">Email</label>
-    <div class="controls">
-      <input type="text" id="contactEmail" name="email" placeholder="Email" value="{{ email }}" data-error-style="inline">
-    </div>
-  </div>
-  <div class="control-group">
-    <label class="control-label" for="contactEmail">Phone</label>
-    <div class="controls">
-      <input type="text" id="contactEmail" name="phone" placeholder="Phone" value="{{ phone }}" data-error-style="inline">
-    </div>
-  </div>
-
   {{/each }}
 
+  <div style="clear:both">
   <hr />
+
 
   <div class="control-group">
     <label class="control-label" for="skills">Skills</label>

@@ -1,3 +1,5 @@
+console.log("in app node file");
+
 express = require('express');
 
 app = express();
@@ -12,6 +14,10 @@ app.get('/index', function(req, res) {
 
 app.get('/admin', function(req, res) {
   return res.sendfile('./public/admin.html');
+});
+
+app.get('/review', function(req, res) {
+  return res.sendfile('./public/review.html');
 });
 
 app.get('/become-an-expert', function(req, res) {

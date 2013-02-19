@@ -36,3 +36,27 @@ body {
 .marketing p + h4 {
   margin-top: 28px;
 }
+
+
+#review label {
+  display:inline-block;
+  font-weight:bold
+}
+
+#review .label {
+  margin-right:10px;
+  padding:3px 5px;
+}
+
+#review .suggetion { border:solid 1px #d3d3d3;padding:20px;width:220px;font-size:11px;display:inline-block;margin-right:20px; }
+
+#review .suggetion img.profile { width:220px;display:block;margin-bottom:16px; }
+#review .suggetion img.icon { width:32px; }
+#review .suggetion div.links { display:inline-block;width:100px;line-height:14px; }
+
+#review .suggetion label {
+  color:gray;
+  font-weight:normal;
+  width:70px;
+  font-size:11px;
+}

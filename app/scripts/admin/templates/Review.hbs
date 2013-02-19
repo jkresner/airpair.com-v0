@@ -1,0 +1,64 @@
+<fieldset>
+  <legend>Review</legend>
+
+  <label for="leadId"><span id="leadId">#{{ id }}</span>
+    &nbsp
+      <span id="status" class="label label-success"> {{ status }} </span>
+    </label>
+
+
+  <h4>Suggestions</h4>
+
+  <div id="suggested">
+
+    {{#each suggested }}
+      <div class="suggetion">
+        <h4>{{ dev.name }}</h4>
+        <img src="{{ dev.pic }}" class="profile" />
+
+        <label>Links: </label>
+        <div class="links">
+          {{#if dev.so}}
+            <a href="http://stackoverflow.com/users/{{ dev.so }}" target=
+          "_blank">stackoverflow</a>
+          {{/if }}
+          <br /><a href="http://github.com/{{ dev.gh }}" target=
+          "_blank">github</a>
+          <br /><a href="http://{{ dev.homepage }}" target=
+          "_blank">homepage</a>
+        </div>
+
+        <hr />
+        <label>Status</label>
+        <span class="label label-warning label-{{ status }}">{{ status }}</span>
+        <br /><label>Availability</label>{{ availabilty }}
+      </div>
+    {{/each}}
+
+  </div>
+
+  <div class="clear:both"></div>
+  <hr />
+
+  <div>
+      <label>For</label>
+      <span id="companyname">{{ company.name }}</span>
+  </div>
+
+  {{#each contacts }}
+  <div>
+      <label>Contact</label>
+      <span id="contactName">{{ name }}</span>, <span id="contactTitle">{{ title }}</span>
+  </div>
+
+  {{/each}}
+
+  <div class="controls">
+    <label>Requirements</label>
+    <span id="skills">{{{skillList}}</span>
+    <div style="font-size:11px;color:gray">{{{ brief }}}</div>
+  </div>
+
+
+
+</fieldset>

@@ -50,4 +50,24 @@ class exports.LeadView extends BB.BadassView
       skillList:          @model.skillList()
     }
 
+
+class exports.ReviewView extends BB.BadassView
+  el: '#review'
+  tmpl: require './templates/Review'
+  initialize: (args) ->
+    @model.on 'change', @render, @
+  render: ->
+    @$el.html @tmpl @tmplData()
+  tmplData: ->
+    data = @model.toJSON()
+    _.extend @model.toJSON(), {
+      createdDate:        data.created.toDateString()
+      skillList:          @model.skillListLabeled()
+    }
+
+
+
+
+
+
 module.exports = exports

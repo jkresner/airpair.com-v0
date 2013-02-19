@@ -11,6 +11,7 @@
   threemonthsagoEpoch: new Date(new Date().getTime() - 12*(7*24*60) * 60000).getTime()
   sixmonthsagoEpoch: new Date(new Date().getTime() - 24*(7*24*60) * 60000).getTime()
   feb1: new Date 'Feb 01, 2013'
+  feb10: new Date 'Feb 10, 2013'
   feb15: new Date 'Feb 15, 2013'
   feb16: new Date 'Feb 16, 2013'
   feb17: new Date 'Feb 17, 2013'
