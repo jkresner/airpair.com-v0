@@ -21,4 +21,11 @@ aDev= (id, name, email, rate, gh, so, homepage, pic, skills) ->
   @jmontross = aDev 900004, 'Joshua Montross', 'joshua.montross@gmail.com', '-', 'jmontross', '602215/jmontross', 'pointmanj.com', 'https://secure.gravatar.com/avatar/b99d624363c48e67696a8d4176a11456?s=420', [@ror,@backbone,@chef,@ruby,@rubymotion,@ubuntu,@javascript,@php,@codeigniter]
   @gosuri = aDev 900005, 'Greg Osuri', 'gosuri@gmail.com', '-', 'gosuri', '228480/greg-osuri', 'gregosuri.com', 'https://secure.gravatar.com/avatar/9c6165b107059ea5dfa2e81985fe8272?s=420', [@ror,@backbone,@chef,@ruby,@java,@javascript,@c]
   @arieljake = aDev 900006, 'Ariel Jakobovits', 'arieljake@gmail.com', '-', 'arieljake', null, 'meetup.com/Bay-Area-Graph-Lab/members/4211752/', 'https://i2.wp.com/a248.e.akamai.net/assets.github.com/images/gravatars/gravatar-user-420.png', [@javascript]
+  @paulmillr = aDev 900007, 'Paul Miller', 'paul@paulmillr.com', '$70p.h.', 'paulmillr', '1232668/paul-miller', 'paulmillr.com', 'https://secure.gravatar.com/avatar/d342e4ef045c54a6a6f41d070d8a0406?s=420', [@brunch]
+  @raynos = aDev 900008, 'Jake Verbaten', 'raynos2@gmail.com', '-', 'raynos', '419970/raynos', 'resume.github.com/?Raynos', 'https://secure.gravatar.com/avatar/d840cb1fb7e828284011cc08f40a1015?s=420', [@node,@javascript,@jquery,@express,@backbone,@coffee]
+  @linus = aDev 900009, 'Linus G Thiel', 'linus@hanssonlarsson.se', '-', 'linus', '295262/linus-g-thiel', 'github.com/raynos', 'https://secure.gravatar.com/avatar/01e61a98122184b3c14959bcac5dba76?s=420', [@node,@javascript,@coffee,@express,@redis,@jquery,@socketio]
 ]
+
+
+
+

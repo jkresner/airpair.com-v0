@@ -53,7 +53,7 @@ logicalCat =      aCompany 10, 'LogicalCat', 'www.logicalcat.com', [bryan_hughes
 logicalCatSuggested = [
   aSuggestion 1211211, @focusaurus, d.feb15, d.feb17, 'willing', 'Evenings Feb 20-23'
   aSuggestion 1211211, @arieljake, d.feb17, d.feb17, 'willing', 'Finding out...'
-
+  aSuggestion 1211211, @raynos, d.feb15, d.feb18, 'willing', 'Finding out...'
 ]
 
 
