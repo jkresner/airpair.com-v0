@@ -43,9 +43,23 @@ search/visualizations in one place.</p>
 """;
 
 module.exports.vero = """
-1. Coverage: are our specs really testing the most important things
-2. Rails controllers: some of our controllers have become out of hand. Getting some feedback on
-refactoring these would be great.
-3. Rails performance: anything from ensuring we have the correct indexes to the right architecture.
-As Chris said we've made some decisions that we believe were correct, but we need another set of eyes ;)
+<p>1. Coverage: confirming our specs are really testing the most important things</p>
+<p>2. Rails controllers: some of our controllers have become out of hand. Getting some feedback on
+refactoring these would be great.</p>
+<p>3. Rails performance: anything from ensuring we have the correct indexes to the right architecture.
+We've made some decisions we believe were correct, but we'd appreciate another set of eyes ;)</p>
+"""
+
+module.exports.orb = """
+<p>Our project is currently live. We are looking to solve real-time data extraction and
+processing challenges as we are new to Python and building a production-ready platform.
+We are looking for production-environment experienced Python talent to look at our
+implementation and provide insight on how we can improve and move quickly. We have
+worked with Python engineers to help us both with pair-programming and design walk-throughs.
+</p>
+"""
+
+
+module.exports.orb = """
+
 """

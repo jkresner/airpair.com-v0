@@ -13,13 +13,13 @@ class exports.InProgressLeadRowView extends BB.BadassView
     data = @model.toJSON()
 
     _.extend @model.toJSON(), {
-      createdDate:        data.created.toDateString()
-      skillList:          @model.skillList()
+      createdDate:        data.created.toDateString().replace(' 2013','')
+      skillList:          @model.skillListLabeled()
       breifSupplied:      if data.brief? then 'y' else '-'
-      suggestedCount:     data.suggested.count
-      suggestedFitCount:  0
-      callCount:          data.calls.count
-      callCompleteCount:  0
+      suggestedCount:     data.suggested.length
+      suggestedFitCount:  _.filter(data.suggested, (s) -> s.status is 'chosen').length
+      callCount:          data.calls.length
+      callCompleteCount:  _.filter(data.calls, (s) -> s.status is 'complete').length
     }
 
 

@@ -6,8 +6,27 @@
       <span id="status" class="label label-success"> {{ status }} </span>
     </label>
 
+  <div>
+      <label>For</label>
+      <span id="companyname"><a href="http://{{ company.url }}" target="_blank">{{ company.name }}</a></span>
+  </div>
 
-  <h4>Suggestions</h4>
+  {{#each contacts }}
+  <div>
+      <label>Contact</label>
+      <span id="contactName">{{ name }}</span>, <span id="contactTitle">{{ title }}</span>
+  </div>
+
+  {{/each}}
+
+  <div class="controls">
+    <label>Requirements</label>
+    <span id="skills">{{{skillList}}</span>
+    <div style="font-size:11px;color:gray">{{{ brief }}}</div>
+  </div>
+
+
+  <h4>Suggested Devs</h4>
 
   <div id="suggested">
 
@@ -39,26 +58,6 @@
 
   <div class="clear:both"></div>
   <hr />
-
-  <div>
-      <label>For</label>
-      <span id="companyname">{{ company.name }}</span>
-  </div>
-
-  {{#each contacts }}
-  <div>
-      <label>Contact</label>
-      <span id="contactName">{{ name }}</span>, <span id="contactTitle">{{ title }}</span>
-  </div>
-
-  {{/each}}
-
-  <div class="controls">
-    <label>Requirements</label>
-    <span id="skills">{{{skillList}}</span>
-    <div style="font-size:11px;color:gray">{{{ brief }}}</div>
-  </div>
-
 
 
 </fieldset>

@@ -51,9 +51,12 @@ aLead = (id, created, status, company, contacts, skills, brief, suggested, calls
 bryan_hughes =    aContact 5322, 'Bryan Hughes', 'Founder', 'rbhughes@logicalcat.com', '303-949-8125'
 logicalCat =      aCompany 10, 'LogicalCat', 'www.logicalcat.com', [bryan_hughes], "LogicalCat is a niche search engine and reporting tool for oil & gas exploration data. Users tend to be technicians or IT folks with the unpleasant task of sifting through potentially millions of messy files. The online app is just a demo; the real thing runs on user's intranets (because oil companies are paranoid), usually 100% Windows."
 logicalCatSuggested = [
-  aSuggestion 1211211, @focusaurus, d.feb15, d.feb17, 'willing', 'Evenings Feb 20-23'
-  aSuggestion 1211211, @arieljake, d.feb17, d.feb17, 'willing', 'Finding out...'
-  aSuggestion 1211211, @raynos, d.feb15, d.feb18, 'willing', 'Finding out...'
+  aSuggestion 1211211, @focusaurus, d.feb15, d.feb17, 'chosen', 'Evenings Feb 20-23'
+  aSuggestion 1211211, @arieljake, d.feb17, d.feb17, 'interested', 'Finding out...'
+  aSuggestion 1211211, @raynos, d.feb15, d.feb18, 'interested', 'Finding out...'
+]
+logicalCatCalls = [
+  aCall 211211211, @focusaurus, 'Wed 20 6:30PM PST', '-', {}, 40, 10
 ]
 
 
@@ -61,8 +64,22 @@ chris_hexton =    aContact 5422, 'Chris Hexton', 'Co-Founder', 'chris@getvero.co
 james_lamont =    aContact 5423, 'James Lamont', 'Co-Founder/CTO', 'james@getvero.com', '02 8005 1556'
 vero =            aCompany 11, 'Vero', 'www.getvero.com', [chris_hexton,james_lamont], "Vero is 10 months old. We do lifecycle/behavioral emails. Most of our customers are eCommerce or SaaS businesses. We collect data on events a bit like Google Analytics and then make it easy for the customers to build emails inside our app (think Mailchimp). When conditions are met we spew emails out the other side. As such the app has to be up ALL THE TIME (near as) and it's getting pretty involved… which makes it awesome fun."
 veroSuggested = [
+  aSuggestion 1311211, @jmontross, d.feb18, null, 'waiting', '-'
+  aSuggestion 1311221, @gosuri, d.feb18, null, 'waiting', '-'
 ]
+veroCalls = [ ]
 
+charles_worthington = aContact 5522, 'Charles Worthington', 'Founder', 'charles@grayducklabs.com', '617 899 7854'
+simply3 =             aCompany 12, 'Simply3', '', [charles_worthington], "Simply3 is an commerce website. Essentially it is a front-end to Amazon.com that aims to simplify shopping decisions by limiting the number of products shown in a given category to just three pre-screened choices."
+simply3Suggested = [ ]
+simply3Calls = [ ]
+
+
+taariq_lewis  =   aContact 5622, 'Taariq Lewis ', 'Founder', 'taariq.lewis@gmail.com', '-'
+simon_frid =      aContact 5623, 'Simon Frid', 'Lead Dev', 'simonfrid@gmail.com', '-'
+orb =             aCompany 11, 'Orb', 'www.getvero.com', [taariq_lewis,simon_frid], " We are Orb. We're a new type of closed group platform for groups that we call Orbs."
+orbSuggested = []
+orbCalls = [ ]
 
 # Lead Status
 # 1) Prospect (Missing about company / brief)
@@ -72,6 +89,8 @@ veroSuggested = [
 # waiting, willing, accepted
 
 @stubs.admin.leads = [
-  aLead 2101, d.feb10, 'open', vero, vero.contacts, [@bdd, @ror], briefs.vero, veroSuggested, []
-  aLead 2112, d.feb15, 'open', logicalCat, logicalCat.contacts, [@bdd, @crawler, @express, @node, @ror, @javascript, @windows], briefs.logicalCat, logicalCatSuggested, []
+  aLead 2101, d.feb10, 'open', vero, vero.contacts, [@bdd, @ror], briefs.vero, veroSuggested, veroCalls
+  aLead 2112, d.feb15, 'open', logicalCat, logicalCat.contacts, [@bdd, @crawler, @express, @node, @ror, @javascript, @windows], briefs.logicalCat, logicalCatSuggested, logicalCatCalls
+  aLead 2122, d.feb15, 'open', simply3, simply3.contacts, [@ror], briefs.simply3, simply3Suggested, simply3Calls
+  aLead 2132, d.feb15, 'stale', orb, orb.contacts, [@python], briefs.orb, orbSuggested, orbCalls
 ]

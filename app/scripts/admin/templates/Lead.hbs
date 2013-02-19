@@ -65,6 +65,8 @@
 
   <hr />
 
+  {{#if suggested.length }}
+
   <h4>Suggestions</h4>
 
   <table id="suggested" class="table table-striped">
@@ -88,5 +90,33 @@
     </tbody>
   </table>
 
+  {{/if }}
+
+  {{#if calls.length }}
+
+  <h4>Calls</h4>
+
+  <table id="calls" class="table table-striped">
+    <thead>
+      <tr>
+        <th>Dev</th>
+        <th>Time</th>
+        <th>Recording</th>
+        <th>Schedule</th>
+      </tr>
+    </thead>
+    <tbody>
+    {{#each calls }}
+      <tr>
+        <td>{{ dev.name }}</td>
+        <td>{{ time }}</td>
+        <td>{{ recordingId }}</td>
+        <td>{{ cost }}</td>
+      </tr>
+    {{/each}}
+    </tbody>
+  </table>
+
+  {{/if }}
 
 </fieldset>

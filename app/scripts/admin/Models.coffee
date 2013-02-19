@@ -10,7 +10,7 @@ class exports.Lead extends Backbone.Model
   skillListLabeled: ->
     skillsShortNames = _.pluck @get('skills'), 'shortName'
     skillList = '';
-    skillList += '<span class="label">' + s + "</span>" for s in skillsShortNames
+    skillList += '<span class="label label-skill">' + s + "</span>" for s in skillsShortNames
     skillList
 
 
