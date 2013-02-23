@@ -12,6 +12,10 @@ app.get('/index', function(req, res) {
   return res.sendfile('./public/index.html');
 });
 
+app.get('/about', function(req, res) {
+  return res.sendfile('./public/about.html');
+});
+
 app.get('/admin', function(req, res) {
   return res.sendfile('./public/admin.html');
 });
