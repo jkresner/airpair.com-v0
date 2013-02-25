@@ -5,6 +5,10 @@ body {
 
 .main { display:none;margin-top:20px; }
 
+.c900 {
+  margin: 0 auto;
+  max-width: 900px;
+}
 
 /* Custom container */
 .container-narrow {
@@ -28,6 +32,8 @@ body {
   font-size: 21px;
   padding: 14px 24px;
 }
+
+.asession { border-bottom:solid 1px #d3d3d3;padding:30px 0px; }
 
 /* Supporting marketing content */
 .marketing {
