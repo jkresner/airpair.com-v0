@@ -1,6 +1,8 @@
 body {
-  padding-top: 20px;
   padding-bottom: 40px;
+  font-family: Open Sans, helvetica, sans-serif;
+  letter-spacing: 0.2px;
+  background: #e2e2e2;
 }
 
 .main { display:none;margin-top:20px; }
@@ -11,13 +13,114 @@ body {
   font-size:14px;
 }
 
+a:hover {
+  text-decoration: none;
+  color: #ffffff;
+}
+
+nav {
+  border-bottom: dashed 1px #A4A4A5;
+  padding: 20px 40px 10px 40px;
+  margin: 0 40px;
+}
+
+.banner {
+   background:url('/images/bg-top.png');
+   background-size:100%;
+   width:100%;
+   border-bottom: solid 30px #212F3B;
+}
+
+.jumbotron {
+  /* background: transparent url('/images/computer4.png') no-repeat 89px 114px; */
+  height: 600px;
+}
+
+h3 {
+  font-weight: 400;
+  color: #212F3B;
+  font-size: 18px;
+  float: left;
+  line-height: 28px;
+}
+
+h2.tagline {
+  text-shadow: 3px 3px 0px rgba(0,0,0,0.1);
+  color: #212F3B;
+  font-size: 40px;
+}
+
+h3.tagline {
+  margin: 3px 30px 0 30px;
+}
+
+a.twitter {
+  float: right;
+  -webkit-transition: margin .2s;
+}
+
+a.twitter:hover {
+  margin-right: -5px;
+  -webkit-transition: margin .2s;
+}
+
+
+.tag-banner {
+  width: 900px;
+  text-align: center;
+  margin-top: 70px;
+}
+
+h2 span {
+  color: #CC6750;
+}
+
+h2.yellow span {
+  color: #99923F;
+}
+
+.banner-text h3 {
+}
+
+.button {
+  background: #CC6750;
+  padding: 10px 20px;
+  border-radius: 0.5em;
+  color: #E6E6E6;
+  border: solid 3px #CC523E;
+  font-size: 18px;
+  margin: 20px 90px;
+  float: left;
+  -webkit-transition: margin .2s;
+}
+
+.button:hover {
+  margin: 20px 100px;
+  -webkit-transition: margin .2s;
+}
+
+a.yellow {
+  background: #99923F;
+  border: solid 3px #7F761C;
+}
+
 .header { color:#999999;border-bottom:solid 1px #d3d3d3; }
 .header div { height:60px; }
 .header img { display:inline-block;float:left }
 .header span { display:inline-block;float:left;padding:6px }
 
-.codeline { padding:8px;clear:both;font-family:courier }
-.codeline em { color:blue; }
+.codeline {
+  clear:both;
+  font-family:courier;
+  color: #212F3B;
+  float: left;
+  border-bottom: dashed 1px #A4A4A5;
+  border-top: dashed 1px #A4A4A5;
+  padding: 10px 0;
+  width: 900px;
+  margin-bottom: 30px;
+}
+.codeline em { color:#CE5424; }
 
 /* Custom container */
 .container-narrow {
@@ -42,6 +145,10 @@ body {
   padding: 14px 24px;
 }
 
+.c900 p {
+  width: 500px;
+}
+
 .asession { border-bottom:solid 1px #d3d3d3;padding:30px 0px; }
 
 /* Supporting marketing content */
@@ -62,3 +169,7 @@ body {
 #review .suggetion img.icon { width:32px; }
 #review .suggetion div.links { display:inline-block;width:100px;line-height:14px; }
 #review .suggetion label { color:gray;font-weight:normal;width:70px;font-size:11px; }
+
+.cf:before, .cf:after { content: ""; display: table; }
+.cf:after { clear: both; }
+.cf { zoom: 1; }
