@@ -8,7 +8,16 @@ body {
 .c900 {
   margin: 0 auto;
   max-width: 900px;
+  font-size:14px;
 }
+
+.header { color:#999999;border-bottom:solid 1px #d3d3d3; }
+.header div { height:60px; }
+.header img { display:inline-block;float:left }
+.header span { display:inline-block;float:left;padding:6px }
+
+.codeline { padding:8px;clear:both;font-family:courier }
+.codeline em { color:blue; }
 
 /* Custom container */
 .container-narrow {
