@@ -107,10 +107,9 @@ a.yellow {
   border: solid 3px #7F761C;
 }
 
-.header { color:#999999;border-bottom:solid 1px #d3d3d3; }
-.header div { height:60px; }
-.header img { display:inline-block;float:left }
-.header span { display:inline-block;float:left;padding:6px }
+.header { height:80px;border-bottom:solid 1px #d3d3d3; }
+.header img { display:inline-block; }
+.header h3 { display:inline-block;color:#999999;padding:16px 6px }
 
 .codeline {
   clear:both;
