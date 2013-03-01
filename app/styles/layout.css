@@ -25,7 +25,7 @@ nav {
 }
 
 .banner {
- background:url('/images/bg-top.png');
+ background:url('/images/bg-top.jpg');
  background-size:100%;
  width:100%;
  border-bottom: solid 30px #212F3B;
@@ -156,7 +156,7 @@ a.yellow {
 }
 
 .c900 div.colb {
-  display:inline-block;width:430px
+  display:inline-block;width:422px;margin-left:8px;
 }
 
 .c900 p.feedback {
