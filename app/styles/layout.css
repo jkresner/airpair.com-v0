@@ -168,7 +168,7 @@ a.yellow {
 .asession h2 b { color:#CC523E }
 .asession h2 em { color:#7F761C;font-style:normal; }
 .privateap { width:420px;height:236px;border:dotted 1px gray;margin:0px auto;position:relative; }
-.privateap i { display:block;margin:90px auto;font-style:normal;width:106px; }
+.privateap i { display:block;margin:90px auto;font-style:normal;text-align:center; }
 
 /* Supporting marketing content */
 .marketing {
