@@ -156,17 +156,19 @@ a.yellow {
 }
 
 .c900 div.colb {
-  display:inline-block;width:422px;margin-left:8px;
+  display:inline-block;width:422px;margin-left:8px;height:100%;float:right;margin-top:40px;
 }
 
 .c900 p.feedback {
   font-size:12px;
 }
 
-.asession { border-bottom:solid 1px #d3d3d3;padding:30px 0px;clear:both; }
-.asession h4 { color:gray;font-size:0.8em; }
-.privateap { width:80px;height:20px;border:dotted 1px gray;margin:20px auto;padding:80px 160px}
-.privateap i { display:block;margin:auto; }
+.asession { border-bottom:solid 1px #d3d3d3;padding:30px 0px;clear:both;min-height:340px; }
+.asession h4 { color:gray;font-size:0.8em;margin-bottom:5px }
+.asession h2 b { color:#CC523E }
+.asession h2 em { color:#7F761C;font-style:normal; }
+.privateap { width:420px;height:236px;border:dotted 1px gray;margin:0px auto;position:relative; }
+.privateap i { display:block;margin:90px auto;font-style:normal;width:106px; }
 
 /* Supporting marketing content */
 .marketing {
