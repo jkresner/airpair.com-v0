@@ -2,6 +2,10 @@
 
 @stubs ?= {}
 
+@stubs.siteUrl = "http://airpair.co/"
+
+$log '@stubs.siteUrl', @stubs.siteUrl
+
 @stubs.dates =
   todayEpoch: new Date().getTime()
   nextweekEpoch: new Date(new Date().getTime() + (7*24*60) * 60000).getTime()

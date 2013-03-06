@@ -74,6 +74,7 @@
       <tr>
         <th>Name</th>
         <th>Contacted</th>
+        <th>Mail</th>
         <th>Status</th>
         <th>Schedule</th>
       </tr>
@@ -83,6 +84,7 @@
       <tr>
         <td>{{ dev.name}}</td>
         <td>{{ contacted }}</td>
+        <td><a href="#" class="mailMatched" data-id="{{ dev.id }}">matched</a></td>
         <td>{{ status }}</td>
         <td>{{ availabilty }}</td>
       </tr>
