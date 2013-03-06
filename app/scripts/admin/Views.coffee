@@ -1,6 +1,5 @@
 exports = {}
 BB = require './../../lib/BB'
-tmpl_mail_developerMatched = require './../../mail/developerMatched'
 
 class exports.InProgressLeadRowView extends BB.BadassView
   tagName: 'tr'
@@ -38,8 +37,11 @@ class exports.InProgressLeadsView extends BB.BadassView
 class exports.LeadView extends BB.BadassView
   el: '#lead'
   tmpl: require './templates/Lead'
+  mailTmpl: require './../../mail/developerMatched'
+  mailTmpl2: require './../../mail/developersContacted'
   events:
     'click a.mailMatched': 'sendMatchedMail'
+    'click a#mailDevsContacted': 'sendDevsContacted'
   initialize: (args) ->
     $log 'LeadView.init', @model.attributes
     @model.on 'change', @render, @
@@ -59,8 +61,14 @@ class exports.LeadView extends BB.BadassView
     developers = _.pluck @model.get('suggested'), 'dev'
     dev = _.find developers, (d) -> d.id == devId
     mailtoAddress = "#{dev.name}%20%3c#{dev.email}%3e"
-    body = tmpl_mail_developerMatched dev_name: dev.name, entrepreneur_name: @model.get('contacts')[0].name, leadId: @model.id
-    window.location.href = "mailto:#{mailtoAddress}?subject=airpair - help an entrepreneur with#{skillList}?&body=#{body}"
+    body = @mailTmpl dev_name: dev.name, entrepreneur_name: @model.get('contacts')[0].name, leadId: @model.id
+    window.location.href = "mailto:#{mailtoAddress}?subject=airpair - Help an entrepreneur with#{skillList}?&body=#{body}"
+  sendDevsContacted: (e) ->
+    e.preventDefault()
+    customer = @model.get('contacts')[0]
+    mailtoAddress = "#{customer.name}%20%3c#{customer.email}%3e"
+    body = @mailTmpl2 entrepreneur_name: customer.name, leadId: @model.id
+    window.location.href = "mailto:#{mailtoAddress}?subject=airpair - We're waiting to hear back from our devs!&body=#{body}"
 
 
 class exports.ReviewView extends BB.BadassView
@@ -76,9 +84,6 @@ class exports.ReviewView extends BB.BadassView
       createdDate:        data.created.toDateString()
       skillList:          @model.skillListLabeled()
     }
-
-
-
 
 
 

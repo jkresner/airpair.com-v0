@@ -87,7 +87,6 @@ kavin_stewart =   aContact 5721, 'Kavin Stewart', 'Founder', 'kavin.stewart@gmai
 grumbleBeans =     aCompany 14, 'Grumble Beans Tea & Spices', null, [kavin_stewart], "I'm Kavin Stewart. I'm a second time entrepreneur. Previously co-founder / CEO / VP Product at Lolapps, a social gaming company. Currently hacking away on some ideas in the photos space. I'm interested in understanding simple things like how to properly access photos across different Android versions and devices. I'm keen on some mentoring and help getting un-stuck with problems"
 grumbleBeansSuggested = [
   aSuggestion 1213211, @khanmurtuza, d.mar06, '-', 'waiting', 'Finding out...'
-  aSuggestion 1213212, @jstart, d.mar06, '-', 'waiting', 'Finding out...'
   aSuggestion 1213213, @ashokvarma2, d.mar06, '-', 'waiting', 'Finding out...'
   aSuggestion 1213214, @justinlloyd, d.mar06, '-', 'waiting', 'Finding out...'
   aSuggestion 1213215, @sweetleon, d.mar06, '-', 'waiting', 'Finding out...'
