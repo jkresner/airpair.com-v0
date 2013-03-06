@@ -1,14 +1,28 @@
-<fieldset>
-  <legend>Review</legend>
+<style type="text/css">
+  #reviewDetail p, #brief { font-size:12px;color:gray }
+  a:hover { color:black!important }
+  .links { height:70px }
+  .skills { height:70px }
+  .skills .label { margin-right:2px!important;padding:2px 4px!important;font-size:10px }
+</style>
 
-  <label for="leadId"><span id="leadId">#{{ id }}</span>
-    &nbsp
-      <span id="status" class="label label-success"> {{ status }} </span>
+<fieldset id="reviewDetail">
+  <legend>Review
+    <label for="leadId"><span id="leadId">#{{ id }}</span>
+      &nbsp <span id="status" class="label label-success"> {{ status }} </span>
     </label>
+  </legend>
 
   <div>
-      <label>For</label>
-      <span id="companyname"><a href="http://{{ company.url }}" target="_blank">{{ company.name }}</a></span>
+    <label>For</label>
+      <span id="companyname">
+      {{#if company.url }}
+        <a href="http://{{ company.url }}" target="_blank">{{ company.name }}</a>
+      {{else}}
+        {{ company.name }}
+      {{/if}}
+      </span>
+      <p>{{ company.about }}</p>
   </div>
 
   {{#each contacts }}
@@ -22,31 +36,42 @@
   <div class="controls">
     <label>Requirements</label>
     <span id="skills">{{{skillList}}</span>
-    <div style="font-size:11px;color:gray">{{{ brief }}}</div>
+    <div id="brief">{{{ brief }}}</div>
   </div>
 
 
-  <h4>Suggested Devs</h4>
+  <legend>{{ suggested.length }} Suggeted Devs</legend>
 
   <div id="suggested">
 
     {{#each suggested }}
-      <div class="suggetion">
-        <h4>{{ dev.name }}</h4>
-        <img src="{{ dev.pic }}" class="profile" />
+      {{#with dev}}
 
-        <label>Links: </label>
-        <div class="links">
-          {{#if dev.so}}
-            <a href="http://stackoverflow.com/users/{{ dev.so }}" target=
-          "_blank">stackoverflow</a>
-          {{/if }}
-          <br /><a href="http://github.com/{{ dev.gh }}" target=
-          "_blank">github</a>
-          <br /><a href="http://{{ dev.homepage }}" target=
-          "_blank">homepage</a>
+      <div class="suggetion">
+        <h4>{{ name }}</h4>
+        <img src="{{ pic }}" class="profile" />
+        <div class="skills">
+          {{#each skills }}
+            <span class="label label-success">{{ name }}</span>
+          {{/each }}
         </div>
 
+        <div class="links">
+          Links:
+          {{#if so}}
+          <br /><a href="http://stackoverflow.com/users/{{ so }}" target=
+          "_blank">stackoverflow/{{ so }}</a>
+          {{/if }}
+          {{#if gh}}
+          <br /><a href="http://github.com/{{ gh }}" target=
+          "_blank">github/{{ gh }}</a>
+          {{/if}}
+          {{#if homepage}}
+            <br /><a href="http://{{ homepage }}" target="_blank">{{ homepage }}</a>
+          {{/if}}
+        </div>
+
+        {{/with}}
         <hr />
         <label>Status</label>
         <span class="label label-warning label-{{ status }}">{{ status }}</span>
