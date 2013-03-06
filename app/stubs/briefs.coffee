@@ -60,6 +60,14 @@ worked with Python engineers to help us both with pair-programming and design wa
 """
 
 
-module.exports.orb = """
+module.exports.orb = """"""
 
+module.exports.grumbleBeans = """
+<p>Looking for a few things here to start:</p>
+<ul>
+<li>Help figuring out how to access camera roll pictures across all Android devices. (Standard methods appear to be failing for certain devices)</li>
+<li>Eclipse debugger tutorial</li>
+<li>Eclipse project settings / build path tutorial</li>
+<li>tutorial on profiling Android applications</li>
+</ul>
 """

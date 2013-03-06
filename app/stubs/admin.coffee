@@ -57,6 +57,7 @@ logicalCatSuggested = [
 ]
 logicalCatCalls = [
   aCall 211211211, @focusaurus, 'Wed 20 6:30PM PST', '-', {}, 40, 10
+  aCall 211211211, @focusaurus, 'Sat 23 8:00PM PST', '-', {}, 140, 20
 ]
 
 
@@ -77,9 +78,21 @@ simply3Calls = [ ]
 
 taariq_lewis  =   aContact 5622, 'Taariq Lewis ', 'Founder', 'taariq.lewis@gmail.com', '-'
 simon_frid =      aContact 5623, 'Simon Frid', 'Lead Dev', 'simonfrid@gmail.com', '-'
-orb =             aCompany 11, 'Orb', 'www.getvero.com', [taariq_lewis,simon_frid], " We are Orb. We're a new type of closed group platform for groups that we call Orbs."
+orb =             aCompany 13, 'Orb', 'www.getvero.com', [taariq_lewis,simon_frid], " We are Orb. We're a new type of closed group platform for groups that we call Orbs."
 orbSuggested = []
 orbCalls = [ ]
+
+# Companies
+kavin_stewart =   aContact 5721, 'Kavin Stewart', 'Founder', 'kavin.stewart@gmail.com', '-'
+grumbleBeans =     aCompany 14, 'Grumble Beans Tea & Spices', null, [kavin_stewart], "I'm Kavin Stewart. I'm a second time entrepreneur. Previously co-founder / CEO / VP Product at Lolapps, a social gaming company. Currently hacking away on some ideas in the photos space. I'm interested in understanding simple things like how to properly access photos across different Android versions and devices. I'm keen on some mentoring and help getting un-stuck with problems"
+grumbleBeansSuggested = [
+  aSuggestion 1213211, @khanmurtuza, d.mar06, '-', 'waiting', 'Finding out...'
+  aSuggestion 1213212, @jstart, d.mar06, '-', 'waiting', 'Finding out...'
+  aSuggestion 1213213, @ashokvarma2, d.mar06, '-', 'waiting', 'Finding out...'
+  aSuggestion 1213214, @justinlloyd, d.mar06, '-', 'waiting', 'Finding out...'
+  aSuggestion 1213215, @sweetleon, d.mar06, '-', 'waiting', 'Finding out...'
+]
+grumbleBeansCalls = [ ]
 
 # Lead Status
 # 1) Prospect (Missing about company / brief)
@@ -90,7 +103,8 @@ orbCalls = [ ]
 
 @stubs.admin.leads = [
   aLead 2101, d.feb10, 'open', vero, vero.contacts, [@bdd, @ror], briefs.vero, veroSuggested, veroCalls
-  aLead 2112, d.feb15, 'open', logicalCat, logicalCat.contacts, [@bdd, @crawler, @express, @node, @ror, @javascript, @windows], briefs.logicalCat, logicalCatSuggested, logicalCatCalls
+  aLead 2112, d.feb15, 'closed', logicalCat, logicalCat.contacts, [@bdd, @crawler, @express, @node, @ror, @javascript, @windows], briefs.logicalCat, logicalCatSuggested, logicalCatCalls
   aLead 2122, d.feb15, 'open', simply3, simply3.contacts, [@ror], briefs.simply3, simply3Suggested, simply3Calls
-  aLead 2132, d.feb15, 'stale', orb, orb.contacts, [@python], briefs.orb, orbSuggested, orbCalls
+  aLead 2132, d.mar01, 'stale', orb, orb.contacts, [@python], briefs.orb, orbSuggested, orbCalls
+  aLead 2142, d.mar01, 'open', grumbleBeans, grumbleBeans.contacts, [@android], briefs.grumbleBeans, grumbleBeansSuggested, grumbleBeansCalls
 ]
