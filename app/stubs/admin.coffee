@@ -91,19 +91,44 @@ grumbleBeansSuggested = [
   aSuggestion 1213214, @justinlloyd, d.mar06, '-', 'waiting', 'Finding out...'
   aSuggestion 1213215, @sweetleon, d.mar06, '-', 'waiting', 'Finding out...'
 ]
-grumbleBeansCalls = [ ]
+grumbleBeansCalls = [
+  aCall 211211211, @sweetleon, 'Fri 09 10:00PM PST', '-', {}, 35, 15
+]
 
-# Lead Status
-# 1) Prospect (Missing about company / brief)
-# 2)
+# [10] bang with friends
+colin_bwf = aContact 5741, 'Colin', 'Founder', 'c@bangwithfriends.com', '-'
+bwf = aCompany 15, 'Bang With Friends', 'bangwithfriends.com', [colin_bwf], 'We have a large scale Facebook-connected site built on Ruby on Rails, Postgres, and sending mail through SendGrid.'
+bwfSuggested = [
+  aSuggestion 1213211, @svanderbleek, d.mar07, '-', 'waiting', 'Finding out...'
+  aSuggestion 1213211, @jorhan, d.mar07, '-', 'waiting', 'Finding out...'
+  aSuggestion 1213211, @gosuri, d.mar07, '-', 'waiting', 'Finding out...'
+  aSuggestion 1213211, @sweetleon, d.mar07, '-', 'waiting', 'Finding out...'
+  aSuggestion 1213211, @ryanong, d.mar07, '-', 'waiting', 'Finding out...'
+]
+bwfCalls = [ ]
+
+# [9] connectrf.com
+#greg_kling = aContact 5751, 'Greg Kling', 'Founder', 'greg@connectrf.com', '-'
+
+# [8]
+#david_quao = aContact 5771, 'David', 'Founder', 'david.qcao1@gmail.com', '-'
+
+# [8] CollegeTraffic.com
+#alexandre_seilliere = aContact 6741, 'Alexandre Seilliere', 'Founder', 'aseilliere@gmail.com', '-'
+
+# [5]
+#chris_sperandio = aContact 6761, 'Chris Sperandio', 'Founder', 'chris@sperand.io', '-'
+
+
 
 # suggestion statuses :
 # waiting, willing, accepted
 
 @stubs.admin.leads = [
-  aLead 2101, d.feb10, 'open', vero, vero.contacts, [@bdd, @ror], briefs.vero, veroSuggested, veroCalls
-  aLead 2112, d.feb15, 'closed', logicalCat, logicalCat.contacts, [@bdd, @crawler, @express, @node, @ror, @javascript, @windows], briefs.logicalCat, logicalCatSuggested, logicalCatCalls
-  aLead 2122, d.feb15, 'open', simply3, simply3.contacts, [@ror], briefs.simply3, simply3Suggested, simply3Calls
-  aLead 2132, d.mar01, 'stale', orb, orb.contacts, [@python], briefs.orb, orbSuggested, orbCalls
-  aLead 2142, d.mar01, 'open', grumbleBeans, grumbleBeans.contacts, [@android], briefs.grumbleBeans, grumbleBeansSuggested, grumbleBeansCalls
+  aLead 102101, d.feb10, 'open', vero, vero.contacts, [@bdd, @ror], briefs.vero, veroSuggested, veroCalls
+  aLead 102112, d.feb15, 'closed', logicalCat, logicalCat.contacts, [@bdd, @crawler, @express, @node, @ror, @javascript, @windows], briefs.logicalCat, logicalCatSuggested, logicalCatCalls
+  aLead 102122, d.feb15, 'open', simply3, simply3.contacts, [@ror], briefs.simply3, simply3Suggested, simply3Calls
+  aLead 102132, d.mar01, 'stale', orb, orb.contacts, [@python], briefs.orb, orbSuggested, orbCalls
+  aLead 102142, d.mar01, 'open', grumbleBeans, grumbleBeans.contacts, [@android], briefs.grumbleBeans, grumbleBeansSuggested, grumbleBeansCalls
+  aLead 102154, d.mar01, 'open', bwf, bwf.contacts, [@ror,@postgres], briefs.bwf, bwfSuggested, bwfCalls
 ]

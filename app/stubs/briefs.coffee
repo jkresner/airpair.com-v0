@@ -71,3 +71,8 @@ module.exports.grumbleBeans = """
 <li>tutorial on profiling Android applications</li>
 </ul>
 """
+
+module.exports.bwf = """
+<p>We have a large scale Facebook-connected site built on Ruby on Rails, Postgres, and sending mail through SendGrid.</p>
+<p>We would like to hear how to better scale our email dispatching so that sending 750K+ emails in weekly updates is not an issue.</p>
+"""

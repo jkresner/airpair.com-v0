@@ -34,5 +34,12 @@ noAvatarUrl = 'https://i2.wp.com/a248.e.akamai.net/assets.github.com/images/grav
   @ashokvarma2 = aDev 'Ashok Varma', 'ashokvarma2@gmail.com', '-', null, null, 'appstark.com', noAvatarUrl, null, [@ror,@android,@javascript,@css,@html,@backbone,@objectivec]  # 1:55 (w skills)
   @justinlloyd = aDev 'Justin Lloyd ', 'justin@justinlloyd.org', '-', null, null, 'justinlloyd.org', noAvatarUrl, 'linkedin.com/in/justinlloyd', [@csharp,@ruby,@android,@dotnet,@mssql,@mysql,@java,@php,@windows,@cpp] # 2:29 (w-out skills)
   @sweetleon = aDev 'Lenny Turetsky', 'airpair@firstgearconsulting.com', '-', 'sweetleon', '318233/lenny-t', 'linkedin.com/in/LennyTuretsky', noAvatarUrl, null, [@backbone,@javascript,@ror,@android,@linux,@unix] # 1:59 (w-out skills)
-  # @ghub = aDev 'name', 'email', '-', 'ghub', 'so', 'homeurl', 'avatarurl', [@skill,@skill,@skill]
+
+  @metashock = aDev 'Thorsten Heymann', 'thorsten@metashock.net', '-', 'metashock', '171318/hek2mgl', 'metashock.de', gravatarUrl + '/2ea6b0398ae82d7e96aada90b8938734?s=420', [@php,@mysql,@javascript,@linux,@video,@stream]
+  @jorhan = aDev 'Jor Han Lau', 'jorhan.lau@cloudcoder.com.my', '-', 'jorhan', null, null, gravatarUrl+'c796d04ae5aa2a4be9f1069d5593eb20?s=420', null, [@ror, @phonegap, @mongo] #, @mysql, @postgres, @php, @jquery, @javascript, @css, @jqmobi, @aws, @azure, @engineyard, @heroku, @coffee]
+  @svanderbleek = aDev 'Sandy Vanderbleek', 'svanderbleek.github.com', '-', 'svanderbleek', null, null, gravatarUrl+"2068ecb35d78f7ea67c6624fba147870?s=420", null, [@ror,@ruby,@javascript,@mysql,@postgres,@email,@sms]
+  @ryanong = aDev 'Ryan Ong', 'ryanong@gmail.com', '-', 'ryanong', 'so', 'ryanong.net', gravatarUrl+'4d2c21c54eb999894fb07e06b2a1ca42?s=400', null, [@ror,@mongo,@chef,@sinatra]
+  # @ghub = aDev 'name', 'email', '-', 'ghub', 'so', 'homeurl', gravatarUrl+'avatarurl', null, [@skill,@skill,@skill]
 ]
+
+
