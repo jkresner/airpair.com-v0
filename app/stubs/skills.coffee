@@ -58,6 +58,7 @@ aSkill = (id, name, shortName, soId) ->
   @ubuntu = aSkill 646236, 'Ubuntu', 'ubuntu', 'ubuntu'
   @unix = aSkill 646636, 'Unix', 'unix', 'unix'
   @videostreaming = aSkill 646696, 'Video', 'video', 'video'
+  @webkit = aSkill  647236, 'WebKit', 'WeKit', 'webkit'
   @windows = aSkill 647236, 'Windows', 'win', 'windows'
   @xcode = aSkill 687236, 'Xcode', 'Xcode', 'xCodeode'
 ]

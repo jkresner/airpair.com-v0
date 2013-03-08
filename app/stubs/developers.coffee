@@ -39,7 +39,12 @@ noAvatarUrl = 'https://i2.wp.com/a248.e.akamai.net/assets.github.com/images/grav
   @jorhan = aDev 'Jor Han Lau', 'jorhan.lau@cloudcoder.com.my', '-', 'jorhan', null, null, gravatarUrl+'c796d04ae5aa2a4be9f1069d5593eb20?s=420', null, [@ror, @phonegap, @mongo] #, @mysql, @postgres, @php, @jquery, @javascript, @css, @jqmobi, @aws, @azure, @engineyard, @heroku, @coffee]
   @svanderbleek = aDev 'Sandy Vanderbleek', 'svanderbleek.github.com', '-', 'svanderbleek', null, null, gravatarUrl+"2068ecb35d78f7ea67c6624fba147870?s=420", null, [@ror,@ruby,@javascript,@mysql,@postgres,@email,@sms]
   @ryanong = aDev 'Ryan Ong', 'ryanong@gmail.com', '-', 'ryanong', 'so', 'ryanong.net', gravatarUrl+'4d2c21c54eb999894fb07e06b2a1ca42?s=400', null, [@ror,@mongo,@chef,@sinatra]
+
+  @markhammonds = aDev 'Mark Hammonds', 'reachme@markhammonds.ws', '-', null, null, 'mobile.tutsplus.com', gravatarUrl+'avatarurl', null, [@objectivec,@linux,@iOS]
   # @ghub = aDev 'name', 'email', '-', 'ghub', 'so', 'homeurl', gravatarUrl+'avatarurl', null, [@skill,@skill,@skill]
 ]
 
 
+#-LAMP Stack Web Development
+#-High-Performance Web Sites
+#-Secure Coding / Penetration Testing"

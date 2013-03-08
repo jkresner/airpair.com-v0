@@ -99,16 +99,25 @@ grumbleBeansCalls = [
 colin_bwf = aContact 5741, 'Colin', 'Founder', 'c@bangwithfriends.com', '-'
 bwf = aCompany 15, 'Bang With Friends', 'bangwithfriends.com', [colin_bwf], 'We have a large scale Facebook-connected site built on Ruby on Rails, Postgres, and sending mail through SendGrid.'
 bwfSuggested = [
-  aSuggestion 1213211, @svanderbleek, d.mar07, '-', 'waiting', 'Finding out...'
-  aSuggestion 1213211, @jorhan, d.mar07, '-', 'waiting', 'Finding out...'
-  aSuggestion 1213211, @gosuri, d.mar07, '-', 'waiting', 'Finding out...'
   aSuggestion 1213211, @sweetleon, d.mar07, '-', 'waiting', 'Finding out...'
+  aSuggestion 1213211, @markhammonds, d.mar07, '-', 'waiting', 'Finding out...'
+  #aSuggestion 1213211, @jorhan, d.mar07, '-', 'waiting', 'Finding out...'
+  aSuggestion 1213211, @gosuri, d.mar07, '-', 'waiting', 'Finding out...'
   aSuggestion 1213211, @ryanong, d.mar07, '-', 'waiting', 'Finding out...'
 ]
 bwfCalls = [ ]
 
 # [9] connectrf.com
 #greg_kling = aContact 5751, 'Greg Kling', 'Founder', 'greg@connectrf.com', '-'
+
+
+
+greg_kling = aContact 5741, 'Greg Kling', 'Founder', 'greg@connectrf.com', '-'
+connectrf = aCompany 15, 'Connect Inc.', 'connectrf.com', [greg_kling], 'We are a software company focused on the AIDC market. We are currently creating an browser for this market based on webkit for CE'
+connectrfSuggested = [
+
+]
+connectrfCalls = [ ]
 
 # [8]
 #david_quao = aContact 5771, 'David', 'Founder', 'david.qcao1@gmail.com', '-'
@@ -131,4 +140,5 @@ bwfCalls = [ ]
   aLead 102132, d.mar01, 'stale', orb, orb.contacts, [@python], briefs.orb, orbSuggested, orbCalls
   aLead 102142, d.mar01, 'open', grumbleBeans, grumbleBeans.contacts, [@android], briefs.grumbleBeans, grumbleBeansSuggested, grumbleBeansCalls
   aLead 102154, d.mar01, 'open', bwf, bwf.contacts, [@ror,@postgres], briefs.bwf, bwfSuggested, bwfCalls
+  aLead 102158, d.mar01, 'open', connectrf, connectrf.contacts, [@android,@webkit], briefs.connectrf, connectrfSuggested, connectrfCalls
 ]

@@ -59,9 +59,6 @@ worked with Python engineers to help us both with pair-programming and design wa
 </p>
 """
 
-
-module.exports.orb = """"""
-
 module.exports.grumbleBeans = """
 <p>Looking for a few things here to start:</p>
 <ul>
@@ -75,4 +72,8 @@ module.exports.grumbleBeans = """
 module.exports.bwf = """
 <p>We have a large scale Facebook-connected site built on Ruby on Rails, Postgres, and sending mail through SendGrid.</p>
 <p>We would like to hear how to better scale our email dispatching so that sending 750K+ emails in weekly updates is not an issue.</p>
+"""
+
+module.exports.connectrf = """
+Help with webkit for CE coding challenges
 """
