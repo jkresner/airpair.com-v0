@@ -99,11 +99,11 @@ grumbleBeansCalls = [
 colin_bwf = aContact 5741, 'Colin', 'Founder', 'c@bangwithfriends.com', '-'
 bwf = aCompany 15, 'Bang With Friends', 'bangwithfriends.com', [colin_bwf], 'We have a large scale Facebook-connected site built on Ruby on Rails, Postgres, and sending mail through SendGrid.'
 bwfSuggested = [
-  aSuggestion 1213211, @sweetleon, d.mar07, '-', 'waiting', 'Finding out...'
-  aSuggestion 1213211, @markhammonds, d.mar07, '-', 'waiting', 'Finding out...'
+  aSuggestion 1213211, @sweetleon, d.mar07, '-', 'willing', 'Finding out...'
+  aSuggestion 1213211, @markhammonds, d.mar07, '-', 'willing', 'Finding out...'
   #aSuggestion 1213211, @jorhan, d.mar07, '-', 'waiting', 'Finding out...'
-  aSuggestion 1213211, @gosuri, d.mar07, '-', 'waiting', 'Finding out...'
-  aSuggestion 1213211, @ryanong, d.mar07, '-', 'waiting', 'Finding out...'
+  aSuggestion 1213211, @gosuri, d.mar07, '-', 'willing', 'Finding out...'
+  aSuggestion 1213211, @ryanong, d.mar07, '-', 'willing', 'Finding out...'
 ]
 bwfCalls = [ ]
 
