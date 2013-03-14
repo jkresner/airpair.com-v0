@@ -1,5 +1,58 @@
 exports = {}
 BB = require './../../lib/BB'
+M = require './Models'
+
+#############################################################################
+
+
+class exports.SkillFormView extends BB.BadassView
+  el: '#skillFormView'
+  tmpl: require './templates/SkillForm'
+  events:
+    'click .save': 'save'
+    'input #skillName': 'auto'
+  render: ->
+    @$el.html @tmpl @model.toJSON()
+    @
+  save: (e) ->
+    e.preventDefault()
+    d = name: $('#skillName').val(), shortName: $('#skillShort').val(), soId: $('#skillSoId').val()
+    $log 'saving skill', d, @collection
+    @collection.create(d, { success: @success })
+  success: (model, options) =>
+    @$('input').val ''
+  auto: ->
+    name = @$('#skillName').val()
+    @$('#skillShort').val name
+    @$('#skillSoId').val name.toLowerCase()
+
+
+class exports.SkillRowView extends BB.BadassView
+  tagName: 'tr'
+  className: 'skillRow'
+  tmpl: require './templates/SkillRow'
+  render: ->
+    @$el.html @tmpl( @model.toJSON() )
+    @
+
+
+class exports.SkillsView extends BB.BadassView
+  el: '#skills'
+  tmpl: require './templates/Skills'
+  initialize: (args) ->
+    @$el.html @tmpl()
+    @skillFormView = new exports.SkillFormView( model: new M.Skill(), collection: @collection ).render()
+    @collection.on 'reset filter sort', @render, @
+    @collection.on 'add', @renderNew, @
+  render: ->
+    for m in @collection.models
+      @$('tbody').append new exports.SkillRowView( model: m ).render().el
+    @
+  renderNew: (model) ->
+    @$('tbody').prepend new exports.SkillRowView( model: model ).render().el
+
+
+#############################################################################
 
 class exports.InProgressLeadRowView extends BB.BadassView
   tagName: 'tr'
@@ -33,6 +86,7 @@ class exports.InProgressLeadsView extends BB.BadassView
       @$('tbody').append new exports.InProgressLeadRowView( model: m ).render().el
     @
 
+#############################################################################
 
 class exports.LeadView extends BB.BadassView
   el: '#lead'
@@ -43,7 +97,6 @@ class exports.LeadView extends BB.BadassView
     'click a.mailMatched': 'sendMatchedMail'
     'click a#mailDevsContacted': 'sendDevsContacted'
   initialize: (args) ->
-    $log 'LeadView.init', @model.attributes
     @model.on 'change', @render, @
   render: ->
     @$el.html @tmpl @tmplData()

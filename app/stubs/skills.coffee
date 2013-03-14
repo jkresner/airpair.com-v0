@@ -1,3 +1,4 @@
+@stubs = @stubs ? {}
 
 aSkill = (id, name, shortName, soId) ->
   id:           id
@@ -63,5 +64,5 @@ aSkill = (id, name, shortName, soId) ->
   @xcode = aSkill 687236, 'Xcode', 'Xcode', 'xCodeode'
 ]
 
-
+module.exports = @stubs.skills
 

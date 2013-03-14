@@ -8,5 +8,16 @@ class exports.Leads extends BB.FilteringCollection
   url: '/api/leads'
 
 
+class exports.Skills extends BB.FilteringCollection
+  model: Models.Skill
+  url: '/api/skills'
+  comparator: (m) -> m.get 'name'
+
+
+class exports.Devs extends BB.FilteringCollection
+  model: Models.Dev
+  url: '/api/devs'
+
+
 
 module.exports = exports

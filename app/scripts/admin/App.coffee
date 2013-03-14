@@ -10,13 +10,19 @@ routers = require './Routers'
 module.exports.Page = class Page
   constructor: (pageData) ->
     @leads = new collections.Leads()
+    @skills = new collections.Skills()
+    @devs = new collections.Devs()
 
     @currentLead = new models.Lead()
 
     @inProgressLeadsView = new views.InProgressLeadsView collection: @leads
+    @skillsView = new views.SkillsView collection: @skills
     @leadView = new views.LeadView model: @currentLead
 
     @leads.reset pageData.leads
+    @devs.reset pageData.devs
+
+    if pageData.skills? then @skills.reset pageData.skills else @skills.fetch()
 
 
 

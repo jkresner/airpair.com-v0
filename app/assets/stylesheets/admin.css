@@ -1,0 +1,8 @@
+body { background:white }
+
+.masthead { height:24px;padding-top:12px; }
+
+/* Skills */
+#skillsList { width:60%;float:left; }
+#skillsList td { font-size:10px;padding:2px; }
+#skillFormView { width:30%;float:right; }

@@ -1,6 +1,13 @@
 exports = {}
 
 
+class exports.Skill extends Backbone.Model
+
+
+class exports.Dev extends Backbone.Model
+
+
+
 class exports.Lead extends Backbone.Model
   skillList: ->
     skillsShortNames = _.pluck @get('skills'), 'shortName'

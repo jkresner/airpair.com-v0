@@ -8,6 +8,7 @@
         <meta name="author" content="Jonathon Kresnder">
         <script src="javascripts/modernizr.js"></script>
         <link rel="stylesheet" href="/stylesheets/app.css">
+        <link rel="stylesheet" href="/stylesheets/admin.css">
     </head>
 
   <body>
@@ -17,10 +18,17 @@
       <div class="masthead">
         <ul class="nav nav-pills pull-right">
           <li class="active"><a href="#">Home</a></li>
+          <li><a href="#skills">skills</a></li>
+          <li><a href="#devs">devs</a></li>
         </ul>
         <h3 class="muted">airpair admin</h3>
       </div>
 
+      <hr />
+
+      <div id="skills" class="main">
+
+      </div>
       <div id="leads" class="main">
         <div id="inProgressLeads"></div>
         <hr>
@@ -46,7 +54,8 @@
         function initSPA(SPA) {
 
             var pagedata = {
-              leads: stubs.admin.leads
+              leads: stubs.admin.leads//,
+              //skills: stubs.skills
             };
 
             window.router = new SPA.Router({ page: new SPA.Page(pagedata) });

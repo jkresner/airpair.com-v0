@@ -4,13 +4,17 @@ exports = {}
 class exports.AdminRouter extends Backbone.Router
   routes:
     '': 'index'
+    'skills': 'skills'
     'lead/:id': 'lead'
     'suggest/:id': 'suggest'
   initialize: (args) ->
     @page = args.page
   index: (args) ->
     $log 'Router.index'
-    @hideshow('#leads')
+    @hideshow '#leads'
+  skills: (args) ->
+    $log 'Router.skills'
+    @hideshow '#skills'
   lead: (id) ->
     $log 'Router.lead'
     if @page.currentLead.id != id
@@ -19,7 +23,7 @@ class exports.AdminRouter extends Backbone.Router
       else
         @page.currentLead.set lead.attributes ## forces redraw
         $log 'currentLead', @page.currentLead.attributes
-        @hideshow('#lead')
+        @hideshow '#lead'
 
   suggest: (id) ->
     $log 'Router.suggest'
