@@ -76,13 +76,6 @@ db.once('open', function() {
   return console.log('connected to db airpair_dev');
 });
 
-exports.startServer = function(port, path, callback) {
-  var p;
-  p = process.env.PORT || port;
-  console.log("startServer on port: " + p + ", path " + path);
-  return app.listen(p);
-};
-
 p = process.env.PORT || 500;
 console.log("startServer on port: " + p);
 app.listen(p);
