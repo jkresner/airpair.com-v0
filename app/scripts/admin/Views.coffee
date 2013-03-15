@@ -54,6 +54,62 @@ class exports.SkillsView extends BB.BadassView
 
 #############################################################################
 
+
+class exports.DevFormView extends BB.BadassView
+  el: '#devFormView'
+  tmpl: require './templates/DevForm'
+  events:
+    'click .save': 'save'
+  render: ->
+    @$el.html @tmpl @model.toJSON()
+    @
+  save: (e) ->
+    e.preventDefault()
+    d = @viewData ['name','email','pic', 'homepage', 'gh', 'so', 'bb', 'in', 'other', 'skills', 'rate']
+    $log 'saving dev', d, @collection
+    @collection.create(d, { success: @success, wait: true })
+  success: (model, options) =>
+    @$('input').val ''
+  viewData: (list) ->
+    data = {}
+    data[attr] = @$("[name=#{attr}]").val() for attr in list
+    $log 'dev.data', data
+    data
+
+
+class exports.DevRowView extends BB.BadassView
+  tagName: 'tr'
+  className: 'devRow'
+  tmpl: require './templates/DevRow'
+  tmpl_links: require './../../templates/devLinks'
+  render: ->
+    tmpl_data = _.extend @model.toJSON(), { skillsList: @model.skillListLabeled() }
+    @$el.html @tmpl( tmpl_data )
+    @$('.links').html @tmpl_links(@model.toJSON())
+    @
+
+
+class exports.DevsView extends BB.BadassView
+  logging: on
+  el: '#devs'
+  tmpl: require './templates/Devs'
+  initialize: (args) ->
+    @$el.html @tmpl()
+    @devFormView = new exports.DevFormView( model: new M.Dev(), collection: @collection ).render()
+    @collection.on 'reset filter sort', @render, @
+    @collection.on 'add', @renderNew, @
+  render: ->
+    for m in @collection.models
+      @$('tbody').append new exports.DevRowView( model: m ).render().el
+    @
+  renderNew: (m) ->
+    @$('tbody').prepend new exports.DevRowView( model: m ).render().el
+
+
+
+
+#############################################################################
+
 class exports.InProgressLeadRowView extends BB.BadassView
   tagName: 'tr'
   className: 'leadRow'

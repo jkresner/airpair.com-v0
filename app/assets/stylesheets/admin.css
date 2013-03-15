@@ -6,3 +6,10 @@ body { background:white }
 #skillsList { width:60%;float:left; }
 #skillsList td { font-size:10px;padding:2px; }
 #skillFormView { width:30%;float:right; }
+
+#devList { width:70%;float:left; }
+#devList td { font-size:10px;padding:2px; }
+#devList .label { font-weight:normal;padding:1px 2px;margin-right:3px }
+#devList .links a { display:inline-block;margin-right:5px }
+#devList .links a:hover { color:blue; }
+#devFormView { width:28%;float:right; }

@@ -16,8 +16,7 @@ flushDb = true
 if flushDb
   api_devs.clear()
   api_skills.clear()
-  api_skills.boot()
-
+  api_skills.boot api_devs.boot
 
 app.get  '/', (req, res) -> res.sendfile './public/index.html'
 app.get  '/about', (req, res) -> res.sendfile './public/index.html'

@@ -2,19 +2,29 @@ exports = {}
 
 
 class exports.AdminRouter extends Backbone.Router
+
   routes:
-    '': 'index'
-    'skills': 'skills'
-    'lead/:id': 'lead'
-    'suggest/:id': 'suggest'
+    '':             'index'
+    'skills':       'skills'
+    'devs':         'devs'
+    'lead/:id':     'lead'
+    'suggest/:id':  'suggest'
+
   initialize: (args) ->
     @page = args.page
+
   index: (args) ->
     $log 'Router.index'
     @hideshow '#leads'
+
   skills: (args) ->
     $log 'Router.skills'
     @hideshow '#skills'
+
+  devs: (args) ->
+    $log 'Router.devs'
+    @hideshow '#devs'
+
   lead: (id) ->
     $log 'Router.lead'
     if @page.currentLead.id != id
@@ -27,6 +37,7 @@ class exports.AdminRouter extends Backbone.Router
 
   suggest: (id) ->
     $log 'Router.suggest'
+
   hideshow: (selector) ->
     $('.main').hide()
     $(selector).show()

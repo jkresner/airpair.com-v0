@@ -1,9 +1,11 @@
 Skill = require '../models/skill'
 
 exports.clear = -> Skill.find({}).remove()
-exports.boot = ->
+exports.boot = (callback) ->
   stubs = require './../app/stubs/skills'
-  new Skill( name: s.name, shortName: s.shortName, soId: s.soId ).save() for s in stubs
+  skills = []
+  skills.push name: s.name, shortName: s.shortName, soId: s.soId for s in stubs
+  Skill.create skills, (e, r) -> if callback? then callback()
 
 
 exports.post = (req, res) ->

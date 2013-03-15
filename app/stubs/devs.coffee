@@ -1,24 +1,29 @@
+@stubs = {} if ! @stubs?
 d = @stubs.dates
-@stubs.developers = {}
 
 idCount = 1
 
-aDev= (name, email, rate, gh, so, homepage, pic, other, skills) ->
+aDev = (name, email, rate, gh, so, homepage, pic, other, skills) ->
   id:           idCount++
   name:         name
   email:        email
-  rate:         rate
+  pic:          pic
+  homepage:     homepage
   gh:           gh
   so:           so
-  homepage:     homepage
-  pic:          pic
   other:        other
   skills:       skills
+  rate:         rate
 
 gravatarUrl = 'https://secure.gravatar.com/avatar/'
-noAvatarUrl = 'https://i2.wp.com/a248.e.akamai.net/assets.github.com/images/gravatars/gravatar-user-420.png'
+noAvatarUrl = '/gravatar-user-420.png'
 
-@stubs.developers.jsdevs = [
+if global?
+  for own attr, value of global
+    #console.log '@.skill', attr
+    @[attr] = value
+
+@stubs.devs = [
   @jkresner = aDev 'Jonathon Kresner', 'jkresner@gmail.com', '$40p.h.', 'jkresner', '178211/jonathon-kresner', 'hackerpreneurialism.com', gravatarUrl+'780d02a99798886da48711d8104801a4?s=420', null, [@backbone,@coffee,@brunch]
   @jcdavison = aDev 'John Davison', 'johncdavison@gmail.com', '-', 'jcdavison', '1345135/john', 'johncdavison.com', gravatarUrl+'78edebd4f93a44265507e01170961309?s=420', null, [@ror]
   @focusaurus = aDev 'Peter Lyons', 'pete@peterlyons.com', '-', 'focusaurus', '266795/peter-lyons', 'peterlyons.com', gravatarUrl+'3b59ae9a92deace346db01f415789f20?s=420', null, [@node,@javascript,@backbone,@coffee,@express,@bdd,@mocha]
@@ -35,7 +40,7 @@ noAvatarUrl = 'https://i2.wp.com/a248.e.akamai.net/assets.github.com/images/grav
   @justinlloyd = aDev 'Justin Lloyd ', 'justin@justinlloyd.org', '-', null, null, 'justinlloyd.org', noAvatarUrl, 'linkedin.com/in/justinlloyd', [@csharp,@ruby,@android,@dotnet,@mssql,@mysql,@java,@php,@windows,@cpp] # 2:29 (w-out skills)
   @sweetleon = aDev 'Lenny Turetsky', 'airpair@firstgearconsulting.com', '-', 'sweetleon', '318233/lenny-t', 'linkedin.com/in/LennyTuretsky', noAvatarUrl, null, [@backbone,@javascript,@ror,@android,@linux,@unix] # 1:59 (w-out skills)
 
-  @metashock = aDev 'Thorsten Heymann', 'thorsten@metashock.net', '-', 'metashock', '171318/hek2mgl', 'metashock.de', gravatarUrl + '/2ea6b0398ae82d7e96aada90b8938734?s=420', [@php,@mysql,@javascript,@linux,@video,@stream]
+  @metashock = aDev 'Thorsten Heymann', 'thorsten@metashock.net', '-', 'metashock', '171318/hek2mgl', 'metashock.de', gravatarUrl + '/2ea6b0398ae82d7e96aada90b8938734?s=420', null, [@php,@mysql,@javascript,@linux,@video,@stream]
   @jorhan = aDev 'Jor Han Lau', 'jorhan.lau@cloudcoder.com.my', '-', 'jorhan', null, null, gravatarUrl+'c796d04ae5aa2a4be9f1069d5593eb20?s=420', null, [@ror, @phonegap, @mongo] #, @mysql, @postgres, @php, @jquery, @javascript, @css, @jqmobi, @aws, @azure, @engineyard, @heroku, @coffee]
   @svanderbleek = aDev 'Sandy Vanderbleek', 'svanderbleek.github.com', '-', 'svanderbleek', null, null, gravatarUrl+"2068ecb35d78f7ea67c6624fba147870?s=420", null, [@ror,@ruby,@javascript,@mysql,@postgres,@email,@sms]
   @ryanong = aDev 'Ryan Ong', 'ryanong@gmail.com', '-', 'ryanong', null, 'ryanong.net', gravatarUrl+'4d2c21c54eb999894fb07e06b2a1ca42?s=400', null, [@ror,@mongo,@chef,@sinatra]
@@ -48,3 +53,6 @@ noAvatarUrl = 'https://i2.wp.com/a248.e.akamai.net/assets.github.com/images/grav
 #-LAMP Stack Web Development
 #-High-Performance Web Sites
 #-Secure Coding / Penetration Testing"
+
+
+module.exports = @stubs.devs

@@ -50,5 +50,5 @@
 
 
 require './skills'
-require './developers'
+require './devs'
 require './admin'

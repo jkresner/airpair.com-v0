@@ -17,7 +17,7 @@ class exports.Skills extends BB.FilteringCollection
 class exports.Devs extends BB.FilteringCollection
   model: Models.Dev
   url: '/api/devs'
-
+  comparator: (m) -> m.get 'name'
 
 
 module.exports = exports

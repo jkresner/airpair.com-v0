@@ -17,12 +17,13 @@ module.exports.Page = class Page
 
     @inProgressLeadsView = new views.InProgressLeadsView collection: @leads
     @skillsView = new views.SkillsView collection: @skills
+    @devsView = new views.DevsView collection: @devs
     @leadView = new views.LeadView model: @currentLead
 
     @leads.reset pageData.leads
-    @devs.reset pageData.devs
 
     if pageData.skills? then @skills.reset pageData.skills else @skills.fetch()
+    if pageData.devs? then @devs.reset pageData.devs else @devs.fetch()
 
 
 

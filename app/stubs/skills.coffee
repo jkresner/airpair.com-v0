@@ -1,4 +1,4 @@
-@stubs = @stubs ? {}
+@stubs = {} if !@stubs?
 
 aSkill = (id, name, shortName, soId) ->
   id:           id
@@ -58,11 +58,16 @@ aSkill = (id, name, shortName, soId) ->
   @stream = aSkill 545536, 'Streaming', 'stream', 'stream'
   @ubuntu = aSkill 646236, 'Ubuntu', 'ubuntu', 'ubuntu'
   @unix = aSkill 646636, 'Unix', 'unix', 'unix'
-  @videostreaming = aSkill 646696, 'Video', 'video', 'video'
+  @video = aSkill 646696, 'Video', 'video', 'video'
   @webkit = aSkill  647236, 'WebKit', 'WeKit', 'webkit'
   @windows = aSkill 647236, 'Windows', 'win', 'windows'
   @xcode = aSkill 687236, 'Xcode', 'Xcode', 'xCodeode'
 ]
+
+if global?
+  for own attr, value of @
+    #console.log 'global.skill', attr
+    global[attr] = value
 
 module.exports = @stubs.skills
 
