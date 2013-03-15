@@ -12,7 +12,7 @@ app.configure ->
 api_devs = require './api/devs'
 api_skills = require './api/skills'
 
-flushDb = true
+flushDb = false
 if flushDb
   api_devs.clear()
   api_skills.clear()
@@ -35,9 +35,11 @@ app.get  '/api/skills', api_skills.list
 app.get  '/api/skills:id', api_skills.show
 app.post '/api/skills', api_skills.post
 
+mongoUri = process.env.MONGOLAB_URI ||
+  process.env.MONGOHQ_URL ||
+  'mongodb://localhost/airpair_dev'
 
-
-mongoose.connect 'mongodb://localhost/airpair_dev'
+mongoose.connect mongoUri
 
 db = mongoose.connection
 db.on('error', console.error.bind(console, 'connection error:'))
