@@ -1,11 +1,5 @@
 _und = require './../vendor/scripts/lodash'
 
-# /* The API controller
-#    Exports 3 methods:
-#    * post - Creates a new thread
-#    * list - Returns a list of threads
-#    * show - Displays a thread and its posts
-# */
 Dev = require '../models/dev'
 Skill = require '../models/skill'
 
