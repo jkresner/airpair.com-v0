@@ -1,19 +1,17 @@
-_und = require './../vendor/scripts/lodash'
-
 Dev = require '../models/dev'
 Skill = require '../models/skill'
+_und = require './../vendor/scripts/lodash'
 
 insertFromStub = (s) ->
   skillsSoIds = _und.pluck(s.skills,'soId')
   Skill.find().where('soId').in(skillsSoIds).select('_id soId').exec (err, skills) ->
     d = name: s.name, email: s.email, pic: s.pic, homepage: s.homepage, gh: s.gh, so: s.so, other: s.other, skills: skills, rate: 0
-    #console.log 'dev.new', d
     Dev.create d, (e, r) -> {}
 
 
-
 exports.clear = -> Dev.find({}).remove()
-exports.boot = () ->
+
+exports.boot = ->
   stubs = require './../app/stubs/devs'
   insertFromStub(s) for s in stubs
 
