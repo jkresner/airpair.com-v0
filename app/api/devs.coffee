@@ -1,7 +1,6 @@
 Dev = require '../models/dev'
 Skill = require '../models/skill'
-und = require './../vendor/scripts/lodash'
-
+und = require 'underscore'
 
 
 insertFromStub = (s) ->

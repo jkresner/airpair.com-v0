@@ -31,7 +31,8 @@
         "brunch": "1.x",
 
         "express": "3.x",
-        "mongoose": "3.x"
+        "mongoose": "3.x",
+        "underscore": "1.4.x"
     },
     "devDependencies": {
 
