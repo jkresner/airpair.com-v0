@@ -1,9 +1,9 @@
 Dev = require '../models/dev'
 Skill = require '../models/skill'
-_und = require './../vendor/scripts/lodash'
+und = require './../vendor/scripts/lodash'
 
 insertFromStub = (s) ->
-  skillsSoIds = _und.pluck(s.skills,'soId')
+  skillsSoIds = und.pluck(s.skills,'soId')
   Skill.find().where('soId').in(skillsSoIds).select('_id soId').exec (err, skills) ->
     d = name: s.name, email: s.email, pic: s.pic, homepage: s.homepage, gh: s.gh, so: s.so, other: s.other, skills: skills, rate: 0
     Dev.create d, (e, r) -> {}
