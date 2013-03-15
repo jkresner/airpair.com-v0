@@ -5,7 +5,6 @@ express = require 'express'
 app = express()
 
 app.configure ->
-  console.log 'express.config'
   app.use(express.static(__dirname + '/public'))
   app.use(express.bodyParser())
 
@@ -35,9 +34,7 @@ app.get  '/api/skills', api_skills.list
 app.get  '/api/skills:id', api_skills.show
 app.post '/api/skills', api_skills.post
 
-mongoUri = process.env.MONGOLAB_URI ||
-  process.env.MONGOHQ_URL ||
-  'mongodb://localhost/airpair_dev'
+mongoUri = process.env.MONGOHQ_URL || 'mongodb://localhost/airpair_dev'
 
 mongoose.connect mongoUri
 

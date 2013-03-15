@@ -1,5 +1,7 @@
 var api_devs, api_skills, app, db, express, flushDb, mongoUri, mongoose;
 
+console.log("in app node file");
+
 mongoose = require('mongoose');
 
 express = require('express');
@@ -7,7 +9,6 @@ express = require('express');
 app = express();
 
 app.configure(function() {
-  console.log('express.config');
   app.use(express["static"](__dirname + '/public'));
   return app.use(express.bodyParser());
 });
@@ -64,7 +65,7 @@ app.get('/api/skills:id', api_skills.show);
 
 app.post('/api/skills', api_skills.post);
 
-mongoUri = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost/airpair_dev';
+mongoUri = process.env.MONGOHQ_URL || 'mongodb://localhost/airpair_dev';
 
 mongoose.connect(mongoUri);
 
@@ -75,6 +76,7 @@ db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
   return console.log('connected to db airpair_dev');
 });
+
 
 p = process.env.PORT || 500;
 console.log("startServer on port: " + p);
