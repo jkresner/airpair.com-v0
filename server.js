@@ -8,12 +8,7 @@ app = express();
 
 app.configure(function() {
   app.use(express["static"](__dirname + '/public'));
-  return app.use(express.bodyParser());
 });
-
-api_devs = require('./app/api/devs');
-
-api_skills = require('./app/api/skills');
 
 app.get('/', function(req, res) {
   return res.sendfile('./public/index.html');

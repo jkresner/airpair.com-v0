@@ -6,7 +6,7 @@ app = express()
 
 app.configure ->
   app.use(express.static(__dirname + '/public'))
-  app.use(express.bodyParser())
+#  app.use(express.bodyParser())
 
 # api_devs = require './app/api/devs'
 # api_skills = require './app/api/skills'
