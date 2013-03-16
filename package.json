@@ -16,6 +16,8 @@
         "postinstall": "brunch build -c config-release.coffee"
     },
     "dependencies": {
+        "coffee-script": "1.6.x",
+
         "javascript-brunch": "> 1.0 < 1.5",
         "coffee-script-brunch": "> 1.0 < 1.5",
         "css-brunch": "> 1.0 < 1.5",
