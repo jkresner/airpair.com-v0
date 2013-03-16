@@ -11,7 +11,7 @@ app.configure ->
 api_devs = require './api/devs'
 api_skills = require './api/skills'
 
-flushDb = false
+flushDb = true
 if flushDb
   api_devs.clear()
   api_skills.clear()
