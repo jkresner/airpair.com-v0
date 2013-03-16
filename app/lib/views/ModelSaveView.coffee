@@ -1,19 +1,24 @@
 HasBootstrapErrorStateView = require './HasBootstrapErrorStateView'
 
+"""
+JK(03.16.13) TODO figure out how to decouple inheritance chain to use other
+ErrorStateVies besides the bootstrap one
+"""
+
 # A view that   (1) knows how to save a model & hook in Backbone.Validation
 #               (2) knows how to get data from the view for saving the model via 'viewdata()'
 #               (3) is capable of rendering an success state
 #               (4) put the view back into default state if the user tries to save without changes to the model
-exports = class ModelSaveView
+module.exports = class ModelSaveView extends HasBootstrapErrorStateView
 
   # change this guy in the class definition to use a different
   # error rendering mechanism
-  ErrorStateViewType:   HasBootstrapErrorStateView
+  #ErrorStateViewType:
 
   async: on
 
   constructor: (args) ->
-    @ErrorStateViewType::constructor.apply @, arguments
+    HasBootstrapErrorStateView::constructor.apply @, arguments
 
   initialize: ->
     throw Error 'must inherit ModelSaveView & implement initialize'
@@ -50,3 +55,7 @@ exports = class ModelSaveView
     obj = {}
     obj[attr] = @$('[name="'+attr+'"]').val() for attr in attrs
     obj
+
+# assumes name (NOT ID!) of an input matches the name of an attribute & grabs the vals associated w specified atrrs
+  setValsFromModel: (attrs) ->
+    @$('[name="'+attr+'"]').val(@model.get(attr)) for attr in attrs

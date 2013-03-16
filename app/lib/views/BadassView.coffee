@@ -45,6 +45,6 @@ module.exports = class BadassView extends Backbone.View
         fn.call @, args
 
     if @save?
-      @save = _.wrap @render, (fn, args) ->
+      @save = _.wrap @save, (fn, args) ->
         $log "#{@viewTypeName}.save", args
         fn.call @, args

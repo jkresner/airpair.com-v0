@@ -1,10 +1,10 @@
+BB = require './../../lib/BB'
 exports = {}
 
+class exports.Skill extends BB.BadassModel
 
-class exports.Skill extends Backbone.Model
 
-
-class exports.Dev extends Backbone.Model
+class exports.Dev extends BB.BadassModel
   skillList: ->
     skillsShortNames = _.pluck @get('skills'), 'soId'
     skillList = '';
@@ -17,8 +17,22 @@ class exports.Dev extends Backbone.Model
     skillList
 
 
+class exports.Company extends BB.BadassModel
+  urlRoot: '/api/companys'
+  defaults:
+    contacts:   []
+  validation:
+    name:           { required: true }
+    about:          { required: true }
 
-class exports.Lead extends Backbone.Model
+
+class exports.CompanyContact extends BB.BadassModel
+  validation:
+    fullName:       { required: true }
+    email:          { required: true, pattern: 'email' }
+
+
+class exports.Lead extends BB.BadassModel
   skillList: ->
     skillsShortNames = _.pluck @get('skills'), 'shortName'
     skillList = '';

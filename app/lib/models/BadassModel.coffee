@@ -1,4 +1,4 @@
-module.exports = class BadassModel extends Backbone.View
+module.exports = class BadassModel extends Backbone.Model
 
   idAttribute:  '_id'     # mongo ids
 

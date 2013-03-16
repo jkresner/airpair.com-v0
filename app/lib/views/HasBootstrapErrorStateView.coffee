@@ -13,12 +13,13 @@ HasErrorStateView = require './HasErrorStateView'
 module.exports = class HasBootstrapErrorStateView extends HasErrorStateView
 
   constructor: (args) ->
-
-    Backbone.Validation.unbind @
-    Backbone.Validation.bind @
+    $log 'HasBootstrapErrorStateView', @
 
     HasErrorStateView::constructor.apply @, arguments
     @errorSummary = @$('.alert-error')
+
+    Backbone.Validation.unbind @
+    Backbone.Validation.bind @
 
   renderErrorSummary: (model, errors) ->
 

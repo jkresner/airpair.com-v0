@@ -1,0 +1,18 @@
+<td>
+  <a class="edit" href="#" data-id="{{ _id }}">edit</a>
+  <a class="delete" href="#" data-id="{{ _id }}">x</a>
+</td>
+<td><a href="#companys/{{ _id }}"><b>{{ name }}</b></a></td>
+<td>
+  {{#if url}}
+  <a href="http://{{ url }}}" target="_blank">{{url}}</a>
+  {{else}}
+   -
+  {{/if}}
+</td>
+<td>{{ about }}</td>
+<td>
+  {{#each contacts }}
+    <a href="mailto:{{email}}">{{ fullName }}</a>
+  {{/each}}
+</td>

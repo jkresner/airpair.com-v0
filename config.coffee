@@ -31,6 +31,8 @@ exports.config =
           'vendor/scripts/jquery.js'
           'vendor/scripts/lodash.js'
           'vendor/scripts/backbone.js'
+          'vendor/scripts/backbone.validation.js'
+          'vendor/scripts/backbone.validation_bootstrap.js'
         ]
 
     stylesheets:

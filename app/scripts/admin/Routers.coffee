@@ -7,6 +7,7 @@ class exports.AdminRouter extends Backbone.Router
     '':             'index'
     'skills':       'skills'
     'devs':         'devs'
+    'companys':     'companys'
     'lead/:id':     'lead'
     'suggest/:id':  'suggest'
 
@@ -24,6 +25,10 @@ class exports.AdminRouter extends Backbone.Router
   devs: (args) ->
     $log 'Router.devs'
     @hideshow '#devs'
+
+  companys: (args) ->
+    $log 'Router.companys'
+    @hideshow '#companys'
 
   lead: (id) ->
     $log 'Router.lead'

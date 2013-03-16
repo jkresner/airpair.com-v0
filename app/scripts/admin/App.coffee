@@ -12,19 +12,21 @@ module.exports.Page = class Page
     @leads = new collections.Leads()
     @skills = new collections.Skills()
     @devs = new collections.Devs()
+    @companys = new collections.Companys()
 
     @currentLead = new models.Lead()
 
     @inProgressLeadsView = new views.InProgressLeadsView collection: @leads
     @skillsView = new views.SkillsView collection: @skills
     @devsView = new views.DevsView collection: @devs
+    @companysView = new views.CompanysView collection: @companys
     @leadView = new views.LeadView model: @currentLead
 
     @leads.reset pageData.leads
 
     if pageData.skills? then @skills.reset pageData.skills else @skills.fetch()
     if pageData.devs? then @devs.reset pageData.devs else @devs.fetch()
-
+    if pageData.companys? then @companys.reset pageData.companys else @companys.fetch()
 
 
 module.exports.Router = routers.AdminRouter

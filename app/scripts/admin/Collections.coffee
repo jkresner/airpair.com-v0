@@ -20,4 +20,13 @@ class exports.Devs extends BB.FilteringCollection
   comparator: (m) -> m.get 'name'
 
 
+class exports.Companys extends BB.FilteringCollection
+  model: Models.Company
+  url: '/api/companys'
+  comparator: (m) -> m.get 'name'
+
+
+
+
+
 module.exports = exports

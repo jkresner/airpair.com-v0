@@ -2,14 +2,31 @@ body { background:white }
 
 .masthead { height:24px;padding-top:12px; }
 
+a:hover { color:black; }
+
 /* Skills */
 #skillsList { width:60%;float:left; }
 #skillsList td { font-size:10px;padding:2px; }
 #skillFormView { width:30%;float:right; }
 
+/* Devs */
 #devList { width:70%;float:left; }
 #devList td { font-size:10px;padding:2px; }
 #devList .label { font-weight:normal;padding:1px 2px;margin-right:3px }
 #devList .links a { display:inline-block;margin-right:5px }
 #devList .links a:hover { color:blue; }
 #devFormView { width:28%;float:right; }
+
+/* Companys */
+#companysList { width:60%;float:left; }
+#companysList td { font-size:10px;padding:2px; }
+#companyFormView { width:30%;float:right; }
+#companyFormView input { width:100% }
+#companyFormView textarea { width:100% }
+
+.alert { display:none }
+
+a.edit { color:blue; }
+a.edit:hover { text-decoration:underline; }
+a.delete { color:red; }
+a.edit:hover { text-decoration:underline; }

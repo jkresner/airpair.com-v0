@@ -90,7 +90,6 @@ class exports.DevRowView extends BB.BadassView
 
 
 class exports.DevsView extends BB.BadassView
-  logging: on
   el: '#devs'
   tmpl: require './templates/Devs'
   initialize: (args) ->
@@ -105,6 +104,97 @@ class exports.DevsView extends BB.BadassView
   renderNew: (m) ->
     @$('tbody').prepend new exports.DevRowView( model: m ).render().el
 
+
+
+#############################################################################
+
+
+class exports.CompanyContactView extends BB.ModelSaveView
+  logging: on
+  tmpl: require './templates/CompanyContactForm'
+  initialize: ->
+  render: (attrs) ->
+    @model.clear()
+    @model.set attrs
+    @$el.html @tmpl @model.toJSON()
+    @
+  viewData: -> @getValsFromInputs ['fullName','email','title','phone']
+
+
+class exports.CompanyFormView extends BB.ModelSaveView
+  logging: on
+  el: '#companyFormView'
+  tmpl: require './templates/CompanyForm'
+  events:
+    'click .save': 'validatePrimaryContactAndSave'
+  initialize: ->
+    @$el.html @tmpl @model.toJSON()
+    @contact1View = new exports.CompanyContactView(el: '#primaryContact', model: new M.CompanyContact(num:1)).render()
+    @contact2View = new exports.CompanyContactView(el: '#secondaryContact', model: new M.CompanyContact(num:2)).render()
+    @model.on 'change', @render, @
+  render: (model) ->
+    if model? then @model = model
+    @setValsFromModel ['name','url','about']
+    @contact1View.render @model.get('contacts')[0]
+    @contact2View.render @model.get('contacts')[1]
+    @
+  viewData: ->
+    data = @getValsFromInputs ['name','url','about']
+    data.contacts = [ @contact1View.viewData(), @contact2View.viewData() ]
+    data
+  validatePrimaryContactAndSave: (e) ->
+    e.preventDefault()
+    $inputName = @$('#primaryContact [name=fullName]')
+    $inputEmail = @$('#primaryContact [name=email]')
+    @renderInputsValid()
+    if $inputName.val() is ''
+      @renderInputInvalid $inputName, 'Primary name required'
+    else if $inputEmail.val() is ''
+      @renderInputInvalid $inputEmail, 'Primary email required'
+    else
+      @save e
+  renderSuccess: (model, response, options) =>
+    @$('.alert-success').fadeIn(800).fadeOut(5000)
+    @collection.add model
+    @render new M.Company()
+
+
+
+class exports.CompanyRowView extends BB.BadassView
+  tagName: 'tr'
+  className: 'companyRow'
+  tmpl: require './templates/CompanyRow'
+  render: ->
+    tmpl_data = _.extend @model.toJSON(), { }
+    @$el.html @tmpl( tmpl_data )
+    @
+
+
+class exports.CompanysView extends BB.BadassView
+  logging: on
+  el: '#companys'
+  tmpl: require './templates/Companys'
+  events:
+    'click .edit': (e) -> @companyFormView.render @getCompany(e)
+    'click .delete': 'destroyRemoveCompany'
+  initialize: (args) ->
+    @$el.html @tmpl()
+    @companyFormView = new exports.CompanyFormView( model: new M.Company(), collection: @collection ).render()
+    $log 'companyFormView', @companyFormView
+    @collection.on 'reset remove filter sort', @render, @
+  render: ->
+    @$('tbody').html ''
+    for m in @collection.models
+      @$('tbody').append new exports.CompanyRowView( model: m ).render().el
+    @
+  getCompany: (e) ->
+    e.preventDefault()
+    cid = $(e.currentTarget).data('id')
+    _.find @collection.models, (m) -> m.id is cid
+  destroyRemoveCompany: (e) ->
+    comp = @getCompany(e)
+    comp.destroy()
+    @collection.remove comp
 
 
 

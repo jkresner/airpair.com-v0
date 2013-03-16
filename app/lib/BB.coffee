@@ -7,3 +7,4 @@ module.exports =
   BadassView:                   require './views/BadassView'
   HasErrorStateView:            require './views/HasErrorStateView'
   HasBootstrapErrorStateView:   require './views/HasBootstrapErrorStateView'
+  ModelSaveView:                require './views/ModelSaveView'
