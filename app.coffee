@@ -8,8 +8,8 @@ app.configure ->
   app.use(express.static(__dirname + '/public'))
   app.use(express.bodyParser())
 
-api_devs = require './app/api/devs'
-api_skills = require './app/api/skills'
+api_devs = require './api/devs'
+api_skills = require './api/skills'
 
 flushDb = false
 if flushDb
