@@ -12,6 +12,7 @@ insertFromStub = (s) ->
 
 exports.clear = -> Dev.find({}).remove()
 
+
 exports.boot = ->
   stubs = require './../app/stubs/devs'
   insertFromStub(s) for s in stubs
