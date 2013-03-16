@@ -177,6 +177,7 @@ class exports.CompanysView extends BB.BadassView
   events:
     'click .edit': (e) -> @companyFormView.render @getCompany(e)
     'click .delete': 'destroyRemoveCompany'
+    'click .detail': (e) -> false
   initialize: (args) ->
     @$el.html @tmpl()
     @companyFormView = new exports.CompanyFormView( model: new M.Company(), collection: @collection ).render()
