@@ -46,7 +46,10 @@ db.once 'open', ->
 
 exports.startServer = (port, path, callback) ->
   p = process.env.PORT || port
-
   console.log "startServer on port: #{p}, path #{path}"
-
   app.listen p
+
+
+isHeroku = process.env.MONGOHQ_URL?
+if isHeroku
+  exports.startServer()

@@ -1,5 +1,5 @@
-Dev = require '../models/dev'
-Skill = require '../models/skill'
+Dev = require './../models/dev'
+Skill = require './../models/skill'
 und = require 'underscore'
 
 

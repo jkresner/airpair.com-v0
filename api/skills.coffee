@@ -1,4 +1,4 @@
-Skill = require '../models/skill'
+Skill = require './../models/skill'
 
 exports.clear = -> Skill.find({}).remove()
 exports.boot = (callback) ->

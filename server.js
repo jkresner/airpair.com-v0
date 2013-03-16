@@ -13,9 +13,9 @@
     return app.use(express.bodyParser());
   });
 
-  api_devs = require('./api/devs');
+  api_devs = require('./api/devs.coffee');
 
-  api_skills = require('./api/skills');
+  api_skills = require('./api/skills.coffee');
 
   flushDb = false;
 
