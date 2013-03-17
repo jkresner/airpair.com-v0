@@ -6,7 +6,8 @@ a:hover { color:black; }
 
 /* Skills */
 #skillsList { width:60%;float:left; }
-#skillsList td { font-size:10px;padding:2px; }
+#skillsList .skill { font-size:12px;margin:4px;display:inline-block; }
+#skillsList .skill a { color:white; }
 #skillFormView { width:30%;float:right; }
 
 /* Devs */

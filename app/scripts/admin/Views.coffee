@@ -2,17 +2,39 @@ exports = {}
 BB = require './../../lib/BB'
 M = require './Models'
 
+
+#############################################################################
+##  Shared
+#############################################################################
+
+class DataListView extends BB.BadassView
+  events:
+    'click .edit': (e) -> @formView.render @getModelFromDataId(e)
+    'click .delete': 'destroyRemoveModel'
+    'click .detail': (e) -> false
+  getModelFromDataId: (e) ->
+    e.preventDefault()
+    id = $(e.currentTarget).data('id')
+    _.find @collection.models, (m) -> m.id is id
+  destroyRemoveModel: (e) ->
+    m = @getModelFromDataId(e)
+    m.destroy()
+    @collection.remove m
+
+
 #############################################################################
 
 
 class exports.SkillFormView extends BB.ModelSaveView
   el: '#skillFormView'
   tmpl: require './templates/SkillForm'
+  viewData: ['name','shortName','soId']
   events:
     'click .save': 'save'
     'input #skillName': 'auto'
   initialize: ->
-  render: ->
+  render: (model) ->
+    if model? then @model = model
     @$el.html @tmpl @model.toJSON()
     @
   auto: ->
@@ -23,29 +45,29 @@ class exports.SkillFormView extends BB.ModelSaveView
     @$('.alert-success').fadeIn(800).fadeOut(5000)
     @$('input').val ''
     @collection.add model
-  viewData: ->
-    @getValsFromInputs ['name','shortName','soId']
 
 
 class exports.SkillRowView extends BB.BadassView
-  tagName: 'tr'
-  className: 'skillRow'
+  className: 'skill label'
   tmpl: require './templates/SkillRow'
+  initialize: -> @model.on 'change', @render, @
   render: ->
-    @$el.html @tmpl( @model.toJSON() )
+    @$el.html @tmpl @model.toJSON()
     @
 
 
-class exports.SkillsView extends BB.BadassView
+class exports.SkillsView extends DataListView
   el: '#skills'
   tmpl: require './templates/Skills'
   initialize: (args) ->
     @$el.html @tmpl()
-    @skillFormView = new exports.SkillFormView( model: new M.Skill(), collection: @collection ).render()
-    @collection.on 'reset remove filter', @render, @
+    @formView = new exports.SkillFormView( model: new M.Skill(), collection: @collection ).render()
+    @collection.on 'reset add remove filter', @render, @
   render: ->
+    $skillsList = @$('#skillsList').html ''
     for m in @collection.models
-      @$('tbody').append new exports.SkillRowView( model: m ).render().el
+      $skillsList.append new exports.SkillRowView( model: m ).render().el
+    @$('.skill a').popover({})
     @
 
 
@@ -55,19 +77,17 @@ class exports.SkillsView extends BB.BadassView
 class exports.DevFormView extends BB.ModelSaveView
   el: '#devFormView'
   tmpl: require './templates/DevForm'
-  async: off
-  events:
-    'click .save': 'save'
+  async: off  # async off because we want skills objects back from server
+  viewData: ['name','email','pic', 'homepage', 'gh', 'so', 'bb', 'in', 'other', 'skills', 'rate']
+  events: { 'click .save': 'save' }
   initialize: ->
-  render: ->
+  render: (model) ->
+    if model? then @model = model
     @$el.html @tmpl @model.toJSON()
     @
   renderSuccess: (model, response, options) =>
     @$('.alert-success').fadeIn(800).fadeOut(5000)
-    @$('input').val ''
     @collection.add model
-  viewData: ->
-    @getValsFromInputs ['name','email','pic', 'homepage', 'gh', 'so', 'bb', 'in', 'other', 'skills', 'rate']
 
 
 class exports.DevRowView extends BB.BadassView
@@ -75,25 +95,26 @@ class exports.DevRowView extends BB.BadassView
   className: 'devRow'
   tmpl: require './templates/DevRow'
   tmpl_links: require './../../templates/devLinks'
+  initialize: -> @model.on 'change', @render, @
   render: ->
     tmpl_data = _.extend @model.toJSON(), { skillsList: @model.skillListLabeled() }
-    @$el.html @tmpl( tmpl_data )
-    @$('.links').html @tmpl_links(@model.toJSON())
+    @$el.html @tmpl tmpl_data
+    @$('.links').html @tmpl_links tmpl_data
     @
 
 
-class exports.DevsView extends BB.BadassView
+class exports.DevsView extends DataListView
   el: '#devs'
   tmpl: require './templates/Devs'
   initialize: (args) ->
     @$el.html @tmpl()
-    @devFormView = new exports.DevFormView( model: new M.Dev(), collection: @collection ).render()
-    @collection.on 'reset remove filter', @render, @
+    @formView = new exports.DevFormView( model: new M.Dev(), collection: @collection ).render()
+    @collection.on 'reset add remove filter', @render, @
   render: ->
+    $tbody = @$('tbody').html ''
     for m in @collection.models
-      @$('tbody').append new exports.DevRowView( model: m ).render().el
+      $tbody.append new exports.DevRowView( model: m ).render().el
     @
-
 
 
 #############################################################################
@@ -101,20 +122,19 @@ class exports.DevsView extends BB.BadassView
 
 class exports.CompanyContactView extends BB.ModelSaveView
   tmpl: require './templates/CompanyContactForm'
+  viewData: ['fullName','email','gmail','title','phone']
   initialize: ->
   render: (attrs) ->
     @model.clear()
     @model.set attrs
     @$el.html @tmpl @model.toJSON()
     @
-  viewData: -> @getValsFromInputs ['fullName','email','title','phone']
 
 
 class exports.CompanyFormView extends BB.ModelSaveView
   el: '#companyFormView'
   tmpl: require './templates/CompanyForm'
-  events:
-    'click .save': 'validatePrimaryContactAndSave'
+  events: { 'click .save': 'validatePrimaryContactAndSave' }
   initialize: ->
     @$el.html @tmpl @model.toJSON()
     @contact1View = new exports.CompanyContactView(el: '#primaryContact', model: new M.CompanyContact(num:1)).render()
@@ -126,9 +146,9 @@ class exports.CompanyFormView extends BB.ModelSaveView
     @contact1View.render @model.get('contacts')[0]
     @contact2View.render @model.get('contacts')[1]
     @
-  viewData: ->
+  getViewData: ->
     data = @getValsFromInputs ['name','url','about']
-    data.contacts = [ @contact1View.viewData(), @contact2View.viewData() ]
+    data.contacts = [ @contact1View.getViewData(), @contact2View.getViewData() ]
     data
   validatePrimaryContactAndSave: (e) ->
     e.preventDefault()
@@ -152,38 +172,26 @@ class exports.CompanyRowView extends BB.BadassView
   tagName: 'tr'
   className: 'companyRow'
   tmpl: require './templates/CompanyRow'
+  initialize: -> @model.on 'change', @render, @
   render: ->
     tmpl_data = _.extend @model.toJSON(), { }
     @$el.html @tmpl( tmpl_data )
     @
 
 
-class exports.CompanysView extends BB.BadassView
+class exports.CompanysView extends DataListView
   el: '#companys'
   tmpl: require './templates/Companys'
-  events:
-    'click .edit': (e) -> @companyFormView.render @getCompany(e)
-    'click .delete': 'destroyRemoveCompany'
-    'click .detail': (e) -> false
   initialize: (args) ->
     @$el.html @tmpl()
-    @companyFormView = new exports.CompanyFormView( model: new M.Company(), collection: @collection ).render()
-    $log 'companyFormView', @companyFormView
-    @collection.on 'reset remove filter', @render, @
+    @formView = new exports.CompanyFormView( model: new M.Company(), collection: @collection ).render()
+    @collection.on 'reset add remove filter', @render, @
   render: ->
-    @$('tbody').html ''
-    for m in @collection.models
-      @$('tbody').append new exports.CompanyRowView( model: m ).render().el
+    $tbody = @$('tbody')
+    $tbody.html ''
+    for m  in @collection.models
+      $tbody.append new exports.CompanyRowView( model: m ).render().el
     @
-  getCompany: (e) ->
-    e.preventDefault()
-    cid = $(e.currentTarget).data('id')
-    _.find @collection.models, (m) -> m.id is cid
-  destroyRemoveCompany: (e) ->
-    comp = @getCompany(e)
-    comp.destroy()
-    @collection.remove comp
-
 
 
 #############################################################################

@@ -4,6 +4,7 @@ Schema = mongoose.Schema
 Contact = new Schema
   fullName:   String
   email:      String
+  gmail:      String
   title:      String
   phone:      String
   timezone:   String

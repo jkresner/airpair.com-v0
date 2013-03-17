@@ -26,7 +26,7 @@ module.exports = class ModelSaveView extends HasBootstrapErrorStateView
   save: (e) ->
     if e? then e.preventDefault()
 
-    newattrs = @viewData()
+    newattrs = @getViewData()
 
     if @logging
       $log 'ModelSaveView.save', 'old:',@model.toJSON(), 'new:',newattrs, 'changes:', @model.changedAttributes newattrs
@@ -47,15 +47,17 @@ module.exports = class ModelSaveView extends HasBootstrapErrorStateView
     if @$('.alert-success').length > 0
       @$('.alert-success').fadeIn(800).fadeOut(5000)
 
-  viewData: ->
-    throw Error 'override viewData function in inheriting view classes'
+
+  # override getViewData in child if you want to do something custom
+  getViewData: ->
+    @getValsFromInputs @viewData
 
   # assumes name (NOT ID!) of an input matches the name of an attribute & grabs the vals associated w specified atrrs
   getValsFromInputs: (attrs) ->
     obj = {}
-    obj[attr] = @$('[name="'+attr+'"]').val() for attr in attrs
+    obj[attr] = @$("[name='#{attr}']").val() for attr in attrs
     obj
 
 # assumes name (NOT ID!) of an input matches the name of an attribute & grabs the vals associated w specified atrrs
   setValsFromModel: (attrs) ->
-    @$('[name="'+attr+'"]').val(@model.get(attr)) for attr in attrs
+    @$("[name='#{attr}']").val( @model.get attr ) for attr in attrs

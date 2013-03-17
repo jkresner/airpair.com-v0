@@ -12,7 +12,7 @@ api_skills = require './api/skills'
 api_devs = require './api/devs'
 api_companys = require './api/companys'
 
-flushDb = true
+flushDb = false
 if flushDb
   console.log '***** flushing DB'
   api_devs.clear()

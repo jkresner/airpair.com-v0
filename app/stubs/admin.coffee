@@ -119,5 +119,3 @@ connectrfCalls = [ ]
   aLead 102154, d.mar01, 'open', bwf, bwf.contacts, [@ror,@postgres], briefs.bwf, bwfSuggested, bwfCalls
   aLead 102158, d.mar01, 'open', connectrf, connectrf.contacts, [@android,@webkit], briefs.connectrf, connectrfSuggested, connectrfCalls
 ]
-
-$log '@stubs.admin.leads', @stubs.admin.leads

@@ -13,7 +13,8 @@ exports.list = (req, res) ->
 
 
 exports.update = (req, res) ->
-  Company.update( req.body, (err, result) -> res.send result )
+  delete req.body._id
+  Company.update({ _id: req.params.id }, req.body, (e, r) -> res.send r )
 
 
 exports.delete = (req, res) ->
