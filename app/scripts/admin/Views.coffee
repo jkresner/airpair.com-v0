@@ -5,26 +5,26 @@ M = require './Models'
 #############################################################################
 
 
-class exports.SkillFormView extends BB.BadassView
+class exports.SkillFormView extends BB.ModelSaveView
   el: '#skillFormView'
   tmpl: require './templates/SkillForm'
   events:
     'click .save': 'save'
     'input #skillName': 'auto'
+  initialize: ->
   render: ->
     @$el.html @tmpl @model.toJSON()
     @
-  save: (e) ->
-    e.preventDefault()
-    d = name: $('#skillName').val(), shortName: $('#skillShort').val(), soId: $('#skillSoId').val()
-    $log 'saving skill', d, @collection
-    @collection.create(d, { success: @success })
-  success: (model, options) =>
-    @$('input').val ''
   auto: ->
     name = @$('#skillName').val()
     @$('#skillShort').val name
     @$('#skillSoId').val name.toLowerCase()
+  renderSuccess: (model, response, options) =>
+    @$('.alert-success').fadeIn(800).fadeOut(5000)
+    @$('input').val ''
+    @collection.add model
+  viewData: ->
+    @getValsFromInputs ['name','shortName','soId']
 
 
 class exports.SkillRowView extends BB.BadassView
@@ -42,39 +42,32 @@ class exports.SkillsView extends BB.BadassView
   initialize: (args) ->
     @$el.html @tmpl()
     @skillFormView = new exports.SkillFormView( model: new M.Skill(), collection: @collection ).render()
-    @collection.on 'reset filter sort', @render, @
-    @collection.on 'add', @renderNew, @
+    @collection.on 'reset remove filter', @render, @
   render: ->
     for m in @collection.models
       @$('tbody').append new exports.SkillRowView( model: m ).render().el
     @
-  renderNew: (model) ->
-    @$('tbody').prepend new exports.SkillRowView( model: model ).render().el
 
 
 #############################################################################
 
 
-class exports.DevFormView extends BB.BadassView
+class exports.DevFormView extends BB.ModelSaveView
   el: '#devFormView'
   tmpl: require './templates/DevForm'
+  async: off
   events:
     'click .save': 'save'
+  initialize: ->
   render: ->
     @$el.html @tmpl @model.toJSON()
     @
-  save: (e) ->
-    e.preventDefault()
-    d = @viewData ['name','email','pic', 'homepage', 'gh', 'so', 'bb', 'in', 'other', 'skills', 'rate']
-    $log 'saving dev', d, @collection
-    @collection.create(d, { success: @success, wait: true })
-  success: (model, options) =>
+  renderSuccess: (model, response, options) =>
+    @$('.alert-success').fadeIn(800).fadeOut(5000)
     @$('input').val ''
-  viewData: (list) ->
-    data = {}
-    data[attr] = @$("[name=#{attr}]").val() for attr in list
-    $log 'dev.data', data
-    data
+    @collection.add model
+  viewData: ->
+    @getValsFromInputs ['name','email','pic', 'homepage', 'gh', 'so', 'bb', 'in', 'other', 'skills', 'rate']
 
 
 class exports.DevRowView extends BB.BadassView
@@ -95,14 +88,11 @@ class exports.DevsView extends BB.BadassView
   initialize: (args) ->
     @$el.html @tmpl()
     @devFormView = new exports.DevFormView( model: new M.Dev(), collection: @collection ).render()
-    @collection.on 'reset filter sort', @render, @
-    @collection.on 'add', @renderNew, @
+    @collection.on 'reset remove filter', @render, @
   render: ->
     for m in @collection.models
       @$('tbody').append new exports.DevRowView( model: m ).render().el
     @
-  renderNew: (m) ->
-    @$('tbody').prepend new exports.DevRowView( model: m ).render().el
 
 
 
@@ -179,7 +169,7 @@ class exports.CompanysView extends BB.BadassView
     @$el.html @tmpl()
     @companyFormView = new exports.CompanyFormView( model: new M.Company(), collection: @collection ).render()
     $log 'companyFormView', @companyFormView
-    @collection.on 'reset remove filter sort', @render, @
+    @collection.on 'reset remove filter', @render, @
   render: ->
     @$('tbody').html ''
     for m in @collection.models

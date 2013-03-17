@@ -16,6 +16,10 @@ a:hover { color:black; }
 #devList .links a { display:inline-block;margin-right:5px }
 #devList .links a:hover { color:blue; }
 #devFormView { width:28%;float:right; }
+#devFormView .control-label { width:80px;text-align:right }
+#devFormView .controls { margin-left:90px;}
+#devFormView .input-prepend .add-on { font-size:10px;padding-right:1px; }
+
 
 /* Companys */
 #companysList { width:65%;float:left; }
