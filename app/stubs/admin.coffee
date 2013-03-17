@@ -3,21 +3,21 @@ d = @stubs.dates
 @stubs.admin = {}
 
 aCompany = (id, name, url, contacts, about) ->
-  id:           id
+  _id:           id
   name:         name
   url:          url
   contacts:     contacts
   about:        about
 
 aContact = (id, name, title, email, phone) ->
-  id:           id
+  _id:           id
   name:         name
   title:        title
   email:        email
   phone:        phone
 
 aSuggestion = (id, dev, contacted, responded, status, availabilty) ->
-  id:           id
+  _id:           id
   dev:          dev
   contacted:    contacted
   responded:    responded
@@ -25,7 +25,7 @@ aSuggestion = (id, dev, contacted, responded, status, availabilty) ->
   availabilty:  availabilty
 
 aCall = (id, dev, time, recordingId, review, cost, comission) ->
-  id:           id
+  _id:           id
   dev:          dev
   time:         time
   recordingId:  recordingId
@@ -34,7 +34,7 @@ aCall = (id, dev, time, recordingId, review, cost, comission) ->
   comission:    comission
 
 aLead = (id, created, status, company, contacts, skills, brief, suggested, calls) ->
-  id:           id
+  _id:           id
   created:      created
   status:       status
   company:      company
@@ -75,26 +75,7 @@ simply3 =             aCompany 12, 'Simply3', '', [charles_worthington], "Simply
 simply3Suggested = [ ]
 simply3Calls = [ ]
 
-
-taariq_lewis  =   aContact 5622, 'Taariq Lewis ', 'Founder', 'taariq.lewis@gmail.com', '-'
-simon_frid =      aContact 5623, 'Simon Frid', 'Lead Dev', 'simonfrid@gmail.com', '-'
-orb =             aCompany 13, 'Orb', 'www.getvero.com', [taariq_lewis,simon_frid], " We are Orb. We're a new type of closed group platform for groups that we call Orbs."
-orbSuggested = []
-orbCalls = [ ]
-
 # Companies
-kavin_stewart =   aContact 5721, 'Kavin Stewart', 'Founder', 'kavin.stewart@gmail.com', '-'
-grumbleBeans =     aCompany 14, 'Grumble Beans Tea & Spices', null, [kavin_stewart], "I'm Kavin Stewart. I'm a second time entrepreneur. Previously co-founder / CEO / VP Product at Lolapps, a social gaming company. Currently hacking away on some ideas in the photos space. I'm interested in understanding simple things like how to properly access photos across different Android versions and devices. I'm keen on some mentoring and help getting un-stuck with problems"
-grumbleBeansSuggested = [
-  aSuggestion 1213211, @khanmurtuza, d.mar06, '-', 'waiting', 'Finding out...'
-  aSuggestion 1213213, @ashokvarma2, d.mar06, '-', 'waiting', 'Finding out...'
-  aSuggestion 1213214, @justinlloyd, d.mar06, '-', 'waiting', 'Finding out...'
-  aSuggestion 1213215, @sweetleon, d.mar06, '-', 'waiting', 'Finding out...'
-]
-grumbleBeansCalls = [
-  aCall 211211211, @sweetleon, 'Fri 09 10:00PM PST', '-', {}, 35, 15
-]
-
 # [10] bang with friends
 colin_bwf = aContact 5741, 'Colin', 'Founder', 'c@bangwithfriends.com', '-'
 bwf = aCompany 15, 'Bang With Friends', 'bangwithfriends.com', [colin_bwf], 'We have a large scale Facebook-connected site built on Ruby on Rails, Postgres, and sending mail through SendGrid.'
@@ -109,7 +90,6 @@ bwfCalls = [ ]
 
 # [9] connectrf.com
 #greg_kling = aContact 5751, 'Greg Kling', 'Founder', 'greg@connectrf.com', '-'
-
 
 
 greg_kling = aContact 5741, 'Greg Kling', 'Founder', 'greg@connectrf.com', '-'
@@ -132,13 +112,12 @@ connectrfCalls = [ ]
 
 # suggestion statuses :
 # waiting, willing, accepted
-
 @stubs.admin.leads = [
   aLead 102101, d.feb10, 'open', vero, vero.contacts, [@bdd, @ror], briefs.vero, veroSuggested, veroCalls
   aLead 102112, d.feb15, 'closed', logicalCat, logicalCat.contacts, [@bdd, @crawler, @express, @node, @ror, @javascript, @windows], briefs.logicalCat, logicalCatSuggested, logicalCatCalls
   aLead 102122, d.feb15, 'open', simply3, simply3.contacts, [@ror], briefs.simply3, simply3Suggested, simply3Calls
-  aLead 102132, d.mar01, 'stale', orb, orb.contacts, [@python], briefs.orb, orbSuggested, orbCalls
-  aLead 102142, d.mar01, 'open', grumbleBeans, grumbleBeans.contacts, [@android], briefs.grumbleBeans, grumbleBeansSuggested, grumbleBeansCalls
   aLead 102154, d.mar01, 'open', bwf, bwf.contacts, [@ror,@postgres], briefs.bwf, bwfSuggested, bwfCalls
   aLead 102158, d.mar01, 'open', connectrf, connectrf.contacts, [@android,@webkit], briefs.connectrf, connectrfSuggested, connectrfCalls
 ]
+
+$log '@stubs.admin.leads', @stubs.admin.leads

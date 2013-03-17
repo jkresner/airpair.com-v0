@@ -1,0 +1,119 @@
+<fieldset>
+  <legend>Company</legend>
+
+  <div class="alert alert-success">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <h4>Company saved</h4>
+  </div>
+
+  <div class="alert alert-error">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <h4>Error</h4>
+  </div>
+
+  <div>
+    <div class="control-group">
+      <label class="control-label" for="reqCompanyName">Name</label>
+      <div class="controls">
+        <input type="text" id="reqCompanyName" name="name" placeholder="Company name" value="{{ name }}" data-error-style="inline">
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="reqCompanyUrl">Url</label>
+      <div class="controls">
+        <div class="input-prepend" style="width:88%">
+          <span class="add-on">http://</span>
+          <input type="text" id="reqCompanyUrl" name="url" placeholder="Website Url" value="{{ url }}" data-error-style="inline">
+        </div>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="reqCompanyAbout">About</label>
+      <div class="controls">
+        <textarea id="reqCompanyAbout" name="about" value="{{ soId }}" data-error-style="inline"></textarea>
+      </div>
+    </div>
+
+    <div style="width:47%;float:left">
+      <h5>Primary Contact</h5>
+      <div id="reqPrimaryContact"></div>
+    </div>
+
+    <div style="width:47%;float:left;margin-left:20px">
+      <h5>Secondary Contact</h5>
+      <div id="reqSecondaryContact"></div>
+    </div>
+
+    <div style="clear:both"></div>
+
+    <fieldset>
+      <legend>Request details</legend>
+
+      <div class="control-group">
+        <label class="control-label" for="reqStatus">Status</label>
+        <div class="controls">
+          <select id="reqStatus" name="status">
+            <option>received</option>
+            <option>incomplete</option>
+            <option>review</option>
+            <option>scheduled</option>
+            <option>completed</option>
+            <option>canceled</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <label class="control-label" for="reqStatus">Availability</label>
+        <div class="controls">
+          <a class="addTime" href="#">add</a>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <label class="control-label" for="reqBrief">Brief</label>
+        <div class="controls">
+          <textarea id="reqBrief" name="brief"></textarea>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <label class="control-label" for="reqStatus">Technologies</label>
+        <div class="controls">
+          <input type="text" id="reqTech" placeholder="Enter tech" value="" data-error-style="inline">
+          <a class="addTech" href="#">add</a> see available list
+        </div>
+      </div>
+
+      <div class="control-group">
+        <label class="control-label" for="reqSuggested">Suggested</label>
+        <div class="controls">
+          <input type="text" id="reqSuggested" placeholder="Enter developer handle" value="" data-error-style="inline">
+          <a class="addDev" href="#">add</a>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <label class="control-label" for="reqCalls">Calls</label>
+        <div class="controls">
+
+        </div>
+      </div>
+
+      <div class="control-group">
+        <label class="control-label" for="reqCanceledReason">Canceled Reason</label>
+        <div class="controls">
+          <textarea id="reqCanceledReason" name="canceledReason"></textarea>
+        </div>
+      </div>
+
+    </fieldset>
+
+    <div class="control-group">
+      <div class="controls">
+        <a href="#" class="save btn btn-large">Save</a>
+      </div>
+    </div>
+  </div>
+
+</fieldset>

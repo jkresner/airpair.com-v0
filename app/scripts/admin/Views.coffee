@@ -110,7 +110,6 @@ class exports.DevsView extends BB.BadassView
 
 
 class exports.CompanyContactView extends BB.ModelSaveView
-  logging: on
   tmpl: require './templates/CompanyContactForm'
   initialize: ->
   render: (attrs) ->
@@ -122,7 +121,6 @@ class exports.CompanyContactView extends BB.ModelSaveView
 
 
 class exports.CompanyFormView extends BB.ModelSaveView
-  logging: on
   el: '#companyFormView'
   tmpl: require './templates/CompanyForm'
   events:
@@ -171,7 +169,6 @@ class exports.CompanyRowView extends BB.BadassView
 
 
 class exports.CompanysView extends BB.BadassView
-  logging: on
   el: '#companys'
   tmpl: require './templates/Companys'
   events:

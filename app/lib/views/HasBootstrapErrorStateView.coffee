@@ -13,7 +13,6 @@ HasErrorStateView = require './HasErrorStateView'
 module.exports = class HasBootstrapErrorStateView extends HasErrorStateView
 
   constructor: (args) ->
-    $log 'HasBootstrapErrorStateView', @
 
     HasErrorStateView::constructor.apply @, arguments
     @errorSummary = @$('.alert-error')

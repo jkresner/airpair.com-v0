@@ -18,12 +18,13 @@ a:hover { color:black; }
 #devFormView { width:28%;float:right; }
 
 /* Companys */
-#companysList { width:60%;float:left; }
+#companysList { width:65%;float:left; }
 #companysList td { font-size:10px;padding:2px; }
 #companysList .edit { display:inline-block;font-weight:bold;margin-right:4px }
 #companysList .delete { display:inline-block;margin-right:4px }
-#companysList .contacts a { float:right;margin:0px 2px; }
-#companysList .about { max-height:40px;overflow:hidden;width:540px;text-overflow:ellipsis; }
+#companysList .contacts { text-align:right; }
+#companysList .contacts a { display:block;margin:0px 2px; }
+#companysList .about { max-height:40px;overflow:hidden;width:440px;text-overflow:ellipsis; }
 #companyFormView { width:30%;float:right; }
 #companyFormView input { width:100% }
 #companyFormView textarea { width:100%;height:120px; }

@@ -17,3 +17,13 @@ To run airpair.co locally:
 
 
 Everything inside of '/app' is client only files, which brunch compiles in '/public'
+
+
+
+Things to pair with
+
+- Review document schema & nested calls + devs etc.
+- Updating Schema
+- Dates with mongo
+- Getting mongoDB data to and from heroku
+- collecting JS dates

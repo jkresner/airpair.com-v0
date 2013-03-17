@@ -21,13 +21,13 @@ if flushDb
   api_skills.boot api_devs.boot
 
 
-app.get  '/', (req, res) -> res.sendfile './public/index.html'
-app.get  '/about', (req, res) -> res.sendfile './public/index.html'
-app.get  '/adminn', (req, res) -> res.sendfile './public/admin.html'
-app.get  '/review', (req, res) -> res.sendfile './public/review.html'
-app.get  '/be-an-expert', (req, res) -> res.sendfile './public/beexpert.html'
-app.get  '/become-an-expert', (req, res) -> res.sendfile './public/beexpert.html'
-app.get  '/find-an-expert', (req, res) -> res.sendfile './public/findexpert.html'
+app.get     '/', (req, res) -> res.sendfile './public/index.html'
+app.get     '/about', (req, res) -> res.sendfile './public/index.html'
+app.get     '/adminn', (req, res) -> res.sendfile './public/admin.html'
+app.get     '/review', (req, res) -> res.sendfile './public/review.html'
+app.get     '/be-an-expert', (req, res) -> res.sendfile './public/beexpert.html'
+app.get     '/become-an-expert', (req, res) -> res.sendfile './public/beexpert.html'
+app.get     '/find-an-expert', (req, res) -> res.sendfile './public/findexpert.html'
 
 
 app.get     '/api/devs', api_devs.list
