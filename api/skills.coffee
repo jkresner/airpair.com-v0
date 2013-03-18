@@ -1,10 +1,9 @@
 CRUDApi = require './_crud'
-Skill = require './../models/skill'
 
 
 class SkillApi extends CRUDApi
 
-  model: Skill
+  model: require './../models/skill'
 
 ###############################################################################
 ## Data loading (should be removed soon)
@@ -15,14 +14,7 @@ class SkillApi extends CRUDApi
     stubs = require './../app/stubs/skills'
     skills = []
     skills.push name: s.name, shortName: s.shortName, soId: s.soId for s in stubs
-    Skill.create skills, (e, r) -> if callback? then callback()
+    @model.create skills, (e, r) -> if callback? then callback()
 
-console.log 'SkillApi', SkillApi
-console.log 'SkillApi.list', SkillApi.list
 
-skillApi = new SkillApi()
-
-console.log 'Skill', Skill
-console.log 'skillApi', skillApi, skillApi.model
-
-module.exports = skillApi
+module.exports = new SkillApi()

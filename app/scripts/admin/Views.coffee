@@ -26,7 +26,6 @@ class DataListView extends BB.BadassView
 
 
 class exports.SkillFormView extends BB.ModelSaveView
-  logging: on
   el: '#skillFormView'
   tmpl: require './templates/SkillForm'
   viewData: ['name','shortName','soId']
@@ -44,8 +43,8 @@ class exports.SkillFormView extends BB.ModelSaveView
     @$('#skillSoId').val name.toLowerCase()
   renderSuccess: (model, response, options) =>
     @$('.alert-success').fadeIn(800).fadeOut(5000)
-    @$('input').val ''
     @collection.add model
+    @render new M.Skill()
 
 
 class exports.SkillRowView extends BB.BadassView
@@ -84,11 +83,13 @@ class exports.DevFormView extends BB.ModelSaveView
   initialize: ->
   render: (model) ->
     if model? then @model = model
-    @$el.html @tmpl @model.toJSON()
+    tmplData = _.extend @model.toJSON(), { skillsSoIds: @model.skillSoIdsList() }
+    @$el.html @tmpl tmplData
     @
   renderSuccess: (model, response, options) =>
     @$('.alert-success').fadeIn(800).fadeOut(5000)
     @collection.add model
+    @render new M.Dev()
 
 
 class exports.DevRowView extends BB.BadassView

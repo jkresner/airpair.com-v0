@@ -9,9 +9,7 @@ class CRUDApi
 
 
   list: (req, res) =>
-    console.log 'list', @
-    console.log '@model', @model
-    @model.find (e, r) -> res.send list
+    @model.find (e, r) -> res.send r
 
 
   post: (req, res) =>

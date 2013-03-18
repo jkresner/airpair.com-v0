@@ -29,6 +29,7 @@ Monday done
 
 Things to pair with
 
+- How can I run brunch to rebuild automatically
 - Review document schema & nested calls + devs etc.
 - Updating Schema
 - Dates with mongo
@@ -39,11 +40,11 @@ Things to pair with
 Test To Implement (Confirmed Manually)
 
 
-- Skill Add
-- Skill Edit
-- Dev Add
-- Dev Update
-- Dev Delete
+- [y] Skill Add
+- [y] Skill Edit
+- [y] Dev Add
+- [y] Dev Update
+- [y] Dev Delete
 - Company Add
 - Company Update
 - Company Delete

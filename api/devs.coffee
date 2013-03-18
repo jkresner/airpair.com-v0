@@ -1,35 +1,47 @@
-Dev = require './../models/dev'
+CRUDApi = require './_crud'
 Skill = require './../models/skill'
 und = require 'underscore'
 
+class DevApi extends CRUDApi
 
-insertFromStub = (s) ->
-  skillsSoIds = und.pluck(s.skills,'soId')
-  Skill.find().where('soId').in(skillsSoIds).select('_id soId').exec (err, skills) ->
-    d = name: s.name, email: s.email, pic: s.pic, homepage: s.homepage, gh: s.gh, so: s.so, other: s.other, skills: skills, rate: 0
-    Dev.create d, (e, r) ->
+  model: require './../models/dev'
+
+###############################################################################
+## Data loading (should be removed soon)
+###############################################################################
+
+  clear: => Dev.find({}).remove()
+  insertFromStub: (s) =>
+    skillsSoIds = und.pluck(s.skills,'soId')
+    Skill.find().where('soId').in(skillsSoIds).select('_id soId').exec (err, skills) ->
+      d = name: s.name, email: s.email, pic: s.pic, homepage: s.homepage, gh: s.gh, so: s.so, other: s.other, skills: skills, rate: 0
+      Dev.create d, (e, r) ->
+  boot: =>
+    stubs = require './../app/stubs/devs'
+    insertFromStub(s) for s in stubs
+
+###############################################################################
+## Data loading (should be removed soon)
+###############################################################################
+
+  post: (req, res) =>
+    @getSkills req, =>
+      new @model( req.body ).save (er, re) -> res.send re
+
+  update: (req, res) =>
+    @getSkills req, =>
+      data = und.clone req.body
+      delete data._id # so mongo doesn't complain
+      @model.update { _id: req.params.id }, data, (e, r) -> res.send req.body
+
+  getSkills: (req, callback) =>
+    skillsSoIds = req.body.skills.split(",")
+    console.log 'skillsSoIds', skillsSoIds
+    Skill.find().where('soId').in(skillsSoIds).select('_id soId').exec (e, r) =>
+      req.body.skills = r
+      console.log 'skills', req.body.skills, @
+        callback()
 
 
-exports.clear = -> Dev.find({}).remove()
 
-
-exports.boot = ->
-  stubs = require './../app/stubs/devs'
-  insertFromStub(s) for s in stubs
-
-
-exports.post = (req, res) ->
-  skillsSoIds = req.body.skills.split(",")
-  console.log 'skillsSoIds', skillsSoIds
-  Skill.find().where('soId').in(skillsSoIds).select('_id soId').exec (err, skills) ->
-    req.body.skills = skills
-    console.log 'skills', req.body.skills
-    new Dev( req.body ).save( (err, result) -> res.send result )
-
-exports.list = (req, res) ->
-  Dev.find( (err, list) -> res.send list )
-
-
-exports.show = (req, res) ->
-  Dev.findOne { name: req.params.name }, (error, item) ->
-    res.send item
+module.exports = new DevApi()

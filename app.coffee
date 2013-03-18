@@ -33,9 +33,15 @@ app.get     '/find-an-expert', (req, res) -> res.sendfile './public/findexpert.h
 app.get     '/api/devs', api_devs.list
 app.get     '/api/devv/:id', api_devs.show
 app.post    '/api/devs', api_devs.post
+app.put     '/api/devs/:id', api_devs.update
+app.delete  '/api/devs/:id', api_devs.delete
+
 app.get     '/api/skills', api_skills.list
 app.get     '/api/skills/:id', api_skills.show
 app.post    '/api/skills', api_skills.post
+app.put     '/api/skills/:id', api_skills.update
+app.put     '/api/skills/:id', api_skills.delete
+
 app.get     '/api/companys', api_companys.list
 app.get     '/api/companys/:id', api_companys.show
 app.put     '/api/companys/:id', api_companys.update

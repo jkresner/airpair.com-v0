@@ -8,6 +8,11 @@ class exports.Dev extends BB.BadassModel
   urlRoot: '/api/devs'
   defaults:
     rate:           0
+  skillSoIdsList: ->
+    skillsShortNames = _.pluck @get('skills'), 'soId'
+    skillList = '';
+    skillList += ',' + s for s in skillsShortNames
+    skillList.substring 1, skillList.length
   skillList: ->
     skillsShortNames = _.pluck @get('skills'), 'soId'
     skillList = '';
