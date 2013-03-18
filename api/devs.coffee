@@ -36,11 +36,9 @@ class DevApi extends CRUDApi
 
   getSkills: (req, callback) =>
     skillsSoIds = req.body.skills.split(",")
-    console.log 'skillsSoIds', skillsSoIds
     Skill.find().where('soId').in(skillsSoIds).select('_id soId').exec (e, r) =>
       req.body.skills = r
-      console.log 'skills', req.body.skills, @
-        callback()
+      callback()
 
 
 

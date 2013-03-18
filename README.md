@@ -45,9 +45,9 @@ Test To Implement (Confirmed Manually)
 - [y] Dev Add
 - [y] Dev Update
 - [y] Dev Delete
-- Company Add
-- Company Update
-- Company Delete
+- [y] Company Add
+- [y] Company Update
+- [y] Company Delete
 - Request Add
 - Request Update
 - Request Delete

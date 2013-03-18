@@ -1,34 +1,14 @@
-Company = require './../models/company'
+CRUDApi = require './_crud'
+
+class CompanyApi extends CRUDApi
+
+  model: require './../models/company'
 
 ###############################################################################
 ## Data loading (should be removed soon)
 ###############################################################################
 
-
-exports.clear = -> Company.find({}).remove()
-
-
-###############################################################################
-## CRUD
-###############################################################################
+  clear: -> @model.find({}).remove()
 
 
-exports.show = (req, res) ->
-  Company.findOne { _id: req.params.id }, (error, item) -> res.send item
-
-
-exports.list = (req, res) ->
-  Company.find (err, list) -> res.send list
-
-
-exports.post = (req, res) ->
-  new Company( req.body ).save (err, result) -> res.send result
-
-
-exports.update = (req, res) ->
-  delete req.body._id
-  Company.update({ _id: req.params.id }, req.body, (e, r) -> res.send r )
-
-
-exports.delete = (req, res) ->
-  Company.find( _id: req.params.id ).remove( (err, result) -> res.send result )
+module.exports = new CompanyApi()
