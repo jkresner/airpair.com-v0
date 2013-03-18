@@ -26,6 +26,7 @@ class DataListView extends BB.BadassView
 
 
 class exports.SkillFormView extends BB.ModelSaveView
+  logging: on
   el: '#skillFormView'
   tmpl: require './templates/SkillForm'
   viewData: ['name','shortName','soId']
@@ -132,6 +133,7 @@ class exports.CompanyContactView extends BB.ModelSaveView
 
 
 class exports.CompanyFormView extends BB.ModelSaveView
+  logging: on
   el: '#companyFormView'
   tmpl: require './templates/CompanyForm'
   events: { 'click .save': 'validatePrimaryContactAndSave' }

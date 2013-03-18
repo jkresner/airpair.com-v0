@@ -1,21 +1,28 @@
+CRUDApi = require './_crud'
 Skill = require './../models/skill'
 
-exports.clear = -> Skill.find({}).remove()
-exports.boot = (callback) ->
-  stubs = require './../app/stubs/skills'
-  skills = []
-  skills.push name: s.name, shortName: s.shortName, soId: s.soId for s in stubs
-  Skill.create skills, (e, r) -> if callback? then callback()
 
+class SkillApi extends CRUDApi
 
-exports.post = (req, res) ->
-  new Skill( req.body ).save( (err, result) -> res.send result )
+  model: Skill
 
+###############################################################################
+## Data loading (should be removed soon)
+###############################################################################
 
-exports.list = (req, res) ->
-  Skill.find( (err, list) -> res.send list )
+  clear: -> Skill.find({}).remove()
+  boot: (callback) ->
+    stubs = require './../app/stubs/skills'
+    skills = []
+    skills.push name: s.name, shortName: s.shortName, soId: s.soId for s in stubs
+    Skill.create skills, (e, r) -> if callback? then callback()
 
+console.log 'SkillApi', SkillApi
+console.log 'SkillApi.list', SkillApi.list
 
-exports.show = (req, res) ->
-  Skill.findOne { _id: req.params.id }, (error, item) ->
-    res.send item
+skillApi = new SkillApi()
+
+console.log 'Skill', Skill
+console.log 'skillApi', skillApi, skillApi.model
+
+module.exports = skillApi

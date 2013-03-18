@@ -34,7 +34,7 @@ module.exports = class ModelSaveView extends HasBootstrapErrorStateView
     # Remove any existing error state before we try save again
     @renderInputsValid()
 
-    options = success: @renderSuccess, _error: @rendererror, wait: !@async
+    options = success: @renderSuccess, error: @renderError, wait: !@async
     @model.save newattrs, options
 
   # By default renderSuccess looks for a bootstrap alert-success element

@@ -15,20 +15,22 @@ module.exports = class HasErrorStateView extends BadassView
 
   renderError: (model, errors) =>
 
-    if @logging then $log 'renderError', @mode, errorBlock, model, errors, arguments
+    if @logging then $log 'renderError', model, errors, arguments
 
-    if errors.code is 500 then return @delegate500Error()
+    if errors?
 
-    # (1) Unless showAlertOnClientError=true we only use summary for server errors
-    if errors.isServer? || @showAlertOnClientError
-      @renderErrorSummary model, errors
+      if errors.code is 500 then return @delegate500Error()
 
-    # (2) For both client & server we show field / input level errors
-    for own attr, value of errors.data
+      # (1) Unless showAlertOnClientError=true we only use summary for server errors
+      if errors.isServer? || @showAlertOnClientError
+        @renderErrorSummary model, errors
 
-      if @logging then $log 'attr', attr, value, input, input.val()
+      # (2) For both client & server we show field / input level errors
+      for own attr, value of errors.data
 
-      @tryRenderInputInvalid "[name=#{attr}]", value
+        if @logging then $log 'attr', attr, value, input, input.val()
+
+        @tryRenderInputInvalid "[name=#{attr}]", value
 
   delegate500Error: ->
 

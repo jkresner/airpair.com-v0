@@ -19,6 +19,13 @@ To run airpair.co locally:
 Everything inside of '/app' is client only files, which brunch compiles in '/public'
 
 
+Monday done
+
+- Add / edit => | Company | Skill | Dev | Request
+- Assign Dev
+- Review
+
+
 
 Things to pair with
 
@@ -27,3 +34,19 @@ Things to pair with
 - Dates with mongo
 - Getting mongoDB data to and from heroku
 - collecting JS dates
+
+
+Test To Implement (Confirmed Manually)
+
+
+- Skill Add
+- Skill Edit
+- Dev Add
+- Dev Update
+- Dev Delete
+- Company Add
+- Company Update
+- Company Delete
+- Request Add
+- Request Update
+- Request Delete

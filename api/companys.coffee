@@ -1,15 +1,28 @@
 Company = require './../models/company'
 
+###############################################################################
+## Data loading (should be removed soon)
+###############################################################################
+
 
 exports.clear = -> Company.find({}).remove()
 
 
-exports.post = (req, res) ->
-  new Company( req.body ).save( (err, result) -> res.send result )
+###############################################################################
+## CRUD
+###############################################################################
+
+
+exports.show = (req, res) ->
+  Company.findOne { _id: req.params.id }, (error, item) -> res.send item
 
 
 exports.list = (req, res) ->
-  Company.find( (err, list) -> res.send list )
+  Company.find (err, list) -> res.send list
+
+
+exports.post = (req, res) ->
+  new Company( req.body ).save (err, result) -> res.send result
 
 
 exports.update = (req, res) ->
@@ -19,7 +32,3 @@ exports.update = (req, res) ->
 
 exports.delete = (req, res) ->
   Company.find( _id: req.params.id ).remove( (err, result) -> res.send result )
-
-
-exports.show = (req, res) ->
-  Company.findOne { _id: req.params.id }, (error, item) -> res.send item
