@@ -29,6 +29,7 @@ class exports.Dev extends BB.BadassModel
     pic:            { required: true }
     rate:           { required: true, range: [0, 2000] }
 
+
 class exports.Company extends BB.BadassModel
   urlRoot: '/api/companys'
   defaults:
@@ -45,6 +46,16 @@ class exports.CompanyContact extends BB.BadassModel
 
 
 class exports.Request extends BB.BadassModel
+  urlRoot: '/api/requests'
+  defaults:
+    suggested:      []
+    calls:          []
+    events:         []
+  validation:
+    status:         { required: true }
+    companyId:      { required: true }
+    companyName:    { required: true }
+    brief:          { required: true }
   skillList: ->
     skillsShortNames = _.pluck @get('skills'), 'shortName'
     skillList = '';

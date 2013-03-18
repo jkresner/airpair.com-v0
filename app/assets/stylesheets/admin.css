@@ -38,6 +38,8 @@ a:hover { color:black; }
 #companyFormView input { width:100% }
 #companyFormView textarea { width:100%;height:120px; }
 
+#requestForm textarea { width:80%;height:120px; }
+
 .alert { display:none }
 
 a.edit { color:blue; }

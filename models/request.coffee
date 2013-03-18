@@ -16,7 +16,7 @@ Request status
 
 Suggestion status
 
-  unconfirmed   : contacted the developer about availability & relevance
+  unconfirmed   : waiting on the developer for availability & relevance
   passed        : if developer is not available or
   available     : developer would like to take the call
   booked        : developer has been booked for an airpair
@@ -56,11 +56,8 @@ Call = new Schema
 schema = new Schema
   events:           [Event]       # created, updated, reviewed,
   status:           String    # received
-  by:
-    _id:            { type: ObjectId , required: true }
-    name:           { type: String, required: true }
-    about:          { type: String, required: true }
-    contacts:       { type: [], required: true }
+  companyId:        String
+  companyName:      String
   availability:     [Date]
   breif:            String
   skills:           [Skill]

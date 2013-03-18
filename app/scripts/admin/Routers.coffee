@@ -10,7 +10,8 @@ class exports.AdminRouter extends Backbone.Router
     'companys':     'companys'
     'lead/:id':     'lead'
     'suggest/:id':  'suggest'
-    'new':             'newRequest'
+    'new-request':  'requestForm'
+    'request/:id':  'requestForm'
 
   initialize: (args) ->
     @page = args.page
@@ -41,9 +42,9 @@ class exports.AdminRouter extends Backbone.Router
         $log 'currentLead', @page.currentLead.attributes
         @hideshow '#lead'
 
-  newRequest: ->
-    $log 'Router.newRequest'
-    @hideshow '#newRequest'
+  requestForm: (id) ->
+    $log 'Router.requestForm', id
+    @hideshow '#requestForm'
 
   suggest: (id) ->
     $log 'Router.suggest'

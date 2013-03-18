@@ -21,6 +21,7 @@ module.exports.Page = class Page
     @devsView = new views.DevsView collection: @devs
     @companysView = new views.CompanysView collection: @companys
     @leadView = new views.LeadView model: @currentLead
+    @requestFormView = new views.RequestFormView model: new models.Request(), companys: @companys, devs: @devs
 
     @leads.reset pageData.leads
 

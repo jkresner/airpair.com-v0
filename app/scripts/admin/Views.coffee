@@ -169,7 +169,6 @@ class exports.CompanyFormView extends BB.ModelSaveView
     @render new M.Company()
 
 
-
 class exports.CompanyRowView extends BB.BadassView
   tagName: 'tr'
   className: 'companyRow'
@@ -197,6 +196,48 @@ class exports.CompanysView extends DataListView
 
 
 #############################################################################
+
+
+class exports.RequestFormView extends BB.ModelSaveView
+  logging: on
+  el: '#requestForm'
+  tmpl: require './templates/RequestForm'
+  viewData: ['companyId','status','skills','brief','canceledReason']
+  events:
+    'click .save': 'save'
+    'click .suggestDev': 'suggestDev'
+    'click .suggestDelete': -> alert 'not implemented'
+  initialize: ->
+    @model.on 'change', @render, @
+    @companys.on 'reset', @render, @
+    @devs.on 'reset', @render, @
+  render: (model) ->
+    if model? && model.set? then @model = model
+    tmplData = _.extend @model.toJSON(), { companys: @companys.toJSON(), devs: @devs.toJSON() }
+    @$el.html @tmpl tmplData
+    @$('reqCompany').val @model.get 'companyId'
+    @$('reqStatus').val @model.get 'status'
+    @
+  renderSuccess: (model, response, options) =>
+    @$('.alert-success').fadeIn(800).fadeOut(5000)
+    @collection.add model
+    @render new M.Request()
+  suggestDev: (e) ->
+    e.preventDefault()
+    # todo, check for duplicates
+    @model.get('suggested').push
+      status: 'unconfirmed'
+      events: [{'created': new Date() }]
+      dev: { _id: @$('#reqDev').val(), name: @$('#reqDev option:selected').text(); }
+      availability: []
+      comment: ''
+    $log 'getViewData', @getViewData()
+    @model.set @getViewData()
+    @model.trigger 'change'
+
+
+#############################################################################
+
 
 class exports.InProgressLeadRowView extends BB.BadassView
   tagName: 'tr'

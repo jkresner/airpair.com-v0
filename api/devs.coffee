@@ -21,7 +21,7 @@ class DevApi extends CRUDApi
     insertFromStub(s) for s in stubs
 
 ###############################################################################
-## Data loading (should be removed soon)
+## CRUD extensions
 ###############################################################################
 
   post: (req, res) =>
