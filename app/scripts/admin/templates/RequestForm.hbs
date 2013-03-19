@@ -16,7 +16,7 @@
     <label class="control-label" for="reqCompanyName">Company</label>
     <div class="controls">
       <select id="reqCompany" name="companyId">
-        <option vale="">please select ...</option>
+        <option vale=""></option>
         {{#each companys}}
         <option value="{{ _id }}">{{ name }}</option>
         {{/each}}
@@ -28,7 +28,7 @@
     <label class="control-label" for="reqStatus">Status</label>
     <div class="controls">
       <select id="reqStatus" name="status">
-        <option vale="">please select ...</option>
+        <option value="">please select ...</option>
         <option>received</option>
         <option>incomplete</option>
         <option>review</option>
@@ -69,7 +69,7 @@
     <label class="control-label" for="reqSuggested">Suggested</label>
     <div class="controls">
       <select id="reqDev">
-        <option value="">please select ...</option>
+        <option value=""></option>
         {{#each devs}}
         <option value="{{ _id }}">{{ gh }}{{ bb }}</option>
         {{/each}}
@@ -84,6 +84,7 @@
               <th>Mail</th>
               <th>Status</th>
               {{! <th>Schedule</th> }}
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -94,6 +95,7 @@
               <td><a href="#" class="mailMatched" data-id="{{ dev.id }}">matched</a></td>
               <td>{{ status }}</td>
               {{! <td>{{ availabilty </td> }}
+              <td><a href="#" class="delete deleteSuggested" data-id="{{ _id }}">x</a></td>
             </tr>
           {{/each}}
           </tbody>
@@ -105,7 +107,7 @@
     <label class="control-label" for="reqCalls">Calls</label>
     <div class="controls">
       <select id="reqCall">
-        <option value="">please select ...</option>
+        <option value=""></option>
         {{#each suggested}}
         <option value="{{ dev._id }}">{{dev.name}}</option>
         {{/each}}

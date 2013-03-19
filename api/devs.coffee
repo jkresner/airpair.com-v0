@@ -10,15 +10,15 @@ class DevApi extends CRUDApi
 ## Data loading (should be removed soon)
 ###############################################################################
 
-  clear: => Dev.find({}).remove()
+  clear: => @model.find({}).remove()
   insertFromStub: (s) =>
     skillsSoIds = und.pluck(s.skills,'soId')
-    Skill.find().where('soId').in(skillsSoIds).select('_id soId').exec (err, skills) ->
+    Skill.find().where('soId').in(skillsSoIds).select('_id soId').exec (err, skills) =>
       d = name: s.name, email: s.email, pic: s.pic, homepage: s.homepage, gh: s.gh, so: s.so, other: s.other, skills: skills, rate: 0
-      Dev.create d, (e, r) ->
+      @model.create d, (e, r) ->
   boot: =>
     stubs = require './../app/stubs/devs'
-    insertFromStub(s) for s in stubs
+    @insertFromStub(s) for s in stubs
 
 #######################################t########################################
 ## CRUD extensions

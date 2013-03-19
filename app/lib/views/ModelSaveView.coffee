@@ -28,6 +28,9 @@ module.exports = class ModelSaveView extends HasBootstrapErrorStateView
 
     newattrs = @getViewData()
 
+    Backbone.Validation.unbind @
+    Backbone.Validation.bind @
+
     if @logging
       $log 'ModelSaveView.save', 'old:',@model.toJSON(), 'new:',newattrs, 'changes:', @model.changedAttributes newattrs
 

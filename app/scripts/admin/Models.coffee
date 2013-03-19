@@ -56,6 +56,9 @@ class exports.Request extends BB.BadassModel
     companyId:      { required: true }
     companyName:    { required: true }
     brief:          { required: true }
+  clean: ->
+    @clear()
+    @set @defaults
   skillSoIdsList: ->
     skillsShortNames = _.pluck @get('skills'), 'soId'
     skillList = '';

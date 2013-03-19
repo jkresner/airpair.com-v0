@@ -39,16 +39,14 @@ class exports.AdminRouter extends Backbone.Router
 
 
   requestForm: (id) ->
-    if @page.requests.length is 0 then @navigate '#', false
-
     $log 'Router.requestForm', id
     if !id?
-      @page.currentRequest = new M.Request()
-    else if @page.currentRequest.id != id
-      request = _.find @page.requests.models, (m) -> m.id.toString() is id
-      if !request? then alert 'Request doesnt exist with id: ' + id
+      @page.currentRequest.clean()
+    else
+      request = _.find @page.requests.models, (m) -> m.get('_id').toString() == id
+      if !request? then return @navigate '#', true
       else
-        @page.currentRequest = request
+        @page.currentRequest.set request.attributes
 
     @page.requestFormView.render @page.currentRequest
     @hideshow '#requestForm'

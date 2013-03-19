@@ -207,7 +207,7 @@ class exports.RequestFormView extends BB.ModelSaveView
   events:
     'click .save': 'save'
     'click .suggestDev': 'suggestDev'
-    'click .suggestDelete': -> alert 'not implemented'
+    'click .deleteSuggested': 'suggestRemove'
   initialize: ->
     @model.on 'change', @render, @
     @companys.on 'reset', @render, @
@@ -221,7 +221,7 @@ class exports.RequestFormView extends BB.ModelSaveView
     @
   renderSuccess: (model, response, options) =>
     @$('.alert-success').fadeIn(800).fadeOut(5000)
-    @collection.add model
+    @collection.fetch()
   suggestDev: (e) ->
     # todo, check for duplicates
     @model.get('suggested').push
@@ -231,6 +231,14 @@ class exports.RequestFormView extends BB.ModelSaveView
       availability: []
       comment: ''
     @save e
+    @render()
+  suggestRemove: (e) ->
+    suggestionId = $(e.currentTarget).data 'id'
+    toRemove = _.find @model.get('suggested'), (d) -> d._id = suggestionId
+    $log 'suggestRemove', suggestionId, toRemove
+    @model.set 'suggested', _.without( @model.get('suggested'), toRemove )
+    @save e
+    @render()
   getViewData: ->
     d = @getValsFromInputs @viewData
     d.companyName = @$('#reqCompany option:selected').text()
@@ -248,7 +256,7 @@ class exports.RequestRowView extends BB.BadassView
     @
   tmplData: ->
     data = @model.toJSON()
-    $log 'RequestRowView.tmplData', data
+    #$log 'RequestRowView.tmplData', data
     _.extend @model.toJSON(), {
       createdDate:        new Date(data.events[0].utc).toDateString().replace(' 2013','')
       skillList:          @model.skillListLabeled()
@@ -261,7 +269,6 @@ class exports.RequestRowView extends BB.BadassView
 
 
 class exports.RequestsView extends BB.BadassView
-  logging: on
   el: '#requests'
   tmpl: require './templates/Requests'
   initialize: (args) ->

@@ -13,9 +13,7 @@ api_devs = require './api/devs'
 api_companys = require './api/companys'
 api_requests = require './api/requests'
 
-api_requests.clear()
-
-flushDb = false
+flushDb = true
 if flushDb
   console.log '***** flushing DB'
   api_requests.clear()

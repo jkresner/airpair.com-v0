@@ -9,7 +9,7 @@ class SkillApi extends CRUDApi
 ## Data loading (should be removed soon)
 ###############################################################################
 
-  clear: -> Skill.find({}).remove()
+  clear: -> @model.find({}).remove()
   boot: (callback) ->
     stubs = require './../app/stubs/skills'
     skills = []

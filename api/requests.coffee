@@ -21,7 +21,6 @@ class DevApi extends CRUDApi
     req.body.events = [{ name:'created', utc: new Date()}]
     @getSkills req, =>
       @getDevs req, =>
-        console.log 'new req', req.body.events
         new @model( req.body ).save (er, re) -> res.send re
 
   update: (req, res) =>
@@ -41,11 +40,12 @@ class DevApi extends CRUDApi
     devs = und.pluck req.body.suggested, 'dev'
     devIds = und.pluck devs, '_id'
     Dev.find().where('_id').in(devIds).exec (e, r) =>
+      console.log 'r', r,
+      console.log 'req.body.suggested', req.body.suggested
       for s in req.body.suggested
-        devId = s.dev._id
-        updatedDev = und.find r, (d) -> d._id = devId
-        s.dev = updatedDev
-      console.log 'suggested', req.body.suggested
+        console.log 's.dev', s.dev
+        s.dev = und.find( r, (d) -> console.log 'd',d; d._id.toString() == s.dev._id )
+      console.log 'req.body.suggested', req.body.suggested
       callback()
 
 
