@@ -314,17 +314,17 @@ class exports.ReviewView extends BB.BadassView
   el: '#review'
   tmpl: require './templates/Review'
   initialize: (args) ->
-    @model.on 'change', @render, @
   render: ->
-    tmplData = @tmplData()
-    @$el.html @tmpl tmplData
-    @$('.links').html tmpl_links tmplData.dev
+    if @model.get('events').length > 0 && @model.get('company')?
+      tmplData = @tmplData()
+      $log 'ren', tmplData.company
+      $log 'ren', tmplData.company.contacts
+      @$el.html @tmpl tmplData
     @
   tmplData: ->
-    data = @model.toJSON()
-    $log 'data', data
-    _.extend @model.toJSON(), {
-      createdDate:        new Date(data.events[0].utc).toDateString()
+    d = @model.toJSON()
+    _.extend d, {
+      createdDate:        new Date(d.events[0].utc).toDateString()
       skillList:          @model.skillListLabeled()
     }
 

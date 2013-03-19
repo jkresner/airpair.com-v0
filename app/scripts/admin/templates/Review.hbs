@@ -7,14 +7,16 @@
 
   <div>
     <label>For</label>
-      <span id="companyname">
-      {{#if company.url }}
-        <a href="http://{{ company.url }}" target="_blank">{{ company.name }}</a>
-      {{else}}
-        {{ company.name }}
-      {{/if}}
-      </span>
-      <p>{{ company.about }}</p>
+      {{#with company }}
+        <span id="companyname">
+        {{#if url }}
+          <a href="http://{{ url }}" target="_blank">{{ name }}</a>
+        {{else}}
+          [{{ name }}]
+        {{/if}}
+        </span>
+        <p>{{ about }}</p>
+      {{/with}}
   </div>
 
   {{#each contacts }}

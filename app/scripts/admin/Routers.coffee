@@ -70,16 +70,16 @@ class exports.ReviewRouter extends Backbone.Router
   initialize: (args) ->
     $log 'Router.init'
     @page = args.page
+    @page.request.on 'change:companyId', @setCompany, @
+    @page.company.on 'change', @setRequestCompany, @
   review: (id) ->
-    $log 'Router.review', @page.company
     @page.request.id = id
-    @page.request.fetch( success: () ->
-      $log 'request.success', router
-      router.page.company.set '_id', router.page.request.get 'companyId'
-      router.page.company.fetch( success: () ->
-        router.page.request.set 'company', router.page.company.toJSON()
-      )
-    )
-
+    @page.request.fetch()
+  setCompany: ->
+    @page.company.set '_id', @page.request.get 'companyId'
+    @page.company.fetch()
+  setRequestCompany: ->
+    @page.request.set 'company', @page.company.attributes
+    @page.reviewView.render()
 
 module.exports = exports
