@@ -25,25 +25,20 @@ Suggestion status
 
 
 Event = new Schema
-  occurred:         Date
   name:             String
-
-
-Skill = new Schema
-  _id:              String
-  shortName:        Date
+  utc:              Date
 
 
 Suggestion = new Schema
   status:           String
   events:           [Event]
-  dev:              { {}, required: true }
+  dev:              {}
   availability:     [Date]
   comment:          String
 
 
 Call = new Schema
-  dev:              { {}, required: true }
+  dev:              {}
   time:             Date
   recordingUrls:    []
   type:             String        # opensource, private, subscription
@@ -59,8 +54,8 @@ schema = new Schema
   companyId:        String
   companyName:      String
   availability:     [Date]
-  breif:            String
-  skills:           [Skill]
+  brief:            String
+  skills:           [{}]
   suggested:        [Suggestion]
   calls:            [Call]
   canceledReason:   String

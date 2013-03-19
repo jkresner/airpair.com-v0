@@ -13,9 +13,12 @@ api_devs = require './api/devs'
 api_companys = require './api/companys'
 api_requests = require './api/requests'
 
+api_requests.clear()
+
 flushDb = false
 if flushDb
   console.log '***** flushing DB'
+  api_requests.clear()
   api_devs.clear()
   api_companys.clear()
   api_skills.clear()
@@ -49,11 +52,11 @@ app.put     '/api/companys/:id', api_companys.update
 app.delete  '/api/companys/:id', api_companys.delete
 app.post    '/api/companys', api_companys.post
 
-app.get     '/api/requets', api_requests.list
-app.get     '/api/requets/:id', api_requests.show
-app.put     '/api/requets/:id', api_requests.update
-app.delete  '/api/requets/:id', api_requests.delete
-app.post    '/api/requets', api_requests.post
+app.get     '/api/requests', api_requests.list
+app.get     '/api/requests/:id', api_requests.show
+app.put     '/api/requests/:id', api_requests.update
+app.delete  '/api/requests/:id', api_requests.delete
+app.post    '/api/requests', api_requests.post
 
 
 mongoUri = process.env.MONGOHQ_URL || 'mongodb://localhost/airpair_dev'

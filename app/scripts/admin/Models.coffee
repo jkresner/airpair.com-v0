@@ -56,6 +56,11 @@ class exports.Request extends BB.BadassModel
     companyId:      { required: true }
     companyName:    { required: true }
     brief:          { required: true }
+  skillSoIdsList: ->
+    skillsShortNames = _.pluck @get('skills'), 'soId'
+    skillList = '';
+    skillList += ',' + s for s in skillsShortNames
+    skillList.substring 1, skillList.length
   skillList: ->
     skillsShortNames = _.pluck @get('skills'), 'shortName'
     skillList = '';

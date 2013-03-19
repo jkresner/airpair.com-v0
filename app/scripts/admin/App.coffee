@@ -9,25 +9,23 @@ routers = require './Routers'
 #instances of objects to make page work with router
 module.exports.Page = class Page
   constructor: (pageData) ->
-    @leads = new collections.Leads()
     @skills = new collections.Skills()
     @devs = new collections.Devs()
     @companys = new collections.Companys()
+    @requests = new collections.Requests()
 
-    @currentLead = new models.Lead()
+    @currentRequest = new models.Request()
 
-    @inProgressLeadsView = new views.InProgressLeadsView collection: @leads
+    @requestsView = new views.RequestsView collection: @requests
+    @requestFormView = new views.RequestFormView model: new models.Request(), companys: @companys, devs: @devs, collection: @requests
     @skillsView = new views.SkillsView collection: @skills
     @devsView = new views.DevsView collection: @devs
     @companysView = new views.CompanysView collection: @companys
-    @leadView = new views.LeadView model: @currentLead
-    @requestFormView = new views.RequestFormView model: new models.Request(), companys: @companys, devs: @devs
-
-    @leads.reset pageData.leads
 
     if pageData.skills? then @skills.reset pageData.skills else @skills.fetch()
     if pageData.devs? then @devs.reset pageData.devs else @devs.fetch()
     if pageData.companys? then @companys.reset pageData.companys else @companys.fetch()
+    if pageData.requests? then @requests.reset pageData.requests else @requests.fetch()
 
 
 module.exports.Router = routers.AdminRouter

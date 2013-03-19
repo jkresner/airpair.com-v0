@@ -8,6 +8,11 @@ class exports.Leads extends BB.FilteringCollection
   url: '/api/leads'
 
 
+class exports.Requests extends BB.FilteringCollection
+  model: Models.Request
+  url: '/api/requests'
+
+
 class exports.Skills extends BB.FilteringCollection
   model: Models.Skill
   url: '/api/skills'

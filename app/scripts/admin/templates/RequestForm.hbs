@@ -1,6 +1,6 @@
 <div class="alert alert-success">
   <button type="button" class="close" data-dismiss="alert">&times;</button>
-  <h4>Company saved</h4>
+  <h4>Request save</h4>
 </div>
 
 <div class="alert alert-error">
@@ -13,12 +13,12 @@
 
  <legend>Info</legend>
   <div class="control-group">
-    <label class="control-label" for="reqCompanyName">Name</label>
+    <label class="control-label" for="reqCompanyName">Company</label>
     <div class="controls">
       <select id="reqCompany" name="companyId">
         <option vale="">please select ...</option>
         {{#each companys}}
-        <option vale="{{ _id }}">{{ name }}</option>
+        <option value="{{ _id }}">{{ name }}</option>
         {{/each}}
       </select>
     </div>
@@ -28,6 +28,7 @@
     <label class="control-label" for="reqStatus">Status</label>
     <div class="controls">
       <select id="reqStatus" name="status">
+        <option vale="">please select ...</option>
         <option>received</option>
         <option>incomplete</option>
         <option>review</option>
@@ -41,14 +42,14 @@
   <div class="control-group">
     <label class="control-label" for="reqStatus">Technologies</label>
     <div class="controls">
-      <input type="text" id="reqTech" placeholder="Enter tech" value="" data-error-style="inline" name="skills">
+      <input type="text" id="reqTech" placeholder="Enter tech" value="{{ skillsSoIds }}" data-error-style="inline" name="skills">
     </div>
   </div>
 
   <div class="control-group">
     <label class="control-label" for="reqBrief">Brief</label>
     <div class="controls">
-      <textarea id="reqBrief" name="brief"></textarea>
+      <textarea id="reqBrief" name="brief">{{ brief }}</textarea>
     </div>
   </div>
 
@@ -116,7 +117,7 @@
   <div class="control-group">
     <label class="control-label" for="reqCanceledReason">Canceled Reason</label>
     <div class="controls">
-      <textarea id="reqCanceledReason" name="canceledReason"></textarea>
+      <textarea id="reqCanceledReason" name="canceledReason">{{ canceledReason }}</textarea>
     </div>
   </div>
 
@@ -126,7 +127,8 @@
 
 <div class="control-group">
   <div class="controls">
-    <a href="#" class="save btn btn-large">Save</a>
+    <a href="#" class="save btn btn-large btn-primary">Save</a>
+    <a href="#" class="btn btn-large">Requests</a>
   </div>
 </div>
 
