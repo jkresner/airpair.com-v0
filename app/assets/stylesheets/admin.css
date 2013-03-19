@@ -14,7 +14,7 @@ a:hover { color:black; }
 #devList { width:70%;float:left; }
 #devList td { font-size:10px;padding:2px; }
 #devList .label { font-weight:normal;padding:1px 2px;margin-right:3px }
-#devList img { margin:2px; }
+#devList img { margin:2px;max-width:40px  ; }
 #devList .skills { width:320px; }
 #devList .links { width:300px; }
 #devList .links a { display:inline-block;margin-right:5px }

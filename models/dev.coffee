@@ -13,6 +13,7 @@ schema = new Schema
   # author: {type: String, default: 'Anon'}
   name:         String
   email:        String
+  gmail:        String
   pic:          String
   homepage:     String      # homepage
   gh:           String      # github

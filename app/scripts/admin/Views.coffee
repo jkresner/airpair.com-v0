@@ -79,7 +79,7 @@ class exports.DevFormView extends BB.ModelSaveView
   el: '#devFormView'
   tmpl: require './templates/DevForm'
   async: off  # async off because we want skills objects back from server
-  viewData: ['name','email','pic', 'homepage', 'gh', 'so', 'bb', 'in', 'other', 'skills', 'rate']
+  viewData: ['name','email','gmail','pic', 'homepage', 'gh', 'so', 'bb', 'in', 'other', 'skills', 'rate']
   events: { 'click .save': 'save' }
   initialize: ->
   render: (model) ->
