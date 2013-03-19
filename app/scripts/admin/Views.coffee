@@ -221,6 +221,7 @@ class exports.RequestFormView extends BB.ModelSaveView
     @
   renderSuccess: (model, response, options) =>
     @$('.alert-success').fadeIn(800).fadeOut(5000)
+    @render()
     @collection.fetch()
   suggestDev: (e) ->
     # todo, check for duplicates
@@ -231,7 +232,6 @@ class exports.RequestFormView extends BB.ModelSaveView
       availability: []
       comment: ''
     @save e
-    @render()
   suggestRemove: (e) ->
     suggestionId = $(e.currentTarget).data 'id'
     toRemove = _.find @model.get('suggested'), (d) -> d._id = suggestionId
