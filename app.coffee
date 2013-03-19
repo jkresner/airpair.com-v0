@@ -13,14 +13,14 @@ api_devs = require './api/devs'
 api_companys = require './api/companys'
 api_requests = require './api/requests'
 
-flushDb = true
-if flushDb
-  console.log '***** flushing DB'
-  api_requests.clear()
-  api_devs.clear()
-  api_companys.clear()
-  api_skills.clear()
-  api_skills.boot api_devs.boot
+# flushDb = true
+# if flushDb
+#   console.log '***** flushing DB'
+#   api_requests.clear()
+#   api_devs.clear()
+#   api_companys.clear()
+#   api_skills.clear()
+#   api_skills.boot api_devs.boot
 
 
 app.get     '/', (req, res) -> res.sendfile './public/index.html'
