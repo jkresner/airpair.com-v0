@@ -269,7 +269,7 @@ class exports.RequestFormView extends BB.ModelSaveView
     $log 'sendDevsContacted', customer, cid
     mailtoAddress = "#{customer.fullName}%20%3c#{customer.email}%3e"
     body = @mailTmpl2 entrepreneur_name: customer.name, leadId: @model.id
-    window.open "mailto:#{mailtoAddress}?subject=airpair - We're waiting to hear back from our devs!&body=#{body}"
+    window.open "mailto:#{mailtoAddress}?subject=airpair - We've got you some devs!&body=#{body}"
     $log 'sendDevsContacted.sent'
 
 #############################################################################
