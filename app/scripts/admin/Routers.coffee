@@ -71,12 +71,15 @@ class exports.ReviewRouter extends Backbone.Router
     $log 'Router.init'
     @page = args.page
   review: (id) ->
-    $log 'Router.review'
-    if @page.currentLead.id != id
-      lead = _.find @page.leads.models, (m) -> m.id.toString() is id
-      if !lead? then alert 'Lead doesnt exist with id: ' + id
-      else
-        @page.currentLead.set lead.attributes ## forces redraw
+    $log 'Router.review', @page.company
+    @page.request.id = id
+    @page.request.fetch( success: () ->
+      $log 'request.success', router
+      router.page.company.set '_id', router.page.request.get 'companyId'
+      router.page.company.fetch( success: () ->
+        router.page.request.set 'company', router.page.company.toJSON()
+      )
+    )
 
 
 module.exports = exports

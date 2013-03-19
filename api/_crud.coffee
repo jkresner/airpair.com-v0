@@ -5,7 +5,7 @@ class CRUDApi
 
 
   show: (req, res) =>
-    @model.findOne { _id: req.params.id }, (e, r) -> res.send item
+    @model.findOne { _id: req.params.id }, (e, r) -> res.send r
 
 
   list: (req, res) =>

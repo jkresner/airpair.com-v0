@@ -1,9 +1,10 @@
 CRUDApi = require './_crud'
 Skill = require './../models/skill'
+Company = require './../models/company'
 Dev = require './../models/dev'
 und = require 'underscore'
 
-class DevApi extends CRUDApi
+class RequestApi extends CRUDApi
 
   model: require './../models/request'
 
@@ -16,6 +17,14 @@ class DevApi extends CRUDApi
 ###############################################################################
 ## CRUD extensions
 ###############################################################################
+
+  show: (req, res) =>
+    @model.findOne { _id: req.params.id }, (e, r) =>
+      # Company.findOne { _id: r.companyId }, (ee, rr) =>
+      #   result = und.extend und.clone(r), { company: und.clone(rr) }
+      #   console.log 'result', result
+        # res.send result
+      res.send r
 
   post: (req, res) =>
     req.body.events = [{ name:'created', utc: new Date()}]
@@ -43,10 +52,10 @@ class DevApi extends CRUDApi
       console.log 'r', r,
       console.log 'req.body.suggested', req.body.suggested
       for s in req.body.suggested
-        console.log 's.dev', s.dev
+        console.log 's.devsv', s.dev
         s.dev = und.find( r, (d) -> console.log 'd',d; d._id.toString() == s.dev._id )
       console.log 'req.body.suggested', req.body.suggested
       callback()
 
 
-module.exports = new DevApi()
+module.exports = new RequestApi()

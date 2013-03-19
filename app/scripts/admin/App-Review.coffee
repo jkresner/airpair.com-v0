@@ -9,13 +9,11 @@ routers = require './Routers'
 #instances of objects to make page work with router
 module.exports.Page = class Page
   constructor: (pageData) ->
-    @leads = new collections.Leads()
 
-    @currentLead = new models.Lead()
+    @request = new models.Request()
+    @company = new models.Company()
 
-    @reviewView = new views.ReviewView model: @currentLead
-
-    @leads.reset pageData.leads
+    @reviewView = new views.ReviewView model: @request, company: @company
 
 
 module.exports.Router = routers.ReviewRouter

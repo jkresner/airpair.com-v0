@@ -1,6 +1,7 @@
 exports = {}
 BB = require './../../lib/BB'
 M = require './Models'
+tmpl_links = require './../../templates/devLinks'
 
 
 #############################################################################
@@ -96,12 +97,10 @@ class exports.DevRowView extends BB.BadassView
   tagName: 'tr'
   className: 'devRow'
   tmpl: require './templates/DevRow'
-  tmpl_links: require './../../templates/devLinks'
   initialize: -> @model.on 'change', @render, @
   render: ->
     tmpl_data = _.extend @model.toJSON(), { skillsList: @model.skillListLabeled() }
     @$el.html @tmpl tmpl_data
-    @$('.links').html @tmpl_links tmpl_data
     @
 
 
@@ -204,10 +203,19 @@ class exports.RequestFormView extends BB.ModelSaveView
   el: '#requestForm'
   tmpl: require './templates/RequestForm'
   viewData: ['companyId','status','skills','brief','canceledReason']
+  mailTmpl: require './../../mail/developerMatched'
+  mailTmpl2: require './../../mail/developersContacted'
   events:
+    'click a.mailMatched': 'sendMatchedMail'
+    'click a#mailDevsContacted': 'sendDevsContacted'
     'click .save': 'save'
     'click .suggestDev': 'suggestDev'
     'click .deleteSuggested': 'suggestRemove'
+    'click .delete': ->
+      @model.destroy()
+      @collection.fetch()
+      router.naviate '#', false
+      false
   initialize: ->
     @model.on 'change', @render, @
     @companys.on 'reset', @render, @
@@ -243,6 +251,26 @@ class exports.RequestFormView extends BB.ModelSaveView
     d = @getValsFromInputs @viewData
     d.companyName = @$('#reqCompany option:selected').text()
     d
+  sendMatchedMail: (e) ->
+    e.preventDefault()
+    devId = parseInt $(e.currentTarget).attr('data-id')
+    skillList = @model.skillList()
+    developers = _.pluck @model.get('suggested'), 'dev'
+    dev = _.find developers, (d) -> d.id == devId
+    mailtoAddress = "#{dev.name}%20%3c#{dev.email}%3e"
+    body = @mailTmpl dev_name: dev.name, entrepreneur_name: @model.get('contacts')[0].name, leadId: @model.id
+    window.open "mailto:#{mailtoAddress}?subject=airpair - Help an entrepreneur with#{skillList}?&body=#{body}"
+    $log 'sendMatchedMail.sent'
+  sendDevsContacted: (e) ->
+    e.preventDefault()
+    cid = @model.get 'companyId'
+    company = _.find @companys.models, (m) -> m.get('_id') == cid
+    customer = company.get('contacts')[0]
+    $log 'sendDevsContacted', customer, cid
+    mailtoAddress = "#{customer.fullName}%20%3c#{customer.email}%3e"
+    body = @mailTmpl2 entrepreneur_name: customer.name, leadId: @model.id
+    window.open "mailto:#{mailtoAddress}?subject=airpair - We're waiting to hear back from our devs!&body=#{body}"
+    $log 'sendDevsContacted.sent'
 
 #############################################################################
 
@@ -281,56 +309,26 @@ class exports.RequestsView extends BB.BadassView
 
 #############################################################################
 
-# class exports.LeadView extends BB.BadassView
-#   el: '#lead'
-#   tmpl: require './templates/Lead'
-#   mailTmpl: require './../../mail/developerMatched'
-#   mailTmpl2: require './../../mail/developersContacted'
-#   events:
-#     'click a.mailMatched': 'sendMatchedMail'
-#     'click a#mailDevsContacted': 'sendDevsContacted'
-#   initialize: (args) ->
-#     @model.on 'change', @render, @
-#   render: ->
-#     @$el.html @tmpl @tmplData()
-#   tmplData: ->
-#     data = @model.toJSON()
 
-#     _.extend @model.toJSON(), {
-#       createdDate:        data.created.toDateString()
-#       skillList:          @model.skillList()
-#     }
-#   sendMatchedMail: (e) ->
-#     e.preventDefault()
-#     devId = parseInt $(e.currentTarget).attr('data-id')
-#     skillList = @model.skillList()
-#     developers = _.pluck @model.get('suggested'), 'dev'
-#     dev = _.find developers, (d) -> d.id == devId
-#     mailtoAddress = "#{dev.name}%20%3c#{dev.email}%3e"
-#     body = @mailTmpl dev_name: dev.name, entrepreneur_name: @model.get('contacts')[0].name, leadId: @model.id
-#     window.location.href = "mailto:#{mailtoAddress}?subject=airpair - Help an entrepreneur with#{skillList}?&body=#{body}"
-#   sendDevsContacted: (e) ->
-#     e.preventDefault()
-#     customer = @model.get('contacts')[0]
-#     mailtoAddress = "#{customer.name}%20%3c#{customer.email}%3e"
-#     body = @mailTmpl2 entrepreneur_name: customer.name, leadId: @model.id
-#     window.location.href = "mailto:#{mailtoAddress}?subject=airpair - We're waiting to hear back from our devs!&body=#{body}"
+class exports.ReviewView extends BB.BadassView
+  el: '#review'
+  tmpl: require './templates/Review'
+  initialize: (args) ->
+    @model.on 'change', @render, @
+  render: ->
+    tmplData = @tmplData()
+    @$el.html @tmpl tmplData
+    @$('.links').html tmpl_links tmplData.dev
+    @
+  tmplData: ->
+    data = @model.toJSON()
+    $log 'data', data
+    _.extend @model.toJSON(), {
+      createdDate:        new Date(data.events[0].utc).toDateString()
+      skillList:          @model.skillListLabeled()
+    }
 
 
-# class exports.ReviewView extends BB.BadassView
-#   el: '#review'
-#   tmpl: require './templates/Review'
-#   initialize: (args) ->
-#     @model.on 'change', @render, @
-#   render: ->
-#     @$el.html @tmpl @tmplData()
-#   tmplData: ->
-#     data = @model.toJSON()
-#     _.extend @model.toJSON(), {
-#       createdDate:        data.created.toDateString()
-#       skillList:          @model.skillListLabeled()
-#     }
-
-
+Handlebars.registerPartial "devLinks", tmpl_links
 
 module.exports = exports
