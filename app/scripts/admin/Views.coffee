@@ -260,9 +260,9 @@ class exports.RequestFormView extends BB.ModelSaveView
     developers = _.pluck @model.get('suggested'), 'dev'
     dev = _.find developers, (d) -> d._id == devId
     companyId = @model.get 'companyId',
-    #$log 'companyId', companyId, @companys.models
+    $log 'companyId', companyId, @companys.models
     company = _.find @companys.models, (m) -> m.id == companyId
-    #$log 'company', company
+    $log 'company', company
     mailtoAddress = "#{dev.name}%20%3c#{dev.email}%3e"
     body = @mailTmpl dev_name: dev.name, entrepreneur_name: company.get('contacts')[0].fullName, leadId: @model.get('_id')
     window.open "mailto:#{mailtoAddress}?subject=airpair - Help an entrepreneur with#{skillList}?&body=#{body}"
