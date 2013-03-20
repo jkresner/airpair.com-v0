@@ -42,7 +42,7 @@ class exports.SkillFormView extends BB.ModelSaveView
   auto: ->
     name = @$('#skillName').val()
     @$('#skillShort').val name
-    @$('#skillSoId').val name.toLowerCase()replace(/\ /g,'-')
+    @$('#skillSoId').val name.toLowerCase().replace(/\ /g,'-')
   renderSuccess: (model, response, options) =>
     @$('.alert-success').fadeIn(800).fadeOut(5000)
     @collection.add model
