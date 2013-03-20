@@ -30,7 +30,7 @@ app.get     '/review', (req, res) -> res.sendfile './public/review.html'
 app.get     '/be-an-expert', (req, res) -> res.sendfile './public/beexpert.html'
 app.get     '/become-an-expert', (req, res) -> res.sendfile './public/beexpert.html'
 app.get     '/find-an-expert', (req, res) -> res.sendfile './public/findexpert.html'
-
+app.get     '/traction', (req, res) -> res.sendfile './public/traction.html'
 
 app.get     '/api/devs', api_devs.list
 app.get     '/api/devv/:id', api_devs.show
