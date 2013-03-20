@@ -22,7 +22,12 @@
     </div>
     <div class="control-group">
       <div class="controls">
-        <a href="#" class="save btn btn-large">Save</a>
+        {{#if _id }}
+          <a href="#" class="save btn btn-large">Update</a>
+          <a href="#" class="cancel btn">Cancel</a>
+        {{else}}
+          <a href="#" class="save btn btn-large btn-primary">Create</a>
+        {{/if}}
       </div>
     </div>
   </div>

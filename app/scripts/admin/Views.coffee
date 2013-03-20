@@ -31,8 +31,9 @@ class exports.SkillFormView extends BB.ModelSaveView
   tmpl: require './templates/SkillForm'
   viewData: ['name','shortName','soId']
   events:
-    'click .save': 'save'
     'input #skillName': 'auto'
+    'click .save': 'save'
+    'click .cancel': -> @render new M.Skill(); false
   initialize: ->
   render: (model) ->
     if model? then @model = model
