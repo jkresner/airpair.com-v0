@@ -233,6 +233,7 @@ class exports.RequestFormView extends BB.ModelSaveView
     @render()
     @collection.fetch()
   suggestDev: (e) ->
+    if @$('#reqDev').val() == '' then alert 'select a dev'; return false
     # todo, check for duplicates
     @model.get('suggested').push
       status: 'unconfirmed'
@@ -254,14 +255,17 @@ class exports.RequestFormView extends BB.ModelSaveView
     d
   sendMatchedMail: (e) ->
     e.preventDefault()
-    devId = parseInt $(e.currentTarget).attr('data-id')
+    devId = $(e.currentTarget).data 'id'
     skillList = @model.skillList()
     developers = _.pluck @model.get('suggested'), 'dev'
-    dev = _.find developers, (d) -> d.id == devId
+    dev = _.find developers, (d) -> d._id == devId
+    companyId = @model.get 'companyId',
+    #$log 'companyId', companyId, @companys.models
+    company = _.find @companys.models, (m) -> m.id == companyId
+    #$log 'company', company
     mailtoAddress = "#{dev.name}%20%3c#{dev.email}%3e"
-    body = @mailTmpl dev_name: dev.name, entrepreneur_name: @model.get('contacts')[0].name, leadId: @model.id
+    body = @mailTmpl dev_name: dev.name, entrepreneur_name: company.get('contacts')[0].fullName, leadId: @model.get('_id')
     window.open "mailto:#{mailtoAddress}?subject=airpair - Help an entrepreneur with#{skillList}?&body=#{body}"
-    $log 'sendMatchedMail.sent'
   sendDevsContacted: (e) ->
     e.preventDefault()
     cid = @model.get 'companyId'
@@ -271,7 +275,6 @@ class exports.RequestFormView extends BB.ModelSaveView
     mailtoAddress = "#{customer.fullName}%20%3c#{customer.email}%3e"
     body = @mailTmpl2 entrepreneur_name: customer.name, leadId: @model.id
     window.open "mailto:#{mailtoAddress}?subject=airpair - We've got you some devs!&body=#{body}"
-    $log 'sendDevsContacted.sent'
 
 #############################################################################
 
