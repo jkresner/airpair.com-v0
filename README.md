@@ -28,7 +28,7 @@ Monday done
 
 
 Things to pair with
-
+f
 - How can I run brunch to rebuild automatically when in node mode
 - Review document schema & nested calls + devs etc.
 - Updating Schema
