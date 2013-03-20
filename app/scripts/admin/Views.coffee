@@ -324,10 +324,14 @@ class exports.ReviewView extends BB.BadassView
     @
   tmplData: ->
     d = @model.toJSON()
-    _.extend d, {
+    $log 'd', d
+    d.brief = d.brief.replace(/\n/g, '<br />')
+    #if d.company.about?
+    #  d.company.about = d.company.about(/\n/g, '<br />')
+    _.extend d,
       createdDate:        new Date(d.events[0].utc).toDateString()
       skillList:          @model.skillListLabeled()
-    }
+
 
 
 Handlebars.registerPartial "devLinks", tmpl_links
