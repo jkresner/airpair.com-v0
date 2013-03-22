@@ -51,6 +51,7 @@ class exports.Request extends BB.BadassModel
     suggested:      []
     calls:          []
     events:         []
+    availability:   []
   validation:
     status:         { required: true }
     companyId:      { required: true }

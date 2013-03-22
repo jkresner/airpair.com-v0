@@ -227,16 +227,22 @@ class exports.RequestFormView extends BB.ModelSaveView
     @$el.html @tmpl tmplData
     @$('#reqCompany').val @model.get 'companyId'
     @$('#reqStatus').val @model.get 'status'
+    @$('#reqAvailability').datetimepicker( minuteStep: 30, autoclose: true )
+    @$('#reqAvailability').on 'dateChanged', @addAvailability
     @
   renderSuccess: (model, response, options) =>
     @$('.alert-success').fadeIn(800).fadeOut(5000)
     @render()
     @collection.fetch()
+  addAvailability: (e) =>
+    # todo, check for duplicates
+    @model.get('availability').push e.date
+    @save e   #some funky shit going on with skills, this just works because of getViewData
   suggestDev: (e) ->
     if @$('#reqDev').val() == '' then alert 'select a dev'; return false
     # todo, check for duplicates
     @model.get('suggested').push
-      status: 'unconfirmed'
+      status: 'awaiting'
       events: [{'created': new Date() }]
       dev: { _id: @$('#reqDev').val(), name: @$('#reqDev option:selected').text() }
       availability: []

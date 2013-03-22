@@ -7,16 +7,16 @@ Request status
 
   received      : requires review by airpair
   incomplete    : more detail required
-  review        : company must choose one or more developers
+  review        : company must review & choose one or more developers
   scheduled     : one or more airpairs scheduled
   completed     : feedback on all calls collected
   canceled      : company has canceled the request
 
-  after a user saves info from incomplete state, request goes back into received
+  ** after a user saves info from incomplete state, request goes back into received
 
 Suggestion status
 
-  unconfirmed   : waiting on the developer for availability & relevance
+  awaiting   : waiting on the developer for availability & relevance
   passed        : if developer is not available or
   available     : developer would like to take the call
   booked        : developer has been booked for an airpair

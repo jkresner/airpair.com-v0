@@ -30,6 +30,7 @@ Monday done
 Things to pair with
 
 - How can I run brunch to rebuild automatically when in node mode
+- How can I rename a mongo collection
 - Review document schema & nested calls + devs etc.
 - Updating Schema
 - Dates with mongo
