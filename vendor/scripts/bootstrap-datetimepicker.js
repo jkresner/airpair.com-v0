@@ -856,6 +856,10 @@
           //this.hide();
         }
       }
+      this.element.trigger({
+        type: 'dateChanged',
+        date: this.date
+      });
     },
 
     moveHour: function(date, dir){
