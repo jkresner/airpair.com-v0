@@ -212,6 +212,7 @@ class exports.RequestFormView extends BB.ModelSaveView
     'click .save': 'save'
     'click .suggestDev': 'suggestDev'
     'click .deleteSuggested': 'suggestRemove'
+    'click .deleteAvalability': 'deleteAvalability'
     'click .delete': ->
       @model.destroy()
       @collection.fetch()
@@ -238,6 +239,11 @@ class exports.RequestFormView extends BB.ModelSaveView
     # todo, check for duplicates
     @model.get('availability').push e.date
     @save e   #some funky shit going on with skills, this just works because of getViewData
+  deleteAvalability: (e) ->
+    toRemove = $(e.currentTarget).data 'val'
+    @model.set 'availability', _.without( @model.get('availability'), toRemove )
+    $log ''
+    @save e
   suggestDev: (e) ->
     if @$('#reqDev').val() == '' then alert 'select a dev'; return false
     # todo, check for duplicates

@@ -41,6 +41,7 @@ a:hover { color:black; }
 #requestForm textarea { width:90%;height:120px; }
 #requestForm #reqTech { width:90% }
 #requestForm .deleteSuggested { color:red; }
+#requestForm .deleteAvalability { color:red; }
 
 .alert { display:none }
 

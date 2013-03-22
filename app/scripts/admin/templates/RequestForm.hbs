@@ -56,11 +56,11 @@
   <div class="control-group">
     <label class="control-label" for="reqStatus">Availability</label>
     <div class="controls">
-      <input type="text" id="reqAvailability" data-error-style="inline" name="skills"/>
+      <input type="text" id="reqAvailability" placeholder="select time" data-error-style="inline" name="availabilty"/>
       <span id="reqTimezone"></span>
       <div>
         {{#each availability}}
-          <div>{{this}}</div>
+          <div>{{this}} <a href="#" class="deleteAvalability" data-val="{{this}}">x</a></div>
         {{/each}}
       </div>
     </div>
