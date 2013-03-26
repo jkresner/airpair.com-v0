@@ -1,0 +1,10 @@
+<label class="control-label" for="reqCalls">Calls</label>
+<div class="controls">
+  <select id="reqCall">
+    <option value=""></option>
+    {{#each suggested}}
+    <option value="{{ dev._id }}">{{dev.name}}</option>
+    {{/each}}
+    <a class="addCall" href="#">add</a>
+  </select>
+</div>

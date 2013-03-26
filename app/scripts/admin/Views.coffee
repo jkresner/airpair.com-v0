@@ -198,53 +198,53 @@ class exports.CompanysView extends DataListView
 #############################################################################
 
 
-class exports.RequestFormView extends BB.ModelSaveView
+class exports.RequestFormInfoView extends BB.BadassView
   logging: on
-  async: off
-  el: '#requestForm'
-  tmpl: require './templates/RequestForm'
-  viewData: ['companyId','status','skills','brief','canceledReason']
-  mailTmpl: require './../../mail/developerMatched'
-  mailTmpl2: require './../../mail/developersContacted'
+  el: '#reqInfo'
+  tmpl: require './templates/RequestFormInfo'
   events:
-    'click a.mailMatched': 'sendMatchedMail'
-    'click a#mailDevsContacted': 'sendDevsContacted'
-    'click .save': 'save'
-    'click .suggestDev': 'suggestDev'
-    'click .deleteSuggested': 'suggestRemove'
     'click .deleteAvalability': 'deleteAvalability'
-    'click .delete': ->
-      @model.destroy()
-      @collection.fetch()
-      router.naviate '#', false
-      false
   initialize: ->
-    @model.on 'change', @render, @
     @companys.on 'reset', @render, @
-    @devs.on 'reset', @render, @
-  render: (model) ->
-    if model? && model.set? then @model = model
-    tmplData = _.extend @model.toJSON(), { companys: @companys.toJSON(), devs: @devs.toJSON(), skillsSoIds: @model.skillSoIdsList() }
-    @$el.html @tmpl tmplData
+    @model.on 'change', @render, @
+  render: ->
+    tmplData = _.extend @model.toJSON(), { companys: @companys.toJSON(), skillsSoIds: @model.skillSoIdsList() }
+    @$el.html @tmpl @model.toJSON(), tmplData
+    $log 'RequestFormInfoView.render', tmplData
     @$('#reqCompany').val @model.get 'companyId'
     @$('#reqStatus').val @model.get 'status'
     @$('#reqAvailability').datetimepicker( minuteStep: 30, autoclose: true )
     @$('#reqAvailability').on 'dateChanged', @addAvailability
+    @$('#reqStatus').on 'change', =>
+      @$('#canceled-control-group').toggle @$('#reqStatus').val() == 'canceled'
     @
-  renderSuccess: (model, response, options) =>
-    @$('.alert-success').fadeIn(800).fadeOut(5000)
-    @render()
-    @collection.fetch()
   addAvailability: (e) =>
     # todo, check for duplicates
     @model.get('availability').push e.date
-    @save e   #some funky shit going on with skills, this just works because of getViewData
+    @parentView.save e   #some funky shit going on with skills, this just works because of getViewData
   deleteAvalability: (e) ->
     toRemove = $(e.currentTarget).data 'val'
     @model.set 'availability', _.without( @model.get('availability'), toRemove )
     $log ''
-    @save e
-  suggestDev: (e) ->
+    @parentView.save e
+
+
+class exports.RequestFormSuggestionsView extends BB.BadassView
+  logging: on
+  el: '#reqSuggestions'
+  tmpl: require './templates/RequestFormSuggestions'
+  mailTmpl: require './../../mail/developerMatched'
+  events:
+    'click .suggestDev': 'add'
+    'click .deleteSuggested': 'remove'
+    'click a.mailMatched': 'sendMatchedMail'
+  initialize: ->
+    @devs.on 'reset', @render, @
+  render: ->
+    tmplData = _.extend @model.toJSON(), { devs: @devs.toJSON() }
+    $log 'render suggestions', @, @$el, @tmpl, tmplData
+    @$el.html @tmpl tmplData
+  add: (e) ->
     if @$('#reqDev').val() == '' then alert 'select a dev'; return false
     # todo, check for duplicates
     @model.get('suggested').push
@@ -253,19 +253,16 @@ class exports.RequestFormView extends BB.ModelSaveView
       dev: { _id: @$('#reqDev').val(), name: @$('#reqDev option:selected').text() }
       availability: []
       comment: ''
-    @save e
-  suggestRemove: (e) ->
+    @parentView.save e
+  remove: (e) ->
     suggestionId = $(e.currentTarget).data 'id'
     toRemove = _.find @model.get('suggested'), (d) -> d._id = suggestionId
     $log 'suggestRemove', suggestionId, toRemove
     @model.set 'suggested', _.without( @model.get('suggested'), toRemove )
-    @save e
+    @parentView.save e
     @render()
-  getViewData: ->
-    d = @getValsFromInputs @viewData
-    d.companyName = @$('#reqCompany option:selected').text()
-    d
   sendMatchedMail: (e) ->
+    $log 'sendMatchedMail'
     e.preventDefault()
     devId = $(e.currentTarget).data 'id'
     skillList = @model.skillList()
@@ -278,6 +275,46 @@ class exports.RequestFormView extends BB.ModelSaveView
     mailtoAddress = "#{dev.name}%20%3c#{dev.email}%3e"
     body = @mailTmpl dev_name: dev.name, entrepreneur_name: company.get('contacts')[0].fullName, leadId: @model.get('_id')
     window.open "mailto:#{mailtoAddress}?subject=airpair - Help an entrepreneur with#{skillList}?&body=#{body}"
+
+
+class exports.RequestFormCallsView extends BB.BadassView
+
+
+class exports.RequestFormView extends BB.ModelSaveView
+  logging: on
+  async: off
+  el: '#requestForm'
+  tmpl: require './templates/RequestForm'
+  viewData: ['companyId','status','skills','brief','canceledReason']
+  mailTmpl: require './../../mail/developersContacted'
+  events:
+    'click a#mailDevsContacted': 'sendDevsContacted'
+    'click .save': 'save'
+    'click .delete': ->
+      @model.destroy()
+      @collection.fetch()
+      router.naviate '#', false
+      false
+  initialize: ->
+    @$el.html @tmpl()
+    @infoView = new exports.RequestFormInfoView model: @model, companys: @companys, parentView: @
+    @suggestionsView = new exports.RequestFormSuggestionsView model: @model, devs: @devs, parentView: @
+    @callsView = new exports.RequestFormCallsView model: @model, parentView: @
+    @model.on 'change', @render, @
+  render: (model) ->
+    if model? && model.set? then @model = model
+    @infoView.render()
+    @suggestionsView.render()
+    @callsView.render()
+    @
+  renderSuccess: (model, response, options) =>
+    @$('.alert-success').fadeIn(800).fadeOut(5000)
+    @render()
+    @collection.fetch()
+  getViewData: ->
+    d = @getValsFromInputs @viewData
+    d.companyName = @$('#reqCompany option:selected').text()
+    d
   sendDevsContacted: (e) ->
     e.preventDefault()
     cid = @model.get 'companyId'

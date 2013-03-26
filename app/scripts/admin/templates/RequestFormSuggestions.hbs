@@ -1,0 +1,35 @@
+<label class="control-label" for="reqSuggested">Suggested</label>
+<div class="controls">
+  <select id="reqDev">
+    <option value=""></option>
+    {{#each devs}}
+    <option value="{{ _id }}">{{ name }}</option>
+    {{/each}}
+  </select>
+  <a class="suggestDev" href="#">add</a>
+
+  <table id="suggested" class="table table-striped">
+      <thead>
+        <tr>
+          <th>Name</th>
+          {{! <th>Contacted</th> }}
+          <th>Mail</th>
+          <th>Status</th>
+          {{! <th>Schedule</th> }}
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+      {{#each suggested }}
+        <tr>
+          <td>{{ dev.name }}</td>
+          {{! <td>{{ contacted </td> }}
+          <td><a href="#" class="mailMatched" data-id="{{ dev._id }}">matched</a></td>
+          <td><a href="#" class="updateStatus">{{ status }}</a></td>
+          {{! <td>{{ availabilty </td> }}
+          <td><a href="#" class="deleteSuggested" data-id="{{ _id }}">x</a></td>
+        </tr>
+      {{/each}}
+      </tbody>
+    </table>
+</div>

@@ -1,0 +1,61 @@
+<legend>Info <a href="/review#{{ _id }}" target="_blank">review</a></legend>
+<div class="control-group">
+  <label class="control-label" for="reqCompanyName">Company</label>
+  <div class="controls">
+    <select id="reqCompany" name="companyId">
+      <option vale=""></option>
+      {{#each companys}}
+      <option value="{{ _id }}">{{ name }}</option>
+      {{/each}}
+    </select>
+  </div>
+</div>
+
+<div class="control-group">
+  <label class="control-label" for="reqStatus">Status</label>
+  <div class="controls">
+    <select id="reqStatus" name="status">
+      <option value="">please select ...</option>
+      <option>received</option>
+      <option>incomplete</option>
+      <option>review</option>
+      <option>scheduled</option>
+      <option>completed</option>
+      <option>canceled</option>
+    </select>
+  </div>
+</div>
+
+<div id="canceled-control-group" class="control-group" style="display:none">
+  <label class="control-label" for="reqCanceledReason">Canceled Reason</label>
+  <div class="controls">
+    <textarea id="reqCanceledReason" name="canceledReason">{{ canceledReason }}</textarea>
+  </div>
+</div>
+
+<div class="control-group">
+  <label class="control-label" for="reqStatus">Technologies</label>
+  <div class="controls">
+    <input type="text" id="reqTech" placeholder="Enter tech" value="{{ skillsSoIds }}" data-error-style="inline" name="skills"/>
+  </div>
+</div>
+
+<div class="control-group">
+  <label class="control-label" for="reqBrief">Brief</label>
+  <div class="controls">
+    <textarea id="reqBrief" name="brief">{{ brief }}</textarea>
+  </div>
+</div>
+
+<div class="control-group">
+  <label class="control-label" for="reqStatus">Availability</label>
+  <div class="controls">
+    <input type="text" id="reqAvailability" placeholder="select time" data-error-style="inline" name="availabilty"/>
+    <span id="reqTimezone"></span>
+    <div>
+      {{#each availability}}
+        <div>{{this}} <a href="#" class="deleteAvalability" data-val="{{this}}">x</a></div>
+      {{/each}}
+    </div>
+  </div>
+</div>
