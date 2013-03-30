@@ -7,7 +7,7 @@ module.exports = class BadassView extends Backbone.View
   # Set logging on /off
   # Why? : During dev it's handy to see the flow your views execute in
   #        to confirm you don't have extra listeners firing etc.
-  logging: on
+  logging: off
 
   # Set autoSetConstructorArgs on /off
   # Why? : Often with bigger apps views are associated with multiple
