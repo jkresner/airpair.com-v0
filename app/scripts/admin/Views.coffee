@@ -223,7 +223,6 @@ class exports.RequestRowView extends BB.BadassView
 
 
 class exports.RequestsView extends BB.BadassView
-  logging: on
   el: '#requests'
   tmpl: require './templates/Requests'
   initialize: (args) ->

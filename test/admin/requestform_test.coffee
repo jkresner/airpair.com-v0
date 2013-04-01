@@ -32,9 +32,9 @@ describe 'Admin:Views RequestFormInfoView =>', ->
 
   it 'request set attributes causes render', ->
     @spys.infoRender = sinon.spy V.RequestFormInfoView::, 'render'
-    # view = new V.RequestFormInfoView @viewData
-    # @request.set 'companyId': 123123
-    # expect(@spys.infoRender.calledOnce).to.be.true
+    view = new V.RequestFormInfoView @viewData
+    @request.set 'companyId': 123123
+    expect(@spys.infoRender.calledOnce).to.be.true
 
 
 describe 'Admin:Views RequestFormView =>', ->

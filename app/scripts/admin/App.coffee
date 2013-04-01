@@ -17,7 +17,7 @@ module.exports.Page = class Page
     @currentRequest = new models.Request()
 
     @requestsView = new views.RequestsView collection: @requests
-    @requestFormView = new views.RequestFormView model: new models.Request(), companys: @companys, devs: @devs, collection: @requests
+    @requestFormView = new views.RequestFormView model: @currentRequest, companys: @companys, devs: @devs, collection: @requests
     @skillsView = new views.SkillsView collection: @skills
     @devsView = new views.DevsView collection: @devs
     @companysView = new views.CompanysView collection: @companys

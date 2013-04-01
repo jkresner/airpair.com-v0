@@ -4,17 +4,17 @@ M = require './Models'
 
 
 class exports.RequestFormInfoView extends BB.BadassView
-  logging: on
+  #logging: on
   el: '#reqInfo'
   tmpl: require './templates/RequestFormInfo'
   events:
     'click .deleteAvalability': 'deleteAvalability'
   initialize: ->
-    @listenTo @companys, 'sync', @render
     @listenTo @model, 'change', @render
+    @listenTo @collection, 'sync', @render
   render: ->
-    if @companys.length is 0 then return
-    tmplData = _.extend @model.toJSON(), { companys: @companys.toJSON(), skillsSoIds: @model.skillSoIdsList() }
+    if @collection.length is 0 then $log 'no companies'; return
+    tmplData = _.extend @model.toJSON(), { companys: @collection.toJSON(), skillsSoIds: @model.skillSoIdsList() }
     @$el.html @tmpl tmplData
     #$log 'RequestFormInfoView.render', arguments, tmplData
     @$('#reqCompany').val @model.get 'companyId'
@@ -25,6 +25,7 @@ class exports.RequestFormInfoView extends BB.BadassView
       @$('#canceled-control-group').toggle @$('#reqStatus').val() == 'canceled'
     @
   addAvailability: (e) =>
+    # this one is comes back from the datetimepicker event handler
     # todo, check for duplicates
     @model.get('availability').push e.date
     @parentView.save e   #some funky shit going on with skills, this just works because of getViewData
@@ -44,12 +45,13 @@ class exports.RequestFormSuggestionsView extends BB.BadassView
     'click .deleteSuggested': 'remove'
     'click a.mailMatched': 'sendMatchedMail'
   initialize: ->
-    @listenTo @devs, 'sync', @render
+    @listenTo @collection, 'sync', @render
     @listenTo @model, 'change', @render
   render: ->
-    tmplData = _.extend @model.toJSON(), { devs: @devs.toJSON() }
+    tmplData = _.extend @model.toJSON(), { devs: @collection.toJSON() }
     #$log 'render suggestions', @, @$el, @tmpl, tmplData
     @$el.html @tmpl tmplData
+    @
   add: (e) ->
     if @$('#reqDev').val() == '' then alert 'select a dev'; return false
     # todo, check for duplicates
@@ -97,17 +99,17 @@ class exports.RequestFormView extends BB.ModelSaveView
   viewData: ['companyId','status','skills','brief','canceledReason']
   mailTmpl: require './../../mail/developersContacted'
   events:
-    'click a#mailDevsContacted': 'sendDevsContacted'
+    'click #mailDevsContacted': 'sendDevsContacted'
     'click .save': 'save'
     'click .delete': 'deleteRequest'
   initialize: ->
     @$el.html @tmpl()
-    @infoView = new exports.RequestFormInfoView model: @model, companys: @companys, parentView: @
-    @suggestionsView = new exports.RequestFormSuggestionsView model: @model, devs: @devs, parentView: @
+    @infoView = new exports.RequestFormInfoView model: @model, collection: @companys, parentView: @
+    @suggestionsView = new exports.RequestFormSuggestionsView model: @model, collection: @devs, parentView: @
     @callsView = new exports.RequestFormCallsView model: @model, parentView: @
   renderSuccess: (model, response, options) =>
     @$('.alert-success').fadeIn(800).fadeOut(5000)
-    @model.set model.attributes
+    # @model.set model.attributes
     @collection.fetch()
   getViewData: ->
     d = @getValsFromInputs @viewData
@@ -118,7 +120,7 @@ class exports.RequestFormView extends BB.ModelSaveView
     cid = @model.get 'companyId'
     company = _.find @companys.models, (m) -> m.get('_id') == cid
     customer = company.get('contacts')[0]
-    $log 'sendDevsContacted', customer, cid
+    # $log 'sendDevsContacted', customer, cid
     mailtoAddress = "#{customer.fullName}%20%3c#{customer.email}%3e"
     body = @mailTmpl2 entrepreneur_name: customer.name, leadId: @model.id
     window.open "mailto:#{mailtoAddress}?subject=airpair - We've got you some devs!&body=#{body}"

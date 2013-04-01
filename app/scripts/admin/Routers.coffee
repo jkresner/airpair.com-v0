@@ -39,17 +39,15 @@ class exports.AdminRouter extends Backbone.Router
 
 
   requestForm: (id) ->
-    $log 'Router.requestForm', id
+    $log 'Router.requestForm', id, @page.currentRequest
     if !id?
       @page.currentRequest.clearAndSetDefaults()
     else
       request = _.find @page.requests.models, (m) -> m.get('_id').toString() == id
       if !request? then return @navigate '#', true
       else
-        $log 'setting current request', request.attributes
         @page.currentRequest.set request.attributes
 
-    @page.requestFormView.render @page.currentRequest
     @hideshow '#requestForm'
 
 
