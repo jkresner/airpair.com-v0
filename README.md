@@ -34,8 +34,8 @@ Things to pair with
 - Review document schema & nested calls + devs etc.
 - Updating Schema
 - Dates with mongo
-- Getting mongoDB data to and from heroku
 - collecting JS dates
+- Mongo performance
 
 
 Test To Implement (Confirmed Manually)
