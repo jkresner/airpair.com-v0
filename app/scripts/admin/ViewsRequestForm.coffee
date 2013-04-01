@@ -119,7 +119,7 @@ class exports.RequestFormView extends BB.ModelSaveView
     customer = company.get('contacts')[0]
     # $log 'sendDevsContacted', customer, cid
     mailtoAddress = "#{customer.fullName}%20%3c#{customer.email}%3e"
-    body = @mailTmpl2 entrepreneur_name: customer.name, leadId: @model.id
+    body = @mailTmpl entrepreneur_name: customer.name, leadId: @model.id
     window.open "mailto:#{mailtoAddress}?subject=airpair - We've got you some devs!&body=#{body}"
   deleteRequest: ->
     model.destroy()
