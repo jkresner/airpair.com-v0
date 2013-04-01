@@ -57,37 +57,27 @@ class exports.Request extends BB.BadassModel
     companyId:      { required: true }
     companyName:    { required: true }
     brief:          { required: true }
-  clean: ->
+  createdDateString: ->
+    if !@get('events')? || @get('events').length < 1
+      'create event missing'
+    else
+      new Date(@get('events')[0].utc).toDateString().replace(' 2013','')
+  clearAndSetDefaults: ->
     @clear()
     @set @defaults
-  skillSoIdsList: ->
-    skillsShortNames = _.pluck @get('skills'), 'soId'
-    skillList = '';
-    skillList += ',' + s for s in skillsShortNames
-    skillList.substring 1, skillList.length
-  skillList: ->
-    skillsShortNames = _.pluck @get('skills'), 'shortName'
-    skillList = '';
-    skillList += ' ' + s for s in skillsShortNames
-    skillList
-  skillListLabeled: ->
-    skillsShortNames = _.pluck @get('skills'), 'shortName'
-    skillList = '';
-    skillList += '<span class="label label-skill">' + s + "</span>" for s in skillsShortNames
-    skillList
 
 
-class exports.Lead extends BB.BadassModel
-  skillList: ->
-    skillsShortNames = _.pluck @get('skills'), 'shortName'
-    skillList = '';
-    skillList += ' ' + s for s in skillsShortNames
-    skillList
-  skillListLabeled: ->
-    skillsShortNames = _.pluck @get('skills'), 'shortName'
-    skillList = '';
-    skillList += '<span class="label label-skill">' + s + "</span>" for s in skillsShortNames
-    skillList
+# class exports.Lead extends BB.BadassModel
+#   skillList: ->
+#     skillsShortNames = _.pluck @get('skills'), 'shortName'
+#     skillList = '';
+#     skillList += ' ' + s for s in skillsShortNames
+#     skillList
+#   skillListLabeled: ->
+#     skillsShortNames = _.pluck @get('skills'), 'shortName'
+#     skillList = '';
+#     skillList += '<span class="label label-skill">' + s + "</span>" for s in skillsShortNames
+#     skillList
 
 
 module.exports = exports
