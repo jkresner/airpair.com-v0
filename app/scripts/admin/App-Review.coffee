@@ -2,7 +2,7 @@ try require './../../stubs/base'
 BB = require './../../lib/BB'
 models = require './Models'
 collections = require './Collections'
-views = require './Views'
+views = require './ViewsReview'
 routers = require './Routers'
 
 

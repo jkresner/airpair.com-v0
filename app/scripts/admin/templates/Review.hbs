@@ -29,7 +29,11 @@
 
   <div class="controls">
     <label>Requirements</label>
-    <span id="skills">{{{skillList}}</span>
+    <span id="skills">
+      {{#each skills}}
+        <span class="label label-skill">{{name}}</span>
+      {{/each}}
+    </span>
     <div id="brief">{{{ brief }}}</div>
   </div>
 
