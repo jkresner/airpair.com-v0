@@ -4,7 +4,6 @@ M = require './Models'
 
 
 class exports.RequestFormInfoView extends BB.BadassView
-  #logging: on
   el: '#reqInfo'
   tmpl: require './templates/RequestFormInfo'
   events:
@@ -13,7 +12,7 @@ class exports.RequestFormInfoView extends BB.BadassView
     @listenTo @model, 'change', @render
     @listenTo @collection, 'sync', @render
   render: ->
-    if @collection.length is 0 then $log 'no companies'; return
+    if @collection.length is 0 then return
     tmplData = _.extend @model.toJSON(), { companys: @collection.toJSON(), skillsSoIds: @model.skillSoIdsList() }
     @$el.html @tmpl tmplData
     #$log 'RequestFormInfoView.render', arguments, tmplData
@@ -57,7 +56,7 @@ class exports.RequestFormSuggestionsView extends BB.BadassView
     # todo, check for duplicates
     @model.get('suggested').push
       status: 'awaiting'
-      events: [{'created': new Date() }]
+      events: [{ 'created': new Date() }]
       dev: { _id: @$('#reqDev').val(), name: @$('#reqDev option:selected').text() }
       availability: []
       comment: ''
@@ -68,21 +67,19 @@ class exports.RequestFormSuggestionsView extends BB.BadassView
     $log 'suggestRemove', suggestionId, toRemove
     @model.set 'suggested', _.without( @model.get('suggested'), toRemove )
     @parentView.save e
-    @render()
   sendMatchedMail: (e) ->
-    $log 'sendMatchedMail'
     e.preventDefault()
     devId = $(e.currentTarget).data 'id'
-    skillList = @model.skillList()
+    skillList = @model.skillSoIdsList()
     developers = _.pluck @model.get('suggested'), 'dev'
     dev = _.find developers, (d) -> d._id == devId
     companyId = @model.get 'companyId',
-    $log 'companyId', companyId, @companys.models
-    company = _.find @companys.models, (m) -> m.id == companyId
-    $log 'company', company
+    $log 'companyId', companyId, @companys.models, @model
+    company = @companys.findWhere _id: companyId
+    #$log 'company', company
     mailtoAddress = "#{dev.name}%20%3c#{dev.email}%3e"
     body = @mailTmpl dev_name: dev.name, entrepreneur_name: company.get('contacts')[0].fullName, leadId: @model.get('_id')
-    window.open "mailto:#{mailtoAddress}?subject=airpair - Help an entrepreneur with#{skillList}?&body=#{body}"
+    window.open "mailto:#{mailtoAddress}?subject=airpair - Help an entrepreneur with #{skillList}?&body=#{body}"
 
 
 class exports.RequestFormCallsView extends BB.BadassView
@@ -105,7 +102,7 @@ class exports.RequestFormView extends BB.ModelSaveView
   initialize: ->
     @$el.html @tmpl()
     @infoView = new exports.RequestFormInfoView model: @model, collection: @companys, parentView: @
-    @suggestionsView = new exports.RequestFormSuggestionsView model: @model, collection: @devs, parentView: @
+    @suggestionsView = new exports.RequestFormSuggestionsView model: @model, collection: @devs, companys: @companys, parentView: @
     @callsView = new exports.RequestFormCallsView model: @model, parentView: @
   renderSuccess: (model, response, options) =>
     @$('.alert-success').fadeIn(800).fadeOut(5000)
