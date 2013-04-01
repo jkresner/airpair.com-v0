@@ -22,10 +22,10 @@ module.exports.Page = class Page
     @devsView = new views.DevsView collection: @devs
     @companysView = new views.CompanysView collection: @companys
 
-    if pageData.skills? then @skills.reset pageData.skills else @skills.fetch()
-    if pageData.devs? then @devs.reset pageData.devs else @devs.fetch()
-    if pageData.companys? then @companys.reset pageData.companys else @companys.fetch()
-    if pageData.requests? then @requests.reset pageData.requests else @requests.fetch()
+    if pageData.skills? then @skills.reset pageData.skills else @skills.fetch({reset:true})
+    if pageData.devs? then @devs.reset pageData.devs else @devs.fetch({reset:true})
+    if pageData.companys? then @companys.reset pageData.companys else @companys.fetch({reset:true})
+    if pageData.requests? then @requests.reset pageData.requests else @requests.fetch({reset:true})
 
 
 module.exports.Router = routers.AdminRouter
