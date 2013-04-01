@@ -100,8 +100,7 @@ class exports.DevRowView extends BB.BadassView
   tmpl: require './templates/DevRow'
   initialize: -> @model.on 'change', @render, @
   render: ->
-    tmpl_data = _.extend @model.toJSON(), { skillsList: @model.skillListLabeled() }
-    @$el.html @tmpl tmpl_data
+    @$el.html @tmpl @model.toJSON()
     @
 
 
@@ -213,7 +212,7 @@ class exports.RequestRowView extends BB.BadassView
     @
   tmplData: ->
     data = @model.toJSON()
-    $log 'RequestRowView.tmplData', data
+    #$log 'RequestRowView.tmplData', data
     _.extend @model.toJSON(), {
       createdDate:        @model.createdDateString()
       suggestedCount:     data.suggested.length

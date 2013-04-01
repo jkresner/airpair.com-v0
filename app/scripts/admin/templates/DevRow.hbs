@@ -3,6 +3,10 @@
     <b>{{ name }}</b></a><br /><a href="mailto:{{ email }}">{{ email }}</a>
     <a class="delete" href="#" data-id="{{ _id }}">x</a>
 </td>
-<td class="skills">{{{ skillsList }}}</td>
+<td class="skills">
+  {{#each skills}}
+    <span class="label label-skill">{{shortName}}</span>
+  {{/each}}
+</td>
 <td class="links">{{> devLinks }}</td>
 <td>{{ rate }}</td>
