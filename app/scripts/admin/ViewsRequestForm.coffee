@@ -10,13 +10,13 @@ class exports.RequestFormInfoView extends BB.BadassView
   events:
     'click .deleteAvalability': 'deleteAvalability'
   initialize: ->
-    @listenTo @companys, 'reset', @render
+    @listenTo @companys, 'sync', @render
     @listenTo @model, 'change', @render
   render: ->
     if @companys.length is 0 then return
     tmplData = _.extend @model.toJSON(), { companys: @companys.toJSON(), skillsSoIds: @model.skillSoIdsList() }
     @$el.html @tmpl tmplData
-    $log 'RequestFormInfoView.render', arguments, tmplData
+    #$log 'RequestFormInfoView.render', arguments, tmplData
     @$('#reqCompany').val @model.get 'companyId'
     @$('#reqStatus').val @model.get 'status'
     @$('#reqAvailability').datetimepicker( minuteStep: 30, autoclose: true )
@@ -31,7 +31,6 @@ class exports.RequestFormInfoView extends BB.BadassView
   deleteAvalability: (e) ->
     toRemove = $(e.currentTarget).data 'val'
     @model.set 'availability', _.without( @model.get('availability'), toRemove )
-    $log ''
     @parentView.save e
 
 
@@ -45,11 +44,11 @@ class exports.RequestFormSuggestionsView extends BB.BadassView
     'click .deleteSuggested': 'remove'
     'click a.mailMatched': 'sendMatchedMail'
   initialize: ->
-    @listenTo @devs, 'reset', @render
+    @listenTo @devs, 'sync', @render
     @listenTo @model, 'change', @render
   render: ->
     tmplData = _.extend @model.toJSON(), { devs: @devs.toJSON() }
-    $log 'render suggestions', @, @$el, @tmpl, tmplData
+    #$log 'render suggestions', @, @$el, @tmpl, tmplData
     @$el.html @tmpl tmplData
   add: (e) ->
     if @$('#reqDev').val() == '' then alert 'select a dev'; return false
