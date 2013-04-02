@@ -230,7 +230,13 @@ class exports.RequestsView extends BB.BadassView
   render: ->
     @$el.html @tmpl( count: @collection.length )
     for m in @collection.models
-      @$('tbody').append new exports.RequestRowView( model: m ).render().el
+      if m.get('status') is 'canceled'
+        @$('#cancelled tbody').append new exports.RequestRowView( model: m ).render().el
+      else if  m.get('status') is 'completed'
+        @$('#completed tbody').append new exports.RequestRowView( model: m ).render().el
+      else
+        @$('#inProgress tbody').append new exports.RequestRowView( model: m ).render().el
+
     @
 
 
