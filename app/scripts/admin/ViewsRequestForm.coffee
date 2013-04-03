@@ -63,7 +63,7 @@ class exports.RequestFormSuggestionsView extends BB.BadassView
     @parentView.save e
   remove: (e) ->
     suggestionId = $(e.currentTarget).data 'id'
-    toRemove = _.find @model.get('suggested'), (d) -> d._id = suggestionId
+    toRemove = _.find @model.get('suggested'), (d) -> d._id == suggestionId
     $log 'suggestRemove', suggestionId, toRemove
     @model.set 'suggested', _.without( @model.get('suggested'), toRemove )
     @parentView.save e
