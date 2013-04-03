@@ -49,6 +49,4 @@
   mar19: new Date 'Mar 19, 2013'
 
 
-require './skills'
-require './devs'
-require './admin'
+#require './skills'

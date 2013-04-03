@@ -1,41 +1,26 @@
-airpair.co
-
-site hosted at http://airpair.co/
+site hosted at airpair.com
 
 
-
-To run airpair.co locally:
-
+To run locally:
 
 1)   npm install brunch -g
 
-2)   brunch w -s    or    brunch watch --server
+2)   brunch w -s      (or  brunch watch --server)
 
 3)   http://localhost:3333/
 
 
 
-
-Everything inside of '/app' is client only files, which brunch compiles in '/public'
-
-
-Monday done
-
-- Add / edit => | Company | Skill | Dev | Request
-- Assign Dev
-- Review
-
-
-
 Things to pair with
 
-- How can I run brunch to rebuild automatically when in node mode
-- How can I rename a mongo collection
-- Review document schema & nested calls + devs etc.
-- Updating Schema
+- Standard rest update call to mongo?
+- Review document schema & nested calls (getSkills) in devs etc.
+- How to run brunch to rebuild automatically when in node mode
+- How to rename a mongo collection
+- How to updating schema
 - Dates with mongo
 - collecting JS dates
-- Mongo performance
+
 
 
 Test To Implement (Confirmed Manually)

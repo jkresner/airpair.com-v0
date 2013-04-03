@@ -38,9 +38,7 @@
 
       function initSPA(SPA) {
 
-          var pagedata = {
-            leads: stubs.admin.leads
-          };
+          var pagedata = { };
 
           window.router = new SPA.Router({ page: new SPA.Page(pagedata) });
           Backbone.history.start();
