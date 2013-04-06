@@ -26,6 +26,7 @@ class CRUDApi
 
 
   update: (req, res) =>
+    # @model.findByIdAndUpdate req.params.id, req.params, (e, r) -> res.send r
     data = und.clone req.body
     delete data._id # so mongo doesn't complain
     @model.update { _id: req.params.id }, data, (e, r) -> res.send req.body

@@ -20,3 +20,4 @@ Things to pair with
 - How to updating schema
 - Dates with mongo
 - collecting JS dates
+- An identity system with github login
