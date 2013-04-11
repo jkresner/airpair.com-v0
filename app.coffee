@@ -11,7 +11,7 @@ app.configure ->
 api_skills = require './api/skills'
 api_devs = require './api/devs'
 api_companys = require './api/companys'
-api_requests = require './api/requests2'
+api_requests = require './api/requests'
 
 # flushDb = true
 # if flushDb
