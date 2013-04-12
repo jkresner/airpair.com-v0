@@ -34,6 +34,7 @@
     "async": "~0.2.6",
     "passport": "0.1.x",
     "passport-oauth": "0.1.x",
+    "passport-openid": "0.3.x",
     "passport-github": "0.1.x",
     "passport-google": "0.1.x",
     "passport-linkedin": "0.1.x",

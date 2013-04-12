@@ -5,21 +5,15 @@ api_devs = require './api/devs'
 api_companys = require './api/companys'
 api_requests = require './api/requests'
 
-ensureUnauthenticated = (req, res, next) ->
-  if req.isAuthenticated()
+passport = require 'passport'
+
+# ensureUnauthenticated = (req, res, next) ->
+  # if req.isAuthenticated()
     # display an "already logged in" message
-    return res.redirect('/')
-  next()
+    # return res.redirect('/')
+  # next()
 
-# authnOrAuthzFacebook = (req, res, next) ->
-#   redir = successRedirect: '/settings/accounts', failureRedirect: '/login' })(req, res, next)
-#   if !req.isAuthenticated()
-#     passport.authenticate('facebook', redir)
-#   else
-#     passport.authorize('facebook-authz')(req, res, next)
-
-
-module.exports = (app, passport) ->
+module.exports = (app) ->
 
   app.get     '/', (req, res) -> res.sendfile './public/index.html'
   app.get     '/about', (req, res) -> res.sendfile './public/index.html'
@@ -59,16 +53,15 @@ module.exports = (app, passport) ->
   app.delete  '/api/requests/:id', api_requests.delete
   app.post    '/api/requests', api_requests.post
 
+  app.get     '/auth/github', auth.github.connect
+  app.get     '/auth/github/callback', auth.github.connect, auth.github.done
 
-  app.get     '/auth/github', passport.authenticate('github')
-  app.get     '/auth/github/callback', passport.authenticate 'github', { failureRedirect: '/welcome-expert', successRedirect: '/' }
-
-  app.get     '/auth/google', passport.authenticate('google')
-  app.get     '/auth/google/callback', passport.authenticate 'google'
+  app.get     '/auth/google', auth.google.connect
+  app.get     '/auth/google/return', auth.google.connect, auth.google.done
 
   # app.get     '/facebook-login', authnOrAuthzFacebook
 
-  app.get     '/connect/twitter', passport.authorize('twitter-authz', { failureRedirect: '/account', successRedirect: '/' })
-  app.get     '/connect/twitter/callback', passport.authorize('twitter-authz', { failureRedirect: '/account' }), auth.twitterSuccessCallback
+  # app.get     '/connect/twitter', passport.authorize('twitter-authz', { failureRedirect: '/account', successRedirect: '/' })
+  # app.get     '/connect/twitter/callback', passport.authorize('twitter-authz', { failureRedirect: '/account' }), auth.twitterSuccessCallback
 
   app.get     '/logout', auth.logout

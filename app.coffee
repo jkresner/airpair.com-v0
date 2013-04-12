@@ -15,7 +15,7 @@ app.configure ->
   app.use passport.session()
 
 
-require('./app_routes')(app, passport)
+require('./app_routes')(app)
 
 
 mongoUri = process.env.MONGOHQ_URL || 'mongodb://localhost/airpair_dev'
