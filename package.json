@@ -32,7 +32,18 @@
     "mongoose": "3.x",
     "underscore": "1.4.x",
     "async": "~0.2.6",
-    "passport": "0.1.x"
+    "passport": "0.1.x",
+    "passport-oauth": "0.1.x",
+    "passport-github": "0.1.x",
+    "passport-google": "0.1.x",
+    "passport-linkedin": "0.1.x",
+    "passport-twitter": "0.1.x",
+    "passport-facebook": "0.1.x",
+    "passport-tumblr": "0.1.x",
+    "passport-bitbucket": "0.1.x",
+    "passport-angellist": "0.1.x",
+    "passport-dropbox": "0.1.x",
+    "passport-paypal": "0.1.x"
   },
   "devDependencies": {}
 }
