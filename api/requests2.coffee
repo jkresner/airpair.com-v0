@@ -13,7 +13,7 @@ class RequestApi extends CRUDApi
 ## CRUD extensions
 ###############################################################################
 
-  show: (req, res) =>
+  detail: (req, res) =>
     @model.findOne { _id: req.params.id }, (e, r) =>
       # Company.findOne { _id: r.companyId }, (ee, rr) =>
       #   result = und.extend und.clone(r), { company: und.clone(rr) }

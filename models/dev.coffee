@@ -3,10 +3,6 @@ Schema = mongoose.Schema
 # ObjectId = Schema.ObjectId;
 
 
-getSkills = (list) -> list.join ','
-setSkills = (list) -> list.split ','
-
-
 schema = new Schema
   # thread: ObjectId
   # date: {type: Date, default: Date.now}
@@ -21,7 +17,7 @@ schema = new Schema
   bb:           String      # bitbucket
   in:           String      # linkedIn
   other:        String
-  skills:       []          #, get: getSkills, set: setSkills }
+  skills:       []
   rate:         Number
 
 

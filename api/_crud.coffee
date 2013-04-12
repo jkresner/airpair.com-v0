@@ -13,7 +13,7 @@ class CRUDApi
 ## Standard CRUD
 ###############################################################################
 
-  show: (req, res) =>
+  detail: (req, res) =>
     @model.findOne { _id: req.params.id }, (e, r) -> res.send r
 
 
