@@ -9,6 +9,9 @@ exports = {}
 passport = require 'passport'
 GoogleStrategy = require('passport-google').Strategy
 GitHubStrategy = require('passport-github').Strategy
+TwitterStrategy = require('passport-twitter').Strategy
+LinkedInStrategy = require('passport-linkedin').Strategy
+BitBucketStrategy = require('passport-bitbucket').Strategy
 
 User = require './models/user'
 User.remove({})
@@ -43,9 +46,8 @@ insertOrUpdateUser = (req, done, providerName, profile) ->
   else
     search['_id'] = req.user._id
 
+  console.log 'update', update
   User.findOneAndUpdate search, update, { upsert: true }, (err, user) ->
-    #t = kind: 'oauth', token: token, attributes: { tokenSecret: tokenSecret }
-    #user.tokens.push t
     done(err, user)
 
 
@@ -76,6 +78,7 @@ exports.github =
   verifyCallback: (req, accessToken, refreshToken, profile, done) ->
     console.log 'githubVerifyCallback'
     delete profile._raw
+    profile.token = kind: 'oauth', token: accessToken, attributes: { refreshToken: refreshToken }
     insertOrUpdateUser req, done, 'github', profile
 
 
@@ -88,7 +91,7 @@ passport.use 'github-authz', new GitHubStrategy config_github, exports.github.ve
 exports.google =
 
   dev_config:
-    returnURL:         'http://localhost:3333/auth/google/return'
+    returnURL:         'http://localhost:3333/auth/google/callbackURL'
     realm:             'http://localhost:3333/'
     passReqToCallback: true
 
@@ -106,21 +109,59 @@ exports.google =
 
 config_google = exports.google.dev_config if isDev
 
-console.log 'config_google', config_google
-
 passport.use 'google-authz', new GoogleStrategy config_google, exports.google.verifyCallback
 
 ######## Twitter
 
-# exports.twitterSuccessCallback = (req, res) ->
-#   user = req.user
-#   account = req.account
+exports.twitter =
 
-#   # Associate the Twitter account with the logged-in user.
-#   account.userId = user.id
-#   account.save (err) ->
-#     if err then return self.error(err)
-#     self.redirect('/')
+  dev_config:
+    consumerKey: '8eIvjnVbj0BkMiUVQP0ZQ',
+    consumerSecret: 'OwrnjqCz3BeRswKLuDJqdzMQlgdDZi9F3hFZPIbxgVM',
+    callbackURL: "http://localhost:3333/auth/twitter/callback"
+    passReqToCallback: true
+
+  connect: (req, res, next) ->
+    authnOrAuthz req, res, next, 'twitter', []
+
+  done: (req, res) -> res.redirect '/'
+
+  verifyCallback: (req, token, tokenSecret, profile, done) ->
+    console.log 'twitterVerifyCallback'
+    delete profile._raw
+    profile.token = kind: 'oauth', token: token, attributes: { tokenSecret: tokenSecret }
+    insertOrUpdateUser req, done, 'twitter', profile
+
+config_twitter = exports.twitter.dev_config if isDev
+
+passport.use 'twitter-authz', new TwitterStrategy config_twitter, exports.twitter.verifyCallback
+
+
+######## LinkedIN
+
+exports.linkedin =
+
+  dev_config:
+    consumerKey: 'sy5n2q8o2i49',  #linkedIN api key
+    consumerSecret: 'lcKjdbFSNG3HfZsd', #linkedIn secret key
+    callbackURL: "http://localhost:3333/auth/linkedin/callback"
+    passReqToCallback: true
+
+  connect: (req, res, next) ->
+    authnOrAuthz req, res, next, 'linkedin', ['r_basicprofile','r_emailaddress','r_fullprofile','r_network','rw_nus']
+
+  done: (req, res) -> res.redirect '/'
+
+  verifyCallback: (req, token, tokenSecret, profile, done) ->
+    console.log 'linkedInVerifyCallback', profile
+    delete profile._raw
+    profile.token = kind: 'oauth', token: token, attributes: { tokenSecret: tokenSecret }
+    insertOrUpdateUser req, done, 'linkedin', profile
+
+config_linkedin = exports.linkedin.dev_config if isDev
+
+passport.use 'linkedin-authz', new LinkedInStrategy config_linkedin, exports.linkedin.verifyCallback
+
 
 
 module.exports = exports

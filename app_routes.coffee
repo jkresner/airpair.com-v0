@@ -55,13 +55,14 @@ module.exports = (app) ->
 
   app.get     '/auth/github', auth.github.connect
   app.get     '/auth/github/callback', auth.github.connect, auth.github.done
-
   app.get     '/auth/google', auth.google.connect
-  app.get     '/auth/google/return', auth.google.connect, auth.google.done
+  app.get     '/auth/google/callback', auth.google.connect, auth.google.done
+  app.get     '/auth/twitter', auth.twitter.connect
+  app.get     '/auth/twitter/callback', auth.twitter.connect, auth.twitter.done
+  app.get     '/auth/linkedin', auth.linkedin.connect
+  app.get     '/auth/linkedin/callback', auth.linkedin.connect, auth.linkedin.done
 
   # app.get     '/facebook-login', authnOrAuthzFacebook
 
-  # app.get     '/connect/twitter', passport.authorize('twitter-authz', { failureRedirect: '/account', successRedirect: '/' })
-  # app.get     '/connect/twitter/callback', passport.authorize('twitter-authz', { failureRedirect: '/account' }), auth.twitterSuccessCallback
 
   app.get     '/logout', auth.logout

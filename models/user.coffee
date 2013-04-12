@@ -9,5 +9,9 @@ schema = new Schema
   github:       {}
   googleId:     String
   google:       {}
+  twitterId:    Number
+  twitter:      {}
+  linkedinId:   String
+  linkedin:      {}
 
 module.exports = mongoose.model 'User', schema
