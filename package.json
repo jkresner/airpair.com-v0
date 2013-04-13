@@ -1,12 +1,12 @@
 {
   "author": "Jonathon Kresner",
-  "name": "airpair.co",
-  "description": "site hosted at airpair.co",
+  "name": "airpair.com",
+  "description": "site hosted at airpair.com",
   "version": "0.0.1",
-  "homepage": "http://airpair.co/",
+  "homepage": "http://airpair.com/",
   "repository": {
     "type": "git",
-    "url": "git@github.com:jkresner/airpair.co.git"
+    "url": "git@github.com:jkresner/airpair.com.git"
   },
   "engines": {
     "node": "0.8.x",
@@ -46,5 +46,7 @@
     "passport-dropbox": "0.1.x",
     "passport-paypal": "0.1.x"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "supertest": "0.5.x"
+  }
 }

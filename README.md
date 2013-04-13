@@ -1,17 +1,56 @@
-site hosted at airpair.com
+###############################################################################
 
+site @ airpair.com
 
-To run locally:
+###############################################################################
+Branching strategy + pull requests
+###############################################################################
+
+- master: is ongoing development branch
+
+- prod: represents the current deployed code @ airpair.com
+
+- prod milestones are tagged with
+
+    git tag release/v0.M.m.x prod
+
+- prod reverts can be achieved using
+
+    git checkout -b prod release/v0.M.m.x prod
+
+- ALL work is to be done on topic branches & merged into master w pull requests
+
+###############################################################################
+Setup + run locally
+###############################################################################
 
 1)   npm install brunch -g
 
-2)   brunch w -s      (or  brunch watch --server)
+2)   Make sure you have mongoDB installed
 
-3)   http://localhost:3333/
+3)   mongod
 
+4)   brunch w -s      (or  brunch watch --server)
 
+5)   http://localhost:3333/
 
-Things to pair with
+###############################################################################
+Test
+###############################################################################
+
+1)   npm install -g mocha
+
+2)   npm install -g mocha-phantomjs
+
+3)   brunch w -s
+
+4)   mocha-phantomjs http://localhost:3333/test/index.html   (front end tests)
+
+5)   mocha test/server (backend tests)
+
+###############################################################################
+List to airpair
+###############################################################################
 
 - Standard rest update call to mongo?
 - Review document schema & nested calls (getSkills) in devs etc.
