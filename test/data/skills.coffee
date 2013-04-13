@@ -1,17 +1,6 @@
-module.exports = [{
-    "name": "Brunch.io",
-    "shortName": "brunch",
-    "soId": "brunch",
-    "_id": "514825fa2a26ea020000000b",
-    "__v": 0
-  },
-  {
-    "name": "C#",
-    "shortName": "c#",
-    "soId": "c#",
-    "_id": "514825fa2a26ea020000000e",
-    "__v": 0
-  },
+module.exports = [
+  { "name": "Brunch.io", "shortName": "brunch", "soId": "brunch", "_id": "514825fa2a26ea020000000b", "__v": 0 },
+  { "name": "C#", "shortName": "c#", "soId": "c#", "_id": "514825fa2a26ea020000000e", "__v": 0  },
   {
     "__v": 0,
     "_id": "514825fa2a26ea0200000010",

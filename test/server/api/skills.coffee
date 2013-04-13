@@ -1,14 +1,11 @@
 require './../../test-setup'
-mongoose = require 'mongoose'
-request = require 'supertest'
-express = require 'express'
+require './../../test-http-setup'
 
 data =
   skills: require './../../data/skills'
 
-app = express()
-
 api_skills = require './../../../api/skills'
+
 app.get     '/api/skills', api_skills.list
 app.get     '/api/skills/:id', api_skills.detail
 app.post    '/api/skills', api_skills.post
@@ -24,18 +21,17 @@ describe "REST update with mongoose", ->
 
   beforeEach (done) ->
     testNum = testNum + 1
+    @skillNum = data.skills[testNum]
     @skill = request(app)
       .post('/api/skills')
-      .send( data.skills[testNum] )
+      .send( @skillNum )
       .expect(200, done)
 
   it "should get first skill", (done) ->
     request(app)
       .get('/api/skills')
-      .expect('Content-Type', /json/)
-      # .expect( [ data.skills[testNum] ] )
+      .expect( [ @skillNum ] )
       .end done
-
 
   after (done) ->
     mongoose.connection.db.executeDbCommand { dropDatabase:1 }, (err, result) ->

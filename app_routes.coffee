@@ -39,19 +39,19 @@ module.exports = (app) ->
   app.get     '/api/skills/:id', api_skills.detail
   app.post    '/api/skills', api_skills.post
   app.put     '/api/skills/:id', api_skills.update
-  app.put     '/api/skills/:id', api_skills.delete
+  app.delete     '/api/skills/:id', api_skills.delete
 
   app.get     '/api/companys', api_companys.list
   app.get     '/api/companys/:id', api_companys.detail
+  app.post    '/api/companys', api_companys.post
   app.put     '/api/companys/:id', api_companys.update
   app.delete  '/api/companys/:id', api_companys.delete
-  app.post    '/api/companys', api_companys.post
 
   app.get     '/api/requests', api_requests.list
   app.get     '/api/requests/:id', api_requests.detail
+  app.post    '/api/requests', api_requests.post
   app.put     '/api/requests/:id', api_requests.update
   app.delete  '/api/requests/:id', api_requests.delete
-  app.post    '/api/requests', api_requests.post
 
   app.get     '/auth/github', auth.github.connect
   app.get     '/auth/github/callback', auth.github.connect, auth.github.done
