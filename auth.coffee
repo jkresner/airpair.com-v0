@@ -148,7 +148,7 @@ exports.linkedin =
     passReqToCallback: true
 
   connect: (req, res, next) ->
-    authnOrAuthz req, res, next, 'linkedin', ['r_basicprofile','r_emailaddress','r_fullprofile','r_network','rw_nus']
+    authnOrAuthz req, res, next, 'linkedin', ['r_fullprofile','r_network','rw_nus']
 
   done: (req, res) -> res.redirect '/'
 
