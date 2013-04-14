@@ -14,7 +14,7 @@ class exports.Router extends Backbone.Router
     @page.user.on 'change'
 
   userAuthenticatedRoute: ->
-    if @page.user.isAuthenticated then @company else @welcome
+    if @page.user.isAuthenticated() then @company else @welcome
 
   welcome: (args) ->
     $log 'Router.index'

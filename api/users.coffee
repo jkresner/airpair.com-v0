@@ -6,8 +6,13 @@ class UserApi extends CRUDApi
 
   detail: (req, res) =>
 
-    user = if req.isAuthenticated() then req.user else { authenticated: false }
-    console.log 'user/detail', user
+    if req.isAuthenticated()
+      user = req.user
+      user = true
+    else
+      user = authenticated : false
+
+    #console.log 'user/detail', user
     res.send user
 
 
