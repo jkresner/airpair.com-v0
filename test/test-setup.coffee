@@ -1,3 +1,4 @@
+global.und = require 'underscore'
 global.sinon = require 'sinon'
 chai = require 'chai'
 chai.use require 'sinon-chai'
