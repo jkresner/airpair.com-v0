@@ -1,9 +1,9 @@
-auth = require './auth'
-api_users = require './api/users'
-api_skills = require './api/skills'
-api_devs = require './api/devs'
-api_companys = require './api/companys'
-api_requests = require './api/requests'
+auth = require './lib/auth/base'
+api_users = require './lib/api/users'
+api_skills = require './lib/api/skills'
+api_devs = require './lib/api/devs'
+api_companys = require './lib/api/companys'
+api_requests = require './lib/api/requests'
 
 passport = require 'passport'
 
@@ -61,8 +61,5 @@ module.exports = (app) ->
   app.get     '/auth/twitter/callback', auth.twitter.connect, auth.twitter.done
   app.get     '/auth/linkedin', auth.linkedin.connect
   app.get     '/auth/linkedin/callback', auth.linkedin.connect, auth.linkedin.done
-
-  # app.get     '/facebook-login', authnOrAuthzFacebook
-
 
   app.get     '/logout', auth.logout

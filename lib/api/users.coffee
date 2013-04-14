@@ -1,6 +1,4 @@
-CRUDApi = require './_crud'
-
-class UserApi extends CRUDApi
+class UserApi
 
   model: require './../models/user'
 
@@ -8,11 +6,10 @@ class UserApi extends CRUDApi
 
     if req.isAuthenticated()
       user = req.user
-      user = true
+      user.authenticated = true
     else
       user = authenticated : false
 
-    #console.log 'user/detail', user
     res.send user
 
 
