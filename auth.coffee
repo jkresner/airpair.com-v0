@@ -100,7 +100,9 @@ exports.google =
      'https://www.googleapis.com/auth/userinfo.email',
      'https//www.googleapis.com/auth/plus.me' ]
 
-  done: (req, res) -> res.redirect '/'
+  done: (req, res) ->
+    res.send req.user
+    #res.redirect '/'
 
   verifyCallback: (req, identifier, profile, done) ->
     console.log 'googleVerifyCallback', identifier, profile

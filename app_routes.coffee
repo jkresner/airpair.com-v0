@@ -20,12 +20,12 @@ module.exports = (app) ->
   app.get     '/adminn', (req, res) -> res.sendfile './public/admin.html'
   app.get     '/review', (req, res) -> res.sendfile './public/review.html'
   app.get     '/be-an-expert', (req, res) -> res.sendfile './public/beexpert.html'
-  app.get     '/become-an-expert', (req, res) -> res.sendfile './public/beexpert.html'
-  app.get     '/find-an-expert', (req, res) -> res.sendfile './public/findexpert.html'
   app.get     '/traction', (req, res) -> res.sendfile './public/traction.html'
 
+  app.get     '/find-an-expert', (req, res) -> res.sendfile './public/request.html'
+
   app.get     '/welcome-expert', (req, res) -> res.sendfile './public/welcomeexpert.html'
-  app.get     '/welcome-student', (req, res) -> res.sendfile './public/welcomestudent.html'
+  app.get     '/welcome-padawan', (req, res) -> res.sendfile './public/welcomestudent.html'
 
   app.get     '/api/users/me', api_users.detail
 
@@ -39,7 +39,7 @@ module.exports = (app) ->
   app.get     '/api/skills/:id', api_skills.detail
   app.post    '/api/skills', api_skills.create
   app.put     '/api/skills/:id', api_skills.update
-  app.delete   '/api/skills/:id', api_skills.delete
+  app.delete  '/api/skills/:id', api_skills.delete
 
   app.get     '/api/companys', api_companys.list
   app.get     '/api/companys/:id', api_companys.detail

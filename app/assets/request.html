@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>airpair, find an expert</title>
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="/stylesheets/app.css">
+</head>
+
+<body>
+
+  <nav>
+    <a href="/" title="Pair programming, code review, architecture advice & more..."><img src="/images/logo.png" /></a>
+
+    <ul>
+      <li><a href="/find-an-expert">Find expert</a></li>
+      <li><a href="/be-an-expert">Be expert</a></li>
+    </ul>
+  </nav>
+
+  <div id="welcome" class="main">
+
+    <h1>Welcome padewan!</h1>
+
+    <p>airpair is a community of developers that share knowledge through video.</p>
+
+    <p>Here you will find experts in every domain in software development. You can book
+      and pay 1 hour at a time for things like pair programming, code review & architecture
+      advice.
+    </p>
+
+    <!-- <p><a href="#" class="btn">I want to learn</a></p>
+
+    <p><a href="#" class="btn">I want to outsource</a></p>
+    -->
+
+    <p><a href="/auth/google" class="btn btn-warning">Sign in with google</a></p>
+    <p>We ask for your google account because we use google hangouts for our screensharing</p>
+  </div>
+
+  <div id="company" class="main"></div>
+
+  <div id="request" class="main"></div>
+
+</body>
+
+  <script src="javascripts/vendor.js" defer></script>
+  <script src="javascripts/app.js" defer onload="require('scripts/request/App');"></script>
+
+  <script type="text/javascript">
+
+      function initSPA(SPA) {
+
+          var pagedata = {};
+
+          window.router = new SPA.Router({ page: new SPA.Page(pagedata) });
+          Backbone.history.start();
+      }
+
+  </script>
+
+</html>

@@ -1,9 +1,12 @@
-.main { display:none;margin-top:20px; }
+body { background:white;width:1280px;margin:auto }
 
+nav { height:54px;border-bottom:dashed 1px #d3d3d3;padding-top:6px; }
+nav img { display:inline-block;width:180px; }
+nav h3 { display:inline-block;color:#999999;padding:16px 6px }
+nav ul { float:right }
+nav ul li { float:right;display:block;margin-left:5px }
 
-.header { height:80px;border-bottom:solid 1px #d3d3d3; }
-.header img { display:inline-block; }
-.header h3 { display:inline-block;color:#999999;padding:16px 6px }
+div.main { margin-top:20px }
 
 
 .codeline {
@@ -20,7 +23,7 @@
 .codeline em { color:#CE5424; }
 
 
-/* Custom container */
+/* Custom container
 .container-narrow {
   margin: 0 auto;
   max-width: 1330px;
@@ -28,6 +31,7 @@
 .container-narrow > hr {
   margin: 30px 0;
 }
+ */
 
 .leadRow td { font-size:11px; }
 .leadRow .label-skill { background-color:maroon;margin-right:4px; }
