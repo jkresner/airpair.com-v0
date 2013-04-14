@@ -54,18 +54,22 @@ Test
 
 
 -------------------------------------------------------------------------------
+List of TODO
+===============================================================================
+
+- Test auth & providers returns correct objects (res.user is not right)
+- Consider problems of passport session deserializing on every api call
+
+-------------------------------------------------------------------------------
 List to airpair
 ===============================================================================
 
-- Standard rest update call to mongo?
 - Review document schema & nested calls (getSkills) in devs etc.
 - How to run brunch to rebuild automatically when in node mode
 - How to rename a mongo collection
   - mongo shell: db.requests.renameCollection( newName , <dropTarget> ) renames the collection.
-- How to updating schema
+- How to update schema
   - https://github.com/visionmedia/node-migrate
 - Dates with mongo
 - collecting JS dates
   - http://momentjs.com/
-- An identity system with github login
-  - look at passportjs

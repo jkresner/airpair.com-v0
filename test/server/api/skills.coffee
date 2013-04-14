@@ -13,7 +13,7 @@ app.post    '/api/skills', api_skills.create
 app.put     '/api/skills/:id', api_skills.update
 app.delete  '/api/skills/:id', api_skills.delete
 
-describe "REST update with mongoose", ->
+describe "REST api skills", ->
 
   before (done) ->
     @testNum = 0

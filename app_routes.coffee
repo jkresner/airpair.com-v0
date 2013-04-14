@@ -1,9 +1,10 @@
-auth = require './auth'
-api_users = require './api/users'
-api_skills = require './api/skills'
-api_devs = require './api/devs'
-api_companys = require './api/companys'
-api_requests = require './api/requests'
+auth = require './lib/auth/base'
+api_users = require './lib/api/users'
+api_skills = require './lib/api/skills'
+api_devs = require './lib/api/devs'
+api_companys = require './lib/api/companys'
+api_requests = require './lib/api/requests'
+authz = require './lib/auth/ensureLoggedIn'
 
 passport = require 'passport'
 
@@ -15,17 +16,17 @@ passport = require 'passport'
 
 module.exports = (app) ->
 
-  app.get     '/', (req, res) -> res.sendfile './public/index.html'
-  app.get     '/about', (req, res) -> res.sendfile './public/index.html'
-  app.get     '/adminn', (req, res) -> res.sendfile './public/admin.html'
-  app.get     '/review', (req, res) -> res.sendfile './public/review.html'
-  app.get     '/be-an-expert', (req, res) -> res.sendfile './public/beexpert.html'
-  app.get     '/become-an-expert', (req, res) -> res.sendfile './public/beexpert.html'
-  app.get     '/find-an-expert', (req, res) -> res.sendfile './public/findexpert.html'
-  app.get     '/traction', (req, res) -> res.sendfile './public/traction.html'
+  app.get     '/', (req, r) -> r.sendfile './public/index.html'
+  app.get     '/about', (req, r) -> r.sendfile './public/index.html'
+  app.get     '/adminn', authz('/'), (req, r) -> r.sendfile './public/admin.html'
+  app.get     '/review', (req, r) -> r.sendfile './public/review.html'
+  app.get     '/be-an-expert', (req, r) -> r.sendfile './public/beexpert.html'
+  app.get     '/traction', (req, r) -> r.sendfile './public/traction.html'
 
-  app.get     '/welcome-expert', (req, res) -> res.sendfile './public/welcomeexpert.html'
-  app.get     '/welcome-student', (req, res) -> res.sendfile './public/welcomestudent.html'
+  app.get     '/find-an-expert', (req, r) -> r.sendfile './public/request.html'
+
+  app.get     '/welcome-expert', (req, r) -> r.sendfile './public/welcomeexpert.html'
+  app.get     '/welcome-padawan', (req, r) -> r.sendfile './public/welcomestudent.html'
 
   app.get     '/api/users/me', api_users.detail
 
@@ -39,7 +40,7 @@ module.exports = (app) ->
   app.get     '/api/skills/:id', api_skills.detail
   app.post    '/api/skills', api_skills.create
   app.put     '/api/skills/:id', api_skills.update
-  app.delete   '/api/skills/:id', api_skills.delete
+  app.delete  '/api/skills/:id', api_skills.delete
 
   app.get     '/api/companys', api_companys.list
   app.get     '/api/companys/:id', api_companys.detail
@@ -61,8 +62,5 @@ module.exports = (app) ->
   app.get     '/auth/twitter/callback', auth.twitter.connect, auth.twitter.done
   app.get     '/auth/linkedin', auth.linkedin.connect
   app.get     '/auth/linkedin/callback', auth.linkedin.connect, auth.linkedin.done
-
-  # app.get     '/facebook-login', authnOrAuthzFacebook
-
 
   app.get     '/logout', auth.logout
