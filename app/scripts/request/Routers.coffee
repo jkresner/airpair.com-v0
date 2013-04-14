@@ -17,7 +17,7 @@ class exports.Router extends Backbone.Router
 
   welcome: (args) ->
     $log 'Router.index'
-    @hideShow '#requests'
+    @hideShow '#welcome'
 
   company: ->
     $log 'Router.company'
