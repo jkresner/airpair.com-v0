@@ -3,11 +3,6 @@ BB = require './../../lib/BB'
 Models = require './Models'
 
 
-class exports.Leads extends BB.FilteringCollection
-  model: Models.Lead
-  url: '/api/leads'
-
-
 class exports.Requests extends BB.FilteringCollection
   model: Models.Request
   url: '/api/requests'

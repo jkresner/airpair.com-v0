@@ -15,8 +15,7 @@ app.configure ->
   app.use passport.session()
 
 
-require('./app_routes')(app)
-
+global.isProd = process.env.MONGOHQ_URL?
 
 mongoUri = process.env.MONGOHQ_URL || 'mongodb://localhost/airpair_dev'
 
@@ -28,12 +27,15 @@ db.once 'open', ->
   console.log 'connected to db airpair_dev'
 
 
+require('./app_routes')(app)
+
+
+
 exports.startServer = (port, path, callback) ->
   p = process.env.PORT || port
   console.log "startServer on port: #{p}, path #{path}"
   app.listen p
 
 
-isHeroku = process.env.MONGOHQ_URL?
-if isHeroku
+if isProd
   exports.startServer()
