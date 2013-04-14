@@ -5,8 +5,10 @@ class UserApi extends CRUDApi
   model: require './../models/user'
 
   detail: (req, res) =>
-    console.log 'user/detail', req.user
-    res.send req.user
+
+    user = if req.isAuthenticated() then req.user else { authenticated: false }
+    console.log 'user/detail', user
+    res.send user
 
 
 module.exports = new UserApi()

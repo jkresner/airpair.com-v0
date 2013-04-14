@@ -91,7 +91,7 @@ passport.use 'github-authz', new GitHubStrategy config_github, exports.github.ve
 exports.google =
 
   dev_config:
-    returnURL:         'http://localhost:3333/auth/google/callbackURL'
+    returnURL:         'http://localhost:3333/auth/google/callback'
     realm:             'http://localhost:3333/'
     passReqToCallback: true
 
