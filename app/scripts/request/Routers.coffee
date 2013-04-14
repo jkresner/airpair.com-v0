@@ -10,11 +10,10 @@ class exports.Router extends Backbone.Router
 
   initialize: (args) ->
     @page = args.page
-    #@listenTo @page.user, 'change', @userAuthenticatedRoute
-    @page.user.on 'change'
+    @listenTo @page.user, 'change', @userAuthenticatedRoute
 
   userAuthenticatedRoute: ->
-    if @page.user.isAuthenticated() then @company else @welcome
+    if @page.user.isAuthenticated() then @company() else @welcome()
 
   welcome: (args) ->
     $log 'Router.index'

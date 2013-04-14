@@ -4,6 +4,7 @@ api_skills = require './lib/api/skills'
 api_devs = require './lib/api/devs'
 api_companys = require './lib/api/companys'
 api_requests = require './lib/api/requests'
+authz = require './lib/auth/ensureLoggedIn'
 
 passport = require 'passport'
 
@@ -15,17 +16,17 @@ passport = require 'passport'
 
 module.exports = (app) ->
 
-  app.get     '/', (req, res) -> res.sendfile './public/index.html'
-  app.get     '/about', (req, res) -> res.sendfile './public/index.html'
-  app.get     '/adminn', (req, res) -> res.sendfile './public/admin.html'
-  app.get     '/review', (req, res) -> res.sendfile './public/review.html'
-  app.get     '/be-an-expert', (req, res) -> res.sendfile './public/beexpert.html'
-  app.get     '/traction', (req, res) -> res.sendfile './public/traction.html'
+  app.get     '/', (req, r) -> r.sendfile './public/index.html'
+  app.get     '/about', (req, r) -> r.sendfile './public/index.html'
+  app.get     '/adminn', authz('/'), (req, r) -> r.sendfile './public/admin.html'
+  app.get     '/review', (req, r) -> r.sendfile './public/review.html'
+  app.get     '/be-an-expert', (req, r) -> r.sendfile './public/beexpert.html'
+  app.get     '/traction', (req, r) -> r.sendfile './public/traction.html'
 
-  app.get     '/find-an-expert', (req, res) -> res.sendfile './public/request.html'
+  app.get     '/find-an-expert', (req, r) -> r.sendfile './public/request.html'
 
-  app.get     '/welcome-expert', (req, res) -> res.sendfile './public/welcomeexpert.html'
-  app.get     '/welcome-padawan', (req, res) -> res.sendfile './public/welcomestudent.html'
+  app.get     '/welcome-expert', (req, r) -> r.sendfile './public/welcomeexpert.html'
+  app.get     '/welcome-padawan', (req, r) -> r.sendfile './public/welcomestudent.html'
 
   app.get     '/api/users/me', api_users.detail
 

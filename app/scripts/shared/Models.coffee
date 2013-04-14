@@ -4,11 +4,7 @@ exports = {}
 
 class exports.User extends BB.BadassModel
   urlRoot: '/api/users/me'
-  isAuthenticated: ->
-    if ! @get('authenticated')?
-      false
-    else
-      @get('authenticated')
+  isAuthenticated: -> @get('_id')?
 
 
 class exports.Skill extends BB.BadassModel

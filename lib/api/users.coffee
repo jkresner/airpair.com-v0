@@ -6,7 +6,6 @@ class UserApi
 
     if req.isAuthenticated()
       user = req.user
-      user.authenticated = true
     else
       user = authenticated : false
 

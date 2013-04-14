@@ -21,7 +21,7 @@ class Google
 
   # Process the response from the external provider
   verifyCallback: (req, identifier, profile, done) =>
-    #console.log 'googleVerifyCallback', identifier, profile
+    #console.log 'googleVerifyCallback', identifier, profile, done
     profile.id = identifier
     @auth.insertOrUpdateUser req, done, 'google', profile
 
@@ -29,10 +29,12 @@ class Google
   connect: (req, res, next) =>
     @auth.authnOrAuthz req, res, next, 'google', [
      'https://www.googleapis.com/auth/userinfo.email',
-     'https//www.googleapis.com/auth/plus.me' ]
+     'https://www.googleapis.com/auth/plus.me' ]
 
   # Completed action
-  done: (req, res) => res.send req.user
+  done: (req, res) =>
+    #console.log 'google.done'
+    res.send req.user
 
 
 module.exports = (auth, passport) -> new Google(auth, passport)
