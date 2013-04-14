@@ -58,6 +58,7 @@ List of TODO
 ===============================================================================
 
 - Test auth & providers returns correct objects (res.user is not right)
+- Consider problems of passport session deserializing on every api call
 
 -------------------------------------------------------------------------------
 List to airpair
