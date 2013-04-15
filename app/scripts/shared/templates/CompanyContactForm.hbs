@@ -1,25 +1,25 @@
 <div class="control-group">
+  <div class="controls">
+    <img src="{{ avatarUrl }}" />
+    <input type="hidden" value="{{ avatarUrl }}" name="avatarUrl" id="avatarUrl{{num}}"/>
+  </div>
+</div>
+<div class="control-group">
   <label for="contactName{{num}}" class="control-label">Full name</label>
   <div class="controls">
     <input type="text" data-error-style="inline" value="{{ fullName }}" placeholder="Full name" name="fullName" id="contactName{{num}}">
   </div>
 </div>
 <div class="control-group">
-  <label for="contactEmail{{num}}" class="control-label">Email</label>
+  <label for="contactEmail{{num}}" class="control-label">Primary email</label>
   <div class="controls">
     <input type="text" data-error-style="inline" value="{{ email }}" placeholder="Email" name="email" id="contactEmail{{num}}">
   </div>
 </div>
 <div class="control-group">
-  <label for="contactGmail{{num}}" class="control-label">Gmail <span class="muted" style="font-size:11px">(for Google+ Hangout)</span></label>
+  <label for="contactGmail{{num}}" class="control-label">Google email <span class="muted" style="font-size:11px">(for Google+ Hangout)</span></label>
   <div class="controls">
     <input type="text" data-error-style="inline" value="{{ gmail }}" placeholder="Google account email" name="gmail" id="contactGmail{{num}}">
-  </div>
-</div>
-<div class="control-group">
-  <label for="contactTitle{{num}}" class="control-label">Title</label>
-  <div class="controls">
-    <input type="text" data-error-style="inline" value="{{ title }}" placeholder="Title" name="title" id="contactTitle{{num}}">
   </div>
 </div>
 <div class="control-group">
@@ -28,3 +28,11 @@
     <input type="text" data-error-style="inline" value="{{ phone }}" placeholder="Phone" name="phone" id="contactPhone{{num}}">
   </div>
 </div>
+<div class="control-group">
+  <label for="contactTitle{{num}}" class="control-label">Title</label>
+  <div class="controls">
+    <input type="text" data-error-style="inline" value="{{ title }}" placeholder="Title" name="title" id="contactTitle{{num}}">
+  </div>
+</div>
+
+<input type="hidden" value="{{ userId }}" name="userId" id="userId{{num}}"/>

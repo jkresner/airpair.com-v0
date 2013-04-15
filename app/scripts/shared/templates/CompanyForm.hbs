@@ -1,55 +1,51 @@
 <fieldset>
-  <legend>Company</legend>
+  <legend>Contact info <span class="muted ">> Request details</span>
 
-  <div class="alert alert-success">
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
-    <h4>Company saved</h4>
-  </div>
-
-  <div class="alert alert-error">
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
-    <h4>Error</h4>
-  </div>
-
-  <div>
-    <div class="control-group">
-      <label class="control-label" for="companyName">Name</label>
-      <div class="controls">
-        <input type="text" id="companyName" name="name" placeholder="Company name" value="{{ name }}" data-error-style="inline">
-      </div>
+    <div class="alert alert-success">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <h4>Company saved</h4>
     </div>
-    <div class="control-group">
-      <label class="control-label" for="companyUrl">Url</label>
-      <div class="controls">
-        <div class="input-prepend" style="width:88%">
-          <span class="add-on">http://</span>
-          <input type="text" id="companyUrl" name="url" placeholder="Website Url" value="{{ url }}" data-error-style="inline">
+
+    <div class="alert alert-error">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <h4>Error</h4>
+    </div>
+
+  </legend>
+
+  <div id="companyContacts"><div id="primaryContact"></div></div>
+
+  <div id="companyInfo">
+    <div>
+      <div class="control-group">
+        <label class="control-label" for="companyName">Company (or app) name</label>
+        <div class="controls">
+          <input type="text" id="companyName" name="name" placeholder="Company name" value="{{ name }}" data-error-style="inline">
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label" for="companyUrl">Url</label>
+        <div class="controls">
+          <div class="input-prepend" style="width:88%">
+            <span class="add-on">http://</span>
+            <input type="text" id="companyUrl" name="url" placeholder="Website Url" value="{{ url }}" data-error-style="inline">
+          </div>
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label" for="companyAbout">What does your company / app do?</label>
+        <div class="controls">
+          <textarea id="companyAbout" name="about" placeholder="About your company" value="{{ soId }}" data-error-style="inline"></textarea>
         </div>
       </div>
     </div>
-    <div class="control-group">
-      <label class="control-label" for="companyAbout">About</label>
-      <div class="controls">
-        <textarea id="companyAbout" name="about" value="{{ soId }}" data-error-style="inline"></textarea>
-      </div>
-    </div>
+  </div>
 
-    <div style="width:47%;float:left">
-      <h5>Primary Contact</h5>
-      <div id="primaryContact"></div>
-    </div>
+  <div style="clear:both"></div>
 
-    <div style="width:47%;float:left;margin-left:20px">
-      <h5>Secondary Contact</h5>
-      <div id="secondaryContact"></div>
-    </div>
-
-    <div style="clear:both"></div>
-
-    <div class="control-group">
-      <div class="controls">
-        <a href="#" class="save btn btn-large">Save</a>
-      </div>
+  <div class="control-group">
+    <div class="controls">
+      <a href="#" class="save btn btn-large">Save</a>
     </div>
   </div>
 

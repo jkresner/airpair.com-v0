@@ -1,7 +1,14 @@
 und = require 'underscore'
-
+authz = require './../auth/ensureLoggedInForApi'
 
 class CRUDApi
+
+  constructor: (app, route) ->
+    app.get     "/api/#{route}", authz(), @list
+    app.get     "/api/#{route}/:id", authz(), @detail
+    app.post    "/api/#{route}", authz(), @create
+    app.put     "/api/#{route}/:id", authz(), @update
+    app.delete  "/api/#{route}/:id", authz(), @delete
 
 ###############################################################################
 ## Data loading / clearing (should only be used when necessary)

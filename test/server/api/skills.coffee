@@ -5,13 +5,8 @@ data =
   skills: require './../../data/skills'
 
 
-api_skills = require './../../../api/skills'
+api_skills = require('./../../../lib/api/skills')(app)
 
-app.get     '/api/skills', api_skills.list
-app.get     '/api/skills/:id', api_skills.detail
-app.post    '/api/skills', api_skills.create
-app.put     '/api/skills/:id', api_skills.update
-app.delete  '/api/skills/:id', api_skills.delete
 
 describe "REST api skills", ->
 
