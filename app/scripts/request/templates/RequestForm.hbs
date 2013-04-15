@@ -1,0 +1,42 @@
+<legend>Info <a href="/review#{{ _id }}" target="_blank">review</a></legend>
+
+<div class="control-group">
+  <label class="control-label" for="reqStatus">Technologies</label>
+  <div class="controls">
+    <input type="text" id="reqTech" placeholder="Enter tech" value="{{ skillsSoIds }}" data-error-style="inline" name="skills"/>
+  </div>
+</div>
+
+<div class="control-group">
+  <label class="control-label" for="reqBrief">Brief</label>
+  <div class="controls">
+    <textarea id="reqBrief" name="brief">{{ brief }}</textarea>
+  </div>
+</div>
+
+<div class="control-group">
+  <label class="control-label" for="reqBudget">Budget</label>
+  <div class="controls">
+    <textarea id="reqBudget" name="budget">{{ budget }}</textarea>
+  </div>
+</div>
+
+<div class="control-group">
+  <label class="control-label" for="reqBrief">Category</label>
+  <div class="controls">
+
+  </div>
+</div>
+
+<div class="control-group">
+  <label class="control-label" for="reqStatus">Availability</label>
+  <div class="controls">
+    <input type="text" id="reqAvailability" placeholder="select time" data-error-style="inline" name="availabilty"/>
+    <span id="reqTimezone"></span>
+    <div>
+      {{#each availability}}
+        <div>{{this}} <a href="#" class="deleteAvalability" data-val="{{this}}">x</a></div>
+      {{/each}}
+    </div>
+  </div>
+</div>

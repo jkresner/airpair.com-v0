@@ -22,7 +22,7 @@ class exports.CompanyContactView extends BB.ModelSaveView
 
 
 class exports.CompanyFormView extends BB.ModelSaveView
-  el: '#companyFormView'
+  el: '#companyForm'
   tmpl: require './../shared/templates/CompanyForm'
   events: { 'click .save': 'validatePrimaryContactAndSave' }
   initialize: ->
@@ -51,13 +51,13 @@ class exports.CompanyFormView extends BB.ModelSaveView
       @save e
   renderSuccess: (model, response, options) =>
     @$('.alert-success').fadeIn(800).fadeOut(5000)
-    router.navigate 'request', false
+    router.navigate 'request', { trigger: true }
 
 
 #############################################################################
 
 class exports.RequestFormView extends BB.ModelSaveView
-  el: '#requestFormView'
+  el: '#requestForm'
   tmpl: require './templates/RequestForm'
   events:
     'click .save': 'save'

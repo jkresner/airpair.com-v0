@@ -11,8 +11,10 @@ module.exports.Page = class Page
     @user = new models.User()
     @company = new models.Company _id: 'me'
     @skills = new collections.Skills()
+    @request = new models.Request()
 
     @companyFormView = new views.CompanyFormView model: @company
+    @requestFormView = new views.RequestFormView model: @request
 
     if pageData.user? then @user.set pageData.user else @user.fetch success: =>
       if @user.isAuthenticated()
