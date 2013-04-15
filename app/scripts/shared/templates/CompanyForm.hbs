@@ -1,9 +1,6 @@
 <fieldset>
-  <legend>Contact info <span class="muted ">> Request details</span></legend>
+  <legend>Contact info <span class="muted ">> Request details</span>
 
-  <div id="companyContacts"><div id="primaryContact"></div></div>
-
-  <div id="companyInfo">
     <div class="alert alert-success">
       <button type="button" class="close" data-dismiss="alert">&times;</button>
       <h4>Company saved</h4>
@@ -14,15 +11,20 @@
       <h4>Error</h4>
     </div>
 
+  </legend>
+
+  <div id="companyContacts"><div id="primaryContact"></div></div>
+
+  <div id="companyInfo">
     <div>
       <div class="control-group">
-        <label class="control-label" for="companyName">Company name</label>
+        <label class="control-label" for="companyName">Company (or app) name</label>
         <div class="controls">
           <input type="text" id="companyName" name="name" placeholder="Company name" value="{{ name }}" data-error-style="inline">
         </div>
       </div>
       <div class="control-group">
-        <label class="control-label" for="companyUrl">Company url</label>
+        <label class="control-label" for="companyUrl">Url</label>
         <div class="controls">
           <div class="input-prepend" style="width:88%">
             <span class="add-on">http://</span>
@@ -31,9 +33,9 @@
         </div>
       </div>
       <div class="control-group">
-        <label class="control-label" for="companyAbout">About</label>
+        <label class="control-label" for="companyAbout">What does your company / app do?</label>
         <div class="controls">
-          <textarea id="companyAbout" name="about" value="{{ soId }}" data-error-style="inline"></textarea>
+          <textarea id="companyAbout" name="about" placeholder="About your company" value="{{ soId }}" data-error-style="inline"></textarea>
         </div>
       </div>
     </div>

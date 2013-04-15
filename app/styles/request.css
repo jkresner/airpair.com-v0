@@ -1,7 +1,8 @@
 #request #companyInfo { float:left;width:540px; }
 #request #companyInfo input { width:84%; }
-#request #companyInfo textarea { width:90%;height:174px; }
-#request #companyContacts { float:left;width:400px; }
+#request #companyInfo textarea { width:90%;height:248px; }
+#request #companyContacts img { height:66px; }
+#request #companyContacts { float:left;width:320px; }
 #request #companyContacts input { width:80%; }
 #request #companyFormView { float:left; }
 #request #companyHelp { float:left;width:180px;padding:100px 80px;background:#d1d1d1; }

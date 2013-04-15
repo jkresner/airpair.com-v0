@@ -11,7 +11,7 @@ M = require './Models'
 
 class exports.CompanyContactView extends BB.ModelSaveView
   tmpl: require './../shared/templates/CompanyContactForm'
-  viewData: ['fullName','email','gmail','title','phone','userId']
+  viewData: ['fullName','email','gmail','title','phone','userId','avatarUrl']
   initialize: ->
   render: (attrs) ->
     @model.clear()

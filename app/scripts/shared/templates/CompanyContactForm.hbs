@@ -1,4 +1,10 @@
 <div class="control-group">
+  <div class="controls">
+    <img src="{{ avatarUrl }}" />
+    <input type="hidden" value="{{ avatarUrl }}" name="avatarUrl" id="avatarUrl{{num}}"/>
+  </div>
+</div>
+<div class="control-group">
   <label for="contactName{{num}}" class="control-label">Full name</label>
   <div class="controls">
     <input type="text" data-error-style="inline" value="{{ fullName }}" placeholder="Full name" name="fullName" id="contactName{{num}}">
@@ -29,4 +35,4 @@
   </div>
 </div>
 
-<input type="hidden" value="{{ userId }}" name="userId" id="userId{{num}}">
+<input type="hidden" value="{{ userId }}" name="userId" id="userId{{num}}"/>

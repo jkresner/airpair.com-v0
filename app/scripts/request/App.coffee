@@ -14,8 +14,9 @@ module.exports.Page = class Page
 
     @companyFormView = new views.CompanyFormView model: @company
 
-    if pageData.skills? then @skills.reset pageData.skills else @skills.fetch({reset:true})
-    if pageData.user? then @user.set pageData.user else @user.fetch()
+    if pageData.user? then @user.set pageData.user else @user.fetch success: =>
+      if @user.isAuthenticated()
+        if pageData.skills? then @skills.reset pageData.skills else @skills.fetch({reset:true})
 
 
 module.exports.Router = routers.Router

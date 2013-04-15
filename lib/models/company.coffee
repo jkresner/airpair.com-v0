@@ -4,6 +4,7 @@ ObjectId = Schema.ObjectId
 
 Contact = new Schema
   userId:     ObjectId
+  avatarUrl:  String
   fullName:   String
   email:      String
   gmail:      String
