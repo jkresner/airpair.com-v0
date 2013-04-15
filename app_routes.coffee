@@ -1,18 +1,6 @@
 auth = require './lib/auth/base'
 api_users = require './lib/api/users'
-api_skills = require './lib/api/skills'
-api_devs = require './lib/api/devs'
-api_companys = require './lib/api/companys'
-api_requests = require './lib/api/requests'
 authz = require './lib/auth/ensureLoggedIn'
-
-passport = require 'passport'
-
-# ensureUnauthenticated = (req, res, next) ->
-  # if req.isAuthenticated()
-    # display an "already logged in" message
-    # return res.redirect('/')
-  # next()
 
 module.exports = (app) ->
 
@@ -30,29 +18,10 @@ module.exports = (app) ->
 
   app.get     '/api/users/me', api_users.detail
 
-  app.get     '/api/devs', api_devs.list
-  app.get     '/api/devv/:id', api_devs.detail
-  app.post    '/api/devs', api_devs.create
-  app.put     '/api/devs/:id', api_devs.update
-  app.delete  '/api/devs/:id', api_devs.delete
-
-  app.get     '/api/skills', api_skills.list
-  app.get     '/api/skills/:id', api_skills.detail
-  app.post    '/api/skills', api_skills.create
-  app.put     '/api/skills/:id', api_skills.update
-  app.delete  '/api/skills/:id', api_skills.delete
-
-  app.get     '/api/companys', api_companys.list
-  app.get     '/api/companys/:id', api_companys.detail
-  app.post    '/api/companys', api_companys.create
-  app.put     '/api/companys/:id', api_companys.update
-  app.delete  '/api/companys/:id', api_companys.delete
-
-  app.get     '/api/requests', api_requests.list
-  app.get     '/api/requests/:id', api_requests.detail
-  app.post    '/api/requests', api_requests.create
-  app.put     '/api/requests/:id', api_requests.update
-  app.delete  '/api/requests/:id', api_requests.delete
+  require('./lib/api/companys')(app)
+  require('./lib/api/skills')(app)
+  require('./lib/api/devs')(app)
+  require('./lib/api/requests')(app)
 
   app.get     '/auth/github', auth.github.connect
   app.get     '/auth/github/callback', auth.github.connect, auth.github.done

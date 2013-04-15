@@ -1,7 +1,9 @@
 mongoose = require 'mongoose'
 Schema = mongoose.Schema
+ObjectId = Schema.ObjectId
 
 Contact = new Schema
+  userId:     ObjectId
   fullName:   String
   email:      String
   gmail:      String

@@ -9,7 +9,10 @@ routers = require './Routers'
 module.exports.Page = class Page
   constructor: (pageData) ->
     @user = new models.User()
+    @company = new models.Company _id: 'me'
     @skills = new collections.Skills()
+
+    @companyFormView = new views.CompanyFormView model: @company
 
     if pageData.skills? then @skills.reset pageData.skills else @skills.fetch({reset:true})
     if pageData.user? then @user.set pageData.user else @user.fetch()

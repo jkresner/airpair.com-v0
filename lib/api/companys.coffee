@@ -1,8 +1,21 @@
 CRUDApi = require './_crud'
 
+
 class CompanyApi extends CRUDApi
 
   model: require './../models/company'
 
+  detail: (req, res) =>
 
-module.exports = new CompanyApi()
+    search = '_id': req.params.id
+
+    if req.params.id is 'me'
+      console.log 'me comp search', req.user._id
+      search = 'contacts.userId': req.user._id
+
+    @model.findOne search, (e, r) ->
+      r = {} if r is null
+      res.send r
+
+
+module.exports = (app) -> new CompanyApi(app,'companys')
