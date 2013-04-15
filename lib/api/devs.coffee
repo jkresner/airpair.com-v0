@@ -27,5 +27,4 @@ class DevApi extends CRUDApi
       callback()
 
 
-
-module.exports = new DevApi()
+module.exports = (app) -> new DevApi(app,'devs')

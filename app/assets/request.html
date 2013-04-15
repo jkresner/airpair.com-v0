@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="/stylesheets/app.css">
 </head>
 
-<body>
+<body id="request">
 
   <nav>
     <a href="/" title="Pair programming, code review, architecture advice & more..."><img src="/images/logo.png" /></a>
@@ -25,21 +25,26 @@
 
     <p>airpair is a community of developers that share knowledge through video.</p>
 
-    <p>Here you will find experts in every domain in software development. You can book
-      and pay 1 hour at a time for things like pair programming, code review & architecture
-      advice.
+    <p>Here you will find experts in every domain in software development. You can book and pay 1 hour at a time for things like pair programming, code review & architecture advice.
     </p>
 
     <!-- <p><a href="#" class="btn">I want to learn</a></p>
 
-    <p><a href="#" class="btn">I want to outsource</a></p>
-    -->
+    <p><a href="#" class="btn">I want to outsource</a></p> -->
 
     <p><a href="/auth/google" class="btn btn-warning">Sign in with google</a></p>
     <p>We ask for your google account because we use google hangouts for our screensharing</p>
   </div>
 
-  <div id="company" class="main"></div>
+  <div id="company" class="main">
+    <div id="companyFormView"></div>
+    <div id="companyHelp">
+      <p><b>Tip</b> Our experts often help customers below their market rate,
+        because they are interested in the domain, space and problems our
+        customers are trying to solve.
+        To improve your chances of an expert being interested in helping you, be descriptive <b>about</b> what your company does.</p>
+    </div>
+  </div>
 
   <div id="request" class="main"></div>
 

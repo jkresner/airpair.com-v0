@@ -51,5 +51,4 @@ class RequestApi extends CRUDApi
       console.log 'req.body.suggested', req.body.suggested
       callback()
 
-
-module.exports = new RequestApi()
+module.exports = (app) -> new RequestApi(app,'request')
