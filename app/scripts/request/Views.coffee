@@ -11,7 +11,8 @@ M = require './Models'
 
 class exports.CompanyContactView extends BB.ModelSaveView
   tmpl: require './../shared/templates/CompanyContactForm'
-  viewData: ['fullName','email','gmail','title','phone','userId','avatarUrl']
+  viewData: ['fullName','email','gmail','title','phone','userId',
+                                'avatarUrl', 'twitter','timezone']
   initialize: ->
   render: (attrs) ->
     @model.clear()
@@ -50,13 +51,26 @@ class exports.CompanyFormView extends BB.ModelSaveView
       @save e
   renderSuccess: (model, response, options) =>
     @$('.alert-success').fadeIn(800).fadeOut(5000)
+    router.navigate 'request', false
 
 
 #############################################################################
 
-RequestFormViews = require './../admin/ViewsRequestForm'
+class exports.RequestFormView extends BB.ModelSaveView
+  el: '#requestFormView'
+  tmpl: require './templates/RequestForm'
+  events:
+    'click .save': 'save'
+  viewData: ['brief']
+  initialize: ->
+    @listenTo @model, 'change', @render
+  render: (model) ->
+    @$el.html @tmpl @model.toJSON()
+    @
+  renderSuccess: (model, response, options) =>
+    @$('.alert-success').fadeIn(800).fadeOut(5000)
 
-_.extend exports, RequestFormViews # add our Request forms view to exports
+
 
 #############################################################################
 

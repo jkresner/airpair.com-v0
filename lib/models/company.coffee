@@ -10,6 +10,7 @@ Contact = new Schema
   gmail:      String
   title:      String
   phone:      String
+  twitter:    String
   timezone:   String
 
 schema = new Schema

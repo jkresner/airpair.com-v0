@@ -34,5 +34,17 @@
     <input type="text" data-error-style="inline" value="{{ title }}" placeholder="Title" name="title" id="contactTitle{{num}}">
   </div>
 </div>
+<div class="control-group">
+  <label for="contactTimezone{{num}}" class="control-label">Timezone</label>
+  <div class="controls">
+    <input type="text" data-error-style="inline" value="{{ timezone }}" placeholder="Timezone" name="timezone" id="contactTimezone{{num}}">
+  </div>
+</div>
+<div class="control-group">
+  <label for="contactTwitter{{num}}" class="control-label">Twitter</label>
+  <div class="controls">
+    <input type="text" data-error-style="inline" value="{{ twitter }}" placeholder="@twitter" name="twitter" id="contactTwitter{{num}}">
+  </div>
+</div>
 
 <input type="hidden" value="{{ userId }}" name="userId" id="userId{{num}}"/>
