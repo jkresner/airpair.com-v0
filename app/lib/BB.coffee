@@ -1,5 +1,6 @@
 module.exports =
   BadassModel:                  require './models/BadassModel'
+  SublistModel:                 require './models/SublistModel'
 
   FilteringCollection:          require './collections/FilteringCollection'
   PagingCollection:             require './collections/PagingCollection'
