@@ -58,21 +58,29 @@ class exports.CompanyFormView extends BB.ModelSaveView
 #############################################################################
 
 class exports.RequestFormView extends BB.ModelSaveView
+  logging: on
   el: '#requestForm'
   tmpl: require './templates/RequestForm'
+  viewData: ['brief','tags','budget']
   events:
     'click .save': 'save'
-  viewData: ['brief']
   initialize: ->
+    @$el.html @tmpl @model.toJSON()
+    @tagsInput = new SV.TagsInputView model: @model, collection: @tags
+    @availabiltyInput = new SV.AvailabiltyInputView model: @model, collection: @tags
     @listenTo @model, 'change', @render
   render: ->
-    @$el.html @tmpl @model.toJSON()
-    @tagsInputForm = new SV.TagsInputView model: @model, collection: @tags
+    @setValsFromModel ['brief','budget']
+    @tagsInput.render()
+    @availabiltyInput.render()
     @
   renderSuccess: (model, response, options) =>
     @$('.alert-success').fadeIn(800).fadeOut(5000)
-
-
+  getViewData: ->
+    d = @getValsFromInputs @viewData
+    d.avilability = @availabiltyInput.getViewData()
+    d.tags = @tagsInput.getViewData()
+    d
 
 #############################################################################
 

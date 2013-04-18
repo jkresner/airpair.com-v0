@@ -1,13 +1,7 @@
 #requestpage .main { display:none }
+#requestpage .muted { font-size:11px;font-style:italic; }
 
-#requestpage #companyInfo { float:left;width:540px; }
-#requestpage #companyInfo input { width:84%; }
-#requestpage #companyInfo textarea { width:90%;height:250px; }
-#requestpage #companyContacts img { height:66px; }
-#requestpage #companyContacts { float:left;width:320px; }
-#requestpage #companyContacts input { width:80%; }
-#requestpage #companyForm { float:left; }
-#requestpage #companyHelp { float:left;width:180px;padding:100px 80px;background:#d1d1d1; }
+#requestpage .twitter-typeahead input { width:280px; }
 
 #requestpage .faces { display:block;float:left;width:160px;margin:-3px 10px 0 10px }
 #requestpage .welcomeMsg { float:left;width:600px;padding:30px 0 0 30px;padding:10px 40px; }
@@ -18,5 +12,22 @@
 #requestpage .signinBtn-google { margin:10px 0 0 -10px; }
 #requestpage legend { border:none;font-size:38px;font-weight:bold;margin-bottom:34px }
 
+#requestpage #companyInfo { float:left;width:540px; }
+#requestpage #companyInfo input { width:84%; }
+#requestpage #companyInfo textarea { width:90%;height:250px; }
+#requestpage #companyContacts img { height:66px; }
+#requestpage #companyContacts { float:left;width:320px; }
+#requestpage #companyContacts input { width:80%; }
+#requestpage #companyForm { float:left; }
+#requestpage #companyHelp { float:left;width:180px;padding:100px 80px;background:#d1d1d1; }
+
+#requestpage #requestForm { float:left;width:860px;  }
+#requestpage #requestForm textarea { width:90%;height:250px; }
+#requestpage #budgetRBs { margin:10px; }
+#requestpage #budgetRBs label { float:left;margin-right:8px;color:gray; }
+#requestpage #budgetRBs input { float:left;margin-right:30px; }
+#requestpage #budgetRBs .error-message { display:block; }
+#requestpage #requestForm .availabilty { float:right;width:34%; }
+#requestpage #requestForm .availabilty input { width:120px; }
 
 #requestpage { background:none repeat scroll 0 0 #E2E2E2 }

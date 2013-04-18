@@ -63,10 +63,10 @@ class exports.TagsInputView extends BB.BadassView
     @listenTo @collection, 'sync', @initTypehead
     @listenTo @model, 'change', @render
     @$auto = @$('.autocomplete')
-    @$auto.on 'blur', => @$auto.val ''   # makes it so no value off focus
   render: ->
     @$('.selected').html ''
-    @$('.selected').append(@tagHtml(t)) for t in @model.get('tags')
+    if @model.get('tags')?
+      @$('.selected').append(@tagHtml(t)) for t in @model.get('tags')
     @
   tagHtml: (t) ->
     "<span class='label label-warning'>#{t.short} <a href='#{t._id}' class='rm'>x</a></span>"
@@ -82,6 +82,7 @@ class exports.TagsInputView extends BB.BadassView
       template: @tmplAutoResult
       local: @collection.toJSON()
     ).on('typeahead:selected', @select)
+    @$auto.on 'blur', => @$auto.val ''   # makes it so no value off focus
     @
   select: (e, data) =>
     if e? then e.preventDefault()
@@ -98,6 +99,7 @@ class exports.TagsInputView extends BB.BadassView
     @newForm.$('input').val @$('.autocomplete').val()
   cleanTypehead: ->
     @$auto.typeahead('destroy').off 'typeahead:selected'
-
+  getViewData: ->
+    if !@model.get('tags')? then undefined else @model.get 'tags'
 
 module.exports = exports

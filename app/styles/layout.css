@@ -8,21 +8,15 @@ nav ul li { float:right;display:block;margin-left:5px }
 
 div.main { margin-top:20px }
 
+.alert { display:none }
 
 .codeline {
-  clear:both;
-  font-family:courier;
-  color: #212F3B;
-  float: left;
-  border-bottom: dashed 1px #A4A4A5;
-  border-top: dashed 1px #A4A4A5;
-  padding: 10px 0;
-  width: 900px;
-  margin-bottom: 30px;
+  clear:both;font-family:courier;color: #212F3B;
+  float: left;border-bottom: dashed 1px #A4A4A5;
+  border-top:dashed 1px #A4A4A5;padding:10px 0;width:900px;margin-bottom:30px;
 }
 .codeline em { color:#CE5424; }
 
-.alert { display:none }
 
 /* Custom container
 .container-narrow {

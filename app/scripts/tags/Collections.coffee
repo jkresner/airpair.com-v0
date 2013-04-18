@@ -2,7 +2,7 @@ exports = {}
 BB = require './../../lib/BB'
 Models = require './Models'
 
-class exports.Tags extends BB.PagingCollection
+class exports.Tags extends BB.FilteringCollection
   model: Models.Tag
   url: '/api/tags'
   comparator: (m) -> m.get 'name'
