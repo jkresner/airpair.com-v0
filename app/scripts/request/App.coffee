@@ -10,15 +10,15 @@ module.exports.Page = class Page
   constructor: (pageData) ->
     @user = new models.User()
     @company = new models.Company _id: 'me'
-    @skills = new collections.Skills()
+    @tags = new collections.Tags()
     @request = new models.Request()
 
     @companyFormView = new views.CompanyFormView model: @company
-    @requestFormView = new views.RequestFormView model: @request
+    @requestFormView = new views.RequestFormView model: @request, tags: @tags
 
     if pageData.user? then @user.set pageData.user else @user.fetch success: =>
-      if @user.isAuthenticated()
-        if pageData.skills? then @skills.reset pageData.skills else @skills.fetch({reset:true})
+      if @user.isGoogleAuthenticated()
+        if pageData.tags? then @tags.reset pageData.tags else @tags.fetch({reset:true})
 
 
 module.exports.Router = routers.Router

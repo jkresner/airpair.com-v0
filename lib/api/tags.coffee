@@ -1,9 +1,6 @@
 request = require 'superagent'
 CRUDApi = require './_crud'
 
-Tag = require './../models/tag'
-Tag.find({}).remove()
-
 class TagsApi extends CRUDApi
 
   model: require './../models/tag'

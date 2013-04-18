@@ -71,7 +71,7 @@ class exports.TagsInputView extends BB.BadassView
   tagHtml: (t) ->
     "<span class='label label-warning'>#{t.short} <a href='#{t._id}' class='rm'>x</a></span>"
   initTypehead: ->
-    $log 'initTypehead', @collection.toJSON()
+    #$log 'initTypehead', @collection.toJSON()
     @newForm.$el.hide()
     @cleanTypehead().val('').show()
     @$auto.typeahead(

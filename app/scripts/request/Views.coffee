@@ -1,6 +1,7 @@
 exports = {}
-BB = require './../..a/lib/BB'
+BB = require './../../lib/BB'
 M = require './Models'
+SV = require './../shared/Views'
 
 #############################################################################
 ##  Shared
@@ -64,8 +65,9 @@ class exports.RequestFormView extends BB.ModelSaveView
   viewData: ['brief']
   initialize: ->
     @listenTo @model, 'change', @render
-  render: (model) ->
+  render: ->
     @$el.html @tmpl @model.toJSON()
+    @tagsInputForm = new SV.TagsInputView model: @model, collection: @tags
     @
   renderSuccess: (model, response, options) =>
     @$('.alert-success').fadeIn(800).fadeOut(5000)

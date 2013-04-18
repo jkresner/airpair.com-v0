@@ -30,6 +30,9 @@ db.once 'open', ->
 require('./app_routes')(app)
 
 
+# Tag = require './../models/tag'
+# Tag.find({}).remove()
+
 
 exports.startServer = (port, path, callback) ->
   p = process.env.PORT || port
