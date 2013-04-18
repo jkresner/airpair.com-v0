@@ -1,7 +1,7 @@
 exports = {}
 BB = require './../../lib/BB'
 M = require './Models'
-tmpl_links = require './../../templates/devLinks'
+tmpl_links = require './../shared/templates/DevLinks'
 
 
 class exports.ReviewView extends BB.BadassView
