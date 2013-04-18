@@ -4,7 +4,7 @@ Models = require './Models'
 Shared = require './../shared/Collections'
 
 
-exports.Skills = Shared.Skills
+exports.Tags = Shared.Tags
 
 
 module.exports = exports

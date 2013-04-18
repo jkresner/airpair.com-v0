@@ -1,27 +1,21 @@
-BB = require './../../lib/BB'
 models = require './Models'
 collections = require './Collections'
 views = require './Views'
 routers = require './Routers'
 
 
-#instances of objects to make page work with router
 module.exports.Page = class Page
   constructor: (pageData) ->
-    @user = new models.User()
-    @company = new models.Company _id: 'me'
     @tags = new collections.Tags()
-    @request = new models.Request()
+    #@tagsView = new views.SkillsView collection: @tags
+    @selectedTags = new models.TagListModel()
 
-    @companyFormView = new views.CompanyFormView model: @company
-    @requestFormView = new views.RequestFormView model: @request, tags: @tags
+    @tagsInputView = new views.TagsInputView collection: @tags, model: @selectedTags
 
-    if pageData.user? then @user.set pageData.user else @user.fetch success: =>
-      if @user.isGoogleAuthenticated()
-        if pageData.tags? then @tags.reset pageData.tags else @tags.fetch({reset:true})
+    if pageData.tags? then @tags.reset pageData.tags else @tags.fetch({reset:true})
 
 
-module.exports.Router = routers.Router
+module.exports.Router = routers.TagsRouter
 
 # LoadSPA allows us to initialize the app multiple times in integration tests
 # without needing to re-require this app.coffee file or wait for jQuery.ready()

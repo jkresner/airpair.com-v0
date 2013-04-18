@@ -1,0 +1,149 @@
+n) Ask to record into (to confirm camera + sounds + google account + screenshare + recording skills)
+
+n) Ask for paypal email address
+
+n) Ask for twitter handle
+
+n) Ask if comfortable with IM?
+
+
+Thorsten Heymann  10:26 AM
+ok. had former support session on my job, but we just used chat.. (or even notepad
+
+me  10:26 AM
+Brian is having problems with images loading slow
+you will need to look through his code
+
+Thorsten Heymann  10:27 AM
+can you show the code?
+
+me  10:27 AM
+I don't have it he does
+But you might need to show code too
+
+Thorsten Heymann  10:27 AM
+you told that problems arised after migrating the site to new servers.
+
+me  10:27 AM
+can you do a screen share now?
+
+Thorsten Heymann  10:28 AM
+which screen do you need?
+
+me  10:28 AM
+any
+I just want to see that you can do it!
+
+Thorsten Heymann  10:28 AM
+how can I enlarge you screen?
+
+me  10:29 AM
+make the hangout window bigger
+you can also up the size of the font...
+I still can't see you screen bud?
+*your screen
+ohhh
+sorry Ican
+for some reason
+the thumbnails
+down the bottom do not update for you
+
+Thorsten Heymann  10:30 AM
+Ok. Should work. I've shared a terminal
+
+me  10:30 AM
+yes I see it
+ok ...
+I would like to teach you how to take the recording
+that way I don't have to be on the call
+.... but
+it's very important we get the recording
+otherwise we can't pay you
+-- got it?
+
+Thorsten Heymann  10:31 AM
+understand
+
+me  10:31 AM
+... you should practice after this call once
+------
+when you create a hangout
+there is a checkbox
+"hang out on air"
+make sure that is checked
+
+Thorsten Heymann  10:31 AM
+understood
+
+me  10:31 AM
+then once you're in the hangout
+you will see s red button
+up the top right
+do you see my cursor over it?
+"start braodcast"
+
+Thorsten Heymann  10:32 AM
+yes
+
+me  10:32 AM
+then it will count down from 10 seconds
+and start recording (it is now)
+just before the end of your session
+when you hang up
+click "end braodcast"
+that's it
+
+Thorsten Heymann  10:33 AM
+Ok, got it
+
+me  10:33 AM
+great - so ... we got off on the wrong foot with Brian
+because we missed the call ...
+I am going to introduce you by email
+and ask him to fill you in on any more details
+so that we can make sure we find his problem
+in the session
+I'm going to schedule in
+for
+6am PST Wednesday
+and send you a google calendar invite
+please reply to that invite
+so we all are on the same page with the time
+
+Thorsten Heymann  10:35 AM
+Ok. Have a question. Can connect to his servers using ssh too? (if required and got credentials)
+
+me  10:36 AM
+Please ask him if he is ok with that in email before hand
+this is us
+https://www.youtube.com/watch?v=IJoDIAx4hak
+---------
+one last detail!
+for the hang out
+please log into the airpair account
+email: team@airpair.co
+password: airpair21
+I think that is everything
+------
+any more questions?
+
+Thorsten Heymann  10:37 AM
+Ok, thanks for the first. Can I see this chat recorded anywhere? for reference?
+
+me  10:38 AM
+Lol, maybe just copy it to a text file
+We will have formalized processes / instructions
+in the next couple of weeks!
+
+Thorsten Heymann  10:38 AM
+done!
+
+me  10:38 AM
+ok, going to intro you by email in a couple of minutes
+
+Thorsten Heymann  10:39 AM
+ok. so we are done here?
+
+me  10:39 AM
+yup
+good luck!

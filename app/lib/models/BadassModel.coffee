@@ -13,3 +13,24 @@ module.exports = class BadassModel extends Backbone.Model
   # checkfor500: (model, errors, options) ->
   #   if errors? & errors.code is 500
   #     exports.render500 errors, 'Failed to get data: ' + model.url
+
+  # toggle: (name, value) ->
+  #   filters = @get(name)
+  #   if !filters?
+  #     @set name, [value]
+  #   else
+  #     # if it's not yet in the list, add it
+  #     if _.indexOf(filters, value) == -1
+  #       if value == 'all'
+  #         @set name, ['all']
+  #       else if @isDefault(name)
+  #         @set name, [value]
+  #       else
+  #         # need to do this so our event listeners fire..
+  #         @set name, (_.union filters, [value])
+
+  #     # else let's remove it
+  #     else
+  #       without = _.without @get(name), value
+  #       if without.length == 0 then without = ['all']
+  #       @set name, without

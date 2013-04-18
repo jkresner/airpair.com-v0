@@ -1,14 +1,20 @@
 BB = require './../../lib/BB'
 exports = {}
 
+_.extend exports, require './../tags/Models'
+
+
 
 class exports.User extends BB.BadassModel
   urlRoot: '/api/users/me'
-  isAuthenticated: -> @get('_id')?
+  isGoogleAuthenticated: ->
+    @get('_id')? && @get('google')?
 
 
 class exports.Skill extends BB.BadassModel
   urlRoot: '/api/skills'
+
+
 
 
 class exports.Company extends BB.BadassModel

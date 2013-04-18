@@ -16,9 +16,12 @@ module.exports = (app) ->
   app.get     '/welcome-expert', (req, r) -> r.sendfile './public/welcomeexpert.html'
   app.get     '/welcome-padawan', (req, r) -> r.sendfile './public/welcomestudent.html'
 
+  app.get     '/edu/tags', (req, r) -> r.sendfile './public/edu/tags.html'
+
   app.get     '/api/users/me', api_users.detail
 
   require('./lib/api/companys')(app)
+  require('./lib/api/tags')(app)
   require('./lib/api/skills')(app)
   require('./lib/api/devs')(app)
   require('./lib/api/requests')(app)
