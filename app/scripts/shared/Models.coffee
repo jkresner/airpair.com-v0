@@ -1,6 +1,9 @@
 BB = require './../../lib/BB'
 exports = {}
 
+und.extend exports, require '/../tags/Models'
+
+
 
 class exports.User extends BB.BadassModel
   urlRoot: '/api/users/me'
@@ -9,6 +12,8 @@ class exports.User extends BB.BadassModel
 
 class exports.Skill extends BB.BadassModel
   urlRoot: '/api/skills'
+
+
 
 
 class exports.Company extends BB.BadassModel

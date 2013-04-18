@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>airpair, education</title>
+    <link rel="stylesheet" href="/stylesheets/app.css">
+</head>
+
+<body id="edupage">
+
+  <nav>
+    <a href="/" title="Pair programming, code review, architecture advice & more..."><img src="/images/logo.png" /></a>
+
+    <ul>
+      <li><a href="/edu/tags">Tags</a></li>
+      <li><a href="#"></a></li>
+    </ul>
+  </nav>
+
+
+  <a href="/auth/github" class="btn">Login w github</a>
+<!--
+  <div id="tags" class="main">
+
+
+
+  <div>
+-->
+
+
+  <div id="tagsInput">
+      <h2>Select tags</h2>
+      <div id="tagNewForm"></div>
+  </div>
+
+
+
+</body>
+
+  <script src="/javascripts/vendor.js" defer></script>
+  <script src="/javascripts/app.js" defer onload="require('/scripts/tags/App');"></script>
+
+  <script type="text/javascript">
+
+      function initSPA(SPA) {
+
+          var pagedata = {};
+
+          window.router = new SPA.Router({ page: new SPA.Page(pagedata) });
+          Backbone.history.start();
+      }
+
+  </script>
+
+</html>
