@@ -44,7 +44,8 @@
     "passport-angellist": "0.1.x",
     "passport-dropbox": "0.1.x",
     "passport-paypal": "0.1.x",
-    "moment": "2.0.0"
+    "moment": "2.0.0",
+    "superagent": "0.14.x"
   },
   "devDependencies": {
     "supertest": "0.5.x"
