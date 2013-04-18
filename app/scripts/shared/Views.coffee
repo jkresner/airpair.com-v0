@@ -15,14 +15,15 @@ class exports.AvailabiltyInputView extends BB.BadassView
     'click .rm': 'deselect'
   initialize: (args) ->
     @$el.append @tmpl @model.toJSON()
-    @listenTo @model, 'change:availabilty', @render
+    # @listenTo @model, 'change:availability', @render
     @$timeselect = @$('.timeselect')
     @$timeselect.datetimepicker( minuteStep: 30, autoclose: true )
     @$timeselect.on 'dateChanged', @select
     @$timeselect.on 'blur', => @$timeselect.val ''   # so no value off focus
   render: ->
     @$('div').html ''
-    @$('div').append(d) for d in @model.get 'availability'
+    if @model.get('availability')?
+      @$('div').append(d) for d in @model.get 'availability'
     @
   select: (e) =>
     # $log 'addAvailability', e
@@ -33,6 +34,7 @@ class exports.AvailabiltyInputView extends BB.BadassView
     e.preventDefault()
     toRemove = $(e.currentTarget).data 'val'
     @model.toggleAvailability toRemove
-  getViewData: -> @model.get 'availabilty'
+  getViewData: ->
+    if !@model.get('availability')? then undefined else @model.get 'availability'
 
 module.exports = exports

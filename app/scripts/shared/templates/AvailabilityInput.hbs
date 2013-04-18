@@ -1,7 +1,6 @@
-<input type="text" class="timeselect" placeholder="select time" data-error-style="inline" />
-<span id="reqTimezone"></span>
-<div>
+<input type="text" class="timeselect" placeholder="select time" name="availability" />
+<div class="selected">
   {{#each availability}}
-    <div>{{this}} <a href="#" class="deleteAvalability" data-val="{{this}}">x</a></div>
+    <div>{{this}} <a href="#" class="rm" data-val="{{this}}">x</a></div>
   {{/each}}
 </div>

@@ -82,7 +82,7 @@ class exports.TagsInputView extends BB.BadassView
       template: @tmplAutoResult
       local: @collection.toJSON()
     ).on('typeahead:selected', @select)
-    @$auto.on 'blur', => @$auto.val ''   # makes it so no value off focus
+    #@$auto.on 'blur', => @$auto.val ''   # makes it so no value off focus
     @
   select: (e, data) =>
     if e? then e.preventDefault()

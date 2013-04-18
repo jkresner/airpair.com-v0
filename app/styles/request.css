@@ -23,10 +23,12 @@
 
 #requestpage #requestForm { float:left;width:860px;  }
 #requestpage #requestForm textarea { width:90%;height:250px; }
-#requestpage #budgetRBs { margin:10px; }
-#requestpage #budgetRBs label { float:left;margin-right:8px;color:gray; }
-#requestpage #budgetRBs input { float:left;margin-right:30px; }
-#requestpage #budgetRBs .error-message { display:block; }
+#requestpage #requestForm .error-message { margin:-10px 0 0 5px;font-size:12px  }
+#requestpage .rb-group { margin:10px;display:block;height:30px; }
+#requestpage .rb-group label { float:left;margin-right:8px;color:gray; }
+#requestpage .rb-group input { float:left;margin-right:30px; }
+#requestpage .rb-group .error-message { display:block; }
+#requestpage .rb-group .checked { color:darkorange;font-weight:bold; }
 #requestpage #requestForm .availabilty { float:right;width:34%; }
 #requestpage #requestForm .availabilty input { width:120px; }
 

@@ -33,24 +33,17 @@ class exports.CompanyContact extends BB.BadassModel
 
 class exports.Request extends BB.SublistModel
   urlRoot: '/api/requests'
-  defaults:
-    # tags:           []
-    suggested:      []
-    calls:          []
-    events:         []
-    availability:   []
+  # defaults:
+    # suggested:      []
+    # calls:          []
   validation:
-    status:         { required: true }
     userId:         { required: true }
     companyId:      { required: true }
     companyName:    { required: true }
-    brief:          { required: true }
+    brief:          { required: true, msg: 'A detailed brief is required' }
     budget:         { required: true }
-    tags:           { fn: 'validateTags', msg: 'At least one technology tag required' }
-    availability:   { required: true, msg: 'At least one time slot is required' }
-  validateTags: (value, attr, computedState) ->
-    console.log 'validateTags', value, attr, computedState
-    if !value? || value.length is 0 then true
+    availability:   { fn: 'validateNonEmptyArray', msg: 'At least one time slot is required' }
+    tags:           { fn: 'validateNonEmptyArray', msg: 'At least one technology tag required' }
   createdDateString: ->
     if !@get('events')? || @get('events').length < 1
       'create event missing'
