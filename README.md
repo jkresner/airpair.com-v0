@@ -42,6 +42,12 @@ Setup + run locally
 Test
 ===============================================================================
 
+Three layers of tests:
+
+- /ui (JS front end only)
+- /integration (JS front end calling server side, should have no deps on node)
+- /server (Node only)
+
 1)   npm install -g mocha
 
 2)   npm install -g mocha-phantomjs

@@ -65,15 +65,16 @@ class exports.RequestFormView extends BB.ModelSaveView
   events:
     'click .save': 'save'
   initialize: ->
-    @$el.html @tmpl @model.toJSON()
+    @$el.html @tmpl {}
     @tagsInput = new SV.TagsInputView model: @model, collection: @tags
-    @availabiltyInput = new SV.AvailabiltyInputView model: @model, collection: @tags
+    @availabilityInput = new SV.AvailabiltyInputView model: @model, collection: @tags
     @$('input:radio').on 'click', @selectRB
     @listenTo @model, 'change', @render
   render: ->
     @setValsFromModel ['brief']
-    @tagsInput.render()
-    @availabiltyInput.render()
+    @$(":radio[value=#{@model.get('budget')}]").prop('checked',true)
+    @$(":radio[value=#{@model.get('pricing')}]").prop('checked',true)
+    # tagsInput + availabiltyInput will render automatically
     @
   selectRB: (e) ->
     rb = $(e.currentTarget)
@@ -83,10 +84,11 @@ class exports.RequestFormView extends BB.ModelSaveView
   renderSuccess: (model, response, options) =>
     @$('.alert-success').fadeIn(800).fadeOut(5000)
   getViewData: ->
+    hours: @$("[name='hours']").val()
     budget: @$("[name='budget']:checked").val()
     pricing: @$("[name='pricing']:checked").val()
     brief: @$("[name='brief']").val()
-    avilability: @availabiltyInput.getViewData()
+    availability: @availabilityInput.getViewData()
     tags: @tagsInput.getViewData()
 
 

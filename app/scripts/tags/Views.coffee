@@ -61,9 +61,10 @@ class exports.TagsInputView extends BB.BadassView
     @$el.append @tmpl @model.toJSON()
     @newForm = new exports.TagNewForm selected: @model, collection: @collection
     @listenTo @collection, 'sync', @initTypehead
-    @listenTo @model, 'change', @render
+    @listenTo @model, 'change:tags', @render
     @$auto = @$('.autocomplete')
   render: ->
+    @$('.error-message').remove() # in case we had an error fire first
     @$('.selected').html ''
     if @model.get('tags')?
       @$('.selected').append(@tagHtml(t)) for t in @model.get('tags')

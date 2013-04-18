@@ -1,6 +1,7 @@
-require './../../test-setup'
-require './../../test-http-setup'
-
+# docs on expect syntax                         chaijs.com/api/bdd/
+# docs on using spy/fake/stub                   sinonjs.org/docs/
+# docs on sinon chai syntax                     chaijs.com/plugins/sinon-chai
+{_, $, $log, Backbone} = window
 
 describe "tags autocomplete", ->
 

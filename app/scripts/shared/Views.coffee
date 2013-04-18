@@ -15,8 +15,8 @@ class exports.AvailabiltyInputView extends BB.BadassView
     'click .rm': 'deselect'
   initialize: (args) ->
     @$el.append @tmpl @model.toJSON()
-    # @listenTo @model, 'change:availability', @render
-    @$timeselect = @$('.timeselect')
+    @listenTo @model, 'change:availability', @render
+    @$timeselect = @$('.datetimepicker')
     @$timeselect.datetimepicker( minuteStep: 30, autoclose: true )
     @$timeselect.on 'dateChanged', @select
     @$timeselect.on 'blur', => @$timeselect.val ''   # so no value off focus

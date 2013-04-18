@@ -4,7 +4,7 @@ Backbone.Validation.renderBootstrapInputInvalid = (control, error) ->
   group = control.parents(".control-group")
   group.addClass("error")
 
-  $log 'renderBootstrapInputInvalid', control, error
+  # $log 'renderBootstrapInputInvalid', control, error
 
   if control.data("error-style") == "tooltip"
     position = control.data("tooltip-position") || "right"
