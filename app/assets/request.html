@@ -11,38 +11,63 @@
 <body id="requestpage">
 
   <nav>
-    <a href="/" title="Pair programming, code review, architecture advice & more..."><img src="/images/logo.png" /></a>
-
-    <ul>
-      <li><a href="/find-an-expert">Find expert</a></li>
-      <li><a href="/be-an-expert">Be expert</a></li>
-    </ul>
+    <a href="/" title="Pair programming, code review, architecture advice & more..."><img src="/images/logo4.png" /></a>
   </nav>
 
   <div id="welcome" class="main">
 
-    <h1>Welcome padewan!</h1>
+    <img src="/images/faces.png" class="faces" />
 
-    <p>airpair is a community of developers that share knowledge through video.</p>
+    <div class="welcomeMsg">
+        <h1>Hello there!</h1>
 
-    <p>Here you will find experts in every domain in software development. You can book and pay 1 hour at a time for things like pair programming, code review & architecture advice.
-    </p>
+        <p>airpair is a community of developers that share knowledge through video.</p>
 
-    <!-- <p><a href="#" class="btn">I want to learn</a></p>
+        <p>Here you'll find experts from all different software backgrounds that you can book and <b>pay 1 hour at a time</b> for pair programming, code review, architecture advice & more.
+        </p>
 
-    <p><a href="#" class="btn">I want to outsource</a></p> -->
+        <p>Our video calls are scheduled with google calendar and facilitated with google hangouts. We will need your google account id when we invite you to join your airpair first call. Please sign in with google to continue.</p>
 
-    <p><a href="/auth/google" class="btn btn-warning">Sign in with google</a></p>
-    <p>We ask for your google account because we use google hangouts for our screensharing</p>
+        <a href="/auth/google"><img src="/images/signin/google.png" class="signinBtn-google"/></a>
+
+    </div>
+    <div class="rightCol">
+
+        <h2>Recent airpairs</h2>
+
+        <div class="customer">
+          <h4>Environment Setup: Rails & Discourse</h4>
+          <iframe width="360" height="220" src="http://www.youtube.com/embed/l9BItvriQmk" frameborder="0" allowfullscreen></iframe>
+        </div>
+
+        <div class="customer">
+          <h4>Architecture brainstorm: Netty eventing</h4>
+          <iframe width="360" height="220" src="http://www.youtube.com/embed/7RuaDzFN4Ew" frameborder="0" allowfullscreen></iframe>
+        </div>
+
+        <div class="customer">
+          <h4>Deployment walkthough: Rails on EC2</h4>
+          <iframe width="360" height="220" src="http://www.youtube.com/embed/rC7ubZ76f98" frameborder="0" allowfullscreen></iframe>
+        </div>
+
+    </div>
   </div>
+
 
   <div id="company" class="main">
     <div id="companyForm"></div>
-    <div id="companyHelp">
-      <p><b>Tip</b> Our experts often help customers below their market rate,
-        because they are interested in the domain, space and problems our
-        customers are trying to solve.
-        To improve your chances of an expert being interested in helping you, be descriptive <b>about</b> what your company does.</p>
+    <div class="rightCol">
+      <h2>Tips</h2>
+
+      <p>We want your request to attract the best experts!</p>
+
+      <p>Experts have limited time to asses if you're a good fit.<p>
+
+      <p>
+        Provide a link to your company and at least a detailed description of the problem your company (or app) is solving. Then our experts can will know
+        if it's a domain they can help you with.
+      </p>
+
     </div>
   </div>
 

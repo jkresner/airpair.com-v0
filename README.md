@@ -57,6 +57,7 @@ Test
 List of TODO
 ===============================================================================
 
+- Test auth against live configs
 - Test auth & providers returns correct objects (res.user is not right)
 - Consider problems of passport session deserializing on every api call
 

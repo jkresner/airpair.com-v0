@@ -1,7 +1,7 @@
 body { background:white;width:1280px;margin:auto }
 
-nav { height:54px;border-bottom:dashed 1px #d3d3d3;padding-top:6px; }
-nav img { display:inline-block;width:180px; }
+nav { height:54px;border-bottom:solid 1px #d3d3d3;padding-top:6px;background:url('/images/bg-top-short.jpg') }
+nav img { display:inline-block;width:180px;padding:2px 10px; }
 nav h3 { display:inline-block;color:#999999;padding:16px 6px }
 nav ul { float:right }
 nav ul li { float:right;display:block;margin-left:5px }
@@ -37,3 +37,10 @@ div.main { margin-top:20px }
 .leadRow td { font-size:11px; }
 .leadRow .label-skill { background-color:maroon;margin-right:4px; }
 
+.signinBtn-google { }
+
+/* Used for colorful braces */
+h2 b { color:#CC523E }
+h2 em { color:#7F761C;font-style:normal; }
+legend b { color:#CC523E }
+legend em { color:#7F761C;font-style:normal; }

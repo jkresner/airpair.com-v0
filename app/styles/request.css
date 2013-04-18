@@ -1,8 +1,22 @@
+#requestpage .main { display:none }
+
 #requestpage #companyInfo { float:left;width:540px; }
 #requestpage #companyInfo input { width:84%; }
-#requestpage #companyInfo textarea { width:90%;height:248px; }
+#requestpage #companyInfo textarea { width:90%;height:250px; }
 #requestpage #companyContacts img { height:66px; }
 #requestpage #companyContacts { float:left;width:320px; }
 #requestpage #companyContacts input { width:80%; }
 #requestpage #companyForm { float:left; }
 #requestpage #companyHelp { float:left;width:180px;padding:100px 80px;background:#d1d1d1; }
+
+#requestpage .faces { display:block;float:left;width:160px;margin:-3px 10px 0 10px }
+#requestpage .welcomeMsg { float:left;width:600px;padding:30px 0 0 30px;padding:10px 40px; }
+#requestpage .welcomeMsg h1 { font-size:72px;margin-bottom:40px;margin-top:6px; }
+#requestpage .welcomeMsg p { font-size:18px;line-height:28px }
+#requestpage .rightCol { float:left;width:360px;padding:25px;min-height:700px;background:white; }
+#requestpage h2 { }
+#requestpage .signinBtn-google { margin:10px 0 0 -10px; }
+#requestpage legend { border:none;font-size:38px;font-weight:bold;margin-bottom:34px }
+
+
+#requestpage { background:none repeat scroll 0 0 #E2E2E2 }

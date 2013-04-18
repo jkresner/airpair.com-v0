@@ -24,7 +24,7 @@ class exports.Router extends Backbone.Router
     @page.company.fetch success: (m, opts, resp) =>
       m.populateFromGoogle @page.user
       @hideShow '#company'
-      @request()
+      # @request()
 
   request: ->
     $log 'Router.request'
