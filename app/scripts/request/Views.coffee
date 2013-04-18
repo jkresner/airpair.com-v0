@@ -1,6 +1,7 @@
 exports = {}
 BB = require './../../lib/BB'
 M = require './Models'
+SV = require './../shared/Views'
 
 #############################################################################
 ##  Shared
@@ -11,7 +12,8 @@ M = require './Models'
 
 class exports.CompanyContactView extends BB.ModelSaveView
   tmpl: require './../shared/templates/CompanyContactForm'
-  viewData: ['fullName','email','gmail','title','phone','userId','avatarUrl']
+  viewData: ['fullName','email','gmail','title','phone','userId',
+                                'avatarUrl', 'twitter','timezone']
   initialize: ->
   render: (attrs) ->
     @model.clear()
@@ -21,7 +23,7 @@ class exports.CompanyContactView extends BB.ModelSaveView
 
 
 class exports.CompanyFormView extends BB.ModelSaveView
-  el: '#companyFormView'
+  el: '#companyForm'
   tmpl: require './../shared/templates/CompanyForm'
   events: { 'click .save': 'validatePrimaryContactAndSave' }
   initialize: ->
@@ -50,13 +52,27 @@ class exports.CompanyFormView extends BB.ModelSaveView
       @save e
   renderSuccess: (model, response, options) =>
     @$('.alert-success').fadeIn(800).fadeOut(5000)
+    router.navigate 'request', { trigger: true }
 
 
 #############################################################################
 
-RequestFormViews = require './../admin/ViewsRequestForm'
+class exports.RequestFormView extends BB.ModelSaveView
+  el: '#requestForm'
+  tmpl: require './templates/RequestForm'
+  events:
+    'click .save': 'save'
+  viewData: ['brief']
+  initialize: ->
+    @listenTo @model, 'change', @render
+  render: ->
+    @$el.html @tmpl @model.toJSON()
+    @tagsInputForm = new SV.TagsInputView model: @model, collection: @tags
+    @
+  renderSuccess: (model, response, options) =>
+    @$('.alert-success').fadeIn(800).fadeOut(5000)
 
-_.extend exports, RequestFormViews # add our Request forms view to exports
+
 
 #############################################################################
 

@@ -1,0 +1,50 @@
+<legend>Info <a href="/review#{{ _id }}" target="_blank">review</a></legend>
+
+
+<div class="control-group">
+  <label class="control-label" for="reqBrief">Category</label>
+  <div class="controls">
+  </div>
+</div>
+
+<div class="control-group">
+  <label class="control-label" for="reqStatus">Tags</label>
+  <div class="controls">
+    <div id="tagsInput">
+      <h2>Select tags</h2>
+      <div id="tagNewForm"></div>
+    </div>
+  </div>
+</div>
+
+<div class="control-group">
+  <label class="control-label" for="reqBrief">Brief</label>
+  <div class="controls">
+    <textarea id="reqBrief" name="brief">{{ brief }}</textarea>
+  </div>
+</div>
+
+<div class="control-group">
+  <label class="control-label" for="reqBudget">Budget per hr in USD</label>
+  <div class="controls">
+    <label for="budget30">$30</label> <input type="radio" id="budget30" name="budget" value="30" />
+    <label for="budget60">$60</label>  <input type="radio" id="budget60" name="budget" value="60" />
+    <label for="budget90">$90</label>  <input type="radio" id="budget90" name="budget" value="90" />
+    <label for="budget130">$130</label>  <input type="radio" id="budget130" name="budget" value="130" />
+    <label for="budget180">$180</label>  <input type="radio" id="budget180" name="budget" value="180" />
+    <label for="budget250">$250</label>  <input type="radio" id="budget250" name="budget" value="250" />
+  </div>
+</div>
+
+<div class="control-group">
+  <label class="control-label" for="reqStatus">Availability</label>
+  <div class="controls">
+    <input type="text" id="reqAvailability" placeholder="select time" data-error-style="inline" name="availabilty"/>
+    <span id="reqTimezone"></span>
+    <div>
+      {{#each availability}}
+        <div>{{this}} <a href="#" class="deleteAvalability" data-val="{{this}}">x</a></div>
+      {{/each}}
+    </div>
+  </div>
+</div>

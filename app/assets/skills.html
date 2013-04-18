@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>airpair, find an expert</title>
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="/stylesheets/app.css">
+</head>
+
+<body id="requestpage">
+
+  <nav>
+    <a href="/" title="Pair programming, code review, architecture advice & more..."><img src="/images/logo.png" /></a>
+
+    <ul>
+      <li><a href="/adm/skills"></a></li>
+      <li><a href="/adm/experts"></a></li>
+    </ul>
+  </nav>
+
+  <div id="welcome" class="main">
+
+  </div>
+
+</body>
+
+  <script src="/javascripts/vendor.js" defer></script>
+  <script src="j/avascripts/app.js" defer onload="require('/scripts/skills/App');"></script>
+
+  <script type="text/javascript">
+
+      function initSPA(SPA) {
+
+          var pagedata = {};
+
+          window.router = new SPA.Router({ page: new SPA.Page(pagedata) });
+          Backbone.history.start();
+      }
+
+  </script>
+
+</html>

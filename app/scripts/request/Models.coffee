@@ -19,6 +19,7 @@ exports.Company = class Company extends Shared.Company
         email:      gplus.emails[0].value
         gmail:      gplus.emails[0].value
         avatarUrl:  gplus._json.picture
+        timezone:   new Date().toString().substring(25, 45)
       }]
 
 module.exports = exports

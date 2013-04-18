@@ -34,7 +34,6 @@
     "async": "~0.2.6",
     "passport": "0.1.x",
     "passport-oauth": "0.1.x",
-    "passport-openid": "0.3.x",
     "passport-github": "0.1.x",
     "passport-google-oauth": "0.1.x",
     "passport-linkedin": "0.1.x",
@@ -44,7 +43,9 @@
     "passport-bitbucket": "0.1.x",
     "passport-angellist": "0.1.x",
     "passport-dropbox": "0.1.x",
-    "passport-paypal": "0.1.x"
+    "passport-paypal": "0.1.x",
+    "moment": "2.0.0",
+    "superagent": "0.14.x"
   },
   "devDependencies": {
     "supertest": "0.5.x"
