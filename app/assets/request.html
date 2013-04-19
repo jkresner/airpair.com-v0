@@ -127,8 +127,10 @@
 
           var pagedata = {};
 
-          window.router = new SPA.Router({ page: new SPA.Page(pagedata) });
-          Backbone.history.start();
+          new SPA.Page(pagedata, function(page) {
+            window.router = new SPA.Router({ page: page });
+            Backbone.history.start();
+          });
       }
 
   </script>

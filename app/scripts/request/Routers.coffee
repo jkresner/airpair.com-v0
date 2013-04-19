@@ -10,13 +10,10 @@ class exports.Router extends Backbone.Router
 
   initialize: (args) ->
     @page = args.page
-    @page.user.fetch success: @userAuthenticatedRoute
+    @userAuthenticatedRoute()
 
-      # if @user.isGoogleAuthenticated()
-      #   if pageData.tags? then @tags.reset pageData.tags else @tags.fetch({reset:true})
-
-  userAuthenticatedRoute: =>
-    if @page.user.isGoogleAuthenticated() then @company() else @welcome()
+  userAuthenticatedRoute: ->
+    if @page.session.isGoogleAuthenticated() then @company() else @welcome()
 
   welcome: ->
     $log 'Router.welcome'
@@ -27,7 +24,7 @@ class exports.Router extends Backbone.Router
     if @page.tags.length is 0 then @page.tags.fetch()
 
     @page.company.fetch success: (m, opts, resp) =>
-      m.populateFromGoogle @page.user
+      m.populateFromGoogle @page.session
       @hideShow '#company'
       #@request()
 
