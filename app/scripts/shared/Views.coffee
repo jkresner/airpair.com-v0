@@ -37,4 +37,34 @@ class exports.AvailabiltyInputView extends BB.BadassView
   getViewData: ->
     if !@model.get('availability')? then undefined else @model.get 'availability'
 
+
+# class exports.locationInput = ($el, selector, hidden_selector) ->
+#   if google? && google.maps?
+#     input = $el.find selector
+#     hd = $el.find hidden_selector
+#     options = { types: ['(cities)'] }
+#     autocomplete = new google.maps.places.Autocomplete(input.get(0), options)
+
+    # http://stackoverflow.com/questions/12816428/how-to-fire-place-changed-event-for-google-places-auto-complete-on-enter-key
+    # input.keypress (e) ->
+    #   if (e.which == 13)
+    #     google.maps.event.trigger(autocomplete, 'place_changed')
+    #     false
+
+    # updateInput = ->
+    #   Backbone.Validation.renderBootstrapInputValid input
+    #   place = autocomplete.getPlace()
+    #   if ! place? || ! place.geometry
+    #     # Inform the user that the place was not found and return.
+    #     Backbone.Validation.renderBootstrapInputInvalid input, 'Place not found'
+    #   else
+    #     hd.val place.formatted_address
+
+    # set the input string or error when place selected
+    # google.maps.event.addListener autocomplete, 'place_changed', updateInput
+
+    # if user changes location_id textbox value after google place_changed was successful
+    # input.on 'change', -> hd.val ''
+
+
 module.exports = exports
