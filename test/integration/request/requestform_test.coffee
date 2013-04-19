@@ -18,7 +18,7 @@ describe 'Request:Views RequestFormView =>', ->
   beforeEach ->
     hlpr.clean_setup @
     hlpr.set_htmlfixture '<div id="requestForm"></div>'
-    @defaultData = brief: 'test', availability: [new Date().toString()], budget: 30, pricing: 'private'
+    @defaultData = brief: 'test', availability: [new Date().toString()], budget: 30, pricing: 'private', hours: '1'
     @request = new M.Request()
     @tags = new C.Tags( data.tags )
     @viewData = model: @request, tags: @tags
@@ -26,11 +26,12 @@ describe 'Request:Views RequestFormView =>', ->
   afterEach ->
     hlpr.clean_tear_down @
 
-  it 'on load sets correct budget & pricing radios', ->
+  it 'on load sets correct budget, pricing & hours radios', ->
     view = new V.RequestFormView @viewData
     view.model.set @defaultData
     expect( view.$('#budget30').is(':checked') ).to.be.true
     expect( view.$('#pricingPrivate').is(':checked') ).to.be.true
+    expect( view.$('[name=hours]').val() ).to.equal '1'
 
   it 'validation on availability fires with not availability', ->
     delete @defaultData.availability
@@ -65,5 +66,11 @@ describe 'Request:Views RequestFormView =>', ->
     view.model.set 'tags', [data.tags[0]]
     expect( view.$('.controls-tags .error-message').length ).to.equal 0
 
+  it 'select time clears after a time is selected', ->
+    expect(false).to.be.true
 
+  it 'selected time matches choice from input', ->
+    expect(false).to.be.true
 
+  it 'on server error, error message renders', ->
+    expect(false).to.be.true

@@ -38,8 +38,7 @@ class exports.Request extends BB.SublistModel
     # calls:          []
   validation:
     userId:         { required: true }
-    companyId:      { required: true }
-    companyName:    { required: true }
+    company:        { required: true }
     brief:          { required: true, msg: 'A detailed brief is required' }
     budget:         { required: true }
     availability:   { fn: 'validateNonEmptyArray', msg: 'At least one time slot is required' }
@@ -50,7 +49,9 @@ class exports.Request extends BB.SublistModel
     else
       new Date(@get('events')[0].utc).toDateString().replace(' 2013','')
   toggleTag: (value) ->
-    @toggleAttrSublistElement 'tags', value, (m) -> m._id is value._id
+    # so we only save what we need and don't bloat the requests
+    tag = _id: value._id, short: value.short, soId: value.soId, ghId: ghId
+    @toggleAttrSublistElement 'tags', tag, (m) -> m._id is value._id
   toggleAvailability: (value) ->
     @toggleAttrSublistElement 'availability', value, (m) -> m is value
 
