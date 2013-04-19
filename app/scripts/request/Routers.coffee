@@ -6,6 +6,7 @@ class exports.Router extends Backbone.Router
   routes:
     'company':      'company'
     'request':      'request'
+    'thanks' :      'thanks'
 
   initialize: (args) ->
     @page = args.page
@@ -28,12 +29,17 @@ class exports.Router extends Backbone.Router
     @page.company.fetch success: (m, opts, resp) =>
       m.populateFromGoogle @page.user
       @hideShow '#company'
-      @request()
+      #@request()
 
   request: ->
     $log 'Router.request'
     @hideShow '#request'
-    @page.request.set 'companyId', @page.company.get('_id')
+    @page.request.set
+      company: @page.company.attributes
+
+  thanks: ->
+    $log 'Router.thanks'
+    @hideShow '#thanks'
 
   hideShow: (selector) ->
     $('.main').hide()

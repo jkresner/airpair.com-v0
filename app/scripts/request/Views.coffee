@@ -71,7 +71,7 @@ class exports.RequestFormView extends BB.ModelSaveView
     @$('input:radio').on 'click', @selectRB
     @listenTo @model, 'change', @render
   render: ->
-    @setValsFromModel ['brief']
+    @setValsFromModel ['brief','hours']
     @$(":radio[value=#{@model.get('budget')}]").prop('checked',true)
     @$(":radio[value=#{@model.get('pricing')}]").prop('checked',true)
     # tagsInput + availabiltyInput will render automatically
@@ -83,6 +83,7 @@ class exports.RequestFormView extends BB.ModelSaveView
     rb.prev().addClass 'checked'
   renderSuccess: (model, response, options) =>
     @$('.alert-success').fadeIn(800).fadeOut(5000)
+    router.navigate '#thanks', { trigger: true }
   getViewData: ->
     hours: @$("[name='hours']").val()
     budget: @$("[name='budget']:checked").val()
