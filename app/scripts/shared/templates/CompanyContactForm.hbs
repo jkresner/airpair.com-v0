@@ -11,13 +11,13 @@
   </div>
 </div>
 <div class="control-group">
-  <label for="contactEmail{{num}}" class="control-label">Primary email</label>
+  <label for="contactEmail{{num}}" class="control-label">Primary email <span class="muted">if not your gmail address</span></label>
   <div class="controls">
     <input type="text" data-error-style="inline" value="{{ email }}" placeholder="Email" name="email" id="contactEmail{{num}}">
   </div>
 </div>
 <div class="control-group">
-  <label for="contactGmail{{num}}" class="control-label">Google email <span class="muted" style="font-size:11px">(for Google+ Hangout)</span></label>
+  <label for="contactGmail{{num}}" class="control-label">Google email <span class="muted">for Google+ Hangout</span></label>
   <div class="controls">
     <input type="text" data-error-style="inline" value="{{ gmail }}" placeholder="Google account email" name="gmail" id="contactGmail{{num}}">
   </div>
@@ -41,9 +41,12 @@
   </div>
 </div>
 <div class="control-group">
-  <label for="contactTwitter{{num}}" class="control-label">Twitter</label>
+  <label for="contactTwitter{{num}}" class="control-label">Twitter  <span class="muted">we thank you via twitter after each call</span></label>
   <div class="controls">
-    <input type="text" data-error-style="inline" value="{{ twitter }}" placeholder="@twitter" name="twitter" id="contactTwitter{{num}}">
+    <div class="input-prepend" style="width:88%">
+      <span class="add-on">@</span>
+      <input type="text" data-error-style="inline" value="{{ twitter }}" placeholder="twitter handle" name="twitter" id="contactTwitter{{num}}">
+    </div>
   </div>
 </div>
 

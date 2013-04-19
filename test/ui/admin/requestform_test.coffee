@@ -2,13 +2,13 @@
 # docs on using spy/fake/stub                   sinonjs.org/docs/
 # docs on sinon chai syntax                     chaijs.com/plugins/sinon-chai
 {_, $, $log, Backbone} = window
-hlpr = require './../helper'
+hlpr = require './../../test-ui-helper'
 BB = require 'lib/BB'
 M = require 'scripts/admin/Models'
 C = require 'scripts/admin/Collections'
 V = require 'scripts/admin/Views'
 data =
- request = require './../data/requestSuggested'
+ request = require './../../data/requestSuggested'
 
 
 describe 'Admin:Views RequestFormInfoView =>', ->

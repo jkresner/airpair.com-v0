@@ -21,7 +21,7 @@ class RequestApi extends CRUDApi
         # res.send result
       res.send r
 
-  post: (req, res) =>
+  create: (req, res) =>
     req.body.events = [{ name:'created', utc: new Date()}]
     @getSkills req, =>
       @getDevs req, =>

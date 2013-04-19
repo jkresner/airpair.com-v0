@@ -1,5 +1,6 @@
 und = require 'underscore'
 authz = require './../auth/ensureLoggedInForApi'
+moment = require 'moment'
 
 class CRUDApi
 
@@ -41,5 +42,7 @@ class CRUDApi
   delete: (req, res) =>
     @model.find( _id: req.params.id ).remove (e, r) -> res.send r
 
+  utcNow: ->
+    new moment().utc().toJSON()
 
 module.exports = CRUDApi

@@ -1,28 +1,22 @@
 body { background:white;width:1280px;margin:auto }
 
-nav { height:54px;border-bottom:dashed 1px #d3d3d3;padding-top:6px; }
-nav img { display:inline-block;width:180px; }
+nav { height:54px;border-bottom:solid 1px #d3d3d3;padding-top:6px;background:url('/images/bg-top-short.jpg') }
+nav img { display:inline-block;width:180px;padding:3px 12px; }
 nav h3 { display:inline-block;color:#999999;padding:16px 6px }
 nav ul { float:right }
 nav ul li { float:right;display:block;margin-left:5px }
 
 div.main { margin-top:20px }
 
+.alert { display:none }
 
 .codeline {
-  clear:both;
-  font-family:courier;
-  color: #212F3B;
-  float: left;
-  border-bottom: dashed 1px #A4A4A5;
-  border-top: dashed 1px #A4A4A5;
-  padding: 10px 0;
-  width: 900px;
-  margin-bottom: 30px;
+  clear:both;font-family:courier;color: #212F3B;
+  float: left;border-bottom: dashed 1px #A4A4A5;
+  border-top:dashed 1px #A4A4A5;padding:10px 0;width:900px;margin-bottom:30px;
 }
 .codeline em { color:#CE5424; }
 
-.alert { display:none }
 
 /* Custom container
 .container-narrow {
@@ -37,3 +31,10 @@ div.main { margin-top:20px }
 .leadRow td { font-size:11px; }
 .leadRow .label-skill { background-color:maroon;margin-right:4px; }
 
+.signinBtn-google { }
+
+/* Used for colorful braces */
+h2 b { color:#CC523E }
+h2 em { color:#7F761C;font-style:normal; }
+legend b { color:#CC523E }
+legend em { color:#7F761C;font-style:normal; }

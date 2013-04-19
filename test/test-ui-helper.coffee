@@ -6,6 +6,7 @@ exports.set_htmlfixture = (html) ->
 
 
 exports.clear_htmlfixture = ->
+  $('.datetimepicker').datetimepicker('remove')
   $('#fixture').remove()
 
 

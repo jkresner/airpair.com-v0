@@ -42,6 +42,12 @@ Setup + run locally
 Test
 ===============================================================================
 
+Three layers of tests:
+
+- /ui (JS front end only)
+- /integration (JS front end calling server side, should have no deps on node)
+- /server (Node only)
+
 1)   npm install -g mocha
 
 2)   npm install -g mocha-phantomjs
@@ -57,6 +63,7 @@ Test
 List of TODO
 ===============================================================================
 
+- Test auth against live configs
 - Test auth & providers returns correct objects (res.user is not right)
 - Consider problems of passport session deserializing on every api call
 

@@ -1,6 +1,7 @@
+
 mongoose = require 'mongoose'
 Schema = mongoose.Schema
-{ObjectId, Mixed} = Schema.Types
+
 
 """
 Request status
@@ -49,18 +50,14 @@ Call = new Schema
 
 
 schema = new Schema
-  userId:           { required: true, type: ObjectId }
-  company:          { required: true, type: Mixed    }
-  tags:             { required: true, type: [{}]     }
-  brief:            { required: true, type: String   }
-  budget:           { required: true, type: Number   }
-  hours:            { required: true, type: String   }
-  pricing:          { required: true, type: String   }
-  availability:     { required: true, type: [Date]   }
-  events:           { required: true, type: [Event]  }
-  status:           { required: true, type: String   }
-  hours:            { required: true, type: String   }
-  suggested:        type: [Suggestion]
+  events:           [Event]       # created, updated, reviewed,
+  status:           String    # received
+  companyId:        String
+  companyName:      String
+  availability:     [Date]
+  brief:            String
+  skills:           [{}]
+  suggested:        [Suggestion]
   calls:            [Call]
   canceledReason:   String
 

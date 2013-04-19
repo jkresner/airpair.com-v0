@@ -9,7 +9,8 @@
   <script>
     mocha.setup({
 
-      //, grep: '', leave grep commented so we run all tests
+      grep: 'Request:Views ',
+      //grep: '',
 
       ui: 'bdd',
 
@@ -25,7 +26,8 @@
         'initSPA',
         'router',
         '__e3_',
-        '_xdc_'
+        '_xdc_',
+        'jQuery*'
       ]
     });
 

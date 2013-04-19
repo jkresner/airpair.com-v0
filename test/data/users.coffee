@@ -1,6 +1,36 @@
 module.exports = [
+
+  # 0 - used for session user in most test
+  {
+    "_id": "51708da81dd90b04cddccc9e",
+    "google": {
+      "_json": {
+        "hd": "airpair.com",
+        "locale": "en",
+        "birthday": "0000-02-05",
+        "gender": "male",
+        "picture": "https://lh3.googleusercontent.com/-NKYL9eK5Gis/AAAAAAAAAAI/AAAAAAAAABY/291KLuvT0iI/photo.jpg",
+        "link": "https://plus.google.com/117132380360243205600",
+        "family_name": "Kresner",
+        "given_name": "Jonathon",
+        "name": "Jonathon Kresner",
+        "verified_email": true,
+        "email": "jk@airpair.com",
+        "id": "117132380360243205600"
+      },
+      "emails": [ { "value": "jk@airpair.com" }
+      ],
+      "name": { "givenName": "Jonathon", "familyName": "Kresner" },
+      "displayName": "Jonathon Kresner", "id": "117132380360243205600",
+      "provider": "google"
+    },
+    "googleId": "117132380360243205600"
+  },
+
+  # 1 - not used
   {},
-  {},
+
+  # 2 - used in test 2 of server/api/users.coffee
   {
     "_id": "516ac6941dd90b04cddccc5d",
     "google": {

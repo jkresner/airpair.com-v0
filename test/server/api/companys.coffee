@@ -1,5 +1,5 @@
-require './../../test-setup'
-require './../../test-http-setup'
+require './../test-lib-setup'
+require './../test-app-setup'
 
 data =
   companys: require './../../data/companys'

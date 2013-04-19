@@ -1,4 +1,5 @@
-console.log "in app node file", process.cwd()
+global.$log = console.log
+$log "in app node file", process.cwd()
 
 mongoose = require 'mongoose'
 express = require 'express'

@@ -1,7 +1,7 @@
 exports = {}
 BB = require './../../lib/BB'
 M = require './Models'
-tmpl_links = require './../../templates/devLinks'
+tmpl_links = require './../shared/templates/DevLinks'
 
 
 #############################################################################
@@ -122,7 +122,7 @@ class exports.DevsView extends DataListView
 
 
 class exports.CompanyContactView extends BB.ModelSaveView
-  tmpl: require './templates/CompanyContactForm'
+  tmpl: require './../shared/templates/CompanyContactForm'
   viewData: ['fullName','email','gmail','title','phone']
   initialize: ->
   render: (attrs) ->
@@ -134,7 +134,7 @@ class exports.CompanyContactView extends BB.ModelSaveView
 
 class exports.CompanyFormView extends BB.ModelSaveView
   el: '#companyFormView'
-  tmpl: require './templates/CompanyForm'
+  tmpl: require './../shared/templates/CompanyForm'
   events: { 'click .save': 'validatePrimaryContactAndSave' }
   initialize: ->
     @$el.html @tmpl @model.toJSON()

@@ -1,5 +1,5 @@
 <fieldset>
-  <legend>Contact info <span class="muted ">> Request details</span>
+  <legend><b>{</b> Contact info <b>}</b></legend>
 
     <div class="alert alert-success">
       <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -33,9 +33,9 @@
         </div>
       </div>
       <div class="control-group">
-        <label class="control-label" for="companyAbout">What does your company / app do?</label>
+        <label class="control-label" for="companyAbout">What problem does your company (or app) solve?</label>
         <div class="controls">
-          <textarea id="companyAbout" name="about" placeholder="About your company" value="{{ soId }}" data-error-style="inline"></textarea>
+          <textarea id="companyAbout" name="about" placeholder="About your company - please be detailed." value="{{ soId }}" data-error-style="inline"></textarea>
         </div>
       </div>
     </div>
@@ -43,10 +43,9 @@
 
   <div style="clear:both"></div>
 
-  <div class="control-group">
-    <div class="controls">
-      <a href="#" class="save btn btn-large">Save</a>
-    </div>
+  <div class="form-actions">
+    <a href="#" class="save btn btn-primary">Save</a>
+    <button type="button" class="cancel btn">Cancel</button>
   </div>
 
 </fieldset>
