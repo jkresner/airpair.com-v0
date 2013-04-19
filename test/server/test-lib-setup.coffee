@@ -1,3 +1,5 @@
+global.$log = console.log
+
 global.und = require 'underscore'
 global.sinon = require 'sinon'
 chai = require 'chai'

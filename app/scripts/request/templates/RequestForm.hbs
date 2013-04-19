@@ -1,50 +1,89 @@
-<legend>Info <a href="/review#{{ _id }}" target="_blank">review</a></legend>
+<fieldset>
 
+  <legend><em>{</em> What do you need help with? <em>}</em></legend>
 
-<div class="control-group">
-  <label class="control-label" for="reqBrief">Category</label>
-  <div class="controls">
+  <div class="alert alert-success">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <h4>Saved</h4>
   </div>
-</div>
 
-<div class="control-group">
-  <label class="control-label" for="reqStatus">Tags</label>
-  <div class="controls">
-    <div id="tagsInput">
-      <h2>Select tags</h2>
-      <div id="tagNewForm"></div>
+  <div class="alert alert-error">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <h4>Error</h4>
+  </div>
+
+{{!   <div class="control-group">
+    <label class="control-label" for="reqBrief">Category</label>
+    <div class="controls">
     </div>
   </div>
-</div>
+ }}
 
-<div class="control-group">
-  <label class="control-label" for="reqBrief">Brief</label>
-  <div class="controls">
-    <textarea id="reqBrief" name="brief">{{ brief }}</textarea>
+  <div style="float:left;width:64%">
+
+    <div class="control-group">
+      <label class="control-label" for="tagsInput">Technologies <span class="muted">technologies you want help with</span></label>
+      <div id="tagsInput" class="controls controls-tags">
+          <div id="tagNewForm"></div>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label" for="reqBrief">What challenges do you want to solve?</label>
+      <div class="controls controls-brief">
+        <textarea id="reqBrief" name="brief" placeholder="Give as MUCH detail as possible. Experts ignore short briefs.">{{ brief }}</textarea>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label" for="reqHrs">Around how many hours of help do you need?</label>
+      <select name="hours" class="span1">
+        <option>1</option>
+        <option selected="selected">2</option>
+        <option>3-5</option>
+        <option>5-10</option>
+        <option>10-20</option>
+      </select>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label" for="reqBudget">Max budget / hr <span class="muted">we will only suggest devs in your budget</span></label>
+      <div class="budget rb-group controls">
+        <label for="budget30">$30</label> <input type="radio" id="budget30" name="budget" value="30" />
+        <label for="budget60">$60</label>  <input type="radio" id="budget60" name="budget" value="60" />
+        <label for="budget90" class="checked">$90</label>  <input type="radio" id="budget90" name="budget" value="90" checked="checked" />
+        <label for="budget130">$130</label>  <input type="radio" id="budget130" name="budget" value="130" />
+        <label for="budget180">$180</label>  <input type="radio" id="budget180" name="budget" value="180" />
+        <label for="budget250">$250</label>  <input type="radio" id="budget250" name="budget" value="250" />
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label" for="reqHrs">What are your privacy requirements?</label>
+      <div class="pricing rb-group controls">
+        <label for="pricingOpensource" class="checked">Opensouce</label> <input type="radio" id="pricingOpensource" name="pricing" value="opensource" checked="checked" />
+        <label for="pricingPrivate">Private (add $20 p.h.)</label>  <input type="radio" id="pricingPrivate" name="pricing" value="private" />
+        <label for="pricingNDA">NDA (add $50 p.h.)</label>  <input type="radio" id="pricingNDA" name="pricing" value="nda" />
+      </div>
+    </div>
+
   </div>
-</div>
 
-<div class="control-group">
-  <label class="control-label" for="reqBudget">Budget per hr in USD</label>
-  <div class="controls">
-    <label for="budget30">$30</label> <input type="radio" id="budget30" name="budget" value="30" />
-    <label for="budget60">$60</label>  <input type="radio" id="budget60" name="budget" value="60" />
-    <label for="budget90">$90</label>  <input type="radio" id="budget90" name="budget" value="90" />
-    <label for="budget130">$130</label>  <input type="radio" id="budget130" name="budget" value="130" />
-    <label for="budget180">$180</label>  <input type="radio" id="budget180" name="budget" value="180" />
-    <label for="budget250">$250</label>  <input type="radio" id="budget250" name="budget" value="250" />
-  </div>
-</div>
-
-<div class="control-group">
-  <label class="control-label" for="reqStatus">Availability</label>
-  <div class="controls">
-    <input type="text" id="reqAvailability" placeholder="select time" data-error-style="inline" name="availabilty"/>
-    <span id="reqTimezone"></span>
-    <div>
-      {{#each availability}}
-        <div>{{this}} <a href="#" class="deleteAvalability" data-val="{{this}}">x</a></div>
-      {{/each}}
+  <div class="control-group">
+    <label class="control-label" for="availabilityInput">Availability</label>
+    <div class="controls controls-availability">
+      <div id="availabilityInput"></div>
     </div>
   </div>
-</div>
+
+
+
+  <div style="clear:both"></div>
+
+  <div class="form-actions">
+    <a href="#" class="save btn btn-primary">Save</a>
+    <a href="#company" class="back btn">Back</a>
+  </div>
+
+</fieldset>
+

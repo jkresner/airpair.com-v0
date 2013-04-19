@@ -18,4 +18,4 @@ class CompanyApi extends CRUDApi
       res.send r
 
 
-module.exports = (app) -> new CompanyApi(app,'companys')
+module.exports = (app) -> new CompanyApi app,'companys'

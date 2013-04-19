@@ -16,11 +16,6 @@ module.exports.Page = class Page
     @companyFormView = new views.CompanyFormView model: @company
     @requestFormView = new views.RequestFormView model: @request, tags: @tags
 
-    if pageData.user? then @user.set pageData.user else @user.fetch success: =>
-      if @user.isGoogleAuthenticated()
-        if pageData.tags? then @tags.reset pageData.tags else @tags.fetch({reset:true})
-
-
 module.exports.Router = routers.Router
 
 # LoadSPA allows us to initialize the app multiple times in integration tests

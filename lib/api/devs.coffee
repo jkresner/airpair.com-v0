@@ -10,7 +10,7 @@ class DevApi extends CRUDApi
 ## CRUD extensions
 ###############################################################################
 
-  post: (req, res) =>
+  create: (req, res) =>
     @getSkills req, =>
       new @model( req.body ).save (er, re) -> res.send re
 

@@ -31,24 +31,34 @@ class exports.CompanyContact extends BB.BadassModel
     fullName:       { required: true }
     email:          { required: true, pattern: 'email' }
 
-
-class exports.Request extends BB.BadassModel
+class exports.Request extends BB.SublistModel
   urlRoot: '/api/requests'
-  defaults:
-    suggested:      []
-    calls:          []
-    events:         []
-    availability:   []
+  # defaults:
+    # suggested:      []
+    # calls:          []
   validation:
-    status:         { required: true }
-    companyId:      { required: true }
-    companyName:    { required: true }
-    brief:          { required: true }
+    userId:         { required: true }
+    company:        { required: true }
+    brief:          { required: true, msg: 'A detailed brief is required' }
+    budget:         { required: true }
+    availability:   { fn: 'validateNonEmptyArray', msg: 'At least one time slot is required' }
+    tags:           { fn: 'validateNonEmptyArray', msg: 'At least one technology tag required' }
   createdDateString: ->
     if !@get('events')? || @get('events').length < 1
       'create event missing'
     else
       new Date(@get('events')[0].utc).toDateString().replace(' 2013','')
+  toggleTag: (value) ->
+    # so we only save what we need and don't bloat the requests
+    tag =
+      _id: value._id
+      name: value.name
+      short: value.short
+      soId: value.soId
+      ghId: value.ghId
+    @toggleAttrSublistElement 'tags', tag, (m) -> m._id is value._id
+  toggleAvailability: (value) ->
+    @toggleAttrSublistElement 'availability', value, (m) -> m is value
 
 
 module.exports = exports

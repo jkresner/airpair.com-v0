@@ -6,6 +6,11 @@ module.exports = class BadassModel extends Backbone.Model
     Backbone.Model::constructor.apply @, arguments
     #@on 'error', @checkfor500, @
 
+  validateNonEmptyArray: (value, attr, computedState) ->
+    # console.log 'validateNonEmptyArray', value, attr, computedState
+    if !value? || value.length is 0 then true
+
+
   #compare the value of an attribute to the supplied value ignoring case
   #ignoreCaseCompare: (attr, value) ->
   #  @get(attr).toLowerCase() == value.toLowerCase()

@@ -3,7 +3,7 @@
 #tagsInput span { clear:both; }
 #tagsInput p { height:20px;overflow:hidden;margin:0;font-size:11px; }
 #tagsInput h3 { }
-#tagsInput .selected { background:white;border-radius:5px;width:300px;height:100px;margin:10px auto; }
+#tagsInput .selected { border-radius:5px;margin:10px auto; }
 #tagsInput .label { padding:6px 10px;margin:3px 3px 0px 0px;border:solid 1px darkorange;font-weight:bold;font-size:14px; }
 #tagsInput .label a { color:pink;margin-left:5px }
 #tagsInput .tt-dropdown-menu { width:260px }
