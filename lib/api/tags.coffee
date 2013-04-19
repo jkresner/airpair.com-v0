@@ -79,4 +79,4 @@ class TagsApi extends CRUDApi
 
 
 
-module.exports = (app) -> new TagsApi(app,'tags')
+module.exports = (app) -> new TagsApi app,'tags'
