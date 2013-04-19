@@ -12,6 +12,12 @@
 
   <nav>
     <a href="/" title="Pair programming, code review, architecture advice & more..."><img src="/images/logo4.png" /></a>
+
+    <ul>
+      <li><a href="/dashboard" class="zocial">dashboard</a></li>
+      <li><a href="/find-an-expert" class="zocial">new request</a></li>
+      <li><a href="/messages" class="zocial">messages</a></li>
+    </ul>
   </nav>
 
   <div id="requests" class="main">
@@ -27,11 +33,12 @@
   <script type="text/javascript">
 
       function initSPA(SPA) {
-
           var pagedata = {};
 
-          window.router = new SPA.Router({ page: new SPA.Page(pagedata) });
-          Backbone.history.start();
+          new SPA.Page(pagedata, function(page) {
+            window.router = new SPA.Router({ page: page });
+            Backbone.history.start();
+          });
       }
 
   </script>
