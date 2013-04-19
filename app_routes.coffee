@@ -6,7 +6,10 @@ module.exports = (app) ->
 
   app.get     '/', (req, r) -> r.sendfile './public/index.html'
   app.get     '/about', (req, r) -> r.sendfile './public/index.html'
-  app.get     '/adminn', authz('/'), (req, r) -> r.sendfile './public/admin.html'
+
+  app.get     '/login', (req, r) -> r.sendfile './public/login.html'
+  app.get     '/dashboard', authz('/login'), (req, r) -> r.sendfile './public/dashboard.html'
+
   app.get     '/review', (req, r) -> r.sendfile './public/review.html'
   app.get     '/be-an-expert', (req, r) -> r.sendfile './public/beexpert.html'
   app.get     '/traction', (req, r) -> r.sendfile './public/traction.html'
@@ -17,6 +20,7 @@ module.exports = (app) ->
   app.get     '/welcome-padawan', (req, r) -> r.sendfile './public/welcomestudent.html'
 
   app.get     '/edu/tags', (req, r) -> r.sendfile './public/edu/tags.html'
+  app.get     '/adminn', authz('/'), (req, r) -> r.sendfile './public/admin.html'
 
   app.get     '/api/users/me', api_users.detail
 
