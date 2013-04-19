@@ -66,10 +66,14 @@ describe 'Request:Views RequestFormView =>', ->
     view.model.set 'tags', [data.tags[0]]
     expect( view.$('.controls-tags .error-message').length ).to.equal 0
 
+
   it 'select time clears after a time is selected', ->
     expect(false).to.be.true
 
-  it 'selected time matches choice from input', ->
+  it 'selected time matches choice from input & is rounded to half hour', ->
+    expect(false).to.be.true
+
+  it 'required error disappears after a time is selected', ->
     expect(false).to.be.true
 
   it 'on server error, error message renders', ->

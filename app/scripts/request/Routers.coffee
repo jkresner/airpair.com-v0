@@ -19,7 +19,7 @@ class exports.Router extends Backbone.Router
     if @page.user.isGoogleAuthenticated() then @company() else @welcome()
 
   welcome: ->
-    $log 'Router.index'
+    $log 'Router.welcome'
     @hideShow '#welcome'
 
   company: ->

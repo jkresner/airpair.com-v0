@@ -50,7 +50,12 @@ class exports.Request extends BB.SublistModel
       new Date(@get('events')[0].utc).toDateString().replace(' 2013','')
   toggleTag: (value) ->
     # so we only save what we need and don't bloat the requests
-    tag = _id: value._id, short: value.short, soId: value.soId, ghId: ghId
+    tag =
+      _id: value._id
+      name: value.name
+      short: value.short
+      soId: value.soId
+      ghId: value.ghId
     @toggleAttrSublistElement 'tags', tag, (m) -> m._id is value._id
   toggleAvailability: (value) ->
     @toggleAttrSublistElement 'availability', value, (m) -> m is value
