@@ -12,7 +12,6 @@ passport = require 'passport'
 ######## Session
 
 User = require './../models/user'
-User.find({}).remove()
 
 passport.serializeUser (user, done) ->
   done null, user._id
