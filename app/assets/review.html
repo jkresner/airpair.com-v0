@@ -1,47 +1,45 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>airpair</title>
-        <meta name="viewport" content="width=device-width">
-        <meta name="author" content="airpair, inc.">
-        <script src="javascripts/modernizr.js"></script>
-        <link rel="stylesheet" href="/stylesheets/app.css">
-        <link rel="stylesheet" href="/stylesheets/frontend.css">
-    </head>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>airpair, dashboard</title>
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="/stylesheets/app.css">
+</head>
 
-  <body style="background:white">
+<body id="reviewpage">
 
-    <div class="container-narrow">
+  <nav>
+    <a href="/" title="Pair programming, code review, architecture advice & more..."><img src="/images/logo4.png" /></a>
 
-      <div class="header">
-        <img src="/images/logo.png" />
-      </div>
+    <ul>
+      <li><a href="/dashboard" class="zocial cal">dashboard</a></li>
+      <li><a href="/find-an-expert" class="zocial call">new request</a></li>
+      <li><a href="/messages" class="zocial email">messages</a></li>
+    </ul>
+  </nav>
 
-      <div style="height:10px"></div>
+  <div id="requestslist">
+    <h2>Review info</h2>
+    <div id="requestInfo"></div>
+  </div>
 
-      <div id="review">
-
-      </div>
-
-    </div> <!-- /container -->
-
-
-  </body>
+</body>
 
   <script src="/javascripts/vendor.js" defer></script>
-  <script src="/javascripts/app.js" defer onload="require('/scripts/admin/App-Review');"></script>
+  <script src="/javascripts/app.js" defer onload="require('/scripts/review/App');"></script>
 
   <script type="text/javascript">
 
-      function initSPA(SPA) {
+    function initSPA(SPA) {
+        var pagedata = {};
 
-          var pagedata = { };
-
-          window.router = new SPA.Router({ page: new SPA.Page(pagedata) });
+        new SPA.Page(pagedata, function(page) {
+          window.router = new SPA.Router({ page: page });
           Backbone.history.start();
-      }
+        });
+    }
 
   </script>
 

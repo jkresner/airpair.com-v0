@@ -8,4 +8,7 @@
 </td>
 <td>{{ suggestedFitCount }} / {{ suggestedCount }}</td>
 <td>{{ callCompleteCount }} / {{ callCount }}</td>
-<td><a class="edit" href="/find-an-expert#update/{{ _id }}" data-id="{{ _id }}">Update</a></td>
+<td>
+  <a href="/review#{{ _id }}" target="_blank" class="btn btn-info">View</a>
+  <a href="/find-an-expert#update/{{ _id }}" data-id="{{ _id }}" class="edit btn btn-warning">Update</a>
+</td>

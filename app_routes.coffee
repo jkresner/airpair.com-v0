@@ -9,8 +9,8 @@ module.exports = (app) ->
 
   app.get     '/login', (req, r) -> r.sendfile './public/login.html'
   app.get     '/dashboard', authz('/login'), (req, r) -> r.sendfile './public/dashboard.html'
+  app.get     '/review', authz('/login'), (req, r) -> r.sendfile './public/review.html'
 
-  app.get     '/review', (req, r) -> r.sendfile './public/review.html'
   app.get     '/be-an-expert', (req, r) -> r.sendfile './public/beexpert.html'
   app.get     '/traction', (req, r) -> r.sendfile './public/traction.html'
 
