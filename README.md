@@ -63,6 +63,8 @@ Three layers of tests:
 List of TODO
 ===============================================================================
 
+- Update heroku size + mongo size
+- Get persisted session running
 - Test auth against live configs
 - Test auth & providers returns correct objects (res.user is not right)
 - Consider problems of passport session deserializing on every api call

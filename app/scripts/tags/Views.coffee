@@ -39,7 +39,7 @@ class exports.TagNewForm extends BB.ModelSaveView
     'click .save-gh': (e) -> @saveWithMode e, 'github'
   initialize: (args) ->
     @selected = args.selected
-    @$el.html @tmpl()
+    # @$el.html @tmpl()
   saveWithMode: (e, mode) ->
     @model = new M.Tag addMode: mode
     @save e

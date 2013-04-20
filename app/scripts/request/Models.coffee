@@ -4,7 +4,6 @@ exports = {}
 
 
 exports.User = Shared.User
-exports.Skill = Shared.Skill
 exports.CompanyContact = Shared.CompanyContact
 exports.Request = Shared.Request
 

@@ -1,29 +1,146 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>airpair</title>
-        <meta name="viewport" content="width=device-width">
-        <meta name="author" content="airpair, inc.">
-        <link rel="stylesheet" href="/stylesheets/app.css">
-    </head>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>airpair, become an expert</title>
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="/stylesheets/app.css">
+</head>
 
-  <body style="background:white;width:900px;margin:auto">
+<body id="bexpertpage">
 
-    <div class="container-narrow">
+  <nav>
+    <a href="/" title="Pair programming, code review, architecture advice & more..."><img src="/images/logo4.png" /></a>
+  </nav>
 
-      <div class="c900 header">
-        <img src="/images/logo.png" />
-      </div>
+  <div id="welcome" class="main">
 
-      <div style="height:10px"></div>
+    <img src="/images/faces.png" class="faces" />
 
-      <iframe src="https://docs.google.com/a/airpair.co/spreadsheet/embeddedform?formkey=dFFzM1NiekxQclU2WUxROGJrMExFemc6MQ" width="760" height="950" frameborder="0" marginheight="0" marginwidth="0" style="overflow:hidden" scrolling="no">Loading...</iframe>
+    <div class="welcomeMsg">
+        <h1>Hello there!</h1>
 
-    </div> <!-- /container -->
+        <p>airpair is a community of developers that share knowledge through video.</p>
+
+        <p>Our experts get the opportunity to practice teaching, be exposed to interesting problems and build their online presence as a domain expert.</P>
+
+        <P>We pride ourselves on helping others learn while blasting through their development barriers.</p>
+
+        <p>Oh, did we mention our experts get paid by the hour?</p>
+
+        <p>We scheduled airpairs with <i>google calendar</i> and facilitated the calls using <i>google hangouts</i>. We'll need your google account id when we invite you to join your airpair first call. Please sign in with google to continue.</p>
+
+        <a href="/auth/google"><img src="/images/signin/google.png" class="signinBtn-google"/></a>
+
+    </div>
+    <div class="rightCol">
+
+        <h2>Recent airpairs</h2>
+
+        <div class="customer">
+          <h4>Environment Setup: Rails & Discourse</h4>
+          <iframe width="360" height="220" src="http://www.youtube.com/embed/l9BItvriQmk" frameborder="0" allowfullscreen></iframe>
+        </div>
+
+        <div class="customer">
+          <h4>Architecture brainstorm: Netty eventing</h4>
+          <iframe width="360" height="220" src="http://www.youtube.com/embed/7RuaDzFN4Ew" frameborder="0" allowfullscreen></iframe>
+        </div>
+
+        <div class="customer">
+          <h4>Deployment walkthough: Rails on EC2</h4>
+          <iframe width="360" height="220" src="http://www.youtube.com/embed/rC7ubZ76f98" frameborder="0" allowfullscreen></iframe>
+        </div>
+
+    </div>
+  </div>
 
 
-    </body>
+  <div id="google" class="main">
+    <div id="companyForm"></div>
+    <div class="rightCol">
+      <h2>Step 1 of 2</h2>
 
+      <h3>Connect your accounts to build your profiles</h3>
+    </div>
+  </div>
+
+  <div id="connect" class="main">
+    <div id="requestForm"></div>
+    <div class="rightCol">
+      <h2>Step 2 of 2</h2>
+
+      <h3>What happens next?</h3>
+
+      <p>After you submit your request, we'll farm it out to our airpair expert network.</p>
+
+      <p>If your request resonates will an expert they'll come back and let
+        you know when they are available.</p>
+
+      <h3>Privacy options</h3>
+
+      <p>airpair is fundamentally about sharing knowledge with the community. We use your session recording for educational purposes. Allowing the session recording to be public also helps our experts build a reputation for themselves.</p>
+
+      <p>If you wish for your recording not to be public (what we call 'opensource'), select private.</p>
+
+      <h3>How many hours do you need?</h3>
+      <p>Well most sessions are blah...</p>
+
+      <h3>When do you pay?</h3>
+      <p>First we need to go out and find you the right expert. Because experts price themselves differently, we don't know how much your session will cost until
+      you choose which expert you want. We will give you 3 options (at different prices). Once you choose, you will pay before your call.</p>
+
+
+    </div>
+  </div>
+
+  <div id="prefs" class="main">
+    <h1>Thank you</h1>
+
+    <p class="success">Your request is submitted.</p>
+
+    <p> You can expect to hear back from us with suggestions within 36 hours, but often much sooner!</p>
+
+    <p>Please follow <a href="http://twitter.com/airpair" class="zocial twitter" target="_blank">@airpair on twitter</a>
+      and  <a href="http://angel.co/airpair" target="_blank" class="zocial angellist">airpair on angelList</a>.</p>
+
+    <p>You can update your request anytime from your <a href="/dashboard">dashboard</a>.</p>
+
+
+  </div>
+
+
+  <div id="thanks" class="main">
+    <h1>Thank you</h1>
+
+    <p class="success">Your request is submitted.</p>
+
+    <p> You can expect to hear back from us with suggestions within 36 hours, but often much sooner!</p>
+
+    <p>Please follow <a href="http://twitter.com/airpair" class="zocial twitter" target="_blank">@airpair on twitter</a>
+      and  <a href="http://angel.co/airpair" target="_blank" class="zocial angellist">airpair on angelList</a>.</p>
+
+    <p>You can update your request anytime from your <a href="/dashboard">dashboard</a>.</p>
+
+
+  </div>
+
+</body>
+
+  <script src="/javascripts/vendor.js" defer></script>
+  <script src="/javascripts/app.js" defer onload="require('/scripts/beexpert/App');"></script>
+
+  <script type="text/javascript">
+
+      function initSPA(SPA) {
+          var pagedata = {};
+
+          new SPA.Page(pagedata, function(page) {
+            window.router = new SPA.Router({ page: page });
+            Backbone.history.start();
+          });
+      }
+
+  </script>
 </html>

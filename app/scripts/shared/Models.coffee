@@ -10,8 +10,8 @@ class exports.User extends BB.BadassModel
     @get('_id')? && @get('google')?
 
 
-class exports.Skill extends BB.BadassModel
-  urlRoot: '/api/skills'
+class exports.Expert extends BB.BadassModel
+  urlRoot: '/api/experts'
 
 
 class exports.Company extends BB.BadassModel

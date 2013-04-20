@@ -1,0 +1,74 @@
+<fieldset>
+
+  <legend><b>{</b> Give us some into <b>}</b></legend>
+
+  <div class="alert alert-success">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <h4>Saved</h4>
+  </div>
+
+  <div class="alert alert-error">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <h4>Error</h4>
+  </div>
+
+
+  <div style="float:left;width:64%">
+
+    <div class="control-group">
+      <label class="control-label" for="tagsInput">Technologies <span class="muted">technologies you want to help with</span></label>
+      <div id="tagsInput" class="controls controls-tags">
+          <div id="tagNewForm"></div>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label" for="brief">What type of challenges do you want to help people solve?</label>
+      <div class="controls controls-brief">
+        <textarea id="brief" name="brief" placeholder="Do you like helping newbies, or solving complicated problems? Tell us the type of work you like and we'll give you preference for it">{{ brief }}</textarea>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label" for="reqHrs">Around how many hours of airpairs would you want a week?</label>
+      <select name="hours" class="span1">
+        <option>1</option>
+        <option selected="selected">2</option>
+        <option>3-5</option>
+        <option>5-10</option>
+        <option>10-20</option>
+      </select>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label" for="rate">Preferred rate / hr <span class="muted">we will only suggest you with request around your rate</span></label>
+      <div class="budget rb-group controls">
+        <label for="rate30">$30</label> <input type="radio" id="rate30" name="rate" value="30" />
+        <label for="rate60">$60</label>  <input type="radio" id="rate60" name="rate" value="60" />
+        <label for="rate90" class="checked">$90</label>  <input type="radio" id="rate90" name="rate" value="90" checked="checked" />
+        <label for="rate130">$130</label>  <input type="radio" id="rate130" name="rate" value="130" />
+        <label for="rate180">$180</label>  <input type="radio" id="rate180" name="rate" value="180" />
+        <label for="rate250">$250</label>  <input type="radio" id="rate250" name="rate" value="250" />
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label" for="reqHrs">Current status?</label>
+      <div class="pricing rb-group controls">
+        <label for="pricingOpensource" class="checked">Send me airpairs!</label> <input type="radio" id="pricingOpensource" name="pricing" value="opensource" checked="checked" />
+        <label for="pricingPrivate">Busy atm, I'll update you next month</label>  <input type="radio" id="pricingPrivate" name="pricing" value="private" />
+      </div>
+    </div>
+
+  </div>
+
+
+  <div style="clear:both"></div>
+
+  <div class="form-actions">
+    <a href="#" class="save btn btn-primary">Save</a>
+    <a href="#company" class="back btn">Back</a>
+  </div>
+
+</fieldset>
+

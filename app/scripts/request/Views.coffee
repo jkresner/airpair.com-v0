@@ -4,11 +4,8 @@ M = require './Models'
 SV = require './../shared/Views'
 
 #############################################################################
-##  Shared
+##  Contact Info
 #############################################################################
-
-#############################################################################
-
 
 class exports.CompanyContactView extends BB.ModelSaveView
   tmpl: require './../shared/templates/CompanyContactForm'
