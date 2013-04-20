@@ -73,6 +73,12 @@ describe 'Request:Views RequestFormView =>', ->
   it 'selected time matches choice from input & is rounded to half hour', ->
     expect(false).to.be.true
 
+  it 'selected time does not wipe other selected form values', ->
+    # select hours
+    # select time
+    # confirm hours choice persists
+    expect(false).to.be.true
+
   it 'required error disappears after a time is selected', ->
     expect(false).to.be.true
 

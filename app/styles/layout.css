@@ -1,9 +1,9 @@
-body { background:white;width:1280px;margin:auto }
+body { background:none repeat scroll 0 0 #E2E2E2;width:1280px;margin:auto }
 
 nav { height:54px;border-bottom:solid 1px #d3d3d3;padding-top:6px;background:url('/images/bg-top-short.jpg') }
 nav img { display:inline-block;width:180px;padding:3px 12px; }
 nav h3 { display:inline-block;color:#999999;padding:16px 6px }
-nav ul { float:right }
+nav ul { float:right;margin:8px; }
 nav ul li { float:right;display:block;margin-left:5px }
 
 div.main { margin-top:20px }
@@ -38,3 +38,14 @@ h2 b { color:#CC523E }
 h2 em { color:#7F761C;font-style:normal; }
 legend b { color:#CC523E }
 legend em { color:#7F761C;font-style:normal; }
+
+.label-tag { padding:4px;background-color:#333333;font-weight:normal; }
+
+
+.label-status { padding:4px; }
+.label-received { background-color:#3A87AD }
+.label-incomplete { background-color:#b94a48 }
+.label-review { background-color:#468847 }
+.label-scheduled { background-color:#333333 }
+.label-completed { background-color:#999999 }
+.label-canceled { background-color:#999999 }
