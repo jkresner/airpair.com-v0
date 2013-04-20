@@ -3,9 +3,29 @@ BB = require './../../lib/BB'
 M = require './Models'
 SV = require './../shared/Views'
 
+exports.ExpertView = SV.ExpertView
+
 #############################################################################
-##  Shared
+##
 #############################################################################
+
+class exports.ConnectFormView extends BB.ModelSaveView
+  logging: on
+  el: '#connectForm'
+  tmpl: require './templates/ConnectForm'
+  events:
+    'click .save': 'save'
+  initialize: ->
+    @listenTo @model, 'change', @render
+  render: ->
+    @$el.html @tmpl @model.toJSON()
+    @
+  renderSuccess: (model, response, options) =>
+    @$('.alert-success').fadeIn(800).fadeOut(5000)
+    router.navigate '#info', { trigger: true }
+  getViewData: ->
+    @model.toJSON()
+
 
 class exports.InfoFormView extends BB.ModelSaveView
   el: '#infoForm'
@@ -15,7 +35,7 @@ class exports.InfoFormView extends BB.ModelSaveView
     'click .save': 'save'
   initialize: ->
     @$el.html @tmpl {}
-    #@tagsInput = new SV.TagsInputView model: @model, collection: @tags
+    @tagsInput = new SV.TagsInputView model: @model, collection: @tags
     @availabilityInput = new SV.AvailabiltyInputView model: @model, collection: @tags
     @$('input:radio').on 'click', @selectRB
     @listenTo @model, 'change', @render
@@ -39,7 +59,7 @@ class exports.InfoFormView extends BB.ModelSaveView
     pricing: @$("[name='pricing']:checked").val()
     brief: @$("[name='brief']").val()
     availability: @availabilityInput.getViewData()
-    #tags: @tagsInput.getViewData()
+    tags: @tagsInput.getViewData()
 
 
 #############################################################################

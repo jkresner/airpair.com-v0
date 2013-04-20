@@ -13,6 +13,60 @@ class exports.User extends BB.BadassModel
 class exports.Expert extends BB.BadassModel
   urlRoot: '/api/experts'
 
+  hasLinks: ->
+    @get('homepage')? || @get('gh')? || @get('so')? || @get('bb')? || @get('in')? || @get('tw')? || @get('other')? || @get('sideproject')?
+
+  populateFromUser: (user) ->
+
+    gplus = user.get('google')
+    # first time
+    if !@get('pic')?
+      @set
+        _id:        undefined
+        userId:     user.get('_id')
+        name:       gplus.displayName
+        email:      gplus.emails[0].value
+        gmail:      gplus.emails[0].value
+        pic:        gplus._json.picture
+        timezone:   new Date().toString().substring(25, 45)
+
+    gh = user.get('github')
+    if gh?
+      @set username: gh.username, gh:
+        profileUrl: gh.profileUrl
+        location: gh._json.location
+        blog: gh._json.blog
+        gravatar_id: gh._json.gravatar_id
+        followers: gh._json.followers
+
+    lkIN = user.get('linkedin')
+    if lkIN?
+      @set in:
+        id: lkIN.id
+        displayName: lkIN.displayName
+
+    tw = user.get('twitter')
+    if tw?
+      @set tw:
+        id: tw.id
+        username: tw.username
+
+    so = user.get('stack')
+    if so?
+      @set so:
+        id: so.id
+        website_url: so.website_url
+        link: so.link
+        reputation: so.reputation
+        profile_image: so.profile_image
+
+    bb = user.get('bitbucket')
+    if bb?
+      @set bb:
+        id: bb.id
+        # website_url: so.website_url
+
+
 
 class exports.Company extends BB.BadassModel
   urlRoot: '/api/companys'

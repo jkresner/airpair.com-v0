@@ -18,20 +18,10 @@ div.main { margin-top:20px }
 .codeline em { color:#CE5424; }
 
 
-/* Custom container
-.container-narrow {
-  margin: 0 auto;
-  max-width: 1330px;
-}
-.container-narrow > hr {
-  margin: 30px 0;
-}
- */
-
-.leadRow td { font-size:11px; }
+/*.leadRow td { font-size:11px; }
 .leadRow .label-skill { background-color:maroon;margin-right:4px; }
 
-.signinBtn-google { }
+*/
 
 /* Used for colorful braces */
 h2 b { color:#CC523E }
@@ -49,3 +39,9 @@ legend em { color:#7F761C;font-style:normal; }
 .label-scheduled { background-color:#333333 }
 .label-completed { background-color:#999999 }
 .label-canceled { background-color:#999999 }
+
+.expert { width:300px;border:solid 0.5px #d3d3d3; }
+.expert h3 { font-size:16px; }
+.expert .pic { width:200px }
+.expert i { display:block;margin:20px auto }
+.expert .links { margin:20px 0; }

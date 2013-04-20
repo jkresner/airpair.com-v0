@@ -21,9 +21,12 @@ class exports.Router extends Backbone.Router
 
   connect: ->
     $log 'Router.connect'
-    @hideShow '#connect'
+    @page.expert.fetch success: (m, opts, resp) =>
+      m.populateFromUser @page.session
+      @hideShow '#connect'
 
   info: ->
+    if @page.tags.length is 0 then @page.tags.fetch()
     $log 'Router.info'
     @hideShow '#info'
 

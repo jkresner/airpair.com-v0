@@ -3,12 +3,14 @@ BB = require './../../lib/BB'
 M = require './Models'
 TagViews = require './../tags/Views'
 
+Handlebars.registerPartial "DevLinks", require('./templates/DevLinks')
+
 
 exports.TagsInputView = TagViews.TagsInputView
 
 
 class exports.AvailabiltyInputView extends BB.BadassView
-  logging: on
+  # logging: on
   el: '#availabilityInput'
   tmpl: require './templates/AvailabilityInput'
   events:
@@ -37,6 +39,16 @@ class exports.AvailabiltyInputView extends BB.BadassView
   getViewData: ->
     if !@model.get('availability')? then undefined else @model.get 'availability'
 
+
+class exports.ExpertView extends BB.BadassView
+  logging: on
+  tmpl: require './templates/Expert'
+  initialize: (args) ->
+    @listenTo @model, 'change', @render
+  render: ->
+    d = (_.extend @model.toJSON(), { hasLinks: @model.hasLinks() } )
+    @$el.html @tmpl d
+    @
 
 # class exports.locationInput = ($el, selector, hidden_selector) ->
 #   if google? && google.maps?

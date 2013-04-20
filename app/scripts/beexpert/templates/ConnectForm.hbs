@@ -1,0 +1,87 @@
+<fieldset>
+
+  <legend><b>{</b> Connect your social profiles <b>}</b></legend>
+
+  <div class="alert alert-success">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <h4>Saved</h4>
+  </div>
+
+  <div class="alert alert-error">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <h4>Error</h4>
+  </div>
+
+  <p style="width:600px">We populate your airpair profile with data from your existing social profiles. We also use information for your profiles in our matching algorithm for incoming airpair requests.</p>
+
+  <hr />
+  <div class="control-group">
+    <label class="control-label" for="github">Github</label>
+    <div class="controls">
+        <a href="/auth/github" class="zocial github">{{#if gh}}Update{{else}}Connect{{/if}}</a>
+        {{#if gh}}
+          <i class="icon-ok icon-white"></i>
+        {{else}}
+          <span class="muted">We use github data to know what languages you code in.</span>
+        {{/if}}
+    </div>
+  </div>
+
+  <div class="control-group">
+    <label class="control-label" for="stackoverflow">Stackoverflow </label>
+    <div class="controls">
+        <a href="/auth/stackexchange" class="zocial stackoverflow">{{#if so}}Update{{else}}Connect{{/if}}</a>
+        {{#if so}}
+          <i class="icon-ok icon-white"></i>
+        {{else}}
+         <span class="muted">We use data from Stackoverflow to know what technologies you like to help with.</span>
+        {{/if}}
+    </div>
+  </div>
+
+  <div class="control-group">
+    <label class="control-label" for="bitbucket">Bitbucket</label>
+    <div class="controls">
+        <a href="/auth/bitbucket" class="zocial bitbucket">{{#if bb}}Update{{else}}Connect{{/if}}</a>
+        {{#if bb}}
+          <i class="icon-ok icon-white"></i>
+        {{else}}
+        <span class="muted">We use bitbucket data to know what languages you code in.</span>
+        {{/if}}
+    </div>
+  </div>
+
+  <div class="control-group">
+    <label class="control-label" for="bitbucket">LinkedIN</label>
+    <div class="controls">
+        <a href="/auth/linkedin" class="zocial linkedin">{{#if in}}Update{{else}}Connect{{/if}}</a>
+        {{#if in}}
+          <i class="icon-ok icon-white"></i>
+        {{else}}
+        <span class="muted">We use LinkedIN data to know what skills you're endorsed for and how many years experience you have.</span>
+        {{/if}}
+    </div>
+  </div>
+
+  <div class="control-group">
+    <label class="control-label" for="twitter">Twitter </label>
+    <div class="controls">
+        <a href="/auth/twitter" class="zocial twitter">{{#if tw}}Update{{else}}Connect{{/if}}</a>
+        {{#if tw}}
+          <i class="icon-ok icon-white"></i>
+        {{else}}
+        <span class="muted"> We use twitter data to asses if you're an alpha geek. We also say thank you after each call using your handle.</span>
+        {{/if}}
+        {{! <input type="checkbox"> Follow @airpair }}
+    </div>
+  </div>
+
+  <div style="clear:both"></div>
+
+  <div class="form-actions">
+    <a href="#" class="save btn btn-primary">Save</a>
+    <a href="#company" class="back btn">Back</a>
+  </div>
+
+</fieldset>
+

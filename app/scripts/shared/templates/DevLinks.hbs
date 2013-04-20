@@ -1,23 +1,39 @@
-{{#if homepage}}
-<a href="http://{{ homepage }}" target="_blank">{{ homepage }}</a>
-{{/if}}
+{{#if hasLinks}}
 
-{{#if so}}
-<a href="http://stackoverflow.com/users/{{ so }}" target="_blank">stackoverflow/{{ so }}</a>
-{{/if }}
+  {{#if homepage}}
+  <a href="http://{{ homepage }}" target="_blank" class="zocial guest icon">{{ homepage }}</a>
+  {{/if}}
 
-{{#if gh}}
-<a href="http://github.com/{{ gh }}" target="_blank">github/{{ gh }}</a>
-{{/if}}
+  {{#if gh}}
+  <a href="{{ gh.profileUrl }}" target="_blank" class="zocial github icon"></a>
+  {{/if}}
 
-{{#if bb}}
-<a href="http://bitbucket.com/{{ bb }}" target="_blank">bitbucket/{{ bb }}</a>
-{{/if}}
+  {{#if so}}
+  <a href="{{ so.link }}" target="_blank" class="zocial stackoverflow icon"></a>
+  {{/if }}
 
-{{#if in}}
-<a href="http://linkedin.com/{{ in }}" target="_blank">linkedin/{{ in }}</a>
-{{/if}}
+  {{#if bb}}
+  <a href="http://bitbucket.com/{{ bb }}" target="_blank" class="zocial bitbucket icon"></a>
+  {{/if}}
 
-{{#if other}}
-<a href="http://{{ other }}" target="_blank">{{ other }}</a>
+  {{#if in}}
+  <a href="http://linkedin.com/{{ in.id }}" target="_blank" class="zocial linkedin icon"></a>
+  {{/if}}
+
+  {{#if tw}}
+  <a href="http://twitter.com/{{ tw.username }}" target="_blank" class="zocial twitter icon"></a>
+  {{/if}}
+
+  {{#if sideproject}}
+  <a href="http://{{ sideproject }}" target="_blank">{{ sideproject }}</a>
+  {{/if}}
+
+  {{#if other}}
+  <a href="http://{{ other }}" target="_blank">{{ other }}</a>
+  {{/if}}
+
+{{else}}
+
+  <i>No info available on expert</i>
+
 {{/if}}

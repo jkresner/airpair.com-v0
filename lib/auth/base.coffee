@@ -25,7 +25,7 @@ passport.deserializeUser (id, done) ->
 
 ######## Shared
 
-exports.logout = (req, res) ->
+logout = (req, res) ->
   req.logout()
   res.redirect('/')
 
@@ -62,10 +62,27 @@ exports.insertOrUpdateUser = (req, done, providerName, profile) ->
 
 ######## Load Providers
 
-exports.github = require('./github')(exports, passport)
-exports.google = require('./google')(exports, passport)
-exports.twitter = require('./twitter')(exports, passport)
-exports.linkedin = require('./linkedin')(exports, passport)
+github = require('./github')(exports, passport)
+google = require('./google')(exports, passport)
+twitter = require('./twitter')(exports, passport)
+linkedin = require('./linkedin')(exports, passport)
+stackexchange = require('./stackexchange')(exports, passport)
+bitbucket = require('./bitbucket')(exports, passport)
 
 
-module.exports = exports
+module.exports = (app) ->
+  app.get     '/logout', logout
+  app.get     '/failed-login', (req, r) -> r.send 'something went wrong with login ...'
+  app.get     '/auth/github', github.connect
+  app.get     '/auth/github/callback', github.connect, github.done
+  app.get     '/auth/google', google.connect
+  app.get     '/auth/google/callback', google.connect, google.done
+  app.get     '/auth/twitter', twitter.connect
+  app.get     '/auth/twitter/callback', twitter.connect, twitter.done
+  app.get     '/auth/linkedin', linkedin.connect
+  app.get     '/auth/linkedin/callback', linkedin.connect, linkedin.done
+  app.get     '/auth/stackexchange', stackexchange.connect
+  app.get     '/auth/stackexchange/callback', stackexchange.connect, stackexchange.done
+  app.get     '/auth/bitbucket', bitbucket.connect
+  app.get     '/auth/bitbucket/callback', bitbucket.connect, bitbucket.done
+
