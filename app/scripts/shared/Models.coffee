@@ -43,9 +43,10 @@ class exports.Request extends BB.SublistModel
     tags:           { fn: 'validateNonEmptyArray', msg: 'At least one technology tag required' }
   createdDate: ->
     if !@get('events')? || @get('events').length < 1 then return new Date()
-    new Date(@get('events')[0])
+    new Date(@get('events')[0].utc)
   createdDateString: ->
-    moment(@createdDate()).format 'MMM DD'
+    $log 'createdDate', @createdDate()
+    m = moment(@createdDate()).format 'MMM DD'
   toggleTag: (value) ->
     # so we only save what we need and don't bloat the requests
     tag =

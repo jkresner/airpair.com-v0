@@ -7,21 +7,25 @@ M = require './Models'
 #############################################################################
 
 
-class exports.RequestRowView extends Backbone.View
+class exports.RequestRowView extends BB.BadassView
+  tagName: 'tr'
   className: 'request'
   tmpl: require './templates/RequestRow'
   initialize: -> @model.on 'change', @render, @
   render: ->
-    @$el.html @tmpl @model.toJSON()
+    @$el.html @tmpl @templateData()
     @
-
+  templateData: ->
+    _.extend @model.toJSON(),
+      contactName:  @model.get('company').contacts[0].fullName
+      created:      @model.createdDateString()
 
 class exports.RequestsView extends Backbone.View
   el: '#requests'
   initialize: (args) ->
     @collection.on 'reset add remove filter', @render, @
   render: ->
-    $list = @$el.html ''
+    $list = @$('tbody').html ''
     for m in @collection.models
       $list.append new exports.RequestRowView( model: m ).render().el
     @

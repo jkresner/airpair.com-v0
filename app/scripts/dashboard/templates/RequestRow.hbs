@@ -1,11 +1,11 @@
-<td><a class="edit" href="#request/{{ _id }}" data-id="{{ _id }}">{{ status }}</td>
-<td>{{ createdDate }}</td>
-<td>{{ company.name }}</td>
+<td>{{ created }}</td>
+<td><span class="label label-status label-{{ status }}">{{ status }}</a></td>
+<td>{{ contactName }} / {{ company.name }}</td>
 <td>
-  {{#each skills}}
-    <span class="label label-skill">{{short}}</span>
+  {{#each tags}}
+    <span class="label label-tag">{{short}}</span>
   {{/each}}
 </td>
 <td>{{ suggestedFitCount }} / {{ suggestedCount }}</td>
 <td>{{ callCompleteCount }} / {{ callCount }}</td>
-<td>-</td>
+<td><a class="edit" href="/find-an-expert#update/{{ _id }}" data-id="{{ _id }}">Update</a></td>

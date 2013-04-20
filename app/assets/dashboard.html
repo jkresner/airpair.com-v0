@@ -14,15 +14,29 @@
     <a href="/" title="Pair programming, code review, architecture advice & more..."><img src="/images/logo4.png" /></a>
 
     <ul>
-      <li><a href="/dashboard" class="zocial">dashboard</a></li>
-      <li><a href="/find-an-expert" class="zocial">new request</a></li>
-      <li><a href="/messages" class="zocial">messages</a></li>
+      <li><a href="/dashboard" class="zocial cal">dashboard</a></li>
+      <li><a href="/find-an-expert" class="zocial call">new request</a></li>
+      <li><a href="/messages" class="zocial email">messages</a></li>
     </ul>
   </nav>
 
-  <div id="requests" class="main">
+  <div id="requestslist" class="main">
+    <h2><b>{</b> Your airpairs <b>}</b></h2>
 
-
+    <table id="requests" class="table table-striped">
+      <thead>
+        <tr>
+          <th>Created</th>
+          <th>Status</th>
+          <th>For</th>
+          <th>Tags</th>
+          <th>Suggested</th>
+          <th>Scheduled</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
   </div>
 
 </body>

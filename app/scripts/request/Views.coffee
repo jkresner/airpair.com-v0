@@ -58,7 +58,6 @@ class exports.CompanyFormView extends BB.ModelSaveView
 #############################################################################
 
 class exports.RequestFormView extends BB.ModelSaveView
-  logging: on
   el: '#requestForm'
   tmpl: require './templates/RequestForm'
   viewData: ['brief']
