@@ -21,6 +21,7 @@ class RequestApi extends CRUDApi
   detail: (req, res) =>
 
     @model.findOne { _id: req.params.id }, (e, r) =>
+
       # Company.findOne { _id: r.companyId }, (ee, rr) =>
       #   result = und.extend und.clone(r), { company: und.clone(rr) }
       #   console.log 'result', result
@@ -39,6 +40,9 @@ class RequestApi extends CRUDApi
         res.send r
 
   update: (req, res) =>
+    # stop users updating other users requests (need a better solution!)
+    if req.body.userId = req.user._id then return res.send 403
+
     @getDevs req, =>
       data = und.clone req.body
       delete data._id # so mongo doesn't complain
