@@ -12,6 +12,7 @@ Contact = new Schema
   phone:      String
   twitter:    String
   timezone:   String
+#  location:   String ( could be used to calculate timezone... )
 
 schema = new Schema
   name:       String

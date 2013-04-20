@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="/stylesheets/app.css">
 </head>
 
-<body id="reviewpage">
+<body id="dashboardpage">
 
   <nav>
     <a href="/" title="Pair programming, code review, architecture advice & more..."><img src="/images/logo4.png" /></a>
@@ -20,26 +20,40 @@
     </ul>
   </nav>
 
-  <div id="requestslist">
-    <h2>Review info</h2>
-    <div id="requestInfo"></div>
+  <div id="requestslist" class="main">
+    <h2><b>{</b> Your airpairs <b>}</b></h2>
+
+    <table id="requests" class="table table-striped">
+      <thead>
+        <tr>
+          <th>Created</th>
+          <th>Status</th>
+          <th>For</th>
+          <th>Tags</th>
+          <th>Suggested</th>
+          <th>Scheduled</th>
+          <th class="reqOptions"></th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
   </div>
 
 </body>
 
   <script src="/javascripts/vendor.js" defer></script>
-  <script src="/javascripts/app.js" defer onload="require('/scripts/review/App');"></script>
+  <script src="/javascripts/app.js" defer onload="require('/scripts/dashboard/App');"></script>
 
   <script type="text/javascript">
 
-    function initSPA(SPA) {
-        var pagedata = {};
+      function initSPA(SPA) {
+          var pagedata = {};
 
-        new SPA.Page(pagedata, function(page) {
-          window.router = new SPA.Router({ page: page });
-          Backbone.history.start();
-        });
-    }
+          new SPA.Page(pagedata, function(page) {
+            window.router = new SPA.Router({ page: page });
+            Backbone.history.start();
+          });
+      }
 
   </script>
 

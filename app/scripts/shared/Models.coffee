@@ -4,7 +4,6 @@ exports = {}
 _.extend exports, require './../tags/Models'
 
 
-
 class exports.User extends BB.BadassModel
   urlRoot: '/api/users/me'
   isGoogleAuthenticated: ->
@@ -13,8 +12,6 @@ class exports.User extends BB.BadassModel
 
 class exports.Skill extends BB.BadassModel
   urlRoot: '/api/skills'
-
-
 
 
 class exports.Company extends BB.BadassModel
@@ -31,6 +28,7 @@ class exports.CompanyContact extends BB.BadassModel
     fullName:       { required: true }
     email:          { required: true, pattern: 'email' }
 
+
 class exports.Request extends BB.SublistModel
   urlRoot: '/api/requests'
   # defaults:
@@ -43,11 +41,12 @@ class exports.Request extends BB.SublistModel
     budget:         { required: true }
     availability:   { fn: 'validateNonEmptyArray', msg: 'At least one time slot is required' }
     tags:           { fn: 'validateNonEmptyArray', msg: 'At least one technology tag required' }
+  createdDate: ->
+    if !@get('events')? || @get('events').length < 1 then return new Date()
+    new Date(@get('events')[0].utc)
   createdDateString: ->
-    if !@get('events')? || @get('events').length < 1
-      'create event missing'
-    else
-      new Date(@get('events')[0].utc).toDateString().replace(' 2013','')
+    $log 'createdDate', @createdDate()
+    m = moment(@createdDate()).format 'MMM DD'
   toggleTag: (value) ->
     # so we only save what we need and don't bloat the requests
     tag =
