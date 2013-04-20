@@ -17,11 +17,12 @@ class exports.Expert extends BB.BadassModel
     @get('homepage')? || @get('gh')? || @get('so')? || @get('bb')? || @get('in')? || @get('tw')? || @get('other')? || @get('sideproject')?
 
   populateFromUser: (user) ->
+    pop = {}
 
     gplus = user.get('google')
     # first time
     if !@get('pic')?
-      @set
+      pop =
         _id:        undefined
         userId:     user.get('_id')
         name:       gplus.displayName
@@ -30,43 +31,47 @@ class exports.Expert extends BB.BadassModel
         pic:        gplus._json.picture
         timezone:   new Date().toString().substring(25, 45)
 
-    gh = user.get('github')
-    if gh?
-      @set username: gh.username, gh:
-        profileUrl: gh.profileUrl
-        location: gh._json.location
-        blog: gh._json.blog
-        gravatar_id: gh._json.gravatar_id
-        followers: gh._json.followers
-
     lkIN = user.get('linkedin')
     if lkIN?
-      @set in:
+      d = in:
         id: lkIN.id
         displayName: lkIN.displayName
+      _.extend pop, d
 
-    tw = user.get('twitter')
-    if tw?
-      @set tw:
-        id: tw.id
-        username: tw.username
+    bb = user.get('bitbucket')
+    if bb?
+      d = username: bb.id, bb:
+        id: bb.id
+      _.extend pop, d
 
     so = user.get('stack')
     if so?
-      @set so:
+      d = username: so.username, so:
         id: so.id
         website_url: so.website_url
         link: so.link
         reputation: so.reputation
         profile_image: so.profile_image
+      _.extend pop, d
 
-    bb = user.get('bitbucket')
-    if bb?
-      @set bb:
-        id: bb.id
-        # website_url: so.website_url
+    tw = user.get('twitter')
+    if tw?
+      d = username: tw.username, tw:
+        id: tw.id
+        username: tw.username
+      _.extend pop, d
 
+    gh = user.get('github')
+    if gh?
+      d = username: gh.username, gh:
+        profileUrl: gh.profileUrl
+        location: gh._json.location
+        blog: gh._json.blog
+        gravatar_id: gh._json.gravatar_id
+        followers: gh._json.followers
+      _.extend pop, d
 
+    @set pop
 
 class exports.Company extends BB.BadassModel
   urlRoot: '/api/companys'

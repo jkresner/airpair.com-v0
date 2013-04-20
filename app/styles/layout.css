@@ -41,7 +41,8 @@ legend em { color:#7F761C;font-style:normal; }
 .label-canceled { background-color:#999999 }
 
 .expert { width:300px;border:solid 0.5px #d3d3d3; }
-.expert h3 { font-size:16px; }
+.expert h3 { font-size:16px;margin:30px 0 0 0;padding-bottom:0;line-height:20px }
+.expert h4 { font-size:12px;color:gray;;margin-top:0 }
 .expert .pic { width:200px }
 .expert i { display:block;margin:20px auto }
 .expert .links { margin:20px 0; }
