@@ -10,69 +10,6 @@ class exports.User extends BB.BadassModel
     @get('_id')? && @get('google')?
 
 
-class exports.Expert extends BB.BadassModel
-  urlRoot: '/api/experts'
-
-  hasLinks: ->
-    @get('homepage')? || @get('gh')? || @get('so')? || @get('bb')? || @get('in')? || @get('tw')? || @get('other')? || @get('sideproject')?
-
-  populateFromUser: (user) ->
-    pop = {}
-
-    gplus = user.get('google')
-    # first time
-    if !@get('pic')?
-      pop =
-        _id:        undefined
-        userId:     user.get('_id')
-        name:       gplus.displayName
-        email:      gplus.emails[0].value
-        gmail:      gplus.emails[0].value
-        pic:        gplus._json.picture
-        timezone:   new Date().toString().substring(25, 45)
-
-    lkIN = user.get('linkedin')
-    if lkIN?
-      d = in:
-        id: lkIN.id
-        displayName: lkIN.displayName
-      _.extend pop, d
-
-    bb = user.get('bitbucket')
-    if bb?
-      d = username: bb.id, bb:
-        id: bb.id
-      _.extend pop, d
-
-    so = user.get('stack')
-    if so?
-      d = username: so.username, so:
-        id: so.id
-        website_url: so.website_url
-        link: so.link
-        reputation: so.reputation
-        profile_image: so.profile_image
-      _.extend pop, d
-
-    tw = user.get('twitter')
-    if tw?
-      d = username: tw.username, tw:
-        id: tw.id
-        username: tw.username
-      _.extend pop, d
-
-    gh = user.get('github')
-    if gh?
-      d = username: gh.username, gh:
-        profileUrl: gh.profileUrl
-        location: gh._json.location
-        blog: gh._json.blog
-        gravatar_id: gh._json.gravatar_id
-        followers: gh._json.followers
-      _.extend pop, d
-
-    @set pop
-
 class exports.Company extends BB.BadassModel
   urlRoot: '/api/companys'
   defaults:
@@ -117,6 +54,86 @@ class exports.Request extends BB.SublistModel
     @toggleAttrSublistElement 'tags', tag, (m) -> m._id is value._id
   toggleAvailability: (value) ->
     @toggleAttrSublistElement 'availability', value, (m) -> m is value
+
+
+class exports.Expert extends BB.SublistModel
+  urlRoot: '/api/experts'
+
+  validation:
+    userId:         { required: true }
+    username:       { required: true }
+    brief:          { required: true }
+    tags:           { fn: 'validateNonEmptyArray', msg: 'At least one technology tag required' }
+
+  hasLinks: ->
+    @get('homepage')? || @get('gh')? || @get('so')? || @get('bb')? || @get('in')? || @get('tw')? || @get('other')? || @get('sideproject')?
+
+  populateFromUser: (user) ->
+    pop = {}
+
+    gplus = user.get('google')
+    # first time
+    if !@get('pic')?
+      pop =
+        _id:        undefined
+        userId:     user.get('_id')
+        name:       gplus.displayName
+        email:      gplus.emails[0].value
+        gmail:      gplus.emails[0].value
+        pic:        gplus._json.picture
+        timezone:   new Date().toString().substring(25, 45)
+
+    lkIN = user.get('linkedin')
+    if lkIN?
+      d = in:
+        id: lkIN.id
+        displayName: lkIN.displayName
+      _.extend pop, d
+
+    bb = user.get('bitbucket')
+    if bb?
+      d = username: bb.id, bb:
+        id: bb.id
+      _.extend pop, d
+
+    so = user.get('stack')
+    if so?
+      d = username: so.username, homepage: so.website_url, so:
+        id: so.id
+        website_url: so.website_url
+        link: so.link
+        reputation: so.reputation
+        profile_image: so.profile_image
+      _.extend pop, d
+
+    tw = user.get('twitter')
+    if tw?
+      d = username: tw.username, tw:
+        id: tw.id
+        username: tw.username
+      _.extend pop, d
+
+    gh = user.get('github')
+    if gh?
+      d = username: gh.username, homepage: gh._json.blog, gh:
+        profileUrl: gh.profileUrl
+        location: gh._json.location
+        blog: gh._json.blog
+        gravatar_id: gh._json.gravatar_id
+        followers: gh._json.followers
+      _.extend pop, d
+
+    @set pop
+
+  toggleTag: (value) ->
+    # so we only save what we need and don't bloat the requests
+    tag =
+      _id: value._id
+      name: value.name
+      short: value.short
+      soId: value.soId
+      ghId: value.ghId
+    @toggleAttrSublistElement 'tags', tag, (m) -> m._id is value._id
 
 
 module.exports = exports

@@ -11,6 +11,7 @@ module.exports = [
     "email":"jk@airpair.com",
     "gmail":"jk@airpair.com",
     "username":"jkresner",
+    "homepage":"http://www.hackperneurialism.com",
     "pic":"https://lh3.googleusercontent.com/-NKYL9eK5Gis/AAAAAAAAAAI/AAAAAAAAABY/291KLuvT0iI/photo.jpg",
     "timezone":"GMT+1000 (EST)",
     "in":{"id":"d9YFKgZ7rY","displayName":"Jonathon Kresner"},

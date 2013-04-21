@@ -40,9 +40,9 @@ class exports.InfoFormView extends BB.ModelSaveView
     @$('input:radio').on 'click', @selectRB
     @listenTo @model, 'change', @render
   render: ->
-    @setValsFromModel ['brief','hours']
-    @$(":radio[value=#{@model.get('budget')}]").prop('checked',true)
-    @$(":radio[value=#{@model.get('pricing')}]").prop('checked',true)
+    @setValsFromModel ['homepage','brief','hours']
+    @$(":radio[value=#{@model.get('rate')}]").prop('checked',true).click()
+    @$(":radio[value=#{@model.get('status')}]").prop('checked',true).click()
     # tagsInput + availabiltyInput will render automatically
     @
   selectRB: (e) ->
@@ -55,10 +55,9 @@ class exports.InfoFormView extends BB.ModelSaveView
     router.navigate '#thanks', { trigger: true }
   getViewData: ->
     hours: @$("[name='hours']").val()
-    budget: @$("[name='budget']:checked").val()
-    pricing: @$("[name='pricing']:checked").val()
+    rate: @$("[name='rate']:checked").val()
+    status: @$("[name='status']:checked").val()
     brief: @$("[name='brief']").val()
-    availability: @availabilityInput.getViewData()
     tags: @tagsInput.getViewData()
 
 

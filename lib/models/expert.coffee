@@ -15,7 +15,7 @@ schema = new Schema
   pic:            { required: true, type: String   }
   homepage:       String      # homepage
   sideproject:    String      # sideproject Url
-  otherUrl:       String
+  other:          String      # other url
   gh:             {}          # github
   so:             {}          # stackoverflow
   bb:             {}          # bitbucket
@@ -26,7 +26,7 @@ schema = new Schema
   timezone:       String
   location:       String
   brief:          String
-  currentStatus:  String
+  status:         String
 
 
 module.exports = mongoose.model 'Expert', schema

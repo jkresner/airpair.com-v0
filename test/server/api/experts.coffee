@@ -37,6 +37,7 @@ describe "REST api experts", ->
         expect(d.email).to.equal @expert.email
         expect(d.gmail).to.equal @expert.gmail
         expect(d.pic).to.equal @expert.pic
+        expect(d.homepage).to.equal @expert.homepage
         expect(d.timezone).to.equal @expert.timezone
         expect(d.in).to.deep.equal @expert.in
         expect(d.tw).to.deep.equal expert.tw

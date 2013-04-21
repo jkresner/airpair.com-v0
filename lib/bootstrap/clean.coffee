@@ -1,2 +1,2 @@
 User = require './../models/user'
-#User.find({}).remove()
+User.find({}).remove()

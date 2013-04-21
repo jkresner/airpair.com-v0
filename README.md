@@ -63,6 +63,7 @@ Three layers of tests:
 List of TODO
 ===============================================================================
 
+- On expert sign up, show when failing to move forward because of username
 - Remove tokens from api/user/me
 - Add stack overflow app icon
 - Update heroku size + mongo size

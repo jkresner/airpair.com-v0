@@ -68,8 +68,8 @@ class exports.RequestFormView extends BB.ModelSaveView
     @listenTo @model, 'change', @render
   render: ->
     @setValsFromModel ['brief','hours']
-    @$(":radio[value=#{@model.get('budget')}]").prop('checked',true)
-    @$(":radio[value=#{@model.get('pricing')}]").prop('checked',true)
+    @$(":radio[value=#{@model.get('budget')}]").prop('checked',true).click()
+    @$(":radio[value=#{@model.get('pricing')}]").prop('checked',true).click()
     # tagsInput + availabiltyInput will render automatically
     @
   selectRB: (e) ->

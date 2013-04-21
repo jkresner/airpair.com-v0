@@ -1,18 +1,24 @@
 <div class="expert">
-  <h3>{{ name }}</h3>
-  <h4>@{{ username }}</h4>
+  <div class="fullName">
+    { {{ name }} }
+  </div>
+  <hr />
+  {{#if username }}
+    <b class="username">@{{ username }}</b>
+  {{/if}}
+
   <img src="{{ pic }}?s=240" class="pic" />
 
   <div class="links">
     {{> DevLinks }}
   </div>
 
-
+  {{#if tags }}
   <div class="tags">
     {{#each tags }}
-      <span class="label label-success">{{ short }}</span>
+      <span class="label label-warning">{{ short }}</span>
     {{/each }}
   </div>
-
+  {{/if}}
 
 </div>
