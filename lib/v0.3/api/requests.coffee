@@ -1,13 +1,13 @@
 CRUDApi = require './_crud'
-Skill = require './../../models/v0/skill'
-Company = require './../models/v0/company'
-Dev = require './../../models/v0/dev'
+Skill = require './../models/skill'
+Company = require './../models/company'
+Dev = require './../modelsdev'
 und = require 'underscore'
 async = require "async"
 
 class RequestApi extends CRUDApi
 
-  model: require './../../models/v0request'
+  model: require './../models/request'
 
 ###############################################################################
 ## CRUD extensions

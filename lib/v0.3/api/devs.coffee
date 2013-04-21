@@ -1,10 +1,10 @@
 CRUDApi = require './_crud'
-Skill = require './../../models/v0/skill'
+Skill = require './../models/skill'
 und = require 'underscore'
 
 class DevApi extends CRUDApi
 
-  model: require './../../models/v0/dev'
+  model: require './../models/dev'
 
 ###############################################################################
 ## CRUD extensions

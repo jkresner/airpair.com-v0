@@ -24,8 +24,8 @@ module.exports = (app) ->
 
   app.get     '/api/users/me', api_users.detail
 
-  require('./lib/api/v0/skills')(app)
-  require('./lib/api/v0/devs')(app)
+  require('./lib/v0.3/api/skills')(app)
+  require('./lib/v0.3/api/devs')(app)
 
   require('./lib/api/companys')(app)
   require('./lib/api/tags')(app)

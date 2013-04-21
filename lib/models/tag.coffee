@@ -1,8 +1,8 @@
 mongoose = require 'mongoose'
 Schema = mongoose.Schema
 
-## Chosen to use abbreviations for tag model because of the volume of tags
-## and bloated size of search results
+## Chosen to use abbreviations for tag model (eg. short == shortName)
+## because of the volume of tags and bloating size of search results
 
 schema = new Schema
   name:           String        # verbose name "Windows Communication Foundation"
