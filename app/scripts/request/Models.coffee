@@ -4,7 +4,6 @@ exports = {}
 
 
 exports.User = Shared.User
-exports.Skill = Shared.Skill
 exports.CompanyContact = Shared.CompanyContact
 exports.Request = Shared.Request
 
@@ -15,10 +14,10 @@ exports.Company = class Company extends Shared.Company
     if @get('contacts').length is 0
       @set _id: undefined, contacts: [{
         userId:     user.get('_id')
-        fullName:   gplus.displayName
+        name:       gplus.displayName
         email:      gplus.emails[0].value
         gmail:      gplus.emails[0].value
-        avatarUrl:  gplus._json.picture
+        pic:        gplus._json.picture
         timezone:   new Date().toString().substring(25, 45)
       }]
 

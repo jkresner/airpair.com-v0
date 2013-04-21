@@ -1,0 +1,84 @@
+<fieldset>
+
+  <legend><b>{</b> Give us some info <b>}</b></legend>
+
+  <div class="alert alert-success">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <h4>Saved</h4>
+  </div>
+
+  <div class="alert alert-error">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <h4>Error</h4>
+  </div>
+
+
+  <div style="float:left;width:64%">
+
+    <div class="control-group">
+      <label class="control-label" for="tagsInput">Homepage / blog</label>
+      <div class="controls">
+        <div class="input-prepend" style="width:88%">
+          <span class="add-on">http://</span>
+          <input type="text" id="homepage" name="homepage" placeholder="Homepage / blog url" value="{{ homepage }}" data-error-style="inline">
+        </div>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label" for="tagsInput">Technologies <span class="muted">technologies you want to help with</span></label>
+      <div id="tagsInput" class="controls controls-tags">
+          <div id="tagNewForm"></div>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label" for="brief">What type of challenges do you want to help people solve?</label>
+      <div class="controls controls-brief">
+        <textarea id="brief" name="brief" placeholder="Do you like helping newbies, or solving complicated problems? Tell us the type of work you like and we'll give you preference for it">{{ brief }}</textarea>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label" for="reqHrs">Around how many hours of airpairs would you want a week?</label>
+      <select name="hours" class="span1">
+        <option>1</option>
+        <option selected="selected">2</option>
+        <option>3-5</option>
+        <option>5-10</option>
+        <option>10-20</option>
+      </select>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label" for="rate">Preferred rate / hr <span class="muted">we will only suggest you with request around your rate</span></label>
+      <div class="budget rb-group controls">
+        <label for="rate10">$10</label> <input type="radio" id="rate10" name="rate" value="10" />
+        <label for="rate40">$40</label>  <input type="radio" id="rate40" name="rate" value="40" />
+        <label for="rate70" class="checked">$70</label>  <input type="radio" id="rate70" name="rate" value="70" checked="checked" />
+        <label for="rate110">$110</label>  <input type="radio" id="rate110" name="rate" value="110" />
+        <label for="rate160">$160</label>  <input type="radio" id="rate160" name="rate" value="160" />
+        <label for="rate230">$230</label>  <input type="radio" id="rate230" name="rate" value="230" />
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label" for="reqHrs">Current status?</label>
+      <div class="status rb-group controls">
+        <label for="statusReady" class="checked">Send me airpairs!</label> <input type="radio" id="statusReady" name="status" value="ready" checked="checked" />
+        <label for="statusBusy">Busy atm, will update you next month</label>  <input type="radio" id="statusBusy" name="status" value="busy" />
+      </div>
+    </div>
+
+  </div>
+
+
+  <div style="clear:both"></div>
+
+  <div class="form-actions">
+    <a href="#" class="save btn btn-primary">Save</a>
+    <a href="#company" class="back btn">Back</a>
+  </div>
+
+</fieldset>
+

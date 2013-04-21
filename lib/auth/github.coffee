@@ -32,7 +32,10 @@ class Github
     @auth.authnOrAuthz req, res, next, 'github', ['user:email']
 
   # Completed action
-  done: (req, res) => res.send req.user
+  done: (req, res) =>
+    # $log 'github.done', req.callbackURL
+    # res.send req.user
+    res.redirect '/be-an-expert'
 
 
 module.exports = (auth, passport) -> new Github(auth, passport)

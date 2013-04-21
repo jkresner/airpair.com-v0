@@ -4,16 +4,13 @@ M = require './Models'
 SV = require './../shared/Views'
 
 #############################################################################
-##  Shared
+##  Contact Info
 #############################################################################
-
-#############################################################################
-
 
 class exports.CompanyContactView extends BB.ModelSaveView
   tmpl: require './../shared/templates/CompanyContactForm'
   viewData: ['fullName','email','gmail','title','phone','userId',
-                                'avatarUrl', 'twitter','timezone']
+                                'pic', 'twitter','timezone']
   initialize: ->
   render: (attrs) ->
     @model.clear()
@@ -71,8 +68,8 @@ class exports.RequestFormView extends BB.ModelSaveView
     @listenTo @model, 'change', @render
   render: ->
     @setValsFromModel ['brief','hours']
-    @$(":radio[value=#{@model.get('budget')}]").prop('checked',true)
-    @$(":radio[value=#{@model.get('pricing')}]").prop('checked',true)
+    @$(":radio[value=#{@model.get('budget')}]").prop('checked',true).click()
+    @$(":radio[value=#{@model.get('pricing')}]").prop('checked',true).click()
     # tagsInput + availabiltyInput will render automatically
     @
   selectRB: (e) ->

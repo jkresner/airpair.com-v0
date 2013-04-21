@@ -1,4 +1,4 @@
-auth = require './lib/auth/base'
+
 api_users = require './lib/api/users'
 authz = require './lib/auth/ensureLoggedIn'
 
@@ -26,17 +26,7 @@ module.exports = (app) ->
 
   require('./lib/api/companys')(app)
   require('./lib/api/tags')(app)
-  require('./lib/api/skills')(app)
-  require('./lib/api/devs')(app)
+  require('./lib/api/experts')(app)
   require('./lib/api/requests')(app)
 
-  app.get     '/auth/github', auth.github.connect
-  app.get     '/auth/github/callback', auth.github.connect, auth.github.done
-  app.get     '/auth/google', auth.google.connect
-  app.get     '/auth/google/callback', auth.google.connect, auth.google.done
-  app.get     '/auth/twitter', auth.twitter.connect
-  app.get     '/auth/twitter/callback', auth.twitter.connect, auth.twitter.done
-  app.get     '/auth/linkedin', auth.linkedin.connect
-  app.get     '/auth/linkedin/callback', auth.linkedin.connect, auth.linkedin.done
-
-  app.get     '/logout', auth.logout
+  require('./lib/auth/base')(app)

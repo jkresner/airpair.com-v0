@@ -1,6 +1,10 @@
 global.$log = console.log
 $log "in app node file", process.cwd()
 
+require('./lib/bootstrap/clean')
+#require('./lib/bootstrap/tags')()
+
+
 mongoose = require 'mongoose'
 express = require 'express'
 passport = require 'passport'

@@ -33,7 +33,8 @@ class Twitter
     @auth.authnOrAuthz req, res, next, 'twitter', []
 
   # Completed action
-  done: (req, res) => res.send req.user
-
+  done: (req, res) =>
+    #res.send req.user
+    res.redirect '/be-an-expert'
 
 module.exports = (auth, passport) -> new Twitter(auth, passport)

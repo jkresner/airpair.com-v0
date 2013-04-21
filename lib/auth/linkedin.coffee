@@ -33,7 +33,9 @@ class LinkedIn
     @auth.authnOrAuthz req, res, next, 'linkedin', ['r_fullprofile','r_network','rw_nus']
 
   # Completed action
-  done: (req, res) => res.send req.user
+  done: (req, res) =>
+    #res.send req.user
+    res.redirect '/be-an-expert'
 
 
 module.exports = (auth, passport) -> new LinkedIn(auth, passport)

@@ -12,6 +12,10 @@ schema = new Schema
   twitterId:    Number
   twitter:      {}
   linkedinId:   String
-  linkedin:      {}
+  linkedin:     {}
+  stackId:      Number
+  stack:        {}
+  bitbucketId:  String
+  bitbucket:    {}
 
 module.exports = mongoose.model 'User', schema
