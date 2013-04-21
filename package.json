@@ -40,6 +40,7 @@
     "passport-twitter": "0.1.x",
     "passport-facebook": "0.1.x",
     "passport-tumblr": "0.1.x",
+    "passport-stackexchange": "0.1.x",
     "passport-bitbucket": "0.1.x",
     "passport-angellist": "0.1.x",
     "passport-dropbox": "0.1.x",

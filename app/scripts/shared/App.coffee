@@ -10,7 +10,7 @@ class exports.SessionPage
       @initialize pageData
       callback @
 
-  setOrFectch: (model, local) ->
+  setOrFetch: (model, local) ->
     if local? then model.set local else model.fetch reset:true
 
   resetOrFectch: (collection, local) ->

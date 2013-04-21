@@ -4,6 +4,8 @@ moment = require 'moment'
 
 class CRUDApi
 
+  logging: off    # note: can set logging in the child class
+
   constructor: (app, route) ->
     app.get     "/api/#{route}", authz(), @list
     app.get     "/api/#{route}/:id", authz(), @detail
@@ -22,7 +24,9 @@ class CRUDApi
 ###############################################################################
 
   detail: (req, res) =>
-    @model.findOne { _id: req.params.id }, (e, r) -> res.send r
+    @model.findOne { _id: req.params.id }, (e, r) =>
+      if @logging then $log 'detail:', e, r
+      res.send r
 
 
   list: (req, res) =>
@@ -30,19 +34,27 @@ class CRUDApi
 
 
   create: (req, res) =>
-    @model( req.body ).save (e, r) -> res.send r
+    new @model( req.body ).save (e, r) =>
+      if @logging then $log 'created:', e, r
+      res.send r
 
 
   update: (req, res) =>
     data = und.clone req.body
     delete data._id # so mongo doesn't complain
-    @model.findByIdAndUpdate req.params.id, data, (e, r) -> res.send r
+    @model.findByIdAndUpdate req.params.id, data, (e, r) =>
+      if @logging then $log 'updated:', e, r
+      res.send r
 
 
   delete: (req, res) =>
-    @model.find( _id: req.params.id ).remove (e, r) -> res.send r
+    @model.find( _id: req.params.id ).remove (e, r) ->
+    if @logging then $log 'deleted:', e, r
+    res.send r
+
 
   utcNow: ->
     new moment().utc().toJSON()
+
 
 module.exports = CRUDApi

@@ -21,7 +21,6 @@ describe "REST api requests", ->
     #console.log 'test', @testNum, @req.brief
     request(app)
       .post('/api/requests')
-      .set('Cookie', 'connect.sid=s%3A8SKuu8fFzc6XFOx7SFyaFSIt.MNHGrpyg4c%2BdQGvw9G8t5hh%2F2vLZtQwslTOl2vFdLqs')
       .send( @req )
       .expect(200, done)
 
@@ -29,7 +28,6 @@ describe "REST api requests", ->
     req = @req
     request(app)
       .get('/api/requests')
-      .set('Cookie', 'connect.sid=s%3A8SKuu8fFzc6XFOx7SFyaFSIt.MNHGrpyg4c%2BdQGvw9G8t5hh%2F2vLZtQwslTOl2vFdLqs')
       .end (err, res) ->
         d = res.body[0]
         # $log 'res', d

@@ -30,7 +30,9 @@ describe 'Request:Views RequestFormView =>', ->
     view = new V.RequestFormView @viewData
     view.model.set @defaultData
     expect( view.$('#budget30').is(':checked') ).to.be.true
+    expect( view.$('#budget30').prev().hasClass('checked') ).to.be.true
     expect( view.$('#pricingPrivate').is(':checked') ).to.be.true
+    expect( view.$('#pricingPrivate').prev().hasClass('checked') ).to.be.true
     expect( view.$('[name=hours]').val() ).to.equal '1'
 
   it 'validation on availability fires with not availability', ->
