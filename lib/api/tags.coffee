@@ -1,6 +1,7 @@
 request = require 'superagent'
 CRUDApi = require './_crud'
 
+
 class TagsApi extends CRUDApi
 
   model: require './../models/tag'

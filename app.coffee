@@ -2,7 +2,7 @@ global.$log = console.log
 $log "in app node file", process.cwd()
 
 require('./lib/bootstrap/clean')
-#require('./lib/bootstrap/tags')()
+require('./lib/bootstrap/tags')()
 
 
 mongoose = require 'mongoose'
@@ -16,7 +16,8 @@ app.configure ->
   app.use express.bodyParser()
   app.use express.cookieParser()
   app.use express.session { secret: 'airpair is the future' }
-  app.use passport.initialize()
+  # app.use passport.initialize()
+  app.use require('./test/server/test-passport').initialize(require('./test/data/users')[0])
   app.use passport.session()
 
 

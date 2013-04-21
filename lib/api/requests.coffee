@@ -1,5 +1,4 @@
 CRUDApi = require './_crud'
-Skill = require './../models/skill'
 Company = require './../models/company'
 Expert = require './../models/expert'
 und = require 'underscore'
