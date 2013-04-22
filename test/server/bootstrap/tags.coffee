@@ -2,7 +2,7 @@ require './../test-lib-setup'
 require './../test-app-setup'
 
 data:
-  skillsv0 = require './../../../lib/bootstrap/data/v0/skills'
+  skillsv0_3 = require './../../../lib/bootstrap/data/v0.3/skills'
 
 Tag = require './../../../lib/models/tag'
 

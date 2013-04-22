@@ -1,6 +1,6 @@
 und = require 'underscore'
 Tag = require './../models/tag'
-v0_skillsdata = require './data/v0/skills'
+v0_skillsdata = require './data/v0.3/skills'
 stackoverflow_tagWikisdata = require './data/stackoverflow/wikis'
 
 migrateFromSkill = (s) ->
@@ -35,15 +35,15 @@ importSkillsV0 = (callback) ->
 # step 2 :: run stack exchange import (findOneAndUpdate)
 importTop2000StackoverflowTags = (callback) ->
   count = 0
-  $log 'importTop2000StackoverflowTags'
+  $log 'importTop2000StackoverflowTags!!'
   pageSize = 20
 
-  for i in [0...100]
+  for i in [0...stackoverflow_tagWikisdata.length]
     t = stackoverflow_tagWikisdata[i]
     search = soId: t.tag_name
 
     Tag.findOneAndUpdate search, migrateFromStack(t), { upsert: true }, (e, r) ->
-      console.log "[added #{count}] #{r.name} #{r.desc}"
+      if e? then $log "[added #{count}] #{r.name} #{r.desc}"
       count++
       if count == stackoverflow_tagWikisdata.length then callback()
 
@@ -54,11 +54,17 @@ importTop50GithubProjects = (callback) ->
 
 
 module.exports = (callback) ->
-  Tag.find({}).remove ->
-    $log 'tags removed'
-    Tag.collection.dropAllIndexes (e, r) ->
-      $log "adding #{v0_skillsdata.length} v0_skillsdata"
-      importSkillsV0 ->
-        $log "adding #{stackoverflow_tagWikisdata.length} stackoverflow_tagWikisdata"
-        importTop2000StackoverflowTags callback
-          #importTop50GithubProjects ->
+  return Tag.find {}, (e,r) -> callback(r)
+
+  # Tag.find({}).remove ->
+  #   $log 't[0] tags removed'
+  #   Tag.collection.dropAllIndexes (e, r) ->
+  #     $log "t[1] adding #{v0_skillsdata.length} v0_skillsdata"
+  #     importSkillsV0 ->
+  #       $log "t[2] adding #{stackoverflow_tagWikisdata.length} stackoverflow_tagWikisdata"
+  #       importTop2000StackoverflowTags ->
+  #         "t[3] finding all Tags"
+  #         Tag.find {}, (e, r) ->
+  #           "t[4] saved r.length tags"
+  #           callback r
+          # importTop50GithubProjects ->
