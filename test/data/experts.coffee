@@ -1,8 +1,7 @@
 module.exports = [
 
   # 0 - not used
-  {
-  },
+  { }
 
   # 1 - saving connected profiles ()
   {
@@ -18,5 +17,21 @@ module.exports = [
     "tw":{"id":21989578,"username":"hackerpreneur"},
     "so":{"id":178211,"website_url":"http://www.hackperneurialism.com","link":"http://stackoverflow.com/users/178211/jonathon-kresner","reputation":490,"profile_image":"http://i.stack.imgur.com/FVija.jpg?g=1&s=128"},
     "bb":{"id":"hackerpreneur"}
+  }
+
+  # 2 - Associating userId with expert (from v0 dev migration) ()
+  {
+    "name":"Jonathon Kresner",
+    "email": "jkresner@gmail.com",
+    "gmail":"jk@airpair.com",
+    "username":"jkresner",
+    "homepage":"http://www.hackperneurialism.com",
+    "pic":"https://lh3.googleusercontent.com/-NKYL9eK5Gis/AAAAAAAAAAI/AAAAAAAAABY/291KLuvT0iI/photo.jpg",
+    "timezone":"GMT+1000 (EST)",
+    "in":{"id":"d9YFKgZ7rY","displayName":"Jonathon Kresner"},
+    "tw":{"id":21989578,"username":"hackerpreneur"},
+    "so":{"id":178211,"website_url":"http://www.hackperneurialism.com","link":"http://stackoverflow.com/users/178211/jonathon-kresner","reputation":490,"profile_image":"http://i.stack.imgur.com/FVija.jpg?g=1&s=128"},
+    "bb":{"id":"hackerpreneur"}
+    "gh":{"followers": 15, "gravatar_id":"780d02a99798886da48711d8104801a4","blog": "hackerpreneurialism.com","location": "San Francisco","username": "jkresner" },
   }
 ]

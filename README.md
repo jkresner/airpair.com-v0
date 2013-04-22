@@ -63,19 +63,55 @@ Three layers of tests:
 List of TODO
 ===============================================================================
 
-- On expert sign up, show when failing to move forward because of username
+Dev Min:
+
+- [H] Import v0.3 data
+  - [H] Skills
+  - [H] Devs
+  - [M] Request
+- [H] Admin
+  - View devs
+  - Basic dashboard
+  - Update Request
+    - assign devs
+- [H] Beautify customer sign up
+  - [H] Resolve availability
+  - [M] get error states
+  - [M] iron bugs
+- [H] Beautify dev sign up
+  - [H] show fail to move forward because of username
+  - [H] split into contact & prefs
+  - [M] get error states
+- [H] User Dashboard
+  - [H] requests for help
+  - [H] requests helping
+- [H] Expert Review + Respond to request
+
+Deploy:
+
+- Tests for tags import
+- Test auth against live configs
+- Confirm persisted session
+- Update heroku dyno size & mongodb size
+
+Pre-deploy:
+
 - Remove tokens from api/user/me
 - Add stack overflow app icon
-- Update heroku size + mongo size
-- Get persisted session running
-- Test auth against live configs
-- Consider cost of passport session deserializing on every api call
+- Mobile homepage
+
+-------------------------------------------------------------------------------
+List of TODO v.5
+===============================================================================
+
+- Add github projects to tags
+- Remove experts with un-associated userIds (haven't logged in)
 
 -------------------------------------------------------------------------------
 List to airpair
 ===============================================================================
 
-- Review document schema & nested calls (getSkills) in devs etc.
+- Consider cost of passport session deserializing on every api call
 - How to run brunch to rebuild automatically when in node mode
 - How to rename a mongo collection
   - mongo shell: db.requests.renameCollection( newName , <dropTarget> ) renames the collection.

@@ -1,6 +1,7 @@
 request = require 'superagent'
 CRUDApi = require './_crud'
 
+
 class TagsApi extends CRUDApi
 
   model: require './../models/tag'
@@ -51,6 +52,10 @@ class TagsApi extends CRUDApi
             if d.watchers_count < 20
               return res.send 400, { errros: { message: "#{d.full_name} has less than 20 watchers cannot add tag" } }
 
+            search = ghId: d.id
+            if req.body._id? && req.body.soId?
+              search = soId: req.body.soId
+
             update =
               name: d.name
               short: d.name
@@ -72,7 +77,7 @@ class TagsApi extends CRUDApi
 
             #console.log 'update', update
 
-            return @model.findOneAndUpdate ghId: d.id, update, { upsert: true }, (e, r) ->
+            return @model.findOneAndUpdate search, update, { upsert: true }, (e, r) ->
               res.send r
 
         return res.send 400, { errros: { message: sres.text } }

@@ -7,7 +7,7 @@ ObjectId = Schema.ObjectId;
   # author: {type: String, default: 'Anon'}
 
 schema = new Schema
-  userId:         { required: true, type: ObjectId }
+  userId:         { type: ObjectId }  # TODO should make required for v0.5
   name:           { required: true, type: String   }
   username:       { required: true, type: String   }
   email:          { required: true, type: String   }

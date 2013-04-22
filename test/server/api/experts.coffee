@@ -45,6 +45,8 @@ describe "REST api experts", ->
         expect(d.bb).to.deep.equal expert.bb
         done()
 
+  # it "un-associated expert gets associated when user logs in first time", (done) ->
+
 
 
   after (done) ->

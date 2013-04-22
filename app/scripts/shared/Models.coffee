@@ -101,7 +101,7 @@ class exports.Expert extends BB.SublistModel
       d = username: so.username, homepage: so.website_url, so:
         id: so.id
         website_url: so.website_url
-        link: so.link
+        link: so.link.replace('http://stackoverflow.com/users/', '')
         reputation: so.reputation
         profile_image: so.profile_image
       _.extend pop, d
@@ -116,7 +116,8 @@ class exports.Expert extends BB.SublistModel
     gh = user.get('github')
     if gh?
       d = username: gh.username, homepage: gh._json.blog, gh:
-        profileUrl: gh.profileUrl
+        id: gh.id
+        username: gh.username
         location: gh._json.location
         blog: gh._json.blog
         gravatar_id: gh._json.gravatar_id
