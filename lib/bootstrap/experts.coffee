@@ -31,7 +31,6 @@ migrate = (d, all_tags) ->
       # $log 'found tag match', t.name, s.name
       tags.push name: t.name, short: t.short, soId: t.soId, ghId: t.ghId
   e.tags = tags
-  # $log 'migrated', e.username, e.gmail
   e
 
 # step 1 :: load in devs from v0 (to maintain original ids)
@@ -40,7 +39,7 @@ importDevsV0 = (tags, callback) ->
   for d in v0_3_devs
     new Expert( migrate(d, tags) ).save (e, r) =>
       # if e? then
-      $log "added[#{count}]", e, r.name
+      #$log "added[#{count}]", e, r.name
       count++
       if count == v0_3_devs.length-1 then callback()
 
@@ -48,8 +47,8 @@ module.exports = (tags, callback) ->
   Expert.find({}).remove ->
     $log 'e[0] experts removed'
     Expert.collection.dropAllIndexes (e, r) ->
-      $log "adding #{v0_3_devs.length} v0_3_devs"
+      $log "e[1] adding #{v0_3_devs.length} v0_3_devs"
       importDevsV0 tags, ->
         Expert.find {}, (e, r) ->
-          $log "t[3] saved #{r.length} experts"
+          $log "e[2] saved #{r.length} experts"
           callback r
