@@ -1,7 +1,7 @@
 CRUDApi = require './_crud'
 Skill = require './../models/skill'
 Company = require './../models/company'
-Dev = require './../models/dev'
+Dev = require './../modelsdev'
 und = require 'underscore'
 async = require "async"
 

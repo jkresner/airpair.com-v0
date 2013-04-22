@@ -1,34 +1,68 @@
-request = require 'superagent'
-model = require './../models/tag'
-tagdata = require './../../test/data/stackoverflow/tags'
+und = require 'underscore'
+Tag = require './../models/tag'
+v0_skillsdata = require './data/v0.3/skills'
+stackoverflow_tagWikisdata = require './data/stackoverflow/wikis'
 
-model.find({}).remove()
+migrateFromSkill = (s) ->
+  _id: s._id
+  name: s.name
+  short: s.shortName
+  soId: s.soId
 
 
-module.exports = ->
+migrateFromStack = (t) ->
+  match = und.find v0_skillsdata, (s) -> s.soId == t.tag_name
 
-  for i in [1...50]
-    vector = ''
-    for j in [0...40]
-      idx = i * j
-      vector += encodeURIComponent(tagdata[idx].name) + ';'
-    console.log 'vector', vector
+  if match?
+    update = desc: t.excerpt
+  else
+    update =
+      name: t.tag_name
+      short: t.tag_name
+      soId: t.tag_name
+      desc: t.excerpt
 
-    request
-      .get("http://api.stackexchange.com/tags/#{vector}/wikis?site=stackoverflow")
-      .end (sres) =>
+# step 1 :: load in skills from v0 (to maintain original ids)
+importSkillsV0 = (callback) ->
+  count = 0
+  for s in v0_skillsdata
+    new Tag( migrateFromSkill(s) ).save (e, r) =>
+      if e? then $log "added.tag[#{count}]", e, r
+      count++
+      if count == v0_skillsdata.length then callback()
 
-        if sres.ok
-          batch = sres.body.items
 
-          for d in batch
+# step 2 :: run stack exchange import (findOneAndUpdate)
+importTop2000StackoverflowTags = (callback) ->
+  count = 0
+  $log 'importTop2000StackoverflowTags!!'
+  pageSize = 20
 
-            update =
-              name: d.tag_name
-              short: d.tag_name
-              soId: d.tag_name
-              desc: d.excerpt
+  for i in [0...stackoverflow_tagWikisdata.length]
+    t = stackoverflow_tagWikisdata[i]
+    search = soId: t.tag_name
 
-            console.log 'update', update
+    Tag.findOneAndUpdate search, migrateFromStack(t), { upsert: true }, (e, r) ->
+      if e? then $log "[added #{count}] #{r.name} #{r.desc}"
+      count++
+      if count == stackoverflow_tagWikisdata.length then callback()
 
-            return model.findOneAndUpdate soId: d.tag_name, update, { upsert: true }, (e, r) ->
+
+# step 3 :: combine top 50 github repos
+importTop50GithubProjects = (callback) ->
+  $log 'importTop50GithubProjects'
+
+
+module.exports = (callback) ->
+  Tag.find({}).remove ->
+    $log 't[0] tags removed'
+    Tag.collection.dropAllIndexes (e, r) ->
+      $log "t[1] adding #{v0_skillsdata.length} v0_skillsdata"
+      importSkillsV0 ->
+        $log "t[2] adding #{stackoverflow_tagWikisdata.length} stackoverflow_tagWikisdata"
+        importTop2000StackoverflowTags ->
+          "t[3] finding all Tags"
+          Tag.find {}, (e, r) ->
+            "t[4] saved r.length tags"
+            callback r
+          # importTop50GithubProjects ->
