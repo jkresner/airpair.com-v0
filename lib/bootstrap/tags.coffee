@@ -54,17 +54,15 @@ importTop50GithubProjects = (callback) ->
 
 
 module.exports = (callback) ->
-  return Tag.find {}, (e,r) -> callback(r)
-
-  # Tag.find({}).remove ->
-  #   $log 't[0] tags removed'
-  #   Tag.collection.dropAllIndexes (e, r) ->
-  #     $log "t[1] adding #{v0_skillsdata.length} v0_skillsdata"
-  #     importSkillsV0 ->
-  #       $log "t[2] adding #{stackoverflow_tagWikisdata.length} stackoverflow_tagWikisdata"
-  #       importTop2000StackoverflowTags ->
-  #         "t[3] finding all Tags"
-  #         Tag.find {}, (e, r) ->
-  #           "t[4] saved r.length tags"
-  #           callback r
+  Tag.find({}).remove ->
+    $log 't[0] tags removed'
+    Tag.collection.dropAllIndexes (e, r) ->
+      $log "t[1] adding #{v0_skillsdata.length} v0_skillsdata"
+      importSkillsV0 ->
+        $log "t[2] adding #{stackoverflow_tagWikisdata.length} stackoverflow_tagWikisdata"
+        importTop2000StackoverflowTags ->
+          "t[3] finding all Tags"
+          Tag.find {}, (e, r) ->
+            "t[4] saved r.length tags"
+            callback r
           # importTop50GithubProjects ->
