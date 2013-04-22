@@ -1,4 +1,4 @@
 module.exports =
-  isAdmin             : require './isAdmin'
-  isLoggedIn          : require './isLoggedIn'
-  isLoggedInApi       : require './isLoggedInApi'
+  Admin             : require './isAdmin'
+  LoggedIn          : require './isLoggedIn'
+  LoggedInApi       : require './isLoggedInApi'

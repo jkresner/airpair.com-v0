@@ -1,5 +1,5 @@
 api_users = require './lib/api/users'
-authz = require './lib/auth/authz/authz'
+auth = require './lib/auth/authz/authz'
 
 file = (r, file) -> r.sendfile "./public/#{file}.html"
 
@@ -9,17 +9,19 @@ module.exports = (app) ->
   require('./lib/auth/base')(app)
 
   # pages
-  app.get '/', (req, r) -> file r, 'index'
-  app.get '/about', (req, r) -> file r, 'index'
-  app.get '/login', (req, r) -> file r, 'login'
-  app.get '/traction', (req, r) -> file r, 'traction'
-  app.get '/be-an-expert', (req, r) -> file r, 'beexpert'
-  app.get '/find-an-expert', (req, r) -> file r, 'request'
+  app.get '/', (req, r)-> file r, 'index'
+  app.get '/about', (req, r)-> file r, 'index'
+  app.get '/login', (req, r)-> file r, 'login'
+  app.get '/traction', (req, r)-> file r, 'traction'
+  app.get '/be-an-expert', (req, r)-> file r, 'beexpert'
+  app.get '/find-an-expert', (req, r)-> file r, 'request'
 
-  app.get '/dashboard', authz.isLoggedIn('/login'),
-    (req, r) -> file r, 'dashboard'
-  app.get '/review', authz.isLoggedIn('/login'),
-    (req, r) -> file r, 'review'
+  app.get '/dashboard', auth.LoggedIn('/login'), (req, r)-> file r, 'dashboard'
+  app.get '/review', auth.LoggedIn('/login'), (req, r)-> file r, 'review'
+
+  # admin pages
+  app.get '/adm/tags', auth.Admin('/'), (req, r) -> file r, 'adm/tags'
+  app.get '/adm/experts', auth.Admin('/'), (req, r) -> file r, 'adm/experts'
 
   # app.get '/adminn', authz('/'), (req, r) -> file r, 'admin.html'
 
