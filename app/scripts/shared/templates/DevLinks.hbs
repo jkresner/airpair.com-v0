@@ -5,31 +5,31 @@
   {{/if}}
 
   {{#if gh}}
-  <a href="{{ gh.profileUrl }}" target="_blank" class="zocial github icon"></a>
+  <a href="//github.com/{{ gh.username }}" target="_blank" class="zocial github icon"></a>
   {{/if}}
 
   {{#if so}}
-  <a href="{{ so.link }}" target="_blank" class="zocial stackoverflow icon"></a>
+  <a href="//stackoverflow.com/users/{{ so.link }}" target="_blank" class="zocial stackoverflow icon"></a>
   {{/if }}
 
   {{#if bb}}
-  <a href="http://bitbucket.org/{{ bb.id }}" target="_blank" class="zocial bitbucket icon"></a>
+  <a href="//bitbucket.org/{{ bb.id }}" target="_blank" class="zocial bitbucket icon"></a>
   {{/if}}
 
   {{#if in}}
-  <a href="http://linkedin.com/profile/view?id={{ in.id }}" target="_blank" class="zocial linkedin icon"></a>
+  <a href="//linkedin.com/profile/view?id={{ in.id }}" target="_blank" class="zocial linkedin icon"></a>
   {{/if}}
 
   {{#if tw}}
-  <a href="http://twitter.com/{{ tw.username }}" target="_blank" class="zocial twitter icon"></a>
+  <a href="//twitter.com/{{ tw.username }}" target="_blank" class="zocial twitter icon"></a>
   {{/if}}
 
   {{#if sideproject}}
-  <a href="http://{{ sideproject }}" target="_blank">{{ sideproject }}</a>
+  <a href="//{{ sideproject }}" target="_blank">{{ sideproject }}</a>
   {{/if}}
 
   {{#if other}}
-  <a href="http://{{ other }}" target="_blank">{{ other }}</a>
+  <a href="//{{ other }}" target="_blank">{{ other }}</a>
   {{/if}}
 
 {{else}}
