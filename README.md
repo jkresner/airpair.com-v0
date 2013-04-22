@@ -70,12 +70,16 @@ Dev Min:
   - [H] Devs
   - [M] Request
 - [H] Admin
-  - View devs
-  - Basic dashboard
-  - Update Request
-    - assign devs
+  - [H] View devs
+  - [H] Basic dashboard
+  - [H] Update Request
+    - [H] assign devs
+  - [H] Review Request
 - [H] Beautify customer sign up
   - [H] Resolve availability
+  - [H] View airpair
+  - [H] Write Test for update airpair
+  - [M] Enforce validation on contact details (e.g. name!)
   - [M] get error states
   - [M] iron bugs
 - [H] Beautify dev sign up
