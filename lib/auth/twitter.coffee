@@ -9,7 +9,7 @@ dev_config =
 prod_config =
   consumerKey: '8eIvjnVbj0BkMiUVQP0ZQ',
   consumerSecret: 'OwrnjqCz3BeRswKLuDJqdzMQlgdDZi9F3hFZPIbxgVM',
-  callbackURL: "http://www.airpair.com/auth/twitter/callback"
+  callbackURL: "http://#{process.env.OAUTH_Host}/auth/twitter/callback"
   passReqToCallback: true
 
 

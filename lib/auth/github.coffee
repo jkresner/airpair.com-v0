@@ -9,7 +9,7 @@ dev_config =
 prod_config =
   clientID:          '5adb6a29c586908f8161'
   clientSecret:      'c4182b3402aa93dd6465e99ca90f2650a0596997'
-  callbackURL:       'http://www.airpair.com/auth/github/callback'
+  callbackURL:       'http://#{process.env.OAUTH_Host}/auth/github/callback'
   passReqToCallback: true
 
 

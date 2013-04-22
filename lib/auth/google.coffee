@@ -9,7 +9,7 @@ dev_config =
 prod_config =
   clientID:           '739031114792.apps.googleusercontent.com'
   clientSecret:       '8_1NuinvGy6ybpu0m2srvYjm'
-  callbackURL:        "http://www.airpair.com/auth/google/callback"
+  callbackURL:        "http://#{process.env.OAUTH_Host}/auth/google/callback"
   passReqToCallback:  true
 
 

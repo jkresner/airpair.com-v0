@@ -9,7 +9,7 @@ dev_config =
 prod_config =
   consumerKey: 'WpdhX5mWW4wmLuDPwA',
   consumerSecret: 'Cx5pvK2ZEjsymVxME42hSffkzkaQ9Buf',
-  callbackURL: "http://www.airpair.com/auth/bitbucket/callback"
+  callbackURL: "http://#{process.env.OAUTH_Host}/auth/bitbucket/callback"
   passReqToCallback: true
 
 

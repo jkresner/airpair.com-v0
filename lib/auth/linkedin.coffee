@@ -9,7 +9,7 @@ dev_config =
 prod_config =
   consumerKey: 'sy5n2q8o2i49',  #linkedIN api key
   consumerSecret: 'lcKjdbFSNG3HfZsd', #linkedIn secret key
-  callbackURL: "http://www.airpair.com/auth/linkedin/callback"
+  callbackURL: "http://#{process.env.OAUTH_Host}/auth/linkedin/callback"
   passReqToCallback: true
 
 

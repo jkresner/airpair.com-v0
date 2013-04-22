@@ -11,7 +11,7 @@ prod_config =
   clientID:          '1432'
   clientSecret:      'oA5O0hVgWg3muObSVC8mSQ(('
   key:               'h0fVRSYpv0*MAKD7HXj5bw(('
-  callbackURL:        "http://www.airpair.com/auth/stackexchange/callback"
+  callbackURL:        "http://#{process.env.OAUTH_Host}/auth/stackexchange/callback"
   passReqToCallback:  true
 
 
