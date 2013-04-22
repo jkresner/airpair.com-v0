@@ -33,6 +33,16 @@ describe "REST api skills", ->
         expect( rr.name ).to.equal 'brunch'
         done()
 
+  it "fails when adding tag with same soId twice", (done) ->
+    test = name: "test", short: "test", soId: "testId"
+    new Tag( test ).save (e, r) ->
+      expect(e).to.equal undefined
+      expect(r.soId).to.equal test.soId
+      new Tag( test ).save (ee, rr) ->
+        $log 'rr', rr
+        expect(ee).to.not.equal undefined
+        expect(rr).to.equal undefined
+
 
 
   after (done) ->

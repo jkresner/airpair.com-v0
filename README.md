@@ -89,10 +89,10 @@ Dev Min:
 
 Deploy:
 
+- Tests for tags import
 - Test auth against live configs
 - Confirm persisted session
 - Update heroku dyno size & mongodb size
-
 
 Pre-deploy:
 

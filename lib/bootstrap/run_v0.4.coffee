@@ -1,6 +1,12 @@
+User = require './../models/user'
+bootTags = require('./tags')   # create tags
+# bootExperts = require('./experts')   # create tags
+
+
 module.exports = ->
 
-  User = require './../models/user'
-  # User.find({}).remove()
 
-  #require('./tags')()   # create tags
+  User.find({}).remove()
+
+  bootTags ->
+  # bootTags bootExperts
