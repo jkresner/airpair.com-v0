@@ -735,38 +735,10 @@ module.exports = [
     "__v": 0
   },
   {
-    "name": "Security",
-    "shortName": "Security",
-    "soId": "security",
-    "_id": "514d0901a52134020000002d",
-    "__v": 0
-  },
-  {
-    "name": "Security",
-    "shortName": "Security",
-    "soId": "security",
-    "_id": "514d0980a52134020000002e",
-    "__v": 0
-  },
-  {
-    "name": "d3.js",
-    "shortName": "d3.js",
-    "soId": "d3.js",
-    "_id": "514d5dbca521340200000055",
-    "__v": 0
-  },
-  {
     "name": "solr",
     "shortName": "solr",
     "soId": "solr",
     "_id": "514d61b1a521340200000061",
-    "__v": 0
-  },
-  {
-    "name": "elasticsearch",
-    "shortName": "elasticsearch",
-    "soId": "elasticsearch",
-    "_id": "514d6211a521340200000062",
     "__v": 0
   },
   {
@@ -788,13 +760,6 @@ module.exports = [
     "shortName": "paypal",
     "soId": "paypal",
     "_id": "514dec1eca38eb020000001a",
-    "__v": 0
-  },
-  {
-    "name": "solr",
-    "shortName": "solr",
-    "soId": "solr",
-    "_id": "514dee09ca38eb020000001b",
     "__v": 0
   },
   {
@@ -840,24 +805,10 @@ module.exports = [
     "__v": 0
   },
   {
-    "name": "sockets",
-    "shortName": "sockets",
-    "soId": "sockets",
-    "_id": "515204d3eecddf020000000a",
-    "__v": 0
-  },
-  {
     "name": "middleware",
     "shortName": "middleware",
     "soId": "middleware",
     "_id": "51520517eecddf020000000b",
-    "__v": 0
-  },
-  {
-    "name": "resque",
-    "shortName": "resque",
-    "soId": "resque",
-    "_id": "5152055aeecddf020000000c",
     "__v": 0
   },
   {
