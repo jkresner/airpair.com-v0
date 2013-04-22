@@ -1,5 +1,5 @@
 und = require 'underscore'
-authz = require './../auth/ensureLoggedInForApi'
+authz = require './../auth/authz/isLoggedInApi'
 moment = require 'moment'
 
 class CRUDApi
