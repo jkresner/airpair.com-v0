@@ -7,9 +7,9 @@ routers = require './Routers'
 module.exports.Page = class Page
   constructor: (pageData) ->
     @tags = new collections.Tags()
-    #@tagsView = new views.SkillsView collection: @tags
     @selectedTags = new models.TagListModel()
 
+    @tagsView = new views.TagsView collection: @tags
     @tagsInputView = new views.TagsInputView collection: @tags, model: @selectedTags
 
     if pageData.tags? then @tags.reset pageData.tags else @tags.fetch({reset:true})

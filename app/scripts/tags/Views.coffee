@@ -6,24 +6,24 @@ M = require './Models'
 ##  To render all tags for admin
 #############################################################################
 
-# class exports.TagRowView extends Backbone.View
-#   className: 'tag label'
-#   tmpl: require './templates/Row'
-#   initialize: -> @model.on 'change', @render, @
-#   render: ->
-#     @$el.html @tmpl @model.toJSON()
-#     @
+class exports.TagRowView extends Backbone.View
+  className: 'tag label'
+  tmpl: require './templates/Row'
+  initialize: -> @model.on 'change', @render, @
+  render: ->
+    @$el.html @tmpl @model.toJSON()
+    @
 
-# class exports.TagsView extends Backbone.View
-#   el: '#tags'
-#   initialize: (args) ->
-#     @collection.on 'reset add remove filter', @render, @
-#   render: ->
-#     $tagList = @$el.html ''
-#     for m in @collection.models
-#       $tagList.append new exports.TagRowView( model: m ).render().el
-#     @$('.tag a').popover({})
-#     @
+class exports.TagsView extends Backbone.View
+  el: '#tags'
+  initialize: (args) ->
+    @collection.on 'reset add remove filter', @render, @
+  render: ->
+    $list = @$el.html ''
+    for m in @collection.models
+      $list.append new exports.TagRowView( model: m ).render().el
+    @$('.tag a').popover({})
+    @
 
 #############################################################################
 ##  Autocomplete and add new tag views
