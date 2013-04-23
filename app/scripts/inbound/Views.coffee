@@ -46,20 +46,30 @@ class exports.RequestsView extends BB.BadassView
 ##  To edit request
 #############################################################################
 
+class exports.RequestFormInfoCompanyView extends BB.ModelSaveView
+  loggin: on
+  el: '#company-controls'
+  initialize: ->
+  render: ->
+    company = @model.get('company')
+    @$el.html company.name
+    @
 
-class exports.RequestFormInfoView extends BB.BadassView
+class exports.RequestFormInfoView extends BB.ModelSaveView
   logging: on
   el: '#reqInfo'
   tmpl: require './templates/RequestFormInfo'
   initialize: ->
     @$el.html @tmpl @model.toJSON()
+    @$('#status').on 'change', =>
+      @$('#canceled-control-group').toggle @$('#status').val() == 'canceled'
+      @$('#incomplete-control-group').toggle @$('#status').val() == 'incomplete'
+    @companyInfo = new exports.RequestFormInfoCompanyView model: @model
     @tagsInput = new SV.TagsInputView model: @model, collection: @tags
     @listenTo @model, 'change', @render
   render: ->
-    @$('#reqStatus').val @model.get 'status'
-    @$('#reqStatus').on 'change', =>
-      @$('#canceled-control-group').toggle @$('#reqStatus').val() == 'canceled'
-      @$('#incomplete-control-group').toggle @$('#reqStatus').val() == 'incomplete'
+    @setValsFromModel ['brief','status','canceledReason','incompleteDetail']
+    @companyInfo.render()
     @
 
 

@@ -1,6 +1,11 @@
 exports = {}
 BB = require './../../lib/BB'
 Models = require './Models'
+Shared = require './../shared/Collections'
+
+
+exports.Tags = Shared.Tags
+
 
 class exports.Requests extends BB.FilteringCollection
   model: Models.Request

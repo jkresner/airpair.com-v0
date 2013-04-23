@@ -7,3 +7,5 @@
 
 #adminboundpage #requests img { max-width:32px }
 #adminboundpage #requests td { font-size:11px; }
+#adminboundpage #requestForm textarea { width:400px;height:150px }
+#adminboundpage #company-controls { font-weight:bold }

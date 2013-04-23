@@ -11,11 +11,13 @@ module.exports.Page = class Page extends SessionPage
 
     @selected = new models.Request()
     @requests = new collections.Requests()
+    @tags = new collections.Tags()
 
     @requestsView = new views.RequestsView collection: @requests, model: @selected
-    # @requestFormView = new views.ExpertView el: '#expertPreview', model: @selected
+    @requestFormView = new views.RequestFormView el: '#requestForm', model: @selected, tags: @tags
 
     @resetOrFectch @requests, pageData.requests
+    @resetOrFectch @tags, pageData.tags
 
 
 module.exports.Router = routers.InboundRouter

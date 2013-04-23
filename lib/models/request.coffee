@@ -52,7 +52,9 @@ schema = new Schema
   pricing:          { required: true, type: String   }
   events:           { required: true, type: [{}]  }
   status:           { required: true, type: String   }
+  incompleteDetail: String
   canceledReason:   String
+  timezone:         String
   availability:     [Date]
   suggested:        [Suggestion]
   calls:            [Call]
