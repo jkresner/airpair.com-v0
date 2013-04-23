@@ -1,7 +1,7 @@
 exports = {}
 BB = require './../../lib/BB'
 M = require './Models'
-Shared = require './../shared/Views'
+SV = require './../shared/Views'
 
 #############################################################################
 ##  To render requests rows for admin
@@ -15,14 +15,17 @@ class exports.RequestRowView extends BB.BadassView
     @$el.html @tmpl @tmplData()
     @
   tmplData: ->
-    data = @model.toJSON()
-    #$log 'RequestRowView.tmplData', data
-    _.extend @model.toJSON(), {
+    d = @model.toJSON()
+    # $log 'RequestRowView.tmplData', d
+    _.extend d, {
+      contactName:        d.company.contacts[0].fullName
+      contactPic:         d.company.contacts[0].pic
+      contactEmail:       d.company.contacts[0].email
       createdDate:        @model.createdDateString()
-      suggestedCount:     data.suggested.length
-      suggestedFitCount:  _.filter(data.suggested, (s) -> s.status is 'chosen').length
-      callCount:          data.calls.length
-      callCompleteCount:  _.filter(data.calls, (s) -> s.status is 'complete').length
+      suggestedCount:     d.suggested.length
+      suggestedFitCount:  _.filter(d.suggested, (s) -> s.status is 'chosen').length
+      callCount:          d.calls.length
+      callCompleteCount:  _.filter(d.calls, (s) -> s.status is 'complete').length
     }
 
 
@@ -34,12 +37,8 @@ class exports.RequestsView extends BB.BadassView
   render: ->
     @$el.html @tmpl( count: @collection.length )
     for m in @collection.models
-      if m.get('status') is 'canceled'
-        @$('#cancelled tbody').append new exports.RequestRowView( model: m ).render().el
-      else if  m.get('status') is 'completed'
-        @$('#completed tbody').append new exports.RequestRowView( model: m ).render().el
-      else
-        @$('#inProgress tbody').append new exports.RequestRowView( model: m ).render().el
+      sts = m.get('status')
+      @$("##{sts} tbody").append new exports.RequestRowView( model: m ).render().el
     @
 
 
@@ -48,35 +47,20 @@ class exports.RequestsView extends BB.BadassView
 #############################################################################
 
 
-# class exports.RequestFormInfoView extends BB.BadassView
-#   el: '#reqInfo'
-#   tmpl: require './templates/RequestFormInfo'
-#   events:
-#     'click .deleteAvalability': 'deleteAvalability'
-#   initialize: ->
-#     @listenTo @model, 'change', @render
-#     @listenTo @collection, 'sync', @render
-#   render: ->
-#     if @collection.length is 0 then return
-#     tmplData = _.extend @model.toJSON(), { companys: @collection.toJSON(), skillsSoIds: @model.skillSoIdsList() }
-#     @$el.html @tmpl tmplData
-#     #$log 'RequestFormInfoView.render', arguments, tmplData
-#     @$('#reqCompany').val @model.get 'companyId'
-#     @$('#reqStatus').val @model.get 'status'
-#     @$('#reqAvailability').datetimepicker( minuteStep: 30, autoclose: true )
-#     @$('#reqAvailability').on 'dateChanged', @addAvailability
-#     @$('#reqStatus').on 'change', =>
-#       @$('#canceled-control-group').toggle @$('#reqStatus').val() == 'canceled'
-#     @
-#   addAvailability: (e) =>
-#     # this one is comes back from the datetimepicker event handler
-#     # todo, check for duplicates
-#     @model.get('availability').push e.date
-#     @parentView.save e   #some funky shit going on with skills, this just works because of getViewData
-#   deleteAvalability: (e) ->
-#     toRemove = $(e.currentTarget).data 'val'
-#     @model.set 'availability', _.without( @model.get('availability'), toRemove )
-#     @parentView.save e
+class exports.RequestFormInfoView extends BB.BadassView
+  logging: on
+  el: '#reqInfo'
+  tmpl: require './templates/RequestFormInfo'
+  initialize: ->
+    @$el.html @tmpl @model.toJSON()
+    @tagsInput = new SV.TagsInputView model: @model, collection: @tags
+    @listenTo @model, 'change', @render
+  render: ->
+    @$('#reqStatus').val @model.get 'status'
+    @$('#reqStatus').on 'change', =>
+      @$('#canceled-control-group').toggle @$('#reqStatus').val() == 'canceled'
+      @$('#incomplete-control-group').toggle @$('#reqStatus').val() == 'incomplete'
+    @
 
 
 # class exports.RequestFormSuggestionsView extends BB.BadassView
@@ -133,55 +117,44 @@ class exports.RequestsView extends BB.BadassView
 #   render: ->
 
 
-# class exports.RequestFormView extends BB.ModelSaveView
-#   #logging: on
-#   async: off
-#   el: '#requestForm'
-#   tmpl: require './templates/RequestForm'
-#   viewData: ['companyId','status','skills','brief','canceledReason']
-#   mailTmpl: require './../../mail/developersContacted'
-#   events:
-#     'click #mailDevsContacted': 'sendDevsContacted'
-#     'click .save': 'save'
-#     'click .delete': 'deleteRequest'
-#   initialize: ->
-#     @$el.html @tmpl()
-#     @infoView = new exports.RequestFormInfoView model: @model, collection: @companys, parentView: @
-#     @suggestionsView = new exports.RequestFormSuggestionsView model: @model, collection: @devs, companys: @companys, parentView: @
-#     @callsView = new exports.RequestFormCallsView model: @model, parentView: @
-#   renderSuccess: (model, response, options) =>
-#     @$('.alert-success').fadeIn(800).fadeOut(5000)
-#     # @model.set model.attributes
-#     @collection.fetch()
-#   getViewData: ->
-#     d = @getValsFromInputs @viewData
-#     d.companyName = @$('#reqCompany option:selected').text()
-#     d
-#   sendDevsContacted: (e) ->
-#     e.preventDefault()
-#     cid = @model.get 'companyId'
-#     company = _.find @companys.models, (m) -> m.get('_id') == cid
-#     customer = company.get('contacts')[0]
-#     # $log 'sendDevsContacted', customer, cid
-#     mailtoAddress = "#{customer.fullName}%20%3c#{customer.email}%3e"
-#     body = @mailTmpl entrepreneur_name: customer.name, leadId: @model.id
-#     window.open "mailto:#{mailtoAddress}?subject=airpair - We've got you some devs!&body=#{body}"
-#   deleteRequest: ->
-#     model.destroy()
-#     @collection.fetch()
-#     router.naviate '#', false
-#     false
+class exports.RequestFormView extends BB.ModelSaveView
+  logging: on
+  async: off
+  el: '#requestForm'
+  tmpl: require './templates/RequestForm'
+  viewData: ['status','tags','brief','canceledReason']
+  # mailTmpl: require './../../mail/developersContacted'
+  events:
+    'click #mailDevsContacted': 'sendDevsContacted'
+    'click .save': 'save'
+    # 'click .delete': 'deleteRequest'
+  initialize: ->
+    @$el.html @tmpl()
+    @infoView = new exports.RequestFormInfoView model: @model, tags: @tags, parentView: @
+    # @suggestionsView = new exports.RequestFormSuggestionsView model: @model, collection: @devs, companys: @companys, parentView: @
+    # @callsView = new exports.RequestFormCallsView model: @model, parentView: @
+  renderSuccess: (model, response, options) =>
+    @$('.alert-success').fadeIn(800).fadeOut(5000)
+    # @model.set model.attributes
+    @collection.fetch()
+  # getViewData: ->
+  #   d = @getValsFromInputs @viewData
+  #   d
+  # sendDevsContacted: (e) ->
+  #   e.preventDefault()
+  #   cid = @model.get 'companyId'
+  #   company = _.find @companys.models, (m) -> m.get('_id') == cid
+  #   customer = company.get('contacts')[0]
+  #   # $log 'sendDevsContacted', customer, cid
+  #   mailtoAddress = "#{customer.fullName}%20%3c#{customer.email}%3e"
+  #   body = @mailTmpl entrepreneur_name: customer.name, leadId: @model.id
+  #   window.open "mailto:#{mailtoAddress}?subject=airpair - We've got you some devs!&body=#{body}"
+  # deleteRequest: ->
+  #   model.destroy()
+  #   @collection.fetch()
+  #   router.naviate '#', false
+  #   false
 
-
-
+Handlebars.registerPartial "RequestSet", require('./templates/RequestSet')
 
 module.exports = exports
-
-
-
-
-
-
-
-
-

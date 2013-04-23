@@ -1,9 +1,12 @@
-<td><a class="edit" href="#request/{{ _id }}" data-id="{{ _id }}">{{ status }}</td>
-<td>{{ createdDate }}</td>
-<td>{{ companyName }}</td>
+<td><a class="edit" href="#request/{{ _id }}" data-id="{{ _id }}">{{ status }}</a> {{ createdDate }}</td>
 <td>
-  {{#each skills}}
-    <span class="label label-skill">{{shortName}}</span>
+    <img src="{{ contactPic }}" />
+    <a href="mailto:contactEmail" target="_blank">{{ contactName }}</a>
+    {{ company.name }}
+</td>
+<td>
+  {{#each tags}}
+    <span class="label label-tags">{{short}}</span>
   {{/each}}
 </td>
 <td>{{ suggestedFitCount }} / {{ suggestedCount }}</td>

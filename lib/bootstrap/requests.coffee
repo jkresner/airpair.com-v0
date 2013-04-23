@@ -2,6 +2,20 @@ und = require 'underscore'
 Request = require './../models/request'
 v0_3_requests = require './data/v0.3/requests'
 
+v0_3company =
+  "name": "Test Co.", "url": "testing.airpair.com",
+  "about": "We like to test airpair.com in a way that makes our systems safe, secure, fast and beautiful.\n\nWe approach testing as a trade off more than pure TDD. JavaScript is an amazing language, but is kind of dangerous so test coverage is important, but not at the expense of speed to market.\n\nSinon is a great framework and brunch comes with mocha-phantom support.",
+  "contacts": [
+    {
+      "fullName": "Jon Test",
+      "email": "jkresner@yahoo.com.au", "gmail": "jk@airpair.com",
+      "title": "", "phone": "",
+      "userId": "5175ffbbbb802cc4d5aaa6aa",
+      "pic": "https://lh3.googleusercontent.com/-NKYL9eK5Gis/AAAAAAAAAAI/AAAAAAAAABY/291KLuvT0iI/photo.jpg",
+      "twitter": "jkresner", "timezone": "GMT-0700 (PDT)"
+    }
+  ]
+
 migrate = (d, all_tags, all_experts, all_users) ->
 
   r =
@@ -9,7 +23,7 @@ migrate = (d, all_tags, all_experts, all_users) ->
     userId: all_users[0]._id
     brief: d.brief
     canceledReason: d.canceledReason
-    company: { _id: d.companyId, name: d.companyName }
+    company: v0_3company
     calls: d.calls
     budget: 50
     hours: "1"

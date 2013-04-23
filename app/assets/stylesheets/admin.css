@@ -4,3 +4,6 @@
 #admexpertspage #experts img { max-width:40px }
 #admexpertspage #experts td { font-size:11px; }
 #admexpertspage #expertPreview { float:right;width:300px }
+
+#adminboundpage #requests img { max-width:32px }
+#adminboundpage #requests td { font-size:11px; }

@@ -41,8 +41,7 @@ class exports.Request extends BB.SublistModel
     if !@get('events')? || @get('events').length < 1 then return new Date()
     new Date(@get('events')[0].utc)
   createdDateString: ->
-    $log 'createdDate', @createdDate()
-    m = moment(@createdDate()).format 'MMM DD'
+    moment(@createdDate()).format 'MMM DD'
   toggleTag: (value) ->
     # so we only save what we need and don't bloat the requests
     tag =
