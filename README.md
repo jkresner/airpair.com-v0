@@ -119,6 +119,7 @@ List to airpair
 - Consider cost of passport session deserializing on every api call
 - Ajax style OAuth flow
 - redirectTo ?
+- sometimes I just get the ajax response instead of the redirect?
 - What type of testing can I do?
 [Paul]
 - How to run brunch to rebuild automatically when in node mode

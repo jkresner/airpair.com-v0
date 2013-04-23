@@ -16,7 +16,7 @@ a:hover { text-decoration:none;color:#ffffff }
 nav { border-bottom: dashed 1px #A4A4A5;padding: 20px 20px 6px 40px;margin: 0 40px; }
 nav img { display:inline-block;float:left; width: 120px } /* logo */
 nav h3 { margin: 3px 30px 0 30px;color:white; } /* tagline */
-nav div.social { float:right;width:240px }
+nav div.social { float:right;width:170px }
 /*nav a.googleplus { width:10 0px;margin-top:-30px }*/
 
 /*a.twitter { float: right;-webkit-transition: margin .2s;background:url('/images/twitter.png');height:40px;width:40px; }
