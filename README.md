@@ -66,11 +66,8 @@ List of TODO
 Dev Min:
 
 - [H] Import v0.3 data
-  - [H] Skills
-  - [H] Devs
   - [M] Request
 - [H] Admin
-  - [H] View devs
   - [H] Basic dashboard
   - [H] Update Request
     - [H] assign devs
@@ -89,7 +86,9 @@ Dev Min:
 - [H] User Dashboard
   - [H] requests for help
   - [H] requests helping
-- [H] Expert Review + Respond to request
+- [H] Expert Review
+  - [H] Respond to request
+  - [H] Email notification to customer
 
 Deploy:
 
@@ -110,17 +109,28 @@ List of TODO v.5
 
 - Add github projects to tags
 - Remove experts with un-associated userIds (haven't logged in)
+- Think about request event array
 
 -------------------------------------------------------------------------------
 List to airpair
 ===============================================================================
 
+[Jared]
 - Consider cost of passport session deserializing on every api call
+- Ajax style OAuth flow
+- redirectTo ?
+- What type of testing can I do?
+[Paul]
 - How to run brunch to rebuild automatically when in node mode
+- How to run serverside & clientside tests
+[Peter Lyons]
+- Sending mail
+- Error handling
+- Dates with mongo
+- collecting JS dates
+  - http://momentjs.com/
+[Un-assigned]
 - How to rename a mongo collection
   - mongo shell: db.requests.renameCollection( newName , <dropTarget> ) renames the collection.
 - How to update schema
   - https://github.com/visionmedia/node-migrate
-- Dates with mongo
-- collecting JS dates
-  - http://momentjs.com/
