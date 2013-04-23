@@ -1,35 +1,39 @@
-
 api_users = require './lib/api/users'
-authz = require './lib/auth/ensureLoggedIn'
+auth = require './lib/auth/authz/authz'
+
+file = (r, file) -> r.sendfile "./public/#{file}.html"
 
 module.exports = (app) ->
 
-  app.get     '/', (req, r) -> r.sendfile './public/index.html'
-  app.get     '/about', (req, r) -> r.sendfile './public/index.html'
+  # login / auth routes
+  require('./lib/auth/base')(app)
 
-  app.get     '/login', (req, r) -> r.sendfile './public/login.html'
-  app.get     '/dashboard', authz('/login'), (req, r) -> r.sendfile './public/dashboard.html'
-  app.get     '/review', authz('/login'), (req, r) -> r.sendfile './public/review.html'
+  # pages
+  app.get '/', (req, r)-> file r, 'index'
+  app.get '/about', (req, r)-> file r, 'index'
+  app.get '/login', (req, r)-> file r, 'login'
+  app.get '/traction', (req, r)-> file r, 'traction'
+  app.get '/be-an-expert', (req, r)-> file r, 'beexpert'
+  app.get '/find-an-expert', (req, r)-> file r, 'request'
 
-  app.get     '/be-an-expert', (req, r) -> r.sendfile './public/beexpert.html'
-  app.get     '/traction', (req, r) -> r.sendfile './public/traction.html'
+  app.get '/dashboard', auth.LoggedIn('/login'), (req, r)-> file r, 'dashboard'
+  app.get '/review', auth.LoggedIn('/login'), (req, r)-> file r, 'review'
 
-  app.get     '/find-an-expert', (req, r) -> r.sendfile './public/request.html'
+  # admin pages
+  app.get '/adm/tags', auth.Admin('/'), (req, r) -> file r, 'adm/tags'
+  app.get '/adm/experts', auth.Admin('/'), (req, r) -> file r, 'adm/experts'
 
-  app.get     '/welcome-expert', (req, r) -> r.sendfile './public/welcomeexpert.html'
-  app.get     '/welcome-padawan', (req, r) -> r.sendfile './public/welcomestudent.html'
+  # app.get '/adminn', authz('/'), (req, r) -> file r, 'admin.html'
 
-  app.get     '/edu/tags', (req, r) -> r.sendfile './public/edu/tags.html'
-  app.get     '/adminn', authz('/'), (req, r) -> r.sendfile './public/admin.html'
-
-  app.get     '/api/users/me', api_users.detail
-
-  # require('./lib/v0.3/api/skills')(app)
-  # require('./lib/v0.3/api/devs')(app)
-
+  # api
+  app.get '/api/users/me', api_users.detail
   require('./lib/api/companys')(app)
   require('./lib/api/tags')(app)
   require('./lib/api/experts')(app)
   require('./lib/api/requests')(app)
 
-  require('./lib/auth/base')(app)
+  # todo, brush up page
+  app.get '/edu/tags', (req, r) -> file r, 'edu/tags'
+
+
+  # require('./lib/v0.3/api/requests')(app)

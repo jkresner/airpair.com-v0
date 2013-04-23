@@ -2703,31 +2703,6 @@ module.exports = [
   },
   {
     "rate": 0,
-    "name": "Yashwanth Maheshwaram",
-    "email": "yashwanth34@gmail.com",
-    "gmail": "",
-    "pic": "http://m.c.lnkd.licdn.com/media/p/8/000/1f1/186/19e5607.jpg",
-    "homepage": "",
-    "gh": "yashwanthm",
-    "so": "",
-    "bb": "",
-    "in": "http://in.linkedin.com/in/myashwanth",
-    "other": "",
-    "_id": "5154c34bd96db10200000083",
-    "__v": 0,
-    "skills": [
-      {
-        "_id": "514a0d7504b9960200000007",
-        "soId": ""
-      },
-      {
-        "_id": "5153f824d96db10200000018",
-        "soId": ""
-      }
-    ]
-  },
-  {
-    "rate": 0,
     "name": "Rahul Somasunderam",
     "email": "rahul.som@gmail.com",
     "gmail": "",

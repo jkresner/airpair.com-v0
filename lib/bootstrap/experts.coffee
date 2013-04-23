@@ -22,7 +22,7 @@ migrate = (d, all_tags) ->
     # consciously decided not migrate linkedin & bitbucket
 
   if d.so? then e.so = link: d.so
-  if d.gh? then e.hg = username: d.gh
+  if d.gh? then e.gh = username: d.gh
 
   tags = []
   for s in d.skills
