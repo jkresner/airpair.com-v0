@@ -6,6 +6,24 @@ M = require './Models'
 ##  To render all tags for admin
 #############################################################################
 
+# class exports.TagEditView extends BB.ModelSaveView
+#   el: '#tagEditView'
+#   tmpl: require './templates/Form'
+#   viewData: ['name','short','soId','ghId']
+#   events:
+#     'click .save': 'save'
+#     'click .cancel': -> @render new M.Skill(); false
+#   initialize: ->
+#   render: (model) ->
+#     if model? then @model = model
+#     @$el.html @tmpl @model.toJSON()
+#     @
+#   renderSuccess: (model, response, options) =>
+#     @$('.alert-success').fadeIn(800).fadeOut(5000)
+#     @collection.add model
+#     @render new M.Skill()
+
+
 class exports.TagRowView extends Backbone.View
   className: 'tag label'
   tmpl: require './templates/Row'
@@ -24,6 +42,21 @@ class exports.TagsView extends Backbone.View
       $list.append new exports.TagRowView( model: m ).render().el
     @$('.tag a').popover({})
     @
+
+
+# class exports.SkillsView extends DataListView
+#   el: '#skills'
+#   tmpl: require './templates/Skills'
+#   initialize: (args) ->
+#     @$el.html @tmpl()
+#     @formView = new exports.SkillFormView( model: new M.Skill(), collection: @collection ).render()
+#     @collection.on 'reset add remove filter', @render, @
+#   render: ->
+#     $skillsList = @$('#skillsList').html ''
+#     for m in @collection.models
+#       $skillsList.append new exports.SkillRowView( model: m ).render().el
+#     @$('.skill a').popover({})
+#     @
 
 #############################################################################
 ##  Autocomplete and add new tag views
