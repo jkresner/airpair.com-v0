@@ -22,7 +22,7 @@ module.exports = (app) ->
   # admin pages
   app.get '/adm/tags', auth.Admin('/'), (req, r) -> file r, 'adm/tags'
   app.get '/adm/experts', auth.Admin('/'), (req, r) -> file r, 'adm/experts'
-
+  app.get '/adm/inbound', auth.Admin('/'), (req, r) -> file r, 'adm/inbound'
   # app.get '/adminn', authz('/'), (req, r) -> file r, 'admin.html'
 
   # api

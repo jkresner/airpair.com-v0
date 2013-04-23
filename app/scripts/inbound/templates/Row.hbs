@@ -1,0 +1,11 @@
+<td><a class="edit" href="#request/{{ _id }}" data-id="{{ _id }}">{{ status }}</td>
+<td>{{ createdDate }}</td>
+<td>{{ companyName }}</td>
+<td>
+  {{#each skills}}
+    <span class="label label-skill">{{shortName}}</span>
+  {{/each}}
+</td>
+<td>{{ suggestedFitCount }} / {{ suggestedCount }}</td>
+<td>{{ callCompleteCount }} / {{ callCount }}</td>
+<td>-</td>

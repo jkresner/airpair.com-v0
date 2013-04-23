@@ -2,14 +2,26 @@ CRUDApi = require './_crud'
 Company = require './../models/company'
 Expert = require './../models/expert'
 und = require 'underscore'
+auth = require './../auth/authz/authz'
 
 class RequestApi extends CRUDApi
 
   model: require './../models/request'
 
+  constructor: (app, route) ->
+    app.get     "/api/admin/#{route}", auth.AdminApi(), @admin
+    super app, route
+
 ###############################################################################
 ## CRUD extensions
 ###############################################################################
+
+  admin: (req, res) =>
+    $log 'requests admin'
+    @model.find {}, (e, r) ->
+      $log 'requests find', e, r
+      r = {} if r is null
+      res.send r
 
   list: (req, res) =>
     search = userId: req.user._id
