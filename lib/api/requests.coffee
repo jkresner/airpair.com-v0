@@ -17,9 +17,7 @@ class RequestApi extends CRUDApi
 ###############################################################################
 
   admin: (req, res) =>
-    $log 'requests admin'
     @model.find {}, (e, r) ->
-      $log 'requests find', e, r
       r = {} if r is null
       res.send r
 
@@ -30,13 +28,7 @@ class RequestApi extends CRUDApi
       res.send r
 
   detail: (req, res) =>
-
     @model.findOne { _id: req.params.id }, (e, r) =>
-
-      # Company.findOne { _id: r.companyId }, (ee, rr) =>
-      #   result = und.extend und.clone(r), { company: und.clone(rr) }
-      #   console.log 'result', result
-        # res.send result
       res.send r
 
   create: (req, res) =>

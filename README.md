@@ -121,6 +121,7 @@ List to airpair
 - redirectTo ?
 - sometimes I just get the ajax response instead of the redirect?
 - What type of testing can I do?
+- Want to redirect to the page I failed to access, not the one I logged in on
 [Paul]
 - How to run brunch to rebuild automatically when in node mode
 - How to run serverside & clientside tests
