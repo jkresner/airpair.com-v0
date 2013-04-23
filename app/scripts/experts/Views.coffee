@@ -8,11 +8,13 @@ Shared = require './../shared/Views'
 #############################################################################
 
 class exports.ExpertRowView extends Backbone.View
+  tagName: 'tr'
   className: 'expert'
   tmpl: require './templates/Row'
   initialize: -> @model.on 'change', @render, @
   render: ->
-    @$el.html @tmpl @model.toJSON()
+    d = (_.extend @model.toJSON(), { hasLinks: @model.hasLinks() } )
+    @$el.html @tmpl d
     @
 
 
@@ -21,9 +23,10 @@ class exports.ExpertsView extends Backbone.View
   initialize: (args) ->
     @collection.on 'reset add remove filter', @render, @
   render: ->
-    $list = @$el.html ''
+    $list = @$('tbody').html ''
     for m in @collection.models
-      $list.append new exports.ExpertRowView( model: m ).render().el
+     $list.append new exports.ExpertRowView( model: m ).render().el
+    @$('.count').html @collection.models.length
     @
 
 

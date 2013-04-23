@@ -6,12 +6,13 @@
     <title>airpair</title>
     <meta name="viewport" content="width=device-width">
     <link rel="stylesheet" href="/stylesheets/app.css">
+    <link rel="stylesheet" href="/stylesheets/admin.css">
 </head>
 
 <body id="admexpertspage">
 
   <nav>
-    <a href="/" title="Pair programming, code review, architecture advice & more..."><img src="/images/logo4.png" /></a>
+    <a href="/"><img src="/images/logo4.png" /></a>
 
     <ul>
       <li><a href="/adm/dash" class="zocial">Dash</a></li>
@@ -20,9 +21,27 @@
     </ul>
   </nav>
 
-  <div id="experts">
-
+  <div id="list" class="main">
+    <table id="experts" class="table table-striped">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Contact</th>
+          <th>Tags</th>
+          <th>Links</th>
+          <th>Rate</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+    <div id="expertPreview"></div>
   </div>
+
+  <div id="edit" class="main">
+    <h1>Edit expert</h1>
+  </div>
+
+
 
 </body>
 

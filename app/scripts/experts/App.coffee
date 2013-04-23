@@ -9,11 +9,11 @@ SessionPage = require('./../shared/App').SessionPage
 module.exports.Page = class Page extends SessionPage
   constructor: (pageData) ->
 
-    @selectedExpert = new models.Expert()
+    @selected = new models.Expert()
     @experts = new collections.Experts()
 
-    @expertsView = new views.ExpertsView collection: @experts, model: @selectedExpert
-    @expertView = new views.ExpertView el: '#expertPreview', model: @selectedExpert
+    @expertsView = new views.ExpertsView collection: @experts, model: @selected
+    @expertView = new views.ExpertView el: '#expertPreview', model: @selected
 
     @resetOrFectch @experts, pageData.experts
 

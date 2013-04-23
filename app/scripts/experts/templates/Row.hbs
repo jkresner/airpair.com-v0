@@ -1,1 +1,12 @@
-<p>{{ name }}</p>
+<td><img src="{{ pic }}?s=40" /></td>
+<td class="info"><a href="#select/{{ _id }}" class="edit" data-id="{{ _id }}">
+    <b>{{ name }}</b></a><br /><a href="mailto:{{ email }}">{{ email }}</a>
+    <a class="delete" href="#" data-id="{{ _id }}">x</a>
+</td>
+<td>
+  {{#each tags}}
+    <span class="label label-warning">{{short}}</span>
+  {{/each}}
+</td>
+<td>{{> DevLinks }}</td>
+<td>{{ rate }}</td>

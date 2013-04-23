@@ -41,7 +41,6 @@ class exports.AvailabiltyInputView extends BB.BadassView
 
 
 class exports.ExpertView extends BB.BadassView
-  logging: on
   tmpl: require './templates/Expert'
   initialize: (args) ->
     @listenTo @model, 'change', @render
