@@ -27,13 +27,13 @@ module.exports = (app) ->
 
   # api
   app.get '/api/users/me', api_users.detail
-  require('./lib/api/companys')(app)
-  require('./lib/api/tags')(app)
-  require('./lib/api/experts')(app)
-  require('./lib/api/requests')(app)
+  # require('./lib/api/companys')(app)
+  # require('./lib/api/tags')(app)
+  # require('./lib/api/experts')(app)
+  # require('./lib/api/requests')(app)
 
   # todo, brush up page
   app.get '/edu/tags', (req, r) -> file r, 'edu/tags'
 
 
-  # require('./lib/v0.3/api/requests')(app)
+  require('./lib/v0.3/api/requests')(app)

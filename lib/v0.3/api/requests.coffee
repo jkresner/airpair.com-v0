@@ -1,9 +1,8 @@
 CRUDApi = require './_crud'
 Skill = require './../models/skill'
 Company = require './../models/company'
-Dev = require './../modelsdev'
+Dev = require './../models/dev'
 und = require 'underscore'
-async = require "async"
 
 class RequestApi extends CRUDApi
 
@@ -13,7 +12,7 @@ class RequestApi extends CRUDApi
 ## CRUD extensions
 ###############################################################################
 
-  detail: (req, res) =>
+  show: (req, res) =>
     @model.findOne { _id: req.params.id }, (e, r) =>
       # Company.findOne { _id: r.companyId }, (ee, rr) =>
       #   result = und.extend und.clone(r), { company: und.clone(rr) }
@@ -21,21 +20,18 @@ class RequestApi extends CRUDApi
         # res.send result
       res.send r
 
-  create: (req, res) =>
+  post: (req, res) =>
     req.body.events = [{ name:'created', utc: new Date()}]
     @getSkills req, =>
       @getDevs req, =>
         new @model( req.body ).save (er, re) -> res.send re
 
   update: (req, res) =>
-    async.parallel [
-      (callback) -> @getSkills req, callback
-      (callback) -> @getDevs req, callback
-    ], (error) ->
-      return res.status(500).send error if error
-      data = und.clone req.body
-      delete data._id # so mongo doesn't complain
-      @model.update { _id: req.params.id }, data, (e, r) -> res.send req.body
+    @getSkills req, =>
+      @getDevs req, =>
+        data = und.clone req.body
+        delete data._id # so mongo doesn't complain
+        @model.update { _id: req.params.id }, data, (e, r) -> res.send req.body
 
   getSkills: (req, callback) =>
     skillsSoIds = req.body.skills.split(",")
@@ -56,4 +52,4 @@ class RequestApi extends CRUDApi
       callback()
 
 
-module.exports = new RequestApi()
+module.exports = (app) -> new RequestApi(app,'requests')
