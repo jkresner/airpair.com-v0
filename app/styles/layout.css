@@ -22,6 +22,7 @@ a.delete { color:red; }
 }
 .codeline em { color:#CE5424; }
 
+.rb-group .checked { color:#7F761C!important;font-weight:bold; }
 
 /*.leadRow td { font-size:11px; }
 .leadRow .label-skill { background-color:maroon;margin-right:4px; }
@@ -34,7 +35,7 @@ h2 em { color:#7F761C;font-style:normal; }
 legend b { color:#CC523E }
 legend em { color:#7F761C;font-style:normal; }
 
-.label-tag { padding:4px;background-color:#333333;font-weight:normal;margin-bottom:4px }
+.label-tag { padding:4px;background-color:#99923F;font-weight:normal;margin-bottom:4px }
 .label-status { padding:4px; }
 .label-received { background-color:#3A87AD }
 .label-incomplete { background-color:#b94a48 }

@@ -103,7 +103,7 @@ class exports.TagsInputView extends BB.BadassView
       @$('.selected').append(@tagHtml(t)) for t in @model.get('tags')
     @
   tagHtml: (t) ->
-    "<span class='label label-warning'>#{t.short} <a href='#{t._id}' class='rm'>x</a></span>"
+    "<span class='label label-tag'>#{t.short} <a href='#{t._id}' class='rm'>x</a></span>"
   initTypehead: ->
     #$log 'initTypehead', @collection.toJSON()
     @newForm.$el.hide()
