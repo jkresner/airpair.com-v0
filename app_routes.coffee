@@ -34,6 +34,3 @@ module.exports = (app) ->
 
   # todo, brush up page
   app.get '/edu/tags', (req, r) -> file r, 'edu/tags'
-
-
-  # require('./lib/v0.3/api/requests')(app)

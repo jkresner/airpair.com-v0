@@ -23,22 +23,16 @@ Suggestion status
 
 """
 
-
-Event = new Schema
-  name:             String
-  utc:              Date
-
-
 Suggestion = new Schema
   status:           String
-  events:           [Event]
-  dev:              {}
+  events:           [{}]
+  expert:           {}
   availability:     [Date]
   comment:          String
 
 
 Call = new Schema
-  dev:              {}
+  expert:           {}
   time:             Date
   recordingUrls:    []
   type:             String        # opensource, private, subscription
@@ -51,18 +45,17 @@ Call = new Schema
 schema = new Schema
   userId:           { required: true, type: ObjectId }
   company:          { required: true, type: Mixed    }
-  tags:             { required: true, type: [{}]     }
+  tags:             [{}]
   brief:            { required: true, type: String   }
   budget:           { required: true, type: Number   }
   hours:            { required: true, type: String   }
   pricing:          { required: true, type: String   }
-  availability:     { required: true, type: [Date]   }
-  events:           { required: true, type: [Event]  }
+  events:           { required: true, type: [{}]  }
   status:           { required: true, type: String   }
-  hours:            { required: true, type: String   }
-  suggested:        type: [Suggestion]
-  calls:            [Call]
   canceledReason:   String
+  availability:     [Date]
+  suggested:        [Suggestion]
+  calls:            [Call]
 
 
 module.exports = mongoose.model 'Request', schema
