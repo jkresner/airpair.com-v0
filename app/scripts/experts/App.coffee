@@ -2,20 +2,24 @@ models = require './Models'
 collections = require './Collections'
 views = require './Views'
 routers = require './Routers'
+SessionPage = require('./../shared/App').SessionPage
 
 
-module.exports.Page = class Page
+#instances of objects to make page work with router
+module.exports.Page = class Page extends SessionPage
   constructor: (pageData) ->
-    @tags = new collections.Tags()
-    @selectedTags = new models.TagListModel()
 
-    @tagsView = new views.TagsView collection: @tags
-    @tagsInputView = new views.TagsInputView collection: @tags, model: @selectedTags
+    @selected = new models.Expert()
+    @experts = new collections.Experts()
 
-    if pageData.tags? then @tags.reset pageData.tags else @tags.fetch({reset:true})
+    @expertsView = new views.ExpertsView collection: @experts, model: @selected
+    @expertView = new views.ExpertView el: '#expertPreview', model: @selected
+
+    @resetOrFectch @experts, pageData.experts
 
 
-module.exports.Router = routers.TagsRouter
+module.exports.Router = routers.ExpertsRouter
+
 
 # LoadSPA allows us to initialize the app multiple times in integration tests
 # without needing to re-require this app.coffee file or wait for jQuery.ready()
