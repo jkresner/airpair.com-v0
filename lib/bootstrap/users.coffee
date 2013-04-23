@@ -8,7 +8,7 @@ importUsersV0_4 = (callback) ->
     new User( d ).save (e, r) =>
       if e? then $log "added[#{count}]", e, r
       count++
-      if count >= v0_4_users.length-1 then callback()
+      if count == v0_4_users.length-1 then callback()
 
 module.exports = (callback) ->
   User.find({}).remove ->
