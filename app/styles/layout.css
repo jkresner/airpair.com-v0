@@ -52,3 +52,12 @@ legend em { color:#7F761C;font-style:normal; }
 .expert i { display:block;margin:20px auto }
 .expert .links { margin:10px 0 10px 0; }
 .expert .tags { padding:10px;background:black; }
+
+.expertMini { width:100px;border:solid 0.5px #d3d3d3;background-color:#E2E2E2;text-align:center }
+.expertMini hr { margin:0; }
+.expertMini .fullName { background-color:#CC523E;color:white;font-size:10px;padding:2px }
+.expertMini .username { display:block;font-size:10px;color:black;margin-top:4px }
+.expertMini .pic { width:80px;margin:8px; }
+.expertMini .links { margin:5px 0 5px 0; }
+.expertMini .links .icon { }
+.expertMini .tags { padding:8px;background:black; }

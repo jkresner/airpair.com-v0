@@ -72,10 +72,24 @@ class exports.RequestFormInfoView extends BB.ModelSaveView
     @
 
 
-class exports.RequestFormSuggestionsView extends BB.BadassView
+class SuggestedView extends BB.BadassView
+  className: '#suggested'
+  tmpl: require './templates/RequestSuggestion'
+  render: ->
+    d = (_.extend @model, { hasLinks: @hasLinks() } )
+    $log 'render', d, @hasLinks()
+    @$el.html @tmpl d
+    @
+  hasLinks: ->
+    d = @model
+    $log 'render', d, @hasLinks()
+    d.homepage? || d.gh? || d.so? || d.bb? || d.in? || d.tw? || d.other? || d.sideproject?
+
+
+
+class exports.RequestFormSuggestedView extends BB.BadassView
   logging: on
-  el: '#reqSuggestions'
-  tmpl: require './templates/RequestFormSuggestions'
+  el: '#suggested'
   # mailTmpl: require './../../mail/developerMatched'
   events:
     'click .suggestDev': 'add'
@@ -85,9 +99,11 @@ class exports.RequestFormSuggestionsView extends BB.BadassView
     @listenTo @collection, 'sync', @render
     @listenTo @model, 'change', @render
   render: ->
-    tmplData = _.extend @model.toJSON(), { experts: @collection.toJSON() }
-    #$log 'render suggestions', @, @$el, @tmpl, tmplData
-    @$el.html @tmpl tmplData
+    if !@model.id? then return
+    $log 'sug', @model.get 'suggested'
+    @$el.html ''
+    for s in @model.get 'suggested'
+      @$el.append( new SuggestedView( model: s ).render().el )
     @
   add: (e) ->
     # if @$('#reqDev').val() == '' then alert 'select a dev'; return false
@@ -140,7 +156,7 @@ class exports.RequestFormView extends BB.ModelSaveView
   initialize: ->
     @$el.html @tmpl()
     @infoView = new exports.RequestFormInfoView model: @model, tags: @tags, parentView: @
-    @suggestionsView = new exports.RequestFormSuggestionsView model: @model, collection: @experts, parentView: @
+    @suggestionsView = new exports.RequestFormSuggestedView model: @model, collection: @experts, parentView: @
     # @callsView = new exports.RequestFormCallsView model: @model, parentView: @
   renderSuccess: (model, response, options) =>
     @$('.alert-success').fadeIn(800).fadeOut(5000)
