@@ -12,14 +12,12 @@ class exports.InboundRouter extends Backbone.Router
   initialize: (args) ->
     @page = args.page
 
-    @page.experts.on 'sync', => @navigate 'request/514d6386a521340200000066', { trigger: true }
-
   list: ->
-    $log 'Router.list'
+    #$log 'Router.list'
     @hideShow '#list'
 
   edit: (id) ->
-    $log 'Router.edit'
+    #$log 'Router.edit'
 
     if !id?
       @page.selected.clearAndSetDefaults()

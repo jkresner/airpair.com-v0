@@ -44,7 +44,7 @@ migrate = (d, all_tags, all_experts, all_users) ->
     t = c
     if t?
       t.expert = c.dev
-      delete t.expert
+      delete t.dev
       calls.push t
   r.calls = calls
 
@@ -53,7 +53,7 @@ migrate = (d, all_tags, all_experts, all_users) ->
     t = c
     if t?
       t.expert = c.dev
-      delete t.expert
+      delete t.dev
       suggested.push t
   r.suggested = suggested
   r

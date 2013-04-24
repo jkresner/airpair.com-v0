@@ -63,7 +63,7 @@ class exports.TagsView extends Backbone.View
 #############################################################################
 
 class exports.TagNewForm extends BB.ModelSaveView
-  logging: on
+  #logging: on
   el: '#tagNewForm'
   tmpl: require './templates/NewForm'
   viewData: ['nameStackoverflow','nameGithub']
@@ -83,7 +83,7 @@ class exports.TagNewForm extends BB.ModelSaveView
 
 
 class exports.TagsInputView extends BB.BadassView
-  logging: on
+  #logging: on
   el: '#tagsInput'
   tmpl: require './templates/Input'
   tmplAutoResult:  require './templates/AutocompleteResult'

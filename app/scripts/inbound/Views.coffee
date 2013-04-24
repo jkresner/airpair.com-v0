@@ -47,7 +47,6 @@ class exports.RequestsView extends BB.BadassView
 #############################################################################
 
 class exports.RequestFormInfoCompanyView extends BB.ModelSaveView
-  loggin: on
   el: '#company-controls'
   initialize: ->
   render: ->
@@ -56,7 +55,7 @@ class exports.RequestFormInfoCompanyView extends BB.ModelSaveView
     @
 
 class exports.RequestFormInfoView extends BB.ModelSaveView
-  logging: on
+  # logging: on
   el: '#reqInfo'
   tmpl: require './templates/RequestFormInfo'
   initialize: ->
@@ -86,20 +85,20 @@ class exports.RequestFormSuggestionsView extends BB.BadassView
     @listenTo @collection, 'sync', @render
     @listenTo @model, 'change', @render
   render: ->
-    tmplData = _.extend @model.toJSON(), { devs: @collection.toJSON() }
+    tmplData = _.extend @model.toJSON(), { experts: @collection.toJSON() }
     #$log 'render suggestions', @, @$el, @tmpl, tmplData
     @$el.html @tmpl tmplData
     @
   add: (e) ->
-    if @$('#reqDev').val() == '' then alert 'select a dev'; return false
-    # todo, check for duplicates
-    @model.get('suggested').push
-      status: 'awaiting'
-      events: [{ 'created': new Date() }]
-      dev: { _id: @$('#reqDev').val(), name: @$('#reqDev option:selected').text() }
-      availability: []
-      comment: ''
-    @parentView.save e
+    # if @$('#reqDev').val() == '' then alert 'select a dev'; return false
+    # # todo, check for duplicates
+    # @model.get('suggested').push
+    #   status: 'awaiting'
+    #   events: [{ 'created': new Date() }]
+    #   dev: { _id: @$('#reqDev').val(), name: @$('#reqDev option:selected').text() }
+    #   availability: []
+    #   comment: ''
+    # @parentView.save e
   remove: (e) ->
     suggestionId = $(e.currentTarget).data 'id'
     toRemove = _.find @model.get('suggested'), (d) -> d._id == suggestionId
@@ -137,7 +136,7 @@ class exports.RequestFormView extends BB.ModelSaveView
   events:
     'click #mailDevsContacted': 'sendDevsContacted'
     'click .save': 'save'
-    # 'click .delete': 'deleteRequest'
+    # 'click .deleteRequest': 'deleteRequest'
   initialize: ->
     @$el.html @tmpl()
     @infoView = new exports.RequestFormInfoView model: @model, tags: @tags, parentView: @
