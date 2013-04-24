@@ -12,12 +12,16 @@ module.exports.Page = class Page extends SessionPage
     @selected = new models.Request()
     @requests = new collections.Requests()
     @tags = new collections.Tags()
+    @experts = new collections.Experts()
 
     @requestsView = new views.RequestsView collection: @requests, model: @selected
-    @requestFormView = new views.RequestFormView el: '#requestForm', model: @selected, tags: @tags
+
+    rfv = el: '#requestForm', model: @selected, tags: @tags, experts: @experts
+    @requestFormView = new views.RequestFormView rfv
 
     @resetOrFectch @requests, pageData.requests
     @resetOrFectch @tags, pageData.tags
+    @resetOrFectch @experts, pageData.experts
 
 
 module.exports.Router = routers.InboundRouter

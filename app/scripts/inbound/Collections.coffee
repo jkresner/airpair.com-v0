@@ -6,6 +6,11 @@ Shared = require './../shared/Collections'
 
 exports.Tags = Shared.Tags
 
+class exports.Experts extends BB.FilteringCollection
+  model: Models.Expert
+  url: '/api/experts'
+  comparator: (m) -> m.get 'name'
+
 
 class exports.Requests extends BB.FilteringCollection
   model: Models.Request
