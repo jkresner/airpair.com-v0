@@ -65,10 +65,7 @@ List of TODO
 
 Dev Min:
 
-- [H] Import v0.3 data
-  - [M] Request
 - [H] Admin
-  - [H] Basic dashboard
   - [H] Update Request
     - [H] assign devs
   - [H] Review Request
@@ -122,15 +119,19 @@ List to airpair
 - sometimes I just get the ajax response instead of the redirect?
 - What type of testing can I do?
 - Want to redirect to the page I failed to access, not the one I logged in on
+- Can I reuse the tokens I save later for api access?
+
 [Paul]
 - How to run brunch to rebuild automatically when in node mode
 - How to run serverside & clientside tests
+
 [Peter Lyons]
 - Sending mail
 - Error handling
 - Dates with mongo
 - collecting JS dates
   - http://momentjs.com/
+
 [Un-assigned]
 - How to rename a mongo collection
   - mongo shell: db.requests.renameCollection( newName , <dropTarget> ) renames the collection.
