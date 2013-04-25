@@ -16,13 +16,13 @@ module.exports = (app) ->
   app.get '/be-an-expert', (req, r)-> file r, 'beexpert'
   app.get '/find-an-expert', (req, r)-> file r, 'request'
 
-  app.get '/dashboard', auth.LoggedIn('/login'), (req, r)-> file r, 'dashboard'
-  app.get '/review', auth.LoggedIn('/login'), (req, r)-> file r, 'review'
+  app.get '/dashboard', auth.LoggedIn(), (req, r)-> file r, 'dashboard'
+  app.get '/review', auth.LoggedIn(), (req, r)-> file r, 'review'
 
   # admin pages
-  app.get '/adm/tags', auth.Admin('/'), (req, r) -> file r, 'adm/tags'
-  app.get '/adm/experts', auth.Admin('/'), (req, r) -> file r, 'adm/experts'
-  app.get '/adm/inbound', auth.Admin('/'), (req, r) -> file r, 'adm/inbound'
+  app.get '/adm/tags', auth.LoggedIn(), auth.Admin(), (req, r) -> file r, 'adm/tags'
+  app.get '/adm/experts', auth.LoggedIn(), auth.Admin(), (req, r) -> file r, 'adm/experts'
+  app.get '/adm/inbound',auth.LoggedIn(), auth.Admin(), (req, r) -> file r, 'adm/inbound'
   # app.get '/adminn', authz('/'), (req, r) -> file r, 'admin.html'
 
   # api
