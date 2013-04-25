@@ -1,20 +1,13 @@
 <legend>Info <a href="/review#{{ _id }}" target="_blank">review</a></legend>
 <div class="control-group">
-  <label class="control-label" for="reqCompanyName">Company</label>
-  <div class="controls">
-    <select id="reqCompany" name="companyId">
-      <option vale=""></option>
-      {{#each companys}}
-      <option value="{{ _id }}">{{ name }}</option>
-      {{/each}}
-    </select>
-  </div>
+  <label class="control-label">Company</label>
+  <div id="company-controls" class="controls"></div>
 </div>
 
 <div class="control-group">
   <label class="control-label" for="reqStatus">Status</label>
   <div class="controls">
-    <select id="reqStatus" name="status">
+    <select id="status" name="status">
       <option value="">please select ...</option>
       <option>received</option>
       <option>incomplete</option>
@@ -33,10 +26,17 @@
   </div>
 </div>
 
-<div class="control-group">
-  <label class="control-label" for="reqStatus">Technologies</label>
+<div id="incomplete-control-group" class="control-group" style="display:none">
+  <label class="control-label" for="reqCanceledReason">Incomplete detail</label>
   <div class="controls">
-    <input type="text" id="reqTech" placeholder="Enter tech" value="{{ skillsSoIds }}" data-error-style="inline" name="skills"/>
+    <textarea id="reqIncompleteDetail" name="incompleteDetail">{{ incompleteDetail }}</textarea>
+  </div>
+</div>
+
+<div class="control-group">
+  <label class="control-label" for="reqStatus">Tags</label>
+  <div id="tagsInput" class="controls controls-tags">
+      <div id="tagNewForm"></div>
   </div>
 </div>
 
@@ -50,7 +50,6 @@
 <div class="control-group">
   <label class="control-label" for="reqStatus">Availability</label>
   <div class="controls">
-    <input type="text" id="reqAvailability" placeholder="select time" data-error-style="inline" name="availabilty"/>
     <span id="reqTimezone"></span>
     <div>
       {{#each availability}}

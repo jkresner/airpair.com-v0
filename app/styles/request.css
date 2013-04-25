@@ -28,7 +28,6 @@
 #requestpage .rb-group label { float:left;margin-right:8px;color:gray; }
 #requestpage .rb-group input { float:left;margin-right:30px; }
 #requestpage .rb-group .error-message { display:block; }
-#requestpage .rb-group .checked { color:darkorange;font-weight:bold; }
 #requestpage #requestForm .availabilty { float:right;width:34%; }
 #requestpage #requestForm .availabilty input { width:120px; }
 
