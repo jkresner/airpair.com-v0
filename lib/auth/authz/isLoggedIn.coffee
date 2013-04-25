@@ -16,6 +16,6 @@ module.exports = (options) ->
       if setReturnTo && req.session
         req.session.returnTo = req.url
 
-      return res.redirect(url)
+      return res.redirect url
 
     next()

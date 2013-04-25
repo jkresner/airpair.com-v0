@@ -114,12 +114,20 @@ List to airpair
 
 [Jared]
 - Consider cost of passport session deserializing on every api call
-- Ajax style OAuth flow
 - redirectTo ?
 - sometimes I just get the ajax response instead of the redirect?
 - What type of testing can I do?
 - Want to redirect to the page I failed to access, not the one I logged in on
 - Can I reuse the tokens I save later for api access?
+- Ajax style OAuth flow
+
+Notes:
+- Checkout about apachebench
+- Try out two instances with redis
+- Navigator.cookies property
+ :: http://stackoverflow.com/questions/5639346/shortest-function-for-reading-a-cookie-in-javascript
+
+‹
 
 [Paul]
 - How to run brunch to rebuild automatically when in node mode
