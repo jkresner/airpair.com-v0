@@ -99,21 +99,10 @@ class exports.RequestSuggestionsView extends BB.BadassView
     # @parentView.save e
 
 
-class SuggestedView extends BB.BadassView
-  className: '#suggested'
-  tmpl: require './templates/RequestSuggestion'
-  render: ->
-    @model.expert.hasLinks = @hasLinks()
-    @$el.html @tmpl @model
-    @
-  hasLinks: ->
-    d = @model.expert
-    d.homepage? || d.gh? || d.so? || d.bb? || d.in? || d.tw? || d.other? || d.sideproject?
-
-
 class exports.RequestSuggestedView extends BB.BadassView
   logging: on
   el: '#suggested'
+  tmpl: require './templates/RequestSuggested'
   # mailTmpl: require './../../mail/developerMatched'
   events:
     'click .suggestDev': 'add'
@@ -122,11 +111,16 @@ class exports.RequestSuggestedView extends BB.BadassView
   initialize: ->
     @listenTo @model, 'change', @render
   render: ->
-    if !@model.id? then return
-    $log 'sug', @model.get 'suggested'
     @$el.html ''
-    for s in @model.get 'suggested'
-      @$el.append( new SuggestedView( model: s ).render().el )
+    suggested = @model.get 'suggested'
+    if !suggested? then return
+    else if suggested.length == 0
+      @$el.append '<p>No suggestion made...</p>'
+    else
+      for s in @model.get 'suggested'
+        d = s.expert
+        s.expert.hasLinks = d.homepage? || d.gh? || d.so? || d.bb? || d.in? || d.tw? || d.other? || d.sideproject?
+        @$el.append @tmpl(s)
     @
   remove: (e) ->
     suggestionId = $(e.currentTarget).data 'id'

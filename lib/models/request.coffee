@@ -9,27 +9,29 @@ Request status
   incomplete    : more detail required
   review        : company must review & choose one or more developers
   scheduled     : one or more airpairs scheduled
-  completed     : feedback on all calls collected
+  complete      : feedback on all calls collected
   canceled      : company has canceled the request
 
   ** after a user saves info from incomplete state, request goes back into received
 
-Suggestion status
+Suggestion expertStatus
 
-  awaiting   : waiting on the developer for availability & relevance
-  passed        : if developer is not available or
-  available     : developer would like to take the call
-  booked        : developer has been booked for an airpair
-
+  waiting       : waiting to hear from the developer
+  abstained     : if developer does not want the call
+  available     : developer wants the call
 """
 
 Suggestion = new Schema
-  status:           String
-  events:           [{}]
-  expert:           Mixed
-  availability:     [Date]
-  comment:          String
-
+  events:             [{}]
+  expert:             { required: true, type: {} }
+  expertStatus:       { required: true, type: String }
+  expertRating:       Number
+  expertFeedback:     String
+  expertComment:      String
+  expertAvailability: [Date]
+  customerRating:     Number
+  customerFeedback:   String
+  messageThreadId:    ObjectId
 
 Call = new Schema
   expert:           {}

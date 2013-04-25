@@ -66,10 +66,8 @@ migrate = (d, all_tags, all_experts, all_users) ->
         gh: t.gh
         karma: 0,
         tags: t.tags
-      suggested.push status: c.status, comment: c.comment, expert: e, availability: [], events: c.events
+      suggested.push expertStatus: 'waiting', expert: e, expertAvailability: [], events: c.events
   r.suggested = suggested
-  if r._id.toString() == "515a60284bfa2f0200000052"
-    $log 'r', r
   r
 
 # step 1 :: load in devs from v0 (to maintain original ids)
@@ -78,7 +76,6 @@ importRequestsV0_3 = (tags, experts, users, callback) ->
   for d in v0_3_requests
     new Request( migrate(d, tags, experts, users) ).save (e, r) =>
       if e? then $log "added[#{count}]", e, r
-      # $log "added[#{count}]", r
       count++
       if count == v0_3_requests.length-1 then callback()
 
@@ -89,9 +86,6 @@ module.exports = (tags, experts, users, callback) ->
     Request.collection.dropAllIndexes (e, r) ->
       $log "r[1] adding #{v0_3_requests.length} v0_3_requests"
       importRequestsV0_3 tags, experts, users, ->
-        Request.findOne {'_id': "515a60284bfa2f0200000052"}, (ee, rr) ->
-          $log 'rr', rr
-
         Request.find {}, (e, r) ->
           $log "r[2] saved #{r.length} requests"
           callback r

@@ -24,10 +24,6 @@ a.delete { color:red; }
 
 .rb-group .checked { color:#7F761C!important;font-weight:bold; }
 
-/*.leadRow td { font-size:11px; }
-.leadRow .label-skill { background-color:maroon;margin-right:4px; }
-
-*/
 
 /* Used for colorful braces */
 h2 b { color:#CC523E }
@@ -41,8 +37,16 @@ legend em { color:#7F761C;font-style:normal; }
 .label-incomplete { background-color:#b94a48 }
 .label-review { background-color:#468847 }
 .label-scheduled { background-color:#333333 }
-.label-completed { background-color:#999999 }
+.label-complete { background-color:#999999 }
 .label-canceled { background-color:#999999 }
+
+.label-waiting { background-color:#333333 }
+.label-abstained { background-color:#999999 }
+.label-available { background-color:#468847 }
+
+.label-waiting { background-color:#333333 }
+.label-abstained { background-color:#999999 }
+.label-available { background-color:#468847 }
 
 .expert { width:300px;border:solid 0.5px #d3d3d3;background-color:#E2E2E2;text-align:center }
 .expert hr { margin:0; }
@@ -59,5 +63,7 @@ legend em { color:#7F761C;font-style:normal; }
 .expertMini .username { display:block;font-size:10px;color:black;margin-top:4px }
 .expertMini .pic { width:80px;margin:8px; }
 .expertMini .links { margin:5px 0 5px 0; }
-.expertMini .links .icon { }
+.expertMini .links .icon { width:0.7em;height:0.7em;margin-right:-2px; }
+.expertMini .links .zocial:before { font: 40%/1.4 zocial; }
 .expertMini .tags { padding:8px;background:black; }
+.expertMini .label-tag { padding:0px 2px 1px 2px;font-size:9px; }

@@ -1,33 +1,37 @@
+<div class="suggested">
 
-{{#with expert}}
+  {{#with expert}}
 
-  <div class="expertMini">
-    <div class="fullName">
+  <img src="{{ pic }}?s=240" class="pic" />
+
+  <div class="deets">
+    <span class="names">
       {{ name }}
-    </div>
-    <hr />
-    {{#if username }}
-      <b class="username">@{{ username }}</b>
-    {{/if}}
-
-    <img src="{{ pic }}?s=240" class="pic" />
-
-    <div class="links">
-
-      {{> DevLinks }}
-    </div>
+      {{#if username }} (@{{ username }}) {{/if}}
+    </span>
 
     {{#if tags }}
-    <div class="tags">
+    <span class="tags">
       {{#each tags }}
         <span class="label label-tag">{{ short }}</span>
       {{/each }}
-    </div>
+    </span>
     {{/if}}
 
+    <span class="links">{{> DevLinks }}</span>
   </div>
 
-{{/with}}
+  {{/with}}
 
-<a href="#" class="mailMatched" data-id="{{ expert._id }}">matched</a><a href="#" class="updateStatus">{{ status }}</a>
-<a href="#" class="delete deleteSuggested" data-id="{{ _id }}">x</a>
+  <div>
+
+    <a href="#" data-id="{{ expert._id }}" class="mailMatched email btn btn-small btn-warning"><i class="icon-envelope icon-white"></i> </a>
+    <a href="#" data-id="{{ _id }}" class="delete deleteSuggested btn btn-small btn-danger"><i class="icon-trash icon-white"></i> </a>
+
+    <a href="#" class="status label label-{{expertStatus}}">{{ expertStatus }}</a>
+
+  <p>He how's it going, sorry I don't think I can deal with this one.</p>
+  <p>{{ expertComment }}</p>
+
+  </div>
+</div>
