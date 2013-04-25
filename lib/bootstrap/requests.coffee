@@ -50,11 +50,13 @@ migrate = (d, all_tags, all_experts, all_users) ->
 
   suggested = []
   for c in d.suggested
-    t = c
+    # $log 'c', c
+    und.find all_experts, (e) -> e._id == c.dev._id
+    # t = (und.find all_experts, (e) -> e._id == c.dev._id) if c.dev?
     if t?
-      t.expert = c.dev
-      delete t.dev
-      suggested.push t
+      c.expert = t
+      delete c.dev
+      suggested.push c
   r.suggested = suggested
   r
 

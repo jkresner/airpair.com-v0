@@ -5841,19 +5841,7 @@ module.exports = [
     "companyName": "Lotus Management",
     "status": "incomplete",
     "calls": [],
-    "suggested": [
-      {
-        "status": "unconfirmed",
-        "comment": "",
-        "_id": "5155f20d4fed6a0200000007",
-        "availability": [],
-        "events": [
-          {
-            "_id": "5155f20d4fed6a0200000008"
-          }
-        ]
-      }
-    ],
+    "suggested": [],
     "skills": [
       {
         "__v": 0,
