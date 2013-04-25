@@ -4,7 +4,7 @@
 #tagsInput p { height:20px;overflow:hidden;margin:0;font-size:11px; }
 #tagsInput h3 { }
 #tagsInput .selected { border-radius:5px;margin:10px auto; }
-#tagsInput .label { padding:6px 10px;margin:3px 3px 0px 0px;border:solid 1px darkorange;font-weight:bold;font-size:14px; }
+#tagsInput .label { padding:6px 10px;margin:3px 3px 0px 0px;border:solid 1px #7F761C;font-weight:bold;font-size:14px; }
 #tagsInput .label a { color:pink;margin-left:5px }
 #tagsInput .tt-dropdown-menu { width:260px }
 #tagsInput .tt-suggestions { padding:5px;text-align:center; }
