@@ -26,7 +26,7 @@ Suggestion status
 Suggestion = new Schema
   status:           String
   events:           [{}]
-  expert:           {}
+  expert:           Mixed
   availability:     [Date]
   comment:          String
 

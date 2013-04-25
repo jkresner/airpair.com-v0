@@ -50,14 +50,26 @@ migrate = (d, all_tags, all_experts, all_users) ->
 
   suggested = []
   for c in d.suggested
-    # $log 'c', c
-    und.find all_experts, (e) -> e._id == c.dev._id
-    # t = (und.find all_experts, (e) -> e._id == c.dev._id) if c.dev?
+    t = und.find all_experts, (m) -> m._id.toString() is c.dev._id
     if t?
-      c.expert = t
-      delete c.dev
-      suggested.push c
+      e =
+        _id: t._id
+        name: t.name
+        username: t.username
+        email: t.email
+        gmail: t.gmail
+        pic: t.pic
+        homepage: t.homepage
+        other: t.other
+        rate: 0
+        so: t.so
+        gh: t.gh
+        karma: 0,
+        tags: t.tags
+      suggested.push status: c.status, comment: c.comment, expert: e, availability: [], events: c.events
   r.suggested = suggested
+  if r._id.toString() == "515a60284bfa2f0200000052"
+    $log 'r', r
   r
 
 # step 1 :: load in devs from v0 (to maintain original ids)
@@ -65,9 +77,11 @@ importRequestsV0_3 = (tags, experts, users, callback) ->
   count = 0
   for d in v0_3_requests
     new Request( migrate(d, tags, experts, users) ).save (e, r) =>
-      if e? then $log "added[#{count}]", e, r._id
+      if e? then $log "added[#{count}]", e, r
+      # $log "added[#{count}]", r
       count++
       if count == v0_3_requests.length-1 then callback()
+
 
 module.exports = (tags, experts, users, callback) ->
   Request.find({}).remove ->
@@ -75,6 +89,9 @@ module.exports = (tags, experts, users, callback) ->
     Request.collection.dropAllIndexes (e, r) ->
       $log "r[1] adding #{v0_3_requests.length} v0_3_requests"
       importRequestsV0_3 tags, experts, users, ->
+        Request.findOne {'_id': "515a60284bfa2f0200000052"}, (ee, rr) ->
+          $log 'rr', rr
+
         Request.find {}, (e, r) ->
           $log "r[2] saved #{r.length} requests"
           callback r

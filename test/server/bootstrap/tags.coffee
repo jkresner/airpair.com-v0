@@ -8,7 +8,7 @@ Tag = require './../../../lib/models/tag'
 
 
 
-describe "REST api skills", ->
+describe "BOOTSTRAP tags", ->
 
   before (done) ->
     @testNum = 0
