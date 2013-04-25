@@ -46,6 +46,7 @@ class exports.RequestsView extends BB.BadassView
 ##  To edit request
 #############################################################################
 
+
 class exports.RequestFormInfoCompanyView extends BB.ModelSaveView
   el: '#company-controls'
   initialize: ->
@@ -53,6 +54,7 @@ class exports.RequestFormInfoCompanyView extends BB.ModelSaveView
     company = @model.get('company')
     @$el.html company.name
     @
+
 
 class exports.RequestFormInfoView extends BB.ModelSaveView
   # logging: on
@@ -72,40 +74,20 @@ class exports.RequestFormInfoView extends BB.ModelSaveView
     @
 
 
-class SuggestedView extends BB.BadassView
-  className: '#suggested'
-  tmpl: require './templates/RequestSuggestion'
-  render: ->
-    d = (_.extend @model, { hasLinks: @hasLinks() } )
-    $log 'render', d, @hasLinks()
-    @$el.html @tmpl d
-    @
-  hasLinks: ->
-    d = @model
-    $log 'render', d, @hasLinks()
-    d.homepage? || d.gh? || d.so? || d.bb? || d.in? || d.tw? || d.other? || d.sideproject?
-
-
-
-class exports.RequestFormSuggestedView extends BB.BadassView
+class exports.RequestSuggestionsView extends BB.BadassView
   logging: on
-  el: '#suggested'
-  # mailTmpl: require './../../mail/developerMatched'
+  el: '#suggestions'
   events:
     'click .suggestDev': 'add'
-    'click .deleteSuggested': 'remove'
-    # 'click a.mailMatched': 'sendMatchedMail'
   initialize: ->
     @listenTo @collection, 'sync', @render
-    @listenTo @model, 'change', @render
   render: ->
-    if !@model.id? then return
-    $log 'sug', @model.get 'suggested'
     @$el.html ''
-    for s in @model.get 'suggested'
-      @$el.append( new SuggestedView( model: s ).render().el )
+    for s in @collection.models
+      $log 'yeah'
+#      @$el.append( new SuggestedView( model: s ).render().el )
     @
-  add: (e) ->
+  #add: (e) ->
     # if @$('#reqDev').val() == '' then alert 'select a dev'; return false
     # # todo, check for duplicates
     # @model.get('suggested').push
@@ -115,6 +97,37 @@ class exports.RequestFormSuggestedView extends BB.BadassView
     #   availability: []
     #   comment: ''
     # @parentView.save e
+
+
+class SuggestedView extends BB.BadassView
+  className: '#suggested'
+  tmpl: require './templates/RequestSuggestion'
+  render: ->
+    @model.expert.hasLinks = @hasLinks()
+    @$el.html @tmpl @model
+    @
+  hasLinks: ->
+    d = @model.expert
+    d.homepage? || d.gh? || d.so? || d.bb? || d.in? || d.tw? || d.other? || d.sideproject?
+
+
+class exports.RequestSuggestedView extends BB.BadassView
+  logging: on
+  el: '#suggested'
+  # mailTmpl: require './../../mail/developerMatched'
+  events:
+    'click .suggestDev': 'add'
+    'click .deleteSuggested': 'remove'
+    # 'click a.mailMatched': 'sendMatchedMail'
+  initialize: ->
+    @listenTo @model, 'change', @render
+  render: ->
+    if !@model.id? then return
+    $log 'sug', @model.get 'suggested'
+    @$el.html ''
+    for s in @model.get 'suggested'
+      @$el.append( new SuggestedView( model: s ).render().el )
+    @
   remove: (e) ->
     suggestionId = $(e.currentTarget).data 'id'
     toRemove = _.find @model.get('suggested'), (d) -> d._id == suggestionId
@@ -156,7 +169,7 @@ class exports.RequestFormView extends BB.ModelSaveView
   initialize: ->
     @$el.html @tmpl()
     @infoView = new exports.RequestFormInfoView model: @model, tags: @tags, parentView: @
-    @suggestionsView = new exports.RequestFormSuggestedView model: @model, collection: @experts, parentView: @
+    @suggestedView = new exports.RequestSuggestedView model: @model, collection: @experts, parentView: @
     # @callsView = new exports.RequestFormCallsView model: @model, parentView: @
   renderSuccess: (model, response, options) =>
     @$('.alert-success').fadeIn(800).fadeOut(5000)
