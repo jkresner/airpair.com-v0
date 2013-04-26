@@ -77,17 +77,35 @@ class exports.RequestFormInfoView extends BB.ModelSaveView
 class exports.RequestSuggestionsView extends BB.BadassView
   logging: on
   el: '#suggestions'
+  tmpl: require './templates/RequestSuggestion'
   events:
-    'click .suggestDev': 'add'
+    'click .add': 'add'
+    'click .tag': 'filterTag'
   initialize: ->
-    @listenTo @collection, 'sync', @render
+    @listenTo @model, 'change', @render
   render: ->
     @$el.html ''
-    for s in @collection.models
-      $log 'yeah'
-#      @$el.append( new SuggestedView( model: s ).render().el )
+    @rTag = @model.get('tags')[0]
+    for t in @model.get('tags')
+      @$el.append "<a href='#' data-name='#{t.name}' class='tag'>#{t.short}</a><br />"
+    @$el.append '<div class="ops"></div>'
+    @renderSuggestions()
     @
-  #add: (e) ->
+  renderSuggestions: ->
+    $log 'renderSuggestions', @rTag, @collection.length
+    @collection.filterFilteredModels( tag: @rTag )
+    @$('.ops').html ''
+    for s in @collection.filteredModels
+      $log 's', s
+      s.set 'hasLinks', s.hasLinks()
+      @$('.ops').append @tmpl(s.toJSON())
+    @
+  filterTag: (e) ->
+    e.preventDefault()
+    name = $(e.currentTarget).data 'name'
+    @rTag = _.find @model.get('tags'), (t) -> t.name == name
+    @renderSuggestions()
+  add: (e) ->
     # if @$('#reqDev').val() == '' then alert 'select a dev'; return false
     # # todo, check for duplicates
     # @model.get('suggested').push
@@ -118,8 +136,7 @@ class exports.RequestSuggestedView extends BB.BadassView
       @$el.append '<p>No suggestion made...</p>'
     else
       for s in @model.get 'suggested'
-        d = s.expert
-        s.expert.hasLinks = d.homepage? || d.gh? || d.so? || d.bb? || d.in? || d.tw? || d.other? || d.sideproject?
+        s.expert.hasLinks = new M.Expert(s.expert).hasLinks()
         @$el.append @tmpl(s)
     @
   remove: (e) ->
@@ -163,6 +180,7 @@ class exports.RequestFormView extends BB.ModelSaveView
   initialize: ->
     @$el.html @tmpl()
     @infoView = new exports.RequestFormInfoView model: @model, tags: @tags, parentView: @
+    @suggestionsView = new exports.RequestSuggestionsView model: @model, collection: @experts, parentView: @
     @suggestedView = new exports.RequestSuggestedView model: @model, collection: @experts, parentView: @
     # @callsView = new exports.RequestFormCallsView model: @model, parentView: @
   renderSuccess: (model, response, options) =>

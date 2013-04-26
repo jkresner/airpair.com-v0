@@ -14,9 +14,9 @@
 #adminboundpage .suggested { border-top:solid 0.5px #d3d3d3;min-height:100px }
 #adminboundpage .suggested hr { margin:0; }
 #adminboundpage .suggested .pic { width:40px;margin:0;float:left; }
-#adminboundpage .suggested .deets { background-color:#CC523E;color:white;font-size:12px;float:right;width:93%; }
-#adminboundpage .suggested .names { padding:3px 0 0 3px;float:left;}
-#adminboundpage .suggested .links { margin:0 4px 0px 0px;padding-top:4px;float:right;height:12px; }
+#adminboundpage .suggested .deets { background-color:#CC523E;color:white;font-size:11px;float:right;width:93%; }
+#adminboundpage .suggested .names { padding:0px 0 0 3px;float:left;}
+#adminboundpage .suggested .links { margin:0 4px 0px 0px;height:20px; }
 #adminboundpage .suggested .links .icon { width:1.2em;height:1.2em;margin-right:-2px;margin-top:1px }
 #adminboundpage .suggested .links .zocial:before { font: 60%/1.5 zocial; }
 #adminboundpage .suggested .tags { padding:1px 2px;float:right; }
@@ -26,4 +26,13 @@
 #adminboundpage .suggested .delete { float:right }
 #adminboundpage .suggested .status { float:right;margin:7px; }
 #adminboundpage .suggested .btn { margin:3px 0px 0 3px;}
-#adminboundpage .suggested { clear:both; }
+#adminboundpage .suggested p { clear:both; }
+
+
+#adminboundpage .suggestion { float:left; }
+#adminboundpage .suggestion .pic { width:40px;margin:0;float:left; }
+#adminboundpage .suggestion .deets { background-color:#CC523E;color:white;font-size:12px;float:right;width:93%; }
+#adminboundpage .suggestion .fullName { font-size:9px;line-height:12px }
+#adminboundpage .suggestion .links { margin:0 4px 0px 0px;padding-top:4px;float:right;height:44px; }
+#adminboundpage .suggestion .tags { padding:1px 2px!important;clear:both;height:100px; }
+#adminboundpage .suggestion .label-tag { padding:0px 2px 1px 2px;font-size:9px;margin-bottom:1px }
