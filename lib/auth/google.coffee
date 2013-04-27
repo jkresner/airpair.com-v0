@@ -37,7 +37,8 @@ class Google
      'https://www.googleapis.com/auth/calendar' ]
 
   # Completed action
-  done: (req, res) => res.send req.user
-
+  done: (req, res) =>
+    res.send req.user
+    # res.redirect '/be-an-expert'
 
 module.exports = (auth, passport) -> new Google(auth, passport)

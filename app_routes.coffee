@@ -16,12 +16,7 @@ module.exports = (app) ->
   app.get '/find-an-expert', (req, r)-> file r, 'request'
 
   app.get '/', (req, r) ->
-    $log 'indeex'
-    $log 'app /', req.isAuthenticated, !req.isAuthenticated()
-    if !req.isAuthenticated || !req.isAuthenticated()
-      file r, 'homepage'
-    else
-      file r, 'dashboard'
+    if !req.isAuthenticated() then file r, 'homepage' else file r, 'dashboard'
 
   app.get '/dashboard', auth.LoggedIn(), (req, r)-> file r, 'dashboard'
   app.get '/review', auth.LoggedIn(), (req, r)-> file r, 'review'

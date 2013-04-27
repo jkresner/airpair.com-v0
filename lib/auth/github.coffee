@@ -5,12 +5,14 @@ dev_config =
   clientSecret:      'f52d233259426f769850a13c95bfc3dbe7e3dbf2'
   callbackURL:       'http://localhost:3333/auth/github/callback'
   passReqToCallback: true
+  customHeaders:      {"User-Agent" : "airpair-com"}
 
 prod_config =
   clientID:          '5adb6a29c586908f8161'
   clientSecret:      'c4182b3402aa93dd6465e99ca90f2650a0596997'
   callbackURL:       'http://#{process.env.OAUTH_Host}/auth/github/callback'
   passReqToCallback: true
+  customHeaders:      {"User-Agent" : "airpair-com"}
 
 
 class Github

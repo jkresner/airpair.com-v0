@@ -99,6 +99,7 @@ Deploy:
 
 Pre-deploy:
 
+- Set up redis for passport session deserialization
 - Remove tokens from api/user/me
 - Add stack overflow app icon
 - Mobile homepage
@@ -115,16 +116,7 @@ List of TODO v.5
 List to airpair
 ===============================================================================
 
-[Jared]
-- Consider cost of passport session deserializing on every api call
-- redirectTo ?
-- sometimes I just get the ajax response instead of the redirect?
-- What type of testing can I do?
-- Want to redirect to the page I failed to access, not the one I logged in on
-- Can I reuse the tokens I save later for api access?
-- Ajax style OAuth flow
-
-Notes:
+passportjs airpair Notes:
 - Checkout about apachebench
 - Try out two instances with redis
 - Navigator.cookies property
