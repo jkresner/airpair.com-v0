@@ -63,12 +63,11 @@ Three layers of tests:
 List of TODO
 ===============================================================================
 
+Bugs:
+- [H] Expert google sign in redirect is json response ...
+
 Dev Min:
 
-- [H] Admin
-  - [H] Update Request
-    - [H] assign devs
-  - [H] Review Request
 - [H] Beautify customer sign up
   - [H] Resolve availability
   - [H] View airpair
@@ -80,6 +79,10 @@ Dev Min:
   - [H] show fail to move forward because of username
   - [H] split into contact & prefs
   - [M] get error states
+- [H] Admin
+  - [H] Update Request
+    - [H] assign devs
+  - [H] Review Request
 - [H] User Dashboard
   - [H] requests for help
   - [H] requests helping
@@ -127,8 +130,6 @@ Notes:
 - Navigator.cookies property
  :: http://stackoverflow.com/questions/5639346/shortest-function-for-reading-a-cookie-in-javascript
 
-‹
-
 [Paul]
 - How to run brunch to rebuild automatically when in node mode
 - How to run serverside & clientside tests
@@ -145,3 +146,12 @@ Notes:
   - mongo shell: db.requests.renameCollection( newName , <dropTarget> ) renames the collection.
 - How to update schema
   - https://github.com/visionmedia/node-migrate
+
+-------------------------------------------------------------------------------
+Non-dev ideas
+===============================================================================
+
+What are you offering on top of video to video, for packages
+Training packages
+Packages
+Become an airpair 'member' and get discounts
