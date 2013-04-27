@@ -1,25 +1,19 @@
-body { background:none repeat scroll 0 0 #E2E2E2;width:1280px;margin:auto }
+body { background:none repeat scroll 0 0 #E2E2E2 }
 
-nav { height:54px;border-bottom:solid 1px #d3d3d3;padding-top:6px;background:url('/images/bg-top-short.jpg') }
+nav { background:url('/images/bg-top-short.jpg');height:70px;border-bottom:solid 1px #d3d3d3}
+nav div { padding-top:6px;height:54px;width:1280px;margin:auto;border-bottom:solid 1px white; }
 nav img { display:inline-block;width:180px;padding:3px 12px; }
 nav h3 { display:inline-block;color:#999999;padding:16px 6px }
 nav ul { float:right;margin:8px; }
 nav ul li { float:right;display:block;margin-left:5px }
 
-div.main { margin-top:20px }
-
-
+div.main { margin-top:20px;width:1280px;margin:auto }
 a.delete { color:red; }
-
 
 .alert { display:none }
 
-
-.codeline {
-  clear:both;font-family:courier;color: #212F3B;
-  float: left;border-bottom: dashed 1px #A4A4A5;
-  border-top:dashed 1px #A4A4A5;padding:10px 0;width:900px;margin-bottom:30px;
-}
+.codeline { clear:both;font-family:courier;color:#212F3B;float:left;border-bottom: dashed 1px #A4A4A5;
+  border-top:dashed 1px #A4A4A5;padding:10px 0;width:900px;margin-bottom:30px }
 .codeline em { color:#CE5424; }
 
 .rb-group .checked { color:#7F761C!important;font-weight:bold; }
