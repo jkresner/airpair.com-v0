@@ -22,6 +22,9 @@ migrateFromStack = (t) ->
       soId: t.tag_name
       desc: t.excerpt
 
+  if !update.desc? then update.desc = ''
+  update
+
 # step 1 :: load in skills from v0 (to maintain original ids)
 importSkillsV0 = (callback) ->
   count = 0
@@ -43,7 +46,8 @@ importTop2000StackoverflowTags = (callback) ->
     search = soId: t.tag_name
 
     Tag.findOneAndUpdate search, migrateFromStack(t), { upsert: true }, (e, r) ->
-      if e? then $log "[added #{count}] #{r.name} #{r.desc}"
+      if e? then $log e
+      # if e? then $log "[added #{count}] #{r.name} #{r.desc}"
       count++
       if count == stackoverflow_tagWikisdata.length then callback()
 

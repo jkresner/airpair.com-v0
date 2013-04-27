@@ -63,9 +63,6 @@ Three layers of tests:
 List of TODO
 ===============================================================================
 
-Bugs:
-- [H] Expert google sign in redirect is json response ...
-
 Dev Min:
 
 - [H] Beautify customer sign up
@@ -111,6 +108,7 @@ List of TODO v.5
 - Add github projects to tags
 - Remove experts with un-associated userIds (haven't logged in)
 - Think about request event array
+- [M] Expert google sign in redirect is json response when multiple accounts...
 
 -------------------------------------------------------------------------------
 List to airpair
