@@ -63,33 +63,45 @@ Three layers of tests:
 List of TODO
 ===============================================================================
 
-Dev Min:
+For tue
 
 - [H] Beautify customer sign up
-  - [H] Resolve availability
+  - [H] Bugs
+    - [M] Try break stuff
+    - [M] Validation on contact full name / email
+  - [H] Change availability to free form
   - [H] View airpair
   - [H] Write Test for update airpair
-  - [M] Enforce validation on contact details (e.g. name!)
   - [M] get error states
-  - [M] iron bugs
 - [H] Beautify dev sign up
   - [H] show fail to move forward because of username
   - [H] split into contact & prefs
   - [M] get error states
+- [H] User Dashboard
+  - [H] requests for help
+  - [H] package deals
+- [H] Error logging / mailing
+
+
+For fri:
+
 - [H] Admin
   - [H] Update Request
     - [H] assign devs
   - [H] Review Request
 - [H] User Dashboard
   - [H] requests for help
-  - [H] requests helping
 - [H] Expert Review
   - [H] Respond to request
   - [H] Email notification to customer
+- [H] Scheduling
+  - [M] Timezone
+- [H] Setup heroku redis session
+- [M] Remove tokens from api/user/me
+
 
 Deploy:
 
-- Tests for tags import
 - Test auth against live configs
 - Confirm persisted session
 - Update heroku dyno size & mongodb size
@@ -97,7 +109,6 @@ Deploy:
 Pre-deploy:
 
 - Set up redis for passport session deserialization
-- Remove tokens from api/user/me
 - Add stack overflow app icon
 - Mobile homepage
 

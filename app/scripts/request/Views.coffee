@@ -31,6 +31,7 @@ class exports.CompanyFormView extends BB.ModelSaveView
     if model? then @model = model
     @setValsFromModel ['name','url','about']
     @contactView.render @model.get('contacts')[0]
+    @$(".btn-cancel").toggle @request.get('_id')?
     @
   getViewData: ->
     data = @getValsFromInputs ['name','url','about']

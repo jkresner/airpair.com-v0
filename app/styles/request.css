@@ -1,5 +1,5 @@
 #requestpage .main { display:none }
-#requestpage .muted { font-size:11px;font-style:italic; }
+#requestpage .muted { font-size:12px;font-style:italic; }
 
 #requestpage .twitter-typeahead input { width:280px; }
 
@@ -9,7 +9,7 @@
 
 
 #requestpage .faces { display:block;float:left;width:160px;margin:18px 10px 0 10px }
-#requestpage .welcomeMsg { float:left;width:600px;padding:30px 40px 0 30px }
+#requestpage .welcomeMsg { float:left;width:600px;padding:30px 50px 0 30px }
 #requestpage .welcomeMsg h1 { font-size:64px;margin-bottom:40px;margin-top:6px; }
 #requestpage .welcomeMsg p { font-size:18px;line-height:28px }
 #requestpage .rightCol { float:left;width:360px;padding:25px;min-height:700px;background:white;text-align:center; }
@@ -17,12 +17,14 @@
 #requestpage h2 { }
 #requestpage legend { border:none;font-size:38px;font-weight:bold;margin-bottom:34px }
 
-#requestpage #contactInfo { float:left;width:840px;padding-top:20px }
-#requestpage #companyInfo input { width:84%; }
+#requestpage #contactInfo { padding-top:20px }
+#requestpage .pic-group { float:left;width:120px;padding:4px 40px 0 0px;; }
+#requestpage .pic-group img { height:126px }
+#requestpage .personal-info-group { float:left;width:300px; }
+#requestpage .personal-info-group { float:left;width:300px; }
+#requestpage #companyInfo { width:500px;float:left;margin-left:40px; }
+#requestpage #companyInfo input {  }
 #requestpage #companyInfo textarea { width:90%;height:250px; }
-#requestpage #companyContacts img { height:66px; }
-#requestpage #companyContacts { float:left;width:320px; }
-#requestpage #companyContacts input { width:80%; }
 #requestpage #companyForm { float:left; }
 #requestpage #companyHelp { float:left;width:180px;padding:100px 80px;background:#d1d1d1; }
 

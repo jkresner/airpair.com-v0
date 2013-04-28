@@ -1,40 +1,43 @@
-<div class="control-group">
+<div class="control-group pic-group">
   <div class="controls">
     <img src="{{ pic }}" />
     <input type="hidden" value="{{ pic }}" name="pic" id="pic{{num}}"/>
   </div>
 </div>
+
+<div class="personal-info-group">
+
 <div class="control-group">
   <label for="contactName{{num}}" class="control-label">Full name</label>
   <div class="controls">
-    <input type="text" data-error-style="inline" value="{{ fullName }}" placeholder="Full name" name="fullName" id="contactName{{num}}">
+    <input type="text" data-error-style="inline" value="{{ fullName }}" placeholder="Full name" name="fullName" id="contactName{{num}}" class="input-block-level">
+  </div>
+</div>
+<div class="control-group" style="display:none">
+  <label for="contactGmail{{num}}" class="control-label">Google account email <span class="muted">for Google+ Hangouts</span></label>
+  <div class="controls">
+    <input type="text" data-error-style="inline" value="{{ gmail }}" placeholder="Google account email" name="gmail" id="contactGmail{{num}}" class="input-block-level">
   </div>
 </div>
 <div class="control-group">
   <label for="contactEmail{{num}}" class="control-label">Primary email <span class="muted">if not your gmail address</span></label>
   <div class="controls">
-    <input type="text" data-error-style="inline" value="{{ email }}" placeholder="Email" name="email" id="contactEmail{{num}}">
-  </div>
-</div>
-<div class="control-group">
-  <label for="contactGmail{{num}}" class="control-label">Google account email <span class="muted">for Google+ Hangout</span></label>
-  <div class="controls">
-    <input type="text" data-error-style="inline" value="{{ gmail }}" placeholder="Google account email" name="gmail" id="contactGmail{{num}}">
+    <input type="text" data-error-style="inline" value="{{ email }}" placeholder="Email" name="email" id="contactEmail{{num}}" class="input-block-level">
   </div>
 </div>
 <div class="control-group" style="display:none">
   <label for="contactPhone{{num}}" class="control-label">Phone</label>
   <div class="controls">
-    <input type="text" data-error-style="inline" value="{{ phone }}" placeholder="Phone" name="phone" id="contactPhone{{num}}">
+    <input type="text" data-error-style="inline" value="{{ phone }}" placeholder="Phone" name="phone" id="contactPhone{{num}}" class="input-block-level">
   </div>
 </div>
 <div class="control-group" style="display:none">
   <label for="contactTitle{{num}}" class="control-label">Title</label>
   <div class="controls">
-    <input type="text" data-error-style="inline" value="{{ title }}" placeholder="Title" name="title" id="contactTitle{{num}}">
+    <input type="text" data-error-style="inline" value="{{ title }}" placeholder="Title" name="title" id="contactTitle{{num}}" class="input-block-level">
   </div>
 </div>
-<div class="control-group">
+<div class="control-group" style="display:none">
   <label for="contactTimezone{{num}}" class="control-label">Timezone</label>
   <div class="controls">
     <input type="text" data-error-style="inline" value="{{ timezone }}" placeholder="Timezone" name="timezone" id="contactTimezone{{num}}">
@@ -43,11 +46,13 @@
 <div class="control-group">
   <label for="contactTwitter{{num}}" class="control-label">Twitter  <span class="muted">we thank you via twitter after each call</span></label>
   <div class="controls">
-    <div class="input-prepend" style="width:88%">
+    <div class="input-prepend">
       <span class="add-on">@</span>
-      <input type="text" data-error-style="inline" value="{{ twitter }}" placeholder="twitter handle" name="twitter" id="contactTwitter{{num}}">
+      <input type="text" data-error-style="inline" value="{{ twitter }}" placeholder="twitter handle" name="twitter" id="contactTwitter{{num}}" class="input-block-level">
     </div>
   </div>
 </div>
 
 <input type="hidden" value="{{ userId }}" name="userId" id="userId{{num}}"/>
+
+</div>

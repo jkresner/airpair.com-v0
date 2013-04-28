@@ -11,7 +11,7 @@
 #beexpertpage h2 { }
 #beexpertpage .signinBtn-google { margin:10px 0 0 -10px; }
 #beexpertpage legend { border:none;font-size:38px;font-weight:bold;margin-bottom:34px }
-#beexpertpage #connectForm { float:left;width:860px; }
+#beexpertpage #connectForm { float:left;width:860px;padding-top:30px; }
 #beexpertpage #connectForm input { width:84%; }
 #beexpertpage #connectForm textarea { width:90%;height:250px; }
 #beexpertpage #connectForm .controls a { width:120px; }

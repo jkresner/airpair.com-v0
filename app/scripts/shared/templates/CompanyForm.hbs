@@ -1,6 +1,5 @@
 <fieldset>
   <legend><b>{</b> Contact info <b>}</b></legend>
-    <p><i>Step 2 of 3</i></p>
 
     <div class="alert alert-success">
       <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -14,14 +13,17 @@
 
   </legend>
 
-  <div id="companyContacts"><div id="primaryContact"></div></div>
+  <div id="companyContacts"><div id="primaryContact"></div>
+
+
+  </div>
 
   <div id="companyInfo">
     <div>
       <div class="control-group">
         <label class="control-label" for="companyName">Company (or app) name</label>
         <div class="controls">
-          <input type="text" id="companyName" name="name" placeholder="Company name" value="{{ name }}" data-error-style="inline">
+          <input style="width:320px" type="text" id="companyName" name="name" placeholder="Company name" value="{{ name }}" data-error-style="inline">
         </div>
       </div>
       <div class="control-group">
@@ -29,14 +31,14 @@
         <div class="controls">
           <div class="input-prepend" style="width:88%">
             <span class="add-on">http://</span>
-            <input type="text" id="companyUrl" name="url" placeholder="Website Url" value="{{ url }}" data-error-style="inline">
+            <input style="width:400px" class="input-block-level" type="text" id="companyUrl" name="url" placeholder="Website Url" value="{{ url }}" data-error-style="inline">
           </div>
         </div>
       </div>
       <div class="control-group">
-        <label class="control-label" for="companyAbout">What problem does your company (or app) solve?</label>
+        <label class="control-label" for="companyAbout">What does your company (or app) do?</label>
         <div class="controls">
-          <textarea id="companyAbout" name="about" placeholder="About your company - please be detailed." value="{{ soId }}" data-error-style="inline"></textarea>
+          <textarea class="input-block-level" id="companyAbout" name="about" placeholder="About your company - please be detailed." value="{{ soId }}" data-error-style="inline"></textarea>
         </div>
       </div>
     </div>
@@ -45,8 +47,8 @@
   <div style="clear:both"></div>
 
   <div class="form-actions">
-    <a href="#" class="save btn btn-primary">Save</a>
-    <a href="/dashboard" class="cancel btn">Cancel</a>
+    <a href="#" class="save btn btn-primary btn-large">Save</a>
+    <a href="/dashboard" class="btn-cancel btn">Cancel</a>
   </div>
 
 </fieldset>
