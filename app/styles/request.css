@@ -12,7 +12,8 @@
 #requestpage .welcomeMsg { float:left;width:600px;padding:30px 50px 0 30px }
 #requestpage .welcomeMsg h1 { font-size:64px;margin-bottom:40px;margin-top:6px; }
 #requestpage .welcomeMsg p { font-size:18px;line-height:28px }
-#requestpage .rightCol { float:left;width:360px;padding:25px;min-height:700px;background:white;text-align:center; }
+#requestpage .rightCol { float:left;width:360px;padding:20px;min-height:700px;background:white;text-align:center; }
+#requestpage .rightCol i { color:gray;font-size:12px; }
 #requestpage .signinBtn-google { margin:10px 0 0 -10px; }
 #requestpage h2 { }
 #requestpage legend { border:none;font-size:38px;font-weight:bold;margin-bottom:34px }
