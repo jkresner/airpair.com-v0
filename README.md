@@ -56,8 +56,11 @@ Three layers of tests:
 
 4)   mocha-phantomjs http://localhost:3333/test/index.html   (front end tests)
 
-5)   mocha test/server (backend tests)
+5)   mocha test/server/all.coffee (backend tests)
 
+# docs on expect syntax                chaijs.com/api/bdd/
+# docs on using spy/fake/stub          sinonjs.org/docs/
+# docs on sinon chai syntax            chaijs.com/plugins/sinon-chai
 
 -------------------------------------------------------------------------------
 List of TODO

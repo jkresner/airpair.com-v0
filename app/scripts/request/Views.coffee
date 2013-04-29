@@ -19,7 +19,7 @@ class exports.CompanyContactView extends BB.ModelSaveView
     @
 
 
-class exports.CompanyFormView extends BB.ModelSaveView
+class exports.ContactInfoView extends BB.ModelSaveView
   el: '#contactInfo'
   tmpl: require './../shared/templates/CompanyForm'
   events: { 'click .save': 'validatePrimaryContactAndSave' }

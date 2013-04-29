@@ -1,3 +1,8 @@
+models = require '/scripts/shared/Models'
+
+data =
+  users: require '/test/data/users'
+
 exports = {}
 
 
@@ -11,11 +16,33 @@ exports.clear_htmlfixture = ->
 
 
 
-exports.clean_setup = (ctx) ->
+exports.clean_setup = (ctx, fixtureHtml) ->
+
+  if fixtureHtml? then exports.set_htmlfixture fixtureHtml
 
   # add objects to hold spys + stubs that we can gracefully clean up in tear_down
   ctx.spys = {}
   ctx.stubs = {}
+
+
+exports.set_initSPA = (spaPath) ->
+
+  window.initSPA = (SPA) =>
+    # stub out getting the users details via ajax
+    SPA.Page.__super__.constructor = (pageData, callback) ->
+      $log 'SPA const override', pageData.sessionObj, @
+      sessionObj = pageData.sessionObj
+      if !sessionObj? then sessionObj = data.users[0]
+      @session = new models.User sessionObj
+      @initialize pageData
+      callback @
+
+  SPA = require(spaPath)
+
+exports.LoadSPA = (SPA, sessionObj) ->
+  # create out app
+  new SPA.Page { sessionObj: sessionObj }, (page) ->
+    window.router = new SPA.Router page: page
 
 
 exports.clean_tear_down = (ctx) ->

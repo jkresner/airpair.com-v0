@@ -2,6 +2,8 @@
 
 config.server.port = 5000
 
+config.env.mode = 'prod'
+
 #config.files.javascripts.joinTo =
   # we exclude the stubs field in the release build
 #  'javascripts/app.js': /^app(\/|\\)(?!stubs)/
