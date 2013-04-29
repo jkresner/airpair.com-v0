@@ -6,6 +6,12 @@ data =
 exports = {}
 
 
+exports.showsError = (input) ->
+  controls = input.parent()
+  # $log 'controls', controls
+  $(controls).find('.error-message').length > 0
+
+
 exports.set_htmlfixture = (html) ->
   $('body').append('<div id="fixture">'+html+'</div>')
 
@@ -13,8 +19,6 @@ exports.set_htmlfixture = (html) ->
 exports.clear_htmlfixture = ->
   $('.datetimepicker').datetimepicker('remove')
   $('#fixture').remove()
-
-
 
 exports.clean_setup = (ctx, fixtureHtml) ->
 
@@ -30,7 +34,7 @@ exports.set_initSPA = (spaPath) ->
   window.initSPA = (SPA) =>
     # stub out getting the users details via ajax
     SPA.Page.__super__.constructor = (pageData, callback) ->
-      $log 'SPA const override', pageData.sessionObj, @
+      # $log 'SPA const override', pageData.sessionObj, @
       sessionObj = pageData.sessionObj
       if !sessionObj? then sessionObj = data.users[0]
       @session = new models.User sessionObj

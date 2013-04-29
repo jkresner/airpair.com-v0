@@ -11,6 +11,7 @@ class CompanyApi extends CRUDApi
 
     if req.params.id is 'me'
       search = 'contacts.userId': req.user._id
+      #$log 'companyApi', search
 
     @model.findOne search, (e, r) ->
       r = {} if r is null

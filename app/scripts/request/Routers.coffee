@@ -17,13 +17,11 @@ class exports.Router extends Backbone.Router
     if @page.session.isGoogleAuthenticated() then @contactInfo() else @welcome()
 
   welcome: ->
-    $log 'Router.welcome'
+    # $log 'Router.welcome'
     @hideShow '#welcome'
 
   contactInfo: ->
     # $log 'Router.contactInfo'
-    if @page.tags.length is 0 then @page.tags.fetch()
-
     @page.company.fetch success: (m, opts, resp) =>
       m.populateFromGoogle @page.session
 
@@ -31,6 +29,8 @@ class exports.Router extends Backbone.Router
 
   request: ->
     # $log 'Router.request'
+    if @page.tags.length is 0 then @page.tags.fetch()
+
     @hideShow '#request'
     @page.request.set
       company: @page.company.attributes

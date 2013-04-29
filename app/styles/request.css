@@ -7,6 +7,7 @@
 #requestpage h4 em { font-size:24px;color:#7F761C;font-style:normal; }
 #requestpage h4 b { font-size:24px;color:#CC523E;font-style:normal; }
 
+#requestpage .form-actions { margin-top:40px;border-top:1px solid gray; }
 
 #requestpage .faces { display:block;float:left;width:160px;margin:18px 10px 0 10px }
 #requestpage .welcomeMsg { float:left;width:600px;padding:30px 50px 0 30px }
@@ -19,6 +20,7 @@
 #requestpage legend { border:none;font-size:38px;font-weight:bold;margin-bottom:34px }
 
 #requestpage #contactInfo { padding-top:20px }
+#requestpage .save { width:120px; }
 #requestpage .pic-group { float:left;width:120px;padding:4px 40px 0 0px;; }
 #requestpage .pic-group img { height:126px }
 #requestpage .personal-info-group { float:left;width:300px; }
@@ -29,7 +31,7 @@
 #requestpage #companyForm { float:left; }
 #requestpage #companyHelp { float:left;width:180px;padding:100px 80px;background:#d1d1d1; }
 
-#requestpage #requestForm { float:left;width:860px;  }
+#requestpage #requestForm { padding-top:20px;float:left;width:860px;  }
 #requestpage #requestForm textarea { width:90%;height:250px; }
 #requestpage #requestForm .error-message { margin:-10px 0 0 5px;font-size:12px  }
 #requestpage .rb-group { margin:10px;display:block;height:30px; }

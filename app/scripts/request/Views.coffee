@@ -39,8 +39,8 @@ class exports.ContactInfoView extends BB.ModelSaveView
     data
   validatePrimaryContactAndSave: (e) ->
     e.preventDefault()
-    $inputName = @$('#contacts [name=fullName]')
-    $inputEmail = @$('#contacts [name=email]')
+    $inputName = @$('[name=fullName]')
+    $inputEmail = @$('[name=email]')
     @renderInputsValid()
     if $inputName.val() is ''
       @renderInputInvalid $inputName, 'Contact name required'
@@ -49,7 +49,6 @@ class exports.ContactInfoView extends BB.ModelSaveView
     else
       @save e
   renderSuccess: (model, response, options) =>
-    @$('.alert-success').fadeIn(800).fadeOut(5000)
     router.navigate 'request', { trigger: true }
 
 

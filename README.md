@@ -52,7 +52,7 @@ Three layers of tests:
 
 2)   npm install -g mocha-phantomjs
 
-3)   brunch w -s
+3)   brunch w -s -c config-test
 
 4)   mocha-phantomjs http://localhost:3333/test/index.html   (front end tests)
 

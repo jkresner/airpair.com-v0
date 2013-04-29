@@ -37,6 +37,9 @@
 #     expect( view.$('#statusBusy').prev().hasClass('checked') ).to.be.true
 
 
+#   it 'strips http:// & https:// from websites & urls', ->
+
+
 #   it 'validation on brief fires with brief', ->
 #     delete @defaultData.brief
 #     view = new V.InfoFormView @viewData

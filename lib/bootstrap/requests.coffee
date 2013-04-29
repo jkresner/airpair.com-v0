@@ -7,12 +7,12 @@ v0_3company =
   "about": "We like to test airpair.com in a way that makes our systems safe, secure, fast and beautiful.\n\nWe approach testing as a trade off more than pure TDD. JavaScript is an amazing language, but is kind of dangerous so test coverage is important, but not at the expense of speed to market.\n\nSinon is a great framework and brunch comes with mocha-phantom support.",
   "contacts": [
     {
-      "fullName": "Jon Test",
-      "email": "jkresner@yahoo.com.au", "gmail": "jk@airpair.com",
+      "fullName": "Jon v0.3 Test",
+      "email": "jkresner@yahoo.com.au", "gmail": "apv3test@gmail.com",
       "title": "", "phone": "",
-      "userId": "5175ffbbbb802cc4d5aaa6aa",
+      "userId": "5175ffbbbb888cc4d5aaa6aa",
       "pic": "https://lh3.googleusercontent.com/-NKYL9eK5Gis/AAAAAAAAAAI/AAAAAAAAABY/291KLuvT0iI/photo.jpg",
-      "twitter": "jkresner", "timezone": "GMT-0700 (PDT)"
+      "twitter": "aptest", "timezone": "GMT-0700 (PDT)"
     }
   ]
 
