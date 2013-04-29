@@ -1,10 +1,7 @@
-mongoose = require 'mongoose'
-assert = require("chai").assert
-
 describe "Can sign in with 3rd parties", ->
 
   before (done) ->
-    mongoose.connect "mongodb://localhost/airpair_test", done
+    createDB done
 
   it "Can sign in with github as new user", (done) ->
     done()
@@ -20,3 +17,6 @@ describe "Can sign in with 3rd parties", ->
 
   it "Can sign in with github as existing google user", (done) ->
     done()
+
+  after (done) ->
+    destroyDB done

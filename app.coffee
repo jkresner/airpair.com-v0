@@ -1,4 +1,5 @@
 global.$log = console.log
+global.und = require 'underscore'
 $log "in app node file", process.cwd()
 
 mongoose = require 'mongoose'

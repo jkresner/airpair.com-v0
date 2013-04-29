@@ -13,7 +13,7 @@ describe "REST api requests", ->
 
   before (done) ->
     @testNum = 0
-    mongoose.connect "mongodb://localhost/airpair_test", done
+    createDB done
 
   beforeEach (done) ->
     @testNum++
@@ -44,5 +44,4 @@ describe "REST api requests", ->
         done()
 
   after (done) ->
-    mongoose.connection.db.executeDbCommand { dropDatabase:1 }, (err, result) ->
-      mongoose.connection.close done
+    destroyDB done
