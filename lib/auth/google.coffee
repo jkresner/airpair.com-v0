@@ -38,7 +38,7 @@ class Google
 
   # Completed action
   done: (req, res) =>
-    res.send req.user
-    # res.redirect '/be-an-expert'
+    # res.send req.user
+    res.redirect '/'
 
 module.exports = (auth, passport) -> new Google(auth, passport)
