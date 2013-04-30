@@ -19,6 +19,8 @@ class exports.ConnectFormView extends BB.ModelSaveView
     @listenTo @model, 'change', @render
   render: ->
     @$el.html @tmpl @model.toJSON()
+    @$(".save").toggle @model.get('username')?
+    @$(".btn-cancel").toggle @model.get('_id')?
     @
   renderSuccess: (model, response, options) =>
     @$('.alert-success').fadeIn(800).fadeOut(5000)

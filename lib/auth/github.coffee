@@ -13,6 +13,7 @@ config =
     clientSecret:       '14292d0a3f665f73dde448fc90ff6c402ab6da9b'
     callbackURL:        "http://staging.airpair.com/auth/github/callback"
     passReqToCallback:  true
+    customHeaders:      {"User-Agent" : "airpair-com"}
 
   prod:
     clientID:          '5adb6a29c586908f8161'

@@ -1,6 +1,6 @@
 <fieldset>
 
-  <legend><b>{</b> Connect your social profiles <b>}</b></legend>
+  <legend><b>{</b> Populate profile <b>}</b></legend>
 
   <div class="alert alert-success">
     <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -12,7 +12,7 @@
     <h4>Error</h4>
   </div>
 
-  <p style="width:600px">We populate your airpair profile with data from your existing social profiles. We also use information for your profiles in our matching algorithm for incoming airpair requests.</p>
+  <p >We take data from your existing social profiles to rapidly fill in your airpair profile.</p>
 
   <hr />
   <div class="control-group">
@@ -22,7 +22,7 @@
         {{#if gh}}
           <i class="icon-ok icon-white"></i>
         {{else}}
-          <span class="muted">We use github data to know what languages you code in.</span>
+          <span class="muted"> &nbsp; connect github to improve your profile.</span>
         {{/if}}
     </div>
   </div>
@@ -34,7 +34,7 @@
         {{#if so}}
           <i class="icon-ok icon-white"></i>
         {{else}}
-         <span class="muted">We use data from Stackoverflow to know what technologies you like to help with.</span>
+         <span class="muted"> &nbsp; connect stackoverflow to improve your profile.</span>
         {{/if}}
     </div>
   </div>
@@ -46,7 +46,7 @@
         {{#if bb}}
           <i class="icon-ok icon-white"></i>
         {{else}}
-        <span class="muted">We use bitbucket data to know what languages you code in.</span>
+        <span class="muted"> &nbsp; connect bitbucket to improve your profile.</span>
         {{/if}}
     </div>
   </div>
@@ -58,7 +58,7 @@
         {{#if in}}
           <i class="icon-ok icon-white"></i>
         {{else}}
-        <span class="muted">We use LinkedIN data to know what skills you're endorsed for and how many years experience you have.</span>
+        <span class="muted"> &nbsp; connect linkedin to improve your profile.</span>
         {{/if}}
     </div>
   </div>
@@ -70,7 +70,7 @@
         {{#if tw}}
           <i class="icon-ok icon-white"></i>
         {{else}}
-        <span class="muted"> We use twitter data to asses if you're an alpha geek. We also say thank you after each call using your handle.</span>
+        <span class="muted"> &nbsp; connect twitter to improve your profile.</span>
         {{/if}}
         {{! <input type="checkbox"> Follow @airpair }}
     </div>
@@ -79,8 +79,8 @@
   <div style="clear:both"></div>
 
   <div class="form-actions">
-    <a href="#" class="save btn btn-primary">Save</a>
-    <a href="/dashboard" class="back btn">Back</a>
+    <a href="#" class="save button">Continue</a>
+    <a href="/dashboard" class="button button-gray btn-cancel">Cancel</a>
   </div>
 
 </fieldset>
