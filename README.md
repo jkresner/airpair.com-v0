@@ -68,24 +68,20 @@ List of TODO
 
 For wed
 
-- [H] Brief clearing when validation fails and it's too short
-- [H] Beautify customer sign up
-  - [H] View airpair
-  - [H] Write Test for update airpair
-  - [M] show server error states
-- [H] Beautify dev sign up
-  - [H] show fail to move forward because of username
-  - [H] split into contact & prefs
-  - [M] show server error states
 - [H] Generate CSV for customers & devs for CRM stuff
+- [H] Beautify customer sign up
+  - [H] View/review airpair (from dashboard)
+  - [H] Write Test for update airpair
+- [H] Beautify dev sign up
+  - [H] write test for v0.3 dev connecting profiles
+  - [M] show server error states
 - [H] User Dashboard
   - [H] requests for help
-  - [H] package deals / content
+  - [H] no requests content
+  - [H] right side content
 - [H] Error logging / mailing
 - [H] Setup heroku redis session
 
-
-For shortest-function-for-reading-a-cookie-in-javascript
 
 - [H] Admin
   - [H] Update Request
@@ -116,14 +112,16 @@ Pre-deploy:
 List of TODO v.5
 ===============================================================================
 
+- Show server error states for customer + expert sign in
 - Protect api calls for owners of objects
 - Mobile homepage
 - Add github projects to tags
 - Remove experts with un-associated userIds (haven't logged in)
 - Think about request event array
-- [M] Expert google sign in redirect is json response when multiple accounts..
+- [M] Expert google sign in redirect is json response when multiple accounts.
 - [H] Scheduling
   - [M] Timezone
+- [H] Split expert sign up into contact & prefs
 
 -------------------------------------------------------------------------------
 List to airpair
@@ -134,6 +132,7 @@ passportjs airpair Notes:
 - Try out two instances with redis
 - Navigator.cookies property
  :: http://stackoverflow.com/questions/5639346/shortest-function-for-reading-a-cookie-in-javascript
+For shortest-function-for-reading-a-cookie-in-javascript
 
 [Paul]
 - How to run brunch to rebuild automatically when in node mode
