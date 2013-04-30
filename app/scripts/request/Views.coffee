@@ -19,7 +19,7 @@ class exports.CompanyContactView extends BB.ModelSaveView
     @
 
 
-class exports.CompanyFormView extends BB.ModelSaveView
+class exports.ContactInfoView extends BB.ModelSaveView
   el: '#contactInfo'
   tmpl: require './../shared/templates/CompanyForm'
   events: { 'click .save': 'validatePrimaryContactAndSave' }
@@ -32,6 +32,7 @@ class exports.CompanyFormView extends BB.ModelSaveView
     @setValsFromModel ['name','url','about']
     @contactView.render @model.get('contacts')[0]
     @$(".btn-cancel").toggle @request.get('_id')?
+    @$(".stepNum").toggle !@request.get('_id')?
     @
   getViewData: ->
     data = @getValsFromInputs ['name','url','about']
@@ -39,8 +40,8 @@ class exports.CompanyFormView extends BB.ModelSaveView
     data
   validatePrimaryContactAndSave: (e) ->
     e.preventDefault()
-    $inputName = @$('#contacts [name=fullName]')
-    $inputEmail = @$('#contacts [name=email]')
+    $inputName = @$('[name=fullName]')
+    $inputEmail = @$('[name=email]')
     @renderInputsValid()
     if $inputName.val() is ''
       @renderInputInvalid $inputName, 'Contact name required'
@@ -49,26 +50,27 @@ class exports.CompanyFormView extends BB.ModelSaveView
     else
       @save e
   renderSuccess: (model, response, options) =>
-    @$('.alert-success').fadeIn(800).fadeOut(5000)
     router.navigate 'request', { trigger: true }
 
 
 #############################################################################
 
 class exports.RequestFormView extends BB.ModelSaveView
+  loggin: on
   el: '#requestForm'
   tmpl: require './templates/RequestForm'
-  viewData: ['brief']
+  # viewData: ['brief','availability']
   events:
     'click .save': 'save'
   initialize: ->
     @$el.html @tmpl {}
     @tagsInput = new SV.TagsInputView model: @model, collection: @tags
-    @availabilityInput = new SV.AvailabiltyInputView model: @model, collection: @tags
+    # @availabilityInput = new SV.AvailabiltyInputView model: @model, collection: @tags
     @$('input:radio').on 'click', @selectRB
     @listenTo @model, 'change', @render
   render: ->
-    @setValsFromModel ['brief','hours']
+    @$(".stepNum").toggle !@model.get('_id')?
+    @setValsFromModel ['brief','availability','hours']
     @$(":radio[value=#{@model.get('budget')}]").prop('checked',true).click()
     @$(":radio[value=#{@model.get('pricing')}]").prop('checked',true).click()
     # tagsInput + availabiltyInput will render automatically
@@ -86,7 +88,7 @@ class exports.RequestFormView extends BB.ModelSaveView
     budget: @$("[name='budget']:checked").val()
     pricing: @$("[name='pricing']:checked").val()
     brief: @$("[name='brief']").val()
-    availability: @availabilityInput.getViewData()
+    availability: @$("[name='availability']").val()
     tags: @tagsInput.getViewData()
 
 

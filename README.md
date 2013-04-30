@@ -52,12 +52,15 @@ Three layers of tests:
 
 2)   npm install -g mocha-phantomjs
 
-3)   brunch w -s
+3)   brunch w -s -c config-test
 
 4)   mocha-phantomjs http://localhost:3333/test/index.html   (front end tests)
 
-5)   mocha test/server (backend tests)
+5)   mocha test/server/all.coffee (backend tests)
 
+# docs on expect syntax                chaijs.com/api/bdd/
+# docs on using spy/fake/stub          sinonjs.org/docs/
+# docs on sinon chai syntax            chaijs.com/plugins/sinon-chai
 
 -------------------------------------------------------------------------------
 List of TODO
@@ -66,21 +69,18 @@ List of TODO
 For tue
 
 - [H] Beautify customer sign up
-  - [H] Bugs
-    - [M] Try break stuff
-    - [M] Validation on contact full name / email
-  - [H] Change availability to free form
   - [H] View airpair
   - [H] Write Test for update airpair
-  - [M] get error states
+  - [M] show server error states
 - [H] Beautify dev sign up
   - [H] show fail to move forward because of username
   - [H] split into contact & prefs
-  - [M] get error states
+  - [M] show server error states
 - [H] User Dashboard
   - [H] requests for help
-  - [H] package deals
+  - [H] package deals / content
 - [H] Error logging / mailing
+- [H] Setup heroku redis session
 
 
 For fri:
@@ -94,10 +94,6 @@ For fri:
 - [H] Expert Review
   - [H] Respond to request
   - [H] Email notification to customer
-- [H] Scheduling
-  - [M] Timezone
-- [H] Setup heroku redis session
-- [M] Remove tokens from api/user/me
 
 
 Deploy:
@@ -108,18 +104,20 @@ Deploy:
 
 Pre-deploy:
 
-- Set up redis for passport session deserialization
 - Add stack overflow app icon
-- Mobile homepage
+
 
 -------------------------------------------------------------------------------
 List of TODO v.5
 ===============================================================================
 
+- Mobile homepage
 - Add github projects to tags
 - Remove experts with un-associated userIds (haven't logged in)
 - Think about request event array
-- [M] Expert google sign in redirect is json response when multiple accounts...
+- [M] Expert google sign in redirect is json response when multiple accounts..
+- [H] Scheduling
+  - [M] Timezone
 
 -------------------------------------------------------------------------------
 List to airpair

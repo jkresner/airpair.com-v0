@@ -7,8 +7,12 @@ bootRequests = require('./requests')   # create tags
 
 module.exports = ->
 
-  bootUsers (users) ->
+  if cfg.env.mode isnt 'test'
+    bootUsers (users) ->
+      bootTags (tags) ->
+        bootExperts tags, (experts) ->
+          bootRequests tags, experts, users, (requests) ->
+            $log 'bootstrap complete'
+  else
     bootTags (tags) ->
-      bootExperts tags, (experts) ->
-        bootRequests tags, experts, users, (requests) ->
-          $log 'bootstrap complete'
+      $log 'test bootstrap complete'

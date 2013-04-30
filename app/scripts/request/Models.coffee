@@ -14,7 +14,7 @@ exports.Company = class Company extends Shared.Company
     if @get('contacts').length is 0
       @set _id: undefined, contacts: [{
         userId:     user.get('_id')
-        name:       gplus.displayName
+        fullName:   gplus.displayName
         email:      gplus.emails[0].value
         gmail:      gplus.emails[0].value
         pic:        gplus._json.picture

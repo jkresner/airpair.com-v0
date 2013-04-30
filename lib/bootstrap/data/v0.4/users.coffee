@@ -2,10 +2,10 @@ module.exports = [
 
   # MRv0.3
   {
-    "_id": "5175ffbbbb802cc4d5aaa6aa",
+    "_id": "5175ffbbbb888cc4d5aaa6aa",
   },
 
-  # JK
+  # JK @airpair.com
   {
     "_id": "5175efbfa3802cc4d5a5e6ed",
     "bitbucket": {

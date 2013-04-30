@@ -16,7 +16,7 @@ class exports.Company extends BB.BadassModel
     contacts:       []
   validation:
     name:           { required: true }
-    about:          { required: true }
+    about:          { rangeLength: [140, 5000], msg: 'Provide reasonable detail (min 140 chars) about your company so experts can asses if they are a good match. Sometimes we find you experts that have both technical & relevant industry experience.' }
 
 
 class exports.CompanyContact extends BB.BadassModel
@@ -33,9 +33,9 @@ class exports.Request extends BB.SublistModel
   validation:
     userId:         { required: true }
     company:        { required: true }
-    brief:          { required: true, msg: 'A detailed brief is required' }
+    brief:          { rangeLength: [250, 5000], msg: 'Provide as much detail as possible (min 250 chars) on what you want to work on. Experts ignore requests when they cant tell if they can help.'}
     budget:         { required: true }
-    availability:   { fn: 'validateNonEmptyArray', msg: 'At least one time slot is required' }
+    availability:   { required: true, msg: 'Please detail your timezone, urgency & availability' }
     tags:           { fn: 'validateNonEmptyArray', msg: 'At least one technology tag required' }
   createdDate: ->
     if !@get('events')? || @get('events').length < 1 then return new Date()
