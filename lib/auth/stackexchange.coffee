@@ -1,18 +1,26 @@
 StackExchangeStrategy = require('passport-stackexchange').Strategy
 
-dev_config =
-  clientID:          '1451'
-  clientSecret:      'CCkJpq3BY3e)lZFNsgkCkA(('
-  key:               'dTtlx1WL0TJvOKPfoU88yg(('
-  callbackURL:        "http://localhost:3333/auth/stackexchange/callback"
-  passReqToCallback:  true
+config =
+  dev:
+    clientID:          '1451'
+    clientSecret:      'CCkJpq3BY3e)lZFNsgkCkA(('
+    key:               'dTtlx1WL0TJvOKPfoU88yg(('
+    callbackURL:        "http://localhost:3333/auth/stackexchange/callback"
+    passReqToCallback:  true
 
-prod_config =
-  clientID:          '1432'
-  clientSecret:      'oA5O0hVgWg3muObSVC8mSQ(('
-  key:               'h0fVRSYpv0*MAKD7HXj5bw(('
-  callbackURL:        "http://#{process.env.OAUTH_Host}/auth/stackexchange/callback"
-  passReqToCallback:  true
+  staging:
+    clientID:          '1489'
+    clientSecret:      '4cwYFL7O*I9xrmFm6wmGYQ(('
+    key:               'tfYVUqc1*XmoIgqvCZH3Gg(('
+    callbackURL:        "http://staging.airpair.com/auth/stackexchange/callback"
+    passReqToCallback:  true
+
+  prod:
+    clientID:          '1432'
+    clientSecret:      'oA5O0hVgWg3muObSVC8mSQ(('
+    key:               'h0fVRSYpv0*MAKD7HXj5bw(('
+    callbackURL:        "http://www.airpair.com/auth/stackexchange/callback"
+    passReqToCallback:  true
 
 
 class StackExchange
@@ -20,8 +28,8 @@ class StackExchange
   constructor: (auth, passport) ->
     @auth = auth
     @passport = passport
-    config = if isProd then prod_config else dev_config
-    @passport.use 'stack-authz', new StackExchangeStrategy config, @verifyCallback
+    envConfig = @auth.getEnvConfig(config)
+    @passport.use 'stack-authz', new StackExchangeStrategy envConfig, @verifyCallback
 
   # Process the response from the external provider
   verifyCallback: (req, accessToken, refreshToken, profile, done) =>

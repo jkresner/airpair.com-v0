@@ -111,6 +111,7 @@ Pre-deploy:
 List of TODO v.5
 ===============================================================================
 
+- Protect api calls for owners of objects
 - Mobile homepage
 - Add github projects to tags
 - Remove experts with un-associated userIds (haven't logged in)

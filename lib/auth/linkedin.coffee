@@ -1,16 +1,23 @@
 LinkedInStrategy = require('passport-linkedin').Strategy
 
-dev_config =
-  consumerKey: 'sy5n2q8o2i49',  #linkedIN api key
-  consumerSecret: 'lcKjdbFSNG3HfZsd', #linkedIn secret key
-  callbackURL: "http://localhost:3333/auth/linkedin/callback"
-  passReqToCallback: true
+config =
+  dev:
+    consumerKey: 'sy5n2q8o2i49',  #linkedIN api key
+    consumerSecret: 'lcKjdbFSNG3HfZsd', #linkedIn secret key
+    callbackURL: "http://localhost:3333/auth/linkedin/callback"
+    passReqToCallback: true
 
-prod_config =
-  consumerKey: 'sy5n2q8o2i49',  #linkedIN api key
-  consumerSecret: 'lcKjdbFSNG3HfZsd', #linkedIn secret key
-  callbackURL: "http://#{process.env.OAUTH_Host}/auth/linkedin/callback"
-  passReqToCallback: true
+  staging:
+    consumerKey: 'rgd74pv5o45c',  #linkedIN api key
+    consumerSecret: 'd6fTF24fLvDe51zf', #linkedIn secret key
+    callbackURL: "http://staging.airpair.com/auth/linkedin/callback"
+    passReqToCallback: true
+
+  prod:
+    consumerKey: 'sy5n2q8o2i49',  #linkedIN api key
+    consumerSecret: 'lcKjdbFSNG3HfZsd', #linkedIn secret key
+    callbackURL: "http://www.airpair.com/auth/linkedin/callback"
+    passReqToCallback: true
 
 
 class LinkedIn
@@ -18,8 +25,8 @@ class LinkedIn
   constructor: (auth, passport) ->
     @auth = auth
     @passport = passport
-    config = if isProd then prod_config else dev_config
-    passport.use 'linkedin-authz', new LinkedInStrategy config, @verifyCallback
+    envConfig = @auth.getEnvConfig(config)
+    passport.use 'linkedin-authz', new LinkedInStrategy envConfig, @verifyCallback
 
   # Process the response from the external provider
   verifyCallback: (req, token, tokenSecret, profile, done) =>

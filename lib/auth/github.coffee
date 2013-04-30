@@ -1,18 +1,25 @@
 GitHubStrategy = require('passport-github').Strategy
 
-dev_config =
-  clientID:          '378dac2743563e96c747'
-  clientSecret:      'f52d233259426f769850a13c95bfc3dbe7e3dbf2'
-  callbackURL:       'http://localhost:3333/auth/github/callback'
-  passReqToCallback: true
-  customHeaders:      {"User-Agent" : "airpair-com"}
+config =
+  dev:
+    clientID:          '378dac2743563e96c747'
+    clientSecret:      'f52d233259426f769850a13c95bfc3dbe7e3dbf2'
+    callbackURL:       'http://localhost:3333/auth/github/callback'
+    passReqToCallback: true
+    customHeaders:      {"User-Agent" : "airpair-com"}
 
-prod_config =
-  clientID:          '5adb6a29c586908f8161'
-  clientSecret:      'c4182b3402aa93dd6465e99ca90f2650a0596997'
-  callbackURL:       'http://#{process.env.OAUTH_Host}/auth/github/callback'
-  passReqToCallback: true
-  customHeaders:      {"User-Agent" : "airpair-com"}
+  staging:
+    clientID:           'e4917fcf822c02fd04f6'
+    clientSecret:       '14292d0a3f665f73dde448fc90ff6c402ab6da9b'
+    callbackURL:        "http://staging.airpair.com/auth/github/callback"
+    passReqToCallback:  true
+
+  prod:
+    clientID:          '5adb6a29c586908f8161'
+    clientSecret:      'c4182b3402aa93dd6465e99ca90f2650a0596997'
+    callbackURL:       'http://www.airpair.com/auth/github/callback'
+    passReqToCallback: true
+    customHeaders:      {"User-Agent" : "airpair-com"}
 
 
 class Github
@@ -20,8 +27,8 @@ class Github
   constructor: (auth, passport) ->
     @auth = auth
     @passport = passport
-    config = if isProd then prod_config else dev_config
-    passport.use 'github-authz', new GitHubStrategy config, @verifyCallback
+    envConfig = @auth.getEnvConfig(config)
+    passport.use 'github-authz', new GitHubStrategy envConfig, @verifyCallback
 
   # Process the response from the external provider
   verifyCallback: (req, accessToken, refreshToken, profile, done) =>
