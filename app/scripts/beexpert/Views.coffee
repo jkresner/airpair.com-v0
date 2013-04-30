@@ -10,7 +10,7 @@ exports.ExpertView = SV.ExpertView
 #############################################################################
 
 class exports.ConnectFormView extends BB.ModelSaveView
-  logging: on
+  # logging: on
   el: '#connectForm'
   tmpl: require './templates/ConnectForm'
   events:
@@ -23,29 +23,28 @@ class exports.ConnectFormView extends BB.ModelSaveView
     @$(".btn-cancel").toggle @model.get('_id')?
     @
   renderSuccess: (model, response, options) =>
-    @$('.alert-success').fadeIn(800).fadeOut(5000)
     router.navigate '#info', { trigger: true }
+    t = @model.get 'tags'
+    if t? && t.length is 0 then @model.set 'tags', null
   getViewData: ->
     @model.toJSON()
 
 
 class exports.InfoFormView extends BB.ModelSaveView
+  logging: on
   el: '#infoForm'
   tmpl: require './templates/InfoForm'
-  viewData: ['brief']
   events:
     'click .save': 'save'
   initialize: ->
     @$el.html @tmpl {}
     @tagsInput = new SV.TagsInputView model: @model, collection: @tags
-    @availabilityInput = new SV.AvailabiltyInputView model: @model, collection: @tags
     @$('input:radio').on 'click', @selectRB
     @listenTo @model, 'change', @render
   render: ->
     @setValsFromModel ['homepage','brief','hours']
     @$(":radio[value=#{@model.get('rate')}]").prop('checked',true).click()
     @$(":radio[value=#{@model.get('status')}]").prop('checked',true).click()
-    # tagsInput + availabiltyInput will render automatically
     @
   selectRB: (e) ->
     rb = $(e.currentTarget)
@@ -53,7 +52,6 @@ class exports.InfoFormView extends BB.ModelSaveView
     group.find("label").removeClass 'checked'
     rb.prev().addClass 'checked'
   renderSuccess: (model, response, options) =>
-    @$('.alert-success').fadeIn(800).fadeOut(5000)
     router.navigate '#thanks', { trigger: true }
   getViewData: ->
     hours: @$("[name='hours']").val()

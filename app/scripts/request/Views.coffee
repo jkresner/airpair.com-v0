@@ -56,16 +56,14 @@ class exports.ContactInfoView extends BB.ModelSaveView
 #############################################################################
 
 class exports.RequestFormView extends BB.ModelSaveView
-  logging: on
+  # logging: on
   el: '#requestForm'
   tmpl: require './templates/RequestForm'
-  # viewData: ['brief','availability']
   events:
     'click .save': 'save'
   initialize: ->
     @$el.html @tmpl {}
     @tagsInput = new SV.TagsInputView model: @model, collection: @tags
-    # @availabilityInput = new SV.AvailabiltyInputView model: @model, collection: @tags
     @$('input:radio').on 'click', @selectRB
     @$('.pricing input:radio').on 'click', @showPricingExplanation
     @listenTo @model, 'change', @render

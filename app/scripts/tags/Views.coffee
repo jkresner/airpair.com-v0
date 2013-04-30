@@ -129,7 +129,7 @@ class exports.TagsInputView extends BB.HasBootstrapErrorStateView
   deselect: (e) =>
     e.preventDefault()
     _id = $(e.currentTarget).attr 'href'
-    $log 'deselect', _id
+    #$log 'deselect', _id
     match = _.find @collection.models, (m) -> m.get('_id') == _id
     @model.toggleTag match.toJSON()
   newTag: (e) =>

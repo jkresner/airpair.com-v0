@@ -1,6 +1,6 @@
 <fieldset>
 
-  <legend><b>{</b> Give us some info <b>}</b></legend>
+  <legend><b>{</b> Preferences <b>}</b></legend>
 
   <div class="alert alert-success">
     <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -12,10 +12,7 @@
     <h4>Error</h4>
   </div>
 
-
-  <div style="float:left;width:64%">
-
-    <div class="control-group">
+    <div class="control-group" style="display:none">
       <label class="control-label" for="tagsInput">Homepage / blog</label>
       <div class="controls">
         <div class="input-prepend" style="width:88%">
@@ -25,8 +22,8 @@
       </div>
     </div>
 
-    <div class="control-group">
-      <label class="control-label" for="tagsInput">Technologies <span class="muted">technologies you want to help with</span></label>
+    <div class="control-group" style="height:100px">
+      <label class="control-label" for="tagsInput">What technologies do you want to help people with?</label>
       <div id="tagsInput" class="controls controls-tags">
           <div id="tagNewForm"></div>
       </div>
@@ -40,7 +37,7 @@
     </div>
 
     <div class="control-group">
-      <label class="control-label" for="reqHrs">Around how many hours of airpairs would you want a week?</label>
+      <label class="control-label" for="reqHrs">How many hours of airpairs do you want a week?</label>
       <select name="hours" class="span1">
         <option>1</option>
         <option selected="selected">2</option>
@@ -70,14 +67,11 @@
       </div>
     </div>
 
-  </div>
-
-
   <div style="clear:both"></div>
 
   <div class="form-actions">
-    <a href="#" class="save btn btn-primary">Save</a>
-    <a href="#company" class="back btn">Back</a>
+    <a href="#" class="save button">Save</a>
+    <a href="#connect" class="back button button-gray">Back</a>
   </div>
 
 </fieldset>

@@ -27,9 +27,6 @@ class exports.CompanyContact extends BB.BadassModel
 
 class exports.Request extends BB.SublistModel
   urlRoot: '/api/requests'
-  # defaults:
-    # suggested:      []
-    # calls:          []
   validation:
     userId:         { required: true }
     company:        { required: true }
@@ -57,11 +54,10 @@ class exports.Request extends BB.SublistModel
 
 class exports.Expert extends BB.SublistModel
   urlRoot: '/api/experts'
-
   validation:
     userId:         { required: true }
     username:       { required: true }
-    brief:          { required: true }
+    brief:          { required: true, msg: 'Let us know the types of work you want to do, so we can match you with stimulating challenges.' }
     tags:           { fn: 'validateNonEmptyArray', msg: 'At least one technology tag required' }
 
   hasLinks: ->
