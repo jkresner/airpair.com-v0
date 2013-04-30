@@ -42,7 +42,7 @@
         $log('loaded')
 
         $.ajax({ url: "/api/experts" }).done(function ( data ) {
-          csv = '';
+          csv = 'name\temail\ttags';
           _.each(data, function(d) {
             csv += d.name + '\t' + d.email + '\n';
           });
