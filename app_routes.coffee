@@ -9,12 +9,14 @@ module.exports = (app) ->
   require('./lib/auth/base')(app)
 
   # pages
-  app.get '/', (req, r)-> file r, 'index'
-  app.get '/about', (req, r)-> file r, 'index'
+  app.get '/about', (req, r)-> file r, 'homepage'
   app.get '/login', (req, r)-> file r, 'login'
   app.get '/traction', (req, r)-> file r, 'traction'
   app.get '/be-an-expert', (req, r)-> file r, 'beexpert'
   app.get '/find-an-expert', (req, r)-> file r, 'request'
+
+  app.get '/', (req, r) ->
+    if !req.isAuthenticated() then file r, 'homepage' else file r, 'dashboard'
 
   app.get '/dashboard', auth.LoggedIn(), (req, r)-> file r, 'dashboard'
   app.get '/review', auth.LoggedIn(), (req, r)-> file r, 'review'

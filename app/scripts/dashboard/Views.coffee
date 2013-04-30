@@ -21,10 +21,12 @@ class exports.RequestRowView extends BB.BadassView
       created:      @model.createdDateString()
 
 class exports.RequestsView extends Backbone.View
-  el: '#requests'
+  el: '#requestslist'
+  tmpl: require './templates/Requests'
   initialize: (args) ->
     @collection.on 'reset add remove filter', @render, @
   render: ->
+    @$el.html @tmpl { hasRequests: @collection.length > 0 }
     $list = @$('tbody').html ''
     for m in @collection.models
       $list.append new exports.RequestRowView( model: m ).render().el

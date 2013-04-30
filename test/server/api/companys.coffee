@@ -6,12 +6,11 @@ data =
 
 api_companys = require('./../../../lib/api/companys')(app)
 
-
 describe "REST api companys", ->
 
   before (done) ->
     @testNum = 0
-    mongoose.connect "mongodb://localhost/airpair_test", done
+    createDB done
 
   beforeEach (done) ->
     @testNum++
@@ -25,14 +24,23 @@ describe "REST api companys", ->
       .send(@company)
       .expect(403)
       .expect({})
-      .end done
-
-  # it "can create company when authenticated", (done) ->
-  #   request(app)
-  #     .get('/api/users/me')
-  #     .expect( { authenticated: false } )
-  #     .end done
+      .end (err, res) =>
+        d = res.body
+        expect(d.name).to.equal @company.name
+        expect(d.url).to.equal @company.url
+        expect(d.about).to.equal @company.about
+        c = res.body.contacts[0]
+        cc = @company.contacts[0]
+        expect(c.userId).to.equal cc.userId
+        expect(c.pic).to.equal cc.pic
+        expect(c.fullName).to.equal cc.fullName
+        expect(c.email).to.equal cc.email
+        expect(c.gmail).to.equal cc.gmail
+        expect(c.timezone).to.equal cc.timezone
+        expect(c.title).to.deep.equal cc.title
+        expect(c.phone).to.deep.equal cc.phone
+        expect(c.twitter).to.deep.equal cc.twitter
+        done()
 
   after (done) ->
-    mongoose.connection.db.executeDbCommand { dropDatabase:1 }, (err, result) ->
-      mongoose.connection.close done
+    destroyDB done

@@ -1,0 +1,32 @@
+{{#if hasRequests }}
+
+<h2><b>{</b> Your requests <b>}</b></h2>
+
+<table id="requests" class="table table-striped">
+  <thead>
+    <tr>
+      <th>Created</th>
+      <th>Status</th>
+      <th>For</th>
+      <th>Tags</th>
+      <th>Suggested</th>
+      <th>Scheduled</th>
+      <th class="reqOptions"></th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+
+{{else }}
+
+<h2><b>{</b> No requests <b>}</b></h2>
+<br />
+<p>airpair is a community of developers that share knowledge through video.</p>
+
+<p>We believe even the strongest developers can be an expert in one technology and student in another.</p>
+
+<p>We noticed you have yet to <a style="font-weight:bold" href="/find-an-expert">create a request</a> to enhance your skills.</p>
+
+<p>If there's nothing you need help with at this moment, make sure you've <a style="font-weight:bold" href="/be-an-expert">filled in your expert profile</a>.</p>
+
+{{/if }}

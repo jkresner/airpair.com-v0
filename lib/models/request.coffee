@@ -57,7 +57,7 @@ schema = new Schema
   incompleteDetail: String
   canceledReason:   String
   timezone:         String
-  availability:     [Date]
+  availability:     String
   suggested:        [Suggestion]
   calls:            [Call]
 

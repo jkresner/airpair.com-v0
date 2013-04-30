@@ -52,82 +52,87 @@ Three layers of tests:
 
 2)   npm install -g mocha-phantomjs
 
-3)   brunch w -s
+3)   brunch w -s -c config-test
 
 4)   mocha-phantomjs http://localhost:3333/test/index.html   (front end tests)
 
-5)   mocha test/server (backend tests)
+5)   mocha test/server/all.coffee (backend tests)
 
+# docs on expect syntax                chaijs.com/api/bdd/
+# docs on using spy/fake/stub          sinonjs.org/docs/
+# docs on sinon chai syntax            chaijs.com/plugins/sinon-chai
 
 -------------------------------------------------------------------------------
 List of TODO
 ===============================================================================
 
-Dev Min:
+For wed
+
+- [H] Generate CSV for customers & devs for CRM stuff
+- [H] Beautify customer sign up
+  - [H] View/review airpair (from dashboard)
+  - [H] Write Test for update airpair
+- [H] Beautify dev sign up
+  - [H] write test for v0.3 dev connecting profiles
+  - [M] show server error states
+- [H] User Dashboard
+  - [H] requests for help
+  - [H] no requests content
+  - [H] right side content
+- [H] Error logging / mailing
+- [H] Setup heroku redis session
+
 
 - [H] Admin
   - [H] Update Request
     - [H] assign devs
   - [H] Review Request
-- [H] Beautify customer sign up
-  - [H] Resolve availability
-  - [H] View airpair
-  - [H] Write Test for update airpair
-  - [M] Enforce validation on contact details (e.g. name!)
-  - [M] get error states
-  - [M] iron bugs
-- [H] Beautify dev sign up
-  - [H] show fail to move forward because of username
-  - [H] split into contact & prefs
-  - [M] get error states
 - [H] User Dashboard
   - [H] requests for help
-  - [H] requests helping
 - [H] Expert Review
   - [H] Respond to request
   - [H] Email notification to customer
 
+
 Deploy:
 
-- Tests for tags import
 - Test auth against live configs
 - Confirm persisted session
 - Update heroku dyno size & mongodb size
 
 Pre-deploy:
 
-- Remove tokens from api/user/me
+- remove data bootstrap!!!
+- confirm google analytics
+- add user voice
 - Add stack overflow app icon
-- Mobile homepage
+
 
 -------------------------------------------------------------------------------
 List of TODO v.5
 ===============================================================================
 
+- Show server error states for customer + expert sign in
+- Protect api calls for owners of objects
+- Mobile homepage
 - Add github projects to tags
 - Remove experts with un-associated userIds (haven't logged in)
 - Think about request event array
+- [M] Expert google sign in redirect is json response when multiple accounts.
+- [H] Scheduling
+  - [M] Timezone
+- [H] Split expert sign up into contact & prefs
 
 -------------------------------------------------------------------------------
 List to airpair
 ===============================================================================
 
-[Jared]
-- Consider cost of passport session deserializing on every api call
-- redirectTo ?
-- sometimes I just get the ajax response instead of the redirect?
-- What type of testing can I do?
-- Want to redirect to the page I failed to access, not the one I logged in on
-- Can I reuse the tokens I save later for api access?
-- Ajax style OAuth flow
-
-Notes:
+passportjs airpair Notes:
 - Checkout about apachebench
 - Try out two instances with redis
 - Navigator.cookies property
  :: http://stackoverflow.com/questions/5639346/shortest-function-for-reading-a-cookie-in-javascript
-
-‹
+For shortest-function-for-reading-a-cookie-in-javascript
 
 [Paul]
 - How to run brunch to rebuild automatically when in node mode
@@ -145,3 +150,12 @@ Notes:
   - mongo shell: db.requests.renameCollection( newName , <dropTarget> ) renames the collection.
 - How to update schema
   - https://github.com/visionmedia/node-migrate
+
+-------------------------------------------------------------------------------
+Non-dev ideas
+===============================================================================
+
+What are you offering on top of video to video, for packages
+Training packages
+Packages
+Become an airpair 'member' and get discounts

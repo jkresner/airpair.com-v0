@@ -1,4 +1,3 @@
-und = require 'underscore'
 authz = require './../auth/authz/isLoggedInApi'
 moment = require 'moment'
 

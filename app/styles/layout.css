@@ -1,29 +1,30 @@
-body { background:none repeat scroll 0 0 #E2E2E2;width:1280px;margin:auto }
+body { background:none repeat scroll 0 0 #E2E2E2 }
 
-nav { height:54px;border-bottom:solid 1px #d3d3d3;padding-top:6px;background:url('/images/bg-top-short.jpg') }
+nav { background:url('/images/bg-top-short.jpg');height:70px;border-bottom:solid 1px #d3d3d3}
+nav div { padding-top:6px;height:54px;width:1280px;margin:auto;border-bottom:solid 1px white; }
 nav img { display:inline-block;width:180px;padding:3px 12px; }
 nav h3 { display:inline-block;color:#999999;padding:16px 6px }
-nav ul { float:right;margin:8px; }
+nav ul { float:right;margin:10px 0px 8px 8px;display:inline; }
 nav ul li { float:right;display:block;margin-left:5px }
+nav .logo { float:left; }
+nav .logout { width:54px;padding:0 4px!important; }
 
-div.main { margin-top:20px }
-
-
+div.main { margin-top:20px;width:1280px;margin:auto }
 a.delete { color:red; }
-
 
 .alert { display:none }
 
-
-.codeline {
-  clear:both;font-family:courier;color: #212F3B;
-  float: left;border-bottom: dashed 1px #A4A4A5;
-  border-top:dashed 1px #A4A4A5;padding:10px 0;width:900px;margin-bottom:30px;
-}
+.codeline { clear:both;font-family:courier;color:#212F3B;float:left;border-bottom: dashed 1px #A4A4A5;
+  border-top:dashed 1px #A4A4A5;padding:10px 0;width:900px;margin-bottom:30px }
 .codeline em { color:#CE5424; }
 
 .rb-group .checked { color:#7F761C!important;font-weight:bold; }
 
+.button { background:#CC6750;padding:10px 20px;border-radius: 0.5em;
+  color:white!important;
+  border:solid 3px #CC523E;font-size:18px;margin:0px 0px;float:left;
+  -webkit-transition: margin .2s;text-decoration:none;margin-right:10px; }
+.button-gray { background:#d3d3d3;border:solid 3px darkgray }
 
 /* Used for colorful braces */
 h2 b { color:#CC523E }
@@ -54,7 +55,7 @@ legend em { color:#7F761C;font-style:normal; }
 .expert .username { display:block;font-size:12px;color:black;margin-top:4px }
 .expert .pic { width:240px;margin:10px; }
 .expert i { display:block;margin:20px auto }
-.expert .links { margin:10px 0 10px 0; }
+.expert .links { margin:10px 0 0px 0;height:50px; }
 .expert .tags { padding:10px;background:black; }
 
 .expertMini { width:100px;border:solid 0.5px #d3d3d3;background-color:#E2E2E2;text-align:center }

@@ -11,7 +11,9 @@
 <body id="requestpage">
 
   <nav>
-    <a href="/" title="Pair programming, code review, architecture advice & more..."><img src="/images/logo4.png" /></a>
+      <div>
+        <a href="/" title="Pair programming, code review, architecture advice & more..."><img src="/images/logo4.png" /></a>
+      </div>
   </nav>
 
   <div id="welcome" class="main">
@@ -19,86 +21,63 @@
     <img src="/images/faces.png" class="faces" />
 
     <div class="welcomeMsg">
-        <h1>Hello there!</h1>
+        <h1>Let's get started!</h1>
 
-        <p>airpair is a community of developers that share knowledge through video.</p>
+        <p><i>Step 1 of 3</i></p>
 
-        <p>Here you'll find experts from all different software backgrounds that you can book and <b>pay 1 hour at a time</b> for pair programming, code review, architecture advice & more.
-        </p>
+        <p>As you can see on the right, we use <i>google hangouts</i> for video chat.</p>
 
-        <p>We scheduled airpairs with <i>google calendar</i> and facilitated the calls using <i>google hangouts</i>. We'll need your google account id when we invite you to join your airpair first call. Please sign in with google to get started.</p>
+        <p>Before jumping on your own airpair, we ask you to supply a technical brief that we use to suggest 3 relevant experts in your budget.</p>
+        <p>
+        Once you choose the expert you like most,
+        we use your google account to invite you to your first airpair hangout. Sign in with google to continue.</p>
 
         <a href="/auth/google"><img src="/images/signin/google.png" class="signinBtn-google"/></a>
 
     </div>
     <div class="rightCol">
 
-        <h2>Recent airpairs</h2>
+        <h2><em>{</em> Example airpairs <em>}</em></h2>
 
         <div class="customer">
-          <h4>Environment Setup: Rails & Discourse</h4>
+          <h4><b>{</b> environment setup <b>}</b><br />
+            <span class="label label-tag">ruby-on-rails</span>
+            <span class="label label-tag">postgres</span>
+            </h4>
+          <p><i>Customer feedback:</i> We got so much done in an hour!</p>
           <iframe width="360" height="220" src="http://www.youtube.com/embed/l9BItvriQmk" frameborder="0" allowfullscreen></iframe>
         </div>
 
         <div class="customer">
-          <h4>Architecture brainstorm: Netty eventing</h4>
-          <iframe width="360" height="220" src="http://www.youtube.com/embed/7RuaDzFN4Ew" frameborder="0" allowfullscreen></iframe>
-        </div>
-
-        <div class="customer">
-          <h4>Deployment walkthough: Rails on EC2</h4>
-          <iframe width="360" height="220" src="http://www.youtube.com/embed/rC7ubZ76f98" frameborder="0" allowfullscreen></iframe>
+          <h4><b>{</b> getting unstuck quicker <b>}</b>
+              <br /><span class="label label-tag">backbone.js</span> <span class="label label-tag">auth</span> <span class="label label-tag">CORS</span>
+          </h4>
+          <p><i>Customer feedback:</i> This was exactly what I wanted. </p>
+          <iframe width="360" height="220" src="http://www.youtube.com/embed/G3q5GBlPEHI" frameborder="0" allowfullscreen></iframe>
         </div>
 
     </div>
   </div>
 
 
-  <div id="company" class="main">
-    <div id="companyForm"></div>
-    <div class="rightCol">
-      <h2>Step 1 of 2</h2>
-
-      <h3>Tips</h3>
-
-      <p>We want your request to attract the best experts!</p>
-
-      <p>Experts have limited time to asses if you're a good fit.<p>
-
-      <p>Provide a link to your company and at least a detailed description of the problem your company (or app) is solving. Then our experts can will know
-        if it's a domain they can help you with.
-      </p>
-
-    </div>
+  <div id="contactInfo" class="main">
   </div>
 
   <div id="request" class="main">
     <div id="requestForm"></div>
-    <div class="rightCol">
-      <h2>Step 2 of 2</h2>
+    <div class="rightCol" style="height:790px">
 
-      <h3>What happens next?</h3>
+      <div style="margin:24px 10px">
+        <h2><em>{ </em>When do you pay?<em> }</em></h2>
+        <p style="color:gray">Each expert sets their own rate.</p>
 
-      <p>After you submit your request, we'll farm it out to our airpair expert network.</p>
+        <p>After submitting your brief, we suggest 3 experts. The suggestions may vary in price but will be within your budget.</p>
 
-      <p>If your request resonates will an expert they'll come back and let
-        you know when they are available.</p>
-
-      <h3>Privacy options</h3>
-
-      <p>airpair is fundamentally about sharing knowledge with the community. We use your session recording for educational purposes. Allowing the session recording to be public also helps our experts build a reputation for themselves.</p>
-
-      <p>If you wish for your recording not to be public (what we call 'opensource'), select private.</p>
-
-      <h3>How many hours do you need?</h3>
-      <p>Well most sessions are blah...</p>
-
-      <h3>When do you pay?</h3>
-      <p>First we need to go out and find you the right expert. Because experts price themselves differently, we don't know how much your session will cost until
-      you choose which expert you want. We will give you 3 options (at different prices). Once you choose, you will pay before your call.</p>
-
+        <p>Once you choose which expert to work with and how many hours you want, we calculate the cost & collect payment.</p>
+      </div>
 
     </div>
+    <div style="clear: both;"></div>
   </div>
 
   <div id="thanks" class="main">
@@ -108,10 +87,11 @@
 
     <p> You can expect to hear back from us with suggestions within 36 hours, but often much sooner!</p>
 
-    <p>Please follow <a href="http://twitter.com/airpair" class="zocial twitter" target="_blank">@airpair on twitter</a>
-      and  <a href="http://angel.co/airpair" target="_blank" class="zocial angellist">airpair on angelList</a>.</p>
+    <p>Update your request anytime from your <a href="/dashboard"><b>dashboard</b></a>.</p>
 
-    <p>You can update your request anytime from your <a href="/dashboard">dashboard</a>.</p>
+
+    <p style="margin-top:40px">Please follow <a href="http://twitter.com/airpair" class="zocial twitter" target="_blank">@airpair on twitter</a>
+      and  <a href="http://angel.co/airpair" target="_blank" class="zocial angellist">airpair on angelList</a></p>
 
 
   </div>

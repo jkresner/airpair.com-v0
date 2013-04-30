@@ -1,16 +1,23 @@
 GoogleStrategy = require('passport-google-oauth').OAuth2Strategy
 
-dev_config =
-  clientID:           '739031114792.apps.googleusercontent.com'
-  clientSecret:       '8_1NuinvGy6ybpu0m2srvYjm'
-  callbackURL:        "http://localhost:3333/auth/google/callback"
-  passReqToCallback:  true
+config =
+  dev:
+    clientID:           '739031114792.apps.googleusercontent.com'
+    clientSecret:       '8_1NuinvGy6ybpu0m2srvYjm'
+    callbackURL:        "http://localhost:3333/auth/google/callback"
+    passReqToCallback:  true
 
-prod_config =
-  clientID:           '739031114792.apps.googleusercontent.com'
-  clientSecret:       '8_1NuinvGy6ybpu0m2srvYjm'
-  callbackURL:        "http://#{process.env.OAUTH_Host}/auth/google/callback"
-  passReqToCallback:  true
+  staging:
+    clientID:           '140030887085.apps.googleusercontent.com'
+    clientSecret:       'jeynX5cSK5Zjv6kvIFLDs2uA'
+    callbackURL:        "http://staging.airpair.com/auth/google/callback"
+    passReqToCallback:  true
+
+  prod:
+    clientID:           '739031114792.apps.googleusercontent.com'
+    clientSecret:       '8_1NuinvGy6ybpu0m2srvYjm'
+    callbackURL:        "http://www.airpair.com/auth/google/callback"
+    passReqToCallback:  true
 
 
 class Google
@@ -18,8 +25,8 @@ class Google
   constructor: (auth, passport) ->
     @auth = auth
     @passport = passport
-    config = if isProd then prod_config else dev_config
-    passport.use 'google-authz', new GoogleStrategy config, @verifyCallback
+    envConfig = @auth.getEnvConfig(config)
+    passport.use 'google-authz', new GoogleStrategy envConfig, @verifyCallback
 
   # Process the response from the external provider
   verifyCallback: (req, accessToken, refreshToken, profile, done) =>
@@ -37,7 +44,8 @@ class Google
      'https://www.googleapis.com/auth/calendar' ]
 
   # Completed action
-  done: (req, res) => res.send req.user
-
+  done: (req, res) =>
+    # res.send req.user
+    res.redirect '/'
 
 module.exports = (auth, passport) -> new Google(auth, passport)

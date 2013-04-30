@@ -48,7 +48,6 @@ class exports.CompanyFormView extends BB.ModelSaveView
     else
       @save e
   renderSuccess: (model, response, options) =>
-    @$('.alert-success').fadeIn(800).fadeOut(5000)
     @collection.add model
     @render new M.Company()
 

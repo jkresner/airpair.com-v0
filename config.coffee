@@ -2,6 +2,11 @@
 
 exports.config =
 
+  env:
+    mode: 'dev'
+
+  db: 'airpair_dev'
+
   server:
     path: 'app.coffee'
     port: 3333
@@ -49,4 +54,4 @@ exports.config =
     templates:
       joinTo: 'javascripts/app.js'
 
-
+global.cfg = exports.config

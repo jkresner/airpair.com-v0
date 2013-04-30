@@ -1,41 +1,29 @@
 <fieldset>
 
-  <legend><em>{</em> What do you need help with? <em>}</em></legend>
-
-  <div class="alert alert-success">
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
-    <h4>Saved</h4>
-  </div>
+  <legend><b>{</b> Technical brief <b>}</b>
+      <span class="stepNum">Step 3 of 3</span>
+  </legend>
 
   <div class="alert alert-error">
     <button type="button" class="close" data-dismiss="alert">&times;</button>
     <h4>Error</h4>
   </div>
 
-{{!   <div class="control-group">
-    <label class="control-label" for="reqBrief">Category</label>
-    <div class="controls">
-    </div>
-  </div>
- }}
-
-  <div style="float:left;width:64%">
-
-    <div class="control-group">
-      <label class="control-label" for="tagsInput">Technologies <span class="muted">technologies you want help with</span></label>
+    <div class="control-group" style="height:100px">
+      <label class="control-label" for="tagsInput">What technologies do you want help with?</label>
       <div id="tagsInput" class="controls controls-tags">
           <div id="tagNewForm"></div>
       </div>
     </div>
 
     <div class="control-group">
-      <label class="control-label" for="reqBrief">What challenges do you want to solve?</label>
+      <label class="control-label" for="reqBrief">What challenges do you want to solve? <span id="breifCount" class="muted">0 chars</span></label>
       <div class="controls controls-brief">
-        <textarea id="reqBrief" name="brief" placeholder="Give as MUCH detail as possible. Experts ignore short briefs.">{{ brief }}</textarea>
+        <textarea id="reqBrief" name="brief" placeholder="Give as MUCH detail  as possible on your problems + what you'd like to learn.">{{ brief }}</textarea>
       </div>
     </div>
 
-    <div class="control-group">
+    <div class="control-group" style="display:none">
       <label class="control-label" for="reqHrs">Around how many hours of help do you need?</label>
       <select name="hours" class="span1">
         <option>1</option>
@@ -46,8 +34,8 @@
       </select>
     </div>
 
-    <div class="control-group">
-      <label class="control-label" for="reqBudget">Max budget / hr <span class="muted">we will only suggest devs in your budget</span></label>
+    <div class="control-group" style="height:66px;margin:22px 0">
+      <label class="control-label" for="reqBudget">What budget per hr do you have to solve your challenge? <span class="muted">we will only suggest devs in your budget</span></label>
       <div class="budget rb-group controls">
         <label for="budget30">$30</label> <input type="radio" id="budget30" name="budget" value="30" />
         <label for="budget60">$60</label>  <input type="radio" id="budget60" name="budget" value="60" />
@@ -58,31 +46,31 @@
       </div>
     </div>
 
-    <div class="control-group">
-      <label class="control-label" for="reqHrs">What are your privacy requirements?</label>
+    <div class="control-group" style="height:66px;margin:22px 0">
+      <label class="control-label">What are your privacy requirements with the session recording?</label>
       <div class="pricing rb-group controls">
-        <label for="pricingOpensource" class="checked">Opensouce</label> <input type="radio" id="pricingOpensource" name="pricing" value="opensource" checked="checked" />
-        <label for="pricingPrivate">Private (add $20 p.h.)</label>  <input type="radio" id="pricingPrivate" name="pricing" value="private" />
-        <label for="pricingNDA">NDA (add $50 p.h.)</label>  <input type="radio" id="pricingNDA" name="pricing" value="nda" />
+        <label for="pricingOpensource" class="checked">Open source</label> <input type="radio" id="pricingOpensource" name="pricing" value="opensource" checked="checked" />
+        <label for="pricingPrivate">Private (+ $20 p.h.)</label>  <input type="radio" id="pricingPrivate" name="pricing" value="private" />
+        <label for="pricingNDA">NDA (+ $60 p.h.)</label>  <input type="radio" id="pricingNDA" name="pricing" value="nda" />
+        <p class="pricingExplanation opensource">Your recording is made public for educational purposes</p>
+        <p class="pricingExplanation private">Only you have access to the recording</p>
+        <p class="pricingExplanation nda">We get experts to sign your non-disclosure agreement</p>
       </div>
-    </div>
 
-  </div>
+    </div>
 
   <div class="control-group">
-    <label class="control-label" for="availabilityInput">Availability</label>
+    <label class="control-label" for="availabilityInput">Location / timezone, urgency & availability</label>
     <div class="controls controls-availability">
-      <div id="availabilityInput"></div>
+      <textarea id="availability" name="availability" placeholder="How soon do you need this solved, what location + timezone are you in & when are you available?" style="height:60px">{{ availability }}</textarea>
     </div>
   </div>
-
-
 
   <div style="clear:both"></div>
 
   <div class="form-actions">
-    <a href="#" class="save btn btn-primary">Save</a>
-    <a href="#company" class="back btn">Back</a>
+    <a href="#" class="save button">Submit</a>
+    <a href="#contactInfo" class="back button button-gray">Back</a>
   </div>
 
 </fieldset>

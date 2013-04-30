@@ -7,7 +7,7 @@ module.exports =
       passport._key = 'passport'
       passport._userProperty = 'user'
       passport.serializeUser = (user, done) -> done null, user
-      passport.deserializeUser = (user, done) -> done null, user
+      passport.deserializeUser = (user, done) -> done null, sessionObject
 
       req._passport = instance: passport
 

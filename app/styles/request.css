@@ -1,28 +1,39 @@
 #requestpage .main { display:none }
-#requestpage .muted { font-size:11px;font-style:italic; }
+#requestpage .muted { font-size:12px;font-style:italic; }
 
 #requestpage .twitter-typeahead input { width:280px; }
 
-#requestpage .faces { display:block;float:left;width:160px;margin:-3px 10px 0 10px }
-#requestpage .welcomeMsg { float:left;width:600px;padding:30px 0 0 30px;padding:10px 40px; }
-#requestpage .welcomeMsg h1 { font-size:72px;margin-bottom:40px;margin-top:6px; }
-#requestpage .welcomeMsg p { font-size:18px;line-height:28px }
-#requestpage .rightCol { float:left;width:360px;padding:25px;min-height:700px;background:white; }
-#requestpage h2 { }
-#requestpage .signinBtn-google { margin:10px 0 0 -10px; }
-#requestpage legend { border:none;font-size:38px;font-weight:bold;margin-bottom:34px }
+#requestpage h4 { padding-top:20px }
+#requestpage h4 em { font-size:24px;color:#7F761C;font-style:normal; }
+#requestpage h4 b { font-size:24px;color:#CC523E;font-style:normal; }
 
-#requestpage #companyInfo { float:left;width:540px; }
-#requestpage #companyInfo input { width:84%; }
-#requestpage #companyInfo textarea { width:90%;height:250px; }
-#requestpage #companyContacts img { height:66px; }
-#requestpage #companyContacts { float:left;width:320px; }
-#requestpage #companyContacts input { width:80%; }
+#requestpage .form-actions { margin:40px 0 0 0;border-top:1px solid gray; }
+
+#requestpage .faces { display:block;float:left;width:160px;margin:18px 10px 0 10px }
+#requestpage .welcomeMsg { float:left;width:600px;padding:30px 50px 0 30px }
+#requestpage .welcomeMsg h1 { font-size:64px;margin-bottom:40px;margin-top:6px; }
+#requestpage .welcomeMsg p { font-size:18px;line-height:28px }
+#requestpage .rightCol { float:left;width:360px;padding:20px;background:white;text-align:center; }
+#requestpage .rightCol i { color:gray;font-size:12px; }
+#requestpage .signinBtn-google { margin:10px 0 0 -10px; }
+#requestpage h2 { }
+#requestpage legend { border:none;font-size:38px;font-weight:bold;margin-bottom:34px }
+#requestpage legend .stepNum { font-style:italic;font-size:18px;margin:0px 0px 30px 0px;color:#99923F }
+
+#requestpage #contactInfo { padding-top:20px }
+#requestpage .save { width:120px; }
+#requestpage .pic-group { float:left;width:120px;padding:4px 40px 0 0px;; }
+#requestpage .pic-group img { height:126px }
+#requestpage .personal-info-group { float:left;width:300px; }
+#requestpage .personal-info-group { float:left;width:300px; }
+#requestpage #companyInfo { width:500px;float:left;margin-left:40px; }
+#requestpage #companyInfo input {  }
+#requestpage #companyInfo textarea { width:98%;height:250px; }
 #requestpage #companyForm { float:left; }
 #requestpage #companyHelp { float:left;width:180px;padding:100px 80px;background:#d1d1d1; }
 
-#requestpage #requestForm { float:left;width:860px;  }
-#requestpage #requestForm textarea { width:90%;height:250px; }
+#requestpage #requestForm { padding-top:24px;float:left;width:880px;  }
+#requestpage #requestForm textarea { width:90%;height:120px; }
 #requestpage #requestForm .error-message { margin:-10px 0 0 5px;font-size:12px  }
 #requestpage .rb-group { margin:10px;display:block;height:30px; }
 #requestpage .rb-group label { float:left;margin-right:8px;color:gray; }
@@ -30,5 +41,16 @@
 #requestpage .rb-group .error-message { display:block; }
 #requestpage #requestForm .availabilty { float:right;width:34%; }
 #requestpage #requestForm .availabilty input { width:120px; }
+#requestpage #requestForm #tagNewForm { display:none; }
+#requestpage #requestForm #tagNewForm a { margin-left:5px; }
+#requestpage #requestForm .stackoverflow { height:30px; }
+#requestpage #request .rightCol p { font-size:16px;margin:20px; }
+
+#requestpage #requestForm .pricingExplanation { color:#7F761C;display:none; }
+
+
+#requestpage #thanks { padding-top:33px }
+#requestpage #thanks .success { font-size:22px;color:green;margin:30px 0; }
+
 
 #requestpage { }

@@ -1,11 +1,12 @@
-<div class="expert">
+
+<div class="expertMini suggestion">
   <div class="fullName">
-    { {{ name }} }
+    {{ name }}
+    {{#if username }}<br />@{{ username }}
+  {{/if}}
   </div>
   <hr />
-  {{#if username }}
-    <b class="username">@{{ username }}</b>
-  {{/if}}
+
 
   <img src="{{ pic }}?s=240" class="pic" />
 
@@ -13,13 +14,14 @@
     {{> DevLinks }}
   </div>
 
-  {{#if tags }}
   <div class="tags">
     {{#each tags }}
       <span class="label label-tag">{{ short }}</span>
     {{/each }}
   </div>
-  {{/if}}
 
-  <div style="clear:both"></div>
+  <a href="#" class="add" data-id="{{ _id }}">Add</a>
 </div>
+
+
+
