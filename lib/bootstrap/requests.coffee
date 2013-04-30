@@ -23,7 +23,7 @@ migrate = (d, all_tags, all_experts, all_users) ->
     userId: all_users[0]._id
     brief: d.brief
     canceledReason: d.canceledReason
-    company: v0_3company
+    company: und.clone(v0_3company)
     calls: d.calls
     budget: 50
     hours: "1"
@@ -31,6 +31,10 @@ migrate = (d, all_tags, all_experts, all_users) ->
     availability: []
     events: d.events
     status: d.status
+
+
+  $log 'd.companyName', d.companyName
+  if d.companyName? then r.company.name = d.companyName
 
   tags = []
   for s in d.skills
@@ -50,11 +54,23 @@ migrate = (d, all_tags, all_experts, all_users) ->
 
   suggested = []
   for c in d.suggested
-    t = c
+    t = und.find all_experts, (m) -> m._id.toString() is c.dev._id
     if t?
-      t.expert = c.dev
-      delete t.dev
-      suggested.push t
+      e =
+        _id: t._id
+        name: t.name
+        username: t.username
+        email: t.email
+        gmail: t.gmail
+        pic: t.pic
+        homepage: t.homepage
+        other: t.other
+        rate: 0
+        so: t.so
+        gh: t.gh
+        karma: 0,
+        tags: t.tags
+      suggested.push expertStatus: 'waiting', expert: e, expertAvailability: [], events: c.events
   r.suggested = suggested
   r
 
@@ -63,9 +79,10 @@ importRequestsV0_3 = (tags, experts, users, callback) ->
   count = 0
   for d in v0_3_requests
     new Request( migrate(d, tags, experts, users) ).save (e, r) =>
-      if e? then $log "added[#{count}]", e, r._id
+      if e? then $log "added[#{count}]", e, r
       count++
       if count == v0_3_requests.length-1 then callback()
+
 
 module.exports = (tags, experts, users, callback) ->
   Request.find({}).remove ->
