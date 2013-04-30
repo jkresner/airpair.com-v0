@@ -23,7 +23,7 @@ migrate = (d, all_tags, all_experts, all_users) ->
     userId: all_users[0]._id
     brief: d.brief
     canceledReason: d.canceledReason
-    company: v0_3company
+    company: und.clone(v0_3company)
     calls: d.calls
     budget: 50
     hours: "1"
@@ -31,6 +31,10 @@ migrate = (d, all_tags, all_experts, all_users) ->
     availability: []
     events: d.events
     status: d.status
+
+
+  $log 'd.companyName', d.companyName
+  if d.companyName? then r.company.name = d.companyName
 
   tags = []
   for s in d.skills
