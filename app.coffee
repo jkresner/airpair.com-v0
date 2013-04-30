@@ -33,8 +33,7 @@ db = mongoose.connection
 db.on('error', console.error.bind(console, 'connection error:'))
 db.once 'open', ->
   console.log "connected to db #{cfg.db}"
-  if cfg.env.mode isnt 'test'
-    require('./lib/bootstrap/run_v0.4')()
+  require('./lib/bootstrap/run_v0.4')()
 
 
 
