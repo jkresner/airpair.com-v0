@@ -97,7 +97,8 @@ class exports.Expert extends BB.SublistModel
 
     so = user.get('stack')
     if so?
-      d = username: so.username, homepage: so.website_url, so:
+      homepage = so.website_url.replace("http://",'')
+      d = username: so.username, homepage: homepage, so:
         id: so.id
         website_url: so.website_url
         link: so.link.replace('http://stackoverflow.com/users/', '')
@@ -114,7 +115,8 @@ class exports.Expert extends BB.SublistModel
 
     gh = user.get('github')
     if gh?
-      d = username: gh.username, homepage: gh._json.blog, gh:
+      homepage = gh._json.blog.replace("http://",'')
+      d = username: gh.username, homepage: homepage, gh:
         id: gh.id
         username: gh.username
         location: gh._json.location
