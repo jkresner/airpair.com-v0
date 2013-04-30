@@ -8,17 +8,6 @@ passport      = require 'passport'
 
 global.isProd = process.env.MONGOHQ_URL?
 
-
-exports.startServer = (port, path, callback) ->
-  p = process.env.PORT || port
-  console.log "started on port: #{p}, path #{path}"
-  app.listen p
-
-if isProd
-  exports.startServer()
-  global.cfg = require './config-release'
-
-
 app = express()
 
 app.configure ->
@@ -34,6 +23,14 @@ app.configure ->
 
   app.use passport.session()
 
+exports.startServer = (port, path, callback) ->
+  p = process.env.PORT || port
+  console.log "started on port: #{p}, path #{path}"
+  app.listen p
+
+if isProd
+  exports.startServer()
+  global.cfg = require './config-release'
 
 mongoUri = process.env.MONGOHQ_URL || "mongodb://localhost/#{cfg.db}"
 
