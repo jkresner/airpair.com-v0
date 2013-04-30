@@ -26,7 +26,7 @@ class exports.Router extends Backbone.Router
       m.populateFromGoogle @page.session
 
     @hideShow '#contactInfo'
-
+    # @request()
   request: ->
     # $log 'Router.request'
     if @page.tags.length is 0 then @page.tags.fetch()

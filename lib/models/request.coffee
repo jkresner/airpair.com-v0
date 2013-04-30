@@ -27,7 +27,7 @@ Suggestion = new Schema
   status:           String
   events:           [{}]
   expert:           {}
-  availability:     [Date]
+  availability:     String
   comment:          String
 
 
@@ -55,7 +55,7 @@ schema = new Schema
   incompleteDetail: String
   canceledReason:   String
   timezone:         String
-  availability:     [Date]
+  availability:     String
   suggested:        [Suggestion]
   calls:            [Call]
 

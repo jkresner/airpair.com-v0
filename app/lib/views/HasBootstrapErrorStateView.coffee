@@ -36,6 +36,9 @@ module.exports = class HasBootstrapErrorStateView extends HasErrorStateView
 
     Backbone.Validation.renderBootstrapInputInvalid input, msg
 
+  renderInputValid: (input) ->
+    Backbone.Validation.renderBootstrapInputValid $(input)
+
   # refresh the view so errors don't show
   renderInputsValid: ->
     for input in @$('input')
