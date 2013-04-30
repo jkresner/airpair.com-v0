@@ -1,12 +1,23 @@
-global.$log = console.log
-global.und = require 'underscore'
-$log "in app node file", process.cwd()
+console.log "in app node file", process.cwd()
 
-mongoose = require 'mongoose'
-express = require 'express'
-passport = require 'passport'
+global.$log   = console.log
+global.und    = require 'underscore'
+mongoose      = require 'mongoose'
+express       = require 'express'
+passport      = require 'passport'
 
-global.cfg = require './config-release' if !cfg?
+global.isProd = process.env.MONGOHQ_URL?
+
+
+exports.startServer = (port, path, callback) ->
+  p = process.env.PORT || port
+  console.log "started on port: #{p}, path #{path}"
+  app.listen p
+
+if isProd
+  exports.startServer()
+  global.cfg = require './config-release'
+
 
 app = express()
 
@@ -24,8 +35,6 @@ app.configure ->
   app.use passport.session()
 
 
-global.isProd = process.env.MONGOHQ_URL?
-
 mongoUri = process.env.MONGOHQ_URL || "mongodb://localhost/#{cfg.db}"
 
 mongoose.connect mongoUri
@@ -37,15 +46,4 @@ db.once 'open', ->
   require('./lib/bootstrap/run_v0.4')()
 
 
-
 require('./app_routes')(app)
-
-
-exports.startServer = (port, path, callback) ->
-  p = process.env.PORT || port
-  console.log "startServer on port: #{p}, path #{path}"
-  app.listen p
-
-
-if isProd
-  exports.startServer()
