@@ -1,5 +1,7 @@
 global.$log = console.log
+global.und = require 'underscore'
 $log "in app node file", process.cwd()
+
 
 mongoose = require 'mongoose'
 express = require 'express'
@@ -12,22 +14,26 @@ app.configure ->
   app.use express.bodyParser()
   app.use express.cookieParser()
   app.use express.session { secret: 'airpair, the future' }
-  app.use passport.initialize()
-  # app.use require('./test/server/test-passport').initialize(require('./test/data/users')[0])
+
+  if cfg.env.mode is 'test'
+    app.use require('./test/server/test-passport').initialize(require('./test/data/users')[0])
+  else
+    app.use passport.initialize()
+
   app.use passport.session()
 
 
 global.isProd = process.env.MONGOHQ_URL?
 
-mongoUri = process.env.MONGOHQ_URL || 'mongodb://localhost/airpair_dev'
+mongoUri = process.env.MONGOHQ_URL || "mongodb://localhost/#{cfg.db}"
 
 mongoose.connect mongoUri
 
 db = mongoose.connection
 db.on('error', console.error.bind(console, 'connection error:'))
 db.once 'open', ->
-  console.log 'connected to db airpair_dev'
-  #require('./lib/bootstrap/run_v0.4')()
+  console.log "connected to db #{cfg.db}"
+  require('./lib/bootstrap/run_v0.4')()
 
 
 

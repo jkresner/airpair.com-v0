@@ -19,10 +19,11 @@ a.delete { color:red; }
 
 .rb-group .checked { color:#7F761C!important;font-weight:bold; }
 
-/*.leadRow td { font-size:11px; }
-.leadRow .label-skill { background-color:maroon;margin-right:4px; }
-
-*/
+.button { background:#CC6750;padding:10px 20px;border-radius: 0.5em;
+  color:white!important;
+  border:solid 3px #CC523E;font-size:18px;margin:0px 0px;float:left;
+  -webkit-transition: margin .2s;text-decoration:none;margin-right:10px; }
+.button-gray { background:#d3d3d3;border:solid 3px darkgray }
 
 /* Used for colorful braces */
 h2 b { color:#CC523E }

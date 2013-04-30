@@ -1,13 +1,27 @@
-# docs on expect syntax                         chaijs.com/api/bdd/
-# docs on using spy/fake/stub                   sinonjs.org/docs/
-# docs on sinon chai syntax                     chaijs.com/plugins/sinon-chai
 {_, $, $log, Backbone} = window
+hlpr = require '/test/ui-helper'
 
+data =
+  users: require '/test/data/users'
 
-describe "tags autocomplete", ->
+fixture = "<div id='welcome' class='main'>welcome</div><div id='contactInfo' class='main'>info</div>"
 
-  it 'sign in w google first time opens step 2', ->
+describe "Request: customer signin", ->
 
-  it 'sign in w google with existing google/user account opens step 2', ->
+  before ->
+    $log 'Request: customer signin'
+    @SPA = hlpr.set_initSPA '/scripts/request/App'
 
-  it 'sign in w google with already signed in with github opens step 2', ->
+  beforeEach -> hlpr.clean_setup @, fixture
+
+  afterEach -> hlpr.clean_tear_down @
+
+  it 'not signed in shows step 1', ->
+    hlpr.LoadSPA @SPA, { "authenticated": false }
+    expect( $('#welcome').is(":visible") ).to.be.true
+    expect( $('#contactInfo').is(":visible") ).to.be.false
+
+  it 'signed in w google shows step 2', ->
+    hlpr.LoadSPA @SPA
+    expect( $('#welcome').is(":visible") ).to.be.false
+    expect( $('#contactInfo').is(":visible") ).to.be.true

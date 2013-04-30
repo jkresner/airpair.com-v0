@@ -14,7 +14,7 @@ module.exports.Page = class Page extends SessionPage
     @tags = new collections.Tags()
     @request = new models.Request()
 
-    @companyFormView = new views.CompanyFormView model: @company, request: @request
+    @contactInfoView = new views.ContactInfoView model: @company, request: @request
     @requestFormView = new views.RequestFormView model: @request, tags: @tags
 
 

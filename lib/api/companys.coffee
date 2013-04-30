@@ -10,12 +10,12 @@ class CompanyApi extends CRUDApi
     search = '_id': req.params.id
 
     if req.params.id is 'me'
-      console.log 'me comp search', req.user._id
       search = 'contacts.userId': req.user._id
+      #$log 'companyApi', search
 
     @model.findOne search, (e, r) ->
       r = {} if r is null
       res.send r
 
 
-module.exports = (app) -> new CompanyApi app,'companys'
+module.exports = (app) -> new CompanyApi app, 'companys'

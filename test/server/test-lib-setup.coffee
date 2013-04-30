@@ -8,3 +8,17 @@ chai.use require 'sinon-chai'
 
 global.sinon = sinon
 global.expect = chai.expect
+
+
+global.createDB = (done) ->
+  if suiteCtx?
+    done()
+  else
+    mongoose.connect "mongodb://localhost/airpair_test", done
+
+global.destroyDB = (done) ->
+  if suiteCtx?
+    done()
+  else
+    mongoose.connection.db.executeDbCommand { dropDatabase:1 }, (err, result) ->
+      mongoose.connection.close done

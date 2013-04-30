@@ -63,39 +63,43 @@ class exports.TagsView extends Backbone.View
 #############################################################################
 
 class exports.TagNewForm extends BB.ModelSaveView
-  #logging: on
   el: '#tagNewForm'
   tmpl: require './templates/NewForm'
   viewData: ['nameStackoverflow','nameGithub']
   events:
     'click .save-so': (e) -> @saveWithMode e, 'stackoverflow'
     'click .save-gh': (e) -> @saveWithMode e, 'github'
+    'click .cancel': (e) -> @collection.trigger 'sync'; false
   initialize: (args) ->
     @selected = args.selected
-    # @$el.html @tmpl()
+    @$el.html @tmpl()
   saveWithMode: (e, mode) ->
     @model = new M.Tag addMode: mode
     @save e
   renderSuccess: (model, response, options) =>
     @$('input').val ''
-    @collection.add model
     @selected.toggleTag model.toJSON()
+    @collection.add model
+    @collection.trigger 'sync'  # causes the tag form to go away
+  renderError: (model, response, options) =>
+    alert 'failed to add tag... is that a valid stackoverflow tag?'
 
 
-class exports.TagsInputView extends BB.BadassView
-  #logging: on
+class exports.TagsInputView extends BB.HasBootstrapErrorStateView
   el: '#tagsInput'
   tmpl: require './templates/Input'
   tmplAutoResult:  require './templates/AutocompleteResult'
   events:
-    'click .rm': 'deselect'
+    'click .rmTag': 'deselect'
     'click .new': 'newTag'
   initialize: (args) ->
     @$el.append @tmpl @model.toJSON()
     @newForm = new exports.TagNewForm selected: @model, collection: @collection
     @listenTo @collection, 'sync', @initTypehead
     @listenTo @model, 'change:tags', @render
-    @$auto = @$('.autocomplete')
+    @$auto = @$('.autocomplete').on 'input', =>
+      @renderInputValid @$('.autocomplete')
+      @renderInputValid @$('[name=newStackoverflow]')
   render: ->
     @$('.error-message').remove() # in case we had an error fire first
     @$('.selected').html ''
@@ -103,9 +107,9 @@ class exports.TagsInputView extends BB.BadassView
       @$('.selected').append(@tagHtml(t)) for t in @model.get('tags')
     @
   tagHtml: (t) ->
-    "<span class='label label-tag'>#{t.short} <a href='#{t._id}' class='rm'>x</a></span>"
+    "<span class='label label-tag'>#{t.short} <a href='#{t._id}' class='rmTag'>x</a></span>"
   initTypehead: ->
-    #$log 'initTypehead', @collection.toJSON()
+    # $log 'initTypehead'#, @collection.toJSON()
     @newForm.$el.hide()
     @cleanTypehead().val('').show()
     @$auto.typeahead(
@@ -125,6 +129,7 @@ class exports.TagsInputView extends BB.BadassView
   deselect: (e) =>
     e.preventDefault()
     _id = $(e.currentTarget).attr 'href'
+    $log 'deselect', _id
     match = _.find @collection.models, (m) -> m.get('_id') == _id
     @model.toggleTag match.toJSON()
   newTag: (e) =>
