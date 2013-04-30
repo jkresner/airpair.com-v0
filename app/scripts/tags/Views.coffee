@@ -71,10 +71,14 @@ class exports.TagNewForm extends BB.ModelSaveView
     'click .save-gh': (e) -> @saveWithMode e, 'github'
     'click .cancel': (e) -> @collection.trigger 'sync'; false
   initialize: (args) ->
+    @model = new M.Tag()
     @selected = args.selected
     @$el.html @tmpl()
+    @$stackName = @$("[name=nameStackoverflow]")
+    @listenTo @$stackName, 'change', => @renderInputsValid()
   saveWithMode: (e, mode) ->
-    @model = new M.Tag addMode: mode
+    @model.clear()
+    @model.set addMode: mode
     @save e
   renderSuccess: (model, response, options) =>
     @$('input').val ''
@@ -82,7 +86,7 @@ class exports.TagNewForm extends BB.ModelSaveView
     @collection.add model
     @collection.trigger 'sync'  # causes the tag form to go away
   renderError: (model, response, options) =>
-    alert 'failed to add tag... is that a valid stackoverflow tag?'
+    @renderInputInvalid @$stackName, 'failed to add tag... is that a valid stackoverflow tag?'
 
 
 class exports.TagsInputView extends BB.HasBootstrapErrorStateView

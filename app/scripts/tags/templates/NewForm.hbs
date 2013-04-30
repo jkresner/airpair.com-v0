@@ -2,12 +2,16 @@
 <div class="stackoverflow">
   <div class="input-prepend">
     <span class="add-on" style="font-size:11px">stackoverflow.com/questions/tagged/</span>
-    <input type="text" class="newStackoverflow span2" name="nameStackoverflow" />
+    <input type="text" class="newStackoverflow span2" name="nameStackoverflow"  data-error-style="inline" />
+
     <a href="#add-skill" class="btn btn-success save-so">add</a>
     <a href="#" class="btn cancel">cancel</a>
   </div>
 </div>
-{{! <p>or</p>
+{{!
+<span style="display:none" class="text-error"></span>
+
+<p>or</p>
 <div class="github">
   <div class="input-prepend">
     <span class="add-on" style="font-size:11px">github.com/</span>
@@ -16,4 +20,4 @@
     <p class="muted">copy the end of any repository urls like /ownder/reponame</p>
   </div>
 </div>
- }}
+}}

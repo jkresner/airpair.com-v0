@@ -67,7 +67,11 @@ class exports.RequestFormView extends BB.ModelSaveView
     @$('input:radio').on 'click', @selectRB
     @$('.pricing input:radio').on 'click', @showPricingExplanation
     @listenTo @model, 'change', @render
+    @$('[name=brief]').on 'input', =>
+      @$('#breifCount').html(@$('[name=brief]').val().length+ ' chars')
+    breifCount
   render: ->
+    if @model.hasChanged('tags') then return
     @$(".stepNum").toggle !@model.get('_id')?
     @setValsFromModel ['brief','availability','hours']
     @$(":radio[value=#{@model.get('budget')}]").click().prop('checked',true)

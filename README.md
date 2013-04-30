@@ -66,8 +66,9 @@ Three layers of tests:
 List of TODO
 ===============================================================================
 
-For tue
+For wed
 
+- [H] Brief clearing when validation fails and it's too short
 - [H] Beautify customer sign up
   - [H] View airpair
   - [H] Write Test for update airpair
@@ -76,6 +77,7 @@ For tue
   - [H] show fail to move forward because of username
   - [H] split into contact & prefs
   - [M] show server error states
+- [H] Generate CSV for customers & devs for CRM stuff
 - [H] User Dashboard
   - [H] requests for help
   - [H] package deals / content
@@ -83,7 +85,7 @@ For tue
 - [H] Setup heroku redis session
 
 
-For fri:
+For shortest-function-for-reading-a-cookie-in-javascript
 
 - [H] Admin
   - [H] Update Request
@@ -104,6 +106,9 @@ Deploy:
 
 Pre-deploy:
 
+- remove data bootstrap!!!
+- confirm google analytics
+- add user voice
 - Add stack overflow app icon
 
 
