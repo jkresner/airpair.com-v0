@@ -29,8 +29,8 @@ exports.startServer = (port, path, callback) ->
   app.listen p
 
 if isProd
-  exports.startServer()
   global.cfg = require './config-release'
+  exports.startServer()
 
 mongoUri = process.env.MONGOHQ_URL || "mongodb://localhost/#{cfg.db}"
 
