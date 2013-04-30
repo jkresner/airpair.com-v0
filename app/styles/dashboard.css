@@ -1,6 +1,6 @@
 #dashboardpage { }
 #dashboardpage .main {  }
-#dashboardpage #requestslist { padding-top:20px;float:left;width:560px; }
+#dashboardpage #requestslist { padding-top:20px;float:left;width:860px; }
 #dashboardpage #requests .reqOptions { width:120px; }
 #dashboardpage #requests a { padding:1px 5px;font-size:12px;float:right;margin-left:4px; }
 
