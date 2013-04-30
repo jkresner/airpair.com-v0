@@ -6,6 +6,7 @@ data:
 
 Tag = require './../../../lib/models/tag'
 
+
 describe "Bootstrap tags", ->
 
   before (done) ->
