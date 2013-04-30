@@ -7,7 +7,7 @@ mongoose      = require 'mongoose'
 express       = require 'express'
 passport      = require 'passport'
 
-if isProd then global.cfg = require './config-release'
+if isProd then global.cfg = require('./config-release').config
 $log "cfg", cfg
 
 app = express()
