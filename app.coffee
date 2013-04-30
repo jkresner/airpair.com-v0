@@ -2,10 +2,11 @@ global.$log = console.log
 global.und = require 'underscore'
 $log "in app node file", process.cwd()
 
-
 mongoose = require 'mongoose'
 express = require 'express'
 passport = require 'passport'
+
+global.cfg = require './config-release' if !cfg?
 
 app = express()
 
