@@ -18,3 +18,5 @@ config.files.stylesheets.joinTo =
   # note removed test stylesheets from the release build
 
 exports.config = config
+
+module.exports = exports.config

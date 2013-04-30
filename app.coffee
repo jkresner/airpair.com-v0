@@ -8,6 +8,7 @@ express       = require 'express'
 passport      = require 'passport'
 
 if isProd then global.cfg = require './config-release'
+$log "cfg", cfg
 
 app = express()
 
