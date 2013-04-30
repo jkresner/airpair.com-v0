@@ -47,16 +47,20 @@
     </div>
 
     <div class="control-group" style="height:66px;margin:22px 0">
-      <label class="control-label" for="reqHrs">What are your privacy requirements with the session recording?</label>
+      <label class="control-label">What are your privacy requirements with the session recording?</label>
       <div class="pricing rb-group controls">
         <label for="pricingOpensource" class="checked">Open source</label> <input type="radio" id="pricingOpensource" name="pricing" value="opensource" checked="checked" />
         <label for="pricingPrivate">Private (+ $20 p.h.)</label>  <input type="radio" id="pricingPrivate" name="pricing" value="private" />
         <label for="pricingNDA">NDA (+ $60 p.h.)</label>  <input type="radio" id="pricingNDA" name="pricing" value="nda" />
+        <p class="pricingExplanation opensource">Your recording is made public for educational purposes</p>
+        <p class="pricingExplanation private">Only you have access to the recording</p>
+        <p class="pricingExplanation nda">We get experts to sign your non-disclosure agreement</p>
       </div>
+
     </div>
 
   <div class="control-group">
-    <label class="control-label" for="availabilityInput">Timezone, urgency & availability</label>
+    <label class="control-label" for="availabilityInput">Location / timezone, urgency & availability</label>
     <div class="controls controls-availability">
       <textarea id="availability" name="availability" placeholder="How soon do you need this solved, what location + timezone are you in & when are you available?" style="height:60px">{{ availability }}</textarea>
     </div>

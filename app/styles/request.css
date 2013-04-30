@@ -44,6 +44,10 @@
 #requestpage #requestForm #tagNewForm { display:none; }
 #requestpage #requestForm #tagNewForm a { margin-left:5px; }
 #requestpage #requestForm .stackoverflow { height:30px; }
+#requestpage #request .rightCol p { font-size:16px;margin:20px; }
+
+#requestpage #requestForm .pricingExplanation { color:#CC523E;display:none; }
+
 
 #requestpage #thanks { padding-top:33px }
 #requestpage #thanks .success { font-size:22px;color:green;margin:30px 0; }
