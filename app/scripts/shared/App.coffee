@@ -1,6 +1,7 @@
 exports = {}
 models = require './Models'
 
+
 class exports.SessionPage
 
   constructor: (pageData, callback) ->
@@ -9,6 +10,9 @@ class exports.SessionPage
       #$log '@session', @session.attributes
       @initialize pageData
       callback @
+
+      # bring in Google analytics, uservoice & others
+      require '/scripts/providers/all'
 
   setOrFetch: (model, local) ->
     if local? then model.set local else model.fetch reset:true
