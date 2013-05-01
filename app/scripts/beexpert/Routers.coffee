@@ -16,18 +16,24 @@ class exports.Router extends Backbone.Router
     if @page.session.isGoogleAuthenticated() then @connect() else @welcome()
 
   welcome: ->
-    $log 'Router.welcome'
+    # $log 'Router.welcome'
     @hideShow '#welcome'
 
   connect: ->
-    $log 'Router.connect'
+    # $log 'Router.connect'
     @page.expert.fetch success: (m, opts, resp) =>
       m.populateFromUser @page.session
       @hideShow '#connect'
 
   info: ->
+    # $log 'Router.info', @page.expert.attributes
+
+    # If we haven't go the user yet
+    if @page.expert.get('_id') is 'me'
+      return @navigate '#connect', { trigger:false }
+
     if @page.tags.length is 0 then @page.tags.fetch()
-    $log 'Router.info'
+
     @hideShow '#info'
 
   thanks: ->
