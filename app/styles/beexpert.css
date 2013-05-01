@@ -6,7 +6,7 @@
 #beexpertpage .welcomeMsg { float:left;width:600px;padding:30px 50px 0 30px }
 #beexpertpage .welcomeMsg h1 { font-size:64px;margin-bottom:40px;margin-top:6px; }
 #beexpertpage .welcomeMsg p { font-size:18px;line-height:28px }
-#beexpertpage .rightCol { text-align:center;float:left;width:360px;padding:25px;min-height:620px;background:white; }
+#beexpertpage .rightCol { text-align:center;float:left;width:360px;padding:25px;min-height:650px;background:white; }
 #beexpertpage .rightCol .expert { margin:30px auto; }
 #beexpertpage h2 { }
 #beexpertpage .signinBtn-google { margin:10px 0 0 -10px; }
