@@ -69,6 +69,7 @@ List of TODO
 For wed
 
 - [H] Generate CSV for customers & devs for CRM stuff
+- [H] Sproos up the login page
 - [H] Beautify customer sign up
   - [H] View/review airpair (from dashboard)
   - [H] Write Test for update airpair
@@ -87,8 +88,6 @@ For wed
   - [H] Update Request
     - [H] assign devs
   - [H] Review Request
-- [H] User Dashboard
-  - [H] requests for help
 - [H] Expert Review
   - [H] Respond to request
   - [H] Email notification to customer

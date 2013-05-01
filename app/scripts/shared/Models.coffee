@@ -63,6 +63,11 @@ class exports.Expert extends BB.SublistModel
   hasLinks: ->
     @get('homepage')? || @get('gh')? || @get('so')? || @get('bb')? || @get('in')? || @get('tw')? || @get('other')? || @get('sideproject')?
 
+  getHomepageUrl: (val) ->
+    url = null
+    url = val.replace("https://",'').replace("http://",'') if val?
+    url
+
   populateFromUser: (user) ->
     pop = {}
 
@@ -93,7 +98,7 @@ class exports.Expert extends BB.SublistModel
 
     so = user.get('stack')
     if so?
-      homepage = so.website_url.replace("http://",'')
+      homepage = @getHomepageUrl(so.website_url)
       d = username: so.username, homepage: homepage, so:
         id: so.id
         website_url: so.website_url
@@ -111,7 +116,7 @@ class exports.Expert extends BB.SublistModel
 
     gh = user.get('github')
     if gh?
-      homepage = gh._json.blog.replace("http://",'')
+      homepage = @getHomepageUrl(gh._json.blog)
       d = username: gh.username, homepage: homepage, gh:
         id: gh.id
         username: gh.username

@@ -42,7 +42,7 @@
         $log('loaded')
 
         $.ajax({ url: "/api/experts" }).done(function ( data ) {
-          csv = 'name\temail\ttags';
+          csv = 'name\temail\ttags\n';
           _.each(data, function(d) {
             csv += d.name + '\t' + d.email + '\n';
           });
@@ -51,9 +51,12 @@
         });
 
         $.ajax({ url: "/api/admin/requests" }).done(function ( data ) {
-          csv = '';
+          csv = 'company\temail\tname\n';
           _.each(data, function(d) {
-            csv += d.company.name + '\t' + d.company.contacts[0].email + '\n';
+
+            csv += d.company.name + '\t' + d.company.contacts[0].email
+              + '\t' + d.company.contacts[0].name
+              + '\n';
           });
 
           $('#customers').val(csv);

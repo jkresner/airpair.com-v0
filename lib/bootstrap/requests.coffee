@@ -1,6 +1,7 @@
 und = require 'underscore'
 Request = require './../models/request'
 v0_3_requests = require './data/v0.3/requests'
+v0_3_companys = require './data/v0.3/companys'
 
 v0_3company =
   "name": "Test Co.", "url": "testing.airpair.com",
@@ -15,6 +16,8 @@ v0_3company =
       "twitter": "aptest", "timezone": "GMT-0700 (PDT)"
     }
   ]
+
+v0_3cont = v0_3company.contacts[0]
 
 migrate = (d, all_tags, all_experts, all_users) ->
 
@@ -32,9 +35,14 @@ migrate = (d, all_tags, all_experts, all_users) ->
     events: d.events
     status: d.status
 
-
-  $log 'd.companyName', d.companyName
-  if d.companyName? then r.company.name = d.companyName
+  comp = und.clone( und.find(v0_3_companys,(c)->c._id == d.companyId) )
+  # $log 'd.companyEmail', d.companyEmail
+  if comp?
+    r.company.name = comp.name
+    r.company.about = comp.about
+    r.company.url = comp.url
+    c = und.clone comp.contacts[0]
+    r.company.contacts = [ und.extend(und.clone(v0_3cont), {fullName: c.fullName, email: c.email, gmail: c.gmail}) ]
 
   tags = []
   for s in d.skills

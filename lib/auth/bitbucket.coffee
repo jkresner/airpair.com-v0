@@ -30,7 +30,7 @@ class BitBucket
 
   # Process the response from the external provider
   verifyCallback: (req, token, tokenSecret, profile, done) =>
-    console.log 'bitbucketVerifyCallback', profile
+    # console.log 'bitbucketVerifyCallback', profile
     delete profile._raw
     profile.token = token: token, attributes: { tokenSecret: tokenSecret }
     profile.id = profile.username
