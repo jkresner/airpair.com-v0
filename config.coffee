@@ -26,6 +26,7 @@ exports.config =
       joinTo:
        'javascripts/app.js': /^app/
        'javascripts/vendor.js': /^vendor/
+       'javascripts/providers.js': /^app\/scripts\/providers/
        'test/javascripts/test.js': /^test(\/|\\)(?!vendor)/
        'test/javascripts/test-vendor.js': /^test(\/|\\)(?=vendor)/
       order:
