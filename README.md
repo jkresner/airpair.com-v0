@@ -68,7 +68,6 @@ List of TODO
 
 For wed
 
-- [H] Generate CSV for customers & devs for CRM stuff
 - [H] Sproos up the login page
 - [H] Beautify customer sign up
   - [H] View/review airpair (from dashboard)
