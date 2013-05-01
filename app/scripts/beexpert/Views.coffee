@@ -42,6 +42,7 @@ class exports.InfoFormView extends BB.ModelSaveView
     @$('input:radio').on 'click', @selectRB
     @listenTo @model, 'change', @render
   render: ->
+    if @model.hasChanged('tags') then return
     @setValsFromModel ['homepage','brief','hours']
     @$(":radio[value=#{@model.get('rate')}]").prop('checked',true).click()
     @$(":radio[value=#{@model.get('status')}]").prop('checked',true).click()
@@ -54,6 +55,7 @@ class exports.InfoFormView extends BB.ModelSaveView
   renderSuccess: (model, response, options) =>
     router.navigate '#thanks', { trigger: true }
   getViewData: ->
+    homepage: @$("[name='homepage']").val()
     hours: @$("[name='hours']").val()
     rate: @$("[name='rate']:checked").val()
     status: @$("[name='status']:checked").val()

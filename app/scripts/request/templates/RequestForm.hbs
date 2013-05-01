@@ -24,7 +24,7 @@
     </div>
 
     <div class="control-group" style="display:none">
-      <label class="control-label" for="reqHrs">Around how many hours of help do you need?</label>
+      <label class="control-label" for="reqHrs"> Around how many hours of help do you need?</label>
       <select name="hours" class="span1">
         <option>1</option>
         <option selected="selected">2</option>
@@ -34,8 +34,8 @@
       </select>
     </div>
 
-    <div class="control-group" style="height:66px;margin:22px 0">
-      <label class="control-label" for="reqBudget">What budget per hr do you have to solve your challenge? <span class="muted">we will only suggest devs in your budget</span></label>
+    <div class="control-group" style="height:86px;margin:22px 0">
+      <label class="control-label" for="reqBudget">Experts set their own rate. What hourly budget do you have for your challenge? <span class="muted">We suggest experts at your budget & below.</span></label>
       <div class="budget rb-group controls">
         <label for="budget30">$30</label> <input type="radio" id="budget30" name="budget" value="30" />
         <label for="budget60">$60</label>  <input type="radio" id="budget60" name="budget" value="60" />
@@ -43,24 +43,32 @@
         <label for="budget130">$130</label>  <input type="radio" id="budget130" name="budget" value="130" />
         <label for="budget180">$180</label>  <input type="radio" id="budget180" name="budget" value="180" />
         <label for="budget250">$250</label>  <input type="radio" id="budget250" name="budget" value="250" />
+
+        <p class="budgetExplanation 30"><b>Only 5%</b> of our experts do airpairs for $30 p.h.</p>
+        <p class="budgetExplanation 60"><b>20%</b> of our experts do airpairs for $60 p.h. or less</p>
+        <p class="budgetExplanation 90"><b>60%</b> of our experts do airpairs for $90 p.h. or less</p>
+        <p class="budgetExplanation 130"><b>85%</b> of our experts do airpairs for $130 p.h. or less</p>
+        <p class="budgetExplanation 180"><b>95%</b> of our experts do airpairs for $180 p.h. or less</p>
+        <p class="budgetExplanation 250"><b>All</b> our experts do airpairs for $250 or less</p>
       </div>
     </div>
 
-    <div class="control-group" style="height:66px;margin:22px 0">
-      <label class="control-label">What are your privacy requirements with the session recording?</label>
+    <div class="control-group" style="height:86px;margin:22px 0">
+      <label class="control-label">What are your privacy requirements with the session recording? </label>
       <div class="pricing rb-group controls">
         <label for="pricingOpensource" class="checked">Open source</label> <input type="radio" id="pricingOpensource" name="pricing" value="opensource" checked="checked" />
         <label for="pricingPrivate">Private (+ $20 p.h.)</label>  <input type="radio" id="pricingPrivate" name="pricing" value="private" />
         <label for="pricingNDA">NDA (+ $60 p.h.)</label>  <input type="radio" id="pricingNDA" name="pricing" value="nda" />
-        <p class="pricingExplanation opensource">Your recording is made public for educational purposes</p>
-        <p class="pricingExplanation private">Only you have access to the recording</p>
-        <p class="pricingExplanation nda">We get experts to sign your non-disclosure agreement</p>
+
+        <p class="pricingExplanation opensource">The recording is public for  educational purposes: &nbsp; <span class="calcph"></span>/hr &nbsp; (you choose # hours later)</p>
+        <p class="pricingExplanation private">Only you have access to your recording: &nbsp; <span class="calcph"></span>/hr &nbsp; (you choose # hours later)</p>
+        <p class="pricingExplanation nda">Experts sign your non-disclosure agreement: &nbsp; <span class="calcph"></span>/hr &nbsp; (you choose # hours later)</p>
       </div>
 
     </div>
 
   <div class="control-group">
-    <label class="control-label" for="availabilityInput">Location / timezone, urgency & availability</label>
+    <label class="control-label" for="availabilityInput">What is your location / timezone, urgency & availability?</label>
     <div class="controls controls-availability">
       <textarea id="availability" name="availability" placeholder="How soon do you need this solved, what location + timezone are you in & when are you available?" style="height:60px">{{ availability }}</textarea>
     </div>

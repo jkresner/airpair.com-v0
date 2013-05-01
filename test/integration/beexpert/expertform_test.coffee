@@ -1,57 +1,95 @@
-# # docs on expect syntax                         chaijs.com/api/bdd/
-# # docs on using spy/fake/stub                   sinonjs.org/docs/
-# # docs on sinon chai syntax                     chaijs.com/plugins/sinon-chai
-# {_, $, $log, Backbone} = window
-# hlpr = require './../../test-ui-helper'
-# # BB = require 'lib/BB'
-# M = require 'scripts/beexpert/Models'
-# C = require 'scripts/beexpert/Collections'
-# V = require 'scripts/beexpert/Views'
-# data =
-#   experts: require './../../data/experts'
-#   tags: require './../../data/tags'
+{_, $, $log, Backbone} = window
+hlpr = require '/test/ui-helper'
+M = require 'scripts/beexpert/Models'
+C = require 'scripts/beexpert/Collections'
+V = require 'scripts/beexpert/Views'
+data =
+  experts: require './../../data/experts'
+  tags: require './../../data/tags'
 
-# describe 'BeExpert:Views InfoFormView =>', ->
+fixture = """<div id='welcome' class='main'>welcome</div>
+      <div id='connectForm' class='main'>info</div>
+       <div id="infoForm"></div>"""
 
-#   before -> $log 'BeExpert:Views InfoFormView'
+describe 'BeExpert:Views InfoFormView =>', ->
 
-#   beforeEach ->
-#     hlpr.clean_setup @
-#     hlpr.set_htmlfixture '<div id="infoForm"></div>'
-#     @defaultData = homepage: 'http://home.co', brief: 'test', rate: 40, status: 'busy', hours: '3-5'
-#     @expert = new M.Expert()
-#     @tags = new C.Tags( data.tags )
-#     @viewData = model: @expert, tags: @tags
+  before ->
+    $log 'BeExpert:Views InfoFormView'
+    @SPA = hlpr.set_initSPA '/scripts/beexpert/App'
 
-#   afterEach ->
-#     hlpr.clean_tear_down @
+  beforeEach ->
+    hlpr.clean_setup @, fixture
+    @defaultData = homepage: 'http://home.co', brief: 'test', rate: 40, status: 'busy', hours: '3-5'
+    @expert = new M.Expert()
+    @tags = new C.Tags( data.tags )
+    @viewData = model: @expert, tags: @tags
 
-#   it 'on load sets correct homepage, hours, rate & status selected', ->
-#     view = new V.InfoFormView @viewData
-#     view.model.set @defaultData
-#     expect( view.$('#homepage').val() ).to.be.equal 'http://home.co'
-#     expect( view.$('[name=hours]').val() ).to.equal '3-5'
-#     expect( view.$('#rate40').is(':checked') ).to.be.true
-#     expect( view.$('#rate40').prev().hasClass('checked') ).to.be.true
-#     expect( view.$('#statusBusy').is(':checked') ).to.be.true
-#     expect( view.$('#statusBusy').prev().hasClass('checked') ).to.be.true
+  afterEach ->
+    hlpr.clean_tear_down @
+
+  it 'on load sets correct homepage, hours, rate & status selected', ->
+    v = new V.InfoFormView @viewData
+    v.model.set @defaultData
+    expect( v.$('#homepage').val() ).to.be.equal 'http://home.co'
+    expect( v.$('[name=hours]').val() ).to.equal '3-5'
+    expect( v.$('#rate40').is(':checked') ).to.be.true
+    expect( v.$('#rate40').prev().hasClass('checked') ).to.be.true
+    expect( v.$('#statusBusy').is(':checked') ).to.be.true
+    expect( v.$('#statusBusy').prev().hasClass('checked') ).to.be.true
+
+  it 'validation on brief fires with brief', ->
+    delete @defaultData.brief
+    v = new V.InfoFormView @viewData
+    v.model.set @defaultData
+    v.$('.save').click()
+    expect( hlpr.showsError(v.$("#brief")) ).to.be.true
+
+  it 'validation on tags fires with no tags', ->
+    delete @defaultData.tags
+    v = new V.InfoFormView @viewData
+    v.model.set @defaultData
+    v.$('.save').click()
+    errorMSG = v.$('.controls-tags .error-message')
+    expect(errorMSG.length).to.equal 1
+
+  it 'adding a tags leaves homepage, brief, rate, hours & status as is', ->
+    delete @defaultData.tags
+    v = new V.InfoFormView @viewData
+    v.model.set @defaultData
+    v.tags.trigger 'sync'
+    v.$('#homepage').val 'airtest.com'
+    v.$('#brief').val 'test don change it!'
+    v.$('#hours').val '5-10'
+    v.$('#rate10').click()
+    v.$('#statusBusy').click()
+    expect(v.model.get('tags')).to.equal undefined
+
+    d = v.getViewData()
+    expect(d.homepage).to.equal 'airtest.com'
+    expect(d.brief).to.equal 'test don change it!'
+    expect(d.hours).to.equal '5-10'
+    expect(d.rate).to.equal '10'
+    expect(d.status).to.equal 'busy'
+
+    $('.autocomplete').val('c').trigger('input').trigger('input')
+    $('.tt-suggestion')[0].click()
+    expect( v.model.get('tags').length ).to.equal 1
+
+    d2 = v.getViewData()
+    expect(d2.homepage).to.equal 'airtest.com'
+    expect(d2.brief).to.equal 'test don change it!'
+    expect(d2.hours).to.equal '5-10'
+    expect(d2.rate).to.equal '10'
+    expect(d2.status).to.equal 'busy'
 
 
-#   it 'strips http:// & https:// from websites & urls', ->
 
 
-#   it 'validation on brief fires with brief', ->
-#     delete @defaultData.brief
-#     view = new V.InfoFormView @viewData
-#     view.model.set @defaultData
-#     view.$('.save').click()
-#     errorMSG = view.$('.controls-brief .error-message')
-#     expect(errorMSG.length).to.equal 1
+    # view.$('.save').click()
+    # errorMSG = view.$('.controls-tags .error-message')
+    # expect(errorMSG.length).to.equal 1
 
-#   it 'validation on tags fires with no tags', ->
-#     delete @defaultData.tags
-#     view = new V.InfoFormView @viewData
-#     view.model.set @defaultData
-#     view.$('.save').click()
-#     errorMSG = view.$('.controls-tags .error-message')
-#     expect(errorMSG.length).to.equal 1
+
+
+  # it 'strips http:// & https:// from websites & urls', ->
+

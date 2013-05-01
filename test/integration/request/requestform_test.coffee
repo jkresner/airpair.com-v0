@@ -1,6 +1,5 @@
 {_, $, $log, Backbone} = window
 hlpr = require '/test/ui-helper'
-# BB = require 'lib/BB'
 M = require '/scripts/request/Models'
 C = require '/scripts/request/Collections'
 V = require '/scripts/request/Views'

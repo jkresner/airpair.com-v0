@@ -56,7 +56,7 @@ class exports.ContactInfoView extends BB.ModelSaveView
 #############################################################################
 
 class exports.RequestFormView extends BB.ModelSaveView
-  # logging: on
+  logging: on
   el: '#requestForm'
   tmpl: require './templates/RequestForm'
   events:
@@ -66,16 +66,17 @@ class exports.RequestFormView extends BB.ModelSaveView
     @tagsInput = new SV.TagsInputView model: @model, collection: @tags
     @$('input:radio').on 'click', @selectRB
     @$('.pricing input:radio').on 'click', @showPricingExplanation
+    @$('.budget input:radio').on 'click', @showBudgetExplanation
     @listenTo @model, 'change', @render
     @$('[name=brief]').on 'input', =>
       @$('#breifCount').html(@$('[name=brief]').val().length+ ' chars')
-    breifCount
   render: ->
     if @model.hasChanged('tags') then return
     @$(".stepNum").toggle !@model.get('_id')?
     @setValsFromModel ['brief','availability','hours']
     @$(":radio[value=#{@model.get('budget')}]").click().prop('checked',true)
     @$(":radio[value=#{@model.get('pricing')}]").click().prop('checked',true)
+    @showBudgetExplanation()
     @showPricingExplanation()
     @
   selectRB: (e) =>
@@ -83,9 +84,19 @@ class exports.RequestFormView extends BB.ModelSaveView
     group = rb.parent()
     group.find("label").removeClass 'checked'
     rb.prev().addClass 'checked'
+  showBudgetExplanation: =>
+    @$('.budgetExplanation').hide()
+    val = @$("[name='budget']:checked").val()
+    @$(".#{val}").show()
+    @showPricingExplanation()
   showPricingExplanation: =>
     @$('.pricingExplanation').hide()
     val = @$("[name='pricing']:checked").val()
+    add = 0
+    base = parseInt(@$("[name='budget']:checked").val())
+    if val is 'private' then add = 20
+    if val is 'nda' then add = 60
+    @$('.calcph').html("$#{base} + <i>$#{add}</i> = $#{base+add}")
     @$(".#{val}").show()
   renderSuccess: (model, response, options) =>
     @$('.alert-success').fadeIn(800).fadeOut(5000)
