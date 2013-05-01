@@ -1,0 +1,12 @@
+@media (max-width:900px) {
+
+  body { padding:0; }
+  nav { width:100% }
+  nav div { width:100% }
+  div.main { width:100%;padding:20px; }
+  #requestpage .faces { display:none }
+  #bexpert .faces { display:none }
+  #requestpage .rightCol { margin:30px;padding:40px 60px }
+  #requestpage #companyInfo { max-width:600px; }
+}
+
