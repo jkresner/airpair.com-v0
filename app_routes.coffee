@@ -2,6 +2,10 @@ api_users = require './lib/api/users'
 auth = require './lib/auth/authz/authz'
 
 file = (r, file) -> r.sendfile "./public/#{file}.html"
+setReturnTo = (req, r, next) ->
+  $log 'setReturnTo'
+  req.session.returnTo = req.url
+  next()
 
 module.exports = (app) ->
 
@@ -12,8 +16,8 @@ module.exports = (app) ->
   app.get '/about', (req, r)-> file r, 'homepage'
   app.get '/login', (req, r)-> file r, 'login'
   app.get '/traction', (req, r)-> file r, 'traction'
-  app.get '/be-an-expert', (req, r)-> file r, 'beexpert'
-  app.get '/find-an-expert', (req, r)-> file r, 'request'
+  app.get '/be-an-expert', setReturnTo, (req, r)-> file r, 'beexpert'
+  app.get '/find-an-expert', setReturnTo, (req, r)-> file r, 'request'
 
   app.get '/', (req, r) ->
     if !req.isAuthenticated() then file r, 'homepage' else file r, 'dashboard'
