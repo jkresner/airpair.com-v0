@@ -20,6 +20,7 @@ class exports.CompanyContactView extends BB.ModelSaveView
 
 
 class exports.ContactInfoView extends BB.ModelSaveView
+  logging: on
   el: '#contactInfo'
   tmpl: require './../shared/templates/CompanyForm'
   events: { 'click .save': 'validatePrimaryContactAndSave' }
@@ -27,8 +28,7 @@ class exports.ContactInfoView extends BB.ModelSaveView
     @$el.html @tmpl @model.toJSON()
     @contactView = new exports.CompanyContactView(el: '#primaryContact', model: new M.CompanyContact(num:1)).render()
     @model.on 'change', @render, @
-  render: (model) ->
-    if model? then @model = model
+  render: ->
     @setValsFromModel ['name','url','about']
     @contactView.render @model.get('contacts')[0]
     @$(".btn-cancel").toggle @request.get('_id')?
@@ -40,8 +40,8 @@ class exports.ContactInfoView extends BB.ModelSaveView
     data
   validatePrimaryContactAndSave: (e) ->
     e.preventDefault()
-    $inputName = @$('[name=fullName]')
-    $inputEmail = @$('[name=email]')
+    $inputName = @$('[name="fullName"]')
+    $inputEmail = @$('[name="email"]')
     @renderInputsValid()
     if $inputName.val() is ''
       @renderInputInvalid $inputName, 'Contact name required'
@@ -68,8 +68,8 @@ class exports.RequestFormView extends BB.ModelSaveView
     @$('.pricing input:radio').on 'click', @showPricingExplanation
     @$('.budget input:radio').on 'click', @showBudgetExplanation
     @listenTo @model, 'change', @render
-    @$('[name=brief]').on 'input', =>
-      @$('#breifCount').html(@$('[name=brief]').val().length+ ' chars')
+    @$('[name="brief"]').on 'input', =>
+      @$('#breifCount').html(@$('[name="brief"]').val().length+ ' chars')
   render: ->
     if @model.hasChanged('tags') then return
     @$(".stepNum").toggle !@model.get('_id')?

@@ -45,7 +45,7 @@ Call = new Schema
 
 
 schema = new Schema
-  userId:           { required: true, type: ObjectId, index: true }
+  userId:           { required: true, type: ObjectId }
   company:          { required: true, type: Mixed    }
   tags:             [{}]
   brief:            { required: true, type: String   }
