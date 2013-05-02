@@ -28,6 +28,7 @@ schema = new Schema
   brief:          String
   karma:          { required: true, type: Number, default: 0 }
   status:         String
-
+  hours:          String
+  helloUrl:       String
 
 module.exports = mongoose.model 'Expert', schema

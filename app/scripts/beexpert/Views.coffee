@@ -37,15 +37,17 @@ class exports.InfoFormView extends BB.ModelSaveView
   events:
     'click .save': 'save'
   initialize: ->
+    @firstRender = yes
     @$el.html @tmpl {}
     @tagsInput = new SV.TagsInputView model: @model, collection: @tags
     @$('input:radio').on 'click', @selectRB
     @listenTo @model, 'change', @render
   render: ->
-    if @model.hasChanged('tags') then return
+    if @model.hasChanged('tags') && !@firstRender then $log 'not rendering info'; return
     @setValsFromModel ['homepage','brief','hours']
     @$(":radio[value=#{@model.get('rate')}]").prop('checked',true).click()
     @$(":radio[value=#{@model.get('status')}]").prop('checked',true).click()
+    @firstRender = no
     @
   selectRB: (e) ->
     rb = $(e.currentTarget)

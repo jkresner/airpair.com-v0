@@ -20,7 +20,6 @@ class exports.CompanyContactView extends BB.ModelSaveView
 
 
 class exports.ContactInfoView extends BB.ModelSaveView
-  logging: on
   el: '#contactInfo'
   tmpl: require './../shared/templates/CompanyForm'
   events: { 'click .save': 'validatePrimaryContactAndSave' }
@@ -56,7 +55,6 @@ class exports.ContactInfoView extends BB.ModelSaveView
 #############################################################################
 
 class exports.RequestFormView extends BB.ModelSaveView
-  logging: on
   el: '#requestForm'
   tmpl: require './templates/RequestForm'
   events:
