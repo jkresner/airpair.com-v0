@@ -38,6 +38,7 @@ describe 'Request:Views RequestFormView =>', ->
     expect( v.$('[name=brief]').val() ).to.be.equal "test brief"
     expect( v.$('[name=hours]').val() ).to.equal '1'
 
+
   it 'validation on availability fires with not availability', ->
     delete @defaultData.availability
     v = new V.RequestFormView @viewData
