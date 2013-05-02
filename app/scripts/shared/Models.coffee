@@ -73,15 +73,16 @@ class exports.Expert extends BB.SublistModel
 
     gplus = user.get('google')
     # first time
-    if !@get('pic')?
+    if !@get('userId')?
       pop =
-        _id:        undefined
         userId:     user.get('_id')
         name:       gplus.displayName
         email:      gplus.emails[0].value
         gmail:      gplus.emails[0].value
         pic:        gplus._json.picture
         timezone:   new Date().toString().substring(25, 45)
+
+      pop._id = undefined if @get('_id') == 'me'
 
     lkIN = user.get('linkedin')
     if lkIN?

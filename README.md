@@ -68,19 +68,16 @@ List of TODO
 
 For wed
 
-- [H] Sproos up the login page
 - [H] Beautify customer sign up
   - [H] View/review airpair (from dashboard)
   - [H] Write Test for update airpair
 - [H] Beautify dev sign up
-  - [H] write test for v0.3 dev connecting profiles
-  - [M] show server error states
+
 - [H] User Dashboard
   - [H] requests for help
   - [H] no requests content
   - [H] right side content
 - [H] Error logging / mailing
-- [H] Setup heroku redis session
 
 
 - [H] Admin
@@ -102,7 +99,6 @@ Pre-deploy:
 
 - remove data bootstrap!!!
 - confirm google analytics
-- add user voice
 - Add stack overflow app icon
 
 
