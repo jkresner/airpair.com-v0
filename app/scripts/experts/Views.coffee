@@ -11,11 +11,16 @@ class exports.ExpertRowView extends Backbone.View
   tagName: 'tr'
   className: 'expert'
   tmpl: require './templates/Row'
+  events: { 'click .deleteExpert': 'deleteExpert' }
   initialize: -> @model.on 'change', @render, @
   render: ->
     d = (_.extend @model.toJSON(), { hasLinks: @model.hasLinks() } )
     @$el.html @tmpl d
     @
+  deleteExpert: ->
+    $log 'deleting', @model.attributes
+    @model.destroy()
+    @$el.remove()
 
 
 class exports.ExpertsView extends Backbone.View

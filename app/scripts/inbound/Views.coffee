@@ -36,6 +36,7 @@ class exports.RequestsView extends BB.BadassView
     @listenTo @collection, 'sync', @render # filter sort
   render: ->
     @$el.html @tmpl( count: @collection.length )
+
     for m in @collection.models
       sts = m.get('status')
       @$("##{sts} tbody").append new exports.RequestRowView( model: m ).render().el
@@ -96,7 +97,6 @@ class exports.RequestSuggestionsView extends BB.BadassView
     @collection.filterFilteredModels( tag: @rTag )
     @$('.ops').html ''
     for s in @collection.filteredModels
-      $log 's', s
       s.set 'hasLinks', s.hasLinks()
       @$('.ops').append @tmpl(s.toJSON())
     @
@@ -176,7 +176,7 @@ class exports.RequestFormView extends BB.ModelSaveView
   events:
     'click #mailDevsContacted': 'sendDevsContacted'
     'click .save': 'save'
-    # 'click .deleteRequest': 'deleteRequest'
+    'click .deleteRequest': 'deleteRequest'
   initialize: ->
     @$el.html @tmpl()
     @infoView = new exports.RequestFormInfoView model: @model, tags: @tags, parentView: @
@@ -199,11 +199,11 @@ class exports.RequestFormView extends BB.ModelSaveView
   #   mailtoAddress = "#{customer.fullName}%20%3c#{customer.email}%3e"
   #   body = @mailTmpl entrepreneur_name: customer.name, leadId: @model.id
   #   window.open "mailto:#{mailtoAddress}?subject=airpair - We've got you some devs!&body=#{body}"
-  # deleteRequest: ->
-  #   model.destroy()
-  #   @collection.fetch()
-  #   router.naviate '#', false
-  #   false
+  deleteRequest: ->
+    @model.destroy()
+    @collection.fetch()
+    router.navigate '#', { trigger: true }
+    false
 
 Handlebars.registerPartial "RequestSet", require('./templates/RequestSet')
 
