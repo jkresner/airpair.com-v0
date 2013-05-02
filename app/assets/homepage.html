@@ -47,18 +47,33 @@
   </div>
 
 
-  <div class="marketing" style="padding:40px">
+  <style type="text/css">
+    #how h2 { margin-bottom:30px }
+    #how .step { width:31%;float:left;margin-right:20px }
+    #how p { font-size:17px }
+    #how b { color:#CC6750; }
+    #how img { border:solid 1px #d3d3d3;margin:30px 0px 20px 0px; }
+  </style>
+
+  <div id="how" class="marketing" style="padding:40px">
     <h2>How does it work?</h2>
 
-    <div class="cola">
+    <div>
+      <div class="step">
+        <p><b>1)</b> Supply tech, challenge & budget</p>
+        <img src="/images/homepage/step1brief.png" style="width:250px" />
+      </div>
+      <div class="step">
+        <p><b>2)</b> Get 3 hand picked experts</p>
+        <img src="/images/homepage/step2suggestions.png" style="width:240px" />
+      </div>
+      <div class="step">
+        <p><b>3)</b> Choose, book & jump on video call</p>
+        <img src="/images/homepage/step3call.png" style="width:310px;" />
+      </div>
 
-      <p>1) Supply info on your tech stack, challenge & budget</p>
-
-      <p>2) Get 3 hand picked experts in your price range</p>
-
-      <p>3) Choose one, book and jump on video call</p>
-
-      <p><a href="/find-an-expert" style="color:#99923F">> Get started!</a></p>
+      <div style="clear:both"></div><br />
+      <a href="/find-an-expert" class="button" style="text-align:center;width:640px">{ Get started! }</a>
     </div>
 
     <hr />
@@ -119,7 +134,7 @@
         <h4>Entrepreneur Feedback</h4>
         <p class="feedback"><b>Bryan Hughes: </b> Perhaps the most valuable result is that I now know that my project's overall re-design has been vetted by a professional.</p>
 
-        <h4>Dev Feedback</h4>
+        <h4>Expert Feedback</h4>
         <p class="feedback"><b>Peter Lyons</b> I like helping entrepreneurs & programmers. This gives me a way to do both.</p>
       </div>
       <div class="colb">
@@ -129,7 +144,7 @@
     </div>
 
 
-    <div class="asession">
+<!--     <div class="asession">
 
     <h2><b>{</b> Architecture Brainstorm: Moving from Rails to NodeJS <b>}</b></h2>
    <div class="cola">
@@ -142,7 +157,7 @@
         <iframe width="420" height="236" src="http://www.youtube.com/embed/KPj_caLNkkY" frameborder="0" allowfullscreen></iframe>
       </div>
       <hr />
-    </div>
+    </div> -->
 
     <div class="asession">
 
@@ -151,7 +166,7 @@
     <h4>Entrepreneur Feedback</h4>
     <p class="feedback"><b>David Crawford:</b> I got answers much faster than I could on my own. I learned a lot and got my money's worth.</p>
 
-    <h4>Dev Feedback</h4>
+    <h4>Expert Feedback</h4>
     <p class="feedback"><b>Alexandru Vladutu: </b>
 
 Besides the awesome feeling you have helping someone (maybe
@@ -172,34 +187,31 @@ questions along the way.</p>
 
     <img src="/images/jk.jpg" style="width:440px;float:left;margin-top:20px" />
 
-    <div style="float:right;width:420px;padding-top:20px">
+    <div style="float:right;width:420px">
     <p><b>Jonathon Kresner: </b> I started airpair to help developers.</p>
     <p class="feedback">I've ALWAYS loved coding product. When things run smooth & you're knocking out screens, life is grand. But often teams lose their way. Products get delayed and instead of knowing if your market assumptions are right, you're stuck battling technology. I know because I was there in both of my first startups. I needed access to mobile experts and db gurus, even though I consider myself a strong engineer.</p>
 
-    <p class="feedback">airpair is for companies that want to get back on track, or better start off on the right foot and periodically get expert help to deliver faster than they could on their own.</p>
+    <p class="feedback">airpair is for companies that want to get back on track, or better, start off on the right foot by periodically getting expert help to deliver faster.</p>
 
     <p>
-      <a class="button" style="width:180px" href="/find-an-expert">{ Find an expert }</a>
+      <a class="button" style="width:320px;text-align:center;margin:20px" href="/find-an-expert">{ Find experts }</a>
     </p>
 
     </div>
   </div>
 
-    <div class="footer c900">
-      <!-- <hr /> -->
-      <p>&copy; <a href="http://airpair.co/">AirPair</a> 2013</p>
-    </div>
 
   </div> <!-- /container -->
 
-
+      <div style="clear:both;height:40px"></div>
+    <div class="footer" style="background:black;height:0px;padding:20px;color:white">
+      <div>
+        &copy; <a href="http://airpair.com/" style="color:white">airpair, inc.</a> 2013
+      </div>
+    </div>
 
   </body>
-    <script src="/javascripts/providers.js" defer onload="require('scripts/providers/all');"></script>
-  <script type="text/javascript">
 
-
-
-  </script>
+  <script src="/javascripts/providers.js" defer onload="require('scripts/providers/all');"></script>
 
 </html>
