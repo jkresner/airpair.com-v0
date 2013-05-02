@@ -6,7 +6,7 @@ class UserApi
   model: require './../models/user'
 
   constructor: (app) ->
-    app.get     "/api/users/me", authz(), @detail
+    app.get     "/api/users/me", @detail
     app.get     "/api/admin/users", admin(), @adminlist
 
   detail: (req, res) =>
