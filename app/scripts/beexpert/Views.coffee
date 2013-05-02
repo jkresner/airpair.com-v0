@@ -20,6 +20,7 @@ class exports.ConnectFormView extends BB.ModelSaveView
   render: ->
     @$el.html @tmpl @model.toJSON()
     @$(".save").toggle @model.get('username')?
+    @$("#mininumConnect").toggle !@model.get('username')?
     @$(".btn-cancel").toggle @model.get('_id')?
     @
   renderSuccess: (model, response, options) =>
