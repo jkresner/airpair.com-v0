@@ -3,10 +3,10 @@ Schema = mongoose.Schema
 ObjectId = Schema.ObjectId
 
 Contact = new Schema
-  userId:     ObjectId
+  userId:     { type: ObjectId, index: true }
   pic:        String
   fullName:   String
-  email:      String
+  email:      { type: ObjectId, index: true }
   gmail:      String
   title:      String
   phone:      String
@@ -15,7 +15,7 @@ Contact = new Schema
 #  location:   String ( could be used to calculate timezone... )
 
 schema = new Schema
-  name:       String
+  name:       { type: String, index: true }
   url:        String
   about:      String
   contacts:   [Contact]

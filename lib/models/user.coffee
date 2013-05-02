@@ -3,7 +3,7 @@ Schema = mongoose.Schema
 
 schema = new Schema
   name:         String
-  email:        String
+  email:        { type: String, index: true }
   pic:          String
   githubId:     Number
   github:       {}
