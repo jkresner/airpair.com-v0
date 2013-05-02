@@ -25,6 +25,12 @@ class exports.Router extends Backbone.Router
     if !@isAuthenticated() then return @navigate 'welcome', { trigger: true }
 
     @page.expert.fetch success: (m, opts, resp) =>
+
+      # cause fresh social profile data
+      if m.get('so')? && !m.get('so').id? then m.unset('so',{silent:true})
+      if m.get('gh')? && !m.get('gh').id? then m.unset('gh',{silent:true})
+      if m.get('in')? && !m.get('in').id? then m.unset('in',{silent:true})
+
       m.populateFromUser @page.session
       @hideShow '#connect'
 
