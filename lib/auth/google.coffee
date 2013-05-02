@@ -14,8 +14,8 @@ config =
     passReqToCallback:  true
 
   prod:
-    clientID:           '739031114792.apps.googleusercontent.com'
-    clientSecret:       '8_1NuinvGy6ybpu0m2srvYjm'
+    clientID:           '140030887085-c7ffv2q96gc56ejmnbpsp433anvqaukf.apps.googleusercontent.com'
+    clientSecret:       '1iB16yFbTgF4iJ3kB7C1lUwj'
     callbackURL:        "http://www.airpair.com/auth/google/callback"
     passReqToCallback:  true
 

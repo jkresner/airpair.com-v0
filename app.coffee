@@ -32,7 +32,7 @@ db = mongoose.connection
 db.on('error', console.error.bind(console, 'connection error:'))
 db.once 'open', ->
   console.log "connected to db #{cfg.db}"
-  require('./lib/bootstrap/run_v0.4')()
+  # require('./lib/bootstrap/run_v0.4')()
 
 
 require('./app_routes')(app)
