@@ -4,6 +4,7 @@ exports = {}
 class exports.Router extends Backbone.Router
 
   routes:
+    'welcome'       : 'welcome'
     'connect'       : 'connect'
     'info'          : 'info'
     'thanks'        : 'thanks'
@@ -21,12 +22,15 @@ class exports.Router extends Backbone.Router
 
   connect: ->
     # $log 'Router.connect'
+    if !@isAuthenticated() then return @navigate 'welcome', { trigger: true }
+
     @page.expert.fetch success: (m, opts, resp) =>
       m.populateFromUser @page.session
       @hideShow '#connect'
 
   info: ->
     # $log 'Router.info', @page.expert.attributes
+    if !@isAuthenticated() then return @navigate 'welcome', { trigger: true }
 
     # If we haven't go the user yet
     if @page.expert.get('_id') is 'me'
@@ -39,6 +43,9 @@ class exports.Router extends Backbone.Router
   thanks: ->
     $log 'Router.thanks'
     @hideShow '#thanks'
+
+  isAuthenticated: ->
+    @page.session.isGoogleAuthenticated()
 
   hideShow: (selector) ->
     $('.main').hide()
