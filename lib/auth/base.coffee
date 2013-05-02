@@ -46,7 +46,7 @@ exports.authnOrAuthz = (req, res, next, providerName, scope) ->
     return passport.authorize(providerName+'-authz', opts)(req, res, next)
   else
     console.log providerName, 'authenticate'
-    opts.successReturnToOrRedirect = req.header('Referer')
+    opts.successReturnToOrRedirect = '/'
     return passport.authenticate(providerName+'-authz', opts)(req, res, next)
 
 
@@ -76,13 +76,17 @@ linkedin = require('./linkedin')(exports, passport)
 stackexchange = require('./stackexchange')(exports, passport)
 bitbucket = require('./bitbucket')(exports, passport)
 
+setReturnTo = (req, r, next) ->
+  ref = req.query["return_to"]
+  if ref? then req.session.returnTo = ref
+  next()
 
 module.exports = (app) ->
   app.get     '/logout', logout
   app.get     '/failed-login', (req, r) -> r.send 'something went wrong with login ...'
   app.get     '/auth/github', github.connect
   app.get     '/auth/github/callback', github.connect, github.done
-  app.get     '/auth/google', google.connect
+  app.get     '/auth/google', setReturnTo, google.connect
   app.get     '/auth/google/callback', google.connect, google.done
   app.get     '/auth/twitter', twitter.connect
   app.get     '/auth/twitter/callback', twitter.connect, twitter.done

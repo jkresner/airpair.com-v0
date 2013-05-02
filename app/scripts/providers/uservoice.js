@@ -13,7 +13,7 @@ module.exports = function()
       forum_id: 205019,
       tab_label: 'Feedback & Support',
       tab_color: '#7f771c',
-      tab_position: 'middle-left',
+      tab_position: 'middle-right',
       tab_inverted: false
     }]);
   }
