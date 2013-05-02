@@ -15,7 +15,7 @@ config =
 
   prod:
     consumerKey: 'WpdhX5mWW4wmLuDPwA',
-    consumerSecret: 'Cx5pvK2ZEjsymVxME42hSffkzkaQ9Buf',
+    consumerSecret: 'uZveS97GysRW6EzjfQhERSB2SpkyBeSJ',
     callbackURL: "http://www.airpair.com/auth/bitbucket/callback"
     passReqToCallback: true
 
