@@ -1,6 +1,13 @@
+authz = require './../auth/authz/isLoggedInApi'
+admin = require './../auth/authz/isAdminApi'
+
 class UserApi
 
   model: require './../models/user'
+
+  constructor: (app) ->
+    app.get     "/api/users/me", authz(), @detail
+    app.get     "/api/admin/users", admin(), @adminlist
 
   detail: (req, res) =>
 
@@ -17,4 +24,10 @@ class UserApi
     res.send user
 
 
-module.exports = new UserApi()
+  adminlist: (req, res) =>
+    $log 'users.adminlist'
+    @model.find {}, (e, r) -> res.send r
+
+
+
+module.exports = (app) -> new UserApi(app)

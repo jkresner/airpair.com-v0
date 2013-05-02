@@ -1,4 +1,3 @@
-api_users = require './lib/api/users'
 auth = require './lib/auth/authz/authz'
 
 file = (r, file) -> r.sendfile "./public/#{file}.html"
@@ -30,7 +29,7 @@ module.exports = (app) ->
   # app.get '/adminn', authz('/'), (req, r) -> file r, 'admin.html'
 
   # api
-  app.get '/api/users/me', api_users.detail
+  require('./lib/api/users')(app)
   require('./lib/api/companys')(app)
   require('./lib/api/tags')(app)
   require('./lib/api/experts')(app)

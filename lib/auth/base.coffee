@@ -17,9 +17,9 @@ passport.serializeUser (user, done) ->
   done null, user._id
 
 passport.deserializeUser (id, done) ->
-  console.log '=================================================='
-  console.log 'deserializeUser.id', id
   User.findById id, (err, user) ->
+    console.log '=================================================='
+    console.log 'deserializeUser.id', id, user.google._json.email
     done err, user
 
 ######## Shared
