@@ -11,6 +11,11 @@ if isProd then global.cfg = require('./config-release').config
 
 app = express()
 
+logErrors = (error, req, res, next) ->
+  console.log "logErrors called"
+  #log.error "Uncaught exception during request processing: #{error}", error
+  res.status(500).sendfile "./public/500.html"
+
 app.configure ->
   app.use express.static(__dirname + '/public')
   app.use express.bodyParser()
@@ -35,6 +40,7 @@ db.once 'open', ->
 
 
 require('./app_routes')(app)
+app.use logErrors
 
 
 exports.startServer = (port, path, callback) ->
