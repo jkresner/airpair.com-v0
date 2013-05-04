@@ -91,16 +91,8 @@ For wed
 
 Deploy:
 
-- Test auth against live configs
 - Confirm persisted session
-- Update heroku dyno size & mongodb size
-
-Pre-deploy:
-
-- remove data bootstrap!!!
-- confirm google analytics
-- Add stack overflow app icon
-
+- Decrease heroku dyno
 
 -------------------------------------------------------------------------------
 List of TODO v.5
@@ -117,6 +109,7 @@ List of TODO v.5
 - [H] Scheduling
   - [M] Timezone
 - [H] Split expert sign up into contact & prefs
+- [L] Add stack overflow app icon
 
 -------------------------------------------------------------------------------
 List to airpair
