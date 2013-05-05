@@ -1,0 +1,24 @@
+<dl>
+  <dt>Company</dt>
+  <dd><a href="#" data-toggle="popover" data-content="{{about}}" data-trigger="hover">{{name}}</a></dd>
+  <dt style="display:none">Url</dt>
+  <dd>http://{{ url }}</dd>
+  <dt>Primary contact</dt>
+  <dd class="contact">
+    {{#each contacts}}
+    <img src="{{pic}}" />
+
+    <dl>
+      <dt>Name</dt>
+      <dd>{{fullName}}</dd>
+      <dt>Email</dt>
+      <dd>{{email}}</dd>
+      <dt>Gmail</dt>
+      <dd>{{gmail}}</dd>
+      <dt>Twitter</dt>
+      <dd>{{twitter}}</dd>
+    </dl>
+    {{/each}}
+  </dd>
+</dl>
+

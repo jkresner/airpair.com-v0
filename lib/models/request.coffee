@@ -7,7 +7,7 @@ Request status
 
   received      : requires review by airpair
   incomplete    : more detail required
-  review        : company must review & choose one or more developers
+  review        : company must review & choose one or more experts
   scheduled     : one or more airpairs scheduled
   complete      : feedback on all calls collected
   canceled      : company has canceled the request

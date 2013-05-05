@@ -49,11 +49,14 @@ class exports.RequestsView extends BB.BadassView
 
 
 class exports.RequestFormInfoCompanyView extends BB.ModelSaveView
+  logging: on
   el: '#company-controls'
+  tmpl: require './templates/RequestFormCompanyInfo'
   initialize: ->
   render: ->
     company = @model.get('company')
-    @$el.html company.name
+    @$el.html @tmpl company
+    @$('[data-toggle="popover"]').popover()
     @
 
 
@@ -78,31 +81,35 @@ class exports.RequestFormInfoView extends BB.ModelSaveView
 class exports.RequestSuggestionsView extends BB.BadassView
   logging: on
   el: '#suggestions'
-  tmpl: require './templates/RequestSuggestion'
+  tmpl: require './templates/RequestSuggestions'
+  tmplSuggestion: require './templates/RequestSuggestion'
   events:
     'click .add': 'add'
-    'click .tag': 'filterTag'
+    'click .js-tag': 'filterTag'
   initialize: ->
     @listenTo @model, 'change', @render
   render: ->
-    @$el.html ''
-    @rTag = @model.get('tags')[0]
-    for t in @model.get('tags')
-      @$el.append "<a href='#' data-name='#{t.name}' class='tag'>#{t.short}</a><br />"
-    @$el.append '<div class="ops"></div>'
+    @rTag = null
+    @$el.html @tmpl @model.toJSON()
     @renderSuggestions()
     @
   renderSuggestions: ->
-    $log 'renderSuggestions', @rTag, @collection.length
-    @collection.filterFilteredModels( tag: @rTag )
-    @$('.ops').html ''
-    for s in @collection.filteredModels
-      s.set 'hasLinks', s.hasLinks()
-      @$('.ops').append @tmpl(s.toJSON())
+    if @model.get('tags')? && @model.get('tags').length
+      if !@rTag? then @rTag = @model.get('tags')[0]
+      $log 'renderSuggestions', @rTag.short, @rTag, @collection.length
+      @collection.filterFilteredModels( tag: @rTag )
+      @$('.ops').html ''
+      for s in @collection.filteredModels
+        s.set 'hasLinks', s.hasLinks()
+        @$('.ops').append @tmplSuggestion(s.toJSON())
+      @$('li').removeClass('active')
+      @$("[data-name='#{@rTag.short}']").addClass('active')
+    else
+      @$('.ops').html 'no tags on this request'
     @
   filterTag: (e) ->
     e.preventDefault()
-    name = $(e.currentTarget).data 'name'
+    name = $(e.currentTarget).closest('li').data 'name'
     @rTag = _.find @model.get('tags'), (t) -> t.name == name
     @renderSuggestions()
   add: (e) ->
