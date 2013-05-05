@@ -28,6 +28,8 @@ app.configure ->
     app.use passport.initialize()
 
   app.use passport.session()
+  app.use logErrors
+
 
 mongoUri = process.env.MONGOHQ_URL || "mongodb://localhost/#{cfg.db}"
 
@@ -40,7 +42,7 @@ db.once 'open', ->
 
 
 require('./app_routes')(app)
-app.use logErrors
+
 
 
 exports.startServer = (port, path, callback) ->

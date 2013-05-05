@@ -46,6 +46,7 @@ class exports.Router extends Backbone.Router
 
     @hideShow '#info'
 
+
   thanks: ->
     $log 'Router.thanks'
     @hideShow '#thanks'

@@ -58,9 +58,9 @@ Three layers of tests:
 
 5)   mocha test/server/all.coffee (backend tests)
 
-# docs on expect syntax                chaijs.com/api/bdd/
-# docs on using spy/fake/stub          sinonjs.org/docs/
-# docs on sinon chai syntax            chaijs.com/plugins/sinon-chai
+docs on expect syntax                chaijs.com/api/bdd/
+docs on using spy/fake/stub          sinonjs.org/docs/
+docs on sinon chai syntax            chaijs.com/plugins/sinon-chai
 
 -------------------------------------------------------------------------------
 List of TODO
@@ -110,6 +110,9 @@ List of TODO v.5
   - [M] Timezone
 - [H] Split expert sign up into contact & prefs
 - [L] Add stack overflow app icon
+- [M] Airpair techniques emails (How to intro, share code etc.)
+- [L] Try out two instances with redis
+- [M] Downsize mongoHQ
 
 -------------------------------------------------------------------------------
 List to airpair
@@ -117,27 +120,24 @@ List to airpair
 
 passportjs airpair Notes:
 - Checkout about apachebench
-- Try out two instances with redis
 - Navigator.cookies property
  :: http://stackoverflow.com/questions/5639346/shortest-function-for-reading-a-cookie-in-javascript
 For shortest-function-for-reading-a-cookie-in-javascript
 
-[Paul]
-- How to run brunch to rebuild automatically when in node mode
-- How to run serverside & clientside tests
-
 [Peter Lyons]
 - Sending mail
-- Error handling
 - Dates with mongo
 - collecting JS dates
   - http://momentjs.com/
+
 
 [Un-assigned]
 - How to rename a mongo collection
   - mongo shell: db.requests.renameCollection( newName , <dropTarget> ) renames the collection.
 - How to update schema
   - https://github.com/visionmedia/node-migrate
+- Performance testing (apachebench / heroku etc.)
+- Setup CI server to run front / back tests
 
 -------------------------------------------------------------------------------
 Non-dev ideas

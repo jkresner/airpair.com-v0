@@ -46,9 +46,12 @@
     "passport-dropbox": "0.1.x",
     "passport-paypal": "0.1.x",
     "moment": "2.0.0",
-    "superagent": "0.14.x"
+    "superagent": "0.14.x",
+    "winston": "~0.7.1",
+    "winston-ses": "0.0.4"
   },
   "devDependencies": {
-    "supertest": "0.5.x"
+    "supertest": "0.5.x",
+    "auto-reload-brunch": "1.6.x"
   }
 }
