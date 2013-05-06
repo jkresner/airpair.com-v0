@@ -1,9 +1,10 @@
-module.exports =
+adminIds = [
+  '117132380360243205600' #JK
+  '105699130570311275819' #MA
+]
 
-  adminIds: [
-    '117132380360243205600' #JK
-    '105699130570311275819' #MA
-  ]
+
+module.exports =
 
   # check google id
   isAdmin: (req) ->
