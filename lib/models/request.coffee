@@ -56,7 +56,7 @@ schema = new Schema
   events:           { required: true, type: [{}]  }
   status:           { required: true, type: String   }
   incompleteDetail: String
-  canceledReason:   String
+  canceledDetail:   String
   timezone:         String
   availability:     String
   suggested:        [Suggestion]
