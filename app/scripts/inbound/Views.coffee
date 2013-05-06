@@ -135,11 +135,10 @@ class exports.RequestSuggestedView extends BB.BadassView
   # logging: on
   el: '#suggested'
   tmpl: require './templates/RequestSuggested'
-  # mailTmpl: require './../../mail/developerMatched'
+  mailTmpl: require './../../mail/expertRequestReview'
   events:
     'click .suggestDev': 'add'
     'click .deleteSuggested': 'remove'
-    # 'click a.mailMatched': 'sendMatchedMail'
   initialize: ->
     @listenTo @model, 'change', @render
   render: ->
@@ -150,8 +149,17 @@ class exports.RequestSuggestedView extends BB.BadassView
       @$el.append '<p>No suggestion made...</p>'
     else
       for s in @model.get 'suggested'
+
+        mailData =
+          _id: @model.get('_id')
+          expertName: s.expert.name
+          companyName: @model.get('company').name
+
+        s.body = @mailTmpl mailData
+        s.tags =  @model.get 'tags'
         s.expert.hasLinks = new M.Expert(s.expert).hasLinks()
-        @$el.append @tmpl(s)
+
+        @$el.append @tmpl s
     @
   remove: (e) ->
     suggestionId = $(e.currentTarget).data 'id'
@@ -159,19 +167,6 @@ class exports.RequestSuggestedView extends BB.BadassView
     $log 'suggestRemove', suggestionId, toRemove
     @model.set 'suggested', _.without( @model.get('suggested'), toRemove )
     @parentView.save e
-  # sendMatchedMail: (e) ->
-  #   e.preventDefault()
-  #   devId = $(e.currentTarget).data 'id'
-  #   skillList = @model.skillSoIdsList()
-  #   developers = _.pluck @model.get('suggested'), 'dev'
-  #   dev = _.find developers, (d) -> d._id == devId
-  #   companyId = @model.get 'companyId',
-  #   $log 'companyId', companyId, @companys.models, @model
-  #   company = @companys.findWhere _id: companyId
-  #   #$log 'company', company
-  #   mailtoAddress = "#{dev.name}%20%3c#{dev.email}%3e"
-  #   body = @mailTmpl dev_name: dev.name, entrepreneur_name: company.get('contacts')[0].fullName, leadId: @model.get('_id')
-  #   window.open "mailto:#{mailtoAddress}?subject=airpair - Help an entrepreneur with #{skillList}?&body=#{body}"
 
 
 # class exports.RequestFormCallsView extends BB.BadassView
