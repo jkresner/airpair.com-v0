@@ -1,28 +1,28 @@
-<legend>Info <a href="/review#{{ _id }}" target="_blank">review</a></legend>
-<div class="control-group">
-  <label class="control-label">Company</label>
-  <div id="company-controls" class="controls"></div>
-</div>
+<legend>Info</legend>
 
 <div class="control-group">
   <label class="control-label" for="reqStatus">Status</label>
   <div class="controls">
     <select id="status" name="status">
       <option value="">please select ...</option>
-      <option>received</option>
-      <option>incomplete</option>
-      <option>review</option>
-      <option>scheduled</option>
-      <option>completed</option>
-      <option>canceled</option>
+      <option value="received">received</option>
+      <option value="incomplete">incomplete</option>
+      <option value="review">review</option>
+      <option value="scheduled">scheduled</option>
+      <option value="completed">completed</option>
+      <option value="canceled">canceled</option>
     </select>
   </div>
 </div>
 
+<div class="control-group" style="margin:0">
+  <div id="company-controls" class="controls"></div>
+</div>
+
 <div id="canceled-control-group" class="control-group" style="display:none">
-  <label class="control-label" for="reqCanceledReason">Canceled Reason</label>
+  <label class="control-label" for="reqCanceledDetail">Canceled Reason</label>
   <div class="controls">
-    <textarea id="reqCanceledReason" name="canceledReason">{{ canceledReason }}</textarea>
+    <textarea id="reqCanceledDetail" name="canceledDetail">{{ canceledReason }}</textarea>
   </div>
 </div>
 
@@ -32,6 +32,29 @@
     <textarea id="reqIncompleteDetail" name="incompleteDetail">{{ incompleteDetail }}</textarea>
   </div>
 </div>
+
+
+<div class="control-group">
+  <label class="control-label" for="reqBudget">Budget / pricing</label>
+  <div class="controls">
+    <select id="reqBudget" name="budget">
+      <option value="">please select ...</option>
+      <option value="30">$30</option>
+      <option value="60">$60</option>
+      <option value="90">$90</option>
+      <option value="130">$130</option>
+      <option value="180">$180</option>
+      <option value="250">$250</option>
+    </select>
+    <select id="reqPricing" name="pricing">
+      <option value="">please select ...</option>
+      <option value="opensource">opensource</option>
+      <option value="private">private (+$20 p.h.)</option>
+      <option value="nda">nda (+$60 p.h.)</option>
+    </select>
+  </div>
+</div>
+
 
 <div class="control-group">
   <label class="control-label" for="reqStatus">Tags</label>
@@ -48,13 +71,8 @@
 </div>
 
 <div class="control-group">
-  <label class="control-label" for="reqStatus">Availability</label>
+  <label class="control-label" for="reqAvailability">Availability</label>
   <div class="controls">
-    <span id="reqTimezone"></span>
-    <div>
-      {{#each availability}}
-        <div>{{this}} <a href="#" class="deleteAvalability" data-val="{{this}}">x</a></div>
-      {{/each}}
-    </div>
+    <textarea id="reqAvailability" name="availability">{{ availability }}</textarea>
   </div>
 </div>

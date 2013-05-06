@@ -41,3 +41,7 @@ tmp/
 public/
 
 npm-debug.log
+
+*.sublime-project
+
+airpair.sublime-workspace

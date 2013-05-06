@@ -13,13 +13,18 @@ module.exports = class HasErrorStateView extends BadassView
 
     BadassView::constructor.apply @, arguments
 
-  renderError: (model, errors) =>
+  renderError: (model, resp, opts) =>
 
-    if @logging then $log 'renderError', model, errors, arguments
+    if @logging then $log 'renderError', model, resp, opts
+
+    try
+      errors = JSON.parse(resp.responseText)
 
     if errors?
 
       if errors.code is 500 then return @delegate500Error()
+
+      if @logging then $log 'errors', errors.isServer, errors
 
       # (1) Unless showAlertOnClientError=true we only use summary for server errors
       if errors.isServer? || @showAlertOnClientError
@@ -27,8 +32,7 @@ module.exports = class HasErrorStateView extends BadassView
 
       # (2) For both client & server we show field / input level errors
       for own attr, value of errors.data
-
-        if @logging then $log 'attr', attr, value, input, input.val()
+        if @logging then $log 'attr', attr, value #, input, input.val()
 
         @tryRenderInputInvalid "[name=#{attr}]", value
 
@@ -40,7 +44,7 @@ module.exports = class HasErrorStateView extends BadassView
     input = @$(selector)
 
     if input.length
-      @renderInputInvalid input, value
+      @renderInputInvalid input, msg
     else
       $log "WARN: input not found for #{selector}"
 

@@ -7,7 +7,7 @@ Request status
 
   received      : requires review by airpair
   incomplete    : more detail required
-  review        : company must review & choose one or more developers
+  review        : customer must review & choose one or more experts
   scheduled     : one or more airpairs scheduled
   complete      : feedback on all calls collected
   canceled      : company has canceled the request
@@ -33,6 +33,7 @@ Suggestion = new Schema
   customerFeedback:   String
   messageThreadId:    ObjectId
 
+
 Call = new Schema
   expert:           {}
   time:             Date
@@ -55,7 +56,7 @@ schema = new Schema
   events:           { required: true, type: [{}]  }
   status:           { required: true, type: String   }
   incompleteDetail: String
-  canceledReason:   String
+  canceledDetail:   String
   timezone:         String
   availability:     String
   suggested:        [Suggestion]

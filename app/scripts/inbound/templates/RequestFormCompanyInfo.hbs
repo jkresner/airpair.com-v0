@@ -1,0 +1,30 @@
+<dl>
+  <dt>Company</dt>
+  <dd><a href="#" data-toggle="popover" data-content="{{about}}" data-trigger="hover">{{name}}</a></dd>
+  {{#if url}}
+  <dt style="display:none">Url</dt>
+  <dd style="font-weight:normal"><a href="http://{{ url }}" target="_blank">http://{{ url }}</a></dd>
+  {{/if}}
+  <dt>Primary contact</dt>
+  <dd class="contact">
+    {{#each contacts}}
+
+    <div>
+      <img src="{{pic}}" />
+      <a target="_blank" href="mailto:{{email}}?subject=airpair - We've got you experts!&body=Hi {{ fullName }},{{../body}}" class="email btn btn-small btn-warning"><i class="icon-envelope icon-white"></i> </a>
+    </div>
+
+    <dl>
+      <dt>Name</dt>
+      <dd>{{fullName}}</dd>
+      <dt>Email</dt>
+      <dd>{{email}}</dd>
+      <dt>Gmail</dt>
+      <dd>{{gmail}}</dd>
+      <dt>Twitter</dt>
+      <dd>{{twitter}}</dd>
+    </dl>
+    {{/each}}
+  </dd>
+</dl>
+

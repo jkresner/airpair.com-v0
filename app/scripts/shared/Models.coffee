@@ -30,7 +30,7 @@ class exports.Request extends BB.SublistModel
   validation:
     userId:         { required: true }
     company:        { required: true }
-    brief:          { rangeLength: [250, 5000], msg: 'Provide as much detail as possible (min 250 chars) on what you want to work on. Experts ignore requests when they cant tell if they can help.'}
+    brief:          { rangeLength: [200, 5000], msg: 'Provide as much detail as possible (min 200 chars) on what you want to work on. Experts ignore requests when they cant tell if they can help.'}
     budget:         { required: true }
     availability:   { required: true, msg: 'Please detail your timezone, urgency & availability' }
     tags:           { fn: 'validateNonEmptyArray', msg: 'At least one technology tag required' }

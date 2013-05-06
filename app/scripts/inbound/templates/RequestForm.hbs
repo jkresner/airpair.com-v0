@@ -1,3 +1,13 @@
+<div class="form-actions">
+  <div class="controls">
+    <a href="#" class="btn">Back</a>
+    <a href="#" class="btn btn-inverse btn-review" target="_blank">Review</a>
+    <a href="#" class="btn btn-primary save">Save</a>
+    <a href="#" class="btn btn-danger deleteRequest">Delete</a>
+  </div>
+</div>
+
+
 <div class="alert alert-success">
   <button type="button" class="close" data-dismiss="alert">&times;</button>
   <h4>Request save</h4>
@@ -15,26 +25,18 @@
 
 <fieldset style="width:49%;float:right">
   <legend>Scheduled</legend>
-  <div id="scheduled"></div>
+  <br />
+  <div id="scheduled"><p>No calls scheduled</p></div>
   <hr />
 
-  <legend>Suggested <span class="label label-tag">node.js</span> Experts</legend>
+  <legend>Suggested</legend>
+  <br />
   <div id="suggested"></div>
   <hr />
 
-  <legend>Suggestions</legend>
   <div id="suggestions"></div>
 </fieldset>
 
 <div style="clear:both"></div>
 
-<div class="control-group">
-  <div class="controls">
-    <a href="#" class="btn btn-large">Back</a>
-    <a href="#" class="save btn btn-large btn-primary">Save</a>
-    {{! <a href="#" class="btn btn-large btn-success" id="mailDevsContacted">Send mail</a>
-     }}
-    <a href="#" class="btn btn-delete deleteRequest">Delete</a>
-  </div>
-</div>
 
