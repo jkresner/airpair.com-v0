@@ -1,7 +1,9 @@
 <legend>Suggestions</legend>
-<ul class="nav nav-pills" style="display:inline!important">
-  {{#each tags}}
-  <li data-name='{{short}}'><a href="#" class="js-tag">{{short}}</a></li>
-  {{/each}}
-</ul>
-<div class="ops"></div>
+<div style="height:60px;height:30px;padding:5px 0">
+  <ul class="nav nav-pills" style="margin-bottom:5px">
+    {{#each tags}}
+    <li data-short='{{short}}'><a href="#" class="js-tag">{{short}}</a></li>
+    {{/each}}
+  </ul>
+<div>
+<div class="ops" style="clear:both"></div>

@@ -49,7 +49,7 @@ class exports.RequestsView extends BB.BadassView
 
 
 class exports.RequestFormInfoCompanyView extends BB.ModelSaveView
-  logging: on
+  # logging: on
   el: '#company-controls'
   tmpl: require './templates/RequestFormCompanyInfo'
   mailTmpl: require './../../mail/customerRequestReview'
@@ -76,13 +76,13 @@ class exports.RequestFormInfoView extends BB.ModelSaveView
     @tagsInput = new SV.TagsInputView model: @model, collection: @tags
     @listenTo @model, 'change', @render
   render: ->
-    @setValsFromModel ['brief','status','canceledReason','incompleteDetail']
+    @setValsFromModel ['brief','availability','status','canceledReason','incompleteDetail','budget','pricing']
     @companyInfo.render()
     @
 
 
 class exports.RequestSuggestionsView extends BB.BadassView
-  logging: on
+  # logging: on
   el: '#suggestions'
   tmpl: require './templates/RequestSuggestions'
   tmplSuggestion: require './templates/RequestSuggestion'
@@ -93,27 +93,30 @@ class exports.RequestSuggestionsView extends BB.BadassView
     @listenTo @model, 'change', @render
   render: ->
     @rTag = null
+    if @model.get('tags')? && @model.get('tags').length
+      @rTag = @model.get('tags')[0]
     @$el.html @tmpl @model.toJSON()
     @renderSuggestions()
     @
   renderSuggestions: ->
-    if @model.get('tags')? && @model.get('tags').length
-      if !@rTag? then @rTag = @model.get('tags')[0]
-      $log 'renderSuggestions', @rTag.short, @rTag, @collection.length
-      @collection.filterFilteredModels( tag: @rTag )
+    if ! @rTag? then @$('.ops').html 'no tags on this request'
+    else
+      $log 'renderSuggestions', @rTag
       @$('.ops').html ''
+      @$('li').removeClass 'active'
+      @$("[data-short='#{@rTag.short}']").addClass 'active'
+
+      suggested = _.pluck @model.get('suggested'), 'expert'
+      @collection.filterFilteredModels( tag: @rTag, excludes: suggested )
       for s in @collection.filteredModels
         s.set 'hasLinks', s.hasLinks()
         @$('.ops').append @tmplSuggestion(s.toJSON())
-      @$('li').removeClass('active')
-      @$("[data-name='#{@rTag.short}']").addClass('active')
-    else
-      @$('.ops').html 'no tags on this request'
     @
   filterTag: (e) ->
     e.preventDefault()
-    name = $(e.currentTarget).closest('li').data 'name'
-    @rTag = _.find @model.get('tags'), (t) -> t.name == name
+    short = $(e.currentTarget).closest('li').data 'short'
+    $log 'filterTag', short
+    @rTag = _.find @model.get('tags'), (t) -> t.short == short
     @renderSuggestions()
   add: (e) ->
     expertId = $(e.currentTarget).data('id')
@@ -129,7 +132,7 @@ class exports.RequestSuggestionsView extends BB.BadassView
 
 
 class exports.RequestSuggestedView extends BB.BadassView
-  logging: on
+  # logging: on
   el: '#suggested'
   tmpl: require './templates/RequestSuggested'
   # mailTmpl: require './../../mail/developerMatched'
@@ -195,10 +198,8 @@ class exports.RequestFormView extends BB.ModelSaveView
     @listenTo @model, 'change', @render
   render: ->
     @$('.btn-review').attr 'href', "/review##{@model.get('_id')}"
-
   renderSuccess: (model, response, options) =>
     @$('.alert-success').fadeIn(800).fadeOut(5000)
-    # @model.set model.attributes
     @collection.fetch()
   # getViewData: ->
   #   d = @getValsFromInputs @viewData
