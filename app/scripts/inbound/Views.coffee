@@ -52,10 +52,13 @@ class exports.RequestFormInfoCompanyView extends BB.ModelSaveView
   logging: on
   el: '#company-controls'
   tmpl: require './templates/RequestFormCompanyInfo'
+  mailTmpl: require './../../mail/customerRequestReview'
   initialize: ->
   render: ->
-    company = @model.get('company')
-    @$el.html @tmpl company
+    body = @mailTmpl(_id: @model.id)
+    tmplData = _.extend @model.get('company'), { body: body }
+    $log 'tempData', tmplData
+    @$el.html @tmpl tmplData
     @$('[data-toggle="popover"]').popover()
     @
 
@@ -180,17 +183,19 @@ class exports.RequestFormView extends BB.ModelSaveView
   el: '#requestForm'
   tmpl: require './templates/RequestForm'
   viewData: ['status','brief','canceledReason']
-  # mailTmpl: require './../../mail/developersContacted'
   events:
-    'click #mailDevsContacted': 'sendDevsContacted'
     'click .save': 'save'
     'click .deleteRequest': 'deleteRequest'
   initialize: ->
-    @$el.html @tmpl()
+    @$el.html @tmpl {}
     @infoView = new exports.RequestFormInfoView model: @model, tags: @tags, parentView: @
     @suggestionsView = new exports.RequestSuggestionsView model: @model, collection: @experts, parentView: @
     @suggestedView = new exports.RequestSuggestedView model: @model, collection: @experts, parentView: @
     # @callsView = new exports.RequestFormCallsView model: @model, parentView: @
+    @listenTo @model, 'change', @render
+  render: ->
+    @$('.btn-review').attr 'href', "/review##{@model.get('_id')}"
+
   renderSuccess: (model, response, options) =>
     @$('.alert-success').fadeIn(800).fadeOut(5000)
     # @model.set model.attributes
@@ -198,15 +203,6 @@ class exports.RequestFormView extends BB.ModelSaveView
   # getViewData: ->
   #   d = @getValsFromInputs @viewData
   #   d
-  # sendDevsContacted: (e) ->
-  #   e.preventDefault()
-  #   cid = @model.get 'companyId'
-  #   company = _.find @companys.models, (m) -> m.get('_id') == cid
-  #   customer = company.get('contacts')[0]
-  #   # $log 'sendDevsContacted', customer, cid
-  #   mailtoAddress = "#{customer.fullName}%20%3c#{customer.email}%3e"
-  #   body = @mailTmpl entrepreneur_name: customer.name, leadId: @model.id
-  #   window.open "mailto:#{mailtoAddress}?subject=airpair - We've got you some devs!&body=#{body}"
   deleteRequest: ->
     @model.destroy()
     @collection.fetch()

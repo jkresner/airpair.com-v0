@@ -11,9 +11,11 @@ class exports.ReviewRouter extends Backbone.Router
     @page = args.page
 
   empty: ->
+    $log 'Router.empty'
     window.location = '/dashboard'
 
   view: (id) ->
+    $log 'view', id
     if !id? then return window.location = '/dashboard'
 
     @page.request.set '_id': id

@@ -10,6 +10,14 @@
 #adminboundpage #requestForm textarea { width:400px;height:150px }
 #adminboundpage #company-controls { font-weight:bold }
 
+#adminboundpage dt { font-weight:normal }
+#adminboundpage .contact { padding-top:10px }
+#adminboundpage .contact div { float:left;width:60px;margin-right:20px;text-align:center; }
+#adminboundpage .contact img { float:left;margin-bottom:4px; }
+#adminboundpage .contact dl { overflow:hidden }
+#adminboundpage .contact dt { display:inline-block;font-weight:normal;width:10% }
+#adminboundpage .contact dd { display:inline-block;width:78% }
+
 #adminboundpage .suggested { border-top:solid 0.5px #d3d3d3;min-height:100px }
 #adminboundpage .suggested hr { margin:0; }
 #adminboundpage .suggested .pic { width:40px;margin:0;float:left; }
@@ -26,13 +34,6 @@
 #adminboundpage .suggested .status { float:right;margin:7px; }
 #adminboundpage .suggested .btn { margin:3px 0px 0 3px;}
 #adminboundpage .suggested p { clear:both; }
-
-#adminboundpage dt { font-weight:normal }
-#adminboundpage .contact { padding-top:10px }
-#adminboundpage .contact img { float:left;width:60px;margin-right:20px }
-#adminboundpage .contact dl { overflow:hidden }
-#adminboundpage .contact dt { display:inline-block;font-weight:normal;width:10% }
-#adminboundpage .contact dd { display:inline-block;width:78% }
 
 #adminboundpage #suggestions { margin-bottom:30px;}
 #adminboundpage .suggestion { float:left;margin-bottom:6px }
