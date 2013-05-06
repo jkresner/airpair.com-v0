@@ -8,20 +8,20 @@
   <div class="controls">
     <select id="status" name="status">
       <option value="">please select ...</option>
-      <option>received</option>
-      <option>incomplete</option>
-      <option>review</option>
-      <option>scheduled</option>
-      <option>completed</option>
-      <option>canceled</option>
+      <option value="received">received</option>
+      <option value="incomplete">incomplete</option>
+      <option value="review">review</option>
+      <option value="scheduled">scheduled</option>
+      <option value="completed">completed</option>
+      <option value="canceled">canceled</option>
     </select>
   </div>
 </div>
 
 <div id="canceled-control-group" class="control-group" style="display:none">
-  <label class="control-label" for="reqCanceledReason">Canceled Reason</label>
+  <label class="control-label" for="reqCanceledDetail">Canceled Reason</label>
   <div class="controls">
-    <textarea id="reqCanceledReason" name="canceledReason">{{ canceledReason }}</textarea>
+    <textarea id="reqCanceledDetail" name="canceledDetail">{{ canceledReason }}</textarea>
   </div>
 </div>
 

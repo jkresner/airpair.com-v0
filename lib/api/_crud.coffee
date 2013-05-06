@@ -57,8 +57,9 @@ class CRUDApi
     new moment().utc().toJSON()
 
 
-  tFE: (req, msg, attr, attrMsg) ->
-    errors.throwFieldError(req, msg, attr, attrMsg)
+  tFE: (res, msg, attr, attrMsg) ->
+    res.contentType('application/json')
+    res.send 400, errors.getFieldError(msg, attr, attrMsg)
 
 
   newEvent: (req, name) ->

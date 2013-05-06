@@ -124,8 +124,6 @@ describe "REST api requests", ->
             expect( d.events[1].by ).to.equal 'Jonathon Kresner'
             done()
 
-  # it "should add incomplete event if status changed to incomplete", (done) ->
-
   # it "should add updated event if details updated by customer", (done) ->
 
   # it "should add suggested event if new expert suggested by admin", (done) ->

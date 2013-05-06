@@ -7,8 +7,9 @@
 
 #adminboundpage #requests img { max-width:32px }
 #adminboundpage #requests td { font-size:11px; }
-#adminboundpage #requestForm textarea { width:400px;height:150px }
+#adminboundpage #requestForm textarea { width:90%;height:100px }
 #adminboundpage #requestForm legend { margin-bottom:0;line-height:20px }
+#adminboundpage #requestForm .form-actions { margin-top:0;padding:15px 10px; }
 #adminboundpage #company-controls { font-weight:bold;margin-bottom:0 }
 
 #adminboundpage dl { margin-bottom:6px }
