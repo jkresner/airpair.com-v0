@@ -1,5 +1,6 @@
 authz = require './../auth/authz/isLoggedInApi'
 moment = require 'moment'
+errors = require './errors'
 
 class CRUDApi
 
@@ -54,6 +55,15 @@ class CRUDApi
 
   utcNow: ->
     new moment().utc().toJSON()
+
+
+  tFE: (req, msg, attr, attrMsg) ->
+    errors.throwFieldError(req, msg, attr, attrMsg)
+
+
+  newEvent: (req, name) ->
+    byDisplayName = req.user.google.displayName if req.user
+    name: name, by: byDisplayName, utc: @utcNow()
 
 
 module.exports = CRUDApi
