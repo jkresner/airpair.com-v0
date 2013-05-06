@@ -7,9 +7,20 @@
 
 #adminboundpage #requests img { max-width:32px }
 #adminboundpage #requests td { font-size:11px; }
-#adminboundpage #requestForm textarea { width:400px;height:150px }
-#adminboundpage #company-controls { font-weight:bold }
+#adminboundpage #requestForm textarea { width:90%;height:100px }
+#adminboundpage #requestForm legend { margin-bottom:0;line-height:20px }
+#adminboundpage #requestForm .form-actions { margin-top:0;padding:15px 10px; }
+#adminboundpage #company-controls { font-weight:bold;margin-bottom:0 }
 
+#adminboundpage dl { margin-bottom:6px }
+#adminboundpage dt { padding:0px 0px 4px 4px;font-weight:normal }
+#adminboundpage dd { padding:0px 0px 4px 4px; }
+#adminboundpage .contact { padding-top:10px }
+#adminboundpage .contact div { float:left;width:40px;margin-right:20px;text-align:center; }
+#adminboundpage .contact img { float:left;margin:4px 0px 8px 0px; }
+#adminboundpage .contact dl { overflow:hidden;line-height:14px }
+#adminboundpage .contact dt { display:inline-block;font-weight:normal;width:10%;line-height:14px }
+#adminboundpage .contact dd { display:inline-block;width:78%;padding:0px; }
 
 #adminboundpage .suggested { border-top:solid 0.5px #d3d3d3;min-height:100px }
 #adminboundpage .suggested hr { margin:0; }
@@ -28,11 +39,15 @@
 #adminboundpage .suggested .btn { margin:3px 0px 0 3px;}
 #adminboundpage .suggested p { clear:both; }
 
+#adminboundpage #suggestions { margin-bottom:30px;}
+#adminboundpage #suggestions .nav-pills { padding-top:10px }
 
-#adminboundpage .suggestion { float:left; }
-#adminboundpage .suggestion .pic { width:40px;margin:0;float:left; }
-#adminboundpage .suggestion .deets { background-color:#CC523E;color:white;font-size:12px;float:right;width:93%; }
+
+#adminboundpage .suggestion { float:left;margin-bottom:6px }
+#adminboundpage .suggestion .pic { width:40px;margin:2px;float:left; }
+#adminboundpage .suggestion .deets { overflow:hidden;height:76px }
 #adminboundpage .suggestion .fullName { font-size:9px;line-height:12px }
-#adminboundpage .suggestion .links { margin:0 4px 0px 0px;padding-top:4px;float:right;height:44px; }
-#adminboundpage .suggestion .tags { padding:1px 2px!important;clear:both;height:100px; }
+#adminboundpage .suggestion .links { width:50%;margin:0 4px 0px 0px;float:right; }
+#adminboundpage .suggestion .tags { padding:1px 2px!important;clear:both;height:100px;overflow:hidden; }
 #adminboundpage .suggestion .label-tag { padding:0px 2px 1px 2px;font-size:9px;margin-bottom:1px }
+#adminboundpage .suggestion .add-suggestion { width:78px; }

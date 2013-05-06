@@ -1,17 +1,20 @@
 
 <div class="expertMini suggestion">
-  <div class="fullName">
-    {{ name }}
-    {{#if username }}<br />@{{ username }}
-  {{/if}}
-  </div>
-  <hr />
+  <div class="deets">
 
+    <div class="fullName">
+      {{ name }}
+      {{#if username }}<br />@{{ username }}
+    {{/if}}
+    </div>
+    <hr />
 
-  <img src="{{ pic }}?s=240" class="pic" />
+    <img src="{{ pic }}?s=240" class="pic" />
 
-  <div class="links">
-    {{> DevLinks }}
+    <div class="links">
+      {{> DevLinks }}
+    </div>
+
   </div>
 
   <div class="tags">
@@ -20,8 +23,5 @@
     {{/each }}
   </div>
 
-  <a href="#" class="add" data-id="{{ _id }}">Add</a>
+  <a href="#" class="add-suggestion btn btn-small" data-id="{{ _id }}">Add (${{rate}})</a>
 </div>
-
-
-

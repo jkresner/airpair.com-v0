@@ -11,11 +11,16 @@ class exports.Experts extends BB.FilteringCollection
   url: '/api/experts'
   comparator: (m) -> m.get 'name'
   _filter: (f) ->
-    $log '_filter', f
+    # $log '_filter', f
     r  = @models
     if f?
       if f.tag?
         r = _.filter r, (m) -> _.find(m.get('tags'), (t) -> t.name == f.tag.name )
+      if f.excludes?
+        for e in f.excludes
+          exclude = _.find r, (m) -> m.get('_id') == e._id
+          r = _.without r, exclude
+
     return r
 
 

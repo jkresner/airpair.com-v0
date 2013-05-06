@@ -7,7 +7,8 @@ Shared = require './../shared/Views'
 ##  To render all experts for admin
 #############################################################################
 
-class exports.ExpertRowView extends Backbone.View
+class exports.ExpertRowView extends BB.BadassView
+  logging: on
   tagName: 'tr'
   className: 'expert'
   tmpl: require './templates/Row'

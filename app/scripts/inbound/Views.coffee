@@ -49,11 +49,17 @@ class exports.RequestsView extends BB.BadassView
 
 
 class exports.RequestFormInfoCompanyView extends BB.ModelSaveView
+  # logging: on
   el: '#company-controls'
+  tmpl: require './templates/RequestFormCompanyInfo'
+  mailTmpl: require './../../mail/customerRequestReview'
   initialize: ->
   render: ->
-    company = @model.get('company')
-    @$el.html company.name
+    body = @mailTmpl(_id: @model.id)
+    tmplData = _.extend @model.get('company'), { body: body }
+    $log 'tempData', tmplData
+    @$el.html @tmpl tmplData
+    @$('[data-toggle="popover"]').popover()
     @
 
 
@@ -70,62 +76,69 @@ class exports.RequestFormInfoView extends BB.ModelSaveView
     @tagsInput = new SV.TagsInputView model: @model, collection: @tags
     @listenTo @model, 'change', @render
   render: ->
-    @setValsFromModel ['brief','status','canceledReason','incompleteDetail']
+    @setValsFromModel ['brief','availability','status','canceledReason','incompleteDetail','budget','pricing']
     @companyInfo.render()
     @
 
 
 class exports.RequestSuggestionsView extends BB.BadassView
-  logging: on
+  # logging: on
   el: '#suggestions'
-  tmpl: require './templates/RequestSuggestion'
+  tmpl: require './templates/RequestSuggestions'
+  tmplSuggestion: require './templates/RequestSuggestion'
   events:
-    'click .add': 'add'
-    'click .tag': 'filterTag'
+    'click .add-suggestion': 'add'
+    'click .js-tag': 'filterTag'
   initialize: ->
     @listenTo @model, 'change', @render
   render: ->
-    @$el.html ''
-    @rTag = @model.get('tags')[0]
-    for t in @model.get('tags')
-      @$el.append "<a href='#' data-name='#{t.name}' class='tag'>#{t.short}</a><br />"
-    @$el.append '<div class="ops"></div>'
+    @rTag = null
+    if @model.get('tags')? && @model.get('tags').length
+      @rTag = @model.get('tags')[0]
+    @$el.html @tmpl @model.toJSON()
     @renderSuggestions()
     @
   renderSuggestions: ->
-    $log 'renderSuggestions', @rTag, @collection.length
-    @collection.filterFilteredModels( tag: @rTag )
-    @$('.ops').html ''
-    for s in @collection.filteredModels
-      s.set 'hasLinks', s.hasLinks()
-      @$('.ops').append @tmpl(s.toJSON())
+    if ! @rTag? then @$('.ops').html 'no tags on this request'
+    else
+      $log 'renderSuggestions', @rTag
+      @$('.ops').html ''
+      @$('li').removeClass 'active'
+      @$("[data-short='#{@rTag.short}']").addClass 'active'
+
+      suggested = _.pluck @model.get('suggested'), 'expert'
+      @collection.filterFilteredModels( tag: @rTag, excludes: suggested )
+      for s in @collection.filteredModels
+        s.set 'hasLinks', s.hasLinks()
+        @$('.ops').append @tmplSuggestion(s.toJSON())
     @
   filterTag: (e) ->
     e.preventDefault()
-    name = $(e.currentTarget).data 'name'
-    @rTag = _.find @model.get('tags'), (t) -> t.name == name
+    short = $(e.currentTarget).closest('li').data 'short'
+    $log 'filterTag', short
+    @rTag = _.find @model.get('tags'), (t) -> t.short == short
     @renderSuggestions()
   add: (e) ->
-    # if @$('#reqDev').val() == '' then alert 'select a dev'; return false
-    # # todo, check for duplicates
-    # @model.get('suggested').push
-    #   status: 'awaiting'
-    #   events: [{ 'created': new Date() }]
-    #   dev: { _id: @$('#reqDev').val(), name: @$('#reqDev option:selected').text() }
-    #   availability: []
-    #   comment: ''
-    # @parentView.save e
+    expertId = $(e.currentTarget).data('id')
+    expert = _.find @collection.filteredModels, (m) -> m.get('_id') == expertId
+    $log 'expert', expertId, expert
+    if expert?
+      # todo, check for duplicates
+      @model.get('suggested').push
+        status: 'waiting'
+        expert: expert.toJSON()
+        availability: []
+      @parentView.save e
 
 
 class exports.RequestSuggestedView extends BB.BadassView
-  logging: on
+  # logging: on
   el: '#suggested'
   tmpl: require './templates/RequestSuggested'
-  # mailTmpl: require './../../mail/developerMatched'
+  mailTmpl: require './../../mail/expertRequestReview'
   events:
     'click .suggestDev': 'add'
     'click .deleteSuggested': 'remove'
-    # 'click a.mailMatched': 'sendMatchedMail'
   initialize: ->
     @listenTo @model, 'change', @render
   render: ->
@@ -136,8 +149,17 @@ class exports.RequestSuggestedView extends BB.BadassView
       @$el.append '<p>No suggestion made...</p>'
     else
       for s in @model.get 'suggested'
+
+        mailData =
+          _id: @model.get('_id')
+          expertName: s.expert.name
+          companyName: @model.get('company').name
+
+        s.body = @mailTmpl mailData
+        s.tags =  @model.get 'tags'
         s.expert.hasLinks = new M.Expert(s.expert).hasLinks()
-        @$el.append @tmpl(s)
+
+        @$el.append @tmpl s
     @
   remove: (e) ->
     suggestionId = $(e.currentTarget).data 'id'
@@ -145,19 +167,6 @@ class exports.RequestSuggestedView extends BB.BadassView
     $log 'suggestRemove', suggestionId, toRemove
     @model.set 'suggested', _.without( @model.get('suggested'), toRemove )
     @parentView.save e
-  # sendMatchedMail: (e) ->
-  #   e.preventDefault()
-  #   devId = $(e.currentTarget).data 'id'
-  #   skillList = @model.skillSoIdsList()
-  #   developers = _.pluck @model.get('suggested'), 'dev'
-  #   dev = _.find developers, (d) -> d._id == devId
-  #   companyId = @model.get 'companyId',
-  #   $log 'companyId', companyId, @companys.models, @model
-  #   company = @companys.findWhere _id: companyId
-  #   #$log 'company', company
-  #   mailtoAddress = "#{dev.name}%20%3c#{dev.email}%3e"
-  #   body = @mailTmpl dev_name: dev.name, entrepreneur_name: company.get('contacts')[0].fullName, leadId: @model.get('_id')
-  #   window.open "mailto:#{mailtoAddress}?subject=airpair - Help an entrepreneur with #{skillList}?&body=#{body}"
 
 
 # class exports.RequestFormCallsView extends BB.BadassView
@@ -171,34 +180,25 @@ class exports.RequestFormView extends BB.ModelSaveView
   async: off
   el: '#requestForm'
   tmpl: require './templates/RequestForm'
-  viewData: ['status','tags','brief','canceledReason']
-  # mailTmpl: require './../../mail/developersContacted'
+  viewData: ['status','brief','canceledReason']
   events:
-    'click #mailDevsContacted': 'sendDevsContacted'
     'click .save': 'save'
     'click .deleteRequest': 'deleteRequest'
   initialize: ->
-    @$el.html @tmpl()
+    @$el.html @tmpl {}
     @infoView = new exports.RequestFormInfoView model: @model, tags: @tags, parentView: @
     @suggestionsView = new exports.RequestSuggestionsView model: @model, collection: @experts, parentView: @
     @suggestedView = new exports.RequestSuggestedView model: @model, collection: @experts, parentView: @
     # @callsView = new exports.RequestFormCallsView model: @model, parentView: @
+    @listenTo @model, 'change', @render
+  render: ->
+    @$('.btn-review').attr 'href', "/review##{@model.get('_id')}"
   renderSuccess: (model, response, options) =>
     @$('.alert-success').fadeIn(800).fadeOut(5000)
-    # @model.set model.attributes
     @collection.fetch()
   # getViewData: ->
   #   d = @getValsFromInputs @viewData
   #   d
-  # sendDevsContacted: (e) ->
-  #   e.preventDefault()
-  #   cid = @model.get 'companyId'
-  #   company = _.find @companys.models, (m) -> m.get('_id') == cid
-  #   customer = company.get('contacts')[0]
-  #   # $log 'sendDevsContacted', customer, cid
-  #   mailtoAddress = "#{customer.fullName}%20%3c#{customer.email}%3e"
-  #   body = @mailTmpl entrepreneur_name: customer.name, leadId: @model.id
-  #   window.open "mailto:#{mailtoAddress}?subject=airpair - We've got you some devs!&body=#{body}"
   deleteRequest: ->
     @model.destroy()
     @collection.fetch()

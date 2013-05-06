@@ -1,27 +1,9 @@
-
-<div class="expertMini suggestion">
-  <div class="fullName">
-    {{ name }}
-    {{#if username }}<br />@{{ username }}
-  {{/if}}
-  </div>
-  <hr />
-
-
-  <img src="{{ pic }}?s=240" class="pic" />
-
-  <div class="links">
-    {{> DevLinks }}
-  </div>
-
-  <div class="tags">
-    {{#each tags }}
-      <span class="label label-tag">{{ short }}</span>
-    {{/each }}
-  </div>
-
-  <a href="#" class="add" data-id="{{ _id }}">Add</a>
-</div>
-
-
-
+<legend>Suggestions</legend>
+<div style="height:60px;height:30px;padding:5px 0">
+  <ul class="nav nav-pills" style="margin-bottom:5px">
+    {{#each tags}}
+    <li data-short='{{short}}'><a href="#" class="js-tag">{{short}}</a></li>
+    {{/each}}
+  </ul>
+<div>
+<div class="ops" style="clear:both"></div>
