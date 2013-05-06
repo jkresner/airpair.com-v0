@@ -1,3 +1,5 @@
+roles = require './roles'
+
 module.exports = (options) ->
 
   if typeof options == 'string'
@@ -9,11 +11,7 @@ module.exports = (options) ->
 
   (req, res, next) ->
 
-    # check for JK / MA
-    gid = req.user.googleId
-    isAdmin = gid == '117132380360243205600' || gid == '105699130570311275819'
-
-    if ! isAdmin
+    if ! roles.isAdmin req
 
       return res.redirect url
 

@@ -19,7 +19,7 @@ class exports.ReviewRouter extends Backbone.Router
     if !id? then return window.location = '/dashboard'
 
     @page.request.set '_id': id
-    @page.request.fetch()
+    @page.request.fetch { error: @empty }
 
 
 module.exports = exports

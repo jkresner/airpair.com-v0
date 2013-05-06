@@ -3,6 +3,7 @@ Company = require './../models/company'
 Expert = require './../models/expert'
 und = require 'underscore'
 auth = require './../auth/authz/authz'
+role = auth.roles
 
 class RequestApi extends CRUDApi
 
@@ -29,7 +30,11 @@ class RequestApi extends CRUDApi
 
   detail: (req, res) =>
     @model.findOne { _id: req.params.id }, (e, r) =>
+      if !r? then return res.send(400)
+      # if role.isAdmin(req) || role.isRequestOwner(req, r) || role.isRequestExpert(req, r)
       res.send r
+      # else
+        # res.send(400)
 
   create: (req, res) =>
     req.body.userId = req.user._id
