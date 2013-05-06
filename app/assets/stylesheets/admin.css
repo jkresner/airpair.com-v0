@@ -34,10 +34,12 @@
 #adminboundpage .contact dt { display:inline-block;font-weight:normal;width:10% }
 #adminboundpage .contact dd { display:inline-block;width:78% }
 
-#adminboundpage .suggestion { float:left; }
-#adminboundpage .suggestion .pic { width:40px;margin:0;float:left; }
-#adminboundpage .suggestion .deets { background-color:#CC523E;color:white;font-size:12px;float:right;width:93%; }
+#adminboundpage #suggestions { margin-bottom:30px;}
+#adminboundpage .suggestion { float:left;margin-bottom:6px }
+#adminboundpage .suggestion .pic { width:40px;margin:2px;float:left; }
+#adminboundpage .suggestion .deets { overflow:hidden;height:76px }
 #adminboundpage .suggestion .fullName { font-size:9px;line-height:12px }
-#adminboundpage .suggestion .links { margin:0 4px 0px 0px;padding-top:4px;float:right;height:44px; }
-#adminboundpage .suggestion .tags { padding:1px 2px!important;clear:both;height:100px; }
+#adminboundpage .suggestion .links { width:50%;margin:0 4px 0px 0px;float:right; }
+#adminboundpage .suggestion .tags { padding:1px 2px!important;clear:both;height:100px;overflow:hidden; }
 #adminboundpage .suggestion .label-tag { padding:0px 2px 1px 2px;font-size:9px;margin-bottom:1px }
+#adminboundpage .suggestion .add-suggestion { width:78px; }

@@ -84,7 +84,7 @@ class exports.RequestSuggestionsView extends BB.BadassView
   tmpl: require './templates/RequestSuggestions'
   tmplSuggestion: require './templates/RequestSuggestion'
   events:
-    'click .add': 'add'
+    'click .add-suggestion': 'add'
     'click .js-tag': 'filterTag'
   initialize: ->
     @listenTo @model, 'change', @render
@@ -113,15 +113,16 @@ class exports.RequestSuggestionsView extends BB.BadassView
     @rTag = _.find @model.get('tags'), (t) -> t.name == name
     @renderSuggestions()
   add: (e) ->
-    # if @$('#reqDev').val() == '' then alert 'select a dev'; return false
-    # # todo, check for duplicates
-    # @model.get('suggested').push
-    #   status: 'awaiting'
-    #   events: [{ 'created': new Date() }]
-    #   dev: { _id: @$('#reqDev').val(), name: @$('#reqDev option:selected').text() }
-    #   availability: []
-    #   comment: ''
-    # @parentView.save e
+    expertId = $(e.currentTarget).data('id')
+    expert = _.find @collection.filteredModels, (m) -> m.get('_id') == expertId
+    $log 'expert', expertId, expert
+    if expert?
+      # todo, check for duplicates
+      @model.get('suggested').push
+        status: 'waiting'
+        expert: expert.toJSON()
+        availability: []
+      @parentView.save e
 
 
 class exports.RequestSuggestedView extends BB.BadassView
@@ -178,7 +179,7 @@ class exports.RequestFormView extends BB.ModelSaveView
   async: off
   el: '#requestForm'
   tmpl: require './templates/RequestForm'
-  viewData: ['status','tags','brief','canceledReason']
+  viewData: ['status','brief','canceledReason']
   # mailTmpl: require './../../mail/developersContacted'
   events:
     'click #mailDevsContacted': 'sendDevsContacted'

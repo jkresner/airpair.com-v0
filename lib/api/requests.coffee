@@ -42,6 +42,10 @@ class RequestApi extends CRUDApi
     # stop users updating other users requests (need a better solution!)
     if req.body.userId = req.user._id then return res.send 403
 
+    for s in req.body.suggested
+      if !s.events?
+        events: [{ name:'created', utc: @utcNow()}]
+
     # @getDevs req, =>
     data = und.clone req.body
     delete data._id # so mongo doesn't complain
