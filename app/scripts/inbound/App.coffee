@@ -16,8 +16,8 @@ module.exports.Page = class Page extends SessionPage
 
     @requestsView = new views.RequestsView collection: @requests, model: @selected
 
-    rfv = el: '#requestForm', model: @selected, collection: @requests, tags: @tags, experts: @experts
-    @requestFormView = new views.RequestFormView rfv
+    rfv = model: @selected, collection: @requests, tags: @tags, experts: @experts
+    @requestView = new views.RequestView rfv
 
     @experts.on 'sync', ->
       setTimeout "router.navigate('request/518547fd350d480200000006', { trigger: true })", 100

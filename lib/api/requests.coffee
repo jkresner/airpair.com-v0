@@ -70,8 +70,12 @@ class RequestApi extends CRUDApi
 
       for s in req.body.suggested
         if !s.events?
-          events: [{ name:'created', utc: @utcNow()}]
-          data.events.push @newEvent(req, "suggested #{s.username}")
+          data.status = "review"
+          reqEvt = @newEvent(req, "suggested #{s.expert.username}")
+          data.events.push reqEvt
+
+          s.expertStatus = "waiting"
+          s.events = [ @newEvent(req, "created") ]
 
       @model.findByIdAndUpdate req.params.id, data, (ee, rr) ->
         res.send rr

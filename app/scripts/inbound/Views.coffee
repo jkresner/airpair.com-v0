@@ -1,3 +1,4 @@
+
 exports = {}
 BB = require './../../lib/BB'
 M = require './Models'
@@ -48,37 +49,28 @@ class exports.RequestsView extends BB.BadassView
 #############################################################################
 
 
-class exports.RequestFormInfoCompanyView extends BB.ModelSaveView
-  # logging: on
-  el: '#company-controls'
-  tmpl: require './templates/RequestFormCompanyInfo'
+class exports.RequestInfoView extends BB.ModelSaveView
+  el: '#info'
+  tmpl: require './templates/RequestInfo'
+  tmplCompany: require './templates/RequestInfoCompany'
   mailTmpl: require './../../mail/customerRequestReview'
   initialize: ->
-  render: ->
-    body = @mailTmpl(_id: @model.id)
-    tmplData = _.extend @model.get('company'), { body: body }
-    $log 'tempData', tmplData
-    @$el.html @tmpl tmplData
-    @$('[data-toggle="popover"]').popover()
-    @
-
-
-class exports.RequestFormInfoView extends BB.ModelSaveView
-  # logging: on
-  el: '#reqInfo'
-  tmpl: require './templates/RequestFormInfo'
-  initialize: ->
     @$el.html @tmpl @model.toJSON()
-    @$('#status').on 'change', =>
-      @$('#canceled-control-group').toggle @$('#status').val() == 'canceled'
-      @$('#incomplete-control-group').toggle @$('#status').val() == 'incomplete'
-    @companyInfo = new exports.RequestFormInfoCompanyView model: @model
+    @$('#status').on 'change', @toggleCanceledIncompleteFields
     @tagsInput = new SV.TagsInputView model: @model, collection: @tags
     @listenTo @model, 'change', @render
   render: ->
     @setValsFromModel ['brief','availability','status','canceledReason','incompleteDetail','budget','pricing']
-    @companyInfo.render()
+    mailBody = @mailTmpl(_id: @model.id)
+    tmplCompanyData = _.extend @model.get('company'), { mailBody: mailBody }
+    @$('#company-controls').html @tmplCompany(tmplCompanyData)
+    @$('[data-toggle="popover"]').popover()
+    @$('.status').addClass "label-#{@model.get('status')}"
+    @$('.status').html @model.get('status')
     @
+  toggleCanceledIncompleteFields: =>
+    @$('#canceled-control-group').toggle @$('#status').val() == 'canceled'
+    @$('#incomplete-control-group').toggle @$('#status').val() == 'incomplete'
 
 
 class exports.RequestSuggestionsView extends BB.BadassView
@@ -121,7 +113,6 @@ class exports.RequestSuggestionsView extends BB.BadassView
   add: (e) ->
     expertId = $(e.currentTarget).data('id')
     expert = _.find @collection.filteredModels, (m) -> m.get('_id') == expertId
-    $log 'expert', expertId, expert
     if expert?
       # todo, check for duplicates
       @model.get('suggested').push
@@ -142,7 +133,7 @@ class exports.RequestSuggestedView extends BB.BadassView
   initialize: ->
     @listenTo @model, 'change', @render
   render: ->
-    @$el.html ''
+    @$el.html '<legend>Suggested</legend>'
     suggested = @model.get 'suggested'
     if !suggested? then return
     else if suggested.length == 0
@@ -169,42 +160,52 @@ class exports.RequestSuggestedView extends BB.BadassView
     @parentView.save e
 
 
-# class exports.RequestFormCallsView extends BB.BadassView
-#   initialize: ->
-#     @listenTo @model, 'change', @render
-#   render: ->
+class exports.RequestCallsView extends BB.BadassView
+  tmpl: require './templates/RequestCalls'
+  initialize: -> @listenTo @model, 'change', @render
+  render: -> @$el.html @tmpl @model.toJSON()
+
+class exports.RequestEventsView extends BB.BadassView
+  tmpl: require './templates/RequestEvents'
+  initialize: -> @listenTo @model, 'change', @render
+  render: -> @$el.html @tmpl { events: @model.get('events').reverse() }
+
+class exports.RequestNavView extends BB.BadassView
+  tmpl: require './templates/RequestNav'
+  initialize: -> @listenTo @model, 'change', @render
+  render: -> @$el.html @tmpl @model.toJSON()
 
 
-class exports.RequestFormView extends BB.ModelSaveView
+class exports.RequestView extends BB.ModelSaveView
   logging: on
   async: off
-  el: '#requestForm'
-  tmpl: require './templates/RequestForm'
-  viewData: ['status','brief','canceledReason']
+  el: '#request'
+  tmpl: require './templates/Request'
+  viewData: ['budget','pricing','status','availability','brief','canceledDetail','incompleteDetail']
   events:
     'click .save': 'save'
     'click .deleteRequest': 'deleteRequest'
   initialize: ->
-    @$el.html @tmpl {}
-    @infoView = new exports.RequestFormInfoView model: @model, tags: @tags, parentView: @
+    @$el.html @tmpl()
+    @navView = new exports.RequestNavView el: '#requestNav', model: @model
+    @eventsView = new exports.RequestEventsView el: '#events', model: @model
+    @infoView = new exports.RequestInfoView model: @model, tags: @tags, parentView: @
     @suggestionsView = new exports.RequestSuggestionsView model: @model, collection: @experts, parentView: @
     @suggestedView = new exports.RequestSuggestedView model: @model, collection: @experts, parentView: @
-    # @callsView = new exports.RequestFormCallsView model: @model, parentView: @
-    @listenTo @model, 'change', @render
-  render: ->
-    @$('.btn-review').attr 'href', "/review##{@model.get('_id')}"
+    @callsView = new exports.RequestCallsView el: '#calls', model: @model, parentView: @
   renderSuccess: (model, response, options) =>
     @$('.alert-success').fadeIn(800).fadeOut(5000)
     @collection.fetch()
-  # getViewData: ->
-  #   d = @getValsFromInputs @viewData
-  #   d
+  getViewData: ->
+    d = @getValsFromInputs @viewData
+    d.tags = @infoView.tagsInput.getViewData()
+    d
   deleteRequest: ->
     @model.destroy()
     @collection.fetch()
     router.navigate '#', { trigger: true }
     false
 
-Handlebars.registerPartial "RequestSet", require('./templates/RequestSet')
+Handlebars.registerPartial "RequestSet", require('./templates/RequestsSet')
 
 module.exports = exports

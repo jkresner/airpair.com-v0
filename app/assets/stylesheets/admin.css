@@ -5,23 +5,37 @@
 #admexpertspage #experts td { font-size:11px; }
 #admexpertspage #expertPreview { float:right;width:300px }
 
+
 #adminboundpage #requests img { max-width:32px }
 #adminboundpage #requests td { font-size:11px; }
-#adminboundpage #requestForm textarea { width:90%;height:100px }
-#adminboundpage #requestForm legend { margin-bottom:0;line-height:20px }
-#adminboundpage #requestForm .form-actions { margin-top:0;padding:15px 10px; }
-#adminboundpage #company-controls { font-weight:bold;margin-bottom:0 }
 
+#adminboundpage #request textarea { width:90%;height:100px }
+#adminboundpage #request legend { margin-bottom:0;line-height:24px;background:black;padding:4px;color:white; }
+#adminboundpage #request .form-actions { margin-top:0;padding:15px 10px; }
+#adminboundpage #request .colA { width:49%;float:left }
+#adminboundpage #request .colB { width:49%;float:right }
+
+#adminboundpage #company-controls { font-weight:bold;margin-bottom:0 }
 #adminboundpage dl { margin-bottom:6px }
 #adminboundpage dt { padding:0px 0px 4px 4px;font-weight:normal }
 #adminboundpage dd { padding:0px 0px 4px 4px; }
+#adminboundpage #events { font-size:10px; }
 #adminboundpage .contact { padding-top:10px }
 #adminboundpage .contact div { float:left;width:40px;margin-right:20px;text-align:center; }
 #adminboundpage .contact img { float:left;margin:4px 0px 8px 0px; }
 #adminboundpage .contact dl { overflow:hidden;line-height:14px }
 #adminboundpage .contact dt { display:inline-block;font-weight:normal;width:10%;line-height:14px }
 #adminboundpage .contact dd { display:inline-block;width:78%;padding:0px; }
-
+#adminboundpage #suggestions { margin-bottom:30px;}
+#adminboundpage #suggestions .nav-pills { padding-top:10px }
+#adminboundpage .suggestion { float:left;margin-bottom:6px }
+#adminboundpage .suggestion .pic { width:40px;margin:2px;float:left; }
+#adminboundpage .suggestion .deets { overflow:hidden;height:76px }
+#adminboundpage .suggestion .fullName { font-size:9px;line-height:12px }
+#adminboundpage .suggestion .links { width:50%;margin:0 4px 0px 0px;float:right; }
+#adminboundpage .suggestion .tags { padding:1px 2px!important;clear:both;height:100px;overflow:hidden; }
+#adminboundpage .suggestion .label-tag { padding:0px 2px 1px 2px;font-size:9px;margin-bottom:1px }
+#adminboundpage .suggestion .add-suggestion { width:78px; }
 #adminboundpage .suggested { border-top:solid 0.5px #d3d3d3;min-height:100px }
 #adminboundpage .suggested hr { margin:0; }
 #adminboundpage .suggested .pic { width:40px;margin:0;float:left; }
@@ -32,22 +46,8 @@
 #adminboundpage .suggested .links .zocial:before { font: 60%/1.5 zocial; }
 #adminboundpage .suggested .tags { padding:1px 2px;float:right; }
 #adminboundpage .suggested .label-tag { padding:0px 2px 1px 2px;font-size:9px; }
-
 #adminboundpage .suggested .email { float:right }
 #adminboundpage .suggested .delete { float:right }
 #adminboundpage .suggested .status { float:right;margin:7px; }
 #adminboundpage .suggested .btn { margin:3px 0px 0 3px;}
 #adminboundpage .suggested p { clear:both; }
-
-#adminboundpage #suggestions { margin-bottom:30px;}
-#adminboundpage #suggestions .nav-pills { padding-top:10px }
-
-
-#adminboundpage .suggestion { float:left;margin-bottom:6px }
-#adminboundpage .suggestion .pic { width:40px;margin:2px;float:left; }
-#adminboundpage .suggestion .deets { overflow:hidden;height:76px }
-#adminboundpage .suggestion .fullName { font-size:9px;line-height:12px }
-#adminboundpage .suggestion .links { width:50%;margin:0 4px 0px 0px;float:right; }
-#adminboundpage .suggestion .tags { padding:1px 2px!important;clear:both;height:100px;overflow:hidden; }
-#adminboundpage .suggestion .label-tag { padding:0px 2px 1px 2px;font-size:9px;margin-bottom:1px }
-#adminboundpage .suggestion .add-suggestion { width:78px; }

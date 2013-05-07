@@ -1,0 +1,19 @@
+<legend>Log</legend>
+<table class="table table-striped table-events">
+  <thead>
+    <tr>
+      <th>Time</th>
+      <th>Name</th>
+      <th>By</th>
+    </tr>
+  </thead>
+  <tbody>
+{{#each events}}
+  <tr>
+    <td>{{utc}}</td>
+    <td>{{name}}</td>
+    <td>{{by}}</td>
+  </tr>
+{{/each}}
+  </tbody>
+</table>
