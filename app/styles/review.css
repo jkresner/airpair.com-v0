@@ -1,7 +1,17 @@
 #reviewpage { }
 #reviewpage .main { }
-#reviewpage .company-info { float:left;width:400px;margin-right:60px; }
-#reviewpage .request-info { float:left;width:800px }
+#reviewpage .info { width:47%;float:left; }
+#reviewpage .suggestions { min-height:800px;width:47%;float:right;background:white;padding:0px 20px; }
+#reviewpage .suggestions .suggestionInfo { float:left;width:200px; }
+#reviewpage .suggestions .suggestionInfo .label { padding:8px 20px; }
+#reviewpage .suggestions .expert { float:right;margin-bottom:20px;  }
+#reviewpage .suggestions hr { clear:both;}
+#reviewpage .suggestions .well { width:236px; }
+#reviewpage .suggestions .well h4 { margin-top:0; }
+#reviewpage .suggestions .well select { width:230px }
+#reviewpage .suggestions .well textarea { width:220px;height:100px;font-size:11px; }
+#reviewpage .suggestions .well hr { margin-bottom:0; }
+#reviewpage .suggestions .well .button { width:188px; }
 
 #reviewpage dl { margin:0 0 6px 0 }
 #reviewpage dt { padding:6px 0px 2px 4px;font-weight:bold }
@@ -12,5 +22,4 @@
 #reviewpage .contact dl { overflow:hidden;line-height:14px }
 #reviewpage .contact dt { display:inline-block;font-weight:normal;width:12%;line-height:14px;color:gray; }
 #reviewpage .contact dd { display:inline-block;width:78%;padding:0px; }
-
 #reviewpage .request-info label { font-weight:bold }

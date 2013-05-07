@@ -1,4 +1,9 @@
-<div class="company-info">
+
+<div class="info">
+  <h2>Request info</h2>
+
+  {{#if isOwner}}<div><label>Budget</label> {{budget}}/{{pricing}} = ${{ total }} p.h.</div>{{/if}}
+
    {{#with company}}
    <dl>
     <dt>Company</dt>
@@ -31,56 +36,18 @@
     </dd>
   </dl>
   {{/with}}
-</div>
 
-<div class="request-info">
-  <div>{{ created }}</div>
-  <div><label>Status</label> <span class="label label-status label-{{ status }}">{{ status }}</a></div>
-  <div><label>Tags</label>
+  <div><label><b>Availability</b></label>
+    {{availability}}</div>
+  <br />
+  <div><label><b>Brief</b></label>
     {{#each tags}}
       <span class="label label-tag">{{short}}</span>
     {{/each}}
-  </div>
-  <div class="price"><label>Budget</label> {{budget}}</div>
-  <div class="price"><label>Pricing</label> {{pricing}}</div>
-  <div><label>Brief</label> {{brief}}</div>
+    <br />
+    {{brief}}</div>
 </div>
 
-<hr style="clear:both" />
-
-<div class="suggestions">
-  {{#unless suggested}} No experts suggested for this request yet ... {{/unless}}
-  {{#each suggested}}
-    {{#with expert}}
-
-
-      <div class="expertMini suggestion">
-        <div class="deets">
-
-          <div class="fullName">
-            {{ name }}
-            {{#if username }}<br />@{{ username }}
-          {{/if}}
-          </div>
-          <hr />
-
-          <img src="{{ pic }}?s=240" class="pic" />
-
-          <div class="links">
-            {{> DevLinks }}
-          </div>
-
-        </div>
-
-        <div class="tags">
-          {{#each tags }}
-            <span class="label label-tag">{{ short }}</span>
-          {{/each }}
-        </div>
-      </div>
-
-
-    {{/with}}
-  {{/each}}
 </div>
 
+<div class="suggestions"></div>

@@ -45,7 +45,7 @@ class exports.ExpertView extends BB.BadassView
   initialize: (args) ->
     @listenTo @model, 'change', @render
   render: ->
-    d = (_.extend @model.toJSON(), { hasLinks: @model.hasLinks() } )
+    d = (_.extend @model.toJSON(), { hasNoLinks: !@model.hasLinks() } )
     @$el.html @tmpl d
     @
 
