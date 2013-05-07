@@ -1,10 +1,86 @@
-<div>{{ created }}</div>
-<div><span class="label label-status label-{{ status }}">{{ status }}</a></div>
-<div{{ contactName }} / {{ company.name }}></div>
-<div>
-  {{#each tags}}
-    <span class="label label-tag">{{short}}</span>
+<div class="company-info">
+   {{#with company}}
+   <dl>
+    <dt>Company</dt>
+    <dd>{{name}}</dd>
+    {{#if url}}
+    <dt style="display:none">Url</dt>
+    <dd style="font-weight:normal"><a href="http://{{ url }}" target="_blank">http://{{ url }}</a></dd>
+    {{/if}}
+    <dt style="display:none">About</dt>
+    <dd>{{about}}}</dd>
+    <dt>Contact</dt>
+    <dd class="contact">
+      {{#each contacts}}
+
+      <div>
+        <img src="{{pic}}" />
+      </div>
+
+      <dl>
+        <dt>Name</dt>
+        <dd>{{fullName}}</dd>
+        <dt>Email</dt>
+        <dd>{{email}}</dd>
+        <dt>Gmail</dt>
+        <dd>{{gmail}}</dd>
+        <dt>Twitter</dt>
+        <dd>{{twitter}}</dd>
+      </dl>
+      {{/each}}
+    </dd>
+  </dl>
+  {{/with}}
+</div>
+
+<div class="request-info">
+  <div>{{ created }}</div>
+  <div><label>Status</label> <span class="label label-status label-{{ status }}">{{ status }}</a></div>
+  <div><label>Tags</label>
+    {{#each tags}}
+      <span class="label label-tag">{{short}}</span>
+    {{/each}}
+  </div>
+  <div class="price"><label>Budget</label> {{budget}}</div>
+  <div class="price"><label>Pricing</label> {{pricing}}</div>
+  <div><label>Brief</label> {{brief}}</div>
+</div>
+
+<hr style="clear:both" />
+
+<div class="suggestions">
+  {{#unless suggested}} No experts suggested for this request yet ... {{/unless}}
+  {{#each suggested}}
+    {{#with expert}}
+
+
+      <div class="expertMini suggestion">
+        <div class="deets">
+
+          <div class="fullName">
+            {{ name }}
+            {{#if username }}<br />@{{ username }}
+          {{/if}}
+          </div>
+          <hr />
+
+          <img src="{{ pic }}?s=240" class="pic" />
+
+          <div class="links">
+            {{> DevLinks }}
+          </div>
+
+        </div>
+
+        <div class="tags">
+          {{#each tags }}
+            <span class="label label-tag">{{ short }}</span>
+          {{/each }}
+        </div>
+      </div>
+
+
+    {{/with}}
   {{/each}}
 </div>
-<div></div>
-<div></div>
+

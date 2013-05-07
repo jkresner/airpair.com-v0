@@ -1,6 +1,7 @@
 exports = {}
 BB = require './../../lib/BB'
 M = require './Models'
+SV = require './../shared/Views'
 
 #############################################################################
 ##  To render requests
@@ -13,8 +14,10 @@ class exports.RequestInfoView extends BB.BadassView
   initialize: (args) ->
     @model.on 'change', @render, @
   render: ->
-    @$el.html @tmpl @model.toJSON()
+    if @model.get('company')?
+      @$el.html @tmpl @model.toJSON()
     @
+
 
 
 module.exports = exports
