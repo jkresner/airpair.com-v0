@@ -304,7 +304,7 @@ describe "REST api requests", ->
           expect( d.events[1].name ).to.equal "customer expert review"
           expect( d.events[1].by.name ).to.equal 'Jonathon Kresner'
 
-          expect( d.suggested[0].expertStatus ).to.equal = ups.expertStatus
+          expect( d.suggested[0].expertStatus ).to.equal = 'unwanted'
           expect( d.suggested[0].customerFeedback ).to.equal = ups.customerFeedback
           expect( d.suggested[0].customerRating ).to.equal = ups.customerRating
 

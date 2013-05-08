@@ -1,47 +1,6 @@
 <h2>Suggested experts</h2>
 <br />
 
-{{#unless suggested}} No experts suggested for this request yet ... {{/unless}}
-
-{{#each suggested}}
-  <div class="suggestionInfo">
-    <dl>
-      <dt>Status</dt>
-      <dd><span class="label label-{{ expertStatus }}">{{ expertStatus }}</span></dd>
-      <dt>Contact</dt>
-      <dd style="font-size:10px">{{#each events}}{{ utc }} {{name}}{{/each}}</dd>
-      {{#if expertFeedback}}
-        <dt>Expert feedback</dt>
-        <dd>{{ expertRating }}/5 {{ expertFeedback }}</dd>
-        <dt>Comment</dt>
-        <dd>{{ expertComment }}</dd>
-        <dt>Availability</dt>
-        <dd> ?? </dd>
-      {{/if}}
-
-
-      <div class="well customerFeedback" {{#if customerFeedback}}style="display:none"{{/if}}>
-        <h4>Suggestion feedback</h4>
-
-          <select name="customerRating">
-            <option val="5">5 - Exactly who I want</option>
-            <option val="4">4 - Looks like a good fit</option>
-            <option val="3">3 - They should work out</option>
-            <option val="2">2 - I'm really not sure</option>
-            <option val="1">1 - Is this a mistake?</option>
-          </select>
-
-          <textarea name="customerFeedback" placeholder="What you think of this suggestion?">{{ customerFeedback }}</textarea>
-
-          <a href="#customerFeedback" class="button saveCustomerFeedback">Save feedback</a>
-          <hr />
-      </div>
-
-    </dl>
-
-  </div>
-  {{#with expert}}
-    {{> Expert }}
-    <hr />
-  {{/with}}
-{{/each}}
+<ul>
+{{#unless suggested}}<li>No experts suggested for this request yet ... </li>{{/unless}}
+</ul>

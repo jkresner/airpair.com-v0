@@ -8,21 +8,44 @@ SV = require './../shared/Views'
 #############################################################################
 
 
+class exports.RequestCustomerSuggestionView extends BB.ModelSaveView
+  tagName: 'li'
+  tmpl: require './templates/CustomerSuggestion'
+  events:
+    'click .saveFeedback': 'save'
+  initialize: (args) ->
+    @model.set requestId: @request.get('_id'), custPic: @request.get('company').contacts[0].pic
+  render: ->
+    @$el.html @tmpl @model.toJSON()
+    @$('[name="customerRating"]').on 'change', @toggleUnwatedCheckbox
+    @
+  getViewData: (e) ->
+    d = @getValsFromInputs ['customerRating', 'customerFeedback']
+    if @$('[name="unwanted"]').is(':checked') then d.expertStatus = 'unwanted'
+    $log 'saving cust feedback yeah', d
+    d
+  toggleUnwatedCheckbox: =>
+    rating = parseInt @$('[name="customerRating"]').val()
+    @$('.unwanted').toggle rating < 3
+  renderSuccess: (model, resp, options) =>
+    @request.set model.attributes
+
+
 class exports.RequestCustomerSuggestionsView extends BB.BadassView
-  logging: on
-  el: '.suggestions'
+  el: '#suggestions'
   tmpl: require './templates/CustomerSuggestions'
   initialize: (args) ->
     @model.on 'change', @render, @
   render: ->
-    $log 'ek', @$el
     @$el.html @tmpl @model.toJSON()
+    for s in @model.get('suggested')
+      args = model: new M.Suggestion(s), request: @model
+      @$('ul').append new exports.RequestCustomerSuggestionView(args).render().el
     @
 
 
-class exports.RequestInfoView extends BB.BadassView
-  logging: on
-  el: '#requestInfo'
+class exports.RequestView extends BB.BadassView
+  el: '#request'
   tmpl: require './templates/Info'
   initialize: (args) ->
     @model.on 'change', @render, @
@@ -34,7 +57,7 @@ class exports.RequestInfoView extends BB.BadassView
       if true
         @suggestionsView = new exports.RequestCustomerSuggestionsView(model: @model, session: @session).render().el
       else
-        @$('.suggestions').html 'please leave your feedback'
+        @$('#suggestions').html 'please leave your feedback'
     @
   hrTotal: ->
     tot = @model.get('budget')
