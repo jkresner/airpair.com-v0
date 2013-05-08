@@ -5,6 +5,11 @@ TagViews = require './../tags/Views'
 
 Handlebars.registerPartial "DevLinks", require('./templates/DevLinks')
 
+Handlebars.registerHelper "localDateTime", (phoneNumber) ->
+  $log 'moment', moment
+  day = moment phoneNumber
+  day.local().format("MMM DD HH:mm");
+
 
 exports.TagsInputView = TagViews.TagsInputView
 
