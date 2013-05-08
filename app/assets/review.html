@@ -22,7 +22,6 @@
   </nav>
 
   <div id="request" class="main">
-    <div id="requestInfo"></div>
   </div>
 
 </body>
@@ -37,7 +36,7 @@
 
         new SPA.Page(pagedata, function(page) {
           window.router = new SPA.Router({ page: page });
-          Backbone.history.start();
+          Backbone.history.start({pushState: true, root: "/review"});
         });
     }
 
