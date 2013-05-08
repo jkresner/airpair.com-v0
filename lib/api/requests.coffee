@@ -138,10 +138,10 @@ class RequestApi extends CRUDApi
     data = { suggested: r.suggested, events: r.events }
     sug = und.find r.suggested, (s) -> s.expert.userId == req.user._id
     sug.events.push @newEvent(req, "expert updated")
-    sug.expertStatus = ups.expertStatus
-    sug.expertFeedback = ups.expertFeedback
     sug.expertRating = ups.expertRating
+    sug.expertFeedback = ups.expertFeedback
     sug.expertComment = ups.expertComment
+    sug.expertStatus = ups.expertStatus
     sug.expertAvailability = ups.expertAvailability
 
     data.events.push @newEvent req, "expert reviewed", ups

@@ -1,25 +1,17 @@
 <div class="suggestionInfo">
   <dl>
     <dt style="padding-top:0">Status <span class="label label-{{ expertStatus }}">{{ expertStatus }}</span></dt>
-    <dt style="display:none">Contact</dt>
+    <dt style="display:none">Events</dt>
     <dd style="font-size:10px;margin-left:0">{{#each events}}<i>{{ localDateTime utc }}</i> {{name}}<br />{{/each}}</dd>
-    {{#if expertFeedback}}
-      <dt>Expert feedback</dt>
-      <dd>{{ expertRating }}/5 {{ expertFeedback }}</dd>
-      <dt>Comment</dt>
-      <dd>{{ expertComment }}</dd>
-      <dt>Availability</dt>
-      <dd> ?? </dd>
-    {{/if}}
+
     <hr />
 
     {{#if customerFeedback}}
       <div class="feedback">
         <label><b>Your feedback</b></label>
-        <img src="{{custPic}}"  />
+        <img src="{{custPic}}" class="user" />
         <div><b>{{ customerRating }}/5</b><br />
         {{ customerFeedback }}</div>
-
       </div>
     {{/if}}
     <div class="well customerFeedback" {{#if customerFeedback}}style="display:none"{{/if}}>
@@ -44,15 +36,20 @@
         <hr />
     </div>
 
-    {{#if expertFeedback}}
+    {{#if expertFeedback }}
       <div class="feedback">
         <label><b>Expert feedback</b></label>
         <img src="{{expert.pic}}" />
-        <div><b>{{ customerRating }}/5</b><br />
-        {{ customerFeedback }}</div>
-
+        <div><b>{{ expertRating }}/5</b><br />
+        {{ expertFeedback }}</div>
+        <br />
+        <hr />
+        {{ expertComment }}
+        <div><b>Availability</b><br />
+        {{ expertAvailability }}</div>
       </div>
     {{/if}}
+
   </dl>
 
 </div>

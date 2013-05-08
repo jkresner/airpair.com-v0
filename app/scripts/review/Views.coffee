@@ -8,9 +8,35 @@ SV = require './../shared/Views'
 #############################################################################
 
 
-class exports.RequestCustomerSuggestionView extends BB.ModelSaveView
+class exports.SuggestionForExpertView extends BB.ModelSaveView
+  tmpl: require './templates/SuggestionForExpert'
+  events:
+    'click .saveFeedback': 'save'
+  initialize: (args) ->
+    @model.set requestId: @request.get('_id'), custPic: @request.get('company').contacts[0].pic
+  render: ->
+    @$el.html @tmpl @model.toJSON()
+    @$('[name="expertStatus"]').on 'change', @toggleSaveButton
+    @
+  getViewData: (e) ->
+    d = @getValsFromInputs ['expertRating', 'expertFeedback', 'expertStatus', 'expertComment', 'expertAvailability']
+    d
+  toggleSaveButton: =>
+    expertStatus = @$('[name="expertStatus"]').val()
+    $log 'expertStatus', expertStatus
+    @$('.hideShowSave').toggle expertStatus != ''
+    if expertStatus is 'available'
+      @$('[name="expertComment"]').attr 'placeholder', "Leave a comment for the customer on why they should pick you for this airpair."
+    else if expertStatus is 'abstained'
+      @$('[name="expertComment"]').attr 'placeholder', "Leave a comment for the customer on why you won't take this airpair. E.g. you're not available ..."
+      @$('[name="expertAvailability"]').hide()
+  renderSuccess: (model, resp, options) =>
+    @request.set model.attributes
+
+
+class exports.SuggestionForCustomerView extends BB.ModelSaveView
   tagName: 'li'
-  tmpl: require './templates/CustomerSuggestion'
+  tmpl: require './templates/SuggestionForCustomer'
   events:
     'click .saveFeedback': 'save'
   initialize: (args) ->
@@ -40,7 +66,7 @@ class exports.RequestCustomerSuggestionsView extends BB.BadassView
     @$el.html @tmpl @model.toJSON()
     for s in @model.get('suggested')
       args = model: new M.Suggestion(s), request: @model
-      @$('ul').append new exports.RequestCustomerSuggestionView(args).render().el
+      @$('ul').append new exports.SuggestionForCustomerView(args).render().el
     @
 
 
@@ -54,10 +80,14 @@ class exports.RequestView extends BB.BadassView
       isOwner = @model.get('userId') == @session.get('_id')
       tmplData = _.extend @model.toJSON(), { isOwner: isOwner, total: @hrTotal() }
       @$el.html @tmpl tmplData
-      if true
+      if isOwner
         @suggestionsView = new exports.RequestCustomerSuggestionsView(model: @model, session: @session).render().el
       else
-        @$('#suggestions').html 'please leave your feedback'
+        s = _.find @model.get('suggested'), (m) => m.expert.userId == @session.get('_id')
+        $log 's', s
+        if !s? then @$('#suggestions').html 'Not the expert or customer?'
+        args = model: new M.Suggestion(s), request: @model
+        @$('#suggestions').append new exports.SuggestionForExpertView(args).render().el
     @
   hrTotal: ->
     tot = @model.get('budget')
@@ -68,6 +98,6 @@ class exports.RequestView extends BB.BadassView
 
 
 Handlebars.registerPartial "Expert", require('./../shared/templates/Expert')
-
+Handlebars.registerPartial "ExpertMini", require('./../shared/templates/ExpertMini')
 
 module.exports = exports
