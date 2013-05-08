@@ -19,7 +19,7 @@ module.exports = (app) ->
     if !req.isAuthenticated() then file r, 'homepage' else file r, 'dashboard'
 
   app.get '/dashboard', auth.LoggedIn(), (req, r)-> file r, 'dashboard'
-  app.get '/review', auth.LoggedIn(), (req, r)-> file r, 'review'
+  app.get '/review*', auth.LoggedIn(), (req, r)-> file r, 'review'
 
   # admin pages
   app.get '/adm/tags', auth.LoggedIn(), auth.Admin(), (req, r) -> file r, 'adm/tags'

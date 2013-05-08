@@ -10,7 +10,11 @@
   <img src="{{ pic }}?s=240" class="pic" />
 
   <div class="links">
-    {{> DevLinks }}
+    {{#if hasNoLinks}}
+      <i>Expert profile empty</i>
+    {{else}}
+      {{> DevLinks }}
+    {{/if}}
   </div>
 
   {{#if tags }}

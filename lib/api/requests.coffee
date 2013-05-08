@@ -11,7 +11,8 @@ class RequestApi extends CRUDApi
   model: require './../models/request'
 
   constructor: (app, route) ->
-    app.get     "/api/admin/#{route}", auth.AdminApi(), @admin
+    app.get  "/api/admin/#{route}", auth.AdminApi(), @admin
+    app.put  "/api/#{route}/:id/suggestion", auth.LoggedInApi(), @updateSuggestion
     super app, route
 
 ###############################################################################
@@ -31,10 +32,27 @@ class RequestApi extends CRUDApi
       res.send r
 
 
+  addViewEvent: (req, res, r, evt) =>
+    up = { events: und.clone r.events }
+    up.events.push evt
+    if evt.name is "expert view"
+      up.suggested = r.suggested
+      sug = und.find r.suggested, (s) -> und.objectIdsEqual s.expert.userId, evt.by.id
+      sug.events.push @newEvent(req, "viewed")
+    @model.findByIdAndUpdate r._id, up, (ee, rr) ->
+      res.send rr
+
+
   detail: (req, res) =>
-    @model.findOne { _id: req.params.id }, (e, r) =>
-      if !r? then return res.send(400)
-      if role.isAdmin(req) || role.isRequestOwner(req, r) || role.isRequestExpert(req, r)
+    rid = req.params.id
+    @model.findOne { _id: rid }, (e, r) =>
+      if !r?
+        res.send(400)
+      else if role.isRequestExpert req, r
+        @addViewEvent req, res, r, @newEvent(req, "expert view")
+      else if role.isRequestOwner req, r
+        @addViewEvent req, res, r, @newEvent(req, "customer view")
+      else if role.isAdmin req
         res.send r
       else
         res.send(400)
@@ -42,14 +60,18 @@ class RequestApi extends CRUDApi
 
   create: (req, res) =>
     req.body.userId = req.user._id
-    req.body.events = [{ name:'created', utc: @utcNow()}]
+    req.body.events = [@newEvent(req, "created")]
     req.body.status = 'received'
-    new @model( req.body ).save (e, r) -> res.send r
+    new @model( req.body ).save (e, r) ->
+      if e then $log 'e', e
+      res.send r
 
 
   update: (req, res) =>
     search = _id: req.params.id
-    @model.find search, (e, r) =>
+    evts = []
+
+    @model.findOne search, (e, r) =>
 
       # stop users updating other users requests (need a better solution!)
       if !(role.isAdmin(req) || role.isRequestOwner(req, r))
@@ -61,21 +83,86 @@ class RequestApi extends CRUDApi
       if data.status is "canceled" && !data.canceledDetail
         return @tFE res, 'Update', 'canceledDetail', 'Must supply canceled reason'
       else if r.status != "canceled" && data.status is "canceled"
-        data.events.push @newEvent(req, "canceled")
+        evts.push @newEvent req, "canceled"
 
       if data.status is "incomplete" && !data.incompleteDetail
         return @tFE res, 'Update', 'incompleteDetail', 'Must supply incomplete reason'
       else if r.status != "incomplete" && data.status is "incomplete"
-        data.events.push @newEvent(req, "incomplete")
+        evts.push @newEvent req, "incomplete"
 
       for s in req.body.suggested
+
         if !s.events?
-          events: [{ name:'created', utc: @utcNow()}]
-          data.events.push @newEvent(req, "suggested #{s.username}")
+          data.status = "review"
+          reqEvt = @newEvent(req, "suggested #{s.expert.username}")
+          evts.push reqEvt
+
+          s.expertStatus = "waiting"
+          s.events = [ @newEvent(req, "first contacted") ]
+
+      if r.suggested?
+        for s in r.suggested
+          match = und.find req.body.suggested, (sug) ->
+            und.objectIdsEqual sug._id, s._id
+          if !match?
+            $log 'pushing removed', s._id, match
+            evts.push @newEvent(req, "removed suggested #{s.expert.username}")
+
+      if evts.length is 0
+        evts.push @newEvent req, "updated"
+
+      data.events.push.apply(data.events, evts)
 
       @model.findByIdAndUpdate req.params.id, data, (ee, rr) ->
         res.send rr
 
+
+  updateSuggestion: (req, res) =>
+    userId = req.user._id
+    @model.findOne { _id: req.params.id }, (e, r) =>
+      # $log 'updateSuggestion', req.params.id, 'owner', r.userId, 'session', userId
+      if role.isRequestOwner(req, r)
+        # $log 'byCustomer', userId
+        @updateSuggestionByCustomer(req, res, r)
+      else if role.isRequestExpert(req, r)  || role.isAdmin(req)
+        # $log 'byExpert', userId
+        @updateSuggestionByExpert(req, res, r)
+      else
+        # $log 'forbidden'
+        res.send 403
+
+
+  # TODO, add some validation!!
+  updateSuggestionByExpert: (req, res, r) =>
+    ups = req.body
+    data = { suggested: r.suggested, events: r.events }
+    sug = und.find r.suggested, (s) -> s.expert.userId == req.user._id
+    sug.events.push @newEvent(req, "expert updated")
+    sug.expertRating = ups.expertRating
+    sug.expertFeedback = ups.expertFeedback
+    sug.expertComment = ups.expertComment
+    sug.expertStatus = ups.expertStatus
+    sug.expertAvailability = ups.expertAvailability
+
+    data.events.push @newEvent req, "expert reviewed", ups
+
+    @model.findByIdAndUpdate req.params.id, data, (ee, rr) ->
+      res.send rr
+
+
+  updateSuggestionByCustomer: (req, res, r) =>
+    ups = req.body
+    data = { suggested: r.suggested, events: r.events }
+    sug = und.find r.suggested, (s) -> s.expert.userId == ups.expert.userId
+    sug.events.push @newEvent(req, "customer updated")
+    sug.customerRating = ups.customerRating
+    sug.customerFeedback = ups.customerFeedback
+    if ups.expertStatus? then sug.expertStatus = ups.expertStatus
+
+    data.events.push @newEvent req, "customer expert review", ups
+
+    @model.findByIdAndUpdate req.params.id, data, (ee, rr) ->
+      res.send rr
 
 
 module.exports = (app) -> new RequestApi app,'requests'

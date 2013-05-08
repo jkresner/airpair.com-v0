@@ -1,40 +1,32 @@
-{{#if hasLinks}}
+{{#if homepage}}
+<a href="http://{{ homepage }}" target="_blank" class="zocial guest icon"></a>
+{{/if}}
 
-  {{#if homepage}}
-  <a href="http://{{ homepage }}" target="_blank" class="zocial guest icon"></a>
-  {{/if}}
-
-  {{#if gh}}
-  <a href="//github.com/{{ gh.username }}" target="_blank" class="zocial github icon"></a>
-  {{/if}}
+{{#if gh}}
+<a href="//github.com/{{ gh.username }}" target="_blank" class="zocial github icon"></a>
+{{/if}}
 
 
-  {{#if so}}
-  <a href="//stackoverflow.com/users/{{ so.link }}" target="_blank" class="zocial stackoverflow icon"></a>
-  {{/if }}
+{{#if so}}
+<a href="//stackoverflow.com/users/{{ so.link }}" target="_blank" class="zocial stackoverflow icon"></a>
+{{/if }}
 
-  {{#if bb}}
-  <a href="//bitbucket.org/{{ bb.id }}" target="_blank" class="zocial bitbucket icon"></a>
-  {{/if}}
+{{#if bb}}
+<a href="//bitbucket.org/{{ bb.id }}" target="_blank" class="zocial bitbucket icon"></a>
+{{/if}}
 
-  {{#if in}}
-  <a href="//linkedin.com/profile/view?id={{ in.id }}" target="_blank" class="zocial linkedin icon"></a>
-  {{/if}}
+{{#if in}}
+<a href="//linkedin.com/profile/view?id={{ in.id }}" target="_blank" class="zocial linkedin icon"></a>
+{{/if}}
 
-  {{#if tw}}
-  <a href="//twitter.com/{{ tw.username }}" target="_blank" class="zocial twitter icon"></a>
-  {{/if}}
+{{#if tw}}
+<a href="//twitter.com/{{ tw.username }}" target="_blank" class="zocial twitter icon"></a>
+{{/if}}
 
-  {{#if sideproject}}
-  <a href="//{{ sideproject }}" target="_blank" class="zocial pinboard icon">{{ sideproject }}</a>
-  {{/if}}
+{{#if sideproject}}
+<a href="//{{ sideproject }}" target="_blank" class="zocial pinboard icon">{{ sideproject }}</a>
+{{/if}}
 
-  {{#if other}}
-  <a href="//{{ other }}" target="_blank" class="zocial pinboard icon">{{ other }}</a>
-  {{/if}}
-
-{{else}}
-
-  <i>Expert profile empty</i>
-
+{{#if other}}
+<a href="//{{ other }}" target="_blank" class="zocial pinboard icon">{{ other }}</a>
 {{/if}}
