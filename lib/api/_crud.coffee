@@ -62,9 +62,11 @@ class CRUDApi
     res.send 400, errors.getFieldError(msg, attr, attrMsg)
 
 
-  newEvent: (req, name) ->
+  newEvent: (req, name, data) ->
     byDisplayName = req.user.google.displayName if req.user
-    name: name, by: { id: req.user._id, name: byDisplayName }, utc: @utcNow()
+    evt = name: name, by: { id: req.user._id, name: byDisplayName }, utc: @utcNow()
+    if data? then evt.data = data
+    evt
 
 
 module.exports = CRUDApi
