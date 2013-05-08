@@ -64,7 +64,7 @@ class CRUDApi
 
   newEvent: (req, name) ->
     byDisplayName = req.user.google.displayName if req.user
-    name: name, by: byDisplayName, utc: @utcNow()
+    name: name, by: { id: req.user._id, name: byDisplayName }, utc: @utcNow()
 
 
 module.exports = CRUDApi
