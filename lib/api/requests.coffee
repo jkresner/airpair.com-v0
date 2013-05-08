@@ -12,7 +12,7 @@ class RequestApi extends CRUDApi
 
   constructor: (app, route) ->
     app.get  "/api/admin/#{route}", auth.AdminApi(), @admin
-    # app.put  "/api/#{route}/suggestion", auth.LoggedInApi(), @updateSuggestionByExpert
+    app.put  "/api/#{route}/:id/suggestion", auth.LoggedInApi(), @updateSuggestion
     super app, route
 
 ###############################################################################
@@ -115,24 +115,50 @@ class RequestApi extends CRUDApi
       @model.findByIdAndUpdate req.params.id, data, (ee, rr) ->
         res.send rr
 
+  updateSuggestion: (req, res) =>
+    userId = req.user._id
+    @model.findOne { _id: req.params.id }, (e, r) =>
+      # $log 'updateSuggestion', req.params.id, 'owner', r.userId, 'session', userId
+      if role.isRequestOwner(req, r)
+        # $log 'byCustomer', userId
+        @updateSuggestionByCustomer(req, res, r)
+      else if role.isRequestExpert(req, r)  || role.isAdmin(req)
+        # $log 'byExpert', userId
+        @updateSuggestionByExpert(req, res, r)
+      else
+        # $log 'forbidden'
+        res.send 403
 
-  # updateSuggestionByExpert: (req, res) =>
-  #   ups = req.body
-  #   @model.findOne { _id: rid }, (e, r) =>
-  #     if role.isRequestExpert(req, r) || role.isAdmin(req)
-  #       data = { suggested: r.suggested }
-  #       sug = und.find r.suggested, (s) -> s.expert.userId == evt.by.id
-  #       sug.events.push @newEvent(req, "expert updated")
-  #       sug.expertStatus = ups.expertStatus
-  #       sug.expertFeedback = ups.expertFeedback
-  #       sug.expertRating = ups.expertRating
-  #       sug.expertComment = ups.expertComment
-  #       sug.expertAvailability = ups.expertAvailability
+  # TODO, add some validation!!
+  updateSuggestionByExpert: (req, res, r) =>
+    ups = req.body
+    data = { suggested: r.suggested, events: r.events }
+    sug = und.find r.suggested, (s) -> s.expert.userId == req.user._id
+    sug.events.push @newEvent(req, "expert updated")
+    sug.expertStatus = ups.expertStatus
+    sug.expertFeedback = ups.expertFeedback
+    sug.expertRating = ups.expertRating
+    sug.expertComment = ups.expertComment
+    sug.expertAvailability = ups.expertAvailability
 
-  #       @model.findByIdAndUpdate req.params.id, data, (ee, rr) ->
-  #         res.send rr
-  #     else
-  #       res.send 403
+    data.events.push @newEvent req, "expert reviewed", ups
+
+    @model.findByIdAndUpdate req.params.id, data, (ee, rr) ->
+      res.send rr
+
+  updateSuggestionByCustomer: (req, res, r) =>
+    ups = req.body
+    data = { suggested: r.suggested, events: r.events }
+    sug = und.find r.suggested, (s) -> s.expert.userId == ups.expert.userId
+    sug.events.push @newEvent(req, "customer updated")
+    sug.customerRating = ups.customerRating
+    sug.customerFeedback = ups.customerFeedback
+    if ups.expertStatus? then sug.expertStatus = ups.expertStatus
+
+    data.events.push @newEvent req, "customer expert review", ups
+
+    @model.findByIdAndUpdate req.params.id, data, (ee, rr) ->
+      res.send rr
 
 
 module.exports = (app) -> new RequestApi app,'requests'

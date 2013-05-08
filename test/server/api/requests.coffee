@@ -249,7 +249,7 @@ describe "REST api requests", ->
 
 
   it "can update suggestion by expert", (done) ->
-    passportMock.setSession 'jk'
+    passportMock.setSession 'admin'
     req = data.requests[3]
     req.suggested = [ data.requests[4].suggested[0] ]
     req.suggested[0].expert.userId = "41708da81dd90b04cddccc9e"
@@ -257,6 +257,8 @@ describe "REST api requests", ->
     req.suggested[0].events = [{}]
 
     createReq req, (up) =>
+      passportMock.setSession 'jk'
+
       ups = expertStatus: 'abstained', expertFeedback: 'not for me', expertRating: 1, expertComment: 'good luck', expertAvailability: 'I can do tonight'
 
       request(app)
