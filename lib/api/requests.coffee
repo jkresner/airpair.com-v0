@@ -37,7 +37,7 @@ class RequestApi extends CRUDApi
     up.events.push evt
     if evt.name is "expert view"
       up.suggested = r.suggested
-      sug = und.find r.suggested, (s) -> s.expert.userId == evt.by.id
+      sug = und.find r.suggested, (s) -> und.objectIdsEqual s.expert.userId, evt.by.id
       sug.events.push @newEvent(req, "viewed")
     @model.findByIdAndUpdate r._id, up, (ee, rr) ->
       res.send rr
@@ -102,9 +102,10 @@ class RequestApi extends CRUDApi
 
       if r.suggested?
         for s in r.suggested
-
-          match = und.find req.body.suggested, (sug) -> sug._id == s._id
+          match = und.find req.body.suggested, (sug) ->
+            und.objectIdsEqual sug._id, s._id
           if !match?
+            $log 'pushing removed', s._id, match
             evts.push @newEvent(req, "removed suggested #{s.expert.username}")
 
       if evts.length is 0
@@ -114,6 +115,7 @@ class RequestApi extends CRUDApi
 
       @model.findByIdAndUpdate req.params.id, data, (ee, rr) ->
         res.send rr
+
 
   updateSuggestion: (req, res) =>
     userId = req.user._id
@@ -128,6 +130,7 @@ class RequestApi extends CRUDApi
       else
         # $log 'forbidden'
         res.send 403
+
 
   # TODO, add some validation!!
   updateSuggestionByExpert: (req, res, r) =>
@@ -145,6 +148,7 @@ class RequestApi extends CRUDApi
 
     @model.findByIdAndUpdate req.params.id, data, (ee, rr) ->
       res.send rr
+
 
   updateSuggestionByCustomer: (req, res, r) =>
     ups = req.body

@@ -15,6 +15,7 @@
 #adminboundpage #request .colA { width:49%;float:left }
 #adminboundpage #request .colB { width:49%;float:right }
 
+#adminboundpage .table-events td { padding:0 }
 #adminboundpage #company-controls { font-weight:bold;margin-bottom:0 }
 #adminboundpage dl { margin-bottom:6px }
 #adminboundpage dt { padding:0px 0px 4px 4px;font-weight:normal }

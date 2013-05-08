@@ -18,13 +18,13 @@ module.exports =
   # check google id
   isRequestOwner: (req, request) ->
     # $log 'isRequestOwner', request.userId, req.user._id
-    objectIdsEqual request.userId, req.user._id
+    und.objectIdsEqual request.userId, req.user._id
 
   # check google id
   isRequestExpert: (req, request) ->
     uid = req.user._id
     for s in request.suggested
-      if objectIdsEqual s.expert.userId, uid then return true
+      if und.objectIdsEqual s.expert.userId, uid then return true
     false
 
 

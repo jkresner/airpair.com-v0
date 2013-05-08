@@ -19,8 +19,8 @@ module.exports.Page = class Page extends SessionPage
     rfv = model: @selected, collection: @requests, tags: @tags, experts: @experts
     @requestView = new views.RequestView rfv
 
-    @experts.on 'sync', ->
-      setTimeout "router.navigate('request/518547fd350d480200000006', { trigger: true })", 100
+    # @experts.on 'sync', ->
+      # setTimeout "router.navigate('request/518547fd350d480200000006', { trigger: true })", 100
 
     @resetOrFectch @requests, pageData.requests
     @resetOrFectch @tags, pageData.tags

@@ -10,9 +10,9 @@
   <tbody>
 {{#each events}}
   <tr>
-    <td>{{utc}}</td>
+    <td>{{localDateTimeSeconds utc}}</td>
     <td>{{name}}</td>
-    <td>{{by}}</td>
+    <td>{{by.name}}</td>
   </tr>
 {{/each}}
   </tbody>

@@ -1,7 +1,7 @@
+require './../../lib/util/global'
 global.mongoose = require 'mongoose'
 global.request = require 'supertest'
 global.express = require 'express'
-global.und = require 'underscore'
 passport = require 'passport'
 passportMock = require './test-passport'
 

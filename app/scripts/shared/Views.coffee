@@ -8,7 +8,11 @@ Handlebars.registerPartial "DevLinks", require('./templates/DevLinks')
 Handlebars.registerHelper "localDateTime", (utcDateString) ->
   # $log 'moment', moment
   day = moment utcDateString
-  day.local().format("MMM DD HH:mm");
+  day.local().format("MMM DD HH:mm")
+
+Handlebars.registerHelper "localDateTimeSeconds", (utcDateString) ->
+  day = moment utcDateString
+  day.local().format("MMM DD HH:mm:ss")
 
 
 exports.TagsInputView = TagViews.TagsInputView

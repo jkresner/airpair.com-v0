@@ -1,8 +1,7 @@
 global.isProd = process.env.MONGOHQ_URL?
 console.log "in app node file", process.cwd(), 'isProd', isProd
 
-global.$log   = console.log
-global.und    = require 'underscore'
+require './lib/util/global'
 mongoose      = require 'mongoose'
 express       = require 'express'
 passport      = require 'passport'
