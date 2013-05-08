@@ -23,7 +23,7 @@ app.configure ->
   app.use express.session { secret: 'airpair, the future' }
 
   if cfg.env.mode is 'test'
-    app.use require('./test/server/test-passport').initialize(require('./test/data/users')[0])
+    app.use require('./test/server/test-passport').initialize()
   else
     app.use passport.initialize()
 

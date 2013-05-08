@@ -5,8 +5,7 @@ global.und = require 'underscore'
 passport = require 'passport'
 passportMock = require './test-passport'
 
-data =
-  users: require './../data/users'
+
 
 global.app = express()
 
@@ -18,5 +17,5 @@ app.configure ->
   app.use express.session { secret: 'airpair is the future' }
 
   # app.use passport.initialize()
-  app.use passportMock.initialize( data.users[0] )
+  app.use passportMock.initialize()
   app.use passport.session()
