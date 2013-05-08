@@ -1,7 +1,8 @@
 #reviewpage { }
 #reviewpage .main { }
-#reviewpage .info { width:47%;float:left; }
-#reviewpage .suggestions { min-height:800px;width:47%;float:right;background:white;padding:0px 20px; }
+#reviewpage h2 { font-size:22px; }
+#reviewpage .info { height:100%;width:46%;padding:0 2% 3% 2%;float:left; }
+#reviewpage .suggestions { min-height:800px;background:white;width:46%;padding:0 2% 0 2%;float:right }
 #reviewpage .suggestions .suggestionInfo { float:left;width:200px; }
 #reviewpage .suggestions .suggestionInfo .label { padding:8px 20px; }
 #reviewpage .suggestions .expert { float:right;margin-bottom:20px;  }
