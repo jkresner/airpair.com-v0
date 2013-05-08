@@ -9,7 +9,7 @@ module.exports.Page = class Page extends SessionPage
 
   initialize: (pageData) ->
     @request = new models.Request()
-    @requestInfoView = new views.RequestInfoView model: @request
+    @requestView = new views.RequestView model: @request, session: @session
 
 
 module.exports.Router = routers.ReviewRouter

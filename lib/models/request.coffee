@@ -16,9 +16,10 @@ Request status
 
 Suggestion expertStatus
 
-  waiting       : waiting to hear from the developer
-  abstained     : if developer does not want the call
-  available     : developer wants the call
+  waiting       : waiting to hear from the expert
+  abstained     : expert does not want the call
+  available     : expert wants the call
+  unwanted      : customer does not want the expert
 """
 
 Suggestion = new Schema
@@ -28,7 +29,7 @@ Suggestion = new Schema
   expertRating:       Number
   expertFeedback:     String
   expertComment:      String
-  expertAvailability: [Date]
+  expertAvailability: String     # todo change to dates
   customerRating:     Number
   customerFeedback:   String
   messageThreadId:    ObjectId

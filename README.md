@@ -98,6 +98,7 @@ Deploy:
 List of TODO v.5
 ===============================================================================
 
+- No suggested experts, signup / shared / refer
 - improve tag search
 - Show server error states for customer + expert sign in
 - Protect api calls for owners of objects

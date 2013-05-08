@@ -86,6 +86,85 @@ module.exports = [
     tags:[{"_id":"514825fa2a26ea020000001b","name":"iOS","short":"ios","soId":"ios"}]
   }
 
-  # 4) Not used
-  {},
+  # 4) Expert suggestions
+  {
+    suggested: [
+      {
+        "expert": {
+          "brief": "Bring me your hard problems! I've designed everything from video surveillance systems on military aircraft to cell phone chipsets. These days, I especially enjoy working with startups to build mobile applications that interact with cloud-based backend services. I've built around 30 iOS applications, and I'm pretty dangerous with Ruby on Rails too. Multi-system communication can be very tricky, and I have a lot of experience solving those kinds of problems.",
+          "email": "jason@ninjanetic.com",
+          "gh": { "id": 162983, "username": "jznadams", "location": null, "blog": "www.ninjanetic.com", "gravatar_id": "28ea3aeec38c19ae698e60b08694e480", "followers": 1 },
+          "gmail": "jason@ninjanetic.com",
+          "homepage": "www.ninjanetic.com",
+          "hours": "3-5",
+          "in": { "id": "inDbmDh3cp", "displayName": "Jason Adams" },
+          "name": "Jason Adams",
+          "other": "",
+          "pic": "https://secure.gravatar.com/avatar/28ea3aeec38c19ae698e60b08694e480",
+          "rate": 110,
+          "so": { "link": "" },
+          "status": "ready",
+          "timezone": "GMT-0500 (CDT)",
+          "tw": { "id": 488483083, "username": "Ninjanetic" },
+          "userId": "518477c866a6f999a465f2b0",
+          "username": "jznadams",
+          "karma": 0,
+          "tags": [
+            { "name": "Android", "short": "android", "soId": "android" },
+            { "name": "iOS", "short": "ios", "soId": "ios" },
+          ]
+        }
+      }
+      {
+        "expert": {
+          "_id": "51549f70d96db10200000062",
+          "brief": "Learning iOS Development.  Getting over iOS programming bugs or architecture decisions.  Implementing unit testing and TDD in iOS.",
+          "email": "jcamealy@gmail.com",
+          "gh": { "username": "bearMountain" },
+          "gmail": "jcamealy@gmail.com",
+          "homepage": "homebearco.com",
+          "hours": "1",
+          "name": "Jeffrey Camealy",
+          "other": "",
+          "pic": "https://lh4.googleusercontent.com/-Oy8DWLey9es/AAAAAAAAAAI/AAAAAAAAAAA/iPECpE2eK_E/photo.jpg",
+          "rate": 70,
+          "so": { "link": "888507/bearmountain" },
+          "status": "ready",
+          "timezone": "GMT-0500 (CDT)",
+          "userId": "5182a00266a6f999a465f29c",
+          "username": "bearMountain",
+          "karma": 0,
+          "tags": [ { "soId": "ios", "short": "ios", "name": "iOS", "_id": "514825fa2a26ea020000001b" } ],
+        }
+      }
+      {
+        "expert": {
+          "_id": "515b6eb4eb8547020000003e",
+          "brief": "Whatever.",
+          "email": "humphriesj@gmail.com",
+          "gh": { "id": 1637617, "username": "humphriesjm", "location": "Raleigh, NC", "blog": null, "gravatar_id": "5d8d3adbf7915863ec0a4484795923b3", "followers": 2 },
+          "gmail": "humphriesj@gmail.com",
+          "homepage": "",
+          "hours": "2",
+          "in": { "id": "GYElf7Gsqh", "displayName": "Jason Humphries" },
+          "name": "Jason Humphries",
+          "other": "",
+          "pic": "https://lh3.googleusercontent.com/-o78abg7SN1A/AAAAAAAAAAI/AAAAAAAAAl8/wyl6r45RbvU/photo.jpg",
+          "rate": 70,
+          "so": { "id": 1096751, "website_url": "http://www.linkedin.com/pub/jason-humphries/19/34b/b32", "link": "1096751/humphriesj", "reputation": 69, "profile_image": "http://www.gravatar.com/avatar/5d8d3adbf7915863ec0a4484795923b3?d=identicon&r=PG" },
+          "status": "ready",
+          "timezone": "GMT-0400 (EDT)",
+          "tw": { "id": 58227067, "username": "humphriesjm" },
+          "userId": "518283dd66a6f999a465f290",
+          "username": "humphriesjm",
+          "karma": 0,
+          "tags": [
+            { "name": "heroku", "short": "heroku", "soId": "heroku" },
+            { "soId": "facebook-connect", "short": "facebook-connect", "name": "facebook-connect", "_id": "5181d0aa66a6f999a465eddf" },
+            { "soId": "ios", "short": "ios", "name": "iOS", "_id": "514825fa2a26ea020000001b" }
+          ]
+        }
+      }
+    ]
+  }
 ]

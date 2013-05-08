@@ -32,7 +32,7 @@
 #requestpage #companyForm { float:left; }
 #requestpage #companyHelp { float:left;width:180px;padding:100px 80px;background:#d1d1d1; }
 
-#requestpage #requestForm { padding-top:24px;float:left;width:880px;  }
+#requestpage #requestForm { padding-top:24px;float:left;width:880px }
 #requestpage #requestForm textarea { width:90%;height:120px; }
 #requestpage #requestForm .error-message { margin:-10px 0 0 5px;font-size:12px  }
 #requestpage .rb-group { margin:8px;display:block;height:40px; }

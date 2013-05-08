@@ -1,7 +1,9 @@
 <legend>Info</legend>
 
 <div class="control-group">
-  <label class="control-label" for="reqStatus">Status</label>
+  <label class="control-label" for="reqStatus">Status
+    <span class="label status"></span>
+  </label>
   <div class="controls">
     <select id="status" name="status">
       <option value="">please select ...</option>
@@ -13,10 +15,6 @@
       <option value="canceled">canceled</option>
     </select>
   </div>
-</div>
-
-<div class="control-group" style="margin:0">
-  <div id="company-controls" class="controls"></div>
 </div>
 
 <div id="canceled-control-group" class="control-group" style="display:none">
@@ -31,6 +29,10 @@
   <div class="controls">
     <textarea id="reqIncompleteDetail" name="incompleteDetail">{{ incompleteDetail }}</textarea>
   </div>
+</div>
+
+<div class="control-group" style="margin:0">
+  <div id="company-controls" class="controls"></div>
 </div>
 
 

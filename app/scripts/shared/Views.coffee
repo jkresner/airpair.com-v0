@@ -5,6 +5,15 @@ TagViews = require './../tags/Views'
 
 Handlebars.registerPartial "DevLinks", require('./templates/DevLinks')
 
+Handlebars.registerHelper "localDateTime", (utcDateString) ->
+  # $log 'moment', moment
+  day = moment utcDateString
+  day.local().format("MMM DD HH:mm")
+
+Handlebars.registerHelper "localDateTimeSeconds", (utcDateString) ->
+  day = moment utcDateString
+  day.local().format("MMM DD HH:mm:ss")
+
 
 exports.TagsInputView = TagViews.TagsInputView
 
@@ -45,7 +54,7 @@ class exports.ExpertView extends BB.BadassView
   initialize: (args) ->
     @listenTo @model, 'change', @render
   render: ->
-    d = (_.extend @model.toJSON(), { hasLinks: @model.hasLinks() } )
+    d = (_.extend @model.toJSON(), { hasNoLinks: !@model.hasLinks() } )
     @$el.html @tmpl d
     @
 
