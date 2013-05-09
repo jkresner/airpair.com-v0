@@ -1,13 +1,14 @@
 """ BadassView adds two basic bits of functionality to a normal Backbone.View
     1) Auto-logging on invocation of initialize, render & save
     2) Auto set constructor args as attributes on the view instance
+    3) Scoped element lookup based on name attribute instead of id
 """
 module.exports = class BadassView extends Backbone.View
 
   # Set logging on /off
   # Why? : During dev it's handy to see the flow your views execute in
   #        to confirm you don't have extra listeners firing etc.
-  logging: off
+  logging: on
 
   # Set autoSetConstructorArgs on /off
   # Why? : Often with bigger apps views are associated with multiple
@@ -55,3 +56,9 @@ module.exports = class BadassView extends Backbone.View
       @save = _.wrap @save, (fn, args) =>
         $log "#{@viewTypeName}.save", args
         fn.call @, args
+
+  # Want to stop referring to elements by id
+  # Use name attribute instead
+  # + be strict about only looking inside the view's scope
+  elm: (attr) ->
+    @$("[name='#{attr}']")

@@ -10,26 +10,24 @@ SV = require './../shared/Views'
 
 class exports.SuggestionForExpertView extends BB.ModelSaveView
   tmpl: require './templates/SuggestionForExpert'
+  viewData: ['expertRating', 'expertFeedback', 'expertStatus', 'expertComment', 'expertAvailability']
   events:
     'click .saveFeedback': 'save'
   initialize: (args) ->
     @model.set requestId: @request.get('_id'), custPic: @request.get('company').contacts[0].pic
   render: ->
     @$el.html @tmpl @model.extend { isWaiting: @model.get('status') is 'waiting' }
-    @$('[name="expertStatus"]').on 'change', @toggleSaveButton
+    @elm('expertStatus').on 'change', @toggleSaveButton
     @
-  getViewData: (e) ->
-    d = @getValsFromInputs ['expertRating', 'expertFeedback', 'expertStatus', 'expertComment', 'expertAvailability']
-    d
   toggleSaveButton: =>
     expertStatus = @$('[name="expertStatus"]').val()
     $log 'expertStatus', expertStatus
     @$('.hideShowSave').toggle expertStatus != ''
     if expertStatus is 'available'
-      @$('[name="expertComment"]').attr 'placeholder', "Leave a comment for the customer on why they should pick you for this airpair."
+      @elm('expertComment').attr 'placeholder', "Leave a comment for the customer on why they should pick you for this airpair."
     else if expertStatus is 'abstained'
-      @$('[name="expertComment"]').attr 'placeholder', "Leave a comment for the customer on why you won't take this airpair. E.g. you're not available ..."
-      @$('[name="expertAvailability"]').hide()
+      @elm('expertComment').attr 'placeholder', "Leave a comment for the customer on why you won't take this airpair. E.g. you're not available ..."
+      @elm('expertAvailability').hide()
   renderSuccess: (model, resp, options) =>
     @request.set model.attributes
 
@@ -43,15 +41,15 @@ class exports.SuggestionForCustomerView extends BB.ModelSaveView
     @model.set requestId: @request.get('_id'), custPic: @request.get('company').contacts[0].pic
   render: ->
     @$el.html @tmpl @model.toJSON()
-    @$('[name="customerRating"]').on 'change', @toggleUnwatedCheckbox
+    @elm('customerRating').on 'change', @toggleUnwatedCheckbox
     @
   getViewData: (e) ->
     d = @getValsFromInputs ['customerRating', 'customerFeedback']
-    if @$('[name="unwanted"]').is(':checked') then d.expertStatus = 'unwanted'
+    if @elm('unwanted').is(':checked') then d.expertStatus = 'unwanted'
     $log 'saving cust feedback yeah', d
     d
   toggleUnwatedCheckbox: =>
-    rating = parseInt @$('[name="customerRating"]').val()
+    rating = parseInt @elm('customerRating').val()
     @$('.unwanted').toggle rating < 3
   renderSuccess: (model, resp, options) =>
     @request.set model.attributes
