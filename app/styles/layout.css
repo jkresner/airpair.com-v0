@@ -2,6 +2,7 @@ body { background:none repeat scroll 0 0 #E2E2E2 }
 
 nav { background:url('/images/bg-top-short.jpg');height:70px;border-bottom:solid 1px #d3d3d3}
 nav div { padding-top:6px;height:54px;width:1280px;margin:auto;border-bottom:solid 1px white; }
+nav div > a { float:left; }
 nav img { display:inline-block;width:180px;padding:3px 12px; }
 nav h3 { display:inline-block;color:#999999;padding:16px 6px }
 nav ul { float:right;margin:10px 0px 8px 8px;display:inline; }
