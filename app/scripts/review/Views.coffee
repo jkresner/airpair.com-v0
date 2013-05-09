@@ -8,7 +8,7 @@ SV = require './../shared/Views'
 #############################################################################
 
 
-class exports.SuggestionForExpertView extends BB.ModelSaveView
+class exports.SuggestionForExpertView extends BB.EnhancedFormView
   tmpl: require './templates/SuggestionForExpert'
   viewData: ['expertRating', 'expertFeedback', 'expertStatus', 'expertComment', 'expertAvailability']
   events:
@@ -16,7 +16,10 @@ class exports.SuggestionForExpertView extends BB.ModelSaveView
   initialize: (args) ->
     @model.set requestId: @request.get('_id'), custPic: @request.get('company').contacts[0].pic
   render: ->
-    @$el.html @tmpl @model.extend { isWaiting: @model.get('status') is 'waiting' }
+    d = @model.extend { isWaiting: @model.get('expertStatus') is 'waiting' }
+    $log 'd', d
+    @$el.html @tmpl d
+    @enableCharCount 'expertFeedback'
     @elm('expertStatus').on 'change', @toggleSaveButton
     @
   toggleSaveButton: =>
@@ -24,10 +27,11 @@ class exports.SuggestionForExpertView extends BB.ModelSaveView
     $log 'expertStatus', expertStatus
     @$('.hideShowSave').toggle expertStatus != ''
     if expertStatus is 'available'
-      @elm('expertComment').attr 'placeholder', "Leave a comment for the customer on why they should pick you for this airpair."
+      @elm('expertComment').attr 'placeholder', "Comment on why the customer should book you for this airpair."
+      if @elm('expertAvailability').val() is 'unavailable' then @elm('expertAvailability').val('')
     else if expertStatus is 'abstained'
-      @elm('expertComment').attr 'placeholder', "Leave a comment for the customer on why you won't take this airpair. E.g. you're not available ..."
-      @elm('expertAvailability').hide()
+      @elm('expertComment').attr 'placeholder', "Comment on why you won't take this airpair. E.g. Are you busy this week?"
+      @elm('expertAvailability').val('unavailable').hide()
   renderSuccess: (model, resp, options) =>
     @request.set model.attributes
 
@@ -83,7 +87,7 @@ class exports.RequestView extends BB.BadassView
       else
         s = _.find @model.get('suggested'), (m) => m.expert.userId == @session.get('_id')
         if !s? then @$('#suggestions').html 'Not the expert or customer?'
-        args = model: new M.Suggestion(s), request: @model
+        args = model: new M.SuggestionExpert(s), request: @model
         @$('#suggestions').append new exports.SuggestionForExpertView(args).render().el
     @
   hrTotal: ->

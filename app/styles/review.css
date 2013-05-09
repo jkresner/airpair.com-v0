@@ -5,6 +5,7 @@
 #reviewpage #suggestions ul { margin:0;padding:0;list-style:none }
 #reviewpage #suggestions li { margin:0;padding:0;list-style:none }
 #reviewpage #suggestions { min-height:800px;background:white;width:46%;padding:0 2% 0 2%;float:right }
+
 #reviewpage .suggestionInfo { float:left;width:260px; }
 #reviewpage .suggestionInfo .label { padding:3px 10px 3px 10px; }
 #reviewpage .suggestionInfo .feedback img.user { width:40px;float:left;margin:4px 10px 0 0 }
@@ -14,13 +15,17 @@
 #reviewpage #suggestions .well { width:230px;padding:15px; }
 #reviewpage #suggestions .well h4 { margin-top:0;font-size:16px; }
 #reviewpage #suggestions .well select { width:230px }
-#reviewpage #suggestions .well textarea { width:90%;height:100px;font-size:11px; }
-#reviewpage #suggestions .well hr { margin-bottom:0; }
+#reviewpage #suggestions .well textarea { width:94%;height:100px;font-size:12px; }
 #reviewpage #suggestions .well .button { width:188px; }
 #reviewpage #suggestions .unwanted { margin-bottom:10px;display:none; }
 
-#reviewpage .expertView { width:400px!important;}
-#reviewpage .expertView .well { width:370px!important;padding:15px; }
+#reviewpage .expertView { width:440px!important;}
+#reviewpage .expertView .well { width:410px!important;padding:15px }
+#reviewpage .expertView h4 { color:black; }
+#reviewpage .expertView select { width:64%!important; }
+#reviewpage .expertView .hideShowSave { display:none }
+
+#reviewpage .expertView .charCount { margin:-20px 13px 0 0;float:right; }
 
 #reviewpage dl { margin:0 0 6px 0 }
 #reviewpage dt { padding:6px 0px 2px 4px;font-weight:bold }

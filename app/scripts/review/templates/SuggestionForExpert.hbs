@@ -1,13 +1,6 @@
 <div class="suggestions">
-<h2>Expert recommendation</h2>
+<h2><em>{ </em>Review request<em> }</em></h2>
 <div class="suggestionInfo expertView">
-  <dl>
-    <dt style="padding-top:0">Status <span class="label label-{{ expertStatus }}">{{ expertStatus }}</span></dt>
-    <dt style="display:none">Events</dt>
-
-    <!--<dd style="font-size:10px;margin-left:0">{{#each events}}<i>{{ localDateTime utc }}</i> {{name}}<br />{{/each}}</dd>-->
-
-    <hr />
 
     {{#if customerFeedback}}
       <div class="feedback">
@@ -20,32 +13,59 @@
     <div class="well expertFeedback" {{#if expertFeedback}}style="display:none"{{/if}}>
       <h4>Suggestion feedback</h4>
 
-        <select name="expertRating">
-          <option value="5">5 - Sounds super fun</option>
-          <option value="4">4 - Looks like a good fit</option>
-          <option value="3">3 - I'll do it this one time</option>
-          <option value="2">2 - I see why you chose me, but...</option>
-          <option value="1">1 - Brief does not match me at all</option>
-        </select>
+        <div class="control-group">
+          <label class="control-label" for="expertRating"></label>
+          <div class="controls">
+             <select name="expertRating">
+                <option value="5">5 - Sounds super fun</option>
+                <option value="4">4 - Looks like a good fit</option>
+                <option value="3">3 - I'll do it this one time</option>
+                <option value="2">2 - I see why you chose me, but...</option>
+                <option value="1">1 - Brief does not match me at all</option>
+              </select>
+          </div>
+        </div>
 
-        <textarea name="expertFeedback" placeholder="What you think of this suggestion? Leave feedback to help us learn your prefereces and get better at what we send you.">{{ expertFeedback }}</textarea>
 
-      <h4>Do you want this airpair?</h4>
-        <select name="expertStatus">
-          <option value="">... please select</option>
-          <option value="available">I'm available for this!</option>
-          <option value="abstained">This one's not for me.</option>
-        </select>
+        <div class="control-group">
+          <label class="control-label" for="expertFeedback"></label>
+          <div class="controls">
+            <span class="charCount">0 chars</span>
+            <textarea name="expertFeedback" placeholder="What you think of this suggestion? Feedback helps us learn your prefereces & get better at what we send you.">{{ expertFeedback }}</textarea>
+          </div>
+        </div>
 
-        <style type="text/css"> .hideShowSave { display:none } </style>
+        <h4>Do you want this airpair?</h4>
+        <div class="control-group">
+          <label class="control-label" for="expertStatus"></label>
+          <div class="controls">
+            <select name="expertStatus">
+              <option value="">... please select</option>
+              <option value="available">I'm available for this!</option>
+              <option value="abstained">This one's not for me.</option>
+            </select>
+          </div>
+        </div>
 
-        <textarea class="hideShowSave" name="expertComment" placeholder="Comment">{{ expertComment }}</textarea>
+        <div class="control-group">
+          <label class="control-label" for="expertComment"></label>
+          <div class="controls">
+              <textarea class="hideShowSave" name="expertComment" placeholder="Comment">{{ expertComment }}</textarea>
+          </div>
+        </div>
 
-        <textarea class="hideShowSave" name="expertAvailability" placeholder="What is your location, timezone and availability?">{{ expertComment }}</textarea>
+        <div class="control-group">
+          <label class="control-label" for="expertAvailability"></label>
+          <div class="controls">
+              <textarea class="hideShowSave" name="expertAvailability" placeholder="What is your location, timezone and availability?">{{ expertAvailability }}</textarea>
+          </div>
+        </div>
+
+        <hr />
 
         <a href="#expertFeedback" class="button saveFeedback hideShowSave">Submit</a>
 
-        <hr />
+       <div style="clear:both"></div>
     </div>
 
     {{#if expertFeedback }}
@@ -61,8 +81,6 @@
         {{ expertAvailability }}</div>
       </div>
     {{/if}}
-
-  </dl>
 
 </div>
 {{#with expert}}
