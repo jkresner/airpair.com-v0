@@ -1,8 +1,8 @@
 
-<div id="info">
+<div id="cola">
   <h2><b>{ </b>Request info<b> }</b></h2>
 
-  {{#if isOwner}}<div><label><b>Budget</label> {{budget}}/{{pricing}} = ${{ total }} p.h.</div>{{/if}}
+  {{#if isCustomer}}<div><label><b>Budget</b></label> {{budget}}/{{pricing}} = ${{ total }} p.h.</div>{{/if}}
 
    {{#with company}}
    <dl>
@@ -49,4 +49,8 @@
 </div>
 
 
-<div id="suggestions"></div>
+<div id="colb">
+  <div id="experts"></div>
+  <div id="expertReview"></div>
+  <div id="notExpertOrCustomer"></div>
+</div>

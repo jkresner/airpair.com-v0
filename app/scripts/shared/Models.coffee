@@ -56,7 +56,7 @@ class exports.Request extends BB.SublistModel
     if !contacts? || contacts.length is 0 then return null
     c = _.find contacts, (c) -> c.fullName == index
     if c? then return c
-    @get('contacts')[index]
+    contacts[index]
 
 class exports.Expert extends BB.SublistModel
   urlRoot: '/api/experts'

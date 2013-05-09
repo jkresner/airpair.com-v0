@@ -7,13 +7,13 @@ exports.User = Shared.User
 exports.Request = Shared.Request
 
 
-class exports.Suggestion extends BB.BadassModel
+class exports.CustomerReview extends BB.BadassModel
   url: -> "/api/requests/#{@get('requestId')}/suggestion"
   # validation:
     # fullName:  { required: true }
     # email:     { required: true, pattern: 'email' }
 
-class exports.SuggestionExpert extends BB.BadassModel
+class exports.ExpertReview extends BB.BadassModel
   url: -> "/api/requests/#{@get('requestId')}/suggestion"
   validation:
     expertStatus:         { required: true }

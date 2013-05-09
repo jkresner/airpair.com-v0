@@ -1,0 +1,24 @@
+
+<div class="expertReview">
+    <h2><em>{ </em>Review request<em> }</em></h2>
+
+    <div id="expertReviewForm"></div>
+
+    <hr />
+
+    {{#if expertFeedback }}
+      <div class="feedback">
+        <h5>Feedback to us <span class="muted">( invisible to customer )</span></h5>
+        <img src="{{expert.pic}}" class="user" />
+        <div>
+            <div class="rating"><span class="label label-{{ expertRating }}">{{ expertRating }}</span> / 5 </div>
+            <p>{{ expertFeedback }}</p>
+        </div>
+
+        <hr style="clear:both" />
+      </div>
+    {{/if}}
+
+    <div class="suggestion"></div>
+
+</div>

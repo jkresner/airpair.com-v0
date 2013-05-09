@@ -1,15 +1,5 @@
-<div class="suggestions">
-<h2><em>{ </em>Review request<em> }</em></h2>
-<div class="suggestionInfo expertView">
+<div class="expertView">
 
-    {{#if customerFeedback}}
-      <div class="feedback">
-        <label><b>Your feedback</b></label>
-        <img src="{{custPic}}"  />
-        <div><b>{{ customerRating }}/5</b><br />
-        {{ customerFeedback }}</div>
-      </div>
-    {{/if}}
     <div class="well expertFeedback" {{#if expertFeedback}}style="display:none"{{/if}}>
       <h4>Suggestion feedback</h4>
 
@@ -25,7 +15,6 @@
               </select>
           </div>
         </div>
-
 
         <div class="control-group">
           <label class="control-label" for="expertFeedback"></label>
@@ -68,24 +57,10 @@
        <div style="clear:both"></div>
     </div>
 
-    {{#if expertFeedback }}
-      <div class="feedback">
-        <label><b>Expert feedback</b></label>
-        <img src="{{expert.pic}}" />
-        <div><b>{{ expertRating }}/5</b><br />
-        {{ expertFeedback }}</div>
-        <br />
-        <hr />
-        {{ expertComment }}
-        <div><b>Availability</b><br />
-        {{ expertAvailability }}</div>
-      </div>
-    {{/if}}
-
 </div>
+
 {{#with expert}}
   <div style="float:right;width:110px">
   {{> ExpertMini }}
   </div>
 {{/with}}
-</div>
