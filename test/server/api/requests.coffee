@@ -222,7 +222,7 @@ describe "REST api requests", ->
     passportMock.setSession 'jk'
     req = data.requests[3]
     req.suggested = [ data.requests[4].suggested[0] ]
-    req.suggested[0].expert.userId = "41708da81dd90b04cddccc9e"
+    req.suggested[0].expert.userId = "5181d1f666a6f999a465f280"
     req.suggested[0].expertStatus = "waiting"
     req.suggested[0].events = [{}]
 
@@ -252,7 +252,7 @@ describe "REST api requests", ->
     passportMock.setSession 'admin'
     req = data.requests[3]
     req.suggested = [ data.requests[4].suggested[0] ]
-    req.suggested[0].expert.userId = "41708da81dd90b04cddccc9e"
+    req.suggested[0].expert.userId = "5181d1f666a6f999a465f280"
     req.suggested[0].expertStatus = "waiting"
     req.suggested[0].events = [{}]
 
@@ -310,6 +310,37 @@ describe "REST api requests", ->
 
           expect( d.suggested[0].events.length ).to.equal = 2
           expect( d.suggested[0].events[1].name ).to.equal = "customer updated"
+
+          done()
+
+
+  it "can say no to suggestion by expert", (done) ->
+    passportMock.setSession 'admin'
+    req = data.requests[5]
+
+    createReq req, (up) =>
+      passportMock.setSession 'jk'
+
+      ups = data.requests[6].nothanks
+
+      request(app)
+        .put("/api/requests/#{up._id}/suggestion")
+        .send(ups)
+        .end (err, res) ->
+          d = res.body
+
+          expect( d.events.length ).to.equal 2
+          expect( d.events[1].name ).to.equal "expert reviewed"
+          expect( d.events[1].by.name ).to.equal 'Jonathon Kresner'
+
+          expect( d.suggested[0].expertStatus ).to.equal = ups.expertStatus
+          expect( d.suggested[0].expertFeedback ).to.equal = ups.expertFeedback
+          expect( d.suggested[0].expertRating ).to.equal = ups.expertRating
+          expect( d.suggested[0].expertComment ).to.equal = ups.expertComment
+          expect( d.suggested[0].expertAvailability ).to.equal = ups.expertAvailability
+
+          expect( d.suggested[0].events.length ).to.equal = 2
+          expect( d.suggested[0].events[1].name ).to.equal = "expert updated"
 
           done()
 
