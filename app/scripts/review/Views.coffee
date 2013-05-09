@@ -15,7 +15,7 @@ class exports.SuggestionForExpertView extends BB.ModelSaveView
   initialize: (args) ->
     @model.set requestId: @request.get('_id'), custPic: @request.get('company').contacts[0].pic
   render: ->
-    @$el.html @tmpl @model.toJSON()
+    @$el.html @tmpl @model.extend { isWaiting: @model.get('status') is 'waiting' }
     @$('[name="expertStatus"]').on 'change', @toggleSaveButton
     @
   getViewData: (e) ->
@@ -84,7 +84,6 @@ class exports.RequestView extends BB.BadassView
         @suggestionsView = new exports.RequestCustomerSuggestionsView(model: @model, session: @session).render().el
       else
         s = _.find @model.get('suggested'), (m) => m.expert.userId == @session.get('_id')
-        $log 's', s
         if !s? then @$('#suggestions').html 'Not the expert or customer?'
         args = model: new M.Suggestion(s), request: @model
         @$('#suggestions').append new exports.SuggestionForExpertView(args).render().el
