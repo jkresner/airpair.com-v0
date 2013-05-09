@@ -33,6 +33,9 @@ h2 em { color:#7F761C;font-style:normal; }
 legend b { color:#CC523E }
 legend em { color:#7F761C;font-style:normal; }
 
+.well { background:#D9D6BB }
+.charCount { font-size:11px;color:gray }
+
 .label-tag { padding:4px;background-color:#99923F;font-weight:normal;margin-bottom:4px }
 .label-status { padding:4px; }
 .label-received { background-color:#3A87AD }

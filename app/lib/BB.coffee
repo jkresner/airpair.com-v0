@@ -9,3 +9,4 @@ module.exports =
   HasErrorStateView:            require './views/HasErrorStateView'
   HasBootstrapErrorStateView:   require './views/HasBootstrapErrorStateView'
   ModelSaveView:                require './views/ModelSaveView'
+  EnhancedFormView:             require './views/EnhancedFormView'
