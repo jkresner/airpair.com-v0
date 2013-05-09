@@ -96,7 +96,7 @@ class RequestApi extends CRUDApi
           data.status = "review"
           reqEvt = @newEvent(req, "suggested #{s.expert.username}")
           evts.push reqEvt
-
+          s.suggestedRate = s.expert.rate
           s.expertStatus = "waiting"
           s.events = [ @newEvent(req, "first contacted") ]
 
