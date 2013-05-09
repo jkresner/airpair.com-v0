@@ -45,7 +45,6 @@ describe "Request: contactInfo", ->
       view.$("#companyName").val('')
       view.$("#companyAbout").val('')
       view.$(".save").click()
-      expect( true ).to.be.true
       expect( hlpr.showsError(view.$("#contactName")) ).to.be.false
       expect( hlpr.showsError(view.$("#contactEmail")) ).to.be.false
       expect( hlpr.showsError(view.$("#companyName")) ).to.be.true

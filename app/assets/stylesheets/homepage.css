@@ -56,3 +56,8 @@ a.green { background: #99923F;border: solid 3px #7F761C }
 .privateap { width:420px;height:236px;border:dotted 1px gray;margin:0px auto;position:relative; }
 .privateap i { display:block;margin:90px auto;font-style:normal;text-align:center; }
 
+#how h2 { margin-bottom:30px }
+#how .step { width:31%;float:left;margin-right:20px }
+#how p { font-size:17px }
+#how b { color:#CC6750; }
+#how img { border:solid 1px #d3d3d3;margin:30px 0px 20px 0px; }

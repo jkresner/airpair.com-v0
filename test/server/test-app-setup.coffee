@@ -14,7 +14,7 @@ app.configure ->
   app.use express.bodyParser()
   app.use express.cookieParser()
 
-  app.use express.session { secret: 'airpair is the future' }
+  app.use express.session { secret: 'testing is the future' }
 
   # app.use passport.initialize()
   app.use passportMock.initialize()

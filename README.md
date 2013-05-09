@@ -148,3 +148,17 @@ What are you offering on top of video to video, for packages
 Training packages
 Packages
 Become an airpair 'member' and get discounts
+
+
+-------------------------------------------------------------------------------
+Jake session
+===============================================================================
+
+- Don't store dates, only numbers
+- Mix panel has a nice pie char of which errors were happening
+- Not flushing database after testing catches a bunch of production problems.
+- https://github.com/airportyh/testem
+- globals, requires, helpers - readme
+- css? try stylus
+- tap: test reports (can set as mocha reporter)
+- pingdom, forever (restarting)
