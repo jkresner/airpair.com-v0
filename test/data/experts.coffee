@@ -141,9 +141,7 @@ module.exports = [
     "_id": "51549f70d96db10200000062",
     "brief": "Learning iOS Development.  Getting over iOS programming bugs or architecture decisions.  Implementing unit testing and TDD in iOS.",
     "email": "jcamealy@gmail.com",
-    "gh": {
-      "username": "bearMountain"
-    },
+    "gh": { "username": "bearMountain" },
     "gmail": "jcamealy@gmail.com",
     "homepage": "homebearco.com",
     "hours": "1",
@@ -151,9 +149,7 @@ module.exports = [
     "other": "",
     "pic": "https://lh4.googleusercontent.com/-Oy8DWLey9es/AAAAAAAAAAI/AAAAAAAAAAA/iPECpE2eK_E/photo.jpg",
     "rate": 70,
-    "so": {
-      "link": "888507/bearmountain"
-    },
+    "so": { "link": "888507/bearmountain"},
     "status": "ready",
     "timezone": "GMT-0500 (CDT)",
     "userId": "5182a00266a6f999a465f29c",
