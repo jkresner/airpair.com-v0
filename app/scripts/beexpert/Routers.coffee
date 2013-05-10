@@ -18,24 +18,19 @@ class exports.Router extends Backbone.Router
 
   welcome: ->
     # $log 'Router.welcome'
+    @page.welcomeView.render()
     @hideShow '#welcome'
 
   connect: ->
-    # $log 'Router.connect'
+    $log 'Router.connect'
     if !@isAuthenticated() then return @navigate 'welcome', { trigger: true }
 
-    @page.expert.fetch success: (m, opts, resp) =>
-
-      # cause fresh social profile data
-      if m.get('so')? && !m.get('so').id? then m.unset('so',{silent:true})
-      if m.get('gh')? && !m.get('gh').id? then m.unset('gh',{silent:true})
-      if m.get('in')? && !m.get('in').id? then m.unset('in',{silent:true})
-
-      m.populateFromUser @page.session
+    @page.expert.fetch success: (model, opts, resp) =>
+      @page.connectView.render()
       @hideShow '#connect'
 
   info: ->
-    # $log 'Router.info', @page.expert.attributes
+    $log 'Router.info', @page.expert.attributes
     if !@isAuthenticated() then return @navigate 'welcome', { trigger: true }
 
     # If we haven't go the user yet
@@ -45,7 +40,6 @@ class exports.Router extends Backbone.Router
     if @page.tags.length is 0 then @page.tags.fetch()
 
     @hideShow '#info'
-
 
   thanks: ->
     $log 'Router.thanks'

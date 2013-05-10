@@ -8,7 +8,6 @@ Shared = require './../shared/Views'
 #############################################################################
 
 class exports.ExpertRowView extends BB.BadassView
-  logging: on
   tagName: 'tr'
   className: 'expert'
   tmpl: require './templates/Row'

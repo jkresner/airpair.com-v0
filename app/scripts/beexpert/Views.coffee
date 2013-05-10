@@ -9,34 +9,44 @@ exports.ExpertView = SV.ExpertView
 ##
 #############################################################################
 
-class exports.ConnectFormView extends BB.ModelSaveView
-  # logging: on
+class exports.WelcomeView extends BB.BadassView
+  el: '#welcome'
+  tmpl: require './templates/Welcome'
+  render: -> @$el.html @tmpl()
+
+#############################################################################
+##
+#############################################################################
+
+class exports.ConnectView extends BB.ModelSaveView
+  logging: on
   el: '#connectForm'
-  tmpl: require './templates/ConnectForm'
+  tmpl: require './templates/Connect'
   events:
     'click .save': 'save'
-  initialize: ->
-    @listenTo @model, 'change', @render
+  initialize: -> # we call render explicitly, only need to once on page load
   render: ->
-    @$el.html @tmpl @model.toJSON()
-    @$(".save").toggle @model.get('username')?
-    @$("#mininumConnect").toggle !@model.get('username')?
-    @$(".btn-cancel").toggle @model.get('_id')?
+    @model.setFromUser @session
+    @$el.html @tmpl @model.extend hasUsername: @mget('username')?
+    @$(".btn-cancel").toggle @mget('_id')?
     @
-  renderSuccess: (model, response, options) =>
+  renderSuccess: (model, resp, opts) =>
     router.navigate '#info', { trigger: true }
     t = @model.get 'tags'
     if t? && t.length is 0 then @model.set 'tags', null
   getViewData: ->
-    @model.toJSON()
+    @model.extend updated: new Date()
 
+
+#############################################################################
+##
+#############################################################################
 
 class exports.InfoFormView extends BB.ModelSaveView
   logging: on
   el: '#infoForm'
   tmpl: require './templates/InfoForm'
-  events:
-    'click .save': 'save'
+  events: { 'click .save': 'save' }
   initialize: ->
     @firstRender = yes
     @$el.html @tmpl {}
@@ -58,11 +68,11 @@ class exports.InfoFormView extends BB.ModelSaveView
   renderSuccess: (model, response, options) =>
     router.navigate '#thanks', { trigger: true }
   getViewData: ->
-    homepage: @$("[name='homepage']").val()
-    hours: @$("[name='hours']").val()
+    homepage: @elm('homepage').val()
+    brief: @elm('brief').val()
+    hours: @elm('hours').val()
     rate: @$("[name='rate']:checked").val()
     status: @$("[name='status']:checked").val()
-    brief: @$("[name='brief']").val()
     tags: @tagsInput.getViewData()
 
 

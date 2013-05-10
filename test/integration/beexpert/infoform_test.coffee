@@ -3,7 +3,9 @@ hlpr = require '/test/ui-helper'
 M = require 'scripts/beexpert/Models'
 C = require 'scripts/beexpert/Collections'
 V = require 'scripts/beexpert/Views'
+
 data =
+  users: require './../../data/users'
   experts: require './../../data/experts'
   tags: require './../../data/tags'
 

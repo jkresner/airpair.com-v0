@@ -10,7 +10,7 @@
 #beexpertpage .rightCol .expert { margin:30px auto; }
 #beexpertpage h2 { }
 #beexpertpage .signinBtn-google { margin:10px 0 0 -10px; }
-#beexpertpage legend { border:none;font-size:38px;font-weight:bold;margin-bottom:34px }
+#beexpertpage legend { border:none;font-size:38px;font-weight:bold;height:45px;margin-bottom:10px; }
 #beexpertpage #connectForm { float:left;width:870px;padding-top:30px; }
 #beexpertpage #connectForm input { width:84%; }
 #beexpertpage #connectForm textarea { width:90%;height:250px; }
