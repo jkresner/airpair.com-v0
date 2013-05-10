@@ -1,24 +1,27 @@
 
 <div class="expertReview">
-    <h2><em>{ </em>Review request<em> }</em></h2>
 
-    <div id="expertReviewForm"></div>
+  <div id="expertReviewForm"></div>
 
+  <div id="expertReviewDetail">
+    <h2><em>{ </em>Your review<em> }</em></h2>
     <hr />
+    <div class="suggestion" style="margin-top:20px"></div>
 
-    {{#if expertFeedback }}
-      <div class="feedback">
-        <h5>Feedback to us <span class="muted">( invisible to customer )</span></h5>
-        <img src="{{expert.pic}}" class="user" />
-        <div>
-            <div class="rating"><span class="label label-{{ expertRating }}">{{ expertRating }}</span> / 5 </div>
-            <p>{{ expertFeedback }}</p>
-        </div>
-
-        <hr style="clear:both" />
+    <div class="feedback" style="padding:0 6px">
+      <h5>Feedback to us <span class="muted">( invisible to customer )</span></h5>
+      <img src="{{expert.pic}}" class="user" />
+      <div>
+        <div class="rating"><span class="label label-{{ expertRating }}">{{ expertRating }}</span> / 5 </div>
+        <p>{{ expertFeedback }}</p>
       </div>
-    {{/if}}
 
-    <div class="suggestion"></div>
+    </div>
+
+    <div style="clear:both"></div>
+    <div style="clear:both;margin-top:20px" class="form-actions">
+       <a href="#edit" class="edit button">edit</a>
+    </div>
+  </div>
 
 </div>

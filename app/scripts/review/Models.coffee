@@ -17,8 +17,8 @@ class exports.ExpertReview extends BB.BadassModel
   url: -> "/api/requests/#{@get('requestId')}/suggestion"
   validation:
     expertStatus:         { required: true }
-    expertFeedback:       { rangeLength: [50, 2000], msg: 'We want to learn your preferences & only send you challenges you like to solve. Supply min 50 chars feedback.'}
-    expertComment:        { rangeLength: [10, 2000], msg: "Build rapport. Let them know why you should (or won't) do this airpair. There may be a another opportunity around the corner!" }
+    expertFeedback:       { rangeLength: [50, 2000], msg: 'Supply min 50 chars so we can learn your preferences & get better at sending you the right opportunities. '}
+    expertComment:        { rangeLength: [10, 2000], msg: "Leave a comment for the customer to build some rapport." }
     expertAvailability:   { required: true, msg: "Supply location / timezone & availability." }
 
 module.exports = exports

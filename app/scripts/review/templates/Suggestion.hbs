@@ -1,43 +1,45 @@
 <div class="suggestionInfo">
-  <dl>
-    <dt style="padding-top:0">Status <span class="label label-{{ expertStatus }}">{{ expertStatus }}</span></dt>
-    <dt style="display:none">Events</dt>
+  <!--<dd style="font-size:10px;margin-left:0">{{#each events}}<i>{{ localDateTime utc }}</i> {{name}}<br />{{/each}}</dd>-->
 
-    <!--<dd style="font-size:10px;margin-left:0">{{#each events}}<i>{{ localDateTime utc }}</i> {{name}}<br />{{/each}}</dd>-->
+  <div class="feedback">
+    <img src="{{expert.pic}}" class="user" />
 
-    <hr />
+    <div>
+      <span class="label label-{{ expertStatus }}">{{ expertStatus }}</span>
+      <p style="margin-top:4px">${{ suggestedRate }} p.h. (+ airpair fees)</p>
 
-    {{#if customerFeedback}}
-      <div class="feedback">
-        <label><b>Your feedback</b></label>
-        <img src="{{custPic}}" class="user" />
-        <div><b>{{ customerRating }}/5</b><br />
-        {{ customerFeedback }}</div>
+      {{#if expertComment }}
+        <div><b>{{expert.name}} said</b></div>
+        <p>{{ expertComment }}</p>
+        <b>Availability</b>
+        <p>{{ expertAvailability }}</p>
+      {{/if}}
+
+    </div>
+  </div>
+
+  {{#if isCustomer}}
+  <div class="customerReviewForm"></div>
+  {{#if customerFeedback}}
+
+  <div class="feedback">
+      <hr />
+      <h5>Your thoughts on @{{expert.username}}</h5>
+      <img src="{{custPic}}" class="user" />
+      <div style="margin-top:-5px">
+        <b>{{custName}}</b>
+        <div class="rating"><span class="label label-{{ customerRating }}">{{ customerRating }}</span> / 5 </div>
+        <p>{{ customerFeedback }}</p>
       </div>
-    {{/if}}
+  </div>
 
-    {{#if isCustomer}}
-      <div class="customerReviewForm"></div>
-    {{/if}}
-
-    {{#if expertFeedback }}
-      <div class="feedback">
-        <label><b>Expert feedback</b></label>
-        <img src="{{expert.pic}}" class="user" />
-        <div><b>{{ expertRating }}/5</b><br />
-        {{ expertFeedback }}</div>
-        <br />
-        <hr />
-        {{ expertComment }}
-        <div><b>Availability</b><br />
-        {{ expertAvailability }}</div>
-      </div>
-    {{/if}}
-
-  </dl>
+  {{/if}}
+  {{/if}}
 
 </div>
+
 {{#with expert}}
   {{> Expert }}
-  <hr />
 {{/with}}
+
+<hr style='clear:both' />

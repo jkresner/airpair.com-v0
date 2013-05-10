@@ -45,22 +45,19 @@ legend em { color:#7F761C;font-style:normal; }
 .label-complete { background-color:#999999 }
 .label-canceled { background-color:#999999 }
 
-.label-waiting { background-color:#333333 }
-.label-abstained { background-color:#999999 }
-.label-available { background-color:#468847 }
-
-.label-waiting { background-color:#333333 }
-.label-abstained { background-color:#999999 }
+.label-waiting { background-color:#3A87AD }
+.label-abstained { background-color:#b94a48 }
+.label-unwanted { background-color:#b94a48 }
 .label-available { background-color:#468847 }
 
 
 .rating { font-weight:bold }
 .rating .label { padding:1px 4px!important;font-weight:normal }
 .label-1 { background-color:#b94a48 }
-.label-2 { background-color:#3A87AD }
-.label-3 { background-color:#468847 }
+.label-2 { background-color:#999999 }
+.label-3 { background-color:#3A87AD }
 .label-4 { background-color:#333333 }
-.label-5 { background-color:#999999 }
+.label-5 { background-color:#468847 }
 
 
 .expert { width:300px;background-color:#E2E2E2;text-align:center }

@@ -18,7 +18,8 @@ class exports.SuggestionView extends BB.BadassView
     @reviewForm = new exports.CustomerReviewFormView args
     @model.set requestId: @request.id
   render: ->
-    d = @model.extend custPic: @request.contact(0).pic, isCustomer: @isCustomer
+    cust = @request.contact(0)
+    d = @model.extend custPic: cust.pic, custName: cust.fullName, isCustomer: @isCustomer
     @$el.html @tmpl d
     if @isCustomer
       @$('.customerReviewForm').append @reviewForm.render().el
@@ -36,20 +37,26 @@ class exports.ExpertReviewFormView extends BB.EnhancedFormView
   el: '#expertReviewForm'
   tmpl: require './templates/ExpertReviewForm'
   viewData: ['expertRating', 'expertFeedback', 'expertStatus', 'expertComment', 'expertAvailability']
+  events:
+    'click .saveFeedback': 'save'
   initialize: (args) ->
   render: ->
     @$el.html @tmpl @model.toJSON()
-    @enableCharCount 'expertFeedback'
     @elm('expertStatus').on 'change', @toggleFormElements
+    @enableCharCount 'expertFeedback'
+    @setValsFromModel ['expertRating', 'expertStatus']
+    @elm('expertStatus').trigger 'change'
     @
   toggleFormElements: =>
+    @renderInputsValid()
+    $log 'renderInputsValid'
     expertStatus = @elm('expertStatus').val()
     @$('.hideShowSave').toggle expertStatus != ''
     if expertStatus is 'available'
-      @elm('expertComment').attr 'placeholder', "Comment on why the customer should book you for this airpair."
+      @elm('expertComment').attr 'placeholder', "Comment to the customer on why they should book you for this airpair."
       if @elm('expertAvailability').val() is 'unavailable' then @elm('expertAvailability').val('')
     else if expertStatus is 'abstained'
-      @elm('expertComment').attr 'placeholder', "Comment on why you won't take this airpair. E.g. Are you busy this week?"
+      @elm('expertComment').attr 'placeholder', "Comment to the customer on why you don't want this airpair. E.g. Are you busy this week?"
       @elm('expertAvailability').val('unavailable').hide()
   renderSuccess: (model, resp, options) =>
     @request.set model.attributes
@@ -60,22 +67,23 @@ class exports.ExpertReviewView extends BB.BadassView
   el: '#expertReview'
   tmpl: require './templates/ExpertReview'
   events:
-    'click .saveFeedback': 'save'
+    'click .edit': -> @editing = true; @render(); false
   initialize: (args) ->
     @model.set requestId: @request.id
-    @editing = @mget('expertFeedback') is ''
-    $log 'editing', @editing
+    @editing = @mget('expertFeedback') is undefined
   render: ->
     @$el.html @tmpl @model.toJSON()
-    viewArgs = model: @model, request: @request
+    viewArgs = model: @model, request: @request, session: @session
     if @reviewForm? then @reviewForm.remove()
     @reviewForm = new exports.ExpertReviewFormView(viewArgs).render()
     @reviewForm.$el.toggle @editing
     if @suggestion? then @suggestion.remove()
     @suggestion = new exports.SuggestionView(viewArgs)
     @$('.suggestion').append @suggestion.render().el
-    @suggestion.$el.toggle !@editing
+    $log 'editing', @editing, @$('.suggestion')
+    @$('#expertReviewDetail').toggle !@editing
     @
+
 
 #############################################################################
 ##
