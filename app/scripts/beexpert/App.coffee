@@ -13,11 +13,11 @@ module.exports.Page = class Page extends SessionPage
     @expert = new models.Expert _id: 'me'
     @tags = new collections.Tags()
 
-    @connectFormView = new views.ConnectFormView model: @expert, session: @session
+    @welcomeView = new views.WelcomeView()
+    @connectView = new views.ConnectView model: @expert, session: @session
     @infoFormView = new views.InfoFormView model: @expert, tags: @tags
     @expertStep1View = new views.ExpertView el: '#expertStep1', model: @expert
     @expertStep2View = new views.ExpertView el: '#expertStep2', model: @expert
-
 
 
 module.exports.Router = routers.Router

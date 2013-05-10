@@ -7,7 +7,14 @@
     <b class="username">@{{ username }}</b>
   {{/if}}
 
-  <img src="{{ pic }}?s=240" class="pic" />
+  {{#if pic }}
+    <img src="{{ pic }}?s=240" class="pic" />
+  {{else}}
+    <img src="/images/faces.png" class="pic" />
+    <i>No image</i>
+  {{/if}}
+
+
 
   <div class="links">
     {{#if hasNoLinks}}
