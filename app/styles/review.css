@@ -1,26 +1,35 @@
 #reviewpage { }
 #reviewpage .main { }
 #reviewpage h2 { font-size:22px; }
-#reviewpage #info { height:100%;width:46%;padding:0 2% 3% 1%;float:left; }
-#reviewpage #suggestions ul { margin:0;padding:0;list-style:none }
-#reviewpage #suggestions li { margin:0;padding:0;list-style:none }
-#reviewpage #suggestions { min-height:800px;background:white;width:46%;padding:0 2% 0 2%;float:right }
-#reviewpage .suggestionInfo { float:left;width:260px; }
-#reviewpage .suggestionInfo .label { padding:3px 10px 3px 10px; }
-#reviewpage .suggestionInfo .feedback img.user { width:40px;float:left;margin:4px 10px 0 0 }
-#reviewpage .suggestionInfo .feedback div { float:left;width:210px;font-size:11px }
-#reviewpage #suggestions .expert { float:right;margin-bottom:20px;  }
-#reviewpage #suggestions hr { clear:both;}
-#reviewpage #suggestions .well { width:230px;padding:15px; }
-#reviewpage #suggestions .well h4 { margin-top:0;font-size:16px; }
-#reviewpage #suggestions .well select { width:230px }
-#reviewpage #suggestions .well textarea { width:90%;height:100px;font-size:11px; }
-#reviewpage #suggestions .well hr { margin-bottom:0; }
-#reviewpage #suggestions .well .button { width:188px; }
-#reviewpage #suggestions .unwanted { margin-bottom:10px;display:none; }
+#reviewpage h5 .muted { font-weight:normal;font-size:12px;font-style:italic; }
+#reviewpage #cola { height:100%;width:46%;padding:0 2% 3% 1%;float:left; }
+#reviewpage #colb { min-height:800px;background:white;width:46%;padding:0 2% 0 2%;float:right }
 
-#reviewpage .expertView { width:400px!important;}
-#reviewpage .expertView .well { width:370px!important;padding:15px; }
+#reviewpage .customerFeedback hr { margin:10px 0; }
+#reviewpage .expert { float:right;margin-bottom:20px;  }
+
+#reviewpage .suggestionInfo { float:left;width:260px }
+#reviewpage .suggestionInfo .label { padding:3px 10px 3px 10px; }
+#reviewpage .suggestionInfo hr { margin:10px 0; }
+#reviewpage .feedback { margin:0px 0px 10px 0 }
+#reviewpage .feedback img.user { width:40px;float:left;margin:0px 10px 0 0 }
+#reviewpage .feedback > div { float:left;width:80%;font-size:11px;margin:0 }
+#reviewpage .well textarea { width:94%;height:100px;font-size:12px; }
+
+#reviewpage #experts hr { clear:both;}
+#reviewpage #experts .well { width:230px;padding:15px; }
+#reviewpage #experts .well h4 { margin-top:0;font-size:16px; }
+#reviewpage #experts .well select { width:230px }
+#reviewpage #experts .well .button { width:188px; }
+#reviewpage #experts .unwanted { margin-bottom:10px;display:none; }
+
+#reviewpage #expertReviewForm {}
+#reviewpage #expertReviewForm .well { width:410px!important;padding:15px;float:left; }
+#reviewpage #expertReviewForm h4 { color:black; }
+#reviewpage #expertReviewForm select { width:64%!important; }
+#reviewpage #expertReviewForm .hideShowSave { display:none }
+#reviewpage #expertReviewForm .charCount { margin:-20px 13px 0 0;float:right; }
+#reviewpage #expertReviewForm .note { color:#CC523E;font-size:11px;margin-left:3px; }
 
 #reviewpage dl { margin:0 0 6px 0 }
 #reviewpage dt { padding:6px 0px 2px 4px;font-weight:bold }

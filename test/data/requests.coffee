@@ -65,7 +65,7 @@ module.exports = [
       ]
   }
 
-  # 3) Used in test server/api/requests
+  # 3) Used in tests server/api/requests
   {
     _id:"518547fd350d480200000006"
     company:
@@ -166,5 +166,119 @@ module.exports = [
         }
       }
     ]
+  }
+
+  # 5) Used in test server/api/requests
+  {
+    "availability": "non-urgent, but would like to have someone i could meet with 1/wk for the next 4-8wks to accelerate my launch-date ",
+    "brief": "general node.js + express work would be helpful, and database help - I have chosen postgres > mongod because it's what i am most comfortable with, still playing around with different ORMs but I like this one ---> https://github.com/dresende/node-orm2 \n\nbiggest concern of the moment is structuring scrapers and/or api calls firing in what that keeps all my data up to date and quickly searchable \n\n",
+    "budget": 30,
+    "company": {
+      "about": "california camping is a tool to discover and reserve campsites. node.js, express, & jade. 140 char is long!! like longer than i'd like it to be. ",
+      "url": "http://signup.californiacamping.ca/",
+      "name": "california camping",
+      "contacts": [
+        {
+          "_id": "5181f28b2e7e450200000005",
+          "timezone": "GMT-0700 (PDT)",
+          "twitter": "alyraz",
+          "pic": "https://lh4.googleusercontent.com/-r9KnRjqx3m8/AAAAAAAAAAI/AAAAAAAAADA/Ssf-_fM5-dE/photo.jpg",
+          "userId": "5181f23d66a6f999a465f284",
+          "phone": "",
+          "title": "",
+          "gmail": "alyssaravasio@gmail.com",
+          "email": "alyssaravasio@gmail.com",
+          "fullName": "Alyssa Ravasio"
+        }
+      ],
+      "_id": "5181f28b2e7e450200000004"
+    },
+    "hours": "1",
+    "pricing": "opensource",
+    "status": "review",
+    "userId": "5181f23d66a6f999a465f284",
+    "calls": [],
+    "suggested": [
+      {
+        "expert": {
+          "tags": [{ "_id": "514825fa2a26ea0200000028", "name": "NodeJS", "short": "node", "soId": "node.js" }],
+          "karma": 0,
+          "username": "jkresner",
+          "userId": "5181d1f666a6f999a465f280",
+          "timezone": "GMT-0700 (PDT)",
+          "status": "ready",
+          "so": {
+            "id": 178211,
+            "website_url": "http://www.hackerpreneurialism.com",
+            "link": "178211/jonathon-kresner",
+            "reputation": 495,
+            "profile_image": "http://i.stack.imgur.com/FVija.jpg?g=1&s=128"
+          },
+          "rate": 110,
+          "pic": "https://lh3.googleusercontent.com/-daU--wCrRcI/AAAAAAAAAAI/AAAAAAAAADA/_BUOhjJeNkk/photo.jpg",
+          "name": "Jonathon Kresner",
+          "homepage": "hackerpreneurialism.com",
+          "gmail": "jkresner@gmail.com",
+          "gh": {
+            "id": 979542,
+            "username": "jkresner",
+            "location": "San Francisco",
+            "blog": "hackerpreneurialism.com",
+            "gravatar_id": "780d02a99798886da48711d8104801a4",
+            "followers": 15
+          },
+          "email": "jkresner@gmail.com",
+          "brief": "Learning frameworks, creating good project structures / architecture. Pair programming.",
+          "_id": "5181d4ccf3dc070200000004"
+        },
+        "expertStatus": "waiting",
+        "_id": "518ac2ecc4a40e7a4b00000a",
+        "events": [
+          {
+            "utc": "2013-05-08T21:26:04.276Z",
+            "by": { "name": "Jonathon Kresner", "id": "5175efbfa3802cc4d5a5e6ed" },
+            "name": "first contacted"
+          }
+        ]
+      }
+    ],
+    "events": [ { "utc": "2013-05-02T05:01:59.284Z", "name": "created" } ],
+    "tags": [
+      { "soId": "node.js", "short": "node", "name": "NodeJS", "_id": "514825fa2a26ea0200000028" },
+      { "soId": "express", "short": "express", "name": "ExpressJS", "_id": "514825fa2a26ea0200000016" }
+    ]
+  }
+
+  # 6) Expert feedback
+  {
+    nothanks:
+      expert:
+        tags: [ { "soId": "node.js", "short": "node", "name": "NodeJS", "_id": "514825fa2a26ea0200000028" } ]
+        username: 'jkresner'
+        userId: '5181d1f666a6f999a465f280'
+        tw: { id: 21989578, username: 'hackerpreneur' }
+        timezone: 'GMT-0700 (PDT)'
+        status: 'ready'
+        so: { id: 178211, website_url: 'http://www.hackerpreneurialism.com', link: '178211/jonathon-kresner', reputation: 495 }
+        rate: 110,
+        pic: 'https://lh3.googleusercontent.com/-daU--wCrRcI/AAAAAAAAAAI/AAAAAAAAADA/_BUOhjJeNkk/photo.jpg',
+        name: 'Jonathon Kresner',
+        in: { id: 'd9YFKgZ7rY', displayName: 'Jonathon Kresner' }
+        homepage: 'hackerpreneurialism.com'
+        gmail: 'jkresner@gmail.com'
+        gh: { id: 979542, username: 'jkresner', location: 'San Francisco', blog: 'hackerpreneurialism.com', gravatar_id: '780d02a99798886da48711d8104801a4', followers: 15 }
+        email: 'jkresner@gmail.com'
+        brief: 'Learning frameworks, creating good project structures / architecture. Pair programming.',
+        bb: { id: 'hackerpreneur' }
+        _id: '5181d4ccf3dc070200000004'
+      expertStatus: 'abstained',
+      _id: '518ac2ecc4a40e7a4b00000a'
+      events: [ { utc: '2013-05-08T21:26:04.276Z', by: [Object], name: 'first contacted' } ]
+      requestId: '5181f3472e7e450200000007'
+      custPic: 'https://lh4.googleusercontent.com/-r9KnRjqx3m8/AAAAAAAAAAI/AAAAAAAAADA/Ssf-_fM5-dE/photo.jpg'
+      expertRating: '1'
+      expertFeedback: 'asdfasdfasdasdfasdfasdasdfasdfasdasdfasdfasdasdfasdfasdasdfasdfasd'
+      expertComment: 'asdfasdfasdf'
+      expertAvailability: 'unavailable'
   }
 ]

@@ -30,6 +30,7 @@ Suggestion = new Schema
   expertFeedback:     String
   expertComment:      String
   expertAvailability: String     # todo change to dates
+  suggestedRate:      Number     # can be altered by admin or expert
   customerRating:     Number
   customerFeedback:   String
   messageThreadId:    ObjectId

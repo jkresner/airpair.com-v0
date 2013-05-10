@@ -1,0 +1,23 @@
+<div class="well customerReviewForm">
+  <h4>Suggestion feedback</h4>
+
+    <select name="customerRating">
+      <option value="5">5 - Exactly who I want</option>
+      <option value="4">4 - Looks like a good fit</option>
+      <option value="3">3 - Should work out</option>
+      <option value="2">2 - Really not sure</option>
+      <option value="1">1 - Is this a mistake?</option>
+    </select>
+
+    <textarea name="customerFeedback" placeholder="What you think of this suggestion?">{{ customerFeedback }}</textarea>
+
+    <label class="checkbox unwanted">
+      <input type='checkbox' name="unwanted" /> Suggest someone else
+    </label>
+
+    <hr />
+
+    <a href="#feedback" class="button saveFeedback">Submit</a>
+    <div style="clear:both"></div>
+
+</div>

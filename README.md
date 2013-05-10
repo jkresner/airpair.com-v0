@@ -68,6 +68,7 @@ List of TODO
 
 For wed
 
+- [M] Pull out hasLink and mail body saving to request/suggestion
 - [H] Beautify customer sign up
   - [H] View/review airpair (from dashboard)
   - [H] Write Test for update airpair

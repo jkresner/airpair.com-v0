@@ -50,7 +50,13 @@ class exports.Request extends BB.SublistModel
     @toggleAttrSublistElement 'tags', tag, (m) -> m._id is value._id
   toggleAvailability: (value) ->
     @toggleAttrSublistElement 'availability', value, (m) -> m is value
-
+  contact: (index) ->
+    # first try lookup by fullName
+    contacts = @get('company').contacts
+    if !contacts? || contacts.length is 0 then return null
+    c = _.find contacts, (c) -> c.fullName == index
+    if c? then return c
+    contacts[index]
 
 class exports.Expert extends BB.SublistModel
   urlRoot: '/api/experts'
