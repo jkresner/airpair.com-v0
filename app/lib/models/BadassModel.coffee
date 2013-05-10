@@ -10,6 +10,9 @@ module.exports = class BadassModel extends Backbone.Model
     # console.log 'validateNonEmptyArray', value, attr, computedState
     if !value? || value.length is 0 then true
 
+  # very useful for calculating extra values needed for templates
+  extend: (args) ->
+    _.extend @toJSON(), args
 
   #compare the value of an attribute to the supplied value ignoring case
   #ignoreCaseCompare: (attr, value) ->

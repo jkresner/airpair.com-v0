@@ -1,0 +1,45 @@
+<div class="suggestionInfo">
+  <!--<dd style="font-size:10px;margin-left:0">{{#each events}}<i>{{ localDateTime utc }}</i> {{name}}<br />{{/each}}</dd>-->
+
+  <div class="feedback">
+    <img src="{{expert.pic}}" class="user" />
+
+    <div>
+      <span class="label label-{{ expertStatus }}">{{ expertStatus }}</span>
+      <p style="margin-top:4px">${{ suggestedRate }} p.h. (+ airpair fees)</p>
+
+      {{#if expertComment }}
+        <div><b>{{expert.name}} said</b></div>
+        <p>{{ expertComment }}</p>
+        <b>Availability</b>
+        <p>{{ expertAvailability }}</p>
+      {{/if}}
+
+    </div>
+  </div>
+
+  {{#if isCustomer}}
+  <div class="customerReviewForm"></div>
+  {{#if customerFeedback}}
+
+  <div class="feedback">
+      <hr />
+      <h5>Your thoughts on @{{expert.username}}</h5>
+      <img src="{{custPic}}" class="user" />
+      <div style="margin-top:-5px">
+        <b>{{custName}}</b>
+        <div class="rating"><span class="label label-{{ customerRating }}">{{ customerRating }}</span> / 5 </div>
+        <p>{{ customerFeedback }}</p>
+      </div>
+  </div>
+
+  {{/if}}
+  {{/if}}
+
+</div>
+
+{{#with expert}}
+  {{> Expert }}
+{{/with}}
+
+<hr style='clear:both' />

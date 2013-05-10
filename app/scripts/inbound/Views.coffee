@@ -101,7 +101,6 @@ class exports.RequestSuggestionsView extends BB.BadassView
       suggested = _.pluck @model.get('suggested'), 'expert'
       @collection.filterFilteredModels( tag: @rTag, excludes: suggested )
       for s in @collection.filteredModels
-        s.set 'hasLinks', s.hasLinks()
         @$('.ops').append @tmplSuggestion(s.toJSON())
     @
   filterTag: (e) ->

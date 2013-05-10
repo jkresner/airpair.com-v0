@@ -96,7 +96,7 @@ class RequestApi extends CRUDApi
           data.status = "review"
           reqEvt = @newEvent(req, "suggested #{s.expert.username}")
           evts.push reqEvt
-
+          s.suggestedRate = s.expert.rate
           s.expertStatus = "waiting"
           s.events = [ @newEvent(req, "first contacted") ]
 
@@ -120,15 +120,11 @@ class RequestApi extends CRUDApi
   updateSuggestion: (req, res) =>
     userId = req.user._id
     @model.findOne { _id: req.params.id }, (e, r) =>
-      # $log 'updateSuggestion', req.params.id, 'owner', r.userId, 'session', userId
       if role.isRequestOwner(req, r)
-        # $log 'byCustomer', userId
         @updateSuggestionByCustomer(req, res, r)
-      else if role.isRequestExpert(req, r)  || role.isAdmin(req)
-        # $log 'byExpert', userId
+      else if role.isRequestExpert(req, r) || role.isAdmin(req)
         @updateSuggestionByExpert(req, res, r)
       else
-        # $log 'forbidden'
         res.send 403
 
 
@@ -136,7 +132,7 @@ class RequestApi extends CRUDApi
   updateSuggestionByExpert: (req, res, r) =>
     ups = req.body
     data = { suggested: r.suggested, events: r.events }
-    sug = und.find r.suggested, (s) -> s.expert.userId == req.user._id
+    sug = und.find r.suggested, (s) -> und.idsEqual s.expert.userId, req.user._id
     sug.events.push @newEvent(req, "expert updated")
     sug.expertRating = ups.expertRating
     sug.expertFeedback = ups.expertFeedback
@@ -153,8 +149,7 @@ class RequestApi extends CRUDApi
   updateSuggestionByCustomer: (req, res, r) =>
     ups = req.body
     data = { suggested: r.suggested, events: r.events }
-    sug = und.find r.suggested, (s) -> s.expert.userId == ups.expert.userId
-    sug.events.push @newEvent(req, "customer updated")
+    sug = und.find r.suggested, (s) -> und.idsEqual s.expert.userId, ups.expert.userId
     sug.customerRating = ups.customerRating
     sug.customerFeedback = ups.customerFeedback
     if ups.expertStatus? then sug.expertStatus = ups.expertStatus
