@@ -58,6 +58,7 @@ class exports.Request extends BB.SublistModel
     if c? then return c
     contacts[index]
 
+
 class exports.Expert extends BB.SublistModel
   urlRoot: '/api/experts'
   validation:
@@ -73,67 +74,6 @@ class exports.Expert extends BB.SublistModel
     url = null
     url = val.replace("https://",'').replace("http://",'') if val?
     url
-
-  populateFromUser: (user) ->
-    pop = {}
-
-    gplus = user.get('google')
-    # first time
-    if !@get('userId')?
-      pop =
-        userId:     user.get('_id')
-        name:       gplus.displayName
-        email:      gplus.emails[0].value
-        gmail:      gplus.emails[0].value
-        pic:        gplus._json.picture
-        timezone:   new Date().toString().substring(25, 45)
-
-      pop._id = undefined if @get('_id') == 'me'
-
-    lkIN = user.get('linkedin')
-    if lkIN?
-      d = in:
-        id: lkIN.id
-        displayName: lkIN.displayName
-      _.extend pop, d
-
-    bb = user.get('bitbucket')
-    if bb?
-      d = username: bb.id, bb:
-        id: bb.id
-      _.extend pop, d
-
-    so = user.get('stack')
-    if so?
-      homepage = @getHomepageUrl(so.website_url)
-      d = username: so.username, homepage: homepage, so:
-        id: so.id
-        website_url: so.website_url
-        link: so.link.replace('http://stackoverflow.com/users/', '')
-        reputation: so.reputation
-        profile_image: so.profile_image
-      _.extend pop, d
-
-    tw = user.get('twitter')
-    if tw?
-      d = username: tw.username, tw:
-        id: tw.id
-        username: tw.username
-      _.extend pop, d
-
-    gh = user.get('github')
-    if gh?
-      homepage = @getHomepageUrl(gh._json.blog)
-      d = username: gh.username, homepage: homepage, gh:
-        id: gh.id
-        username: gh.username
-        location: gh._json.location
-        blog: gh._json.blog
-        gravatar_id: gh._json.gravatar_id
-        followers: gh._json.followers
-      _.extend pop, d
-
-    @set pop
 
   toggleTag: (value) ->
     # so we only save what we need and don't bloat the requests

@@ -79,9 +79,12 @@
   <div style="clear:both"></div>
 
   <div class="form-actions">
-    <p id="mininumConnect" style="margin:10px;color:#99923F;font-weight:bold">You must connect at least github, bitbucket or twitter to continue.</p>
+    {{#if hasUsername }}
+      <a href="#" class="save button">Continue</a>
+    {{else}}
+      <p id="mininumConnect" style="margin:10px;color:#99923F;font-weight:bold">You must connect at least github, bitbucket or twitter to continue.</p>
+    {{/if}}
 
-    <a href="#" class="save button">Continue</a>
     <a href="/dashboard" class="button button-gray btn-cancel">Cancel</a>
   </div>
 
