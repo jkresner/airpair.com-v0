@@ -77,12 +77,6 @@ module.exports = [
   {
     "_id": "5183a97b66a6f999a465f2ac",
     "github": {
-      "token": {
-        "attributes": {
-          "refreshToken": null
-        },
-        "token": "3dcd393a2889ee2caab7afe8cdbfc2bd21701370"
-      },
       "_json": {
         "public_gists": 1,
         "updated_at": "2013-05-03T12:20:03Z",
@@ -120,12 +114,6 @@ module.exports = [
     },
     "githubId": 367320,
     "google": {
-      "token": {
-        "attributes": {
-          "refreshToken": null
-        },
-        "token": "ya29.AHES6ZT4jDXUjGPQfXH3zxl5N5K28KWo_ud9zqjlCrQ7PqugpgJUmQ"
-      },
       "_json": {
         "hd": "netzsafe.com",
         "locale": "en",
@@ -186,11 +174,62 @@ module.exports = [
     "stackId": 664108
   }
 
+  # 4 - Jeffrey Camealy failing to update profile
+  {
+    "_id": "5182a00266a6f999a465f29c",
+    "google": {
+      "_json": {
+        "locale": "en",
+        "gender": "male",
+        "picture": "https://lh4.googleusercontent.com/-Oy8DWLey9es/AAAAAAAAAAI/AAAAAAAAAAA/iPECpE2eK_E/photo.jpg",
+        "link": "https://plus.google.com/110135960297878281741",
+        "family_name": "Camealy",
+        "given_name": "Jeffrey",
+        "name": "Jeffrey Camealy",
+        "verified_email": true,
+        "email": "jcamealy@gmail.com",
+        "id": "110135960297878281741"
+      },
+      "emails": [ { "value": "jcamealy@gmail.com" } ],
+      "name": { "givenName": "Jeffrey", "familyName": "Camealy" },
+      "displayName": "Jeffrey Camealy",
+      "id": "110135960297878281741",
+      "provider": "google"
+    },
+    "googleId": "110135960297878281741",
+    "stack": {
+      "id": 888507,
+      "provider": "stackexchange",
+      "accept_rate": 90,
+      "badge_counts": {
+        "bronze": 21,
+        "silver": 5,
+        "gold": 0
+      },
+      "account_id": 477171,
+      "location": "Chicago, IL",
+      "website_url": "http://www.homebearco.com/",
+      "link": "http://stackoverflow.com/users/888507/bearmountain",
+      "is_employee": false,
+      "last_modified_date": 1349199585,
+      "last_access_date": 1368157883,
+      "age": 27,
+      "reputation_change_year": 175,
+      "reputation_change_quarter": 35,
+      "reputation_change_month": 10,
+      "reputation_change_week": 10,
+      "reputation_change_day": 0,
+      "reputation": 732,
+      "profile_image": "http://www.gravatar.com/avatar/b239848073d206b0067c1de620b8294a?d=identicon&r=PG",
+      "display_name": "bearMountain",
+      "creation_date": 1312999713,
+      "user_type": "registered",
+      "user_id": 888507
+    },
+    "stackId": 888507
+  }
+
+
+
+
 ]
-
-
-
-
-
-
-

@@ -40,3 +40,18 @@ describe 'BeExpert:Views ConnectFormView =>', ->
 
     v.model.on 'sync', onSaved, @
     v.$('.save').click()
+
+
+  it 'can update profile with Jeffrey Camealy details (v0.3 upgrade)', (done) ->
+    @stubs.success = sinon.stub V.ConnectView::, 'renderSuccess', ->
+    @viewData.session.set data.users[4]
+    @viewData.model.set data.experts[5]
+    v = new V.ConnectView @viewData
+    v.render()  # we call it explicitly
+
+    onSaved = =>
+      expect(@stubs.success.calledOnce).to.be.true
+      done()
+
+    v.model.on 'sync', onSaved, @
+    v.$('.save').click()

@@ -35,7 +35,7 @@ module.exports = [
     "gh":{"followers": 15, "gravatar_id":"780d02a99798886da48711d8104801a4","blog": "hackerpreneurialism.com","location": "San Francisco","username": "jkresner" },
   }
 
-  # Old Greg
+  # 3 Old Greg
   {
     "_id": "514826b12a26ea0200000051",
     "name": "Gregory Nicholas",
@@ -73,7 +73,7 @@ module.exports = [
     ]
   }
 
-  # New Greg
+  # 4 New Greg
   {
     "__v": 0,
     "_id": "5181f2b62e7e450200000006",
@@ -132,6 +132,37 @@ module.exports = [
         "name": "MongoDB",
         "_id": "514825fa2a26ea0200000025"
       }
+    ]
+  }
+
+
+  # 5 Jeffrey Camealy (failing to update profile)
+  {
+    "_id": "51549f70d96db10200000062",
+    "brief": "Learning iOS Development.  Getting over iOS programming bugs or architecture decisions.  Implementing unit testing and TDD in iOS.",
+    "email": "jcamealy@gmail.com",
+    "gh": {
+      "username": "bearMountain"
+    },
+    "gmail": "jcamealy@gmail.com",
+    "homepage": "homebearco.com",
+    "hours": "1",
+    "name": "Jeffrey Camealy",
+    "other": "",
+    "pic": "https://lh4.googleusercontent.com/-Oy8DWLey9es/AAAAAAAAAAI/AAAAAAAAAAA/iPECpE2eK_E/photo.jpg",
+    "rate": 70,
+    "so": {
+      "link": "888507/bearmountain"
+    },
+    "status": "ready",
+    "timezone": "GMT-0500 (CDT)",
+    "userId": "5182a00266a6f999a465f29c",
+    "username": "bearMountain",
+    "karma": 0,
+    "tags": [
+      { "name": "Objective-C", "short": "objectiveC", "soId": "objective-c" }
+      { "name": "C++", "short": "c++", "soId": "c++"},
+      {"soId": "ios", "short": "ios", "name": "iOS", "_id": "514825fa2a26ea020000001b" }
     ]
   }
 
