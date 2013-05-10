@@ -30,10 +30,7 @@ class exports.ConnectView extends BB.ModelSaveView
     @$el.html @tmpl @model.extend hasUsername: @mget('username')?
     @$(".btn-cancel").toggle @mget('_id')?
     @
-  renderError: (model, resp, opts) =>
-    $log 'renderError'
   renderSuccess: (model, resp, opts) =>
-    console.log 'renderSuccess'
     router.navigate '#info', { trigger: true }
     t = @model.get 'tags'
     if t? && t.length is 0 then @model.set 'tags', null

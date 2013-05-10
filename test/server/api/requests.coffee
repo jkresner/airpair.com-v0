@@ -299,7 +299,6 @@ describe "REST api requests", ->
         .send(ups)
         .end (err, res) ->
           d = res.body
-
           expect( d.events.length ).to.equal 2
           expect( d.events[1].name ).to.equal "customer expert review"
           expect( d.events[1].by.name ).to.equal 'Jonathon Kresner'
