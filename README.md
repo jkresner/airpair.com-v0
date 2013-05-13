@@ -62,6 +62,11 @@ docs on expect syntax                chaijs.com/api/bdd/
 docs on using spy/fake/stub          sinonjs.org/docs/
 docs on sinon chai syntax            chaijs.com/plugins/sinon-chai
 
+For git pre-push hook to ensure tests pass before pushing, do this:
+
+    cd .git/hooks
+    ln -nsf ../../build/git-hooks/pre-push
+
 -------------------------------------------------------------------------------
 List of TODO
 ===============================================================================
