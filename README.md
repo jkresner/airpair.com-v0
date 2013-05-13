@@ -1,15 +1,15 @@
 About
 ===============================================================================
 
-site @ http:///www.airpair.com/
+site @ http://www.airpair.com/
 
 
 Branching strategy + pull requests
 ===============================================================================
 
-- master: is ongoing development branch
+- **master** is ongoing development branch
 
-- prod: represents the current deployed code @ airpair.com
+- **prod** represents the current deployed code @ airpair.com
 
 - prod milestones are tagged with
 
@@ -25,56 +25,51 @@ Branching strategy + pull requests
 To setup + run locally
 ===============================================================================
 
-1)   npm install brunch -g
+1)   Install mongoDB
 
-2)   Have mongoDB installed
+1)   Install Brunch.io `npm install brunch -g`
 
-3)   mongod
+3)   Run mongo `mongod`
 
-4)   npm install
+4)   Install required npm package `npm install`
 
-5)   brunch w -s      (or  brunch watch --server)
+5)   Run brunch server `brunch w -s` or `brunch watch --server`
 
-6)   http://localhost:3333/
+6)   Open browser @ http://localhost:3333/
 
+7)   For testing, install PhantomJS & mocha-phantomjs `npm install -g mocha-phantomjs phantomjs`
 
 
 Running tests
 ===============================================================================
 
-### Two types of tests
+#### Two types of tests
 
-1) /test/server
+##### 1. /test/server
 
-   Runs inside node with mocha (things like api tests)
+   Runs in node with mocha (e.g api tests)
 
-   ```mocha test/server/all.coffee
+   `mocha test/server/all.coffee`
 
-2) /test/integration
+##### 2. /test/integration
 
    hit html & make http requests either in browser or w PhantomJS
    First run brunch in test mode (test db/users etc.)
 
-   ```brunch w -s -c config-test
+   `brunch w -s -c config-test`
 
    Then execute tests
-   ```http://localhost:4444/test/index.html (in browser w mocha)
-   ```mocha-phantomjs http://localhost:4444/test/index.html (in terminal with mocha-phantomjs)
+   `http://localhost:4444/test/index.html` (in browser w mocha)
+   `mocha-phantomjs http://localhost:4444/test/index.html` (in terminal)
 
-### Pre-push git hook testing
+#### Pre-push git hook testing
 
-Tests should be run on every push, to setup locally
+Tests should run on every push. To setup locally
 
-  ```cd .git/hooks
-     ln -nsf ../../build/git-hooks/pre-push
+  `cd .git/hooks
+  ln -nsf ../../build/git-hooks/pre-push`
 
-### Setup tests for mocha-phantomjs invocation
-
-1) Install PhantomJS & mocha-phantomjs
-  ```npm install -g mocha-phantomjs phantomjs
-
-
-### Useful links
+#### Useful links
 
 docs on expect syntax                chaijs.com/api/bdd/
 docs on using spy/fake/stub          sinonjs.org/docs/
