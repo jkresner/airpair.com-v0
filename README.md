@@ -22,6 +22,7 @@ Branching strategy + pull requests
 
 - ALL work is to be done on topic branches & merged into master w pull requests
 
+- Note from Pete, consider git flow: http://nvie.com/posts/a-successful-git-branching-model/
 
 -------------------------------------------------------------------------------
 Setup + run locally
@@ -61,6 +62,11 @@ NOTE YOU MUST HAVE:
 docs on expect syntax                chaijs.com/api/bdd/
 docs on using spy/fake/stub          sinonjs.org/docs/
 docs on sinon chai syntax            chaijs.com/plugins/sinon-chai
+
+For git pre-push hook to ensure tests pass before pushing, do this:
+
+    cd .git/hooks
+    ln -nsf ../../build/git-hooks/pre-push
 
 -------------------------------------------------------------------------------
 List of TODO
