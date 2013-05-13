@@ -1,4 +1,4 @@
 #!/bin/sh
 exec mocha test/server/all.coffee
-brunch w -s -c config-test.coffee &
-mocha-phantomjs http://localhost:4444/test/index.html
+exec brunch w -s -c config-test.coffee &
+exec mocha-phantomjs http://localhost:4444/test/index.html
