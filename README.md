@@ -58,8 +58,8 @@ Running tests
    ```brunch w -s -c config-test
 
    Then execute tests
-   ```http://localhost:3333/test/index.html (in browser w mocha)
-   ```mocha-phantomjs http://localhost:3333/test/index.html (in terminal with mocha-phantomjs)
+   ```http://localhost:4444/test/index.html (in browser w mocha)
+   ```mocha-phantomjs http://localhost:4444/test/index.html (in terminal with mocha-phantomjs)
 
 ### Pre-push git hook testing
 
@@ -70,9 +70,9 @@ Tests should be run on every push, to setup locally
 
 ### Setup tests for mocha-phantomjs invocation
 
-1) Install PhantomJS
+1) Install PhantomJS & mocha-phantomjs
+  ```npm install -g mocha-phantomjs phantomjs
 
-2) npm install -g mocha-phantomjs
 
 ### Useful links
 
