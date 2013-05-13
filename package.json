@@ -23,10 +23,6 @@
     "handlebars-brunch": "> 1.0 < 1.5",
     "uglify-js-brunch": "> 1.0 < 1.5",
     "clean-css-brunch": "> 1.0 < 1.5",
-    "mocha": "~1.9.0",
-    "chai": "~1.5.0",
-    "sinon": "1.4.2",
-    "sinon-chai": "2.1.2",
     "brunch": "1.x",
     "express": "3.x",
     "mongoose": "3.x",
@@ -48,7 +44,13 @@
     "moment": "2.0.0",
     "superagent": "0.14.x",
     "winston": "~0.7.1",
-    "winston-ses": "0.0.4"
+    "winston-ses": "0.0.4",
+
+    //should move to devDependencies
+    "mocha": "~1.9.0",
+    "chai": "~1.5.0",
+    "sinon": "1.4.2",
+    "sinon-chai": "2.1.2"
   },
   "devDependencies": {
     "supertest": "0.5.x",

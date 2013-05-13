@@ -1,0 +1,10 @@
+-------------------------------------------------------------------------------
+Peter session
+===============================================================================
+
+- git hook to run tests on git push
+- something wrong with tests ....
+- .dotfiles
+- think about suggestions as separate collection with own api (think rpc?)
+- Export using coffee short hand ( exports = {blah} )
+- Send an email

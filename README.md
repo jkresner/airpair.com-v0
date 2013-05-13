@@ -1,10 +1,9 @@
 About
 ===============================================================================
 
-site @ airpair.com
+site @ http:///www.airpair.com/
 
 
--------------------------------------------------------------------------------
 Branching strategy + pull requests
 ===============================================================================
 
@@ -22,162 +21,113 @@ Branching strategy + pull requests
 
 - ALL work is to be done on topic branches & merged into master w pull requests
 
-- Note from Pete, consider git flow: http://nvie.com/posts/a-successful-git-branching-model/
 
--------------------------------------------------------------------------------
-Setup + run locally
+To setup + run locally
 ===============================================================================
 
 1)   npm install brunch -g
 
-2)   Make sure you have mongoDB installed
+2)   Have mongoDB installed
 
 3)   mongod
 
-4)   brunch w -s      (or  brunch watch --server)
+4)   npm install
 
-5)   http://localhost:3333/
+5)   brunch w -s      (or  brunch watch --server)
+
+6)   http://localhost:3333/
 
 
--------------------------------------------------------------------------------
-Test
+
+Running tests
 ===============================================================================
 
-Two layers of tests: Server + Integration (running actual pages with PhantomJS)
+### Two types of tests
 
-NOTE YOU MUST HAVE:
-  - PhantomJS installed
-  - MOCHA-PHANTOMJS
+1) /test/server
 
-1)   npm install -g mocha
+   Runs inside node with mocha (things like api tests)
 
-2)   npm install -g mocha-phantomjs
+   ```mocha test/server/all.coffee
 
-3)   brunch w -s -c config-test
+2) /test/integration
 
-4)   mocha-phantomjs http://localhost:3333/test/index.html   (front end tests)
+   hit html & make http requests either in browser or w PhantomJS
+   First run brunch in test mode (test db/users etc.)
 
-5)   mocha test/server/all.coffee (backend tests)
+   ```brunch w -s -c config-test
+
+   Then execute tests
+   ```http://localhost:3333/test/index.html (in browser w mocha)
+   ```mocha-phantomjs http://localhost:3333/test/index.html (in terminal with mocha-phantomjs)
+
+### Pre-push git hook testing
+
+Tests should be run on every push, to setup locally
+
+  ```cd .git/hooks
+     ln -nsf ../../build/git-hooks/pre-push
+
+### Setup tests for mocha-phantomjs invocation
+
+1) Install PhantomJS
+
+2) npm install -g mocha-phantomjs
+
+### Useful links
 
 docs on expect syntax                chaijs.com/api/bdd/
 docs on using spy/fake/stub          sinonjs.org/docs/
 docs on sinon chai syntax            chaijs.com/plugins/sinon-chai
 
-For git pre-push hook to ensure tests pass before pushing, do this:
 
-    cd .git/hooks
-    ln -nsf ../../build/git-hooks/pre-push
-
--------------------------------------------------------------------------------
-List of TODO
+List of TODO next
 ===============================================================================
 
-For wed
-
-- [M] Pull out hasLink and mail body saving to request/suggestion
-- [H] Beautify customer sign up
-  - [H] View/review airpair (from dashboard)
-  - [H] Write Test for update airpair
-- [H] Beautify dev sign up
-
-- [H] User Dashboard
-  - [H] requests for help
-  - [H] no requests content
-  - [H] right side content
-- [H] Error logging / mailing
-
-
+- [H] Transactional email
+- [H] Deploy Error logging / mailing
 - [H] Admin
-  - [H] Update Request
-    - [H] assign devs
-  - [H] Review Request
+  - [H] Review Request as Customer
 - [H] Expert Review
-  - [H] Respond to request
   - [H] Email notification to customer
-
 
 Deploy:
 
-- Confirm persisted session
-- Decrease heroku dyno
+- setup git hook, for front + back tests
 
--------------------------------------------------------------------------------
-List of TODO v.5
+
+TODO v.5
 ===============================================================================
 
-- No suggested experts, signup / shared / refer
-- improve tag search
-- Show server error states for customer + expert sign in
-- Protect api calls for owners of objects
-- Mobile homepage
-- Add github projects to tags
-- Remove experts with un-associated userIds (haven't logged in)
-- Think about request event array
-- [M] Expert google sign in redirect is json response when multiple accounts.
-- [H] Scheduling
-  - [M] Timezone
 - [H] Split expert sign up into contact & prefs
-- [L] Add stack overflow app icon
+- [H] Write Test for update request
+- [M] Pull out hasLink and mail body saving to request/suggestion
+- [H] Ask if request can be farmed out to the public
+- [M] No suggested experts, signup / shared / refer
+- [M] improve tag search
+- [H] Show server error states for customer + expert sign in
+- [M] Protect api calls for owners of objects
+- [M] Mobile homepage
+- [M] Add github projects to tags
+- [H] Scheduling
+  - [M] Timezones
+- Remove experts with un-associated userIds (haven't logged in)
 - [M] Airpair techniques emails (How to intro, share code etc.)
-- [L] Try out two instances with redis
-- [M] Downsize mongoHQ
 
--------------------------------------------------------------------------------
-List to airpair
+
+TODO low priority
 ===============================================================================
 
-passportjs airpair Notes:
-- Checkout about apachebench
-- Navigator.cookies property
- :: http://stackoverflow.com/questions/5639346/shortest-function-for-reading-a-cookie-in-javascript
-For shortest-function-for-reading-a-cookie-in-javascript
+- [M] Downsize mongoHQ
+- [L] Try out two instances with redis
+- [Pete] consider flow: http://nvie.com/posts/a-successful-git-branching-model
 
-[Peter Lyons]
-- Sending mail
-- Dates with mongo
-- collecting JS dates
-  - http://momentjs.com/
 
+Ideas to airpair on
+===============================================================================
+
+[Jake Verbaten]
+- Mix panel & error logs pie chart
 
 [Un-assigned]
-- How to rename a mongo collection
-  - mongo shell: db.requests.renameCollection( newName , <dropTarget> ) renames the collection.
-- How to update schema
-  - https://github.com/visionmedia/node-migrate
-- Performance testing (apachebench / heroku etc.)
-- Setup CI server to run front / back tests
-
--------------------------------------------------------------------------------
-Non-dev ideas
-===============================================================================
-
-What are you offering on top of video to video, for packages
-Training packages
-Packages
-Become an airpair 'member' and get discounts
-
-
--------------------------------------------------------------------------------
-Jake session
-===============================================================================
-
-- Don't store dates, only numbers
-- Mix panel has a nice pie char of which errors were happening
-- Not flushing database after testing catches a bunch of production problems.
-- https://github.com/airportyh/testem
-- globals, requires, helpers - readme
-- css? try stylus
-- tap: test reports (can set as mocha reporter)
-- pingdom, forever (restarting)
-
-
--------------------------------------------------------------------------------
-Peter session
-===============================================================================
-
-- git hook to run tests on git push
-- something wrong with tests ....
-- .dotfiles
-- think about suggestions as separate collection with own api (think rpc?)
-- Export using coffee short hand ( exports = {blah} )
-- Send an email
+- Update schema: https://github.com/visionmedia/node-migrate
