@@ -99,6 +99,7 @@ Deploy:
 TODO v.5
 ===============================================================================
 
+- [H] User to user messaging system
 - [H] Split expert sign up into contact & prefs
 - [H] Write Test for update request
 - [M] Pull out hasLink and mail body saving to request/suggestion
