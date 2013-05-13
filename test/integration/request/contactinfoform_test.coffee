@@ -8,13 +8,9 @@ fixture = "<div id='welcome' class='main'>welcome</div><div id='contactInfo' cla
 
 describe "Request: contactInfo", ->
 
-  before ->
-    $log 'Request: contactInfo form'
-    @SPA = hlpr.set_initSPA '/scripts/request/App'
-
-  beforeEach -> hlpr.clean_setup @, fixture
-
+  before -> @SPA = hlpr.set_initSPA '/scripts/request/App'
   afterEach -> hlpr.clean_tear_down @
+  beforeEach -> hlpr.clean_setup @, fixture
 
   it 'missing full name & email fires validation', (done) ->
     hlpr.LoadSPA @SPA

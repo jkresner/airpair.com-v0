@@ -8,13 +8,9 @@ fixture = "<div id='welcome' class='main'>welcome</div><div id='contactInfo' cla
 
 describe "Request: customer signin", ->
 
-  before ->
-    $log 'Request: customer signin'
-    @SPA = hlpr.set_initSPA '/scripts/request/App'
-
-  beforeEach -> hlpr.clean_setup @, fixture
-
+  before -> @SPA = hlpr.set_initSPA '/scripts/request/App'
   afterEach -> hlpr.clean_tear_down @
+  beforeEach -> hlpr.clean_setup @, fixture
 
   it 'not signed in shows step 1', ->
     hlpr.LoadSPA @SPA, { "authenticated": false }

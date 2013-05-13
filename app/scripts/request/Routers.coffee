@@ -18,20 +18,16 @@ class exports.Router extends Backbone.Router
     if @isAuthenticated() then @contactInfo() else @welcome()
 
   welcome: ->
-    $log 'Router.welcome'
     @hideShow '#welcome'
 
   contactInfo: ->
-    # $log 'Router.contactInfo'
     if !@isAuthenticated() then return @navigate 'welcome', { trigger: true }
 
     @page.company.fetch success: (m, opts, resp) =>
       m.populateFromGoogle @page.session
 
     @hideShow '#contactInfo'
-    # @request()
   request: ->
-    # $log 'Router.request'
     if !@isAuthenticated() then return @navigate 'welcome', { trigger: true }
 
     if @page.tags.length is 0 then @page.tags.fetch()
@@ -41,7 +37,6 @@ class exports.Router extends Backbone.Router
       company: @page.company.attributes
 
   thanks: ->
-    # $log 'Router.thanks'
     @hideShow '#thanks'
 
   update: (id) ->

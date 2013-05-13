@@ -15,17 +15,14 @@ fixture = """<div id='welcome' class='main'>welcome</div>
 
 describe 'BeExpert:Views ConnectView =>', ->
 
-  before ->
-    @SPA = hlpr.set_initSPA '/scripts/beexpert/App'
-
+  before -> @SPA = hlpr.set_initSPA '/scripts/beexpert/App'
+  afterEach -> hlpr.clean_tear_down @
   beforeEach ->
     hlpr.clean_setup @, fixture
     @session = new M.User()
     @expert = new M.Expert()
     @viewData = model: @expert, session: @session
 
-  afterEach ->
-    hlpr.clean_tear_down @
 
   it 'can continue with fabian user details', (done) ->
     @stubs.success = sinon.stub V.ConnectView::, 'renderSuccess', ->

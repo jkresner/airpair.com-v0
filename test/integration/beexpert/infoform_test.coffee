@@ -15,18 +15,14 @@ fixture = """<div id='welcome' class='main'>welcome</div>
 
 describe 'BeExpert:Views InfoFormView =>', ->
 
-  before ->
-    @SPA = hlpr.set_initSPA '/scripts/beexpert/App'
-
+  before -> @SPA = hlpr.set_initSPA '/scripts/beexpert/App'
+  afterEach -> hlpr.clean_tear_down @
   beforeEach ->
     hlpr.clean_setup @, fixture
     @defaultData = homepage: 'http://home.co', brief: 'test', rate: 40, status: 'busy', hours: '3-5'
     @expert = new M.Expert()
     @tags = new C.Tags( data.tags )
     @viewData = model: @expert, tags: @tags
-
-  afterEach ->
-    hlpr.clean_tear_down @
 
   it 'on load sets correct homepage, hours, rate & status selected', ->
     v = new V.InfoFormView @viewData

@@ -13,10 +13,8 @@ fixture = """<div id='welcome' class='main'>welcome</div>
 
 describe 'Request:Views RequestFormView =>', ->
 
-  before ->
-    $log 'Request:Views RequestFormView'
-    @SPA = hlpr.set_initSPA '/scripts/request/App'
-
+  before -> @SPA = hlpr.set_initSPA '/scripts/request/App'
+  afterEach -> hlpr.clean_tear_down @
   beforeEach ->
     hlpr.clean_setup @, fixture
     @defaultData = brief: 'test brief', availability: "I am available", budget: 30, pricing: 'private', hours: '1'
@@ -24,8 +22,6 @@ describe 'Request:Views RequestFormView =>', ->
     @tags = new C.Tags( data.tags )
     @viewData = model: @request, tags: @tags
 
-  afterEach ->
-    hlpr.clean_tear_down @
 
   it 'on load sets correct {budget, pricing} radios, {brief, availability} ', ->
     v = new V.RequestFormView @viewData
@@ -74,10 +70,10 @@ describe 'Request:Views RequestFormView =>', ->
     v = new V.RequestFormView @viewData
     v.tags.trigger 'sync'
     expect( v.$('.tt-dropdown-menu').is(':visible') ).to.be.false
-    $('.autocomplete').val('c').trigger('input')
+    v.$('.autocomplete').val('c').trigger('input')
     expect( v.$('.tt-dropdown-menu').is(':visible') ).to.be.true
     expect( v.model.get('tags') ).to.equal undefined
-    $('.tt-suggestion')[0].click()
+    $(v.$('.tt-suggestion')[0]).click()
     expect( v.model.get('tags').length ).to.equal 1
     expect( v.$('.selected .label-tag').length ).to.equal 1
 
@@ -86,7 +82,7 @@ describe 'Request:Views RequestFormView =>', ->
     v.tags.trigger 'sync'
     $('.autocomplete').val('c').trigger('input')
     expect( v.model.get('tags') ).to.equal undefined
-    $('.tt-suggestion')[0].click()
+    $(v.$('.tt-suggestion')[0]).click()
     $(v.$('.selected .label-tag')[0]).find('.rmTag').click()
     expect( v.model.get('tags').length ).to.equal 0
 
@@ -144,7 +140,7 @@ describe 'Request:Views RequestFormView =>', ->
     v.tags.trigger 'sync'
 
     v.$('.autocomplete').val('c').trigger('input')
-    v.$('.tt-suggestion')[0].click()
+    $(v.$('.tt-suggestion')[0]).click()
     v.$('[name=brief]').val 'baaaaah'
     v.$('[name=availability]').val 'now biatch!'
     v.$('.save').click()
@@ -160,7 +156,7 @@ describe 'Request:Views RequestFormView =>', ->
     v.$('[name=brief]').val 'baaaaah'
     v.$('[name=availability]').val 'now biatch!2'
     v.$('.autocomplete').val('c').trigger('input')
-    v.$('.tt-suggestion')[0].click()
+    $(v.$('.tt-suggestion')[0]).click()
 
     expect( v.$("[name=brief]").val() ).to.equal 'baaaaah'
     expect( v.$("[name=availability]").val() ).to.equal 'now biatch!2'
