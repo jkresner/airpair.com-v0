@@ -11,11 +11,11 @@ Branching strategy + pull requests
 
 - **prod** represents the current deployed code @ airpair.com
 
-- prod milestones are tagged with
+- ***milestones*** are tagged with
 
     `git tag release/v0.M.m.x prod`
 
-- prod reverts can be achieved using
+- ***reverts*** can be achieved using
 
     `git checkout -b prod release/v0.M.m.x prod`
 
@@ -27,11 +27,11 @@ To setup + run locally
 
 1)   Install mongoDB
 
-1)   Install Brunch.io `npm install brunch -g`
+1)   Install brunch.io `npm install brunch -g`
 
 3)   Run mongo `mongod`
 
-4)   Install required npm package `npm install`
+4)   Install npm package `npm install`
 
 5)   Run brunch server `brunch w -s` or `brunch watch --server`
 
@@ -54,26 +54,28 @@ Running tests
 ##### 2. /test/integration
 
    hit html & make http requests either in browser or w PhantomJS
+
    First run brunch in test mode (test db/users etc.)
 
    `brunch w -s -c config-test`
 
    Then execute tests
+
    `http://localhost:4444/test/index.html` (in browser w mocha)
-   `mocha-phantomjs http://localhost:4444/test/index.html` (in terminal)
+   `mocha-phantomjs http://localhost:4444/test/index.html` (in terminal w mocha-phantomjs)
 
 #### Pre-push git hook testing
 
 Tests should run on every push. To setup locally
 
-  `cd .git/hooks
-  ln -nsf ../../build/git-hooks/pre-push`
+  `cd .git/hooks`
+  `ln -nsf ../../build/git-hooks/pre-push`
 
 #### Useful links
 
-docs on expect syntax                chaijs.com/api/bdd/
-docs on using spy/fake/stub          sinonjs.org/docs/
-docs on sinon chai syntax            chaijs.com/plugins/sinon-chai
+- docs on expect syntax                chaijs.com/api/bdd/
+- docs on using spy/fake/stub          sinonjs.org/docs/
+- docs on sinon chai syntax            chaijs.com/plugins/sinon-chai
 
 
 List of TODO next
@@ -85,10 +87,6 @@ List of TODO next
   - [H] Review Request as Customer
 - [H] Expert Review
   - [H] Email notification to customer
-
-Deploy:
-
-- setup git hook, for front + back tests
 
 
 TODO v.5
