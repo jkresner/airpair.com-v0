@@ -42,11 +42,11 @@ Setup + run locally
 Test
 ===============================================================================
 
-Three layers of tests:
+Two layers of tests: Server + Integration (running actual pages with PhantomJS)
 
-- /ui (JS front end only)
-- /integration (JS front end calling server side, should have no deps on node)
-- /server (Node only)
+NOTE YOU MUST HAVE:
+  - PhantomJS installed
+  - MOCHA-PHANTOMJS
 
 1)   npm install -g mocha
 
@@ -163,3 +163,15 @@ Jake session
 - css? try stylus
 - tap: test reports (can set as mocha reporter)
 - pingdom, forever (restarting)
+
+
+-------------------------------------------------------------------------------
+Peter session
+===============================================================================
+
+- git hook to run tests on git push
+- something wrong with tests ....
+- .dotfiles
+- think about suggestions as separate collection with own api (think rpc?)
+- Export using coffee short hand ( exports = {blah} )
+- Send an email
