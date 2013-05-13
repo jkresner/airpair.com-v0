@@ -22,6 +22,7 @@ Branching strategy + pull requests
 
 - ALL work is to be done on topic branches & merged into master w pull requests
 
+- Note from Pete, consider git flow: http://nvie.com/posts/a-successful-git-branching-model/
 
 -------------------------------------------------------------------------------
 Setup + run locally
