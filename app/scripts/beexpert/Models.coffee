@@ -29,7 +29,6 @@ class exports.Expert extends Shared.Expert
 
   # try set pic from alternate sources if google plus image is null
   trySetPic: (pop) ->
-    $log 'trySetPic', pop
     if !pop.pic? && pop.gh? && pop.gh.gravatar_id?
       pop.pic = "https://secure.gravatar.com/avatar/#{pop.gh.gravatar_id}"
     if !pop.pic? && pop.so? && pop.so.profile_image?

@@ -16,7 +16,6 @@ fixture = """<div id='welcome' class='main'>welcome</div>
 describe 'BeExpert:Views InfoFormView =>', ->
 
   before ->
-    $log 'BeExpert:Views InfoFormView'
     @SPA = hlpr.set_initSPA '/scripts/beexpert/App'
 
   beforeEach ->
@@ -73,8 +72,8 @@ describe 'BeExpert:Views InfoFormView =>', ->
     expect(d.rate).to.equal '10'
     expect(d.status).to.equal 'busy'
 
-    $('.autocomplete').val('c').trigger('input').trigger('input')
-    $('.tt-suggestion')[0].click()
+    v.$('.autocomplete').val('c').trigger('input').trigger('input')
+    $(v.$('.tt-suggestion')[0]).click()
     expect( v.model.get('tags').length ).to.equal 1
 
     d2 = v.getViewData()
@@ -84,14 +83,4 @@ describe 'BeExpert:Views InfoFormView =>', ->
     expect(d2.rate).to.equal '10'
     expect(d2.status).to.equal 'busy'
 
-
-
-
-    # view.$('.save').click()
-    # errorMSG = view.$('.controls-tags .error-message')
-    # expect(errorMSG.length).to.equal 1
-
-
-
   # it 'strips http:// & https:// from websites & urls', ->
-

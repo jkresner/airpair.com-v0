@@ -19,7 +19,6 @@ class exports.WelcomeView extends BB.BadassView
 #############################################################################
 
 class exports.ConnectView extends BB.ModelSaveView
-  logging: on
   el: '#connectForm'
   tmpl: require './templates/Connect'
   events:
@@ -43,7 +42,6 @@ class exports.ConnectView extends BB.ModelSaveView
 #############################################################################
 
 class exports.InfoFormView extends BB.ModelSaveView
-  logging: on
   el: '#infoForm'
   tmpl: require './templates/InfoForm'
   events: { 'click .save': 'save' }
@@ -54,7 +52,7 @@ class exports.InfoFormView extends BB.ModelSaveView
     @$('input:radio').on 'click', @selectRB
     @listenTo @model, 'change', @render
   render: ->
-    if @model.hasChanged('tags') && !@firstRender then $log 'not rendering info'; return
+    return if @model.hasChanged('tags') && !@firstRender
     @setValsFromModel ['homepage','brief','hours']
     @$(":radio[value=#{@model.get('rate')}]").prop('checked',true).click()
     @$(":radio[value=#{@model.get('status')}]").prop('checked',true).click()
