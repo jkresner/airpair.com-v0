@@ -62,6 +62,7 @@ Running tests
    Then execute tests
 
    `http://localhost:4444/test/index.html` (in browser w mocha)
+
    `mocha-phantomjs http://localhost:4444/test/index.html` (in terminal w mocha-phantomjs)
 
 #### Pre-push git hook testing
@@ -69,6 +70,7 @@ Running tests
 Tests should run on every push. To setup locally
 
   `cd .git/hooks`
+
   `ln -nsf ../../build/git-hooks/pre-push`
 
 #### Useful links
