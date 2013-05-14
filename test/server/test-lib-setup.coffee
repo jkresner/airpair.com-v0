@@ -1,24 +1,27 @@
 global.$log = console.log
 
-global.und = require 'underscore'
-global.sinon = require 'sinon'
-chai = require 'chai'
+
+mongoose      = require 'mongoose'
+chai          = require 'chai'
 chai.use require 'sinon-chai'
 #require "sinon/lib/sinon/util/fake_xml_http_request"
 
-global.sinon = sinon
-global.expect = chai.expect
+
+connect = (done) ->
+  return done() if mongoose.connections[0]._listening
+  mongoose.connect 'localhost/airpair_test', done
+
+destroy = (done) ->
+  return done() if suiteCtx?  # set in /test/server/all.coffee
+  mongoose.connection.db.executeDbCommand { dropDatabase:1 }, (e, r) ->
+    mongoose.connection.close done
 
 
-global.createDB = (done) ->
-  if suiteCtx?
-    done()
-  else
-    mongoose.connect "mongodb://localhost/airpair_test", done
-
-global.destroyDB = (done) ->
-  if suiteCtx?
-    done()
-  else
-    mongoose.connection.db.executeDbCommand { dropDatabase:1 }, (err, result) ->
-      mongoose.connection.close done
+module.exports =
+  http:       require 'supertest'
+  _:          require 'underscore'
+  sinon:      require 'sinon'
+  chai:       require 'chai'
+  expect:     chai.expect
+  dbConnect:  connect
+  dbDestroy:  destroy

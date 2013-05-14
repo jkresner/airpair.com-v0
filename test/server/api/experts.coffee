@@ -1,53 +1,43 @@
-require './../test-lib-setup'
-require './../test-app-setup'
+{http,_,sinon,chai,expect,dbConnect,dbDestroy} = require './../test-lib-setup'
+{app,data,passportMock} = require './../test-app-setup'
 
-data =
-  experts: require './../../data/experts'
 
-api_experts = require('./../../../lib/api/experts')(app)
+require('./../../../lib/api/experts')(app)
+
 
 describe "REST api experts", ->
 
-  before (done) ->
-    @testNum = 0
-    createDB done
+  @testNum = 0
+  before (done) -> dbConnect done
+  after (done) -> dbDestroy done
+  beforeEach -> @testNum++
 
-  beforeEach (done) ->
-    @testNum++
-    @expert = data.experts[@testNum]
-    request(app)
-      .post('/api/experts')
+
+  it "can get created expert", (done) ->
+    @expert = data.experts[1]
+    http(app).post('/api/experts')
       .send( @expert )
       .expect(200)
       .end (err, res) =>
         d = res.body
         expect(d.userId).to.equal @expert.userId
-        @expertId = res.body._id
-        done()
+        expertId = res.body._id
 
-  it "can get created expert", (done) ->
-    expert = @expert
-    request(app)
-      .get("/api/experts/#{@expertId}")
-      .expect(200)
-      .end (err, res) =>
-        d = res.body
-        expect(d.userId).to.equal @expert.userId
-        expect(d.name).to.equal @expert.name
-        expect(d.email).to.equal @expert.email
-        expect(d.gmail).to.equal @expert.gmail
-        expect(d.pic).to.equal @expert.pic
-        expect(d.homepage).to.equal @expert.homepage
-        expect(d.timezone).to.equal @expert.timezone
-        expect(d.in).to.deep.equal @expert.in
-        expect(d.tw).to.deep.equal expert.tw
-        expect(d.so).to.deep.equal expert.so
-        expect(d.bb).to.deep.equal expert.bb
-        done()
+        http(app).get("/api/experts/#{expertId}")
+          .expect(200)
+          .end (errr, ress) =>
+            d = res.body
+            expect(d.userId).to.equal @expert.userId
+            expect(d.name).to.equal @expert.name
+            expect(d.email).to.equal @expert.email
+            expect(d.gmail).to.equal @expert.gmail
+            expect(d.pic).to.equal @expert.pic
+            expect(d.homepage).to.equal @expert.homepage
+            expect(d.timezone).to.equal @expert.timezone
+            expect(d.in).to.deep.equal @expert.in
+            expect(d.tw).to.deep.equal @expert.tw
+            expect(d.so).to.deep.equal @expert.so
+            expect(d.bb).to.deep.equal @expert.bb
+            done()
 
   # it "un-associated expert gets associated when user logs in first time", (done) ->
-
-
-
-  after (done) ->
-    destroyDB done

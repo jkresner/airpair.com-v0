@@ -105,7 +105,6 @@ class RequestApi extends CRUDApi
           match = und.find req.body.suggested, (sug) ->
             und.objectIdsEqual sug._id, s._id
           if !match?
-            $log 'pushing removed', s._id, match
             evts.push @newEvent(req, "removed suggested #{s.expert.username}")
 
       if evts.length is 0

@@ -1,19 +1,12 @@
-require './../test-lib-setup'
-require './../test-app-setup'
-passportMock = require './../test-passport'
+{http,_,sinon,chai,expect,dbConnect,dbDestroy} = require './../test-lib-setup'
+{app,data,passportMock} = require './../test-app-setup'
 
-data =
-  users: require './../../data/users'
-  requests: require './../../data/requests'
-
-
-api_skills = require('./../../../lib/api/requests')(app)
+require('./../../../lib/api/requests')(app)
 
 createReq = (reqData, callback) ->
   newReq = und.clone reqData
   delete newReq._id
-  request(app)
-    .post("/api/requests")
+  http(app).post("/api/requests")
     .send(newReq)
     .expect(200)
     .end (e, r) =>
@@ -23,23 +16,16 @@ createReq = (reqData, callback) ->
 
 
 describe "REST api requests", ->
+  @testNum = 0
 
-  before (done) ->
-    @testNum = 0
-    createDB done
-
-  beforeEach ->
-    @testNum++
-
-  after (done) ->
-    $log 'destroying...'
-    destroyDB done
+  before (done) -> dbConnect done
+  after (done) -> dbDestroy done
+  beforeEach -> @testNum++
 
   it "should get first request", (done) ->
     passportMock.setSession 'admin'
     createReq data.requests[1], (req) =>
-      request(app)
-        .get('/api/requests')
+      http(app).get('/api/requests')
         .end (err, res) =>
           d = res.body[0]
           expect(d.userId).to.equal data.users[0]._id
@@ -59,8 +45,7 @@ describe "REST api requests", ->
     errors = isServer: true, msg: "Update failed", data: { canceledDetail: "Must supply canceled reason" }
     createReq data.requests[3], (up) =>
       up.status = "canceled"
-      request(app)
-        .put("/api/requests/#{up._id}")
+      http(app).put("/api/requests/#{up._id}")
         .send(up)
         .expect(400)
         .end (err, res) ->
@@ -72,8 +57,7 @@ describe "REST api requests", ->
     createReq data.requests[3], (up) =>
       up.status = "canceled"
       up.canceledDetail = "testing babay"
-      request(app)
-        .put("/api/requests/#{up._id}")
+      http(app).put("/api/requests/#{up._id}")
         .send(up)
         .expect(200)
         .end (err, res) ->
@@ -89,8 +73,7 @@ describe "REST api requests", ->
     errors = isServer: true, msg: "Update failed", data: { incompleteDetail: "Must supply incomplete reason" }
     createReq data.requests[3], (up) =>
       up.status = "incomplete"
-      request(app)
-        .put("/api/requests/#{up._id}")
+      http(app).put("/api/requests/#{up._id}")
         .send(up)
         .expect(400)
         .end (err, res) ->
@@ -102,8 +85,7 @@ describe "REST api requests", ->
     createReq data.requests[3], (up) =>
       up.status = "incomplete"
       up.incompleteDetail = "testing babay"
-      request(app)
-        .put("/api/requests/#{up._id}")
+      http(app).put("/api/requests/#{up._id}")
         .send(up)
         .expect(200)
         .end (err, res) ->
@@ -118,8 +100,7 @@ describe "REST api requests", ->
     createReq data.requests[3], (up) =>
       suggestion = data.requests[4].suggested[0]
       up.suggested = [ suggestion ]
-      request(app)
-        .put("/api/requests/#{up._id}")
+      http(app).put("/api/requests/#{up._id}")
         .send(up)
         .expect(200)
         .end (err, res) ->
@@ -145,8 +126,7 @@ describe "REST api requests", ->
       sug1 = data.requests[4].suggested[1]
       sug2 = data.requests[4].suggested[2]
       up.suggested = [ sug1, sug2 ]
-      request(app)
-        .put("/api/requests/#{up._id}")
+      http(app).put("/api/requests/#{up._id}")
         .send(up)
         .expect(200)
         .end (err, res) ->
@@ -164,15 +144,13 @@ describe "REST api requests", ->
     createReq data.requests[3], (up) =>
       suggestion = data.requests[4].suggested[0]
       up.suggested = [ suggestion ]
-      request(app)
-        .put("/api/requests/#{up._id}")
+      http(app).put("/api/requests/#{up._id}")
         .send(up)
         .expect(200)
         .end (err, res) ->
           upp = res.body
           upp.suggested = []
-          request(app)
-            .put("/api/requests/#{upp._id}")
+          http(app).put("/api/requests/#{upp._id}")
             .send(upp)
             .end (errr, ress) ->
               d = ress.body
@@ -186,8 +164,7 @@ describe "REST api requests", ->
     passportMock.setSession 'jk'
     createReq data.requests[3], (up) =>
       up.brief = 'updating brief'
-      request(app)
-        .put("/api/requests/#{up._id}")
+      http(app).put("/api/requests/#{up._id}")
         .send(up)
         .expect(200)
         .end (err, res) ->
@@ -202,15 +179,13 @@ describe "REST api requests", ->
   it "should add viewed event if viewed by customer", (done) ->
     passportMock.setSession 'jk'
     createReq data.requests[3], (up) =>
-      request(app)
-        .get("/api/requests/#{up._id}")
+      http(app).get("/api/requests/#{up._id}")
         .end (err, res) ->
           d = res.body
           expect( d.events.length ).to.equal 2
           expect( d.events[1].name ).to.equal "customer view"
           expect( d.events[1].by.name ).to.equal 'Jonathon Kresner'
-          request(app)
-            .get("/api/requests/#{up._id}")
+          http(app).get("/api/requests/#{up._id}")
             .end (errr, ress) ->
               dd = ress.body
               expect( dd.events.length ).to.equal 3
@@ -227,8 +202,7 @@ describe "REST api requests", ->
     req.suggested[0].events = [{}]
 
     createReq req, (up) =>
-      request(app)
-        .get("/api/requests/#{up._id}")
+      http(app).get("/api/requests/#{up._id}")
         .end (err, res) ->
           d = res.body
           expect( d.events.length ).to.equal 2
@@ -238,8 +212,7 @@ describe "REST api requests", ->
           expect( d.suggested[0].events.length ).to.equal 2
           expect( d.suggested[0].events[1].name ).to.equal "viewed"
 
-          request(app)
-            .get("/api/requests/#{up._id}")
+          http(app).get("/api/requests/#{up._id}")
             .end (errr, ress) ->
               dd = ress.body
               expect( dd.events.length ).to.equal 3
@@ -261,8 +234,7 @@ describe "REST api requests", ->
 
       ups = expertStatus: 'abstained', expertFeedback: 'not for me', expertRating: 1, expertComment: 'good luck', expertAvailability: 'I can do tonight'
 
-      request(app)
-        .put("/api/requests/#{up._id}/suggestion")
+      http(app).put("/api/requests/#{up._id}/suggestion")
         .send(ups)
         .end (err, res) ->
           d = res.body
@@ -294,8 +266,7 @@ describe "REST api requests", ->
     createReq req, (up) =>
       ups = expert: sug.expert , expertStatus: 'unwanted', customerFeedback: 'no way', expertRating: 1
 
-      request(app)
-        .put("/api/requests/#{up._id}/suggestion")
+      http(app).put("/api/requests/#{up._id}/suggestion")
         .send(ups)
         .end (err, res) ->
           d = res.body
@@ -322,8 +293,7 @@ describe "REST api requests", ->
 
       ups = data.requests[6].nothanks
 
-      request(app)
-        .put("/api/requests/#{up._id}/suggestion")
+      http(app).put("/api/requests/#{up._id}/suggestion")
         .send(ups)
         .end (err, res) ->
           d = res.body
