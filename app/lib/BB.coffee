@@ -1,6 +1,8 @@
 module.exports =
+
   BadassModel:                  require './models/BadassModel'
   SublistModel:                 require './models/SublistModel'
+  SessionModel:                 require './models/SessionModel'
 
   FilteringCollection:          require './collections/FilteringCollection'
   PagingCollection:             require './collections/PagingCollection'
@@ -10,3 +12,6 @@ module.exports =
   HasBootstrapErrorStateView:   require './views/HasBootstrapErrorStateView'
   ModelSaveView:                require './views/ModelSaveView'
   EnhancedFormView:             require './views/EnhancedFormView'
+
+  BadassRouter:                 require './routers/BadassRouter'
+  SessionRouter:                require './routers/SessionRouter'

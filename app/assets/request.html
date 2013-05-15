@@ -16,54 +16,11 @@
       </div>
   </nav>
 
-  <div id="welcome" class="main" style="dispaly:none">
+  <div id="welcome" class="route"></div>
 
-    <img src="/images/faces.png" class="faces" />
+  <div id="info" class="route"></div>
 
-    <div class="welcomeMsg">
-        <h1>Let's get started!</h1>
-
-        <p><i>Step 1 of 3</i></p>
-
-        <p>As you can see on the right, we use <i>google hangouts</i> for video chat.</p>
-
-        <p>Before jumping on your own airpair, we ask you to supply a technical brief that we use to suggest 3 relevant experts in your budget.</p>
-        <p>
-        Once you choose the expert you like most,
-        we use your google account to invite you to your first airpair hangout. Sign in with google to continue.</p>
-
-        <a href="/auth/google?return_to=/find-an-expert"><img src="/images/signin/google.png" class="signinBtn-google"/></a>
-
-    </div>
-    <div class="rightCol">
-
-        <h2><em>{</em> Example airpairs <em>}</em></h2>
-
-        <div class="customer">
-          <h4><b>{</b> environment setup <b>}</b><br />
-            <span class="label label-tag">ruby-on-rails</span>
-            <span class="label label-tag">postgres</span>
-            </h4>
-          <p><i>Customer feedback:</i> We got so much done in an hour!</p>
-          <iframe width="360" height="220" src="http://www.youtube.com/embed/l9BItvriQmk" frameborder="0" allowfullscreen></iframe>
-        </div>
-
-        <div class="customer">
-          <h4><b>{</b> getting unstuck quicker <b>}</b>
-              <br /><span class="label label-tag">backbone.js</span> <span class="label label-tag">auth</span> <span class="label label-tag">CORS</span>
-          </h4>
-          <p><i>Customer feedback:</i> This was exactly what I wanted. </p>
-          <iframe width="360" height="220" src="http://www.youtube.com/embed/G3q5GBlPEHI" frameborder="0" allowfullscreen></iframe>
-        </div>
-
-    </div>
-  </div>
-
-
-  <div id="contactInfo" class="main">
-  </div>
-
-  <div id="request" class="main">
+  <div id="request" class="route">
     <div id="requestForm"></div>
     <div class="rightCol" style="height:820px">
 
@@ -80,7 +37,7 @@
     <div style="clear: both;"></div>
   </div>
 
-  <div id="thanks" class="main">
+  <div id="thanks" class="route">
     <h1>Thank you</h1>
 
     <p class="success">Your request is submitted.</p>
@@ -93,23 +50,18 @@
     <p style="margin-top:40px">Please follow <a href="http://twitter.com/airpair" class="zocial twitter" target="_blank">@airpair on twitter</a>
       and  <a href="http://angel.co/airpair" target="_blank" class="zocial angellist">airpair on angelList</a></p>
 
-
   </div>
 
 </body>
 
   <script src="/javascripts/vendor.js" defer></script>
-  <script src="/javascripts/app.js" defer onload="require('/scripts/request/App');"></script>
+  <script src="/javascripts/app.js" defer onload="require('/scripts/request/Router');"></script>
 
   <script type="text/javascript">
 
-      function initSPA(SPA) {
-          var pagedata = {};
-
-          new SPA.Page(pagedata, function(page) {
-            window.router = new SPA.Router({ page: page });
-            Backbone.history.start();
-          });
+      function initRouterWithPageData(AppRouter) {
+        var pageData = { test: "yup", go: 'no' };
+        window.router = new AppRouter(pageData);
       }
 
   </script>

@@ -1,9 +1,9 @@
+exports = {}
 models = require '/scripts/shared/Models'
 
 data =
   users: require '/test/data/users'
 
-exports = {}
 
 
 exports.showsError = (input) ->
@@ -27,6 +27,25 @@ exports.clean_setup = (ctx, fixtureHtml) ->
   # add objects to hold spys + stubs that we can gracefully clean up in tear_down
   ctx.spys = {}
   ctx.stubs = {}
+
+exports.set_initRouter = (routerPath) ->
+
+  window.initRouterWithPageData = (Router, pageData) =>
+    pageData = {} if !pageData?
+    if window.router? then Backbone.history.stop()
+    window.router = new Router pageData
+
+  R = require(routerPath)
+  R::pushState = off # turn pushState off
+  R::enableExternalProviders = off
+  # stub out getting the users details via ajax
+  R::_setSession = (pageData, callback) ->
+    session = pageData.session
+    if !session? then session = data.users[0]
+    # $log '_setSession override', session
+    @app = { session: new models.User session }
+    @superConstructor.call @, pageData, callback
+  R
 
 
 exports.set_initSPA = (spaPath) ->
@@ -59,6 +78,10 @@ exports.clean_tear_down = (ctx) ->
     ctx.stubs[attr].restore()
 
   exports.clear_htmlfixture()
+
+  # so we can press refresh in the browser easily
+  if window.router?
+    router.navigate '#'
 
 
 # used for an object that doesn't yet have a function defined for what we want to stub
