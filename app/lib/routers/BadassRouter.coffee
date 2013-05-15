@@ -53,6 +53,9 @@ module.exports = class BadassRouter extends Backbone.Router
     # Call backbone to correctly wire up & call Router.initialize
     Backbone.Router::constructor.apply @, arguments
 
+    if @pushState
+      @enablePushStateNavigate()
+
   # construct all instances of models, collection & views for page
   appConstructor: (pageData, callback) ->
     throw new Error 'override appConstructor in child router'
@@ -66,6 +69,7 @@ module.exports = class BadassRouter extends Backbone.Router
 
     for route of @routes
       routeName = route.split('/')[0]  # routes may contain /:id etc.
+      @[routeName] = (->) if !@[routeName]? # default function allows us to be lazy in child routers
       @[routeName].routeName = routeName
       @[routeName] = _.wrap @[routeName], (fn, args) =>
         if @logging then $log "Router.#{fn.routeName}"
@@ -87,12 +91,22 @@ module.exports = class BadassRouter extends Backbone.Router
     @navigate routeUrl, { trigger: trigger }
 
 
+  # setup the ajax links for the html5 push navigation
+  enablePushStateNavigate:  ->
+    $("body").on "click", "a", (e) =>
+      href = $(e.currentTarget).attr 'href'
+      if href.length && href.charAt(0) is '#'
+        e.preventDefault()
+        @navTo href.replace('#','')
+
+
   # short hand to handle injection of pageData for pre-loading models
   setOrFetch: (model, data, opts) ->
     if data? then return model.set data
     opts = {} if !opts?
     opts.reset = true # backbone 1.0 so slow without this set
     model.fetch opts
+
 
   # short hand to handle injection of pageData for pre-loading collections
   resetOrFetch: (collection, data, opts) ->
