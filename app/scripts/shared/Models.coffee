@@ -6,6 +6,8 @@ _.extend exports, require './../tags/Models'
 
 class exports.User extends BB.BadassModel
   urlRoot: '/api/users/me'
+  authenticated: ->
+    @isGoogleAuthenticated()
   isGoogleAuthenticated: ->
     @get('_id')? && @get('google')?
 
