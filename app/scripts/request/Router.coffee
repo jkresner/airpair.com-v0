@@ -51,7 +51,7 @@ module.exports = class Router extends S.AirpairSessionRouter
     @app.request.set '_id': id
     @app.request.fetch success: (model, opts, resp) =>
       @app.company.set '_id': model.get('company')._id
-      @company()
+      @navTo 'info'
 
 
 # on jQuery ready, construct a router instance w data injected from the page
