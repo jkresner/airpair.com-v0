@@ -3,17 +3,18 @@ hlpr = require '/test/ui-helper'
 M = require '/scripts/request/Models'
 C = require '/scripts/request/Collections'
 V = require '/scripts/request/Views'
+
 data =
   requests: require './../../data/requests'
   tags: require './../../data/tags'
 
-fixture = """<div id='welcome' class='main'>welcome</div>
-      <div id='contactInfo' class='main'>info</div>
-       <div id="requestForm"></div>"""
+fixture = "<div id='welcome' class='route'>welcome</div>
+           <div id='info' class='route'>info</div>
+           <div id='requestForm'></div>"
 
 describe 'Request:Views RequestFormView =>', ->
 
-  before -> @SPA = hlpr.set_initSPA '/scripts/request/App'
+  before -> @Router = hlpr.set_initRouter '/scripts/request/Router'
   afterEach -> hlpr.clean_tear_down @
   beforeEach ->
     hlpr.clean_setup @, fixture
@@ -22,7 +23,6 @@ describe 'Request:Views RequestFormView =>', ->
     @tags = new C.Tags( data.tags )
     @viewData = model: @request, tags: @tags
 
-
   it 'on load sets correct {budget, pricing} radios, {brief, availability} ', ->
     v = new V.RequestFormView @viewData
     v.model.set @defaultData
@@ -30,9 +30,9 @@ describe 'Request:Views RequestFormView =>', ->
     expect( v.$('#budget30').prev().hasClass('checked') ).to.be.true
     expect( v.$('#pricingPrivate').is(':checked') ).to.be.true
     expect( v.$('#pricingPrivate').prev().hasClass('checked') ).to.be.true
-    expect( v.$('[name=availability]').val() ).to.be.equal "I am available"
-    expect( v.$('[name=brief]').val() ).to.be.equal "test brief"
-    expect( v.$('[name=hours]').val() ).to.equal '1'
+    expect( v.elm('availability').val() ).to.be.equal "I am available"
+    expect( v.elm('brief').val() ).to.be.equal "test brief"
+    expect( v.elm('hours').val() ).to.equal '1'
 
 
   it 'validation on availability fires with not availability', ->
@@ -99,9 +99,9 @@ describe 'Request:Views RequestFormView =>', ->
     newLink.click()
     expect( v.$('.autocomplete').is(':visible') ).to.be.false
     expect( v.$('#tagNewForm').is(':visible') ).to.be.true
-    expect( v.$('[name=nameStackoverflow]').val() ).to.equal 'zzzzzd'
+    expect( v.elm('nameStackoverflow').val() ).to.equal 'zzzzzd'
     expect( v.model.get('tags') ).to.equal undefined
-    v.$('[name=nameStackoverflow]').val('c')
+    v.elm('nameStackoverflow').val('c')
     v.$('.save-so').click()
 
     tagSaved = =>
@@ -141,25 +141,25 @@ describe 'Request:Views RequestFormView =>', ->
 
     v.$('.autocomplete').val('c').trigger('input')
     $(v.$('.tt-suggestion')[0]).click()
-    v.$('[name=brief]').val 'baaaaah'
-    v.$('[name=availability]').val 'now biatch!'
+    v.elm('brief').val 'baaaaah'
+    v.elm('availability').val 'now biatch!'
     v.$('.save').click()
 
-    expect( hlpr.showsError(v.$("[name=brief]")) ).to.be.true
-    expect( v.$("[name=brief]").val() ).to.equal 'baaaaah'
+    expect( hlpr.showsError(v.elm("brief")) ).to.be.true
+    expect( v.elm("brief").val() ).to.equal 'baaaaah'
 
 
   it 'choosing a tag doesnt effect other field', ->
     v = new V.RequestFormView @viewData
     v.tags.trigger 'sync'
 
-    v.$('[name=brief]').val 'baaaaah'
-    v.$('[name=availability]').val 'now biatch!2'
+    v.elm('brief').val 'baaaaah'
+    v.elm('availability').val 'now biatch!2'
     v.$('.autocomplete').val('c').trigger('input')
     $(v.$('.tt-suggestion')[0]).click()
 
-    expect( v.$("[name=brief]").val() ).to.equal 'baaaaah'
-    expect( v.$("[name=availability]").val() ).to.equal 'now biatch!2'
+    expect( v.elm("brief").val() ).to.equal 'baaaaah'
+    expect( v.elm("availability").val() ).to.equal 'now biatch!2'
 
   # it 'on server error, error message renders', ->
   #   expect(false).to.be.true
