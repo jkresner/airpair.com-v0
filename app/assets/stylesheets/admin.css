@@ -36,7 +36,8 @@
 #adminboundpage .suggestion .links { width:50%;margin:0 4px 0px 0px;float:right; }
 #adminboundpage .suggestion .tags { padding:1px 2px!important;clear:both;height:100px;overflow:hidden; }
 #adminboundpage .suggestion .label-tag { padding:0px 2px 1px 2px;font-size:9px;margin-bottom:1px }
-#adminboundpage .suggestion .add-suggestion { width:78px; }
+#adminboundpage .suggestion .add-suggestion { padding-top:0px;width:48px;line-height:13px;margin:0;float:left;height:26px; }
+#adminboundpage .suggestion a.email { padding:4px 7px;margin:0;float:left; }
 #adminboundpage .suggested { border-top:solid 0.5px #d3d3d3;min-height:100px }
 #adminboundpage .suggested hr { margin:0; }
 #adminboundpage .suggested .pic { width:40px;margin:0;float:left; }

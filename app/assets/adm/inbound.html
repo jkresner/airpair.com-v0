@@ -24,30 +24,26 @@
     </div>
   </nav>
 
-  <div id="list" class="main">
+  <div id="list" class="route">
     <div id="requests"></div>
   </div>
 
-  <div id="edit" class="main">
-    <div id="request"></div>
-  </div>
+  <div id="request" class="route"></div>
 
 
 </body>
 
   <script src="/javascripts/vendor.js" defer></script>
-  <script src="/javascripts/app.js" defer onload="require('/scripts/inbound/App');"></script>
+  <script src="/javascripts/app.js" defer onload="require('/scripts/inbound/Router')"></script>
 
   <script type="text/javascript">
 
-      function initSPA(SPA) {
-
-          var pagedata = {};
-
-          window.router = new SPA.Router({ page: new SPA.Page(pagedata) });
-          Backbone.history.start();
-      }
+    function initRouterWithPageData(Router) {
+      var pageData = {};
+      window.router = new Router(pageData);
+    }
 
   </script>
+
 
 </html>

@@ -62,7 +62,7 @@ class exports.RequestInfoView extends BB.ModelSaveView
   render: ->
     @setValsFromModel ['brief','availability','status','canceledReason','incompleteDetail','budget','pricing']
     mailBody = @mailTmpl(_id: @model.id)
-    tmplCompanyData = _.extend @model.get('company'), { mailBody: mailBody }
+    tmplCompanyData = _.extend @mget('company'), { mailBody: mailBody }
     @$('#company-controls').html @tmplCompany(tmplCompanyData)
     @$('[data-toggle="popover"]').popover()
     @$('.status').addClass "label-#{@model.get('status')}"
@@ -141,12 +141,12 @@ class exports.RequestSuggestedView extends BB.BadassView
       for s in @model.get 'suggested'
 
         mailData =
-          _id: @model.get('_id')
+          _id: @model.id
           expertName: s.expert.name
-          companyName: @model.get('company').name
+          companyName: @mget('company').name
 
         s.body = @mailTmpl mailData
-        s.tags =  @model.get 'tags'
+        s.tags =  @mget 'tags'
         s.expert.hasLinks = new M.Expert(s.expert).hasLinks()
 
         @$el.append @tmpl s
@@ -200,9 +200,8 @@ class exports.RequestView extends BB.ModelSaveView
     d.tags = @infoView.tagsInput.getViewData()
     d
   deleteRequest: ->
-    @model.destroy()
-    @collection.fetch()
-    router.navigate '#', { trigger: true }
+    @model.destroy wait: true, success: =>
+      @collection.fetch success: => router.navTo 'list'
     false
 
 Handlebars.registerPartial "RequestSet", require('./templates/RequestsSet')
