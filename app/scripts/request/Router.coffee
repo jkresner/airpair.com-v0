@@ -4,8 +4,9 @@ M = require './Models'
 C = require './Collections'
 V = require './Views'
 
+
 # on page we construct our app/router with data from the page
-$ -> window.initRouterWithPageData RequestRouter
+$ -> if RequestRouter? then window.initRouterWithPageData RequestRouter
 
 
 class RequestRouter extends SRouters.AirpairSessionRouter

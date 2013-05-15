@@ -4,20 +4,22 @@ hlpr = require '/test/ui-helper'
 data =
   users: require '/test/data/users'
 
-fixture = "<div id='welcome' class='main'>welcome</div><div id='contactInfo' class='main'>info</div>"
+fixture = "<div id='welcome' class='route'>welcome</div>
+           <div id='info' class='route'>info</div>"
+pageData = {}
 
 describe "Request: customer signin", ->
 
-  before -> @SPA = hlpr.set_initSPA '/scripts/request/App'
+  before -> @Router = hlpr.set_initRouter '/scripts/request/Router'
   afterEach -> hlpr.clean_tear_down @
   beforeEach -> hlpr.clean_setup @, fixture
 
   it 'not signed in shows step 1', ->
-    hlpr.LoadSPA @SPA, { "authenticated": false }
+    initRouterWithPageData @Router, { session: { "authenticated": false } }
     expect( $('#welcome').is(":visible") ).to.be.true
-    expect( $('#contactInfo').is(":visible") ).to.be.false
+    expect( $('#info').is(":visible") ).to.be.false
 
   it 'signed in w google shows step 2', ->
-    hlpr.LoadSPA @SPA
+    initRouterWithPageData @Router, pageData
     expect( $('#welcome').is(":visible") ).to.be.false
-    expect( $('#contactInfo').is(":visible") ).to.be.true
+    expect( $('#info').is(":visible") ).to.be.true

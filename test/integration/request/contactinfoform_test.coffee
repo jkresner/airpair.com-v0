@@ -4,17 +4,18 @@ hlpr = require '/test/ui-helper'
 data =
   users: require '/test/data/users'
 
-fixture = "<div id='welcome' class='main'>welcome</div><div id='contactInfo' class='main'>info</div>"
+fixture = "<div id='welcome' class='route'>welcome</div><div id='info' class='route'>info</div>"
+pageData = {}
 
-describe "Request: contactInfo", ->
+describe "Request: infoForm", ->
 
-  before -> @SPA = hlpr.set_initSPA '/scripts/request/App'
+  before -> @Router = hlpr.set_initRouter '/scripts/request/Router'
   afterEach -> hlpr.clean_tear_down @
   beforeEach -> hlpr.clean_setup @, fixture
 
   it 'missing full name & email fires validation', (done) ->
-    hlpr.LoadSPA @SPA
-    v = router.page.contactInfoView
+    initRouterWithPageData @Router, pageData
+    v = router.app.infoFormView
 
     checkValidationErrors = ->
       v.$("#contactName").val('')
@@ -31,30 +32,30 @@ describe "Request: contactInfo", ->
       expect( hlpr.showsError(v.$("#contactEmail")) ).to.be.false
       done()
 
-    router.page.company.once 'sync', checkValidationErrors, @
+    router.app.company.once 'sync', checkValidationErrors, @
 
   it 'company name & less than 100 words on about company fires validation', (done) ->
-    hlpr.LoadSPA @SPA
-    view = router.page.contactInfoView
+    initRouterWithPageData @Router
+    v = router.app.infoFormView
 
     checkValidationErrors = ->
-      view.$("#companyName").val('')
-      view.$("#companyAbout").val('')
-      view.$(".save").click()
-      expect( hlpr.showsError(view.$("#contactName")) ).to.be.false
-      expect( hlpr.showsError(view.$("#contactEmail")) ).to.be.false
-      expect( hlpr.showsError(view.$("#companyName")) ).to.be.true
-      expect( hlpr.showsError(view.$("#companyAbout")) ).to.be.true
-      view.$("#companyName").val('test inc.')
-      view.$(".save").click()
-      expect( hlpr.showsError(view.$("#companyName")) ).to.be.false
-      expect( hlpr.showsError(view.$("#companyAbout")) ).to.be.true
-      view.$("#companyAbout").val('test inc.')
-      view.$(".save").click()
-      expect( hlpr.showsError(view.$("#companyAbout")) ).to.be.true
-      view.$("#companyAbout").val('airpair is fundamentally about sharing knowledge with the community. We use your session recording for educational purposes. Allowing the session recording to be public also helps our experts build a reputation for themselves.')
-      view.$(".save").click()
-      expect( hlpr.showsError(view.$("#companyAbout")) ).to.be.false
+      v.$("#companyName").val('')
+      v.$("#companyAbout").val('')
+      v.$(".save").click()
+      expect( hlpr.showsError(v.$("#contactName")) ).to.be.false
+      expect( hlpr.showsError(v.$("#contactEmail")) ).to.be.false
+      expect( hlpr.showsError(v.$("#companyName")) ).to.be.true
+      expect( hlpr.showsError(v.$("#companyAbout")) ).to.be.true
+      v.$("#companyName").val('test inc.')
+      v.$(".save").click()
+      expect( hlpr.showsError(v.$("#companyName")) ).to.be.false
+      expect( hlpr.showsError(v.$("#companyAbout")) ).to.be.true
+      v.$("#companyAbout").val('test inc.')
+      v.$(".save").click()
+      expect( hlpr.showsError(v.$("#companyAbout")) ).to.be.true
+      v.$("#companyAbout").val('airpair is fundamentally about sharing knowledge with the community. We use your session recording for educational purposes. Allowing the session recording to be public also helps our experts build a reputation for themselves.')
+      v.$(".save").click()
+      expect( hlpr.showsError(v.$("#companyAbout")) ).to.be.false
       done()
 
-    router.page.company.once 'sync', checkValidationErrors, @
+    router.app.company.once 'sync', checkValidationErrors, @

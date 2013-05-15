@@ -14,9 +14,6 @@ module.exports = class BadassRouter extends Backbone.Router
   # Set logging on /off - Why? : Handy during dev to see flow of routes
   logging: off
 
-  # Set to off if you don't to maintain route history
-  history: on
-
   # Set to off if you don't want to use pushSate in child router
   pushState: on
 
@@ -30,7 +27,8 @@ module.exports = class BadassRouter extends Backbone.Router
   constructor: (pageData, callback) ->
 
     if @logging
-      $log 'BadassRouter.ctor', @pageData, callback
+      history = "pushState: #{@pushState}, root: #{@pushStateRoot}"
+      $log 'BadassRouter.ctor', history, @pageData, callback
 
     @pageData = pageData if pageData?
 
@@ -45,14 +43,11 @@ module.exports = class BadassRouter extends Backbone.Router
       fn.call @, args
       # wire up our 3rd party provider scripts to load only after our spa
       # had been initialized and constructed
-      #@loadExternalProviders()
+      @loadExternalProviders()
 
     @wrapRoutes()
 
-    if @history
-      Backbone.history.start pushState: @pushState, root: @pushStateRoot
-      if @logging
-        $log "History.pushState", @pushState, @pushStateRoot
+    Backbone.history.start pushState: @pushState, root: @pushStateRoot
 
     # Call backbone to correctly wire up & call Router.initialize
     Backbone.Router::constructor.apply @, arguments
@@ -63,7 +58,7 @@ module.exports = class BadassRouter extends Backbone.Router
 
   # load external providers like google analytics, user-voice etc.
   loadExternalProviders: ->
-    throw new Error 'override loadExternalProviders in child router'
+    $log 'override loadExternalProviders in child router'
 
   # automatically wrap route handlers
   wrapRoutes: ->
@@ -82,7 +77,7 @@ module.exports = class BadassRouter extends Backbone.Router
   navTo: (route, trigger) ->
     trigger = true if !trigger?
     @navigate route, { trigger: trigger }
-    $log 'navTo', route, 'trigger:', trigger
+
 
   # short hand to handle injection of pageData for pre-loading models
   setOrFetch: (model, data, opts) ->
