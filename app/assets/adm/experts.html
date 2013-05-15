@@ -24,7 +24,7 @@
     </div>
   </nav>
 
-  <div id="list" class="main">
+  <div id="list" class="route">
     <table id="experts" class="table table-striped">
       <thead>
         <tr>
@@ -40,7 +40,7 @@
     <div id="expertPreview"></div>
   </div>
 
-  <div id="edit" class="main">
+  <div id="edit" class="route">
     <h1>Edit expert</h1>
   </div>
 
@@ -49,18 +49,15 @@
 </body>
 
   <script src="/javascripts/vendor.js" defer></script>
-  <script src="/javascripts/app.js" defer onload="require('/scripts/experts/App');"></script>
-
+  <script src="/javascripts/app.js" defer onload="require('/scripts/experts/Router')"></script>
   <script type="text/javascript">
 
-      function initSPA(SPA) {
-
-          var pagedata = {};
-
-          window.router = new SPA.Router({ page: new SPA.Page(pagedata) });
-          Backbone.history.start();
-      }
+    function initRouterWithPageData(Router) {
+      var pageData = {};
+      window.router = new Router(pageData);
+    }
 
   </script>
+
 
 </html>

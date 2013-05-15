@@ -18,14 +18,14 @@ module.exports = (app) ->
   app.get '/', (req, r) ->
     if !req.isAuthenticated() then file r, 'homepage' else file r, 'dashboard'
 
-  app.get '/dashboard', auth.LoggedIn(), (req, r)-> file r, 'dashboard'
+  app.get '/dashboard*', auth.LoggedIn(), (req, r)-> file r, 'dashboard'
   app.get '/review*', auth.LoggedIn(), (req, r)-> file r, 'review'
 
   # admin pages
-  app.get '/adm/tags', auth.LoggedIn(), auth.Admin(), (req, r) -> file r, 'adm/tags'
-  app.get '/adm/experts', auth.LoggedIn(), auth.Admin(), (req, r) -> file r, 'adm/experts'
-  app.get '/adm/inbound',auth.LoggedIn(), auth.Admin(), (req, r) -> file r, 'adm/inbound'
-  app.get '/adm/csvs',auth.LoggedIn(), auth.Admin(), (req, r) -> file r, 'adm/csvs'
+  app.get '/adm/tags*', auth.LoggedIn(), auth.Admin(), (req, r) -> file r, 'adm/tags'
+  app.get '/adm/experts*', auth.LoggedIn(), auth.Admin(), (req, r) -> file r, 'adm/experts'
+  app.get '/adm/inbound*',auth.LoggedIn(), auth.Admin(), (req, r) -> file r, 'adm/inbound'
+  app.get '/adm/csvs*',auth.LoggedIn(), auth.Admin(), (req, r) -> file r, 'adm/csvs'
   # app.get '/adminn', authz('/'), (req, r) -> file r, 'admin.html'
 
   # api

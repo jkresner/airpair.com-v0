@@ -25,6 +25,7 @@ class exports.ExpertRowView extends BB.BadassView
 
 class exports.ExpertsView extends Backbone.View
   el: '#experts'
+  events: { 'click .select': 'select' }
   initialize: (args) ->
     @collection.on 'reset add remove filter', @render, @
   render: ->
@@ -33,7 +34,11 @@ class exports.ExpertsView extends Backbone.View
      $list.append new exports.ExpertRowView( model: m ).render().el
     @$('.count').html @collection.models.length
     @
-
+  select: (e) ->
+    e.preventDefault()
+    id = $(e.currentTarget).data('id')
+    expert = _.find @collection.models, (m) -> m.id.toString() == id
+    @model.set expert.attributes
 
 
 # class exports.DevFormView extends BB.ModelSaveView
