@@ -13,8 +13,6 @@ class RequestRouter extends SRouters.AirpairSessionRouter
 
   pushStateRoot: '/find-an-expert'
 
-  logging: on
-
   routes:
     'welcome'       : 'welcome'
     'info'          : 'info'

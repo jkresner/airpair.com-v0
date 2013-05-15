@@ -37,13 +37,13 @@ exports.set_initRouter = (routerPath) ->
 
   R = require(routerPath)
   R::pushState = off # turn pushState off
+  R::enableExternalProviders = off
   # stub out getting the users details via ajax
   R::_setSession = (pageData, callback) ->
     session = pageData.session
     if !session? then session = data.users[0]
     # $log '_setSession override', session
     @app = { session: new models.User session }
-    $log '@app', @app.session.attributes
     @superConstructor.call @, pageData, callback
   R
 

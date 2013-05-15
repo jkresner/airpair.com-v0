@@ -20,8 +20,8 @@ module.exports = class BadassRouter extends Backbone.Router
   # Should almost always override pushStateRoot in child router
   pushStateRoot: '/'
 
-  #
-  loadOnJqueryReadyWithPageData: on
+  # Very useful to turn off during testing
+  enableExternalProviders: on
 
   # takes pageData to pre-load data into the SPA without ajax calls
   constructor: (pageData, callback) ->
@@ -43,7 +43,8 @@ module.exports = class BadassRouter extends Backbone.Router
       fn.call @, args
       # wire up our 3rd party provider scripts to load only after our spa
       # had been initialized and constructed
-      @loadExternalProviders()
+      if @enableExternalProviders
+        @loadExternalProviders()
 
     @wrapRoutes()
 
