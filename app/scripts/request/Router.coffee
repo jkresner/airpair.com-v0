@@ -28,26 +28,24 @@ module.exports = class Router extends S.AirpairSessionRouter
     _.extend d, v
 
   initialize: (args) ->
-    if @app.session.authenticated() then @navTo 'info' else @navTo 'welcome'
+    if @isAuthenticated() then @navTo 'info' else @navTo 'welcome'
 
   welcome: ->
     @app.welcomeView.render()
 
   info: ->
-    if !@app.session.authenticated() then return @navTo 'welcome'
+    if !@isAuthenticated() then return @navTo 'welcome'
 
     @app.company.fetch success: (m, opts, resp) =>
       m.populateFromGoogle @app.session
 
   request: ->
-    if !@app.session.authenticated() then return @navTo 'welcome'
+    if !@isAuthenticated() then return @navTo 'welcome'
 
     if @app.tags.length is 0 then @app.tags.fetch()
 
     @app.request.set
       company: @app.company.attributes
-
-  thanks: ->
 
   update: (id) ->
     @app.request.set '_id': id

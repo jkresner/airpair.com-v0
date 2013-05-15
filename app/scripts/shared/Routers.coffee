@@ -13,4 +13,8 @@ class exports.AirpairSessionRouter extends BB.SessionRouter
     # bring in Google analytics, uservoice & other 3rd party things
     require '/scripts/providers/all'
 
+  isAuthenticated: ->
+    @app.session.authenticated()
+
+
 module.exports = exports
