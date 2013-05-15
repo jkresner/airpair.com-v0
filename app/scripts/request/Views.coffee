@@ -4,6 +4,15 @@ M = require './Models'
 SV = require './../shared/Views'
 
 #############################################################################
+##
+#############################################################################
+
+class exports.WelcomeView extends BB.BadassView
+  el: '#welcome'
+  tmpl: require './templates/Welcome'
+  render: -> @$el.html @tmpl()
+
+#############################################################################
 ##  Contact Info
 #############################################################################
 
@@ -19,8 +28,8 @@ class exports.CompanyContactView extends BB.ModelSaveView
     @
 
 
-class exports.ContactInfoView extends BB.ModelSaveView
-  el: '#contactInfo'
+class exports.InfoFormView extends BB.ModelSaveView
+  el: '#info'
   tmpl: require './../shared/templates/CompanyForm'
   events: { 'click .save': 'validatePrimaryContactAndSave' }
   initialize: ->
@@ -49,9 +58,11 @@ class exports.ContactInfoView extends BB.ModelSaveView
     else
       @save e
   renderSuccess: (model, response, options) =>
-    router.navigate 'request', { trigger: true }
+    router.navTo 'request'
 
 
+#############################################################################
+##  Request form
 #############################################################################
 
 class exports.RequestFormView extends BB.ModelSaveView
