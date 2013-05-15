@@ -1,15 +1,10 @@
-exports = {}
-SRouters = require('./../shared/All').Routers
+S = require('./../shared/Routers')
 M = require './Models'
 C = require './Collections'
 V = require './Views'
 
 
-# on page we construct our app/router with data from the page
-$ -> if RequestRouter? then window.initRouterWithPageData RequestRouter
-
-
-class RequestRouter extends SRouters.AirpairSessionRouter
+module.exports = class Router extends S.AirpairSessionRouter
 
   pushStateRoot: '/find-an-expert'
 
@@ -61,4 +56,5 @@ class RequestRouter extends SRouters.AirpairSessionRouter
       @company()
 
 
-module.exports = RequestRouter
+# on jQuery ready, construct a router instance w data injected from the page
+$ -> window.initRouterWithPageData Router
