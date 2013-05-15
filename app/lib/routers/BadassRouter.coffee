@@ -20,7 +20,7 @@ module.exports = class BadassRouter extends Backbone.Router
   # Should almost always override pushStateRoot in child router
   pushStateRoot: '/'
 
-  # Very useful to turn off during testing
+  # Useful to turn off during testing & admin pages
   enableExternalProviders: on
 
   # takes pageData to pre-load data into the SPA without ajax calls
@@ -39,7 +39,7 @@ module.exports = class BadassRouter extends Backbone.Router
       $log 'BadassRouter.app', @app
 
     @initialize = _.wrap @initialize, (fn, args) =>
-      if @logging then $log "Router.init", @app, args
+      if @logging then $log "Router.init", args, @app
       fn.call @, args
       # wire up our 3rd party provider scripts to load only after our spa
       # had been initialized and constructed
@@ -75,9 +75,16 @@ module.exports = class BadassRouter extends Backbone.Router
 
   # prefer trigger to always be true
   # pass false as second arg for false
-  navTo: (route, trigger) ->
+  navTo: (routeUrl, trigger) ->
     trigger = true if !trigger?
-    @navigate route, { trigger: trigger }
+
+    # re-execute code
+    currentFragment = Backbone.history.getFragment()
+    if currentFragment == routeUrl && trigger
+      # $log 'currentFragment', currentFragment
+      @navigate '/#t' # move to a temp route so we re-execute the code
+
+    @navigate routeUrl, { trigger: trigger }
 
 
   # short hand to handle injection of pageData for pre-loading models

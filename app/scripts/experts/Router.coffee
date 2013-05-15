@@ -6,22 +6,32 @@ V = require './Views'
 
 module.exports = class Router extends S.AirpairSessionRouter
 
-  pushStateRoot: '/adm/tags'
+  pushStateRoot: '/adm/experts'
 
   enableExternalProviders: off  # don't want uservoice + ga on admin
 
+  routes:
+    'list'        : 'list'
+    'edit'        : 'edit'
+
   appConstructor: (pageData, callback) ->
     d =
-      selectedTags: new M.TagListModel()
-      tags: new C.Tags()
+      selected: new M.Expert()
+      experts: new C.Experts()
     v =
-      tagsView: new V.TagsView collection: d.tags
-      tagsInputView: new V.TagsInputView collection: d.tags, model: d.selectedTags
+      expertsView: new V.ExpertsView collection: d.experts, model: d.selected
+      expertView: new V.ExpertView el: '#expertPreview', model: d.selected
 
-    @resetOrFetch d.tags, pageData.tags
+    @resetOrFetch d.experts, pageData.experts
 
     _.extend d, v
 
+  initialize: (args) ->
+    @navTo 'list'
+
+  list: ->
+
+  edit: ->
 
 # on jQuery ready, construct a router instance w data injected from the page
 $ -> window.initRouterWithPageData Router

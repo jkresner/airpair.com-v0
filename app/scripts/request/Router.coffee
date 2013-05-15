@@ -1,4 +1,3 @@
-exports = {}
 S = require('./../shared/Routers')
 M = require './Models'
 C = require './Collections'
