@@ -6,6 +6,8 @@ V = require './Views'
 
 module.exports = class Router extends S.AirpairSessionRouter
 
+  logging: on
+
   pushStateRoot: '/be-an-expert'
 
   routes:
@@ -47,7 +49,3 @@ module.exports = class Router extends S.AirpairSessionRouter
       return @navTo 'connect'
 
     if @app.tags.length is 0 then @app.tags.fetch()
-
-
-# on jQuery ready, construct a router instance w data injected from the page
-$ -> window.initRouterWithPageData Router

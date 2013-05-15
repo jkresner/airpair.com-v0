@@ -54,15 +54,16 @@
 
 </body>
 
-  <script src="/javascripts/vendor.js" defer></script>
-  <script src="/javascripts/app.js" defer onload="require('/scripts/beexpert/Router');"></script>
-
   <script type="text/javascript">
 
-    function initRouterWithPageData(Router) {
-      var pageData = {};
+    function initApp() {
+      pageData = {};
+      Router = require('/scripts/beexpert/Router');
       window.router = new Router(pageData);
     }
 
   </script>
+  <script src="/javascripts/vendor.js" defer></script>
+  <script src="/javascripts/app.js" defer onload="initApp()"></script>
+
 </html>
