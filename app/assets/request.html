@@ -59,10 +59,11 @@
 
   <script type="text/javascript">
 
-      function initRouterWithPageData(AppRouter) {
-        var pageData = { test: "yup", go: 'no' };
-        window.router = new AppRouter(pageData);
-      }
+    function initRouterWithPageData(Router) {
+      var pageData = {};
+      window.router = new Router(pageData);
+    }
 
   </script>
+
 </html>
