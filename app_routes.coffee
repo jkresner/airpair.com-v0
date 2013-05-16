@@ -15,6 +15,8 @@ module.exports = (app) ->
   app.get '/be-an-expert*', (req, r)-> file r, 'beexpert'
   app.get '/find-an-expert*', (req, r)-> file r, 'request'
 
+  app.get '/error-test', (req, r)-> throw new Error('my silly error')
+
   app.get '/', (req, r) ->
     if !req.isAuthenticated() then file r, 'homepage' else file r, 'dashboard'
 
