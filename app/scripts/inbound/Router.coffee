@@ -44,7 +44,3 @@ module.exports = class Router extends S.AirpairSessionRouter
       if !d? then return @navigate '#', true
       else
         @app.selected.set d.attributes
-
-
-# on jQuery ready, construct a router instance w data injected from the page
-$ -> window.initRouterWithPageData Router

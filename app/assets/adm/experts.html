@@ -44,20 +44,16 @@
     <h1>Edit expert</h1>
   </div>
 
-
-
 </body>
 
-  <script src="/javascripts/vendor.js" defer></script>
-  <script src="/javascripts/app.js" defer onload="require('/scripts/experts/Router')"></script>
   <script type="text/javascript">
-
-    function initRouterWithPageData(Router) {
+    function initApp() {
       var pageData = {};
+      Router = require('/scripts/experts/Router');
       window.router = new Router(pageData);
     }
-
   </script>
-
+  <script src="/javascripts/vendor.js" defer></script>
+  <script src="/javascripts/app.js" defer onload="initApp()"></script>
 
 </html>
