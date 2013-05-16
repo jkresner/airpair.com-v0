@@ -11,16 +11,16 @@
 """
 module.exports = class BadassRouter extends Backbone.Router
 
-  # Set logging on /off - Why? : Handy during dev to see flow of routes
+  # Set logging on /off - Very dandy during dev to see flow of routes
   logging: off
 
-  # Set to off if you don't want to use pushSate in child router
+  # Set off if you don't want pushSate - great during testing!
   pushState: on
 
-  # Should almost always override pushStateRoot in child router
+  # Almost always a good idea to override pushStateRoot in child router
   pushStateRoot: '/'
 
-  # Useful to turn off during testing & admin pages
+  # Good to turn off during testing & admin pages
   enableExternalProviders: on
 
   # takes pageData to pre-load data into the SPA without ajax calls
