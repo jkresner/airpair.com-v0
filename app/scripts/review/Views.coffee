@@ -15,11 +15,12 @@ class exports.SuggestionView extends BB.BadassView
   tmpl: require './templates/Suggestion'
   initialize: (args) ->
     @isCustomer = @request.get('userId') == @session.id
-    @isCustomer = true if /iscust/.test(location.href)
+    # @isCustomer = true if /iscust/.test(location.href)
     @reviewForm = new exports.CustomerReviewFormView args
     @model.set requestId: @request.id
   render: ->
     cust = @request.contact(0)
+    $log '@isCustomer', @isCustomer
     d = @model.extend custPic: cust.pic, custName: cust.fullName, isCustomer: false
     @$el.html @tmpl d
     if @isCustomer
