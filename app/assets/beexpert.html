@@ -16,10 +16,10 @@
     </div>
   </nav>
 
-  <div id="welcome" class="main"></div>
+  <div id="welcome" class="route"></div>
 
 
-  <div id="connect" class="main">
+  <div id="connect" class="route">
     <div id="connectForm"></div>
     <div class="rightCol">
       <h2>Your profile</h2>
@@ -29,7 +29,7 @@
     </div>
   </div>
 
-  <div id="info" class="main">
+  <div id="info" class="route">
     <div id="infoForm"></div>
     <div class="rightCol">
       <h2>Your expert profile</h2>
@@ -39,7 +39,7 @@
   </div>
 
 
-  <div id="thanks" class="main">
+  <div id="thanks" class="route">
     <h1>Thank you</h1>
 
     <p class="success">Your expert profile has been saved.</p>
@@ -54,19 +54,16 @@
 
 </body>
 
-  <script src="/javascripts/vendor.js" defer></script>
-  <script src="/javascripts/app.js" defer onload="require('/scripts/beexpert/App');"></script>
-
   <script type="text/javascript">
 
-      function initSPA(SPA) {
-          var pagedata = {};
-
-          new SPA.Page(pagedata, function(page) {
-            window.router = new SPA.Router({ page: page });
-            Backbone.history.start();
-          });
-      }
+    function initApp() {
+      pageData = {};
+      Router = require('/scripts/beexpert/Router');
+      window.router = new Router(pageData);
+    }
 
   </script>
+  <script src="/javascripts/vendor.js" defer></script>
+  <script src="/javascripts/app.js" defer onload="initApp()"></script>
+
 </html>

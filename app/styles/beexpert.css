@@ -3,7 +3,7 @@
 #beexpertpage .muted { font-size:12px;font-style:italic; }
 #beexpertpage .twitter-typeahead input { width:280px; }
 #beexpertpage .faces { display:block;float:left;width:160px;margin:18px 10px 0 10px }
-#beexpertpage .welcomeMsg { float:left;width:600px;padding:30px 50px 0 30px }
+#beexpertpage .welcomeMsg { float:left;width:560px;padding:30px 50px 0 30px }
 #beexpertpage .welcomeMsg h1 { font-size:64px;margin-bottom:40px;margin-top:6px; }
 #beexpertpage .welcomeMsg p { font-size:18px;line-height:28px }
 #beexpertpage .rightCol { text-align:center;float:left;width:360px;padding:25px;min-height:650px;background:white; }
@@ -11,7 +11,7 @@
 #beexpertpage h2 { }
 #beexpertpage .signinBtn-google { margin:10px 0 0 -10px; }
 #beexpertpage legend { border:none;font-size:38px;font-weight:bold;height:45px;margin-bottom:10px; }
-#beexpertpage #connectForm { float:left;width:870px;padding-top:30px; }
+#beexpertpage #connectForm { float:left;width:830px;padding-top:30px; }
 #beexpertpage #connectForm input { width:84%; }
 #beexpertpage #connectForm textarea { width:90%;height:250px; }
 #beexpertpage #connectForm .controls a { width:120px; }
@@ -21,7 +21,7 @@
 #beexpertpage #connectForm hr { margin-bottom:30px; }
 #beexpertpage #connectForm .form-actions { margin-top:44px;min-height:40px; }
 #beexpertpage #mininumConnect { margin:10px;color:#99923F;font-weight:bold }
-#beexpertpage #infoForm { padding-top:20px;float:left;width:860px;  }
+#beexpertpage #infoForm { padding-top:20px;float:left;width:820px;  }
 #beexpertpage #infoForm textarea { width:90%;height:120px; }
 #beexpertpage #infoForm .error-message { margin:-10px 0 0 5px;font-size:12px  }
 #beexpertpage .rb-group { margin:10px;display:block;height:30px; }

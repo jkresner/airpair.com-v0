@@ -23,21 +23,18 @@
     </div>
   </nav>
 
-  <div id="tags" class="main" style="width:80%">
-
-  </div>
+  <div id="list" class="route" style="width:80%"></div>
 
 </body>
 
-  <script src="/javascripts/vendor.js" defer></script>
-  <script src="/javascripts/app.js" defer onload="require('/scripts/tags/Router')"></script>
   <script type="text/javascript">
-
-    function initRouterWithPageData(Router) {
+    function initApp() {
       var pageData = {};
+      Router = require('/scripts/tags/Router');
       window.router = new Router(pageData);
     }
-
   </script>
+  <script src="/javascripts/vendor.js" defer></script>
+  <script src="/javascripts/app.js" defer onload="initApp()"></script>
 
 </html>
