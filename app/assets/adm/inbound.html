@@ -33,17 +33,14 @@
 
 </body>
 
-  <script src="/javascripts/vendor.js" defer></script>
-  <script src="/javascripts/app.js" defer onload="require('/scripts/inbound/Router')"></script>
-
   <script type="text/javascript">
-
-    function initRouterWithPageData(Router) {
+    function initApp() {
       var pageData = {};
+      Router = require('/scripts/inbound/Router');
       window.router = new Router(pageData);
     }
-
   </script>
-
+  <script src="/javascripts/vendor.js" defer></script>
+  <script src="/javascripts/app.js" defer onload="initApp()"></script>
 
 </html>

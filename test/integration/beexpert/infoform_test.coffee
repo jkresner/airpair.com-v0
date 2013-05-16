@@ -9,51 +9,68 @@ data =
   experts: require './../../data/experts'
   tags: require './../../data/tags'
 
-fixture = """<div id='welcome' class='main'>welcome</div>
-      <div id='connectForm' class='main'>info</div>
-       <div id="infoForm"></div>"""
+fixture = """<div id='welcome' class='route'>welcome</div>
+          <div id='connect' class='route'><div id="connectForm"></div></div>
+          <div id="info" class="route"><div id="infoForm"></div></div>"""
+pageData = {}
 
 describe 'BeExpert:Views InfoFormView =>', ->
 
-  before -> @SPA = hlpr.set_initSPA '/scripts/beexpert/App'
+  before -> hlpr.set_initApp '/scripts/beexpert/Router'
   afterEach -> hlpr.clean_tear_down @
   beforeEach ->
     hlpr.clean_setup @, fixture
-    @defaultData = homepage: 'http://home.co', brief: 'test', rate: 40, status: 'busy', hours: '3-5'
+    @defaultData = _id: null, homepage: 'http://home.co', brief: 'test', rate: 40, status: 'busy', hours: '3-5'
     @expert = new M.Expert()
     @tags = new C.Tags( data.tags )
     @viewData = model: @expert, tags: @tags
 
+
   it 'on load sets correct homepage, hours, rate & status selected', ->
-    v = new V.InfoFormView @viewData
-    v.model.set @defaultData
+    d = @defaultData
+    @stubs.expertFetch = sinon.stub M.Expert::, 'fetch', -> @set d
+
+    initApp { session: data.users[3] }
+
+    v = router.app.infoFormView
     expect( v.$('#homepage').val() ).to.be.equal 'http://home.co'
-    expect( v.$('[name=hours]').val() ).to.equal '3-5'
+    expect( v.elm('hours').val() ).to.equal '3-5'
     expect( v.$('#rate40').is(':checked') ).to.be.true
     expect( v.$('#rate40').prev().hasClass('checked') ).to.be.true
     expect( v.$('#statusBusy').is(':checked') ).to.be.true
     expect( v.$('#statusBusy').prev().hasClass('checked') ).to.be.true
 
   it 'validation on brief fires with brief', ->
-    delete @defaultData.brief
-    v = new V.InfoFormView @viewData
-    v.model.set @defaultData
+    d = @defaultData
+    delete d.brief
+    @stubs.expertFetch = sinon.stub M.Expert::, 'fetch', -> @set d
+
+    initApp { session: data.users[3] }
+    v = router.app.infoFormView
     v.$('.save').click()
     expect( hlpr.showsError(v.$("#brief")) ).to.be.true
 
   it 'validation on tags fires with no tags', ->
-    delete @defaultData.tags
-    v = new V.InfoFormView @viewData
+    d = @defaultData
+    delete d.tags
+    @stubs.expertFetch = sinon.stub M.Expert::, 'fetch', -> @set d
+    initApp { session: data.users[3] }
+    v = router.app.infoFormView
     v.model.set @defaultData
     v.$('.save').click()
     errorMSG = v.$('.controls-tags .error-message')
     expect(errorMSG.length).to.equal 1
 
   it 'adding a tags leaves homepage, brief, rate, hours & status as is', ->
-    delete @defaultData.tags
-    v = new V.InfoFormView @viewData
-    v.model.set @defaultData
-    v.tags.trigger 'sync'
+    d = @defaultData
+    delete d.tags
+    @stubs.expertFetch = sinon.stub M.Expert::, 'fetch', -> @set d
+    @stubs.tagsFetch = sinon.stub C.Tags::, 'fetch', -> @set data.tags; @trigger 'sync'
+
+    initApp { session: data.users[3] }
+
+    v = router.app.infoFormView
+    router.navTo 'info'
     v.$('#homepage').val 'airtest.com'
     v.$('#brief').val 'test don change it!'
     v.$('#hours').val '5-10'
@@ -78,5 +95,6 @@ describe 'BeExpert:Views InfoFormView =>', ->
     expect(d2.hours).to.equal '5-10'
     expect(d2.rate).to.equal '10'
     expect(d2.status).to.equal 'busy'
+
 
   # it 'strips http:// & https:// from websites & urls', ->

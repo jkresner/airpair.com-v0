@@ -153,7 +153,6 @@ module.exports = [
     "status": "ready",
     "timezone": "GMT-0500 (CDT)",
     "userId": "5182a00266a6f999a465f29c",
-    "username": "bearMountain",
     "karma": 0,
     "tags": [
       { "name": "Objective-C", "short": "objectiveC", "soId": "objective-c" }

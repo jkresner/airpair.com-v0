@@ -28,24 +28,25 @@ exports.clean_setup = (ctx, fixtureHtml) ->
   ctx.spys = {}
   ctx.stubs = {}
 
-exports.set_initRouter = (routerPath) ->
+exports.set_initApp = (routerPath) ->
 
-  window.initRouterWithPageData = (Router, pageData) =>
+  window.initApp = (pageData) =>
     pageData = {} if !pageData?
+    # $log 'initApp', routerPath, pageData
+    Router = require routerPath
+    Router::pushState = off # turn pushState off
+    Router::enableExternalProviders = off
+    # stub out getting the users details via ajax
+    Router::_setSession = (pageData, callback) ->
+      session = pageData.session
+      if !session? then session = data.users[0]
+      # $log '_setSession override', session
+      @app = { session: new models.User session }
+      @superConstructor.call @, pageData, callback
+
     if window.router? then Backbone.history.stop()
     window.router = new Router pageData
 
-  R = require(routerPath)
-  R::pushState = off # turn pushState off
-  R::enableExternalProviders = off
-  # stub out getting the users details via ajax
-  R::_setSession = (pageData, callback) ->
-    session = pageData.session
-    if !session? then session = data.users[0]
-    # $log '_setSession override', session
-    @app = { session: new models.User session }
-    @superConstructor.call @, pageData, callback
-  R
 
 
 exports.set_initSPA = (spaPath) ->

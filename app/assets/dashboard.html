@@ -24,7 +24,7 @@
     </div>
   </nav>
 
-  <div class="main">
+  <div id="requests" class="route">
     <div id="requestslist"></div>
     <div class="rightCol">
 
@@ -52,18 +52,14 @@
 </body>
 
   <script src="/javascripts/vendor.js" defer></script>
-  <script src="/javascripts/app.js" defer onload="require('/scripts/dashboard/App');"></script>
+  <script src="/javascripts/app.js" defer onload="require('/scripts/dashboard/Router')"></script>
 
   <script type="text/javascript">
 
-      function initSPA(SPA) {
-          var pagedata = {};
-
-          new SPA.Page(pagedata, function(page) {
-            window.router = new SPA.Router({ page: page });
-            Backbone.history.start();
-          });
-      }
+    function initRouterWithPageData(Router) {
+      var pageData = {};
+      window.router = new Router(pageData);
+    }
 
   </script>
 

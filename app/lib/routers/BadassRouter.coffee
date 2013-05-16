@@ -49,9 +49,13 @@ module.exports = class BadassRouter extends Backbone.Router
     @wrapRoutes()
 
     Backbone.history.start pushState: @pushState, root: @pushStateRoot
+    defaultFragment = Backbone.history.getFragment()
 
     # Call backbone to correctly wire up & call Router.initialize
     Backbone.Router::constructor.apply @, arguments
+
+    if defaultFragment != currentFragment = Backbone.history.getFragment()
+      @navTo defaultFragment
 
     if @pushState
       @enablePushStateNavigate()

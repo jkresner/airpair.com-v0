@@ -9,12 +9,12 @@ pageData = {}
 
 describe "Request: infoForm", ->
 
-  before -> @Router = hlpr.set_initRouter '/scripts/request/Router'
+  before -> hlpr.set_initApp '/scripts/request/Router'
   afterEach -> hlpr.clean_tear_down @
   beforeEach -> hlpr.clean_setup @, fixture
 
   it 'missing full name & email fires validation', (done) ->
-    initRouterWithPageData @Router, pageData
+    initApp pageData
     v = router.app.infoFormView
 
     checkValidationErrors = ->
@@ -35,7 +35,7 @@ describe "Request: infoForm", ->
     router.app.company.once 'sync', checkValidationErrors, @
 
   it 'company name & less than 100 words on about company fires validation', (done) ->
-    initRouterWithPageData @Router
+    initApp pageData
     v = router.app.infoFormView
 
     checkValidationErrors = ->

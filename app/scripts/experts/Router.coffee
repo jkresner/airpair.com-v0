@@ -28,7 +28,3 @@ module.exports = class Router extends S.AirpairSessionRouter
 
   initialize: (args) ->
     @navTo 'list'
-
-
-# on jQuery ready, construct a router instance w data injected from the page
-$ -> window.initRouterWithPageData Router
