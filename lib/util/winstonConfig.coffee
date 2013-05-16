@@ -1,5 +1,5 @@
 winston     =   require('winston')
-winstonses  =   require('winston').Ses
+winstonses  =   require('winston-ses').Ses
 
 
 winston.remove winston.transports.Console
