@@ -21,25 +21,20 @@
     </div>
   </nav>
 
-  <div id="request" class="main">
+  <div id="detail" class="route">
+    <div id="request"></div>
   </div>
 
 </body>
 
-  <script src="/javascripts/vendor.js" defer></script>
-  <script src="/javascripts/app.js" defer onload="require('/scripts/review/App');"></script>
-
   <script type="text/javascript">
-
-    function initSPA(SPA) {
-        var pagedata = {};
-
-        new SPA.Page(pagedata, function(page) {
-          window.router = new SPA.Router({ page: page });
-          Backbone.history.start({pushState: true, root: "/review"});
-        });
+    function initApp() {
+      var pageData = {};
+      Router = require('/scripts/review/Router');
+      window.router = new Router(pageData);
     }
-
   </script>
+  <script src="/javascripts/vendor.js" defer></script>
+  <script src="/javascripts/app.js" defer onload="initApp()"></script>
 
 </html>

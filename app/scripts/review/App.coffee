@@ -8,9 +8,6 @@ SessionPage = require('./../shared/App').SessionPage
 module.exports.Page = class Page extends SessionPage
 
   initialize: (pageData) ->
-    @request = new models.Request()
-    @requestView = new views.RequestView model: @request, session: @session
-
 
 module.exports.Router = routers.ReviewRouter
 
