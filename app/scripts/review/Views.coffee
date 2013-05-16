@@ -147,6 +147,7 @@ class exports.RequestView extends BB.BadassView
   render: ->
     if @v? then @v.remove()
     isCustomer = @mget('userId') == @session.id
+    isCustomer = true if /iscust/.test(location.href)
     s = _.find @mget('suggested'), (m) => m.expert.userId == @session.id
     isExpert = s?
     @$el.html @tmpl @model.extend isCustomer: isCustomer, total: @hrTotal()

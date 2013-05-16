@@ -39,8 +39,20 @@ module.exports = class BadassRouter extends Backbone.Router
       $log 'BadassRouter.app', @app
 
     @initialize = _.wrap @initialize, (fn, args) =>
+
+      Backbone.history.start pushState: @pushState, root: @pushStateRoot
+      defaultFragment = Backbone.history.getFragment()
+
+      if @pushState
+        @enablePushStateNavigate()
+
       if @logging then $log "Router.init", args, @app
       fn.call @, args
+
+      # $log 'defaultFragment', defaultFragment
+      if defaultFragment != currentFragment = Backbone.history.getFragment()
+        @navTo defaultFragment
+
       # wire up our 3rd party provider scripts to load only after our spa
       # had been initialized and constructed
       if @enableExternalProviders
@@ -48,38 +60,40 @@ module.exports = class BadassRouter extends Backbone.Router
 
     @wrapRoutes()
 
-    Backbone.history.start pushState: @pushState, root: @pushStateRoot
-    defaultFragment = Backbone.history.getFragment()
-
     # Call backbone to correctly wire up & call Router.initialize
     Backbone.Router::constructor.apply @, arguments
 
-    if defaultFragment != currentFragment = Backbone.history.getFragment()
-      @navTo defaultFragment
-
-    if @pushState
-      @enablePushStateNavigate()
 
   # construct all instances of models, collection & views for page
   appConstructor: (pageData, callback) ->
-    throw new Error 'override appConstructor in child router'
-
-  # load external providers like google analytics, user-voice etc.
-  loadExternalProviders: ->
-    $log 'override loadExternalProviders in child router'
+    throw new Error 'override appConstructor in child router & build all models, collections & views then return single objects'
 
   # automatically wrap route handlers
+  # adding div hide/show + console logging (if enabled)
   wrapRoutes: ->
 
     for route of @routes
-      routeName = route.split('/')[0]  # routes may contain /:id etc.
-      @[routeName] = (->) if !@[routeName]? # default function allows us to be lazy in child routers
-      @[routeName].routeName = routeName
-      @[routeName] = _.wrap @[routeName], (fn, args) =>
-        if @logging then $log "Router.#{fn.routeName}"
-        $(".route").hide()
-        $("##{fn.routeName}").show()
-        fn.call @, args
+
+      # routes may contain /:id etc. - we only use
+      # the first fragment to map to the fn name
+      routeName = route.replace(/:id/g,'').split('/')[0]
+
+      # can map empty routes twice to do default route
+      if routeName != ''
+        @[routeName] = (->) if !@[routeName]? # default function allows us to be lazy in child routers
+        @[routeName].routeName = routeName
+        @[routeName] = _.wrap @[routeName], (fn, args) =>
+          if @logging then $log "Router.#{fn.routeName}"
+          $(".route").hide()
+          $("##{fn.routeName}").show()
+          @routeMiddleware()
+          fn.call @, args
+
+  # override routeMiddleware to execute custom code on every route
+  routeMiddleware: ->
+
+  # load external providers like google analytics, user-voice etc.
+  loadExternalProviders: ->
 
   # prefer trigger to always be true
   # pass false as second arg for false
@@ -90,7 +104,7 @@ module.exports = class BadassRouter extends Backbone.Router
     currentFragment = Backbone.history.getFragment()
     if currentFragment == routeUrl && trigger
       # $log 'currentFragment', currentFragment
-      @navigate '/#t' # move to a temp route so we re-execute the code
+      @navigate '/#temp' # move to a temp route so we re-execute the code
 
     @navigate routeUrl, { trigger: trigger }
 
