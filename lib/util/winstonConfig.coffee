@@ -31,4 +31,6 @@ logEmailConfig =
   sesSubject:     'ap error'
 
 
-winston.add(winstonses.Ses, logEmailConfig) if isProd
+winston.add(winstonses, logEmailConfig) if isProd
+
+$log 'got winston config', winston
