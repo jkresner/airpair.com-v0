@@ -32,7 +32,6 @@ describe 'BeExpert:Views ConnectView =>', ->
     expect( v.$('.save').length ).to.equal 1
     expect( v.$('#mininumConnect').length ).to.equal 0
     v.model.on 'sync', =>
-      $log '@', @, @stubs.success
       expect(@stubs.success.calledOnce).to.be.true
       done()
 
