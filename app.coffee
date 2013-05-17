@@ -15,25 +15,24 @@ if isProd
 
 
 app = express()
+app.use express.static(__dirname + '/public')
+app.use express.bodyParser()
+app.use express.cookieParser()
+app.use express.session { secret: 'airpair, the future' }
 
+if cfg.env.mode is 'test'
+  app.use require('./test/server/test-passport').initialize()
+else
+  app.use passport.initialize()
 
-app.configure ->
-  app.use express.static(__dirname + '/public')
-  app.use express.bodyParser()
-  app.use express.cookieParser()
-  app.use express.session { secret: 'airpair, the future' }
+app.use passport.session()
 
-  if cfg.env.mode is 'test'
-    app.use require('./test/server/test-passport').initialize()
-  else
-    app.use passport.initialize()
+require('./app_routes')(app)
 
-  app.use passport.session()
-
-  app.use (error, req, res, next) ->
-    console.log "handleError", error
-    winston.error "error {req.url}", error
-    res.status(500).sendfile "./public/500.html"
+app.use (err, req, res, next) ->
+  console.log "handleError", err
+  winston.error "error #{req.url}", err if isProd
+  res.status(500).sendfile "./public/500.html"
 
 
 mongoUri = process.env.MONGOHQ_URL || "mongodb://localhost/#{cfg.db}"
@@ -46,8 +45,6 @@ db.once 'open', ->
   console.log "connected to db #{cfg.db}"
 
 
-require('./app_routes')(app)
-
 
 
 exports.startServer = (port, path, callback) ->
@@ -57,3 +54,4 @@ exports.startServer = (port, path, callback) ->
 
 if isProd
   exports.startServer()
+

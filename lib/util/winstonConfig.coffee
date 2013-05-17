@@ -32,5 +32,3 @@ logEmailConfig =
 
 
 winston.add(winstonses, logEmailConfig) if isProd
-
-$log 'got winston config', winston
