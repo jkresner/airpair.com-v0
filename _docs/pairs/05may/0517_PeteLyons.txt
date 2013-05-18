@@ -5,3 +5,5 @@
 * git mv vs rename delete/add
 * set environment variables for AP_SES_* in ~/dotfiles/airpair.sh and sourced them from ~/.bashrc
 * http://stackoverflow.com/a/415444 (bashrc vs bash_profile)
+* User ref in mongoose schema so can populate
+* Default date on date type
