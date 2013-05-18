@@ -15,8 +15,6 @@ module.exports = (app) ->
   app.get '/be-an-expert*', (req, r)-> file r, 'beexpert'
   app.get '/find-an-expert*', (req, r)-> file r, 'request'
 
-  app.get '/error-test', (req, r)-> throw new Error('my silly error')
-
   app.get '/', (req, r) ->
     if !req.isAuthenticated() then file r, 'homepage' else file r, 'dashboard'
 
@@ -26,9 +24,8 @@ module.exports = (app) ->
   # admin pages
   app.get '/adm/tags*', auth.LoggedIn(), auth.Admin(), (req, r) -> file r, 'adm/tags'
   app.get '/adm/experts*', auth.LoggedIn(), auth.Admin(), (req, r) -> file r, 'adm/experts'
-  app.get '/adm/inbound*',auth.LoggedIn(), auth.Admin(), (req, r) -> file r, 'adm/inbound'
-  app.get '/adm/csvs*',auth.LoggedIn(), auth.Admin(), (req, r) -> file r, 'adm/csvs'
-  # app.get '/adminn', authz('/'), (req, r) -> file r, 'admin.html'
+  app.get '/adm/inbound*', auth.LoggedIn(), auth.Admin(), (req, r) -> file r, 'adm/inbound'
+  app.get '/adm/csvs*', auth.LoggedIn(), auth.Admin(), (req, r) -> file r, 'adm/csvs'
 
   # api
   require('./lib/api/users')(app)
@@ -36,6 +33,11 @@ module.exports = (app) ->
   require('./lib/api/tags')(app)
   require('./lib/api/experts')(app)
   require('./lib/api/requests')(app)
+  require('./lib/api/mail')(app)
 
   # todo, brush up page
   app.get '/edu/tags', (req, r) -> file r, 'edu/tags'
+
+  # dev stuff
+  app.get '/error-test', (req, r)-> throw new Error('my silly error')
+  app.get '/adm/mail', auth.LoggedIn(), auth.Admin(), (req, r) -> file r, 'adm/mail'

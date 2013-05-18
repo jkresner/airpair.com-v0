@@ -1,8 +1,8 @@
-BadassRouter = require './BadassRouter'
+BadassAppRouter = require './BadassAppRouter'
 
-module.exports = class SessionRouter extends BadassRouter
+module.exports = class SessionRouter extends BadassAppRouter
 
-  superConstructor: BadassRouter::constructor
+  superConstructor: BadassAppRouter::constructor
 
   # can /should override with your own application specific model
   model: require './../models/SessionModel'
