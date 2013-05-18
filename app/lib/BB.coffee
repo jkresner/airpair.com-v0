@@ -13,5 +13,5 @@ module.exports =
   ModelSaveView:                require './views/ModelSaveView'
   EnhancedFormView:             require './views/EnhancedFormView'
 
-  BadassRouter:                 require './routers/BadassRouter'
+  BadassAppRouter:              require './routers/BadassAppRouter'
   SessionRouter:                require './routers/SessionRouter'

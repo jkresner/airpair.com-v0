@@ -1,0 +1,6 @@
+* fix key repeat https://gist.github.com/erikh/2260182
+* fix sublime expand to selection (need key binding)
+  {"keys": ["ctrl+f"], "command": "find_under_expand" },
+
+* git mv vs rename delete/add
+* set environment variables for AP_SES_* in ~/dotfiles/airpair.sh and sourced them from ~/.bash_profile
