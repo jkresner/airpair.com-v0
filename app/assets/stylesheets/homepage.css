@@ -44,7 +44,6 @@ a.green { background: #99923F;border: solid 3px #7F761C }
 .marketing hr { height:30px;clear:both;
     border-bottom:dashed 1px gray;border-top:none;border-left:none;border-right:none }
 
-
 .cola { float:left;clear:left;width:460px;margin-right:6px }
 .colb { float:right;width:422px;margin-left:8px;height:100%;margin-top:40px; }
 
@@ -61,3 +60,6 @@ a.green { background: #99923F;border: solid 3px #7F761C }
 #how p { font-size:17px }
 #how b { color:#CC6750; }
 #how img { border:solid 1px #d3d3d3;margin:30px 0px 20px 0px; }
+#how h3 { font-weight:bold; }
+#how i { color:gray;font-style:normal;font-weight:normal; }
+#how h3 em { color:#7F761C;font-style:normal; }
