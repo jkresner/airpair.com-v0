@@ -4,14 +4,16 @@ C = require './Collections'
 V = require './Views'
 
 
-module.exports = class Router extends S.AirpairSessionRouter
+module.exports = class Router extends S.AirpairRouter
+
+  logging: on
 
   pushStateRoot: '/pair-programmers'
 
   routes:
     ''        : 'about'
     'about'   : 'about'
-    'signup'  : 'signup'
+    'post'    : 'post'
     'thanks'  : 'thanks'
     'share'   : 'share'
 

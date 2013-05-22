@@ -15,10 +15,12 @@
   </head>
 <body>
 
+  <div id="about" class="route">
+
   <div class='fold cf'>
     <nav class="cf">
-      <img src="/images/logo4.png" />
-      <h3>Pair up with with baller developers. Make friends. Learn things.</h3>
+      <a href="/"><img src="/images/logo4.png" /></a>
+      <h3>Pair up weekly with baller developers. Make friends. Learn things.</h3>
 
       <!-- <div class="social">
         <a class="zocial twitter icon" href="http://twitter.com/airpair" target="_blank"></a> <a class="zocial facebook icon" href="http://facebook.com/airpair" target="_blank"></a>
@@ -27,11 +29,11 @@
 
     <div class="jumbotron cf" style="height:562px">
 
-      <img src="/images/jumbfaces.png" style="width:220px">
+      <img src="/images/jumbfaces.png" style="width:200px">
 
       <div style="margin:auto">
           <h2><span>{</span> Remote pair programmers meetup <span>}</span></h2>
-          <p style="width:680px;margin:40px auto">At airpair, our primary focus is promoting collaboration & knowledge share amongst developers. We believe pair programming is a powerful & critical tool to foster greater learning, faster development & better products. Thus we run a <a href="http://www.meetup.com/remotepairprogrammers/" target="_blank" style="color:white">free virtual meetup</a> for developers interested in pairing with & learning from each other.
+          <p style="width:720px;margin:40px auto">At airpair, our primary focus is promoting collaboration & knowledge share amongst developers. We believe pair programming is a powerful & critical tool to foster greater learning, faster development & better products. We run a <a href="http://www.meetup.com/remotepairprogrammers/" target="_blank" style="color:white">free virtual meetup</a> for developers interested in pairing with & learning from each other.
           </p>
 
           <p style="width:240px;margin:40px auto">
@@ -44,52 +46,217 @@
   <div id="how" class="marketing" style="padding:40px">
     <h2>How our virtual meetups work?</h2>
 
-    <p>24 hours before each meetup event, we send instructions in a meetup message with variations of each step below.</p>
+    <p style="font-size:16px;font-style:italic">Our meetup is an experiment on uncovering the best ways to enable developers to find pair programming help. The process will change as we go. We'd love your input, please <a href="mailto:team@airpair.com" target="_blank">email us</a> your feedback & ideas.</p>
 
-    <p style="font-size:16px;font-style:italic">Our meetup is about experimenting on the best ways to enable developers to find pair programming help in real-time. The process might change from time to time. We'd love your input, so <a href="mailto:team@airpair.com" target="_blank">email us</a> feedback & ideas.</p>
+    <p>24 hours before each meetup, we send instructions in a meetup message with variations of the following steps.</p>
 
     <h3 id="pre-meetup-post"><b>{</b> <i>1.</i> Pre-event post <b>}</b></h3>
 
-    <p>On the day, fill out a basic google form with the tech and challenge(s) you'd like to pair on.<p>
+    <p>Before the meetup, <a href="#post">post</a> the technologies & things you'd like to pair on..<p>
 
     <h3 id="join-event-chat"><em>{</em> <i>2.</i> Join the event chatroom <i style="font-weight:normal">a.k.a IRC channel</i> <em>}</em></h3>
 
-    <p style="margin:0"><a href="http://webchat.freenode.net/?channels=pairprogrammers" target="_blank">Connect to our irc channel</a></p>
+    <p style="margin:0">At the scheduled time, <a href="http://webchat.freenode.net/?channels=pairprogrammers" target="_blank">connect to our #pariprogrammers irc channel</a></p>
 
-    <a href="http://webchat.freenode.net/?channels=pairprogrammers" target="_blank"><img src="/images/meetup/pairprogrammersirc.png" /></a>
+    <a href="http://webchat.freenode.net/?channels=pairprogrammers" target="_blank"><img src="/images/meetup/pairprogrammersirc.png" style="width:460px" /></a>
 
-    <h3><b>{</b> <i>3.</i> Share a link to join chatroom <b>}</b></h3>
+    <h3><b>{</b> <i>3.</i> As you join our chartroom increase attendance by <a href="#share">sharing</a> our meetup.<b>}</b></h3>
 
-    <quote>"I just joined the remote pair programmers chat-room for their two hour weekly week up to find baller coders to pair with."</quote>
+    <br >
+    <div class="addthis_toolbox addthis_default_style addthis_32x32_style"   addthis:url="http://www.meetup.com/remotepairprogrammers/"
+       addthis:title="I'm excited to attend a Virtual Pair Programmers Meetup. #pairprogrammingrocks">
+      <a class="addthis_button_email"></a>
+      <a class="addthis_button_twitter"></a>
+      <a class="addthis_button_hackernews"></a>
+      <a class="addthis_button_linkedin"></a>
+      <a class="addthis_button_google_plusone_share"></a>
+      <a class="addthis_button_facebook"></a>
+      <a class="addthis_button_reddit"></a>
+      <a class="addthis_button_stumbleupon"></a>
+      <a class="addthis_button_wordpress"></a>
+      <a class="addthis_button_tumblr"></a>
+      <a class="addthis_button_delicious"></a>
+      <a class="addthis_button_compact"></a><a class="addthis_counter addthis_bubble_style"></a>
+    </div>
 
-    <h3><em>{</em> <i>4.</i> Post your hello in the irc channel <em>}</em></h3>
+    <h3><em>{</em> <i>4.</i> Post a hello funny or friendly hello as you enter <em>}</em></h3>
 
-    <p>Hello!!! {option funny callout message}. I'm {full name}. I'm a {beginner|intermediate|advanced} with {technology(s)}. I've been developing for {n} years (or months). I would like to pair up on {insert what you're up for}.</p>
+    <p>"Hello!!! I am a pair programming golden god!"</p>
 
-    <h3><b>{</b> <i>5.</i> Create a google hangout and share the link <b>}</b></h3>
+    <h3><b>{</b> <i>5.</i> Use the google docs spreadsheet to figure out who you want to pair with <b>}</b></h3>
+
+    <p>Then start a conversation with them over irc and figure out if one of you wants to kick off a pairing session via google hangouts.</p>
+
+    <h3><b>{</b> <i>6.</i> Create a google hangout <b>}</b></h3>
+
+    <a href="https://talkgadget.google.com/u/0/talkgadget/_/channel/bind?VER=8&clid=E3A2963C48EA20BA&gsessionid=I9lbLpuU_kE&prop=homepage&ec=%5B1%2C1%2C0%2C%22chat_wcs_20130516.170212_RC3%22%5D&RID=rpc&SID=BA9588C0753EE728&CI=1&AID=3&TYPE=xmlhttp&zx=vep7dlxr3ma2&t=1" class="button" target="_blank">Create hangout</a>
 
     <p>* If joining someone else's hangout you can ignore these steps.</p>
 
-    <p>Open google+ and click "<a href="">start a hangout"</a></p>
+    <p>Open google+ and click "<a href="https://plus.google.com/hangouts/_?hso=0&gid=b5f465d3fa10a5a738d56c01378876ddf50e09a7">start a hangout"</a></p>
 
     <h3><em>{</em> <i>6.</i> Give feedback <em>}</em></h3>
 
-    <p>We will send you a questionnaire asking for feedback on the success of your pairing session as well as feedback on your pairing partner(s).</p>
+    <p>We will send you a questionnaire on feedback of your pairing session as well as feedback on your pairing partner(s).</p>
 
     <hr />
   </div>
 
-    <style type="text/css">
-       #how h3 { clear:both;display:block;float:none; }
+  </div>
 
+  <div id="post" class="route">
+
+  <div class='fold cf'>
+    <nav class="cf">
+      <a href="/"><img src="/images/logo4.png" /></a>
+      <h3>Pair up weekly with baller developers. Make friends. Learn things.</h3>
+    </nav>
+  </div>
+
+<div class="ss-form-heading" class="marketing" style="padding:20px 40px"><h1 class="ss-form-title">05-22 Pair Programmers Meetup</h1>
+<p></p>
+<div class="ss-form-desc ss-no-ignore-whitespace" style="width:500px">Share info on your interests so others can quickly find you. We collect this info into a <a href="https://docs.google.com/spreadsheet/pub?key=0AsOwlciMAOtXdDVEdFRJMUlyZFRlUHgzYnozOGhnTUE&output=html" target="_blank" style="color:#CC523E;font-weight:bold">google form</a> so you can figure out who to pair with.</div>
+
+<hr class="ss-email-break" style="display:none;">
+<div class="ss-form">
+
+  <script type="text/javascript">var submitted=false;</script>
+  <iframe name="hidden_iframe" id="hidden_iframe"
+  style="display:none;" onload="if(submitted)
+  {router.navTo('thanks');}"></iframe>
+
+  <form action="https://docs.google.com/a/airpair.com/spreadsheet/formResponse?formkey=dDVEdFRJMUlyZFRlUHgzYnozOGhnTUE6MQ&amp;theme=0AX42CRMsmRFbUy1iOGYwN2U2Mi1hNWU0LTRlNjEtYWMyOC1lZmU4ODg1ODc1ODI&amp;ifq" method="POST" id="ss-form" target="hidden_iframe" onsubmit="submitted=true;">
+
+<br>
+<div class="errorbox-good">
+<div class="ss-item  ss-text"><div class="ss-form-entry"><label class="ss-q-title" for="entry_3">What chat usersname will you use?
+</label>
+<br /><label class="ss-q-help" for="entry_3"></label>
+<input type="text" name="entry.3.single" value="" class="ss-q-short" id="entry_3"></div></div></div>
+<br> <div class="errorbox-good">
+<div class="ss-item ss-item-required ss-paragraph-text"><div class="ss-form-entry"><label class="ss-q-title" for="entry_0">What technologies do you want to pair on?
+<span class="ss-required-asterisk">*</span></label>
+<label class="ss-q-help" for="entry_0">Ruby-on-rails, JavaScript, Python, Node.js, Mongo, Backbone.js, Scala, asp.net, etc.</label>
+<textarea name="entry.0.single" rows="8" cols="75" class="ss-q-long" id="entry_0"></textarea></div></div></div>
+<br> <div class="errorbox-good">
+<div class="ss-item  ss-paragraph-text"><div class="ss-form-entry"><label class="ss-q-title" for="entry_2">How long have you worked with each technology?
+</label>
+<label class="ss-q-help" for="entry_2">E.g. &quot;Less than 6 months with node.js, 10 years experience coding&quot;</label>
+<textarea name="entry.2.single" rows="8" cols="75" class="ss-q-long" id="entry_2"></textarea></div></div></div>
+<br> <div class="errorbox-good">
+<div class="ss-item  ss-paragraph-text"><div class="ss-form-entry"><label class="ss-q-title" for="entry_1">What do you want to work on today?
+</label>
+<label class="ss-q-help" for="entry_1">Talk about your side projects or up to 3 challenges / areas you want to work through.</label>
+<textarea name="entry.1.single" rows="8" cols="75" class="ss-q-long" id="entry_1"></textarea></div></div></div>
+<br>
+<input type="hidden" name="pageNumber" value="0">
+<input type="hidden" name="backupCache" value="">
+
+
+<div class="ss-item ss-navigate"><div class="ss-form-entry">
+<input type="submit" name="submit" value="Submit" class="button" style="margin:0">
+</div></div></form>
+<script type="text/javascript">
+
+      (function() {
+var divs = document.getElementById('ss-form').
+getElementsByTagName('div');
+var numDivs = divs.length;
+for (var j = 0; j < numDivs; j++) {
+if (divs[j].className == 'errorbox-bad') {
+divs[j].lastChild.firstChild.lastChild.focus();
+return;
+}
+}
+for (var i = 0; i < numDivs; i++) {
+var div = divs[i];
+if (div.className == 'ss-form-entry' &&
+div.firstChild &&
+div.firstChild.className == 'ss-q-title') {
+div.lastChild.focus();
+return;
+}
+}
+})();
+      </script>
+
+  </div>
+</div>
+</div>
+
+  <div id="thanks" class="route">
+      <div class='fold cf'>
+    <nav class="cf">
+      <a href="/"><img src="/images/logo4.png" /></a>
+      <h3>Pair up weekly with baller developers. Make friends. Learn things.</h3>
+    </nav>
+  </div>
+
+
+
+<div class="marketing" style="padding:20px 40px">
+    <h1>All set!</h1>
+
+    <p style="font-size:18px">Thanks for posting your info. Feel free to
+<a href="https://docs.google.com/spreadsheet/pub?key=0AsOwlciMAOtXdDVEdFRJMUlyZFRlUHgzYnozOGhnTUE&output=html" target="_blank">read everyone's answers</a>
+       just before the meetup starts to figure out who you want to pair with.</p>
+
+    <hr style="margin:0 0 40px 0" />
+
+    <h1>Improve your experience!</h1>
+
+    <p>The more people that join, the bigger the pool of like minded programmers you'll have to choose from. To , share our meetup event as often an far as possible across the different networks you hang out on.</p>
+    <br />
+
+    <div class="addthis_toolbox addthis_default_style addthis_32x32_style"   addthis:url="http://www.meetup.com/remotepairprogrammers/"
+       addthis:title="I'm excited to attend a Virtual Pair Programmers Meetup. #pairprogrammingrocks">
+      <a class="addthis_button_email"></a>
+      <a class="addthis_button_twitter"></a>
+      <a class="addthis_button_hackernews"></a>
+      <a class="addthis_button_linkedin"></a>
+      <a class="addthis_button_google_plusone_share"></a>
+      <a class="addthis_button_facebook"></a>
+      <a class="addthis_button_reddit"></a>
+      <a class="addthis_button_stumbleupon"></a>
+      <a class="addthis_button_wordpress"></a>
+      <a class="addthis_button_tumblr"></a>
+      <a class="addthis_button_delicious"></a>
+      <a class="addthis_button_compact"></a><a class="addthis_counter addthis_bubble_style"></a>
+    </div>
+
+  </div>
+
+  </div>
+
+  <div id="thanks" class="route">
+    <h1>Share</h1>
+
+    <br />
+    <div class="addthis_toolbox addthis_default_style addthis_32x32_style"   addthis:url="http://www.meetup.com/remotepairprogrammers/"
+       addthis:title="I'm excited to attend a Virtual Pair Programmers Meetup. #pairprogrammingrocks">
+      <a class="addthis_button_email"></a>
+      <a class="addthis_button_twitter"></a>
+      <a class="addthis_button_hackernews"></a>
+      <a class="addthis_button_linkedin"></a>
+      <a class="addthis_button_google_plusone_share"></a>
+      <a class="addthis_button_facebook"></a>
+      <a class="addthis_button_reddit"></a>
+      <a class="addthis_button_stumbleupon"></a>
+      <a class="addthis_button_wordpress"></a>
+      <a class="addthis_button_tumblr"></a>
+      <a class="addthis_button_delicious"></a>
+      <a class="addthis_button_compact"></a><a class="addthis_counter addthis_bubble_style"></a>
+    </div>
+  </div>
+
+    <style type="text/css">
+       #how h3 { clear:both;display:block;float:none;margin-top:35px; }
+       .ss-q-help { display:block;color:gray;}
+       .marketing a { color:#CC523E;font-weight:bold}
     </style>
 
       <div style="clear:both;height:40px"></div>
-    <div class="footer" style="background:black;height:0px;padding:20px;color:white">
-      <div>
-        &copy; <a href="http://airpair.com/" style="color:white">airpair, inc.</a> 2013
-      </div>
-    </div>
+
 
   </body>
 
@@ -103,5 +270,6 @@
   </script>
   <script src="/javascripts/vendor.js" defer></script>
   <script src="/javascripts/app.js" defer onload="initApp()"></script>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=undefined"></script>
 
 </html>
