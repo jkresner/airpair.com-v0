@@ -36,6 +36,9 @@ module.exports = (app) ->
   require('./lib/api/mail')(app)
 
   # todo, brush up page
+  app.get '/pair-programmers*', (req, r)-> file r, 'pairing'
+
+  # todo, brush up page
   app.get '/edu/tags', (req, r) -> file r, 'edu/tags'
 
   # dev stuff

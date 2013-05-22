@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>airpair - pair programmers</title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="author" content="airpair, inc.">
+    <meta name="keywords" content="airpair, expert developers, nodejs, ruby on rails, code review, remote pair programming">
+    <meta name="description" content="airpair remote pair programmers meetup.">
+    <link rel="stylesheet" href="/stylesheets/homepage.css">
+    <link rel="stylesheet" href="/stylesheets/zocial/zocial.css">
+    <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,300' type='text/css'>
+    <!-- Place apple-touch-icon.png in root dir -->
+  </head>
+<body>
+
+  <div class='fold cf'>
+    <nav class="cf">
+      <img src="/images/logo4.png" />
+      <h3>Pair up with with baller developers. Make friends. Learn things.</h3>
+
+      <!-- <div class="social">
+        <a class="zocial twitter icon" href="http://twitter.com/airpair" target="_blank"></a> <a class="zocial facebook icon" href="http://facebook.com/airpair" target="_blank"></a>
+      </div> -->
+    </nav>
+
+    <div class="jumbotron cf" style="height:562px">
+
+      <img src="/images/jumbfaces.png" style="width:220px">
+
+      <div style="margin:auto">
+          <h2><span>{</span> Remote pair programmers meetup <span>}</span></h2>
+          <p style="width:680px;margin:40px auto">At airpair, our primary focus is promoting collaboration & knowledge share amongst developers. We believe pair programming is a powerful & critical tool to foster greater learning, faster development & better products. Thus we run a <a href="http://www.meetup.com/remotepairprogrammers/" target="_blank" style="color:white">free virtual meetup</a> for developers interested in pairing with & learning from each other.
+          </p>
+
+          <p style="width:240px;margin:40px auto">
+            <a href="http://www.meetup.com/remotepairprogrammers/" class="button" target="_blank" style="margin:auto;width:200px">{ join meetup group }</a>
+          </p>
+      </div>
+    </div>
+  </div>
+
+  <div id="how" class="marketing" style="padding:40px">
+    <h2>How our virtual meetups work?</h2>
+
+    <p>24 hours before each meetup event, we send instructions in a meetup message with variations of each step below.</p>
+
+    <p style="font-size:16px;font-style:italic">Our meetup is about experimenting on the best ways to enable developers to find pair programming help in real-time. The process might change from time to time. We'd love your input, so <a href="mailto:team@airpair.com" target="_blank">email us</a> feedback & ideas.</p>
+
+    <h3 id="pre-meetup-post"><b>{</b> <i>1.</i> Pre-event post <b>}</b></h3>
+
+    <p>On the day, fill out a basic google form with the tech and challenge(s) you'd like to pair on.<p>
+
+    <h3 id="join-event-chat"><em>{</em> <i>2.</i> Join the event chatroom <i style="font-weight:normal">a.k.a IRC channel</i> <em>}</em></h3>
+
+    <p style="margin:0"><a href="http://webchat.freenode.net/?channels=pairprogrammers" target="_blank">Connect to our irc channel</a></p>
+
+    <a href="http://webchat.freenode.net/?channels=pairprogrammers" target="_blank"><img src="/images/meetup/pairprogrammersirc.png" /></a>
+
+    <h3><b>{</b> <i>3.</i> Share a link to join chatroom <b>}</b></h3>
+
+    <quote>"I just joined the remote pair programmers chat-room for their two hour weekly week up to find baller coders to pair with."</quote>
+
+    <h3><em>{</em> <i>4.</i> Post your hello in the irc channel <em>}</em></h3>
+
+    <p>Hello!!! {option funny callout message}. I'm {full name}. I'm a {beginner|intermediate|advanced} with {technology(s)}. I've been developing for {n} years (or months). I would like to pair up on {insert what you're up for}.</p>
+
+    <h3><b>{</b> <i>5.</i> Create a google hangout and share the link <b>}</b></h3>
+
+    <p>* If joining someone else's hangout you can ignore these steps.</p>
+
+    <p>Open google+ and click "<a href="">start a hangout"</a></p>
+
+    <h3><em>{</em> <i>6.</i> Give feedback <em>}</em></h3>
+
+    <p>We will send you a questionnaire asking for feedback on the success of your pairing session as well as feedback on your pairing partner(s).</p>
+
+    <hr />
+  </div>
+
+    <style type="text/css">
+       #how h3 { clear:both;display:block;float:none; }
+
+    </style>
+
+      <div style="clear:both;height:40px"></div>
+    <div class="footer" style="background:black;height:0px;padding:20px;color:white">
+      <div>
+        &copy; <a href="http://airpair.com/" style="color:white">airpair, inc.</a> 2013
+      </div>
+    </div>
+
+  </body>
+
+
+  <script type="text/javascript">
+    function initApp() {
+      var pageData = {};
+      Router = require('/scripts/pairing/Router');
+      window.router = new Router(pageData);
+    }
+  </script>
+  <script src="/javascripts/vendor.js" defer></script>
+  <script src="/javascripts/app.js" defer onload="initApp()"></script>
+
+</html>
