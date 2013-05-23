@@ -4,22 +4,14 @@
       <ModulePrefs title="Face Movement">
           <Require feature="rpc"/>
           <Require feature="views" />
+          <Require feature="dynamic-height"/>
       </ModulePrefs>
       <Content type="html"><![CDATA[
 <!DOCTYPE html>
 
-<script src="https://talkgadget.google.com/hangouts/_/api/hangout.js?v=1.2" ></script>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
-<script>
-$(document).ready(function(){
-$("body").css("height", "100%");
-$("html").css("height", "100%");
-});
-</script>
-<div style="height:100%">
-<iframe id="theIFrame" frameborder="no" scrolling="yes" src="" style="width:100%; height:100%">
-Welcome to the remote pair programmers meetup. Use the "invite" button in the top left to invite other members to join you for pair programming.
-</iframe>
+<script src="//plus.google.com/hangouts/_/api/v1/hangout.js"></script>
+<div>
+  <p>Welcome to the remote pair programmers meetup. Use the "invite" button to invite other members to join you for pair programming.</p>
 </div>
-<br/>
+
 ]]></Content></Module>
