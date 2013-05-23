@@ -11,11 +11,12 @@ module.exports = class Router extends S.AirpairRouter
   pushStateRoot: '/pair-programmers'
 
   routes:
-    ''        : 'about'
-    'about'   : 'about'
-    'post'    : 'post'
-    'thanks'  : 'thanks'
-    'share'   : 'share'
+    ''                 : 'about'
+    'about'            : 'about'
+    'post'             : 'post'
+    'thanks'           : 'thanks'
+    'share'            : 'share'
+    'instructions'     : 'instructions'
 
   appConstructor: (pageData, callback) ->
     d = {}

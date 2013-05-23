@@ -33,6 +33,7 @@ h2.yellow span { color: #99923F; }
   -webkit-transition: margin .2s;text-decoration:none;width:180px; }
 
 .button:hover { margin: 20px 100px; -webkit-transition: margin .2s; }
+.button-gray { background:#d3d3d3;border:solid 3px darkgray }
 
 a.green { background: #99923F;border: solid 3px #7F761C }
 

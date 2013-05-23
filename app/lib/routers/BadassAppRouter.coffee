@@ -86,6 +86,7 @@ module.exports = class BadassRouter extends Backbone.Router
           if @logging then $log "Router.#{fn.routeName}"
           $(".route").hide()
           $("##{fn.routeName}").show()
+          window.scrollTo 0, 0
           @routeMiddleware()
           fn.call @, args
 
@@ -112,10 +113,14 @@ module.exports = class BadassRouter extends Backbone.Router
   # setup the ajax links for the html5 push navigation
   enablePushStateNavigate:  ->
     $("body").on "click", "a", (e) =>
-      href = $(e.currentTarget).attr 'href'
+      $a = $(e.currentTarget)
+      href = $a.attr 'href'
+      $log 'href', href, href.length, $a, $a.hasClass 'at300b'
       if href.length && href.charAt(0) is '#'
-        e.preventDefault()
-        @navTo href.replace('#','')
+
+        if ! $a.hasClass 'at300b'
+          e.preventDefault()
+          @navTo href.replace('#','')
 
 
   # short hand to handle injection of pageData for pre-loading models
