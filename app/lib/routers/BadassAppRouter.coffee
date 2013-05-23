@@ -115,7 +115,7 @@ module.exports = class BadassRouter extends Backbone.Router
     $("body").on "click", "a", (e) =>
       $a = $(e.currentTarget)
       href = $a.attr 'href'
-      $log 'href', href, href.length, $a, $a.hasClass 'at300b'
+      # $log 'href', href, href.length, $a, $a.hasClass 'at300b'
       if href.length && href.charAt(0) is '#'
 
         if ! $a.hasClass 'at300b'

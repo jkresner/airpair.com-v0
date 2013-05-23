@@ -17,13 +17,20 @@ module.exports = class Router extends S.AirpairRouter
     'share'            : 'share'
 
   appConstructor: (pageData, callback) ->
-    d = {}
+    d =
+      meetup: new Backbone.Model
+        spreadsheetKey: "0AsOwlciMAOtXdDVEdFRJMUlyZFRlUHgzYnozOGhnTUE"
+        chatRoomName: "pairprogrammers"
+        formKey: "dDVEdFRJMUlyZFRlUHgzYnozOGhnTUE6MQ"
+        hashTag: "ilovepairprogramming"
+
     v =
-      aboutView: new V.AboutView()
-      instructionsView: new V.InstructionsView()
-      postView: new V.PostView()
-      thanksView: new V.ThanksView()
-      shareView: new V.ShareView()
+      aboutView: new V.AboutView model: d.meetup
+      instructionsView: new V.InstructionsView model: d.meetup
+      postView: new V.PostView model: d.meetup
+      thanksView: new V.ThanksView model: d.meetup
+      shareView: new V.ShareView model: d.meetup
+
     _.extend d, v
 
   initialize: (args) ->
