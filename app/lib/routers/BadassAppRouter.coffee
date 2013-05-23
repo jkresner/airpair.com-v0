@@ -33,7 +33,7 @@ module.exports = class BadassRouter extends Backbone.Router
     @pageData = pageData if pageData?
 
     app = @appConstructor pageData, callback
-    @app = _.extend @app, app
+    @app = if @app? then _.extend @app, app else app
 
     if @logging
       $log 'BadassRouter.app', @app
