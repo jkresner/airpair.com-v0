@@ -6,8 +6,6 @@ V = require './Views'
 
 module.exports = class Router extends S.AirpairRouter
 
-  logging: on
-
   pushStateRoot: '/pair-programmers'
 
   routes:
