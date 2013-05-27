@@ -1,3 +1,18 @@
-<p style="padding:30px">Not the customer or expert!?</p>
+<br />
+<h2>Think you can handle this request?</h2>
 
-<p style="padding:30px">Referrals / sharing features to come!</p>
+<p style="padding:4px;margin-bottom:20px">Got the expert tech chops to help?</p>
+
+{{#if authenticated}}
+
+  <a target="_blank" href="mailto:jk@airpair.com?Subject=Want to help with request %23{{_id}}&Body=Can you suggest me for http://airpair.com/review/{{_id}}" class="button">{ claim request }</a>
+
+{{else}}
+
+ <a href="/be-an-expert" class="button">{ create your expert profile }</a>
+<br /><br />
+ <hr style="clear:both" />
+
+  <p>Already an airpair expert? Then <a href="/auth/google?return_to=/review/{{_id}}">Sign in.</a><p>
+
+{{/if}}
