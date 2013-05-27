@@ -16,11 +16,8 @@ module.exports = class Router extends S.AirpairSessionRouter
     ''            : 'empty'
 
   appConstructor: (pageData, callback) ->
-    d =
-      request: new M.Request()
-    v =
-      requestView: new V.RequestView model: d.request, session: @app.session
-
+    d = request: new M.Request()
+    v = requestView: new V.RequestView( model: d.request, session: @app.session )
     _.extend d, v
 
   initialize: (args) ->
@@ -32,6 +29,8 @@ module.exports = class Router extends S.AirpairSessionRouter
   detail: (id) ->
     if !id? then return window.location = '/dashboard'
 
+    if !@isAuthenticated()
+      @app.request.urlRoot = '/api/requests/pub'
+
     @app.request.set '_id': id
     @app.request.fetch { error: @empty }
-

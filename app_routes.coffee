@@ -19,7 +19,7 @@ module.exports = (app) ->
     if !req.isAuthenticated() then file r, 'homepage' else file r, 'dashboard'
 
   app.get '/dashboard*', auth.LoggedIn(), (req, r)-> file r, 'dashboard'
-  app.get '/review*', auth.LoggedIn(), (req, r)-> file r, 'review'
+  app.get '/review*', (req, r)-> file r, 'review'
 
   # admin pages
   app.get '/adm/tags*', auth.LoggedIn(), auth.Admin(), (req, r) -> file r, 'adm/tags'
@@ -39,9 +39,9 @@ module.exports = (app) ->
   app.get '/pair-programmers*', (req, r)-> file r, 'pairing'
 
   # todo, get agreements
-  app.get '/TOS', (req, r)-> file r, 'legal'
-  app.get '/', (req, r)-> file r, 'legal'
-  app.get '/support', (req, r)-> file r, 'login'
+  # app.get '/TOS', (req, r)-> file r, 'legal'
+  # app.get '/privacy', (req, r)-> file r, 'legal'
+  # app.get '/support', (req, r)-> file r, 'login'
 
   # todo, brush up page
   app.get '/edu/tags', (req, r) -> file r, 'edu/tags'
