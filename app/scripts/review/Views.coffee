@@ -133,7 +133,8 @@ class exports.NotExpertOrCustomerView extends BB.BadassView
   el: '#notExpertOrCustomer'
   tmpl: require './templates/NotExpertOrCustomer'
   render: ->
-    @$el.html @tmpl @request.extend authenticated: @session.authenticated()
+    $log 'req tags', @request, @request.tagsString()
+    @$el.html @tmpl @request.extend authenticated: @session.authenticated(), tagsString: @request.tagsString()
     @
 
 

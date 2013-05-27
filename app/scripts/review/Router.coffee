@@ -31,6 +31,7 @@ module.exports = class Router extends S.AirpairSessionRouter
 
     if !@isAuthenticated()
       @app.request.urlRoot = '/api/requests/pub'
+      $('nav ul').hide()
 
     @app.request.set '_id': id
     @app.request.fetch { error: @empty }

@@ -1,7 +1,7 @@
 <br />
-<h2>Think you can handle this request?</h2>
+<h2>Think you can handle this?</h2>
 
-<p style="padding:4px;margin-bottom:20px">Got the expert tech chops to help?</p>
+<p style="padding:4px;margin-bottom:20px;width:80%">If your {{tagsString}} skills are fine tuned & the brief on the left is something you want to get paid to help with:</p>
 
 {{#if authenticated}}
 
@@ -13,6 +13,15 @@
 <br /><br />
  <hr style="clear:both" />
 
-  <p>Already an airpair expert? Then <a href="/auth/google?return_to=/review/{{_id}}">Sign in.</a><p>
+  <p>Already an airpair expert? Then <a href="/auth/google?return_to=/review/{{_id}}"><b>sign in</b></a>.<p>
 
 {{/if}}
+
+
+<br />
+<h2>Know someone else who can help?</h2>
+<br />
+<a href="mailto:?Subject=Check this {{tagsString}} airpair&Body=I think you could help this person with {{ tagsString }}. Cool concept... paid consulting through google hangouts.%0A%0Ahttp://airpair.com/review/{{_id}}" target="_blank" class="zocial email" style="width:260px;height:32px">Send to a friend</a>
+<br /><br />
+<a href="https://twitter.com/share?url=http://airpair.com/review/{{_id}}&text=Get paid for an hour of {{ tagsString }} consulting via google hangouts =>" class="zocial twitter" target="_blank" style="width:260px;height:32px">Share on twitter</a>
+
