@@ -11,6 +11,7 @@ class RequestApi extends CRUDApi
   model: require './../models/request'
 
   constructor: (app, route) ->
+    app.get  "/api/#{route}/pub/:id", @detailPub
     app.get  "/api/admin/#{route}", auth.AdminApi(), @admin
     app.put  "/api/#{route}/:id/suggestion", auth.LoggedInApi(), @updateSuggestion
     super app, route
@@ -42,6 +43,13 @@ class RequestApi extends CRUDApi
     @model.findByIdAndUpdate r._id, up, (ee, rr) ->
       res.send rr
 
+  # Used for sharing requests in public on the review page
+  detailPub: (req, res) =>
+    @model.findOne { _id: req.params.id }, (e, r) =>
+      if !r? then res.send(400)
+      # d = und.clone r
+      # delete d.suggested
+      res.send r
 
   detail: (req, res) =>
     rid = req.params.id
