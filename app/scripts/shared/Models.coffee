@@ -59,6 +59,18 @@ class exports.Request extends BB.SublistModel
     c = _.find contacts, (c) -> c.fullName == index
     if c? then return c
     contacts[index]
+  tagsString: ->
+    t = @get 'tags'
+    return '' if !t? || t.length is 0
+    return t[0].name if t.length is 1
+    i = 0
+    ts = t[0].name
+    for i in [1..t.length-1]
+      if i is t.length - 1
+        ts += " & #{t[i].name}"
+      else
+        ts += ", #{t[i].name}"
+    ts
 
 
 class exports.Expert extends BB.SublistModel
