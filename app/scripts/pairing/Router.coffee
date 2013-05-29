@@ -19,7 +19,7 @@ module.exports = class Router extends S.AirpairRouter
   appConstructor: (pageData, callback) ->
     d =
       meetup: new Backbone.Model
-        meetupName: "Tue, 05-28 Pair Programmers Meetup"
+        meetupName: "Wed, 06-05 Pair Programmers Meetup"
         spreadsheetKey: "0AsOwlciMAOtXdDVEdFRJMUlyZFRlUHgzYnozOGhnTUE"
         chatRoomName: "pairprogrammers"
         formKey: "dDVEdFRJMUlyZFRlUHgzYnozOGhnTUE6MQ"
