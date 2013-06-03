@@ -1,5 +1,5 @@
 """
-  BadassRouter takes the philosophical position that only one router
+  BadassAppRouter takes the philosophical position that only one router
   can be used for one html page / single page app and it is the top most
   app container object other than window.
 
@@ -9,7 +9,7 @@
   It also assumes that each route has an associated top level views
   which becomes visible when you hit that route and all other become hidden
 """
-module.exports = class BadassRouter extends Backbone.Router
+module.exports = class BadassAppRouter extends Backbone.Router
 
   # Set logging on /off - Very dandy during dev to see flow of routes
   logging: off
@@ -64,9 +64,13 @@ module.exports = class BadassRouter extends Backbone.Router
     Backbone.Router::constructor.apply @, arguments
 
 
-  # construct all instances of models, collection & views for page
+  # Construct all models/ collections & views for our SPA, the will be
+  # assigned onto window.router.app (in the constructor) having them all
+  # accessible means easy testing, stubbing of all objects that make up
+  # our SPA
   appConstructor: (pageData, callback) ->
     throw new Error 'override appConstructor in child router & build all models, collections & views then return single objects'
+
 
   # automatically wrap route handlers
   # adding div hide/show + console logging (if enabled)
@@ -87,11 +91,11 @@ module.exports = class BadassRouter extends Backbone.Router
           $(".route").hide()
           $("##{fn.routeName}").show()
           window.scrollTo 0, 0
-          @routeMiddleware()
+          @routeMiddleware fn
           fn.call @, args
 
   # override routeMiddleware to execute custom code on every route
-  routeMiddleware: ->
+  routeMiddleware: (routeFn) ->
 
   # load external providers like google analytics, user-voice etc.
   loadExternalProviders: ->
@@ -115,12 +119,13 @@ module.exports = class BadassRouter extends Backbone.Router
     $("body").on "click", "a", (e) =>
       $a = $(e.currentTarget)
       href = $a.attr 'href'
-      # $log 'href', href, href.length, $a, $a.hasClass 'at300b'
+      # $log 'href', href, href.length, $a, $a.hasClass 'routeIgnore'
       if href.length && href.charAt(0) is '#'
 
-        if ! $a.hasClass 'at300b'
-          e.preventDefault()
-          @navTo href.replace('#','')
+        # TODO: add ignore classes
+        # if ! $a.hasClass 'routeIgnore'
+        e.preventDefault()
+        @navTo href.replace('#','')
 
 
   # short hand to handle injection of pageData for pre-loading models

@@ -1,5 +1,9 @@
 BadassModel = require './BadassModel'
 
+"""
+A model that has one or more of it's attributes that is as list
+where we can toggle a value in and out of that list
+"""
 module.exports = class SublistModel extends BadassModel
 
   toggleAttrSublistElement: (attr, value, compareDelegate) ->

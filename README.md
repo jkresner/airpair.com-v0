@@ -94,6 +94,7 @@ List of TODO next
 TODO v.5
 ===============================================================================
 
+- [H] Add linkedIn airpair share
 - [H] User to user messaging system
 - [H] Split expert sign up into contact & prefs
 - [H] Write Test for update request

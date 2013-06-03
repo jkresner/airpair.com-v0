@@ -64,3 +64,6 @@ module.exports = class ModelSaveView extends HasBootstrapErrorStateView
 # assumes name (NOT ID!) of an input matches the name of an attribute & grabs the vals associated w specified atrrs
   setValsFromModel: (attrs) ->
     @$("[name='#{attr}']").val( @model.get attr ) for attr in attrs
+
+  mget: (attr) ->
+    @model.get(attr)
