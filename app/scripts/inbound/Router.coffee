@@ -15,6 +15,7 @@ module.exports = class Router extends S.AirpairSessionRouter
     'request/:id'  : 'request'
     'closed'       : 'closed'
     'canceled'     : 'canceled'
+    ':id'          : 'request'
 
   appConstructor: (pageData, callback) ->
     d =
@@ -26,9 +27,11 @@ module.exports = class Router extends S.AirpairSessionRouter
       requestsView: new V.RequestsView collection: d.requests, model: d.selected
       requestView: new V.RequestView model: d.selected, collection: d.requests, tags: d.tags, experts: d.experts
 
-    @resetOrFetch d.requests, pageData.requests
-    @resetOrFetch d.tags, pageData.tags
+    @resetOrFetch d.requests, pageData.requests, success: =>
+      @navTo @defaultFragment if @defaultFragment != ''
+
     @resetOrFetch d.experts, pageData.experts
+    @resetOrFetch d.tags, pageData.tags
 
     _.extend d, v
 
@@ -36,6 +39,7 @@ module.exports = class Router extends S.AirpairSessionRouter
     @navTo 'list'
 
   request: (id) ->
+    if @app.requests.length == 0 then return
 
     if !id?
       @app.selected.clearAndSetDefaults()

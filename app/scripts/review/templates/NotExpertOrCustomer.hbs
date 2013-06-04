@@ -1,11 +1,14 @@
 <br />
 <h2>Think you can handle this?</h2>
 
-<p style="padding:4px;margin-bottom:20px;width:80%">If your {{tagsString}} skills are fine tuned & the brief on the left is something you want to get paid to help with:</p>
+<p style="padding:4px;margin-bottom:20px;width:90%">New to airpair? If you think your {{tagsString}} skills are fine tuned & the brief on the left is something you want to get paid to help with:</p>
 
 {{#if authenticated}}
 
-  <a target="_blank" href="mailto:jk@airpair.com?Subject=Want to help with request %23{{_id}}&Body=Can you suggest me for http://airpair.com/review/{{_id}}" class="button">{ claim request }</a>
+  <div style="height:40px">
+    <a target="_blank" href="mailto:jk@airpair.com?Subject=Want to help with request %23{{_id}}&Body=Can you suggest me for http://airpair.com/review/{{_id}}" class="button">{ claim request }</a>
+  </div>
+
 
 {{else}}
 
@@ -13,13 +16,15 @@
 <br /><br />
  <hr style="clear:both" />
 
-  <p>Already an airpair expert? Then <a href="/auth/google?return_to=/review/{{_id}}"><b>sign in</b></a>.<p>
+  <p>Already an airpair expert, or is this your request?<p>
+
+ <a href="/auth/google?return_to=/review/{{_id}}" class="zocial googleplus" style="width:260px;height:32px">Sign in to reply</a>
 
 {{/if}}
 
+<hr style="clear:both" />
 
-<br />
-<h2>Know someone else who can help?</h2>
+<h2>Know someone who can help?</h2>
 <br />
 <a href="mailto:?Subject=Check this {{tagsString}} airpair&Body=I think you could help this person with {{ tagsString }}. Cool concept... paid consulting through google hangouts.%0A%0Ahttp://airpair.com/review/{{_id}}" target="_blank" class="zocial email" style="width:260px;height:32px">Send to a friend</a>
 <br /><br />
