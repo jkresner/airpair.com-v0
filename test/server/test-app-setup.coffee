@@ -1,4 +1,4 @@
-require './../../lib/util/global'
+require './../../lib/util/globals'
 express       = require 'express'
 passport      = require 'passport'
 passportMock  = require './test-passport'

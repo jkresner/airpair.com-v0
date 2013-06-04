@@ -69,6 +69,7 @@ exports.insertOrUpdateUser = (req, done, providerName, profile) ->
 
 ######## Load Providers
 
+# rememberme = require('./rememberme')(exports, passport)
 github = require('./github')(exports, passport)
 google = require('./google')(exports, passport)
 twitter = require('./twitter')(exports, passport)
@@ -84,10 +85,10 @@ setReturnTo = (req, r, next) ->
 module.exports = (app) ->
   app.get     '/logout', logout
   app.get     '/failed-login', (req, r) -> r.send 'something went wrong with login ...'
-  app.get     '/auth/github', github.connect
-  app.get     '/auth/github/callback', github.connect, github.done
   app.get     '/auth/google', setReturnTo, google.connect
   app.get     '/auth/google/callback', google.connect, google.done
+  app.get     '/auth/github', github.connect
+  app.get     '/auth/github/callback', github.connect, github.done
   app.get     '/auth/twitter', twitter.connect
   app.get     '/auth/twitter/callback', twitter.connect, twitter.done
   app.get     '/auth/linkedin', linkedin.connect
