@@ -24,9 +24,9 @@
 #adminboundpage .contact { padding-top:10px }
 #adminboundpage .contact div { float:left;width:40px;margin-right:20px;text-align:center; }
 #adminboundpage .contact img { float:left;margin:4px 0px 8px 0px; }
-#adminboundpage .contact dl { overflow:hidden;line-height:14px }
-#adminboundpage .contact dt { display:inline-block;font-weight:normal;width:10%;line-height:14px }
-#adminboundpage .contact dd { display:inline-block;width:78%;padding:0px; }
+#adminboundpage .contact table { font-weight:normal }
+#adminboundpage .contact table th { width:80px; }
+#adminboundpage .contact .email { width:100px;padding:1px 7px;text-align:left }
 #adminboundpage #suggestions { margin-bottom:30px;}
 #adminboundpage #suggestions .nav-pills { padding-top:10px }
 #adminboundpage .suggestion { float:left;margin-bottom:6px }

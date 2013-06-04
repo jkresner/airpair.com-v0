@@ -41,7 +41,7 @@ module.exports = class BadassAppRouter extends Backbone.Router
     @initialize = _.wrap @initialize, (fn, args) =>
 
       Backbone.history.start pushState: @pushState, root: @pushStateRoot
-      defaultFragment = Backbone.history.getFragment()
+      @defaultFragment = Backbone.history.getFragment()
 
       if @pushState
         @enablePushStateNavigate()
@@ -50,8 +50,8 @@ module.exports = class BadassAppRouter extends Backbone.Router
       fn.call @, args
 
       # $log 'defaultFragment', defaultFragment
-      if defaultFragment != currentFragment = Backbone.history.getFragment()
-        @navTo defaultFragment
+      if @defaultFragment != currentFragment = Backbone.history.getFragment()
+        @navTo @defaultFragment
 
       # wire up our 3rd party provider scripts to load only after our spa
       # had been initialized and constructed

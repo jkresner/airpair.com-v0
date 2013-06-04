@@ -49,11 +49,24 @@ class exports.RequestsView extends BB.BadassView
 #############################################################################
 
 
+class MailTemplates
+  tmplReceived: require './../../mail/customerRequestReceived'
+  tmplReview: require './../../mail/customerRequestReview'
+  tmplMatched: require './../../mail/customerRequestMatched'
+  tmplFollowup: require './../../mail/customerRequestFollowup'
+  constructor: (request) ->
+    r = request.extendJSON tagsString: request.tagsString()
+
+    @received = @tmplReceived r
+    @review = @tmplReview r
+    @matched = @tmplMatched r
+    @followup = @tmplFollowup r
+
+
 class exports.RequestInfoView extends BB.ModelSaveView
   el: '#info'
   tmpl: require './templates/RequestInfo'
   tmplCompany: require './templates/RequestInfoCompany'
-  mailTmpl: require './../../mail/customerRequestReview'
   initialize: ->
     @$el.html @tmpl @model.toJSON()
     @$('#status').on 'change', @toggleCanceledIncompleteFields
@@ -61,8 +74,8 @@ class exports.RequestInfoView extends BB.ModelSaveView
     @listenTo @model, 'change', @render
   render: ->
     @setValsFromModel ['brief','availability','status','canceledReason','incompleteDetail','budget','pricing']
-    mailBody = @mailTmpl(_id: @model.id)
-    tmplCompanyData = _.extend @mget('company'), { mailBody: mailBody }
+    mailTemplates = new MailTemplates @model
+    tmplCompanyData = _.extend @mget('company'), { mailTemplates: mailTemplates, tagsString: @model.tagsString() }
     @$('#company-controls').html @tmplCompany(tmplCompanyData)
     @$('[data-toggle="popover"]').popover()
     @$('.status').addClass "label-#{@model.get('status')}"
@@ -205,5 +218,6 @@ class exports.RequestView extends BB.ModelSaveView
     false
 
 Handlebars.registerPartial "RequestSet", require('./templates/RequestsSet')
+Handlebars.registerPartial "MailSignature", require('./../../mail/signature')
 
 module.exports = exports
