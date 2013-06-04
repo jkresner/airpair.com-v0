@@ -59,3 +59,6 @@ module.exports = class BadassView extends Backbone.View
   # strict about only looking inside the view's DOM scope
   elm: (attr) ->
     @$("[name='#{attr}']")
+
+  mget: (attr) ->
+    @model.get(attr) if @model?
