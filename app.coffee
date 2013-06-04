@@ -29,7 +29,7 @@ else
   app.use passport.initialize()
 
 app.use passport.session()
-app.use passport.authenticate('remember-me')
+# app.use passport.authenticate('remember-me')
 
 require('./app_routes')(app)
 
