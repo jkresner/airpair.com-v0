@@ -1,50 +1,43 @@
-global.isProd = process.env.MONGOHQ_URL?
-console.log "in app node file", process.cwd(), 'isProd', isProd
+require './lib/util/globals'
 
-require './lib/util/global'
-winston       = require 'winston'   # logging
-require './lib/util/winstonConfig'
-mongoose      = require 'mongoose'
+$log "in app file", process.cwd(), 'isProd', isProd
+
 express       = require 'express'
 passport      = require 'passport'
-
 
 if isProd
   winston.error "ap restart"
   global.cfg = require('./config-release').config
 
-
+# setup our express app
 app = express()
+
+# load our db
+{MongoSessionStore} = require('./app_mongoose')(app, express)
+
 app.use express.static(__dirname + '/public')
 app.use express.bodyParser()
 app.use express.cookieParser()
-app.use express.session { secret: 'airpair, the future' }
+app.use express.session
+  cookie : { path: '/', httpOnly: true, maxAge: 2419200000 }
+  secret: 'airpair the future'
+  store: new MongoSessionStore url: "#{app.get('mongoUri')}/sessions"
 
 if cfg.env.mode is 'test'
-  app.use require('./test/server/test-passport').initialize()
+  require('./app_test')(app)
 else
   app.use passport.initialize()
 
 app.use passport.session()
+# app.use passport.authenticate('remember-me')
 
 require('./app_routes')(app)
+
 
 app.use (err, req, res, next) ->
   console.log "handleError", err
   winston.error "error #{req.url}", err if isProd
   res.status(500).sendfile "./public/500.html"
-
-
-mongoUri = process.env.MONGOHQ_URL || "mongodb://localhost/#{cfg.db}"
-
-mongoose.connect mongoUri
-
-db = mongoose.connection
-db.on('error', console.error.bind(console, 'connection error:'))
-db.once 'open', ->
-  console.log "connected to db #{cfg.db}"
-
-
 
 
 exports.startServer = (port, path, callback) ->
@@ -54,4 +47,3 @@ exports.startServer = (port, path, callback) ->
 
 if isProd
   exports.startServer()
-

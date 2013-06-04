@@ -1,4 +1,3 @@
-winston     =   require('winston')
 winstonses  =   require('winston-ses').Ses
 
 
