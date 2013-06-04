@@ -29,9 +29,14 @@ module.exports = class Router extends S.AirpairSessionRouter
   detail: (id) ->
     if !id? then return window.location = '/dashboard'
 
+    @app.request.set '_id': id
+
     if !@isAuthenticated()
       @app.request.urlRoot = '/api/requests/pub'
       $('nav ul').hide()
+    else if @app.session.id is '5175efbfa3802cc4d5a5e6ed'
+      $('nav ul').append("<li><a href='/adm/inbound/#{@app.request.id}'' class='zocial'>request admin</a><li>")
 
-    @app.request.set '_id': id
-    @app.request.fetch { error: @empty }
+    @app.request.fetch error: =>
+      @app.request.urlRoot = '/api/requests/pub'
+      @app.request.fetch { error: @empty }
