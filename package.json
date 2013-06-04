@@ -23,6 +23,7 @@
     "handlebars-brunch": "> 1.0 < 1.5",
     "uglify-js-brunch": "> 1.0 < 1.5",
     "clean-css-brunch": "> 1.0 < 1.5",
+    "brunch": "1.x",
     "underscore": "1.4.x",
     "async": "~0.2.8",
     "mongoose": "3.x",
