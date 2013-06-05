@@ -1,6 +1,10 @@
 <td><a class="edit" href="#request/{{ _id }}" data-id="{{ _id }}">{{ status }}</a> {{ createdDate }}</td>
 <td>
-    <img src="{{ contactPic }}" />
+    {{#if contactPic }}
+      <img src="{{ contactPic }}" />
+    {{else}}
+      <img src="/images/default-avatar.jpg" />
+    {{/if}}
     <a href="mailto:{{contactEmail}}" target="_blank">{{ contactName }}</a>
     {{ company.name }}
 </td>

@@ -20,6 +20,7 @@
 #requestpage legend .stepNum { font-style:italic;font-size:18px;margin:0px 0px 30px 0px;color:#99923F }
 
 #requestpage #info { padding-top:20px }
+#requestpage .noavatar { text-align:center;margin-top:10px;font-size:11px; }
 #requestpage .pic-group { float:left;width:120px;padding:4px 40px 0 0px;; }
 #requestpage .pic-group img { height:126px }
 #requestpage .personal-info-group { float:left;width:300px; }

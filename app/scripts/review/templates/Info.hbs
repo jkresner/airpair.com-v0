@@ -19,25 +19,31 @@
       {{#each contacts}}
 
       <div>
-        <img src="{{pic}}" />
+        {{#if pic }}
+          <img src="{{ pic }}" />
+        {{else}}
+          <img src="/images/default-avatar.jpg" />
+        {{/if}}
       </div>
 
       <dl>
         <dt>Name</dt>
         <dd>{{fullName}}</dd>
-        <dt>Email</dt>
-        <dd>{{email}}</dd>
-        <dt>Gmail</dt>
-        <dd>{{gmail}}</dd>
-        <dt>Twitter</dt>
-        <dd>{{twitter}}</dd>
+        {{#if isCustomer}}
+          <dt>Email</dt>
+          <dd>{{email}}</dd>
+          <dt>Gmail</dt>
+          <dd>{{gmail}}</dd>
+          <dt>Twitter</dt>
+          <dd>{{twitter}}</dd>
+        {{/if}}
       </dl>
       {{/each}}
     </dd>
   </dl>
   {{/with}}
 
-  <div><label><b>Availability</b></label>
+  <div style="clear:both"><label><b>Availability</b></label>
     {{availability}}</div>
   <br />
   <div><label><b>Brief</b></label>
