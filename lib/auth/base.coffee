@@ -79,7 +79,9 @@ bitbucket = require('./bitbucket')(exports, passport)
 
 setReturnTo = (req, r, next) ->
   ref = req.query["return_to"]
-  if ref? then req.session.returnTo = ref
+  if ref?
+    req.session.returnTo = ref
+    $log 'req.session.returnTo', ref
   next()
 
 module.exports = (app) ->

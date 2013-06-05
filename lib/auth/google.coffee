@@ -45,7 +45,8 @@ class Google
 
   # Completed action
   done: (req, res) =>
-    # res.send req.user
-    res.redirect '/'
+    returnUrl = '/'
+    returnUrl = req.session.returnTo if req.session.returnTo?
+    res.redirect returnUrl
 
 module.exports = (auth, passport) -> new Google(auth, passport)
