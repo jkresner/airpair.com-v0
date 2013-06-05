@@ -28,6 +28,8 @@ a.delete { color:red; }
   -webkit-transition: margin .2s;text-decoration:none;margin-right:10px; }
 .button-gray { background:#d3d3d3;border:solid 3px darkgray }
 
+.charCount { margin:-20px 13px 0 0;float:right; }
+
 /* Used for colorful braces */
 h2 b { color:#CC523E }
 h2 em { color:#7F761C;font-style:normal; }

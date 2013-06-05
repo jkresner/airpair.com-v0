@@ -28,7 +28,7 @@ class exports.CompanyContactView extends BB.ModelSaveView
     @
 
 
-class exports.InfoFormView extends BB.ModelSaveView
+class exports.InfoFormView extends BB.EnhancedFormView
   el: '#info'
   tmpl: require './../shared/templates/CompanyForm'
   events: { 'click .save': 'validatePrimaryContactAndSave' }
@@ -39,8 +39,9 @@ class exports.InfoFormView extends BB.ModelSaveView
   render: ->
     @setValsFromModel ['name','url','about']
     @contactView.render @model.get('contacts')[0]
-    @$(".btn-cancel").toggle @request.get('_id')?
-    @$(".stepNum").toggle !@request.get('_id')?
+    @$(".btn-cancel").toggle @request.id?
+    @$(".stepNum").toggle !@request.id?
+    @enableCharCount 'about'
     @
   getViewData: ->
     data = @getValsFromInputs ['name','url','about']
@@ -48,8 +49,8 @@ class exports.InfoFormView extends BB.ModelSaveView
     data
   validatePrimaryContactAndSave: (e) ->
     e.preventDefault()
-    $inputName = @$('[name="fullName"]')
-    $inputEmail = @$('[name="email"]')
+    $inputName = @elm('fullName')
+    $inputEmail = @elm('email')
     @renderInputsValid()
     if $inputName.val() is ''
       @renderInputInvalid $inputName, 'Contact name required'
