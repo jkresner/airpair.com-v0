@@ -13,6 +13,10 @@
     <span class="label label-tags">{{short}}</span>
   {{/each}}
 </td>
-<td>{{ suggestedFitCount }} / {{ suggestedCount }}</td>
+<td>
+  {{#each suggested }}
+    {{#with expert}} <img class="border-{{../expertStatus}}" src="{{ pic }}" />{{/with}}
+  {{/each}}
+</td>
 <td>{{ callCompleteCount }} / {{ callCount }}</td>
 <td>-</td>

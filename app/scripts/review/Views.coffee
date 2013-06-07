@@ -22,7 +22,7 @@ class exports.SuggestionView extends BB.BadassView
     cust = @request.contact(0)
     $log '@isCustomer', @isCustomer
     d = @model.extend custPic: cust.pic, custName: cust.fullName, isCustomer: false
-    @$el.html @tmpl d
+    @$el.html @tmpl don
     if @isCustomer
       @$('.customerReviewForm').append @reviewForm.render().el
       @$('.customerReviewForm').toggle !@mget('customerFeedback')?

@@ -17,7 +17,7 @@ class exports.RequestRowView extends BB.BadassView
     @
   tmplData: ->
     d = @model.toJSON()
-    # $log 'RequestRowView.tmplData', d
+    $log 'RequestRowView.tmplData', d
     _.extend d, {
       contactName:        d.company.contacts[0].fullName
       contactPic:         d.company.contacts[0].pic
