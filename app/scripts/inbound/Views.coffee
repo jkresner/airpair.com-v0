@@ -48,19 +48,32 @@ class exports.RequestsView extends BB.BadassView
 ##  To edit request
 #############################################################################
 
-
-class MailTemplates
+class CustomerMailTemplates
   tmplReceived: require './../../mail/customerRequestReceived'
   tmplReview: require './../../mail/customerRequestReview'
   tmplMatched: require './../../mail/customerRequestMatched'
   tmplFollowup: require './../../mail/customerRequestFollowup'
   constructor: (request) ->
     r = request.extendJSON tagsString: request.tagsString()
-
     @received = @tmplReceived r
     @review = @tmplReview r
     @matched = @tmplMatched r
     @followup = @tmplFollowup r
+
+
+class ExpertMailTemplates
+  tmplAnother: require './../../mail/expertRequestAnother'
+  tmplCancelled: require './../../mail/expertRequestCancelled'
+  tmplChosen: require './../../mail/expertRequestChosen'
+  tmplSuggested: require './../../mail/expertRequestSuggested'
+  constructor: (request, expertId) ->
+    suggestion = request.suggestion expertId
+    $log 'suggestion', suggestion, request
+    r = _.extend suggestion, { tagsString: request.tagsString(), companyName: request.get('company').name }
+    @another = @tmplAnother r
+    @canceled = @tmplCancelled r
+    @chosen = @tmplChosen r
+    @suggested = @tmplSuggested r
 
 
 class exports.RequestInfoView extends BB.ModelSaveView
@@ -74,7 +87,7 @@ class exports.RequestInfoView extends BB.ModelSaveView
     @listenTo @model, 'change', @render
   render: ->
     @setValsFromModel ['brief','availability','status','canceledReason','incompleteDetail','budget','pricing']
-    mailTemplates = new MailTemplates @model
+    mailTemplates = new CustomerMailTemplates @model
     tmplCompanyData = _.extend @mget('company'), { mailTemplates: mailTemplates, tagsString: @model.tagsString() }
     @$('#company-controls').html @tmplCompany(tmplCompanyData)
     @$('[data-toggle="popover"]').popover()
@@ -138,7 +151,6 @@ class exports.RequestSuggestedView extends BB.BadassView
   # logging: on
   el: '#suggested'
   tmpl: require './templates/RequestSuggested'
-  mailTmpl: require './../../mail/expertRequestReview'
   events:
     'click .suggestDev': 'add'
     'click .deleteSuggested': 'remove'
@@ -153,16 +165,11 @@ class exports.RequestSuggestedView extends BB.BadassView
     else
       for s in @model.get 'suggested'
 
-        mailData =
-          _id: @model.id
-          expertName: s.expert.name
-          companyName: @mget('company').name
-
-        s.body = @mailTmpl mailData
         s.tags =  @mget 'tags'
         s.expert.hasLinks = new M.Expert(s.expert).hasLinks()
 
-        @$el.append @tmpl s
+        mailTemplates = new ExpertMailTemplates @model, s.expert._id
+        @$el.append @tmpl _.extend s, { mailTemplates: mailTemplates, tagsString: @model.tagsString() }
     @
   remove: (e) ->
     suggestionId = $(e.currentTarget).data 'id'
