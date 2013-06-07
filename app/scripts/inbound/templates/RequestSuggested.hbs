@@ -25,18 +25,23 @@
 
   <div>
 
-    <a href="mailto:{{expert.name}}%20%3c{{expert.email}}%3e?subject=airpair - request {{#each tags}}/{{short}}{{/each}}?&body={{body}}" class="email btn btn-small btn-warning" target="_blank"><i class="icon-envelope icon-white"></i> </a>
-
     <a href="#" data-id="{{ _id }}" class="delete deleteSuggested btn btn-small btn-danger"><i class="icon-trash icon-white"></i> </a>
 
-    <a href="#" class="status label label-{{expertStatus}}">{{ expertStatus }}</a>
+    <a href="mailto:{{expert.name}}%20%3c{{expert.email}}%3e?subject=airpair - request cancelled {{tagsString}}?&body={{mailTemplates.cancelled}}" class="email btn btn-small btn-warning" target="_blank"><i class="icon-envelope icon-white"></i> canceled</a>
+
+    <a href="mailto:{{expert.name}}%20%3c{{expert.email}}%3e?subject=airpair - request {{tagsString}}?&body={{mailTemplates.another}}" class="email btn btn-small btn-warning" target="_blank"><i class="icon-envelope icon-white"></i> another</a>
+
+    <a href="mailto:{{expert.name}}%20%3c{{expert.email}}%3e?subject=airpair - you were chosen for #{{_id}}?&body={{mailTemplates.suggested}}" class="email btn btn-small btn-warning" target="_blank"><i class="icon-envelope icon-white"></i> chosen</a>
+
+
+    <a href="mailto:{{expert.name}}%20%3c{{expert.email}}%3e?subject=airpair - suggested for help {{tagsString}}?&body={{mailTemplates.suggested}}" class="email btn btn-small btn-warning" target="_blank"><i class="icon-envelope icon-white"></i> suggested</a>
+
+    <span class="status label label-{{expertStatus}}">{{ expertStatus }}</span>
 
   {{#if expertComment}}
-
     <p>{{ expertComment }}</p>
-
   {{else}}
-    {{! <p>No comment by expert yet.</p> }}
+    <p>no comment yet</p>
   {{/if}}
 
   </div>
