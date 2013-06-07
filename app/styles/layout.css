@@ -53,6 +53,11 @@ legend em { color:#7F761C;font-style:normal; }
 .label-unwanted { background-color:#b94a48 }
 .label-available { background-color:#468847 }
 
+.border-waiting { border-color:#3A87AD }
+.border-abstained { border-color:#b94a48 }
+.border-unwanted { border-color:#b94a48 }
+.border-available { border-color:#468847 }
+
 
 .rating { font-weight:bold }
 .rating .label { padding:1px 4px!important;font-weight:normal }

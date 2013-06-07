@@ -59,6 +59,12 @@ class exports.Request extends BB.SublistModel
     c = _.find contacts, (c) -> c.fullName == index
     if c? then return c
     contacts[index]
+  suggestion: (index) ->
+    suggested = @get('suggested')
+    if !suggested? || suggested.length is 0 then return null
+    s = _.find suggested, (o) -> o.expert._id == index
+    if s? then return s
+    suggested[index]
   tagsString: ->
     t = @get 'tags'
     return '' if !t? || t.length is 0

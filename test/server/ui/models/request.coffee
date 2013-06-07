@@ -23,12 +23,12 @@ describe "UI models shared", ->
 
   it "tagsString returns and separated string for 1 length tags", ->
     m = new sm.Request tags: [{name:'backbone'},{name:'underscore'}]
-    expect( m.tagsString() ).to.equal 'backbone & underscore'
+    expect( m.tagsString() ).to.equal 'backbone and underscore'
 
   it "tagsString returns commma and and separated string for 1 length tags", ->
     m = new sm.Request tags: [{name:'backbone'},{name:'underscore'},{name:'node'}]
-    expect( m.tagsString() ).to.equal 'backbone, underscore & node'
+    expect( m.tagsString() ).to.equal 'backbone, underscore and node'
 
   it "tagsString returns commma and and separated string for 1 length tags", ->
     m = new sm.Request tags: [{name:'backbone'},{name:'underscore'},{name:'node'},{name:'mongo'}]
-    expect( m.tagsString() ).to.equal 'backbone, underscore, node & mongo'
+    expect( m.tagsString() ).to.equal 'backbone, underscore, node and mongo'
