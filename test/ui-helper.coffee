@@ -69,6 +69,11 @@ exports.LoadSPA = (SPA, sessionObj) ->
     window.router = new SPA.Router page: page
 
 
+exports.setSession = (userKey, callback) ->
+  $.ajax(url: "/set-session/#{userKey}").done( -> callback() )
+
+
+
 exports.clean_tear_down = (ctx) ->
 
   # restore all our spys & stubs
