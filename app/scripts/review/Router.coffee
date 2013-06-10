@@ -6,14 +6,14 @@ V = require './Views'
 
 module.exports = class Router extends S.AirpairSessionRouter
 
-  logging: on
+  # logging: on
 
   pushStateRoot: '/review'
 
   routes:
     ':id'         : 'detail'
     'detail/:id'  : 'detail'
-    ''            : 'empty'
+    # ''            : 'empty'
 
   appConstructor: (pageData, callback) ->
     d = request: new M.Request()
@@ -24,10 +24,10 @@ module.exports = class Router extends S.AirpairSessionRouter
 
   empty: ->
     $log 'Router.empty'
-    window.location = '/dashboard'
+    # window.location = '/'
 
   detail: (id) ->
-    if !id? then return window.location = '/dashboard'
+    if !id? then return @empty()
 
     @app.request.set '_id': id
 

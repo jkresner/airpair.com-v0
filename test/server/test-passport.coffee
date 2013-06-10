@@ -5,6 +5,7 @@ data.users.anon = authenticated: false
 data.users.admin = users[0]  # jk@airpair.com
 data.users.jk = users[1]  # jkresner@gmail.com
 data.users.artjumble = users[5] # Steven Matthews
+data.users.bearMountain = users[4] # Jeffrey Camealy
 
 setSession = (userKey) ->
   if data.users[userKey]?

@@ -10,19 +10,22 @@ Handlebars.registerPartial "ExpertMini", require './../shared/templates/ExpertMi
 ## Shared across Expert Review + Experts View
 #############################################################################
 
+isCustomer = ->
+  return false if !router.app.session.id?
+  return true if /iscust/.test(location.href)
+  router.app.request.get('userId') == router.app.session.id
+
 
 class exports.SuggestionView extends BB.BadassView
   tmpl: require './templates/Suggestion'
   initialize: (args) ->
-    @isCustomer = @request.get('userId') == @session.id
-    # @isCustomer = true if /iscust/.test(location.href)
     @reviewForm = new exports.CustomerReviewFormView args
     @model.set requestId: @request.id
   render: ->
     cust = @request.contact(0)
     $log '@isCustomer', @isCustomer
     d = @model.extend custPic: cust.pic, custName: cust.fullName, isCustomer: false
-    @$el.html @tmpl don
+    @$el.html @tmpl d
     if @isCustomer
       @$('.customerReviewForm').append @reviewForm.render().el
       @$('.customerReviewForm').toggle !@mget('customerFeedback')?
@@ -111,8 +114,8 @@ class exports.CustomerReviewFormView extends BB.ModelSaveView
     @request.set model.attributes
 
 
-class exports.ExpertsView extends BB.BadassView
-  el: '#experts'
+class exports.CustomerReviewView extends BB.BadassView
+  el: '#customerReview'
   tmpl: require './templates/Experts'
   initialize: (args) ->
     @request.on 'change', @render, @
@@ -133,7 +136,6 @@ class exports.NotExpertOrCustomerView extends BB.BadassView
   el: '#notExpertOrCustomer'
   tmpl: require './templates/NotExpertOrCustomer'
   render: ->
-    $log 'req tags', @request, @request.tagsString()
     @$el.html @tmpl @request.extend authenticated: @session.authenticated(), tagsString: @request.tagsString()
     @
 
@@ -142,34 +144,42 @@ class exports.NotExpertOrCustomerView extends BB.BadassView
 ##
 #############################################################################
 
+class exports.RequestInfoView extends BB.BadassView
+  el: '#info'
+  tmpl: require './templates/Info'
+  render: ->
+    @$el.html @tmpl @model.extend isCustomer: isCustomer(), total: @hrTotal()
+    @
+  hrTotal: -> #TODO remove from view and put into model
+    t = @mget('budget')
+    pricing = @mget('pricing')
+    if pricing is 'private' then t = t+20
+    if pricing is 'nda' then t = t+60
+    t
+
 
 class exports.RequestView extends BB.BadassView
   el: '#request'
-  tmpl: require './templates/Info'
-  initialize: (args) -> @model.on 'change:suggested', @render, @
+  tmpl: require './templates/Request'
+  initialize: (args) ->
+    @$el.html @tmpl()
+    @infoView = new exports.RequestInfoView model: @model
+    @model.on 'change:tags', @render, @
   render: ->
     if @v? then @v.remove()
-    isCustomer = @mget('userId') == @session.id
-    isCustomer = true if /iscust/.test(location.href)
-    s = _.find @mget('suggested'), (m) => m.expert.userId == @session.id
-    isExpert = s?
-    @$el.html @tmpl @model.extend isCustomer: isCustomer, total: @hrTotal()
+    @infoView.render()
     viewArgs = request: @model, session: @session
-    if isCustomer
-      @v = new exports.ExpertsView viewArgs
-    else if isExpert
-      viewArgs.model = new M.ExpertReview(s)
+    suggested = @model.suggestion(@session.id)
+    if isCustomer()
+      @v = new exports.CustomerReviewView viewArgs
+    else if suggested? # is expert suggestion
+      viewArgs.model = new M.ExpertReview(suggested)
       @v = new exports.ExpertReviewView viewArgs
     else
       @v = new exports.NotExpertOrCustomerView viewArgs
     @v.render()
     @
-  hrTotal: ->
-    tot = @mget('budget')
-    pricing = @mget('pricing')
-    if pricing is 'private' then tot = tot+20
-    if pricing is 'nda' then tot = tot+60
-    tot
+
 
 
 
