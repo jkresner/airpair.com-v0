@@ -14,8 +14,6 @@ fixture = "<div id='welcome' class='route'>welcome</div>
            <div id='info' class='route'>info</div>
            <div id='request' class='route'><div id='requestForm'></div></div>"
 
-pageData = { session: data.users[3] }
-
 describe 'Request:Views RequestFormView =>', ->
 
   before -> hlpr.set_initApp '/scripts/request/Router'
@@ -27,7 +25,7 @@ describe 'Request:Views RequestFormView =>', ->
     @tags = new C.Tags( data.tags )
     @stubs.companyFetch = sinon.stub M.Company::, 'fetch', -> @set data.companys[0]
     @stubs.tagsFetch = sinon.stub C.Tags::, 'fetch', -> @set data.tags; @trigger 'sync'
-    initApp pageData
+    initApp session: data.users[3]
     router.navTo 'request'
 
   it 'on load sets correct {budget, pricing} radios, {brief, availability}', ->
