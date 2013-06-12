@@ -52,7 +52,6 @@ describe "Review page: customer", ->
     req = rv.request
     req.once 'sync', =>
       suggestion = _.extend(req.get('suggested')[0], data.requestSuggested[0])
-      $log 'suggestion', suggestion
       req.set 'suggested', [suggestion]
       req.trigger 'change'
       expect( req.has 'budget' ).to.equal true
