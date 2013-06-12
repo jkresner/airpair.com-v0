@@ -28,6 +28,10 @@ exports.clean_setup = (ctx, fixtureHtml) ->
   ctx.spys = {}
   ctx.stubs = {}
 
+  # stop our router doing anything before "beforeEach" executes for next test
+  if window.router? then Backbone.history.stop()
+
+
 exports.set_initApp = (routerPath) ->
 
   window.initApp = (pageData) =>
@@ -67,6 +71,11 @@ exports.LoadSPA = (SPA, sessionObj) ->
   # create out app
   new SPA.Page { sessionObj: sessionObj }, (page) ->
     window.router = new SPA.Router page: page
+
+
+exports.setSession = (userKey, callback) ->
+  $.ajax(url: "/set-session/#{userKey}").done( -> callback() )
+
 
 
 exports.clean_tear_down = (ctx) ->

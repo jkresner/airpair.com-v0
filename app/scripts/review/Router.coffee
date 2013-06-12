@@ -6,7 +6,7 @@ V = require './Views'
 
 module.exports = class Router extends S.AirpairSessionRouter
 
-  logging: on
+  # logging: on
 
   pushStateRoot: '/review'
 
@@ -17,26 +17,25 @@ module.exports = class Router extends S.AirpairSessionRouter
 
   appConstructor: (pageData, callback) ->
     d = request: new M.Request()
-    v = requestView: new V.RequestView( model: d.request, session: @app.session )
+    v = requestView: new V.RequestView( request: d.request, session: @app.session )
+
     _.extend d, v
 
   initialize: (args) ->
 
   empty: ->
     $log 'Router.empty'
-    window.location = '/dashboard'
+    window.location = '/'
 
   detail: (id) ->
-    if !id? then return window.location = '/dashboard'
+    if !id? then return @empty()
 
-    @app.request.set '_id': id
+    @app.request.set { '_id': id }, { silent: true }
 
-    if !@isAuthenticated()
-      @app.request.urlRoot = '/api/requests/pub'
-      $('nav ul').hide()
-    else if @app.session.id is '5175efbfa3802cc4d5a5e6ed'
+    $('nav ul').show() if @isAuthenticated()
+
+    if @app.session.id is '5175efbfa3802cc4d5a5e6ed'
       $('nav ul').append("<li><a href='/adm/inbound/#{@app.request.id}'' class='zocial'>request admin</a><li>")
 
-    @app.request.fetch error: =>
-      @app.request.urlRoot = '/api/requests/pub'
-      @app.request.fetch { error: @empty }
+    if !@app.request.get('userId')?
+      @app.request.fetch error: => error: @empty
