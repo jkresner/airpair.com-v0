@@ -1,12 +1,9 @@
 {_, $, $log, Backbone} = window
 hlpr = require '/test/ui-helper'
+data = require './../../data/all'
 M = require '/scripts/review/Models'
 C = require '/scripts/review/Collections'
 V = require '/scripts/review/Views'
-
-data =
-  users: require './../../data/users'
-  requests: require './../../data/requests'
 
 
 fixture = "<div id='detail' class='route'><div id='request'></div></div>"
@@ -17,31 +14,32 @@ describe "Review page: anonymous", ->
   before (done) ->
     hlpr.set_initApp '/scripts/review/Router'
     hlpr.setSession 'jk', =>
-      $.post('/api/requests',data.requests[7]).done (data) =>
-        @rId = data._id
+      $.post('/api/requests',data.requests[7]).done (r) =>
+        @r = r
         hlpr.setSession 'anon', done
 
   beforeEach ->
+    window.location = "#"+@r._id
     hlpr.clean_setup @, fixture
     initApp session: { authenticated: false }
     @router = window.router
 
   afterEach ->
-    hlpr.clean_tear_down @
+    # hlpr.clean_tear_down @
 
 
-  it 'when reviewing anonymous user', (done) ->
-    @router.navTo @rId
+  it 'when reviewing as anonymous user', (done) ->
     rv = @router.app.requestView
 
-    rv.model.on 'sync', =>
-      m = rv.model
+    rv.request.once 'sync', =>
+      m = rv.request
       # should not get experts in request
       expect( m.has 'budget' ).to.equal false
       expect( m.has 'suggested' ).to.equal false
       expect( m.has 'events' ).to.equal false
 
-      expect( rv.$('#expertReview').is(':empty') ).to.equal true
+      expect( rv.$('#expertReviewForm').is(':empty') ).to.equal true
+      expect( rv.$('#expertReviewDetail').is(':empty') ).to.equal true
       expect( rv.$('#customerReview').is(':empty') ).to.equal true
       expect( rv.$('#notExpertOrCustomer').is(':empty') ).to.equal false
       expect( rv.$('a.createProfile').is(':visible') ).to.equal true

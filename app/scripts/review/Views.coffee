@@ -5,6 +5,7 @@ SV = require './../shared/Views'
 
 Handlebars.registerPartial "Expert", require './../shared/templates/Expert'
 Handlebars.registerPartial "ExpertMini", require './../shared/templates/ExpertMini'
+Handlebars.registerPartial "Suggestion", require './templates/Suggestion'
 
 #############################################################################
 ## Shared across Expert Review + Experts View
@@ -23,7 +24,6 @@ class exports.SuggestionView extends BB.BadassView
     @model.set requestId: @request.id
   render: ->
     cust = @request.contact(0)
-    $log '@isCustomer', @isCustomer
     d = @model.extend custPic: cust.pic, custName: cust.fullName, isCustomer: false
     @$el.html @tmpl d
     if @isCustomer
@@ -54,7 +54,6 @@ class exports.ExpertReviewFormView extends BB.EnhancedFormView
     @
   toggleFormElements: =>
     @renderInputsValid()
-    $log 'renderInputsValid'
     expertStatus = @elm('expertStatus').val()
     @$('.hideShowSave').toggle expertStatus != ''
     if expertStatus is 'available'
@@ -67,26 +66,30 @@ class exports.ExpertReviewFormView extends BB.EnhancedFormView
     @request.set model.attributes
 
 
+class exports.ExpertReviewDetailView extends BB.BadassView
+  el: '#expertReviewDetail'
+  tmpl: require './templates/ExpertReviewDetail'
+  render: ->
+    @$el.html @tmpl @model.toJSON()
+    @
+
+
 class exports.ExpertReviewView extends BB.BadassView
-  logging: on
   el: '#expertReview'
   tmpl: require './templates/ExpertReview'
   events:
-    'click .edit': -> @editing = true; @render(); false
+    'click .edit': -> @render(true); false
   initialize: (args) ->
-    @model.set requestId: @request.id
-    @editing = @mget('expertFeedback') is undefined
-  render: ->
-    @$el.html @tmpl @model.toJSON()
-    viewArgs = model: @model, request: @request, session: @session
-    if @reviewForm? then @reviewForm.remove()
-    @reviewForm = new exports.ExpertReviewFormView(viewArgs).render()
-    @reviewForm.$el.toggle @editing
-    if @suggestion? then @suggestion.remove()
-    @suggestion = new exports.SuggestionView(viewArgs)
-    @$('.suggestion').append @suggestion.render().el
-    $log 'editing', @editing, @$('.suggestion')
-    @$('#expertReviewDetail').toggle !@editing
+    @$el.html @tmpl()
+    @reviewFormView = new exports.ExpertReviewFormView args
+    @detailView = new exports.ExpertReviewDetailView args
+  render: (editing) ->
+    @editing = @model.get('expertFeedback') is undefined
+    @editing = editing if editing?
+    @reviewFormView.render() if @editing
+    @reviewFormView.$el.toggle @editing
+    @detailView.render() if !@editing
+    @detailView.$el.toggle !@editing
     @
 
 
@@ -118,7 +121,6 @@ class exports.CustomerReviewView extends BB.BadassView
   el: '#customerReview'
   tmpl: require './templates/Experts'
   initialize: (args) ->
-    @request.on 'change', @render, @
   render: ->
     @$el.html @tmpl @request.toJSON()
     for s in @request.get('suggested')
@@ -144,6 +146,7 @@ class exports.NotExpertOrCustomerView extends BB.BadassView
 ##
 #############################################################################
 
+
 class exports.RequestInfoView extends BB.BadassView
   el: '#info'
   tmpl: require './templates/Info'
@@ -163,23 +166,24 @@ class exports.RequestView extends BB.BadassView
   tmpl: require './templates/Request'
   initialize: (args) ->
     @$el.html @tmpl()
-    @infoView = new exports.RequestInfoView model: @model
-    @model.on 'change:tags', @render, @
+    @infoView = new exports.RequestInfoView model: @request
+    @anonView = new exports.NotExpertOrCustomerView args
+    @customerReviewView = new exports.CustomerReviewView args
+    expArgs = _.extend args, { model: new M.ExpertReview() }
+    @expertReviewView = new exports.ExpertReviewView expArgs
+    @request.on 'change', @render, @
   render: ->
-    if @v? then @v.remove()
     @infoView.render()
-    viewArgs = request: @model, session: @session
-    suggested = @model.suggestion(@session.id)
-    if isCustomer()
-      @v = new exports.CustomerReviewView viewArgs
-    else if suggested? # is expert suggestion
-      viewArgs.model = new M.ExpertReview(suggested)
-      @v = new exports.ExpertReviewView viewArgs
+    meExpert = @request.suggestion @session.id
+    $log 'rendered', meExpert, @request.attributes.suggested
+    if meExpert?
+      @expertReviewView.model.set _.extend(meExpert, { requestId: @request.id })
+      @expertReviewView.render()
+    else if isCustomer()
+      @customerReviewView.render()
     else
-      @v = new exports.NotExpertOrCustomerView viewArgs
-    @v.render()
+      @anonView.render()
     @
-
 
 
 

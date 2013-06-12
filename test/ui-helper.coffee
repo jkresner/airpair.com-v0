@@ -28,6 +28,10 @@ exports.clean_setup = (ctx, fixtureHtml) ->
   ctx.spys = {}
   ctx.stubs = {}
 
+  # stop our router doing anything before "beforeEach" executes for next test
+  if window.router? then Backbone.history.stop()
+
+
 exports.set_initApp = (routerPath) ->
 
   window.initApp = (pageData) =>

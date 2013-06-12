@@ -285,7 +285,7 @@ module.exports = [
   # 7) Review request
   {
     availability: "SFO",
-    brief: "I need better coverage for my review screen. I need better coverage for my review screen.\nI need better coverage for my review screen. I need better coverage for my review screen.\nI need better coverage for my review screen. I need better coverage for my review screen.\nI need better coverage for my review screen. I need better coverage for my review screen.",
+    brief: "I need better coverage for my review screen. I need better coverage for my review screen.\nI need better coverage for my review screen. I need better coverage for my review screen.\nI need better coverage for my review screen. I need better coverage for my review screen.\nI need better coverage for my review screen. I need better coverage for my review screen. I need better coverage for my review screen. I need better coverage for my review screen.\nI need better coverage for my review screen. I need better coverage for my review screen.\nI need better coverage for my review screen. I need better coverage for my review screen.\nI need better coverage for my review screen. I need better coverage for my review screen.",
     budget: 90,
     canceledDetail: "",
     company: {
@@ -308,12 +308,7 @@ module.exports = [
     calls: [],
     suggested: [
       {
-        expertAvailability: "Testing testing ",
-        expertComment: "Testing testing ",
-        expertFeedback: "Testing testing Testing testing Testing testing Testing testing Testing testing Testing testing ",
-        expertRating: 5,
         expert: {
-          "hasLinks": true,
           "tags": [
             "soId": "flex", "short": "Flex", "name": "Flex"
             "soId": "angularjs", "short": "AngularJS", "name": "AngularJS"
@@ -344,71 +339,15 @@ module.exports = [
           "_id": "514a38d9bf8213020000000b"
         },
         suggestedRate: 70,
-        expertStatus: "available",
+        expertStatus: "waiting",
         _id: "51b25a1722ddda020000000d",
         events: [
           "utc": "2013-06-07T22:09:27.163Z", "name": "first contacted", "by": { "name": "Jonathon Kresner", "id": "5175efbfa3802cc4d5a5e6ed" }
         ]
       }
     ],
-    events: [
-      name: "created", utc: "2013-06-07T22:08:36.756Z", by: { "id": "5175efbfa3802cc4d5a5e6ed", "name": "Jonathon Kresner" }
-      name: "expert view", utc: "2013-06-07T22:11:26.483Z", by: { "name": "Steve Mathews", "id": "51828a1066a6f999a465f292" }
-      {
-        "data": {
-          "expertAvailability": "Testing testing ",
-          "expertComment": "Testing testing ",
-          "expertFeedback": "Testing testing Testing testing Testing testing Testing testing Testing testing Testing testing ",
-          "expertRating": "5",
-          "requestId": "51b259e422ddda020000000c",
-          "events": [
-            "name": "first contacted", "by": { "id": "5175efbfa3802cc4d5a5e6ed", "name": "Jonathon Kresner" }, "utc": "2013-06-07T22:09:27.163Z"
-            "utc": "2013-06-07T22:11:26.484Z", "by": { "name": "Steve Mathews", "id": "51828a1066a6f999a465f292" }, "name": "viewed"
-          ],
-          "_id": "51b25a1722ddda020000000d",
-          "expertStatus": "available",
-          "suggestedRate": 70,
-          "expert": {
-            "_id": "514a38d9bf8213020000000b",
-            "email": "happydog@gmail.com",
-            "gh": {
-              "id": 125826,
-              "username": "artjumble",
-              "location": "Phx, AZ",
-              "blog": "artjumble.com/blog",
-              "gravatar_id": "0a2cb1e3af6082a7dc8d6200d237299f",
-              "followers": 0
-            },
-            "gmail": "happydog@gmail.com",
-            "homepage": "artjumble.com/blog",
-            "hours": "2",
-            "in": { "id": "VZovK2UHph", "displayName": "Steve Mathews" },
-            "name": "Steve Mathews",
-            "other": "",
-            "pic": "https://secure.gravatar.com/avatar/0a2cb1e3af6082a7dc8d6200d237299f",
-            "rate": 70,
-            "status": "ready",
-            "timezone": "GMT-0700 (MST)",
-            "userId": "51828a1066a6f999a465f292",
-            "username": "artjumble",
-            "tags": [
-              "name": "Flex", "short": "Flex", "soId": "flex"
-              "name": "AngularJS", "short": "AngularJS", "soId": "angularjs"
-              "name": "ActionScript 3", "short": "ActionScript3", "soId": "actionscript-3"
-            ],
-            "hasLinks": true
-          }
-        },
-        "utc": "2013-06-07T22:13:02.467Z",
-        "by": {
-          "name": "Steve Mathews",
-          "id": "51828a1066a6f999a465f292"
-        },
-        "name": "expert reviewed"
-      },
-      utc: "2013-06-07T22:13:44.105Z", "name": "expert view", "by": { "name": "Steve Mathews", "id": "51828a1066a6f999a465f292" }
-    ],
-    "tags": [
+    events: [ name: "created", utc: "2013-06-07T22:08:36.756Z", by: { "id": "5175efbfa3802cc4d5a5e6ed", "name": "Jonathon Kresner" } ],
+    tags: [
       _id: "514825fa2a26ea0200000024", "name": "Mocha", "short": "mocha", "soId": "mocha"
       _id: "514825fa2a26ea0200000011", "name": "CoffeeScript", "short": "coffee", "soId": "coffeescript"
       _id: "5181d0ab66a6f999a465efa1", "name": "integration-testing", "short": "integration-testing", "soId": "integration-testing"
@@ -416,5 +355,9 @@ module.exports = [
       _id: "5181d0aa66a6f999a465ed8e", "name": "tdd", "short": "tdd", "soId": "tdd"
     ]
   }
+
+
+  # 7) Review request
+
 
 ]

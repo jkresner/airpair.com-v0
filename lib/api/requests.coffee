@@ -46,7 +46,12 @@ class RequestApi extends CRUDApi
   detailPub: (req, res) =>
     @model.findOne { _id: req.params.id }, (e, r) =>
       if !r? then res.send(400)
-      res.send und.pick r, ['_id','tags','company','brief','availability']
+      else if role.isRequestOwner(req, r) || role.isRequestExpert(req, r) || role.isAdmin(req)
+        res.send r
+      else
+        $log 'role.isRequestExpert(req, r)', role.isRequestExpert(req, r)
+        res.send und.pick r, ['_id','tags','company','brief','availability']
+
 
   detail: (req, res) =>
     rid = req.params.id
