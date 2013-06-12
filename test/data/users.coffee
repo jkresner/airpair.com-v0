@@ -201,11 +201,7 @@ module.exports = [
       "id": 888507,
       "provider": "stackexchange",
       "accept_rate": 90,
-      "badge_counts": {
-        "bronze": 21,
-        "silver": 5,
-        "gold": 0
-      },
+      "badge_counts": { "bronze": 21, "silver": 5, "gold": 0 },
       "account_id": 477171,
       "location": "Chicago, IL",
       "website_url": "http://www.homebearco.com/",
@@ -227,9 +223,136 @@ module.exports = [
       "user_id": 888507
     },
     "stackId": 888507
+  },
+
+
+  # 5 - Steven Matthews
+  {
+    "_id": "51828a1066a6f999a465f292",
+    "github": {
+      "_json": {
+        "public_gists": 1,
+        "updated_at": "2013-05-01T21:43:31Z",
+        "created_at": "2009-09-11T18:01:13Z",
+        "following": 1,
+        "followers": 0,
+        "public_repos": 8,
+        "bio": null,
+        "hireable": true,
+        "email": "happydog at that google place",
+        "location": "Phx, AZ",
+        "blog": "artjumble.com/blog",
+        "company": null,
+        "name": "Steve Mathews",
+        "type": "User",
+        "received_events_url": "https://api.github.com/users/artjumble/received_events",
+        "events_url": "https://api.github.com/users/artjumble/events{/privacy}",
+        "repos_url": "https://api.github.com/users/artjumble/repos",
+        "organizations_url": "https://api.github.com/users/artjumble/orgs",
+        "subscriptions_url": "https://api.github.com/users/artjumble/subscriptions",
+        "starred_url": "https://api.github.com/users/artjumble/starred{/owner}{/repo}",
+        "gists_url": "https://api.github.com/users/artjumble/gists{/gist_id}",
+        "following_url": "https://api.github.com/users/artjumble/following",
+        "followers_url": "https://api.github.com/users/artjumble/followers",
+        "html_url": "https://github.com/artjumble",
+        "url": "https://api.github.com/users/artjumble",
+        "gravatar_id": "0a2cb1e3af6082a7dc8d6200d237299f",
+        "avatar_url": "https://secure.gravatar.com/avatar/0a2cb1e3af6082a7dc8d6200d237299f?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png",
+        "id": 125826,
+        "login": "artjumble"
+      },
+      "emails": [
+        {
+          "value": "happydog at that google place"
+        }
+      ],
+      "profileUrl": "https://github.com/artjumble",
+      "username": "artjumble",
+      "displayName": "Steve Mathews",
+      "id": 125826,
+      "provider": "github"
+    },
+    "githubId": 125826,
+    "google": {
+      "_json": {
+        "locale": "en",
+        "birthday": "0000-11-25",
+        "gender": "male",
+        "picture": "https://lh6.googleusercontent.com/-SB0YMlSnWGs/AAAAAAAAAAI/AAAAAAAABb4/nQN-O2a59wI/photo.jpg",
+        "link": "https://plus.google.com/110524363100971668578",
+        "family_name": "Mathews",
+        "given_name": "Steve",
+        "name": "Steve Mathews",
+        "verified_email": true,
+        "email": "happydog@gmail.com",
+        "id": "110524363100971668578"
+      },
+      "emails": [
+        {
+          "value": "happydog@gmail.com"
+        }
+      ],
+      "name": {
+        "givenName": "Steve",
+        "familyName": "Mathews"
+      },
+      "displayName": "Steve Mathews",
+      "id": "110524363100971668578",
+      "provider": "google"
+    },
+    "googleId": "110524363100971668578",
+    "linkedin": {
+      "_json": {
+        "lastName": "Mathews",
+        "id": "VZovK2UHph",
+        "firstName": "Steve"
+      },
+      "name": {
+        "givenName": "Steve",
+        "familyName": "Mathews"
+      },
+      "displayName": "Steve Mathews",
+      "id": "VZovK2UHph",
+      "provider": "linkedin"
+    },
+    "linkedinId": "VZovK2UHph"
   }
 
-
-
-
 ]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

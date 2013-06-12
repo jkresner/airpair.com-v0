@@ -62,7 +62,7 @@ class exports.Request extends BB.SublistModel
   suggestion: (index) ->
     suggested = @get('suggested')
     if !suggested? || suggested.length is 0 then return null
-    s = _.find suggested, (o) -> o.expert._id == index
+    s = _.find suggested, (o) -> o.expert._id == index || o.expert.userId == index
     if s? then return s
     suggested[index]
   tagsString: ->

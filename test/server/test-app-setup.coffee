@@ -14,7 +14,7 @@ app.configure ->
   app.use express.session secret: 'testing is the future'
 
   # app.use passport.initialize()
-  app.use passportMock.initialize()
+  app.use passportMock.initialize(app)
   app.use passport.session()
 
 data =
