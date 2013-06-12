@@ -175,7 +175,7 @@ class exports.RequestView extends BB.BadassView
   render: ->
     @infoView.render()
     meExpert = @request.suggestion @session.id
-    $log 'rendered', meExpert, @request.attributes.suggested
+    # $log 'rendered', meExpert, @request.attributes.suggested
     if meExpert?
       @expertReviewView.model.set _.extend(meExpert, { requestId: @request.id })
       @expertReviewView.render()
