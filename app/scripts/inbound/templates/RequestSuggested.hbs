@@ -27,14 +27,13 @@
 
     <a href="#" data-id="{{ _id }}" class="delete deleteSuggested btn btn-small btn-danger"><i class="icon-trash icon-white"></i> </a>
 
-    <a href="mailto:{{expert.name}}%20%3c{{expert.email}}%3e?subject=airpair - request cancelled {{tagsString}}?&body={{mailTemplates.cancelled}}" class="email btn btn-small btn-warning" target="_blank"><i class="icon-envelope icon-white"></i> canceled</a>
+    <a href="mailto:{{expert.name}}%20%3c{{expert.email}}%3e?subject=airpair - request canceled {{_id}}?&body={{mailTemplates.canceled}}" class="email btn btn-small btn-warning" target="_blank"><i class="icon-envelope icon-white"></i> canceled</a>
 
-    <a href="mailto:{{expert.name}}%20%3c{{expert.email}}%3e?subject=airpair - request {{tagsString}}?&body={{mailTemplates.another}}" class="email btn btn-small btn-warning" target="_blank"><i class="icon-envelope icon-white"></i> another</a>
+    <a href="mailto:{{expert.name}}%20%3c{{expert.email}}%3e?subject=Another expert was selected for airpair {{_id}}?&body={{mailTemplates.another}}" class="email btn btn-small btn-warning" target="_blank"><i class="icon-envelope icon-white"></i> another</a>
 
-    <a href="mailto:{{expert.name}}%20%3c{{expert.email}}%3e?subject=airpair - you were chosen for #{{_id}}?&body={{mailTemplates.suggested}}" class="email btn btn-small btn-warning" target="_blank"><i class="icon-envelope icon-white"></i> chosen</a>
+    <a href="mailto:{{expert.name}}%20%3c{{expert.email}}%3e?subject=You've been chosen for airpair {{_id}}?&body={{mailTemplates.chosen}}" class="email btn btn-small btn-warning" target="_blank"><i class="icon-envelope icon-white"></i> chosen</a>
 
-
-    <a href="mailto:{{expert.name}}%20%3c{{expert.email}}%3e?subject=airpair - suggested for help {{tagsString}}?&body={{mailTemplates.suggested}}" class="email btn btn-small btn-warning" target="_blank"><i class="icon-envelope icon-white"></i> suggested</a>
+    <a href="mailto:{{expert.name}}%20%3c{{expert.email}}%3e?subject={{tagsString}} airpair?&body={{mailTemplates.suggested}}" class="email btn btn-small btn-warning" target="_blank"><i class="icon-envelope icon-white"></i> suggested</a>
 
     <span class="status label label-{{expertStatus}}">{{ expertStatus }}</span>
 

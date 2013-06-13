@@ -74,7 +74,7 @@ class exports.TagNewForm extends BB.ModelSaveView
     @model = new M.Tag()
     @selected = args.selected
     @$el.html @tmpl()
-    @$stackName = @$("[name=nameStackoverflow]")
+    @$stackName = @elm("nameStackoverflow")
     @listenTo @$stackName, 'change', => @renderInputsValid()
   saveWithMode: (e, mode) ->
     @model.clear()
@@ -103,7 +103,7 @@ class exports.TagsInputView extends BB.HasBootstrapErrorStateView
     @listenTo @model, 'change:tags', @render
     @$auto = @$('.autocomplete').on 'input', =>
       @renderInputValid @$('.autocomplete')
-      @renderInputValid @$('[name=newStackoverflow]')
+      @renderInputValid @elm('newStackoverflow')
   render: ->
     @$('.error-message').remove() # in case we had an error fire first
     @$('.selected').html ''
@@ -111,7 +111,7 @@ class exports.TagsInputView extends BB.HasBootstrapErrorStateView
       @$('.selected').append(@tagHtml(t)) for t in @model.get('tags')
     @
   tagHtml: (t) ->
-    "<span class='label label-tag'>#{t.short} <a href='#{t._id}' class='rmTag'>x</a></span>"
+    "<span class='label label-tag'>#{t.short} <a href='#{t._id}' title='#{t.name}' class='rmTag'>x</a></span>"
   initTypehead: ->
     # $log 'initTypehead'#, @collection.toJSON()
     @newForm.$el.hide()

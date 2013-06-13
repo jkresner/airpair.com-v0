@@ -1,13 +1,8 @@
-{_, $, $log, Backbone} = window
 hlpr = require '/test/ui-helper'
+data = require '/test/data/all'
 M = require 'scripts/beexpert/Models'
 C = require 'scripts/beexpert/Collections'
 V = require 'scripts/beexpert/Views'
-
-data =
-  users: require './../../data/users'
-  experts: require './../../data/experts'
-  tags: require './../../data/tags'
 
 fixture = """<div id='welcome' class='route'>welcome</div>
           <div id='connect' class='route'><div id="connectForm"></div></div>
@@ -16,10 +11,10 @@ pageData = {}
 
 describe 'BeExpert:Views InfoFormView =>', ->
 
-  before -> hlpr.set_initApp '/scripts/beexpert/Router'
-  afterEach -> hlpr.clean_tear_down @
+  before -> hlpr.setInitApp '/scripts/beexpert/Router'
+  afterEach -> hlpr.cleanTearDown @
   beforeEach ->
-    hlpr.clean_setup @, fixture
+    hlpr.cleanSetup @, fixture
     @defaultData = _id: null, homepage: 'http://home.co', brief: 'test', rate: 40, status: 'busy', hours: '3-5'
     @expert = new M.Expert()
     @tags = new C.Tags( data.tags )

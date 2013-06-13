@@ -1,8 +1,5 @@
-{_, $, $log, Backbone} = window
 hlpr = require '/test/ui-helper'
-
-data =
-  users: require '/test/data/users'
+data = require '/test/data/all'
 
 fixture = "<div id='welcome' class='route'>welcome</div>
            <div id='info' class='route'>info</div>"
@@ -10,12 +7,12 @@ pageData = {}
 
 describe "Request: customer signin", ->
 
-  before -> hlpr.set_initApp '/scripts/request/Router'
-  afterEach -> hlpr.clean_tear_down @
-  beforeEach -> hlpr.clean_setup @, fixture
+  before -> hlpr.setInitApp '/scripts/request/Router'
+  afterEach -> hlpr.cleanTearDown @
+  beforeEach -> hlpr.cleanSetup @, fixture
 
   it 'not signed in shows step 1', ->
-    initApp session: { "authenticated": false }
+    initApp session: { authenticated: false }
     expect( $('#welcome').is(":visible") ).to.be.true
     expect( $('#info').is(":visible") ).to.be.false
 
