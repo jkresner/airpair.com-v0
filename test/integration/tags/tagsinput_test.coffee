@@ -1,5 +1,3 @@
-# {_, $, $log, Backbone} = window
-
 # describe "Tags: input", ->
 
 #   it 'add new tag hides autocomplete', ->

@@ -68,8 +68,9 @@ class ExpertMailTemplates
   tmplSuggested: require './../../mail/expertRequestSuggested'
   constructor: (request, expertId) ->
     suggestion = request.suggestion expertId
-    $log 'suggestion', suggestion, request
-    r = _.extend suggestion, { tagsString: request.tagsString(), companyName: request.get('company').name }
+    contact = request.contact 0
+    # $log 'suggestion', suggestion, contact, request
+    r = request.extendJSON { tagsString: request.tagsString(), suggestion: suggestion, contact: contact }
     @another = @tmplAnother r
     @canceled = @tmplCancelled r
     @chosen = @tmplChosen r
@@ -93,6 +94,7 @@ class exports.RequestInfoView extends BB.ModelSaveView
     @$('[data-toggle="popover"]').popover()
     @$('.status').addClass "label-#{@model.get('status')}"
     @$('.status').html @model.get('status')
+    @toggleCanceledIncompleteFields()
     @
   toggleCanceledIncompleteFields: =>
     @$('#canceled-control-group').toggle @$('#status').val() == 'canceled'
@@ -105,36 +107,51 @@ class exports.RequestSuggestionsView extends BB.BadassView
   tmpl: require './templates/RequestSuggestions'
   tmplSuggestion: require './templates/RequestSuggestion'
   events:
+    'input .autocomplete': 'renderSearchSuggestions'
     'click .add-suggestion': 'add'
     'click .js-tag': 'filterTag'
   initialize: ->
-    @listenTo @model, 'change', @render
+    @listenTo @model, 'change:tags', @render
+    @listenTo @model, 'change:suggested', @renderSuggestions
   render: ->
     @rTag = null
     if @model.get('tags')? && @model.get('tags').length
       @rTag = @model.get('tags')[0]
     @$el.html @tmpl @model.toJSON()
-    @renderSuggestions()
-    @
-  renderSuggestions: ->
-    if ! @rTag? then @$('.ops').html 'no tags on this request'
-    else
-      $log 'renderSuggestions', @rTag
-      @$('.ops').html ''
-      @$('li').removeClass 'active'
-      @$("[data-short='#{@rTag.short}']").addClass 'active'
-
-      suggested = _.pluck @model.get('suggested'), 'expert'
-      @collection.filterFilteredModels( tag: @rTag, excludes: suggested )
-      for s in @collection.filteredModels
-        @$('.ops').append @tmplSuggestion(s.toJSON())
+    @renderTagSuggestions()
     @
   filterTag: (e) ->
-    e.preventDefault()
     short = $(e.currentTarget).closest('li').data 'short'
-    $log 'filterTag', short
+    #$log 'filterTag', short
     @rTag = _.find @model.get('tags'), (t) -> t.short == short
-    @renderSuggestions()
+    @renderTagSuggestions()
+  renderTagSuggestions: ->
+    #$log 'renderTagSuggestions', @rTag
+    @$('.ops').html ''
+    @$('.custom').toggle !@rTag?
+    @$('li').removeClass 'active'
+    if !@rTag?
+      @$("[data-short='custom']").addClass 'active'
+    else if @rTag?
+      @$("[data-short='#{@rTag.short}']").addClass 'active'
+      suggested = _.pluck @model.get('suggested'), 'expert'
+      @collection.filterFilteredModels( tag: @rTag, excludes: suggested )
+      @renderSuggestions @collection.filteredModels
+    false
+  renderSearchSuggestions: ->
+    @$('.ops').html ''
+    search = @$('.autocomplete').val()
+    #$log 'renderSearch', @$('.autocomplete').val()
+    if search.length > 2
+      @collection.filterFilteredModels( searchTerm: search )
+      @renderSuggestions @collection.filteredModels
+    else
+      @renderSuggestions []
+  renderSuggestions: (experts) ->
+    #$log 'renderSuggestions', experts.length
+    for s in experts
+      @$('.ops').append @tmplSuggestion(s.toJSON())
+    false
   add: (e) ->
     expertId = $(e.currentTarget).data('id')
     expert = _.find @collection.filteredModels, (m) -> m.get('_id') == expertId

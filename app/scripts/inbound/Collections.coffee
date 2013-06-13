@@ -14,6 +14,9 @@ class exports.Experts extends BB.FilteringCollection
     # $log '_filter', f
     r  = @models
     if f?
+      if f.searchTerm?
+        pattern = new RegExp f.searchTerm, 'gi'
+        r = _.filter r, (m) -> _.any ['name','username'], (attr) => pattern.test m.get attr
       if f.tag?
         r = _.filter r, (m) -> _.find(m.get('tags'), (t) -> t.name == f.tag.name )
       if f.excludes?

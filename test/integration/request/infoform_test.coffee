@@ -1,17 +1,14 @@
-{_, $, $log, Backbone} = window
 hlpr = require '/test/ui-helper'
-
-data =
-  users: require '/test/data/users'
+data = require '/test/data/all'
 
 fixture = "<div id='welcome' class='route'>welcome</div><div id='info' class='route'>info</div>"
-pageData = {}
+pageData = { session: data.users[0] }
 
 describe "Request: infoForm", ->
 
-  before -> hlpr.set_initApp '/scripts/request/Router'
-  afterEach -> hlpr.clean_tear_down @
-  beforeEach -> hlpr.clean_setup @, fixture
+  before -> hlpr.setInitApp '/scripts/request/Router'
+  afterEach -> hlpr.cleanTearDown @
+  beforeEach -> hlpr.cleanSetup @, fixture
 
   it 'missing full name & email fires validation', (done) ->
     initApp pageData

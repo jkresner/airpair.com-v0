@@ -8,6 +8,7 @@ module.exports =
 
   # check google id
   isAdmin: (req) ->
+    return false if !req.user?
     und.contains adminIds, req.user.googleId
 
   # check google id
