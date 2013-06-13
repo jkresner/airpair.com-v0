@@ -2,8 +2,14 @@
 <div style="height:60px;height:30px;padding:5px 0">
   <ul class="nav nav-pills" style="margin-bottom:5px">
     {{#each tags}}
-    <li data-short='{{short}}'><a href="#" class="js-tag">{{short}}</a></li>
+    <li data-short='{{short}}'><a href="#" class="js-tag" title="{{name}}">{{short}}</a></li>
     {{/each}}
+    <li data-short='custom'><a href="#" class="js-tag">custom</a></li>
   </ul>
 <div>
+<div class="custom" style="display:none">
+  No matches, type expert name:
+  <br />
+  <input type="text" class="autocomplete" placeholder="Type expert name" name="expert" />
+</div>
 <div class="ops" style="clear:both"></div>
