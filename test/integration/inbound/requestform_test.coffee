@@ -15,11 +15,11 @@
 # describe "Inbound: RequestView", ->
 
 #   before (done) ->
-#     hlpr.set_initApp '/scripts/inbound/Router'
+#     hlpr.setInitApp '/scripts/inbound/Router'
 #     done()
-#   afterEach -> hlpr.clean_tear_down @
+#   afterEach -> hlpr.cleanTearDown @
 #   beforeEach ->
-#     hlpr.clean_setup @, fixture
+#     hlpr.cleanSetup @, fixture
 
 
 #   it 'request view does not save mail templates & tags string', (done) ->

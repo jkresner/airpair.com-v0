@@ -1,84 +1,90 @@
 exports = {}
+
+## TODO figure out how to remove this reference
 models = require '/scripts/shared/Models'
 
-data =
-  users: require '/test/data/users'
+###############################################################################
+## Private helper functions
+###############################################################################
 
 
+# inject html below our mocha test runner to execute a test with html context
+setHtmlfixture = (html) ->
+  $('body').append('<div id="fixture">'+html+'</div>')
 
+clearHtmlfixture = ->
+  $('.datetimepicker').datetimepicker('remove')  # harmless not using plugin
+  $('#fixture').remove()
+
+
+###############################################################################
+## Exported helper functions
+###############################################################################
+
+
+""" showsError: short hand for checking a bootstrap validation error """
 exports.showsError = (input) ->
   controls = input.parent()
   # $log 'controls', controls
   $(controls).find('.error-message').length > 0
 
 
-exports.set_htmlfixture = (html) ->
-  $('body').append('<div id="fixture">'+html+'</div>')
+""" setInitApp
+allows us to redefine initApp() from one test to another
+since normally in a badass-backbone app it would be defined on the html
+page and we can't do that from a mocha test harness page """
+exports.setInitApp = (routerPath, sessionUser) ->
 
+  sessionUser = { authenticated: false } if !sessionUser?
 
-exports.clear_htmlfixture = ->
-  $('.datetimepicker').datetimepicker('remove')
-  $('#fixture').remove()
+  window.initApp = (pageData) =>
+    # $log 'initApp', routerPath, pageData
 
-exports.clean_setup = (ctx, fixtureHtml) ->
+    pageData = {} if !pageData?
 
-  if fixtureHtml? then exports.set_htmlfixture fixtureHtml
+    Router = require routerPath
+
+    # turn pushState off so browser doesn't navigate away from mocha test page
+    Router::pushState = off
+
+    # stop router loading google analytics & other external scripts
+    Router::enableExternalProviders = off
+
+    # stub out getting the users details via ajax
+    Router::_setSession = (pageData, callback) ->
+      session = pageData.session
+      if !session? then session = sessionUser
+      # $log '_setSession override', session
+      @app = session: new models.User session
+
+      @superConstructor.call @, pageData, callback
+
+    # if we are running test for many routers we make sure the don't clash
+    if window.router? then Backbone.history.stop()
+
+    # set our global router object as normal in badass-backbone convention
+    window.router = new Router pageData
+
+""" cleanSetup
+called in conjunction with cleanTearDown:
+1) loads our html fixture
+2) sets up spys & stubs objects to be auto restored on test completion
+"""
+exports.cleanSetup = (ctx, fixtureHtml) ->
+
+  if fixtureHtml? then setHtmlfixture fixtureHtml
 
   # add objects to hold spys + stubs that we can gracefully clean up in tear_down
   ctx.spys = {}
   ctx.stubs = {}
 
-  # stop our router doing anything before "beforeEach" executes for next test
-  if window.router? then Backbone.history.stop()
-
-
-exports.set_initApp = (routerPath) ->
-
-  window.initApp = (pageData) =>
-    pageData = {} if !pageData?
-    # $log 'initApp', routerPath, pageData
-    Router = require routerPath
-    Router::pushState = off # turn pushState off
-    Router::enableExternalProviders = off
-    # stub out getting the users details via ajax
-    Router::_setSession = (pageData, callback) ->
-      session = pageData.session
-      if !session? then session = data.users[0]
-      # $log '_setSession override', session
-      @app = { session: new models.User session }
-      @superConstructor.call @, pageData, callback
-
-    if window.router? then Backbone.history.stop()
-    window.router = new Router pageData
-
-
-
-exports.set_initSPA = (spaPath) ->
-
-  window.initSPA = (SPA) =>
-    # stub out getting the users details via ajax
-    SPA.Page.__super__.constructor = (pageData, callback) ->
-      # $log 'SPA const override', pageData.sessionObj, @
-      sessionObj = pageData.sessionObj
-      if !sessionObj? then sessionObj = data.users[0]
-      @session = new models.User sessionObj
-      @initialize pageData
-      callback @
-
-  SPA = require(spaPath)
-
-exports.LoadSPA = (SPA, sessionObj) ->
-  # create out app
-  new SPA.Page { sessionObj: sessionObj }, (page) ->
-    window.router = new SPA.Router page: page
-
-
-exports.setSession = (userKey, callback) ->
-  $.ajax(url: "/set-session/#{userKey}").done( -> callback() )
-
-
-
-exports.clean_tear_down = (ctx) ->
+""" cleanTearDown
+called in conjunction with cleanSetup:
+1) clears our html fixture
+2) auto restores spys and stubs
+3) switches off the current router
+"""
+exports.cleanTearDown = (ctx) ->
 
   # restore all our spys & stubs
   for own attr, value of ctx.spys
@@ -87,17 +93,24 @@ exports.clean_tear_down = (ctx) ->
   for own attr, value of ctx.stubs
     ctx.stubs[attr].restore()
 
-  exports.clear_htmlfixture()
+  clearHtmlfixture()
 
-  # so we can press refresh in the browser easily
+  # stop our router doing anything before "beforeEach" executes for next test
   if window.router?
+    # so we can press refresh in the browser easily
     router.navigate '#'
+    Backbone.history.stop()
 
 
-# used for an object that doesn't yet have a function defined for what we want to stub
-exports.createStub = (ctx, obj, fnName, fn) ->
-  obj[fnName] = ->
-  ctx.stubs[fnName] = sinon.stub obj, fnName, fn
+# """ createStub used for an object that doesn't yet have
+# a function defined for what we want to stub """
+# exports.createStub = (ctx, obj, fnName, fn) ->
+#   obj[fnName] = ->
+#   ctx.stubs[fnName] = sinon.stub obj, fnName, fn
+
+
+exports.setSession = (userKey, callback) ->
+  $.ajax(url: "/set-session/#{userKey}").done( -> callback() )
 
 
 module.exports = exports

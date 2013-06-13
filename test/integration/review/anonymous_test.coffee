@@ -1,6 +1,5 @@
-{_, $, $log, Backbone} = window
 hlpr = require '/test/ui-helper'
-data = require './../../data/all'
+data = require '/test/data/all'
 M = require '/scripts/review/Models'
 C = require '/scripts/review/Collections'
 V = require '/scripts/review/Views'
@@ -12,7 +11,7 @@ fixture = "<div id='detail' class='route'><div id='request'></div></div>"
 describe "Review page: anonymous", ->
 
   before (done) ->
-    hlpr.set_initApp '/scripts/review/Router'
+    hlpr.setInitApp '/scripts/review/Router'
     hlpr.setSession 'jk', =>
       $.post('/api/requests',data.requests[7]).done (r) =>
         @r = r
@@ -20,12 +19,12 @@ describe "Review page: anonymous", ->
 
   beforeEach ->
     window.location = "#"+@r._id
-    hlpr.clean_setup @, fixture
+    hlpr.cleanSetup @, fixture
     initApp session: { authenticated: false }
     @router = window.router
 
   afterEach ->
-    # hlpr.clean_tear_down @
+    hlpr.cleanTearDown @
 
 
   it 'when reviewing as anonymous user', (done) ->

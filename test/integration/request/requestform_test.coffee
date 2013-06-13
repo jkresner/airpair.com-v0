@@ -1,14 +1,8 @@
-{_, $, $log, Backbone} = window
 hlpr = require '/test/ui-helper'
+data = require '/test/data/all'
 M = require '/scripts/request/Models'
 C = require '/scripts/request/Collections'
 V = require '/scripts/request/Views'
-
-data =
-  users: require './../../data/users'
-  requests: require './../../data/requests'
-  tags: require './../../data/tags'
-  companys: require './../../data/companys'
 
 fixture = "<div id='welcome' class='route'>welcome</div>
            <div id='info' class='route'>info</div>
@@ -16,10 +10,10 @@ fixture = "<div id='welcome' class='route'>welcome</div>
 
 describe 'Request:Views RequestFormView =>', ->
 
-  before -> hlpr.set_initApp '/scripts/request/Router'
-  afterEach -> hlpr.clean_tear_down @
+  before -> hlpr.setInitApp '/scripts/request/Router'
+  afterEach -> hlpr.cleanTearDown @
   beforeEach ->
-    hlpr.clean_setup @, fixture
+    hlpr.cleanSetup @, fixture
     @defaultData = brief: 'test brief', availability: "I am available", budget: 30, pricing: 'private', hours: '1'
     @request = new M.Request()
     @tags = new C.Tags( data.tags )

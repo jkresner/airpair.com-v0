@@ -1,24 +1,20 @@
-{_, $, $log, Backbone} = window
 hlpr = require '/test/ui-helper'
+data = require '/test/data/all'
 M = require 'scripts/beexpert/Models'
 C = require 'scripts/beexpert/Collections'
 V = require 'scripts/beexpert/Views'
 
-data =
-  users: require './../../data/users'
-  experts: require './../../data/experts'
-  tags: require './../../data/tags'
-
 fixture = """<div id='welcome' class='route'>welcome</div>
           <div id='connect' class='route'><div id="connectForm"></div></div>
           <div id="info" class="route">info</div>"""
+
 pageData = {}
 
 describe 'BeExpert:Views ConnectView =>', ->
 
-  before -> hlpr.set_initApp '/scripts/beexpert/Router'
-  afterEach -> hlpr.clean_tear_down @
-  beforeEach -> hlpr.clean_setup @, fixture
+  before -> hlpr.setInitApp '/scripts/beexpert/Router'
+  afterEach -> hlpr.cleanTearDown @
+  beforeEach -> hlpr.cleanSetup @, fixture
 
 
   it 'can continue with fabian user details', (done) ->
