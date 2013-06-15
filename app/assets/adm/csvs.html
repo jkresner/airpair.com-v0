@@ -48,7 +48,7 @@
           i = 0;
           csv = '#\tname\temail\ttags\n';
           _.each(data, function(d) {
-            i = 0;
+            i++;
             csv += i + '\t' + d.name + '\t' + d.email + '\n';
           });
 
@@ -76,7 +76,7 @@
           _.each(data, function(d) {
             if (d.google)
             {
-              i = 0;
+              i++;
               g = d.google._json
               csv += i + '\t' + g.name + '\t' + g.email  + '\n';
             }

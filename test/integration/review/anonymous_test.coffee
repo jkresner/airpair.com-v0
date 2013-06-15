@@ -20,14 +20,24 @@ describe "Review page: anonymous", ->
   beforeEach ->
     window.location = "#"+@r._id
     hlpr.cleanSetup @, fixture
-    initApp session: { authenticated: false }
-    @router = window.router
 
   afterEach ->
     hlpr.cleanTearDown @
 
+  it 'review an id that does not exist', (done) ->
+    window.location = "#"+@r._id.replace '5', '4'
+    initApp session: { authenticated: false }
+    @router = window.router
+    rv = @router.app.requestView
+    rv.request.once 'sync', =>
+      m = rv.request
+      expect( sfalse ).to.equal true
+      expect( rv.$('a.createProfile').is(':visible') ).to.equal true
+      done()
 
   it 'when reviewing as anonymous user', (done) ->
+    initApp session: { authenticated: false }
+    @router = window.router
     rv = @router.app.requestView
 
     rv.request.once 'sync', =>
