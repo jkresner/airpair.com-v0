@@ -1,76 +1,38 @@
-CRUDApi = require './_crud'
-Company = require './../models/company'
-Expert = require './../models/expert'
-auth = require './../auth/authz/authz'
-role = auth.Roles
-
+CRUDApi     = require './_crud'
+RequestsSvc = require './../services/requests'
+authz       = require './../identity/authz'
+admin       = authz.Admin isApi: true
+loggedIn    = authz.LoggedIn isApi: true
+role        = authz.Roles
 
 class RequestApi extends CRUDApi
 
   model: require './../models/request'
+  svc: new RequestsSvc()
 
   constructor: (app, route) ->
-    app.get  "/api/#{route}/pub/:id", @detailPub
-    app.get  "/api/admin/#{route}", auth.AdminApi(), @admin
-    app.put  "/api/#{route}/:id/suggestion", auth.LoggedInApi(), @updateSuggestion
+    app.get  "/api/admin/#{route}", admin, @admin
+    app.put  "/api/#{route}/:id/suggestion", loggedIn, @updateSuggestion
     super app, route
+    app.get  "/api/#{route}/:id", @detail
+
 
 ###############################################################################
 ## CRUD extensions
 ###############################################################################
 
-  admin: (req, res) =>
-    @model.find {}, (e, r) ->
-      r = {} if r is null
-      res.send r
-
+  admin: (req, res, next) =>
+    $log 'in admin handler'
+    @svc.getAll (r) -> res.send r
 
   list: (req, res) =>
-    search = userId: req.user._id
-    @model.find search, (e, r) ->
-      r = {} if r is null
-      res.send r
-
-
-  addViewEvent: (req, res, r, evt) =>
-    up = { events: und.clone r.events }
-    up.events.push evt
-    if evt.name is "expert view"
-      up.suggested = r.suggested
-      sug = und.find r.suggested, (s) -> und.objectIdsEqual s.expert.userId, evt.by.id
-      sug.events.push @newEvent(req, "viewed")
-    @model.findByIdAndUpdate r._id, up, (ee, rr) ->
-      res.send rr
-
-  # Used for sharing requests in public on the review page
-  detailPub: (req, res) =>
-    $log 'detailPub', req.params.id
-    @model.findOne { _id: req.params.id }, (e, r) =>
-      if !r?
-        $log '!r?'
-        res.send(400)
-      else if role.isRequestOwner(req, r) || role.isRequestExpert(req, r) || role.isAdmin(req)
-        res.send r
-      else
-        $log 'role.isRequestExpert(req, r)', role.isRequestExpert(req, r)
-        $log 'role.isRequestExpert(req, r)', role.isRequestExpert(req, r)
-        res.send und.pick r, ['_id','tags','company','brief','availability']
-
+    @svc.getByUserId (r) -> res.send r
 
   detail: (req, res) =>
-    rid = req.params.id
-    @model.findOne { _id: rid }, (e, r) =>
-      if !r?
-        res.send(400)
-      else if role.isRequestExpert req, r
-        @addViewEvent req, res, r, @newEvent(req, "expert view")
-      else if role.isRequestOwner req, r
-        @addViewEvent req, res, r, @newEvent(req, "customer view")
-      else if role.isAdmin req
-        res.send r
-      else
-        res.send(400)
-
+    user = req.user
+    @svc.getByIdSmart req.params.id, user, (e, r) =>
+      if !r? then res.send(400)
+      res.send r
 
   create: (req, res) =>
     req.body.userId = req.user._id

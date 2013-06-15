@@ -1,5 +1,5 @@
-authz = require './../auth/authz/isLoggedInApi'
-admin = require './../auth/authz/isAdminApi'
+authz     = require './../identity/authz'
+admin     = authz.Admin isApi: true
 
 class UserApi
 
@@ -7,7 +7,7 @@ class UserApi
 
   constructor: (app) ->
     app.get     "/api/users/me", @detail
-    app.get     "/api/admin/users", admin(), @adminlist
+    app.get     "/api/admin/users", admin, @adminlist
 
   detail: (req, res) =>
 

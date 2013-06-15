@@ -16,6 +16,9 @@ module.exports = (options) ->
       if setReturnTo && req.session
         req.session.returnTo = req.url
 
-      return res.redirect url
+      if options.isApi
+        return res.send 403, {}
+      else
+        return res.redirect url
 
     next()
