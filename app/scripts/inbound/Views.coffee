@@ -41,6 +41,9 @@ class exports.RequestsView extends BB.BadassView
     for m in @collection.models
       sts = m.get('status')
       @$("##{sts} tbody").append new exports.RequestRowView( model: m ).render().el
+
+    for set in @$('.requestSet') #show only ones with results
+      $(set).toggle $(set).find('td').length > 0
     @
 
 

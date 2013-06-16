@@ -27,9 +27,7 @@ module.exports = class Router extends S.AirpairSessionRouter
       requestsView: new V.RequestsView collection: d.requests, model: d.selected
       requestView: new V.RequestView model: d.selected, collection: d.requests, tags: d.tags, experts: d.experts
 
-    @resetOrFetch d.requests, pageData.requests, success: =>
-      @navTo @defaultFragment if @defaultFragment != ''
-
+    @resetOrFetch d.requests, pageData.requests
     @resetOrFetch d.experts, pageData.experts
     @resetOrFetch d.tags, pageData.tags
 

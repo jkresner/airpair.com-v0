@@ -36,7 +36,7 @@
 
   <script type="text/javascript">
     function initApp() {
-      var pageData = {};
+      var pageData = { requests: {{{ requests}}}, session: {{{ session }}} };
       Router = require('/scripts/inbound/Router');
       window.router = new Router(pageData);
     }
