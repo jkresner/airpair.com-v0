@@ -130,15 +130,21 @@ module.exports = class BadassAppRouter extends Backbone.Router
 
   # short hand to handle injection of pageData for pre-loading models
   setOrFetch: (model, data, opts) ->
-    if data? then return model.set data
-    opts = {} if !opts?
-    opts.reset = true # backbone 1.0 so slow without this set
-    model.fetch opts
+    if data?
+      model.set data
+      if opts.success? then opts.success(model,'set',opts)
+    else
+      opts = {} if !opts?
+      opts.reset = true # backbone 1.0 so slow without this set
+      model.fetch opts
 
 
   # short hand to handle injection of pageData for pre-loading collections
   resetOrFetch: (collection, data, opts) ->
-    if data? then return collection.reset data
-    opts = {} if !opts?
-    opts.reset = true # backbone 1.0 so slow without this set
-    collection.fetch opts
+    if data?
+      collection.reset data
+      if opts.success? then opts.success(collection,'reset',opts)
+    else
+      opts = {} if !opts?
+      opts.reset = true # backbone 1.0 so slow without this set
+      collection.fetch opts
