@@ -28,11 +28,12 @@ describe "Review page: anonymous", ->
     window.location = "#"+@r._id.replace '5', '4'
     initApp session: { authenticated: false }
     @router = window.router
+
     rv = @router.app.requestView
-    rv.request.once 'sync', =>
+    rv.request.once 'error', =>
       m = rv.request
-      expect( sfalse ).to.equal true
-      expect( rv.$('a.createProfile').is(':visible') ).to.equal true
+      expect( $('#request').is(':visible') ).to.equal false
+      expect( $('#empty').is(':visible') ).to.equal true
       done()
 
   it 'when reviewing as anonymous user', (done) ->

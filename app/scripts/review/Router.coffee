@@ -24,8 +24,7 @@ module.exports = class Router extends S.AirpairSessionRouter
   initialize: (args) ->
 
   empty: ->
-    $log 'Router.empty'
-    window.location = '/'
+    $('#request').replaceWith '<div id="empty"><h2>Could not retrieve request for review</h2></div>'
 
   detail: (id) ->
     if !id? then return @empty()
@@ -38,4 +37,5 @@ module.exports = class Router extends S.AirpairSessionRouter
       $('nav ul').append("<li><a href='/adm/inbound/#{@app.request.id}'' class='zocial'>request admin</a><li>")
 
     if !@app.request.get('userId')?
-      @app.request.fetch error: => error: @empty
+      @app.request.fetch error: =>
+        @empty()

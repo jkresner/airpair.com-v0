@@ -26,6 +26,7 @@ class CRUDApi
 ###############################################################################
 
   detail: (req, res) =>
+    $log 'CRUD.detail', req.user
     @model.findOne { _id: req.params.id }, (e, r) =>
       if @logging then $log 'detail:', e, r
       res.send r

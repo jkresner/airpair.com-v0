@@ -18,12 +18,12 @@ module.exports = class DomainService
     @model.findOne { _id: id }, (e, r) => callback r
 
 
-  newEvent: (user, evtName, evtData) ->
+  newEvent: (usr, evtName, evtData) ->
     byUser = 'anon'
-    if user?
+    if usr? && (usr.authenticated != false)
       byUser =
-        id: user._id
-        name: user.google.displayName
+        id: usr._id
+        name: usr.google.displayName
 
     evt =
       utc:  new moment().utc().toJSON()

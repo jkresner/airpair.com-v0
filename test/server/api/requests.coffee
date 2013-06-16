@@ -179,50 +179,49 @@ describe "REST api requests", ->
   it "should add viewed event if viewed by customer", (done) ->
     passportMock.setSession 'jk'
     createReq data.requests[3], (up) =>
-      http(app).get("/api/requests/#{up._id}")
-        .end (err, res) ->
-          d = res.body
-          expect( d.events.length ).to.equal 2
-          expect( d.events[1].name ).to.equal "customer view"
-          expect( d.events[1].by.name ).to.equal 'Jonathon Kresner'
+      http(app).get("/api/requests/#{up._id}") .end () ->
+        http(app).get("/api/requests/#{up._id}").end () ->
+          passportMock.setSession 'admin'
+
           http(app).get("/api/requests/#{up._id}")
-            .end (errr, ress) ->
-              dd = ress.body
-              expect( dd.events.length ).to.equal 3
-              expect( dd.events[2].name ).to.equal "customer view"
-              expect( dd.events[2].by.name ).to.equal 'Jonathon Kresner'
+            .end (e, r) ->
+              d = r.body
+              expect( d.events.length ).to.equal 3
+              expect( d.events[1].name ).to.equal "customer view"
+              expect( d.events[1].by.name ).to.equal 'Jonathon Kresner'
+              expect( d.events[2].name ).to.equal "customer view"
+              expect( d.events[2].by.name ).to.equal 'Jonathon Kresner'
               done()
 
-  it "should add viewed event if viewed by expert", (done) ->
+  it "adds viewed event if viewed by expert", (done) ->
     passportMock.setSession 'jk'
     req = data.requests[3]
+
     req.suggested = [ data.requests[4].suggested[0] ]
     req.suggested[0].expert.userId = "5181d1f666a6f999a465f280"
     req.suggested[0].expertStatus = "waiting"
     req.suggested[0].events = [{}]
 
     createReq req, (up) =>
-      http(app).get("/api/requests/#{up._id}")
-        .end (err, res) ->
-          d = res.body
-          expect( d.events.length ).to.equal 2
-          expect( d.events[1].name ).to.equal "expert view"
-          expect( d.events[1].by.name ).to.equal 'Jonathon Kresner'
+      http(app).get("/api/requests/#{up._id}").end () ->
+        http(app).get("/api/requests/#{up._id}").end () ->
 
-          expect( d.suggested[0].events.length ).to.equal 2
-          expect( d.suggested[0].events[1].name ).to.equal "viewed"
+          passportMock.setSession 'admin'
+          http(app).get("/api/requests/#{up._id}").end (e, r) ->
 
-          http(app).get("/api/requests/#{up._id}")
-            .end (errr, ress) ->
-              dd = ress.body
-              expect( dd.events.length ).to.equal 3
-              expect( dd.events[2].name ).to.equal "expert view"
-              expect( dd.events[2].by.name ).to.equal 'Jonathon Kresner'
-              done()
+            d = r.body
+            expect( d.suggested[0].events.length ).to.equal 3
+            expect( d.suggested[0].events[1].name ).to.equal "viewed"
+            expect( d.events.length ).to.equal 3
+            expect( d.events[1].name ).to.equal "expert view"
+            expect( d.events[1].by.name ).to.equal 'Jonathon Kresner'
+            expect( d.events[2].name ).to.equal "expert view"
+            expect( d.events[2].by.name ).to.equal 'Jonathon Kresner'
+            done()
 
 
   it "can update suggestion by expert", (done) ->
-    passportMock.setSession 'admin'
+    passportMock.setSession 'artjumble'
     req = data.requests[3]
     req.suggested = [ data.requests[4].suggested[0] ]
     req.suggested[0].expert.userId = "5181d1f666a6f999a465f280"
@@ -230,29 +229,29 @@ describe "REST api requests", ->
     req.suggested[0].events = [{}]
 
     createReq req, (up) =>
-      passportMock.setSession 'jk'
-
       ups = expertStatus: 'abstained', expertFeedback: 'not for me', expertRating: 1, expertComment: 'good luck', expertAvailability: 'I can do tonight'
-
+      passportMock.setSession 'jk'
       http(app).put("/api/requests/#{up._id}/suggestion")
         .send(ups)
-        .end (err, res) ->
-          d = res.body
+        .end () ->
+          passportMock.setSession 'admin'
+          http(app).get("/api/requests/#{up._id}").end (e, r) ->
+            d = r.body
 
-          expect( d.events.length ).to.equal 2
-          expect( d.events[1].name ).to.equal "expert reviewed"
-          expect( d.events[1].by.name ).to.equal 'Jonathon Kresner'
+            expect( d.events.length ).to.equal 2
+            expect( d.events[1].name ).to.equal "expert reviewed"
+            expect( d.events[1].by.name ).to.equal 'Jonathon Kresner'
 
-          expect( d.suggested[0].expertStatus ).to.equal = ups.expertStatus
-          expect( d.suggested[0].expertFeedback ).to.equal = ups.expertFeedback
-          expect( d.suggested[0].expertRating ).to.equal = ups.expertRating
-          expect( d.suggested[0].expertComment ).to.equal = ups.expertComment
-          expect( d.suggested[0].expertAvailability ).to.equal = ups.expertAvailability
+            expect( d.suggested[0].expertStatus ).to.equal = ups.expertStatus
+            expect( d.suggested[0].expertFeedback ).to.equal = ups.expertFeedback
+            expect( d.suggested[0].expertRating ).to.equal = ups.expertRating
+            expect( d.suggested[0].expertComment ).to.equal = ups.expertComment
+            expect( d.suggested[0].expertAvailability ).to.equal = ups.expertAvailability
 
-          expect( d.suggested[0].events.length ).to.equal = 2
-          expect( d.suggested[0].events[1].name ).to.equal = "expert updated"
+            expect( d.suggested[0].events.length ).to.equal = 2
+            expect( d.suggested[0].events[1].name ).to.equal = "expert updated"
 
-          done()
+            done()
 
 
   it "can update suggestion by customer", (done) ->
