@@ -68,7 +68,7 @@ module.exports = class BadassAppRouter extends Backbone.Router
   getDefaultFragment: ->
     if @pushState
       fragment = window.location.pathname
-      root = this.root.replace(/\/$/, '')
+      root = @pushStateRoot.replace(/\/$/, '')
       if !fragment.indexOf(@pushStateRoot)
         fragment = fragment.substr(root.length)
     else
