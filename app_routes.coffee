@@ -2,7 +2,24 @@ authz = require './lib/identity/authz'
 loggedIn = authz.LoggedIn()
 admin = authz.Admin()
 
+RSvc = require('./lib/services/requests')
+rSvc = new RSvc()
+
+
 file = (r, file) -> r.sendfile "./public/#{file}.html"
+getSession = (req) ->
+  if req.isAuthenticated()
+    user = _.clone req.user
+    if user.google then delete user.google.token
+    if user.twitter then delete user.twitter.token
+    if user.bitbucket then delete user.bitbucket.token
+    if user.github then delete user.github.token
+    if user.stack then delete user.stack.token
+  else
+    user = authenticated : false
+
+  JSON.stringify(user)
+
 
 module.exports = (app) ->
 
@@ -19,7 +36,10 @@ module.exports = (app) ->
     if !req.isAuthenticated() then file r, 'homepage' else file r, 'dashboard'
 
   app.get '/dashboard*', loggedIn, (req, r)-> file r, 'dashboard'
-  app.get '/review*', (req, r)-> file r, 'review'
+
+  app.get '/review/:id', (req, r)->
+    rSvc.getByIdSmart req.params.id, req.user, (d) =>
+      r.render 'review.html', { session: getSession(req), request: JSON.stringify(d) }
 
   # admin pages
   app.get '/adm/tags*', loggedIn, admin, (req, r) -> file r, 'adm/tags'

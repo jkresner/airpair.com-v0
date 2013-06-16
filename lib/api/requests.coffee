@@ -23,7 +23,7 @@ class RequestApi extends CRUDApi
 
   ## Temporary
   newEvent: (req, evtName, evtData) ->
-    @svc.newEvent(req.user,evtName,evtData)
+    @svc.newEvent req.user, evtName, evtData
 
 
   admin: (req, res, next) =>

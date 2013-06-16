@@ -16,6 +16,10 @@ app = express()
 {MongoSessionStore} = require('./app_mongoose')(app, express)
 mongoSessionStore = new MongoSessionStore url: "#{app.get('mongoUri')}/sessions"
 
+app.set('view engine', 'hbs')
+app.engine('html', require('hbs').__express)
+app.set('views', __dirname + '/public')
+
 app.use express.static(__dirname + '/public')
 app.use express.bodyParser()
 app.use express.cookieParser()

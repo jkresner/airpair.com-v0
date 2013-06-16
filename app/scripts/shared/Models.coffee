@@ -77,6 +77,10 @@ class exports.Request extends BB.SublistModel
       else
         ts += ", #{t[i].name}"
     ts
+  isCustomer: (session) ->
+    return false if !session.id?
+    return true if /iscust/.test(location.href)
+    @get('userId') == session.id
 
 
 class exports.Expert extends BB.SublistModel

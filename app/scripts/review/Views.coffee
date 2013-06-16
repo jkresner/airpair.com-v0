@@ -11,12 +11,6 @@ Handlebars.registerPartial "Suggestion", require './templates/Suggestion'
 ## Shared across Expert Review + Experts View
 #############################################################################
 
-isCustomer = ->
-  return false if !router.app.session.id?
-  return true if /iscust/.test(location.href)
-  router.app.request.get('userId') == router.app.session.id
-
-
 class exports.SuggestionView extends BB.BadassView
   tmpl: require './templates/Suggestion'
   initialize: (args) ->
@@ -26,7 +20,7 @@ class exports.SuggestionView extends BB.BadassView
     cust = @request.contact(0)
     d = @model.extend custPic: cust.pic, custName: cust.fullName, isCustomer: false
     @$el.html @tmpl d
-    if @isCustomer
+    if @request.isCustomer @session
       @$('.customerReviewForm').append @reviewForm.render().el
       @$('.customerReviewForm').toggle !@mget('customerFeedback')?
       @$('.feedback').toggle @mget('customerFeedback')?
@@ -151,7 +145,7 @@ class exports.RequestInfoView extends BB.BadassView
   el: '#info'
   tmpl: require './templates/Info'
   render: ->
-    @$el.html @tmpl @model.extend isCustomer: isCustomer(), total: @hrTotal()
+    @$el.html @tmpl @request.extend isCustomer: @request.isCustomer(@session), total: @hrTotal()
     @
   hrTotal: -> #TODO remove from view and put into model
     t = @mget('budget')
@@ -166,7 +160,7 @@ class exports.RequestView extends BB.BadassView
   tmpl: require './templates/Request'
   initialize: (args) ->
     @$el.html @tmpl()
-    @infoView = new exports.RequestInfoView model: @request
+    @infoView = new exports.RequestInfoView args
     @anonView = new exports.NotExpertOrCustomerView args
     @customerReviewView = new exports.CustomerReviewView args
     expArgs = _.extend args, { model: new M.ExpertReview() }
@@ -179,7 +173,7 @@ class exports.RequestView extends BB.BadassView
     if meExpert?
       @expertReviewView.model.set _.extend(meExpert, { requestId: @request.id })
       @expertReviewView.render()
-    else if isCustomer()
+    else if @request.isCustomer @session
       @customerReviewView.render()
     else
       @anonView.render()
