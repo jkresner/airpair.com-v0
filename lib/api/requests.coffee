@@ -1,75 +1,41 @@
-CRUDApi = require './_crud'
-Company = require './../models/company'
-Expert = require './../models/expert'
-auth = require './../auth/authz/authz'
-role = auth.Roles
-
+CRUDApi     = require './_crud'
+RequestsSvc = require './../services/requests'
+authz       = require './../identity/authz'
+admin       = authz.Admin isApi: true
+loggedIn    = authz.LoggedIn isApi: true
+Roles        = authz.Roles
 
 class RequestApi extends CRUDApi
 
   model: require './../models/request'
+  svc: new RequestsSvc()
 
   constructor: (app, route) ->
-    app.get  "/api/#{route}/pub/:id", @detailPub
-    app.get  "/api/admin/#{route}", auth.AdminApi(), @admin
-    app.put  "/api/#{route}/:id/suggestion", auth.LoggedInApi(), @updateSuggestion
+    app.get  "/api/admin/#{route}", admin, @admin
+    app.put  "/api/#{route}/:id/suggestion", loggedIn, @updateSuggestion
+    app.get  "/api/#{route}/:id", @detail
     super app, route
+
 
 ###############################################################################
 ## CRUD extensions
 ###############################################################################
 
-  admin: (req, res) =>
-    @model.find {}, (e, r) ->
-      r = {} if r is null
-      res.send r
+  ## Temporary
+  newEvent: (req, evtName, evtData) ->
+    @svc.newEvent req.user, evtName, evtData
 
+
+  admin: (req, res, next) =>
+    @svc.getAll (r) -> res.send r
 
   list: (req, res) =>
-    search = userId: req.user._id
-    @model.find search, (e, r) ->
-      r = {} if r is null
-      res.send r
-
-
-  addViewEvent: (req, res, r, evt) =>
-    up = { events: und.clone r.events }
-    up.events.push evt
-    if evt.name is "expert view"
-      up.suggested = r.suggested
-      sug = und.find r.suggested, (s) -> und.objectIdsEqual s.expert.userId, evt.by.id
-      sug.events.push @newEvent(req, "viewed")
-    @model.findByIdAndUpdate r._id, up, (ee, rr) ->
-      res.send rr
-
-  # Used for sharing requests in public on the review page
-  detailPub: (req, res) =>
-    $log 'detailPub', req.params.id
-    @model.findOne { _id: req.params.id }, (e, r) =>
-      if !r?
-        $log '!r?'
-        res.send(400)
-      else if role.isRequestOwner(req, r) || role.isRequestExpert(req, r) || role.isAdmin(req)
-        res.send r
-      else
-        $log 'role.isRequestExpert(req, r)', role.isRequestExpert(req, r)
-        $log 'role.isRequestExpert(req, r)', role.isRequestExpert(req, r)
-        res.send und.pick r, ['_id','tags','company','brief','availability']
-
+    @svc.getByUserId req.user._id, (r) -> res.send r
 
   detail: (req, res) =>
-    rid = req.params.id
-    @model.findOne { _id: rid }, (e, r) =>
-      if !r?
-        res.send(400)
-      else if role.isRequestExpert req, r
-        @addViewEvent req, res, r, @newEvent(req, "expert view")
-      else if role.isRequestOwner req, r
-        @addViewEvent req, res, r, @newEvent(req, "customer view")
-      else if role.isAdmin req
-        res.send r
-      else
-        res.send(400)
+    user = req.user
+    @svc.getByIdSmart req.params.id, user, (r) =>
+      if r? then res.send r else res.send(400, {})
 
 
   create: (req, res) =>
@@ -82,13 +48,14 @@ class RequestApi extends CRUDApi
 
 
   update: (req, res) =>
+    usr = req.user
     search = _id: req.params.id
     evts = []
 
     @model.findOne search, (e, r) =>
 
       # stop users updating other users requests (need a better solution!)
-      if !(role.isAdmin(req) || role.isRequestOwner(req, r))
+      if !(Roles.isAdmin(usr, r) || Roles.isRequestOwner(usr, r))
         return res.send 403
 
       data = und.clone req.body
@@ -131,11 +98,11 @@ class RequestApi extends CRUDApi
 
 
   updateSuggestion: (req, res) =>
-    userId = req.user._id
+    usr = req.user
     @model.findOne { _id: req.params.id }, (e, r) =>
-      if role.isRequestOwner(req, r)
+      if Roles.isRequestOwner(usr, r)
         @updateSuggestionByCustomer(req, res, r)
-      else if role.isRequestExpert(req, r) || role.isAdmin(req)
+      else if Roles.isRequestExpert(usr, r) || Roles.isAdmin(usr)
         @updateSuggestionByExpert(req, res, r)
       else
         res.send 403
@@ -153,7 +120,7 @@ class RequestApi extends CRUDApi
     sug.expertStatus = ups.expertStatus
     sug.expertAvailability = ups.expertAvailability
 
-    data.events.push @newEvent req, "expert reviewed", ups
+    data.events.push @newEvent(req, "expert reviewed", ups)
 
     @model.findByIdAndUpdate req.params.id, data, (ee, rr) ->
       res.send rr
@@ -162,12 +129,12 @@ class RequestApi extends CRUDApi
   updateSuggestionByCustomer: (req, res, r) =>
     ups = req.body
     data = { suggested: r.suggested, events: r.events }
-    sug = und.find r.suggested, (s) -> und.idsEqual s.expert.userId, ups.expert.userId
+    sug = _.find r.suggested, (s) ->
+      _.idsEqual s.expert.userId, ups.expert.userId
     sug.events.push @newEvent(req, "customer updated")
     sug.customerRating = ups.customerRating
     sug.customerFeedback = ups.customerFeedback
     if ups.expertStatus? then sug.expertStatus = ups.expertStatus
-
     data.events.push @newEvent req, "customer expert review", ups
 
     @model.findByIdAndUpdate req.params.id, data, (ee, rr) ->

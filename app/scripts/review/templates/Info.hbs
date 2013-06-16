@@ -1,5 +1,14 @@
 <h2><b>{ </b>Request info<b> }</b></h2>
 
+<div><label><b>Brief</b></label>
+  {{#each tags}}
+    <span class="label label-tag">{{short}}</span>
+  {{/each}}
+  <br />
+  {{brief}}</div>
+<br />
+
+
 {{#if isCustomer}}<div><label><b>Budget</b></label> {{budget}}/{{pricing}} = ${{ total }} p.h.</div>{{/if}}
 
  {{#with company}}
@@ -43,10 +52,3 @@
 
 <div style="clear:both"><label><b>Availability</b></label>
   {{availability}}</div>
-<br />
-<div><label><b>Brief</b></label>
-  {{#each tags}}
-    <span class="label label-tag">{{short}}</span>
-  {{/each}}
-  <br />
-  {{brief}}</div>

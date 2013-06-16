@@ -1,6 +1,7 @@
 global.isProd   = process.env.MONGOHQ_URL?
 global.$log     = console.log
 global.und      = require 'underscore'
+global._        = global.und
 global.winston  = require 'winston'   # logging
 require './winstonConfig'
 

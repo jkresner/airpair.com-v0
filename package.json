@@ -48,6 +48,7 @@
     "winston": "~0.7.1",
     "winston-ses": "0.0.4",
     "handlebars": "~1.0.10",
+    "hbs": "2.3.0",
 
     "awssum" : "1.0.x",
     "awssum-amazon": "1.x.x",

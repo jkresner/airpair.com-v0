@@ -45,19 +45,23 @@
         $log('loaded')
 
         $.ajax({ url: "/api/experts" }).done(function ( data ) {
-          csv = 'name\temail\ttags\n';
+          i = 0;
+          csv = '#\tname\temail\ttags\n';
           _.each(data, function(d) {
-            csv += d.name + '\t' + d.email + '\n';
+            i++;
+            csv += i + '\t' + d.name + '\t' + d.email + '\n';
           });
 
           $('#experts').val(csv);
         });
 
         $.ajax({ url: "/api/admin/requests" }).done(function ( data ) {
-          csv = 'company\temail\tname\n';
+          csv = '#\tcompany\temail\tname\n';
+          i = 0;
           _.each(data, function(d) {
+            i++;
 
-            csv += d.company.name + '\t' + d.company.contacts[0].email
+            csv += i + '\t' + d.company.name + '\t' + d.company.contacts[0].email
               + '\t' + d.company.contacts[0].fullName
               + '\n';
           });
@@ -67,12 +71,14 @@
 
 
         $.ajax({ url: "/api/admin/users" }).done(function ( data ) {
-          csv = 'name\temail\n';
+          i = 0;
+          csv = '#\tname\temail\n';
           _.each(data, function(d) {
             if (d.google)
             {
+              i++;
               g = d.google._json
-              csv += g.name + '\t' + g.email  + '\n';
+              csv += i + '\t' + g.name + '\t' + g.email  + '\n';
             }
           });
 

@@ -14,6 +14,11 @@ app = express()
 
 # load our db
 {MongoSessionStore} = require('./app_mongoose')(app, express)
+mongoSessionStore = new MongoSessionStore url: "#{app.get('mongoUri')}/sessions"
+
+app.set('view engine', 'hbs')
+app.engine('html', require('hbs').__express)
+app.set('views', __dirname + '/public')
 
 app.use express.static(__dirname + '/public')
 app.use express.bodyParser()
@@ -21,7 +26,7 @@ app.use express.cookieParser()
 app.use express.session
   cookie : { path: '/', httpOnly: true, maxAge: 2419200000 }
   secret: 'airpair the future'
-  store: new MongoSessionStore url: "#{app.get('mongoUri')}/sessions"
+  store: mongoSessionStore
 
 if cfg.env.mode is 'test'
   require('./app_test')(app)
@@ -29,7 +34,7 @@ else
   app.use passport.initialize()
 
 app.use passport.session()
-# app.use passport.authenticate('remember-me')
+
 
 require('./app_routes')(app)
 
