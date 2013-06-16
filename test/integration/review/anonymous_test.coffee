@@ -13,7 +13,7 @@ describe "Review page: anonymous", ->
   before (done) ->
     hlpr.setInitApp '/scripts/review/Router'
     hlpr.setSession 'jk', =>
-      $.post('/api/requests',data.requests[7]).done (r) =>
+      $.post('/api/requests', data.requests[7]).done (r) =>
         @r = r
         hlpr.setSession 'anon', done
 
@@ -55,6 +55,19 @@ describe "Review page: anonymous", ->
       expect( rv.$('a.createProfile').is(':visible') ).to.equal true
       done()
 
+  it '[preloaded] when reviewing as anonymous user', (done) ->
+    initApp request: @r, session: { authenticated: false }
+    @router = window.router
+    rv = @router.app.requestView
+
+    m = rv.request
+
+    expect( rv.$('#expertReviewForm').is(':empty') ).to.equal true
+    expect( rv.$('#expertReviewDetail').is(':empty') ).to.equal true
+    expect( rv.$('#customerReview').is(':empty') ).to.equal true
+    expect( rv.$('#notExpertOrCustomer').is(':empty') ).to.equal false
+    expect( rv.$('a.createProfile').is(':visible') ).to.equal true
+    done()
 
 
   # it "when click be expert should take to be expert page", (done) ->
