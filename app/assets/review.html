@@ -30,7 +30,7 @@
 
   <script type="text/javascript">
     function initApp() {
-      var pageData = {};
+      var pageData = { session: {{{ session }}}, request: {{{ request }}} };
       Router = require('/scripts/review/Router');
       window.router = new Router(pageData);
     }

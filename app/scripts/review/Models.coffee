@@ -6,7 +6,7 @@ Shared = require './../shared/Models'
 exports.User = Shared.User
 
 class exports.Request extends Shared.Request
-  urlRoot: '/api/requests/pub'
+  urlRoot: '/api/requests'
 
 
 class exports.CustomerReview extends BB.BadassModel

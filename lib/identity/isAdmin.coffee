@@ -11,8 +11,10 @@ module.exports = (options) ->
 
   (req, res, next) ->
 
-    if ! roles.isAdmin req
-
-      return res.redirect url
+    if ! roles.isAdmin req.user
+      if options.isApi
+        return res.send 403, {}
+      else
+       return res.redirect url
 
     next()

@@ -1,5 +1,5 @@
-authz = require './../auth/authz/isLoggedInApi'
-admin = require './../auth/authz/isAdminApi'
+authz     = require './../identity/authz'
+admin     = authz.Admin isApi: true
 
 class UserApi
 
@@ -7,12 +7,12 @@ class UserApi
 
   constructor: (app) ->
     app.get     "/api/users/me", @detail
-    app.get     "/api/admin/users", admin(), @adminlist
+    app.get     "/api/admin/users", admin, @adminlist
 
   detail: (req, res) =>
 
     if req.isAuthenticated()
-      user = und.clone req.user
+      user = _.clone req.user
       if user.google then delete user.google.token
       if user.twitter then delete user.twitter.token
       if user.bitbucket then delete user.bitbucket.token

@@ -13,21 +13,32 @@ describe "Review page: anonymous", ->
   before (done) ->
     hlpr.setInitApp '/scripts/review/Router'
     hlpr.setSession 'jk', =>
-      $.post('/api/requests',data.requests[7]).done (r) =>
+      $.post('/api/requests', data.requests[7]).done (r) =>
         @r = r
         hlpr.setSession 'anon', done
 
   beforeEach ->
     window.location = "#"+@r._id
     hlpr.cleanSetup @, fixture
-    initApp session: { authenticated: false }
-    @router = window.router
 
   afterEach ->
     hlpr.cleanTearDown @
 
+  it 'review an id that does not exist', (done) ->
+    window.location = "#"+@r._id.replace '5', '4'
+    initApp session: { authenticated: false }
+    @router = window.router
+
+    rv = @router.app.requestView
+    rv.request.once 'error', =>
+      m = rv.request
+      expect( $('#request').is(':visible') ).to.equal false
+      expect( $('#empty').is(':visible') ).to.equal true
+      done()
 
   it 'when reviewing as anonymous user', (done) ->
+    initApp session: { authenticated: false }
+    @router = window.router
     rv = @router.app.requestView
 
     rv.request.once 'sync', =>
@@ -44,6 +55,19 @@ describe "Review page: anonymous", ->
       expect( rv.$('a.createProfile').is(':visible') ).to.equal true
       done()
 
+  it '[preloaded] when reviewing as anonymous user', (done) ->
+    initApp request: @r, session: { authenticated: false }
+    @router = window.router
+    rv = @router.app.requestView
+
+    m = rv.request
+
+    expect( rv.$('#expertReviewForm').is(':empty') ).to.equal true
+    expect( rv.$('#expertReviewDetail').is(':empty') ).to.equal true
+    expect( rv.$('#customerReview').is(':empty') ).to.equal true
+    expect( rv.$('#notExpertOrCustomer').is(':empty') ).to.equal false
+    expect( rv.$('a.createProfile').is(':visible') ).to.equal true
+    done()
 
 
   # it "when click be expert should take to be expert page", (done) ->

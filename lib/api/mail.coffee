@@ -1,6 +1,6 @@
-authz = require './../auth/authz/isLoggedInApi'
-admin = require './../auth/authz/isAdminApi'
-
+authz     = require './../identity/authz'
+loggedIn  = authz.LoggedIn isApi:true
+admin     = authz.Admin isApi:true
 
 
 mailSend =    require './../mail/mailman'
@@ -10,7 +10,7 @@ mailSend =    require './../mail/mailman'
 class MailApi
 
   constructor: (app) ->
-    app.post     "/api/adm/mail/expert-review", authz(), @expertReview
+    app.post     "/api/adm/mail/expert-review", loggedIn, @expertReview
 
 
   expertReview: (req, res) =>

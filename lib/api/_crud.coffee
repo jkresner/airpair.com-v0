@@ -1,4 +1,6 @@
-authz = require './../auth/authz/isLoggedInApi'
+authz       = require './../identity/authz'
+admin       = authz.Admin isApi: true
+loggedIn    = authz.LoggedIn isApi: true
 moment = require 'moment'
 errors = require './errors'
 
@@ -7,11 +9,11 @@ class CRUDApi
   logging: off    # note: can set logging in the child class
 
   constructor: (app, route) ->
-    app.get     "/api/#{route}", authz(), @list
-    app.get     "/api/#{route}/:id", authz(), @detail
-    app.post    "/api/#{route}", authz(), @create
-    app.put     "/api/#{route}/:id", authz(), @update
-    app.delete  "/api/#{route}/:id", authz(), @delete
+    app.get     "/api/#{route}", loggedIn, @list
+    app.get     "/api/#{route}/:id", loggedIn, @detail
+    app.post    "/api/#{route}", loggedIn, @create
+    app.put     "/api/#{route}/:id", loggedIn, @update
+    app.delete  "/api/#{route}/:id", loggedIn, @delete
 
 ###############################################################################
 ## Data loading / clearing (should only be used when necessary)
@@ -24,6 +26,7 @@ class CRUDApi
 ###############################################################################
 
   detail: (req, res) =>
+    $log 'CRUD.detail', req.user
     @model.findOne { _id: req.params.id }, (e, r) =>
       if @logging then $log 'detail:', e, r
       res.send r
@@ -60,13 +63,6 @@ class CRUDApi
   tFE: (res, msg, attr, attrMsg) ->
     res.contentType('application/json')
     res.send 400, errors.getFieldError(msg, attr, attrMsg)
-
-
-  newEvent: (req, name, data) ->
-    byDisplayName = req.user.google.displayName if req.user
-    evt = name: name, by: { id: req.user._id, name: byDisplayName }, utc: @utcNow()
-    if data? then evt.data = data
-    evt
 
 
 module.exports = CRUDApi

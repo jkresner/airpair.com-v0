@@ -31,7 +31,7 @@ describe "Review page: customer", ->
   it "when reviewing as customer & expert hasn't replied", (done) ->
     rv = @router.app.requestView
     req = rv.request
-    req.once 'sync', =>
+    req.once 'change', =>
 
       expect( req.has 'budget' ).to.equal true
       expect( req.has 'suggested' ).to.equal true
@@ -49,7 +49,7 @@ describe "Review page: customer", ->
   it "when reviewing as customer & expert has replied", (done) ->
     rv = @router.app.requestView
     req = rv.request
-    req.once 'sync', =>
+    req.once 'change', =>
       suggestion = _.extend(req.get('suggested')[0], data.requestSuggested[0])
       req.set 'suggested', [suggestion]
       req.trigger 'change'
