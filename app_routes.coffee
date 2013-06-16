@@ -44,8 +44,10 @@ module.exports = (app) ->
   # admin pages
   app.get '/adm/tags*', loggedIn, admin, (req, r) -> file r, 'adm/tags'
   app.get '/adm/experts*', loggedIn, admin, (req, r) -> file r, 'adm/experts'
-  app.get '/adm/inbound*', loggedIn, admin, (req, r) -> file r, 'adm/inbound'
   app.get '/adm/csvs*', loggedIn, admin, (req, r) -> file r, 'adm/csvs'
+  app.get '/adm/inbound*', loggedIn, admin, (req, r) ->
+    rSvc.getActive (d) =>
+      r.render 'adm/inbound.html', { session: getSession(req), requests: JSON.stringify(d) }
 
   # api
   require('./lib/api/users')(app)
