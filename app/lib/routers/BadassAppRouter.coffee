@@ -32,7 +32,10 @@ module.exports = class BadassAppRouter extends Backbone.Router
 
     @pageData = pageData if pageData?
 
+    @defaultFragment = @getDefaultFragment()
+
     app = @appConstructor pageData, callback
+
     @app = if @app? then _.extend @app, app else app
 
     if @logging
@@ -41,7 +44,6 @@ module.exports = class BadassAppRouter extends Backbone.Router
     @initialize = _.wrap @initialize, (fn, args) =>
 
       Backbone.history.start pushState: @pushState, root: @pushStateRoot
-      @defaultFragment = Backbone.history.getFragment()
 
       if @pushState
         @enablePushStateNavigate()
@@ -62,6 +64,16 @@ module.exports = class BadassAppRouter extends Backbone.Router
 
     # Call backbone to correctly wire up & call Router.initialize
     Backbone.Router::constructor.apply @, arguments
+
+  getDefaultFragment: ->
+    if @pushState
+      fragment = window.location.pathname
+      root = this.root.replace(/\/$/, '')
+      if !fragment.indexOf(@pushStateRoot)
+        fragment = fragment.substr(root.length)
+    else
+      fragment = Backbone.history.getHash()
+    fragment
 
 
   # Construct all models/ collections & views for our SPA, the will be
