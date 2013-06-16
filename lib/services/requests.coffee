@@ -44,3 +44,19 @@ module.exports = class RequestsService extends DomainService
           request = @publicView r
 
       callback request
+
+  # Used for dashboard
+  getActive: (callback) ->
+    @model.find({})
+      .where('status').in(['received', 'incomplete', 'review', 'scheduled'])
+      .exec (e, r) ->
+        r = {} if r is null
+        callback r
+
+  # Used for history
+  getInactive: (callback) ->
+    @model.find({})
+      .where('status').in(['canceled', 'completed'])
+      .exec (e, r) ->
+        r = {} if r is null
+        callback r

@@ -51,7 +51,7 @@ module.exports = class BadassAppRouter extends Backbone.Router
       if @logging then $log "Router.init", args, @app
       fn.call @, args
 
-      # $log 'defaultFragment', defaultFragment
+      # $log 'defaultFragment', @defaultFragment
       if @defaultFragment != currentFragment = Backbone.history.getFragment()
         @navTo @defaultFragment
 
@@ -73,6 +73,7 @@ module.exports = class BadassAppRouter extends Backbone.Router
         fragment = fragment.substr(root.length)
     else
       fragment = Backbone.history.getHash()
+    fragment = '' if fragment is '/'
     fragment
 
 
@@ -144,7 +145,8 @@ module.exports = class BadassAppRouter extends Backbone.Router
   setOrFetch: (model, data, opts) ->
     if data?
       model.set data
-      if opts.success? then opts.success(model,'set',opts)
+      if opts? && opts.success? then opts.success(model,'set',opts)
+      model.trigger 'sync'
     else
       opts = {} if !opts?
       opts.reset = true # backbone 1.0 so slow without this set
@@ -155,7 +157,8 @@ module.exports = class BadassAppRouter extends Backbone.Router
   resetOrFetch: (collection, data, opts) ->
     if data?
       collection.reset data
-      if opts.success? then opts.success(collection,'reset',opts)
+      if opts? && opts.success? then opts.success(collection,'reset',opts)
+      collection.trigger 'sync'
     else
       opts = {} if !opts?
       opts.reset = true # backbone 1.0 so slow without this set
