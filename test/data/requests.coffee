@@ -317,7 +317,7 @@ module.exports = [
           "username": "artjumble",
           "userId": "51828a1066a6f999a465f292",
           "timezone": "GMT-0700 (MST)",
-          "status": "ready",
+          "status": "waiting",
           "rate": 70,
           "pic": "https://secure.gravatar.com/avatar/0a2cb1e3af6082a7dc8d6200d237299f",
           "other": "",

@@ -20,10 +20,10 @@ class exports.SuggestionView extends BB.BadassView
     cust = @request.contact(0)
     d = @model.extend custPic: cust.pic, custName: cust.fullName, isCustomer: false
     @$el.html @tmpl d
-    if @request.isCustomer @session
-      @$('.customerReviewForm').append @reviewForm.render().el
-      @$('.customerReviewForm').toggle !@mget('customerFeedback')?
-      @$('.feedback').toggle @mget('customerFeedback')?
+    # if @request.isCustomer @session
+    #   @$('.customerReviewForm').append @reviewForm.render().el
+    #   @$('.customerReviewForm').toggle !@mget('customerFeedback')?
+    #   @$('.feedback').toggle @mget('customerFeedback')?
     @
 
 

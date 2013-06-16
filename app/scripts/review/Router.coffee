@@ -16,10 +16,10 @@ module.exports = class Router extends S.AirpairSessionRouter
     ''            : 'empty'
 
   appConstructor: (pageData, callback) ->
-    d = request: new M.Request()
+    d = request: new M.Request _id: @defaultFragment
     v = requestView: new V.RequestView( request: d.request, session: @app.session )
 
-    @setOrFetch d.request, pageData.request, { silent: true }
+    @setOrFetch d.request, pageData.request, { error: => @empty() }
     _.extend d, v
 
   initialize: (args) ->
@@ -30,13 +30,7 @@ module.exports = class Router extends S.AirpairSessionRouter
   detail: (id) ->
     if !id? then return @empty()
 
-    # @app.request.set { '_id': id }, { silent: true }
-
     $('nav ul').show() if @isAuthenticated()
 
     if @app.session.id is '5175efbfa3802cc4d5a5e6ed'
       $('nav ul').append("<li><a href='/adm/inbound/#{@app.request.id}'' class='zocial'>request admin</a><li>")
-
-    # if !@app.request.get('userId')?
-    #   @app.request.fetch error: =>
-    #     @empty()
