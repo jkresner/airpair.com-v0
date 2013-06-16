@@ -26,6 +26,7 @@ class exports.CompanyContact extends BB.BadassModel
     fullName:       { required: true }
     email:          { required: true, pattern: 'email' }
 
+util = require('../util')
 
 class exports.Request extends BB.SublistModel
   urlRoot: '/api/requests'
@@ -65,18 +66,7 @@ class exports.Request extends BB.SublistModel
     s = _.find suggested, (o) -> o.expert._id == index || o.expert.userId == index
     if s? then return s
     suggested[index]
-  tagsString: ->
-    t = @get 'tags'
-    return '' if !t? || t.length is 0
-    return t[0].name if t.length is 1
-    i = 0
-    ts = t[0].name
-    for i in [1..t.length-1]
-      if i is t.length - 1
-        ts += " and #{t[i].name}" # and instead of & to fix urls
-      else
-        ts += ", #{t[i].name}"
-    ts
+  tagsString: -> util.tagsString @get('tags')
   isCustomer: (session) ->
     return false if !session.id?
     return true if /iscust/.test(location.href)
