@@ -5,6 +5,7 @@ admin = authz.Admin()
 RSvc = require('./lib/services/requests')
 rSvc = new RSvc()
 
+util = require('./app/scripts/util')
 
 file = (r, file) -> r.sendfile "./public/#{file}.html"
 getSession = (req) ->
@@ -39,7 +40,10 @@ module.exports = (app) ->
 
   app.get '/review/:id', (req, r)->
     rSvc.getByIdSmart req.params.id, req.user, (d) =>
-      r.render 'review.html', { session: getSession(req), request: JSON.stringify(d) }
+      # $log 'dd'
+      $log 'd', d
+      ts = if d? then util.tagsString(d.tags) else 'Not found'
+      r.render 'review.html', { session: getSession(req), request: JSON.stringify(d), tagsString: ts }
 
   # admin pages
   app.get '/adm/tags*', loggedIn, admin, (req, r) -> file r, 'adm/tags'
