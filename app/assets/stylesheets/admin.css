@@ -22,6 +22,8 @@
 #adminboundpage #request .form-actions { margin-top:0;padding:15px 10px; }
 #adminboundpage #request .colA { width:49%;float:left }
 #adminboundpage #request .colB { width:49%;float:right }
+#adminboundpage #request #reqBudget { width:50px; }
+#adminboundpage #request #reqPricing { width:140px; }
 
 #adminboundpage .table-events td { padding:0 }
 #adminboundpage #company-controls { font-weight:bold;margin-bottom:0 }
