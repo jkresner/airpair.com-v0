@@ -1,11 +1,11 @@
 request = require 'superagent'
 CRUDApi = require './_crud'
-
+TagsSvc = require './../services/tags'
 
 class TagsApi extends CRUDApi
 
   model: require './../models/tag'
-
+  svc: new TagsSvc()
 
   create: (req, res) =>
     console.log 'create', 'addMode', req.body.addMode
@@ -13,6 +13,7 @@ class TagsApi extends CRUDApi
     else if req.body.addMode is 'github' then @getGithubRepo(req, res)
     else @model( req.body ).save (e, r) -> res.send r
 
+  list: (req, res) => @svc.getAll (r) -> res.send r
 
   getStackoverflowTag: (req, res) =>
     encoded = encodeURIComponent req.body.nameStackoverflow

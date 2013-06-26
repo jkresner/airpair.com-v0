@@ -34,38 +34,38 @@
       </select>
     </div>
 
-    <div class="control-group" style="height:86px;margin:22px 0">
-      <label class="control-label" for="reqBudget">Experts set their own rate. What hourly budget do you have for your challenge? <span class="muted">We suggest experts at your budget & below.</span></label>
-      <div class="budget rb-group controls">
-        <label for="budget30">$30</label> <input type="radio" id="budget30" name="budget" value="30" />
-        <label for="budget60">$60</label>  <input type="radio" id="budget60" name="budget" value="60" />
-        <label for="budget90" class="checked">$90</label>  <input type="radio" id="budget90" name="budget" value="90" checked="checked" />
-        <label for="budget130">$130</label>  <input type="radio" id="budget130" name="budget" value="130" />
-        <label for="budget180">$180</label>  <input type="radio" id="budget180" name="budget" value="180" />
-        <label for="budget250">$250</label>  <input type="radio" id="budget250" name="budget" value="250" />
-
-        <p class="budgetExplanation 30"><b>Only 5%</b> of our experts do airpairs for $30 p.h.</p>
-        <p class="budgetExplanation 60"><b>20%</b> of our experts do airpairs for $60 p.h. or less</p>
-        <p class="budgetExplanation 90"><b>60%</b> of our experts do airpairs for $90 p.h. or less</p>
-        <p class="budgetExplanation 130"><b>85%</b> of our experts do airpairs for $130 p.h. or less</p>
-        <p class="budgetExplanation 180"><b>95%</b> of our experts do airpairs for $180 p.h. or less</p>
-        <p class="budgetExplanation 250"><b>All</b> our experts do airpairs for $250 or less</p>
-      </div>
-    </div>
-
-    <div class="control-group" style="height:86px;margin:22px 0">
+   <div class="control-group" style="height:86px;margin:22px 0">
       <label class="control-label">What are your privacy requirements with the session recording? </label>
       <div class="pricing rb-group controls">
-        <label for="pricingOpensource" class="checked">Open source</label> <input type="radio" id="pricingOpensource" name="pricing" value="opensource" checked="checked" />
-        <label for="pricingPrivate">Private (+ $20 p.h.)</label>  <input type="radio" id="pricingPrivate" name="pricing" value="private" />
-        <label for="pricingNDA">NDA (+ $60 p.h.)</label>  <input type="radio" id="pricingNDA" name="pricing" value="nda" />
+        <label for="pricingOpensource" class="pricingOpensource">Open source ( -$<span></span> p.h. )</label> <input type="radio" id="pricingOpensource" name="pricing" value="opensource" />
+        <label for="pricingPrivate" class="checked">Private</label>  <input type="radio" id="pricingPrivate" name="pricing" value="private" checked="checked" />
+        <label for="pricingNDA" class="pricingNDA">NDA ( +$<span></span> p.h. )</label>  <input type="radio" id="pricingNDA" name="pricing" value="nda" />
 
-        <p class="pricingExplanation opensource">The recording is public for  educational purposes: &nbsp; <span class="calcph"></span>/hr &nbsp; (you choose # hours later)</p>
-        <p class="pricingExplanation private">Only you have access to your recording: &nbsp; <span class="calcph"></span>/hr &nbsp; (you choose # hours later)</p>
-        <p class="pricingExplanation nda">Experts sign your non-disclosure agreement: &nbsp; <span class="calcph"></span>/hr &nbsp; (you choose # hours later)</p>
+        <p class="pricingExplanation opensource">Get <b>$20 per hour discount</b> for sharing your session publicly for educational purposes.</p>
+        <p class="pricingExplanation private">We record the session for your reference and only you have access to it.</p>
+        <p class="pricingExplanation nda">Experts sign your non-disclosure agreement. You choose if you want your session recorded.</p>
       </div>
 
     </div>
+
+
+    <div class="control-group" style="height:86px;margin:22px 0">
+      <label class="control-label" for="reqBudget">What's your hourly budget?</label>
+      <div class="budget rb-group controls">
+        <label for="budget1">$80</label>  <input type="radio" id="budget1" name="budget" value="80" />
+        <label for="budget2" class="checked">$110</label>  <input type="radio" id="budget2" name="budget" value="110" checked="checked" />
+        <label for="budget3">$150</label>  <input type="radio" id="budget3" name="budget" value="150" />
+        <label for="budget4">$200</label>  <input type="radio" id="budget4" name="budget" value="180" />
+        <label for="budget5">$270</label>  <input type="radio" id="budget5" name="budget" value="270" />
+
+        <p class="budgetExplanation budget1"><b>20%</b> of our experts do airpairs in this budget</p>
+        <p class="budgetExplanation budget2"><b>50%</b> of our experts do airpairs in this budget</p>
+        <p class="budgetExplanation budget3"><b>75%</b> of our experts do airpairs in this budget</p>
+        <p class="budgetExplanation budget4"><b>95%</b> of our experts do airpairs in this budget</p>
+        <p class="budgetExplanation budget5"><b>All</b> our experts do airpairs in this budget</p>
+      </div>
+    </div>
+
 
   <div class="control-group">
     <label class="control-label" for="availabilityInput">What is your location / timezone, urgency & availability?</label>

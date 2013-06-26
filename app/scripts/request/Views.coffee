@@ -78,14 +78,16 @@ class exports.RequestFormView extends BB.ModelSaveView
     @$('.pricing input:radio').on 'click', @showPricingExplanation
     @$('.budget input:radio').on 'click', @showBudgetExplanation
     @listenTo @model, 'change', @render
-    @$('[name="brief"]').on 'input', =>
-      @$('#breifCount').html(@$('[name="brief"]').val().length+ ' chars')
+    @elm('brief').on 'input', =>
+      @$('#breifCount').html(@elm('brief').val().length+ ' chars')
   render: ->
     if @model.hasChanged('tags') then return
     @$(".stepNum").toggle !@model.get('_id')?
     @setValsFromModel ['brief','availability','hours']
     @$(":radio[value=#{@model.get('budget')}]").click().prop('checked',true)
     @$(":radio[value=#{@model.get('pricing')}]").click().prop('checked',true)
+    @$(".pricingOpensource span").html (-1*@model.opensource)
+    @$(".pricingNDA span").html @model.nda
     @showBudgetExplanation()
     @showPricingExplanation()
     @
@@ -96,27 +98,33 @@ class exports.RequestFormView extends BB.ModelSaveView
     rb.prev().addClass 'checked'
   showBudgetExplanation: =>
     @$('.budgetExplanation').hide()
-    val = @$("[name='budget']:checked").val()
+    val = @$("[name='budget']:checked").attr('id')
     @$(".#{val}").show()
     @showPricingExplanation()
   showPricingExplanation: =>
     @$('.pricingExplanation').hide()
     val = @$("[name='pricing']:checked").val()
-    add = 0
-    base = parseInt(@$("[name='budget']:checked").val())
-    if val is 'private' then add = 20
-    if val is 'nda' then add = 60
-    @$('.calcph').html("$#{base} + <i>$#{add}</i> = $#{base+add}")
+    i = 1
+    for r in @model.rates val
+      #$log 'r',r
+      @$("#budget#{i}").prev().html "$#{r}"
+      @$("#budget#{i}").val r
+      i++
+    # add = 0
+    # base = parseInt(@$("[name='budget']:checked").val())
+    # if val is 'private' then add = 20
+    # if val is 'nda' then add = 60
+    # @$('.calcph').html("$#{base} + <i>$#{add}</i> = $#{base+add}")
     @$(".#{val}").show()
   renderSuccess: (model, response, options) =>
     @$('.alert-success').fadeIn(800).fadeOut(5000)
     router.navigate '#thanks', { trigger: true }
   getViewData: ->
-    hours: @$("[name='hours']").val()
+    brief: @elm("brief").val()
+    hours: @elm("hours").val()
+    availability: @elm("availability").val()
     budget: @$("[name='budget']:checked").val()
     pricing: @$("[name='pricing']:checked").val()
-    brief: @$("[name='brief']").val()
-    availability: @$("[name='availability']").val()
     tags: @tagsInput.getViewData()
 
 

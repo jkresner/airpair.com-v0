@@ -1,9 +1,20 @@
 CRUDApi = require './_crud'
-
+ExpertsSvc = require './../services/experts'
+authz       = require './../identity/authz'
+admin       = authz.Admin isApi: true
+loggedIn    = authz.LoggedIn isApi: true
+Roles       = authz.Roles
 
 class ExpertApi extends CRUDApi
 
   model: require './../models/expert'
+  svc: new ExpertsSvc()
+
+  constructor: (app, route) ->
+    app.get  "/api/#{route}", admin, @list
+    super app, route
+
+  list: (req, res) => @svc.getAll (r) -> res.send r
 
   detail: (req, res) =>
 

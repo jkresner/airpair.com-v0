@@ -1,26 +1,10 @@
 authz = require './lib/identity/authz'
 loggedIn = authz.LoggedIn()
 admin = authz.Admin()
-
-RSvc = require('./lib/services/requests')
-rSvc = new RSvc()
-
-util = require('./app/scripts/util')
+ViewDataService = require('./lib/services/_viewdata')
+viewData = new ViewDataService()
 
 file = (r, file) -> r.sendfile "./public/#{file}.html"
-getSession = (req) ->
-  if req.isAuthenticated()
-    user = _.clone req.user
-    if user.google then delete user.google.token
-    if user.twitter then delete user.twitter.token
-    if user.bitbucket then delete user.bitbucket.token
-    if user.github then delete user.github.token
-    if user.stack then delete user.stack.token
-  else
-    user = authenticated : false
-
-  JSON.stringify(user)
-
 
 module.exports = (app) ->
 
@@ -39,19 +23,14 @@ module.exports = (app) ->
   app.get '/dashboard*', loggedIn, (req, r)-> file r, 'dashboard'
 
   app.get '/review/:id', (req, r)->
-    rSvc.getByIdSmart req.params.id, req.user, (d) =>
-      # $log 'dd'
-      $log 'd', d
-      ts = if d? then util.tagsString(d.tags) else 'Not found'
-      r.render 'review.html', { session: getSession(req), request: JSON.stringify(d), tagsString: ts }
+    viewData.review req.params.id, req.user, (d) => r.render 'review.html', d
 
   # admin pages
   app.get '/adm/tags*', loggedIn, admin, (req, r) -> file r, 'adm/tags'
   app.get '/adm/experts*', loggedIn, admin, (req, r) -> file r, 'adm/experts'
   app.get '/adm/csvs*', loggedIn, admin, (req, r) -> file r, 'adm/csvs'
   app.get '/adm/inbound*', loggedIn, admin, (req, r) ->
-    rSvc.getActive (d) =>
-      r.render 'adm/inbound.html', { session: getSession(req), requests: JSON.stringify(d) }
+    viewData.inbound req.user, (d) => r.render 'adm/inbound.html', d
 
   # api
   require('./lib/api/users')(app)
