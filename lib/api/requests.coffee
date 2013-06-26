@@ -81,8 +81,7 @@ class RequestApi extends CRUDApi
           evts.push reqEvt
 
           # make sure our suggested rate is less than our budget!
-          s.suggestedRate = @rates.calcSuggestedRate r.budget, s.expert
-
+          s.suggestedRate = @rates.calcSuggestedRate r, s.expert
           s.expertStatus = "waiting"
           s.events = [ @newEvent(req, "first contacted") ]
 

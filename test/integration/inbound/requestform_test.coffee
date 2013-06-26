@@ -61,7 +61,7 @@ describe "Inbound: RequestView", ->
       suggested1 = rv.model.get('suggested')[0]
       expect( suggested1._id ).to.not.equal undefined
       expect( suggested1.expert.rate ).to.equal 160
-      expect( suggested1.suggestedRate ).to.not.equal 70
+      expect( suggested1.suggestedRate ).to.equal 70
       expect( rv.$('#suggested .suggested').length ).to.equal 1
       done()
 
@@ -79,13 +79,13 @@ describe "Inbound: RequestView", ->
       expect( rv.model.get('suggested').length ).to.equal 1
       suggested1 = rv.model.get('suggested')[0]
       expect( suggested1.expert.rate ).to.equal 70
-      expect( suggested1.suggestedRate ).to.not.equal 70
+      expect( suggested1.suggestedRate ).to.equal 70
 
       rv.model.once 'sync', =>
         expect( rv.model.get('suggested').length ).to.equal 2
         suggested2 = rv.model.get('suggested')[1]
         expect( suggested2.expert.rate ).to.equal 40
-        expect( suggested2.suggestedRate ).to.not.equal 55
+        expect( suggested2.suggestedRate ).to.equal 55
         done()
 
       requnixSuggestion = rv.$('[data-id=51a466707021eb0200000004]')

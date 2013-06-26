@@ -12,23 +12,23 @@ module.exports = class RatesService extends DomainService
 
     if r.budget <= e.rate then return r.budget - 20
 
-    baseCut = 40
-    if r.pricing is 'nda' then baseCut = 90
-    else if r.pricing is 'opensource' then baseCut = 20
+    baseMargin = 40
+    if r.pricing is 'nda' then baseMargin = 90
+    else if r.pricing is 'opensource' then baseMargin = 20
 
-    baseMargin = r.budget - e.rate
+    margin = r.budget - e.rate
 
-    if baseCut == baseMargin then return e.rate
+    if baseMargin == margin then return e.rate
 
-    if baseMargin > baseCut
+    else if margin > baseMargin
       # split the difference with expert
-      difference = (baseMargin - baseCut)/2
-      return e.rate + difference
+      difference = margin - baseMargin
+      return e.rate + difference*.5
 
-    if baseMargin < baseCut
+    else # margin < baseMargin
       # split the difference with expert
-      difference = (baseMargin - baseCut)/2
-      return3 e.rate + difference
+      difference = baseMargin - margin
+      return e.rate - difference*.5
 
     ## Biased score to get the developer booked
 
@@ -39,5 +39,7 @@ module.exports = class RatesService extends DomainService
     ## developer klout
 
     ## global variables on liquidity vs profit
+
+    ## how quickly since the suggestion is the expert responding
 
 

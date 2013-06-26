@@ -67,7 +67,6 @@ class exports.InfoFormView extends BB.EnhancedFormView
 #############################################################################
 
 class exports.RequestFormView extends BB.ModelSaveView
-  logging: on
   el: '#requestForm'
   tmpl: require './templates/RequestForm'
   events:

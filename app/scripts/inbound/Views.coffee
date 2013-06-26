@@ -241,6 +241,7 @@ class exports.RequestView extends BB.ModelSaveView
   getViewData: ->
     d = @getValsFromInputs @viewData
     d.tags = @infoView.tagsInput.getViewData()
+    delete @mget('company').mailTemplates # temp fix for old leak code
     d
   deleteRequest: ->
     @model.destroy wait: true, success: =>
