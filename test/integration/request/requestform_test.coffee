@@ -25,8 +25,8 @@ describe 'Request:Views RequestFormView =>', ->
   it 'on load sets correct {budget, pricing} radios, {brief, availability}', ->
     v = router.app.requestFormView
     v.model.set @defaultData
-    expect( v.$('#budget30').is(':checked') ).to.be.true
-    expect( v.$('#budget30').prev().hasClass('checked') ).to.be.true
+    expect( v.$('#budget2').is(':checked') ).to.be.true
+    expect( v.$('#budget2').prev().hasClass('checked') ).to.be.true
     expect( v.$('#pricingPrivate').is(':checked') ).to.be.true
     expect( v.$('#pricingPrivate').prev().hasClass('checked') ).to.be.true
     expect( v.elm('availability').val() ).to.be.equal "I am available"

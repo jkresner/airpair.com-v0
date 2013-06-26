@@ -10,7 +10,11 @@
     {{#each contacts}}
 
     <div>
-      <img src="{{pic}}" />
+      {{#if pic }}
+        <img src="{{ pic }}" />
+      {{else}}
+        <img src="/images/default-avatar.jpg" />
+      {{/if}}
     </div>
 
     <table>
