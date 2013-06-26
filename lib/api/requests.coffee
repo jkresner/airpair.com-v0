@@ -1,14 +1,16 @@
 CRUDApi     = require './_crud'
 RequestsSvc = require './../services/requests'
+RatesSvc    = require './../services/rates'
 authz       = require './../identity/authz'
 admin       = authz.Admin isApi: true
 loggedIn    = authz.LoggedIn isApi: true
-Roles        = authz.Roles
+Roles       = authz.Roles
 
 class RequestApi extends CRUDApi
 
   model: require './../models/request'
   svc: new RequestsSvc()
+  rates: new RatesSvc()
 
   constructor: (app, route) ->
     app.get  "/api/admin/#{route}", admin, @admin
@@ -77,7 +79,10 @@ class RequestApi extends CRUDApi
           data.status = "review"
           reqEvt = @newEvent(req, "suggested #{s.expert.username}")
           evts.push reqEvt
-          s.suggestedRate = s.expert.rate
+
+          # make sure our suggested rate is less than our budget!
+          s.suggestedRate = @rates.calcSuggestedRate r.budget, s.expert
+
           s.expertStatus = "waiting"
           s.events = [ @newEvent(req, "first contacted") ]
 

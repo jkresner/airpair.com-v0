@@ -10,6 +10,7 @@
 #adminboundpage #requests a.edit { width:50px; }
 #adminboundpage #requests img { max-width:32px;border-style:solid;border-width:1.5px;float:left;margin-right:5px;padding:1px; }
 #adminboundpage #requests td { font-size:11px;line-height:15px }
+#adminboundpage #requests img { width:32px;height:32px; }
 
 #adminboundpage #requests .r { width:100px; }
 #adminboundpage #requests .c { width:200px; }
@@ -50,8 +51,8 @@
 #adminboundpage .suggestion a.email { padding:4px 7px;margin:0;float:left; }
 #adminboundpage .suggested { border-top:solid 0.5px #d3d3d3;margin:5px; }
 #adminboundpage .suggested hr { margin:0; }
-#adminboundpage .suggested .pic { width:40px;margin:0;float:left; }
-#adminboundpage .suggested .deets { background-color:#CC523E;color:white;font-size:11px;float:right;width:93% }
+#adminboundpage .suggested .pic { width:40px;height:40px;margin:0;float:left; }
+#adminboundpage .suggested .deets { background-color:#CC523E;color:white;font-size:11px;float:right;width:500px }
 #adminboundpage .suggested .names { padding:0px 0 0 4px;float:left;}
 #adminboundpage .suggested .links { margin:0 4px 0px 0px;height:20px; }
 #adminboundpage .suggested .links .icon { width:1.2em;height:1.2em;margin-right:-2px;margin-top:1px }
@@ -63,4 +64,5 @@
 #adminboundpage .suggested .delete { float:right }
 #adminboundpage .suggested .status { float:left;margin:7px 0px; }
 #adminboundpage .suggested .btn { margin:3px 0px 0 3px;padding:0px 7px;}
+#adminboundpage .suggested .rate { height:30px;width:55px;float:left;margin:0;padding:8px 0 0 0; }
 #adminboundpage .suggested p { clear:both;font-size:11px; }

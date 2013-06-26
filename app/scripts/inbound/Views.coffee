@@ -92,7 +92,7 @@ class exports.RequestInfoView extends BB.ModelSaveView
   render: ->
     @setValsFromModel ['brief','availability','status','canceledReason','incompleteDetail','budget','pricing']
     mailTemplates = new CustomerMailTemplates @model
-    tmplCompanyData = _.extend @mget('company'), { mailTemplates: mailTemplates, tagsString: @model.tagsString() }
+    tmplCompanyData = _.extend { mailTemplates: mailTemplates, tagsString: @model.tagsString() }, @mget('company')
     @$('#company-controls').html @tmplCompany(tmplCompanyData)
     @$('[data-toggle="popover"]').popover()
     @$('.status').addClass "label-#{@model.get('status')}"
@@ -189,7 +189,8 @@ class exports.RequestSuggestedView extends BB.BadassView
         s.expert.hasLinks = new M.Expert(s.expert).hasLinks()
 
         mailTemplates = new ExpertMailTemplates @model, s.expert._id
-        @$el.append @tmpl _.extend s, { mailTemplates: mailTemplates, tagsString: @model.tagsString() }
+        tmplData = _.extend { mailTemplates: mailTemplates, tagsString: @model.tagsString() }, s
+        @$el.append @tmpl tmplData
     @
   remove: (e) ->
     suggestionId = $(e.currentTarget).data 'id'
@@ -234,7 +235,9 @@ class exports.RequestView extends BB.ModelSaveView
     @callsView = new exports.RequestCallsView el: '#calls', model: @model, parentView: @
   renderSuccess: (model, response, options) =>
     @$('.alert-success').fadeIn(800).fadeOut(5000)
-    @collection.fetch()
+    m = @collection.findWhere(_id: model.id)
+    m.set model.attributes
+    @collection.trigger 'sync'  # for the requests view to re-render
   getViewData: ->
     d = @getValsFromInputs @viewData
     d.tags = @infoView.tagsInput.getViewData()
