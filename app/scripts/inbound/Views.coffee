@@ -115,7 +115,7 @@ class exports.RequestSuggestionsView extends BB.BadassView
     'click .js-tag': 'filterTag'
   initialize: ->
     @listenTo @model, 'change:tags', @render
-    @listenTo @model, 'change:suggested', @renderSuggestions
+    @listenTo @model, 'change:suggested', @renderTagSuggestions
   render: ->
     @rTag = null
     if @model.get('tags')? && @model.get('tags').length
@@ -151,7 +151,7 @@ class exports.RequestSuggestionsView extends BB.BadassView
     else
       @renderSuggestions []
   renderSuggestions: (experts) ->
-    #$log 'renderSuggestions', experts.length
+    # $log 'renderSuggestions', experts.length
     for s in experts
       @$('.ops').append @tmplSuggestion(s.toJSON())
     false
@@ -217,7 +217,6 @@ class exports.RequestNavView extends BB.BadassView
 
 
 class exports.RequestView extends BB.ModelSaveView
-  logging: on
   async: off
   el: '#request'
   tmpl: require './templates/Request'
