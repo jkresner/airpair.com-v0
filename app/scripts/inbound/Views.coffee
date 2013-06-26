@@ -92,7 +92,7 @@ class exports.RequestInfoView extends BB.ModelSaveView
   render: ->
     @setValsFromModel ['brief','availability','status','canceledReason','incompleteDetail','budget','pricing']
     mailTemplates = new CustomerMailTemplates @model
-    tmplCompanyData = _.extend @mget('company'), { mailTemplates: mailTemplates, tagsString: @model.tagsString() }
+    tmplCompanyData = _.extend { mailTemplates: mailTemplates, tagsString: @model.tagsString() }, @mget('company')
     @$('#company-controls').html @tmplCompany(tmplCompanyData)
     @$('[data-toggle="popover"]').popover()
     @$('.status').addClass "label-#{@model.get('status')}"
@@ -115,7 +115,7 @@ class exports.RequestSuggestionsView extends BB.BadassView
     'click .js-tag': 'filterTag'
   initialize: ->
     @listenTo @model, 'change:tags', @render
-    @listenTo @model, 'change:suggested', @renderSuggestions
+    @listenTo @model, 'change:suggested', @renderTagSuggestions
   render: ->
     @rTag = null
     if @model.get('tags')? && @model.get('tags').length
@@ -151,7 +151,7 @@ class exports.RequestSuggestionsView extends BB.BadassView
     else
       @renderSuggestions []
   renderSuggestions: (experts) ->
-    #$log 'renderSuggestions', experts.length
+    # $log 'renderSuggestions', experts.length
     for s in experts
       @$('.ops').append @tmplSuggestion(s.toJSON())
     false
@@ -189,7 +189,9 @@ class exports.RequestSuggestedView extends BB.BadassView
         s.expert.hasLinks = new M.Expert(s.expert).hasLinks()
 
         mailTemplates = new ExpertMailTemplates @model, s.expert._id
-        @$el.append @tmpl _.extend s, { mailTemplates: mailTemplates, tagsString: @model.tagsString() }
+        totalRate = s.suggestedRate + @model.baseMargin()
+        tmplData = _.extend { mailTemplates: mailTemplates, tagsString: @model.tagsString(), totalRate: totalRate }, s
+        @$el.append @tmpl tmplData
     @
   remove: (e) ->
     suggestionId = $(e.currentTarget).data 'id'
@@ -216,7 +218,6 @@ class exports.RequestNavView extends BB.BadassView
 
 
 class exports.RequestView extends BB.ModelSaveView
-  logging: on
   async: off
   el: '#request'
   tmpl: require './templates/Request'
@@ -234,10 +235,13 @@ class exports.RequestView extends BB.ModelSaveView
     @callsView = new exports.RequestCallsView el: '#calls', model: @model, parentView: @
   renderSuccess: (model, response, options) =>
     @$('.alert-success').fadeIn(800).fadeOut(5000)
-    @collection.fetch()
+    m = @collection.findWhere(_id: model.id)
+    m.set model.attributes
+    @collection.trigger 'sync'  # for the requests view to re-render
   getViewData: ->
     d = @getValsFromInputs @viewData
     d.tags = @infoView.tagsInput.getViewData()
+    delete @mget('company').mailTemplates # temp fix for old leak code
     d
   deleteRequest: ->
     @model.destroy wait: true, success: =>

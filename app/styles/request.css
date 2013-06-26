@@ -46,8 +46,9 @@
 #requestpage #request .rightCol p { font-size:16px;margin:20px; }
 
 #requestpage #requestForm .budgetExplanation { clear:left;color:#7F761C;display:none;padding-top:5px;font-size:12px; }
-#requestpage #requestForm .budgetExplanation b { font-style:italic; }
+#requestpage #requestForm .budgetExplanation b { font-style:italic;color:#CC523E; }
 #requestpage #requestForm .pricingExplanation { clear:left;color:#7F761C;display:none;padding-top:5px;font-size:12px; }
+#requestpage #requestForm .pricingExplanation b { font-style:italic;color:#CC523E; }
 
 #requestpage #thanks { padding-top:33px }
 #requestpage #thanks .success { font-size:22px;color:green;margin:30px 0; }
