@@ -63,6 +63,8 @@
 #adminboundpage .suggested .email { float:right }
 #adminboundpage .suggested .delete { float:right }
 #adminboundpage .suggested .status { float:left;margin:7px 0px; }
-#adminboundpage .suggested .btn { margin:3px 0px 0 3px;padding:0px 7px;}
-#adminboundpage .suggested .rate { height:30px;width:55px;float:left;margin:0;padding:8px 0 0 0; }
+#adminboundpage .suggested .btn { margin:3px 0px 0 3px;padding:0px 7px;line-height:15px }
+#adminboundpage .suggested .rate { height:30px;width:55px;float:left;margin:0;padding:4px 0;font-size:14px; }
+#adminboundpage .suggested .rate em { display:block;color:gray;font-size:11px;font-style:normal; }
 #adminboundpage .suggested p { clear:both;font-size:11px; }
+

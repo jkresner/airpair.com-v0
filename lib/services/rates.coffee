@@ -6,6 +6,8 @@ module.exports = class RatesService extends DomainService
 
   nda: 50
 
+  # NOTE suggestedRate is the developers rate
+  # not including airpair's margin
   calcSuggestedRate: (request, expert) ->
     r = request
     e = expert

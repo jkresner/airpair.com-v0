@@ -189,7 +189,8 @@ class exports.RequestSuggestedView extends BB.BadassView
         s.expert.hasLinks = new M.Expert(s.expert).hasLinks()
 
         mailTemplates = new ExpertMailTemplates @model, s.expert._id
-        tmplData = _.extend { mailTemplates: mailTemplates, tagsString: @model.tagsString() }, s
+        totalRate = s.suggestedRate + @model.baseMargin()
+        tmplData = _.extend { mailTemplates: mailTemplates, tagsString: @model.tagsString(), totalRate: totalRate }, s
         @$el.append @tmpl tmplData
     @
   remove: (e) ->

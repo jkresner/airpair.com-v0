@@ -1,9 +1,10 @@
 <div class="suggested">
 
-  {{#with expert}}
-  <div style="height:40px">
-    <div class="rate btn">${{ ../suggestedRate }}</div>
 
+  <div style="height:40px">
+    <div class="rate btn">${{ suggestedRate }}<em>${{totalRate}}</em></div>
+
+    {{#with expert}}
     <img src="{{ pic }}" class="pic" />
 
     <div class="deets">
@@ -20,10 +21,11 @@
         {{/each }}
       </span>
       {{/if}}
+    {{/with}}
 
     </div>
   </div>
-  {{/with}}
+
 
   <div>
 
