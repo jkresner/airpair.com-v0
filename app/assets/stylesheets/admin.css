@@ -57,7 +57,7 @@
 #adminboundpage .suggested .links { margin:0 4px 0px 0px;height:20px; }
 #adminboundpage .suggested .links .icon { width:1.2em;height:1.2em;margin-right:-2px;margin-top:1px }
 #adminboundpage .suggested .links .zocial:before { font: 60%/1.5 zocial; }
-#adminboundpage .suggested .tags { margin-top:-1px;padding:0px 2px;float:right;max-width:340px }
+#adminboundpage .suggested .tags { margin-top:-1px;padding:0px 2px;float:right;max-width:250px;text-align:right }
 #adminboundpage .suggested .tags .label-tag { margin:-2px 1px 0 1px; }
 #adminboundpage .suggested .label-tag { padding:0px 2px 1px 2px;font-size:9px;float-right }
 #adminboundpage .suggested .email { float:right }

@@ -71,14 +71,6 @@ class exports.Request extends BB.SublistModel
     return false if !session.id?
     return true if /iscust/.test(location.href)
     @get('userId') == session.id
-  baseMargin: ->
-    type = @get('pricing')
-    if type is 'opensource' then return 20
-    else if type is 'nda' then return 90
-    return 40
-    # opensource: 20
-    # private: 40
-    # nda: 90
 
 
 class exports.Expert extends BB.SublistModel
