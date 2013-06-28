@@ -58,10 +58,10 @@ class CustomerMailTemplates
   tmplFollowup: require './../../mail/customerRequestFollowup'
   constructor: (request) ->
     r = request.extendJSON tagsString: request.tagsString()
-    @received = @tmplReceived r
-    @review = @tmplReview r
-    @matched = @tmplMatched r
-    @followup = @tmplFollowup r
+    @received = encodeURI(@tmplReceived r)
+    @review = encodeURI(@tmplReview r)
+    @matched = encodeURI(@tmplMatched r)
+    @followup = encodeURI(@tmplFollowup r)
 
 
 class ExpertMailTemplates
@@ -74,10 +74,10 @@ class ExpertMailTemplates
     contact = request.contact 0
     # $log 'suggestion', suggestion, contact, request
     r = request.extendJSON { tagsString: request.tagsString(), suggestion: suggestion, contact: contact }
-    @another = @tmplAnother r
-    @canceled = @tmplCancelled r
-    @chosen = @tmplChosen r
-    @suggested = @tmplSuggested r
+    @another = encodeURI(@tmplAnother r)
+    @canceled = encodeURI(@tmplCancelled r)
+    @chosen = encodeURI(@tmplChosen r)
+    @suggested = encodeURI(@tmplSuggested r)
 
 
 class exports.RequestInfoView extends BB.ModelSaveView
