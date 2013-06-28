@@ -18,8 +18,7 @@ class exports.SuggestionView extends BB.BadassView
     @model.set requestId: @request.id
   render: ->
     cust = @request.contact(0)
-    totalRate = @model.get('suggestedRate') + @request.baseMargin()
-    d = @model.extend custPic: cust.pic, custName: cust.fullName, isCustomer: false, totalRate: totalRate
+    d = @model.extend custPic: cust.pic, custName: cust.fullName, isCustomer: @request.isCustomer(@session)
     @$el.html @tmpl d
     # if @request.isCustomer @session
     #   @$('.customerReviewForm').append @reviewForm.render().el
