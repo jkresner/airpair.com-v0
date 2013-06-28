@@ -1,36 +1,47 @@
-DomainService   = require './_svc'
+DomainService = require './_svc'
+
+higherSplit = 0.6
+lowerSplit = 0.5
 
 module.exports = class RatesService extends DomainService
 
-  opensource: -20
-
-  nda: 50
+  base:
+    opensource: 20
+    private: 40
+    nda: 90
 
   # NOTE suggestedRate is the developers rate
   # not including airpair's margin
   calcSuggestedRate: (request, expert) ->
-    r = request
+    {budget,pricing} = request
     e = expert
 
-    if r.budget <= e.rate then return r.budget - 20
+    # start with defaults rate
+    r = expert: e.rate, total: budget
 
-    baseMargin = 40
-    if r.pricing is 'nda' then baseMargin = 90
-    else if r.pricing is 'opensource' then baseMargin = 20
+    # get the base margin for the type of pricing
+    baseMargin = @base[pricing]
 
-    margin = r.budget - e.rate
+    # subtract margin from total budget to get what's left for the expert
+    expertBudget = budget - baseMargin
 
-    if baseMargin == margin then return e.rate
-
-    else if margin > baseMargin
+    if expertBudget > e.rate
       # split the difference with expert
-      difference = margin - baseMargin
-      return e.rate + difference*.5
+      extra = expertBudget - e.rate
+      split = extra*higherSplit
+      r.expert = e.rate + split*.5
+      r.total = r.expert + baseMargin + split*.5
 
-    else # margin < baseMargin
+    if expertBudget < e.rate
       # split the difference with expert
-      difference = baseMargin - margin
-      return e.rate - difference*.5
+      # difference = e.rate - expertBudget
+      r.expert = expertBudget #- difference*lowerSplit
+      r.total = r.expert + baseMargin
+
+    #$log 'baseMargin', baseMargin, 'expertBudget', expertBudget, 'expertRate', e.rate, 'suggestedExpertRate', r.expert, 'suggestedTotal', r.total
+
+    r.pricing = pricing
+    r
 
     ## Biased score to get the developer booked
 

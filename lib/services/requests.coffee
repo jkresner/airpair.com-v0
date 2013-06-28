@@ -1,11 +1,11 @@
 DomainService   = require './_svc'
 Roles           = require './../identity/roles'
-
+RatesSvc        = require './rates'
 
 module.exports = class RequestsService extends DomainService
 
   model: require './../models/request'
-
+  rates: new RatesSvc()
 
   publicView: (request) ->
     _.pick request, ['_id','tags','company','brief','availability']
@@ -27,7 +27,7 @@ module.exports = class RequestsService extends DomainService
 
 
   getByIdSmart: (id, usr, callback) =>
-    @model.findOne { _id: id }, (e, r) =>
+    @model.findOne({ _id: id }).lean().exec (e, r) =>
       request = null
 
       if r?
@@ -43,15 +43,29 @@ module.exports = class RequestsService extends DomainService
           @addViewEvent r, usr, "anon view"
           request = @publicView r
 
+        for s in r.suggested
+          s.suggestedRate = @rates.calcSuggestedRate r, s.expert
+
       callback request
+
+  update: (id, data, callback) ->
+    @model.findByIdAndUpdate(id, data).lean().exec (e, r) =>
+      for s in r.suggested
+        s.suggestedRate = @rates.calcSuggestedRate r, s.expert
+
+      callback r
 
   # Used for dashboard
   getActive: (callback) ->
     @model.find({})
       .where('status').in(['received', 'incomplete', 'review', 'scheduled'])
-      .exec (e, r) ->
-        r = {} if r is null
-        callback r
+      .lean()
+      .exec (e, rs) =>
+        rs = {} if rs is null
+        for r in rs
+          for s in r.suggested
+            s.suggestedRate = @rates.calcSuggestedRate r, s.expert
+        callback rs
 
   # Used for history
   getInactive: (callback) ->

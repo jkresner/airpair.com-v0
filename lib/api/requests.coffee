@@ -1,6 +1,6 @@
 CRUDApi     = require './_crud'
 RequestsSvc = require './../services/requests'
-RatesSvc    = require './../services/rates'
+# RatesSvc        = require './../services/rates'
 authz       = require './../identity/authz'
 admin       = authz.Admin isApi: true
 loggedIn    = authz.LoggedIn isApi: true
@@ -10,7 +10,7 @@ class RequestApi extends CRUDApi
 
   model: require './../models/request'
   svc: new RequestsSvc()
-  rates: new RatesSvc()
+  # rates: new RatesSvc()
 
   constructor: (app, route) ->
     app.get  "/api/admin/#{route}", admin, @admin
@@ -81,7 +81,8 @@ class RequestApi extends CRUDApi
           evts.push reqEvt
 
           # make sure our suggested rate is less than our budget!
-          s.suggestedRate = @rates.calcSuggestedRate r, s.expert
+          # s.suggestedRate = @rates.calcSuggestedRate r, s.expert
+
           s.expertStatus = "waiting"
           s.events = [ @newEvent(req, "first contacted") ]
 
@@ -97,8 +98,7 @@ class RequestApi extends CRUDApi
 
       data.events.push.apply(data.events, evts)
 
-      @model.findByIdAndUpdate req.params.id, data, (ee, rr) ->
-        res.send rr
+      @svc.update req.params.id, data, (r) => res.send r
 
 
   updateSuggestion: (req, res) =>
@@ -123,11 +123,9 @@ class RequestApi extends CRUDApi
     sug.expertComment = ups.expertComment
     sug.expertStatus = ups.expertStatus
     sug.expertAvailability = ups.expertAvailability
-
     data.events.push @newEvent(req, "expert reviewed", ups)
 
-    @model.findByIdAndUpdate req.params.id, data, (ee, rr) ->
-      res.send rr
+    @svc.update req.params.id, data, (r) => res.send r
 
 
   updateSuggestionByCustomer: (req, res, r) =>
@@ -141,8 +139,7 @@ class RequestApi extends CRUDApi
     if ups.expertStatus? then sug.expertStatus = ups.expertStatus
     data.events.push @newEvent req, "customer expert review", ups
 
-    @model.findByIdAndUpdate req.params.id, data, (ee, rr) ->
-      res.send rr
+    @svc.update req.params.id, data, (r) => res.send r
 
 
 module.exports = (app) -> new RequestApi app,'requests'

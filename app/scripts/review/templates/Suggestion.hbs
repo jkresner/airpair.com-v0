@@ -5,7 +5,10 @@
 
     <div>
       <span class="label label-{{ expertStatus }}">{{ expertStatus }}</span>
-      <p style="margin-top:4px;font-weight:bold">${{ totalRate }} p.h.</p>
+
+      {{#if isCustomer}}
+      <p style="margin-top:4px;font-weight:bold">${{ suggestedRate.total }} p.h.</p>
+      {{/if}}
 
       {{#if expertComment }}
         <div><b>{{expert.name}} said</b></div>
@@ -17,24 +20,24 @@
     </div>
   </div>
 
-  {{#if isCustomer}}
+ {{!  {{#if isCustomer
   <div class="customerReviewForm"></div>
-  {{#if customerFeedback}}
+  {{#if customerFeedback
 
   <div class="feedback">
       <hr />
-      <h5>Your thoughts on @{{expert.username}}</h5>
-      <img src="{{custPic}}" class="user" />
+      <h5>Your thoughts on @{{expert.username</h5>
+      <img src="{{custPic" class="user" />
       <div style="margin-top:-5px">
-        <b>{{custName}}</b>
-        <div class="rating"><span class="label label-{{ customerRating }}">{{ customerRating }}</span> / 5 </div>
-        <p>{{ customerFeedback }}</p>
+        <b>{{custName</b>
+        <div class="rating"><span class="label label-{{ customerRating">{{ customerRating </span> / 5 </div>
+        <p>{{ customerFeedback</p>
       </div>
   </div>
 
-  {{/if}}
-  {{/if}}
-
+  {{/if
+  {{/if
+ }}
 </div>
 
 {{#with expert}}
