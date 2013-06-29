@@ -10,37 +10,51 @@ module.exports = class RatesService extends DomainService
     private: 40
     nda: 90
 
+  getRelativeBudget: (budget, requestPricing, pricing) ->
+    return budget - (@base[requestPricing]-@base[pricing])
+
   # NOTE suggestedRate is the developers rate
   # not including airpair's margin
-  calcSuggestedRate: (request, expert) ->
-    {budget,pricing} = request
+  calcSuggestedRates: (request, expert) ->
     e = expert
 
-    # start with defaults rate
-    r = expert: e.rate, total: budget
+    r = {}
+    for pricing in ['opensource','private','nda']
 
-    # get the base margin for the type of pricing
-    baseMargin = @base[pricing]
+      # get the base margin for the type of pricing
+      baseMargin = @base[pricing]
 
-    # subtract margin from total budget to get what's left for the expert
-    expertBudget = budget - baseMargin
+      # if the user was to change their choice between opensource / private
+      relativeBudget = @getRelativeBudget request.budget, request.pricing, pricing
 
-    if expertBudget > e.rate
-      # split the difference with expert
-      extra = expertBudget - e.rate
-      split = extra*higherSplit
-      r.expert = e.rate + split*.5
-      r.total = r.expert + baseMargin + split*.5
+      # start with defaults rate
+      pr = expert: e.rate, total: relativeBudget
 
-    if expertBudget < e.rate
-      # split the difference with expert
-      # difference = e.rate - expertBudget
-      r.expert = expertBudget #- difference*lowerSplit
-      r.total = r.expert + baseMargin
+      # subtract margin from total budget to get what's left for the expert
+      expertBudget = relativeBudget - baseMargin
 
-    #$log 'baseMargin', baseMargin, 'expertBudget', expertBudget, 'expertRate', e.rate, 'suggestedExpertRate', r.expert, 'suggestedTotal', r.total
+      if expertBudget > e.rate
+        # split the difference with expert
+        extra = expertBudget - e.rate
+        split = extra*higherSplit
+        pr.expert = e.rate + split*.5
+        pr.total = pr.expert + baseMargin + split*.5
 
-    r.pricing = pricing
+      if expertBudget < e.rate
+        # split the difference with expert
+        # difference = e.rate - expertBudget
+        pr.expert = expertBudget #- difference*lowerSplit
+        pr.total = pr.expert + baseMargin
+
+      # we could do more complex things on the split between
+      # the expert and airpair
+      if pricing is 'nda'
+        # give the expert $20 more p.h. for nda
+        pr.expert += 20
+
+      r[pricing] = pr
+      # $log 'baseMargin', baseMargin, 'expertBudget', expertBudget, 'expertRate', e.rate, 'suggestedExpertRate', pr.expert, 'suggestedTotal', pr.total
+
     r
 
     ## Biased score to get the developer booked
