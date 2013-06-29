@@ -5,6 +5,21 @@ Shared = require './../shared/Models'
 
 exports.User = Shared.User
 
+
+class exports.Order extends BB.BadassModel
+  urlRoot: '/api/orders'
+  lineItem: (index) ->
+    # first try lookup by suggestion.Id
+    items = @get('lineItems')
+    if !items? || items.length is 0 then return null
+    i = _.find items, (item) -> item.suggestion._id == index
+    if i? then return i
+    items[index]
+  calcTotal: ->
+    total = 0
+    total += li.total for li in @get 'lineItems'
+    total
+
 class exports.Request extends Shared.Request
   urlRoot: '/api/requests'
 

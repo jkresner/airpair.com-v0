@@ -1,0 +1,54 @@
+<hr />
+<div class="expertMini suggestion">
+  <div class="deets">
+
+    {{#with suggestion.expert}}
+    <div class="fullName">
+      {{ name }}
+      {{#if username }}<br />@{{ username }}
+    {{/if}}
+    </div>
+    <hr />
+
+    <img src="{{ pic }}?s=80" class="pic" />
+    {{/with}}
+
+  </div>
+
+</div>
+<div class="expertOptions">
+
+    <div class="control-group">
+      <label class="control-label" for="priving">Hours</label>
+      <div class="controls">
+          <select name="hours">
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="20">20</option>
+          </select>
+      </div>
+    </div>
+
+    <div class="control-group">
+      {{! <label class="control-label" for="priving">Privacy requirements</label> }}
+      <div class="controls">
+          <select name="pricing">
+            <option value="opensource">Open source</option>
+            <option value="private">Private</option>
+            <option value="nda">Non-disclosure agreement</option>
+          </select>
+      </div>
+    </div>
+
+
+</div>
+<div class="expertOptions">
+  Expert total
+  <div>
+    <h3>$<span>{{ total }}</span></h3>
+    <h4>$<span>{{ hrRate }}</spam> <em>x</em> <span>{{ hours }}</span> hrs</h4>
+  </div>
+</div>

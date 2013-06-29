@@ -17,9 +17,10 @@ class exports.SuggestionView extends BB.BadassView
     @reviewForm = new exports.CustomerReviewFormView args
     @model.set requestId: @request.id
   render: ->
-    cust = @request.contact(0)
-    d = @model.extend custPic: cust.pic, custName: cust.fullName, isCustomer: @request.isCustomer(@session)
+    d = @model.extend isCustomer: @request.isCustomer(@session)
+    d.rates = @model.get('suggestedRate')[@request.get('pricing')]
     @$el.html @tmpl d
+    # cust = @request.contact(0)
     # if @request.isCustomer @session
     #   @$('.customerReviewForm').append @reviewForm.render().el
     #   @$('.customerReviewForm').toggle !@mget('customerFeedback')?
@@ -28,7 +29,61 @@ class exports.SuggestionView extends BB.BadassView
 
 
 #############################################################################
-##
+## Book
+#############################################################################
+
+class exports.BookSummaryView extends BB.BadassView
+  el: '#summary'
+  tmpl: require './templates/BookSummary'
+  initialize: (args) ->
+    @order.on 'change', @render, @
+  render: ->
+    @order.set('total', @order.calcTotal())
+    @$el.html @tmpl @order.toJSON()
+    @
+
+
+class exports.BookExpertView extends BB.BadassView
+  tmpl: require './templates/BookExpert'
+  events:
+    'change select': 'update'
+  initialize: (args) ->
+    # @order.on 'change', @render, @
+  render: ->
+    @li = @model.lineItem @suggestion._id
+    @$el.html @tmpl @li
+    @elm('pricing').val @li.pricing
+    @elm('hours').val @li.hours
+    @
+  update: ->
+    @li = @model.lineItem @suggestion._id
+    @li.pricing = @elm('pricing').val()
+    @li.hours = parseInt( @elm('hours').val() )
+    @li.hrRate = @suggestion.suggestedRate[@li.pricing].total
+    @li.total = @li.hrRate * @li.hours
+    @model.trigger 'change'
+    @render()
+
+
+class exports.BookView extends BB.BadassView
+  el: '#book'
+  tmpl: require './templates/BookInfo'
+  initialize: (args) ->
+    @$el.html @tmpl()
+    @summaryView = new exports.BookSummaryView order: @order
+    @request.on 'change', @render, @
+  render: ->
+    @order.set requestId: @request.id, 'lineItems': []
+    pricing = @request.get('pricing')
+    for s in @request.get('suggested')
+      item = suggestion: s, hours: 0, total: 0, pricing: @request.get('pricing'), hrRate: s.suggestedRate[pricing].total
+      @order.get('lineItems').push item
+      @$('ul').append( new exports.BookExpertView(suggestion:s,request:@request,model:@order).render().el )
+    @
+
+
+#############################################################################
+## Review
 #############################################################################
 
 

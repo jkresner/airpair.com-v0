@@ -52,3 +52,9 @@
 
 <div style="clear:both"><label><b>Availability</b></label>
   {{availability}}</div>
+
+{{#if isCustomer}}
+  <div class="form-actions">
+    <a href="#book/{{_id}}" class="btn btn-warning btn-large">Book expert(s)</a>
+  </div>
+{{/if}}

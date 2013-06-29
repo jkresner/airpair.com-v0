@@ -1,14 +1,16 @@
+<div class="cola">
+
 <h2><b>{ </b>Book experts<b> }</b></h2>
 
-<div><label><b>Brief</b></label>
-  {{#each tags}}
-    <span class="label label-tag">{{short}}</span>
-  {{/each}}
-<br />
-{{#if isCustomer}}<div><label><b>Budget</b></label> {{budget}}/{{pricing}} = ${{ total }} p.h.</div>{{/if}}
+<ul id="experts">
 
-{{#if isCustomer}}
-  <div class="form-actions">
-    <a href="#save" class="save btn btn-warning btn-large">Continue(s)</a>
+</ul>
+
+</div>
+<div class="colb form-actions">
+  <div id="summary">
+
   </div>
-{{/if}}
+
+  <a href="#save" class="save btn btn-warning btn-large">Continue</a>
+</div>

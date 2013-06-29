@@ -22,8 +22,10 @@ module.exports = (app) ->
 
   app.get '/dashboard*', loggedIn, (req, r)-> file r, 'dashboard'
 
-  app.get '/review/:id', (req, r)->
+  renderReview = (req, r) ->
     viewData.review req.params.id, req.user, (d) => r.render 'review.html', d
+  app.get '/review/:id', renderReview
+  app.get '/review/book/:id', renderReview
 
   # admin pages
   app.get '/adm/tags*', loggedIn, admin, (req, r) -> file r, 'adm/tags'
