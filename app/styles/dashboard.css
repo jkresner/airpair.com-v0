@@ -3,6 +3,6 @@
 #dashboardpage #requestslist { padding-top:20px;float:left;width:860px; }
 #dashboardpage .requests .reqOptions { width:120px; }
 #dashboardpage .requests a { padding:1px 5px;font-size:12px;float:right;margin-left:4px; }
-
+#dashboardpage .requests img { width:24px;height:24px;border:solid 1px gray;padding:1px; }
 #dashboardpage .rightCol { float:right;width:360px;padding:0px;min-height:700px;background:white;text-align:center; }
 
