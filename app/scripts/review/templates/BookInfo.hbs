@@ -1,16 +1,37 @@
-<div class="cola">
+<table>
+  <tr>
+    <td class="leftCol">
 
-<h2><b>{ </b>Book experts<b> }</b></h2>
+  <h2><b>{ </b>Book experts<b> }</b></h2>
 
-<ul id="experts">
+  <ul id="experts">
 
-</ul>
+  </ul>
 
-</div>
-<div class="colb form-actions">
-  <div id="summary">
+  <div style="clear:both"></div>
+  <div class="form-actions">
+
+      <form id="pay" action="https://www.sandbox.paypal.com/webapps/adaptivepayment/flow/pay" target="PPDGFrame" class="standard">
+        <a href="#" class="pay"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_paynowCC_LG.gif" /></a>
+        <input type="image" id="submitBtn" src="" value="">
+        {{! <input id="type" type="hidden" name="expType" value="light"> }}
+        <input id="paykey" type="hidden" name="paykey" value="insert_pay_key">
+      </form>
+
+
+      <p id="selecthours">Please select at least 1 hour to continue.</p>
+
+    <script type="text/javascript" charset="utf-8">
+      var embeddedPPFlow = new PAYPAL.apps.DGFlow({trigger: 'submitBtn',type:'light'});
+    </script>
 
   </div>
 
-  <a href="#save" class="save btn btn-warning btn-large">Continue</a>
-</div>
+</td>
+<td class="rightCol">
+  <div id="summary">
+
+  </div>
+</td>
+</tr>
+</table>

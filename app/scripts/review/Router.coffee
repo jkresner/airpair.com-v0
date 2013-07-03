@@ -22,7 +22,7 @@ module.exports = class Router extends S.AirpairSessionRouter
       order: new M.Order()
     v =
       requestView: new V.RequestView( request: d.request, session: @app.session )
-      bookView: new V.BookView( request: d.request, session: @app.session, order: d.order )
+      bookView: new V.BookView( model: d.order, request: d.request, session: @app.session )
 
     @setOrFetch d.request, pageData.request, { error: => @empty() }
     _.extend d, v

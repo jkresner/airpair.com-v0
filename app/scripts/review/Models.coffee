@@ -8,6 +8,8 @@ exports.User = Shared.User
 
 class exports.Order extends BB.BadassModel
   urlRoot: '/api/orders'
+  defaults:
+    total: 0
   lineItem: (index) ->
     # first try lookup by suggestion.Id
     items = @get('lineItems')
@@ -19,9 +21,13 @@ class exports.Order extends BB.BadassModel
     total = 0
     total += li.total for li in @get 'lineItems'
     total
+  setTotal: ->
+    @set 'total', @calcTotal()
+
 
 class exports.Request extends Shared.Request
   urlRoot: '/api/requests'
+
 
 
 class exports.CustomerReview extends BB.BadassModel
@@ -29,6 +35,7 @@ class exports.CustomerReview extends BB.BadassModel
   # validation:
     # fullName:  { required: true }
     # email:     { required: true, pattern: 'email' }
+
 
 class exports.ExpertReview extends BB.BadassModel
   url: -> "/api/requests/#{@get('requestId')}/suggestion"

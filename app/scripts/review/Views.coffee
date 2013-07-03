@@ -38,7 +38,7 @@ class exports.BookSummaryView extends BB.BadassView
   initialize: (args) ->
     @order.on 'change', @render, @
   render: ->
-    @order.set('total', @order.calcTotal())
+    @order.setTotal()
     @$el.html @tmpl @order.toJSON()
     @
 
@@ -65,21 +65,42 @@ class exports.BookExpertView extends BB.BadassView
     @render()
 
 
-class exports.BookView extends BB.BadassView
+class exports.BookView extends BB.ModelSaveView
+  logging: on
   el: '#book'
   tmpl: require './templates/BookInfo'
+  events:
+    'click .pay': 'pay'
   initialize: (args) ->
     @$el.html @tmpl()
-    @summaryView = new exports.BookSummaryView order: @order
-    @request.on 'change', @render, @
+    @summaryView = new exports.BookSummaryView order: @model
+    @listenTo @request, 'change', @render
+    @listenTo @model, 'change', @renderPay
   render: ->
-    @order.set requestId: @request.id, 'lineItems': []
+    @model.set requestId: @request.id, 'lineItems': []
     pricing = @request.get('pricing')
+    @$('ul').html ''
     for s in @request.get('suggested')
       item = suggestion: s, hours: 0, total: 0, pricing: @request.get('pricing'), hrRate: s.suggestedRate[pricing].total
-      @order.get('lineItems').push item
-      @$('ul').append( new exports.BookExpertView(suggestion:s,request:@request,model:@order).render().el )
+      @model.get('lineItems').push item
+      @$('ul').append( new exports.BookExpertView(suggestion:s,request:@request,model:@model).render().el )
     @
+  renderPay: ->
+    @$('#pay').toggle @mget('total') isnt 0
+    @$('#selecthours').toggle @mget('total') is 0
+    @
+  pay: (e) ->
+    e.preventDefault()
+    if @model.get('total') is 0
+      alert('please select at least one hour')
+    else
+      @save(e)
+  getViewData: ->
+    @model.attributes
+  renderSuccess: (model, resp, opts) ->
+    $log 'resp', resp
+    @$('#paykey').val resp.payKey
+    @$('#submitBtn').click()
 
 
 #############################################################################

@@ -41,7 +41,10 @@ module.exports = (app) ->
   require('./lib/api/experts')(app)
   require('./lib/api/requests')(app)
   require('./lib/api/mail')(app)
+  require('./lib/api/orders')(app)
 
+  app.get '/paypal/success', (req, r) -> r.send 'paypal success'
+  app.get '/paypal/cancel', (req, r) -> r.send 'paypal cancel'
 
   # todo, brush up page
   app.get '/pair-programmers*', (req, r)-> file r, 'pairing'
