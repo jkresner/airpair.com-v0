@@ -53,14 +53,14 @@ class exports.BookExpertView extends BB.BadassView
     @li = @model.lineItem @suggestion._id
     @$el.html @tmpl @li
     @elm('pricing').val @li.pricing
-    @elm('hours').val @li.hours
+    @elm('qty').val @li.qty
     @
   update: ->
     @li = @model.lineItem @suggestion._id
-    @li.pricing = @elm('pricing').val()
-    @li.hours = parseInt( @elm('hours').val() )
-    @li.hrRate = @suggestion.suggestedRate[@li.pricing].total
-    @li.total = @li.hrRate * @li.hours
+    @li.type = @elm('pricing').val()
+    @li.qty = parseInt( @elm('qty').val() )
+    @li.unitPrice = @suggestion.suggestedRate[@li.pricing].total
+    @li.total = @li.qty * @li.unitPrice
     @model.trigger 'change'
     @render()
 
@@ -74,14 +74,14 @@ class exports.BookView extends BB.ModelSaveView
   initialize: (args) ->
     @$el.html @tmpl()
     @summaryView = new exports.BookSummaryView order: @model
-    @listenTo @request, 'change', @render
+    @listenTo @request, 'change', @renderExperts
     @listenTo @model, 'change', @renderPay
-  render: ->
+  renderExperts: ->
     @model.set requestId: @request.id, 'lineItems': []
     pricing = @request.get('pricing')
     @$('ul').html ''
     for s in @request.get('suggested')
-      item = suggestion: s, hours: 0, total: 0, pricing: @request.get('pricing'), hrRate: s.suggestedRate[pricing].total
+      item = suggestion: s, qty: 0, total: 0, pricing: @request.get('pricing'), unitPrice: s.suggestedRate[pricing].total
       @model.get('lineItems').push item
       @$('ul').append( new exports.BookExpertView(suggestion:s,request:@request,model:@model).render().el )
     @
