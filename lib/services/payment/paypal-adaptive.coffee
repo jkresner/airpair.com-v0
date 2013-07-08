@@ -1,5 +1,32 @@
 request = require 'superagent'
 
+
+config =
+  docs:
+    Endpoint: 'https://svcs.sandbox.paypal.com/AdaptivePayments'
+    PrimaryReceiver: 'jk-facilitator@airpair.com'
+    SECURITYUSERID: 'caller_1312486258_biz_api1.gmail.com',
+    SECURITYPASSWORD: '1312486294',
+    SECURITYSIGNATURE: 'AbtI7HV1xB428VygBUcIhARzxch4AL65.T18CTeylixNNxDZUu0iO87e'
+    APPLICATIONID: 'APP-80W284485P519543T'
+
+  test:
+    Endpoint: 'https://svcs.sandbox.paypal.com/AdaptivePayments'
+    PrimaryReceiver: 'jk-facilitator@airpair.com'
+    SECURITYUSERID: 'jk-facilitator_api1.airpair.com',
+    SECURITYPASSWORD: '1372567697',
+    SECURITYSIGNATURE: 'An5ns1Kso7MWUdW4ErQKJJJ4qi4-AC6a0z5no3hrQwQyUMvBCahLxwBA'
+    APPLICATIONID: 'APP-80W284485P519543T'
+
+  prod:
+    Endpoint: 'https://svcs.paypal.com/AdaptivePayments'
+    PrimaryReceiver: 'jk@airpair.com'
+    SECURITYUSERID: 'jk_api1.airpair.com',
+    SECURITYPASSWORD: 'CKGLTLST5C2KYCXQ',
+    SECURITYSIGNATURE: 'AFcWxV21C7fd0v3bYYYRCpSSRl31AQ3FdahDmrAydOM0v6NUkwsQ2Nug'
+    APPLICATIONID: 'APP-7AK038815Y6144228'
+
+
 payloadDefault =
   actionType:      "PAY_PRIMARY"
   currencyCode:    "USD"
@@ -62,34 +89,6 @@ module.exports = class PaypalAdaptive
       .set('X-PAYPAL-APPLICATION-ID', @cfg.APPLICATIONID)
       .end (res) =>
         callback res.body
-
-
-
-config =
-  docs:
-    Endpoint: 'https://svcs.sandbox.paypal.com/AdaptivePayments'
-    PrimaryReceiver: 'jk-facilitator@airpair.com'
-    SECURITYUSERID: 'caller_1312486258_biz_api1.gmail.com',
-    SECURITYPASSWORD: '1312486294',
-    SECURITYSIGNATURE: 'AbtI7HV1xB428VygBUcIhARzxch4AL65.T18CTeylixNNxDZUu0iO87e'
-    APPLICATIONID: 'APP-80W284485P519543T'
-
-  test:
-    Endpoint: 'https://svcs.sandbox.paypal.com/AdaptivePayments'
-    PrimaryReceiver: 'jk-facilitator@airpair.com'
-    SECURITYUSERID: 'jk-facilitator_api1.airpair.com',
-    SECURITYPASSWORD: '1372567697',
-    SECURITYSIGNATURE: 'An5ns1Kso7MWUdW4ErQKJJJ4qi4-AC6a0z5no3hrQwQyUMvBCahLxwBA'
-    APPLICATIONID: 'APP-80W284485P519543T'
-
-  prod:
-    Endpoint: 'https://svcs.paypal.com/AdaptivePayments'
-    PrimaryReceiver: 'jk@airpair.com'
-    SECURITYUSERID: 'jk_api1.airpair.com',
-    SECURITYPASSWORD: 'CKGLTLST5C2KYCXQ',
-    SECURITYSIGNATURE: 'AFcWxV21C7fd0v3bYYYRCpSSRl31AQ3FdahDmrAydOM0v6NUkwsQ2Nug'
-    APPLICATIONID: 'APP-7AK038815Y6144228'
-
 
 
 # payloadExample1 =
