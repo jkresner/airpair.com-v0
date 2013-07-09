@@ -19,4 +19,4 @@ class OrdersApi extends CRUDApi
     @svc.create req.body, (r) => res.send r
 
 
-module.exports = (app) -> new OrdersApi app,'orders'
+module.exports = (app) -> new OrdersApi app, 'orders'
