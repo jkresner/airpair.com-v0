@@ -1,6 +1,6 @@
 require './lib/util/globals'
 
-$log "--------------------------------------------------"
+$log "--------------------------------------------------------"
 $log "In app file", process.cwd(), 'isProd', isProd
 
 express       = require 'express'

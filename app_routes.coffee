@@ -27,6 +27,8 @@ module.exports = (app) ->
   app.get '/review/:id', renderReview
   app.get '/review/book/:id', renderReview
 
+  app.get '/settings*', loggedIn, (req, r)-> file r, 'settings'
+
   # admin pages
   app.get '/adm/tags*', loggedIn, admin, (req, r) -> file r, 'adm/tags'
   app.get '/adm/experts*', loggedIn, admin, (req, r) -> file r, 'adm/experts'
@@ -42,6 +44,8 @@ module.exports = (app) ->
   require('./lib/api/requests')(app)
   require('./lib/api/mail')(app)
   require('./lib/api/orders')(app)
+  require('./lib/api/settings')(app)
+
 
   app.get '/paypal/success', (req, r) -> r.send 'paypal success'
   app.get '/paypal/cancel', (req, r) -> r.send 'paypal cancel'

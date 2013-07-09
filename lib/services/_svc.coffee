@@ -10,12 +10,20 @@ module.exports = class DomainService
       callback r
 
 
+  getById: (id, callback) =>
+    @model.findOne { _id: id }, (e, r) => callback r
+
+
   getByUserId: (id, callback) =>
     @model.find userId: id, (e, r) -> callback r
 
 
-  getById: (id, callback) =>
-    @model.findOne { _id: id }, (e, r) => callback r
+  create: (o, callback) =>
+    new @model( o ).save (e, r) => callback r
+
+
+  update: (id, data, callback) =>
+    @model.findByIdAndUpdate(id, data).lean().exec (e, r) => callback r
 
 
   newEvent: (usr, evtName, evtData) ->
