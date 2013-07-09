@@ -9,7 +9,7 @@ module.exports = class Router extends S.AirpairSessionRouter
   pushStateRoot: '/settings'
 
   routes:
-    ''        : 'settings'
+    'settings'        : 'settings'
 
   appConstructor: (pageData, callback) ->
     d =
@@ -17,8 +17,10 @@ module.exports = class Router extends S.AirpairSessionRouter
     v =
       paymentSettingsView: new V.PaymentSettingsView model: d.settings
 
-    @setOrFetch d.settings, pageData.settings
+    @setOrFetch d.settings, pageData.settings, { success: =>
+      v.paymentSettingsView.render() }
 
     _.extend d, v
 
   initialize: (args) ->
+    @navTo 'settings'

@@ -6,13 +6,18 @@ M = require './Models'
 ##
 #############################################################################
 
-class exports.PaymentSettingsView extends Backbone.View
-  className: 'tag label'
+class exports.PaymentSettingsView extends BB.ModelSaveView
+  el: '#paymentSettings'
   tmpl: require './templates/PaymentSettings'
-  initialize: -> @model.on 'change', @render, @
+  events:
+    'click .save': 'save'
+  initialize: ->
   render: ->
-    @$el.html @tmpl @model.toJSON()
+    @$el.html @tmpl @model.paymentMethod('paypal')
     @
+  getViewData: ->
+    pp = type: 'paypal', isPrimary: true, info: { email: @elm('paypalEmail').val() }
+    paymentMethods: [ pp ]
 
 
 module.exports = exports
