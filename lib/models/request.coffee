@@ -55,7 +55,7 @@ schema = new Schema
   budget:           { required: true, type: Number   }
   hours:            { required: true, type: String   }
   pricing:          { required: true, type: String   }
-  events:           { required: true, type: [{}]  }
+  events:           { required: true, type: [{}]     }
   status:           { required: true, type: String   }
   incompleteDetail: String
   canceledDetail:   String

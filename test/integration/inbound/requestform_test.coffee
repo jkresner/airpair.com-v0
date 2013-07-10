@@ -45,7 +45,7 @@ describe "Inbound: RequestView", ->
     expect( comp.mailTemplates ).to.equal undefined
 
   # it 'request object had reasonable data in events objects ...', (done) ->
-    # expect(false).to.be.true
+  #   expect(false).to.be.true
 
 
   it 'Can suggest expert with higher rate than budget ...', (done) ->
@@ -61,9 +61,8 @@ describe "Inbound: RequestView", ->
       suggested1 = rv.model.get('suggested')[0]
       expect( suggested1._id ).to.not.equal undefined
       expect( suggested1.expert.rate ).to.equal 160
-      expect( suggested1.suggestedRate.expert ).to.equal 70
-      expect( suggested1.suggestedRate.total ).to.equal 90
-      expect( suggested1.suggestedRate.pricing ).to.equal 'opensource'
+      expect( suggested1.suggestedRate.opensource.expert ).to.equal 70
+      expect( suggested1.suggestedRate.opensource.total ).to.equal 90
       expect( rv.$('#suggested .suggested').length ).to.equal 1
       done()
 
@@ -81,13 +80,13 @@ describe "Inbound: RequestView", ->
       expect( rv.model.get('suggested').length ).to.equal 1
       suggested1 = rv.model.get('suggested')[0]
       expect( suggested1.expert.rate ).to.equal 70
-      expect( suggested1.suggestedRate.expert ).to.equal 70
+      expect( suggested1.suggestedRate.opensource.expert ).to.equal 70
 
       rv.model.once 'sync', =>
         expect( rv.model.get('suggested').length ).to.equal 2
         suggested2 = rv.model.get('suggested')[1]
         expect( suggested2.expert.rate ).to.equal 40
-        expect( suggested2.suggestedRate.expert ).to.equal 49
+        expect( suggested2.suggestedRate.opensource.expert ).to.equal 49
         done()
 
       requnixSuggestion = rv.$('[data-id=51a466707021eb0200000004]')

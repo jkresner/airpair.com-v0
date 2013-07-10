@@ -13,13 +13,22 @@ module.exports = class Router extends S.AirpairSessionRouter
   routes:
     ':id'         : 'detail'
     'detail/:id'  : 'detail'
+    'book/:id'    : 'book'
     ''            : 'empty'
 
   appConstructor: (pageData, callback) ->
-    d = request: new M.Request _id: @defaultFragment
-    v = requestView: new V.RequestView( request: d.request, session: @app.session )
+    d =
+      request: new M.Request _id: @defaultFragment
+      order: new M.Order()
+    v =
+      requestView: new V.RequestView( request: d.request, session: @app.session )
 
-    @setOrFetch d.request, pageData.request, { error: => @empty() }
+    reqSuccess = =>
+      if d.request.isCustomer(@app.session)
+        v.bookView = new V.BookView( model: d.order, request: d.request, session: @app.session ).render()
+
+    opts = error: @empty, success: reqSuccess
+    @setOrFetch d.request, pageData.request, opts
     _.extend d, v
 
   initialize: (args) ->
@@ -34,3 +43,6 @@ module.exports = class Router extends S.AirpairSessionRouter
 
     if @app.session.id is '5175efbfa3802cc4d5a5e6ed'
       $('nav ul').append("<li><a href='/adm/inbound/#{@app.request.id}'' class='zocial'>request admin</a><li>")
+
+  book: (id) ->
+    if !id? then return @empty()

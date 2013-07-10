@@ -338,7 +338,7 @@ module.exports = [
           "brief": "Helping new developers learn, or get started with a new technology.",
           "_id": "514a38d9bf8213020000000b"
         },
-        suggestedRate: 70,
+        suggestedRate: { opensource: { expert: 70, total: 90 }, private: { expert: 70, total: 110 }, nda: { expert: 70, total: 160 } },
         expertStatus: "waiting",
         _id: "51b25a1722ddda020000000d",
         events: [
@@ -355,9 +355,6 @@ module.exports = [
       _id: "5181d0aa66a6f999a465ed8e", "name": "tdd", "short": "tdd", "soId": "tdd"
     ]
   }
-
-
-  # 7) Review request
 
 
 ]

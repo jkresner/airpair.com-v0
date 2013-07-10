@@ -1,6 +1,7 @@
 require './lib/util/globals'
 
-$log "in app file", process.cwd(), 'isProd', isProd
+$log "--------------------------------------------------------"
+$log "In app file", process.cwd(), 'isProd', isProd
 
 express       = require 'express'
 passport      = require 'passport'
@@ -34,7 +35,6 @@ else
   app.use passport.initialize()
 
 app.use passport.session()
-
 
 require('./app_routes')(app)
 
