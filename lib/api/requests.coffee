@@ -39,15 +39,8 @@ class RequestApi extends CRUDApi
     @svc.getByIdSmart req.params.id, user, (r) =>
       if r? then res.send r else res.send(400, {})
 
-
   create: (req, res) =>
-    req.body.userId = req.user._id
-    req.body.events = [@newEvent(req, "created")]
-    req.body.status = 'received'
-    new @model( req.body ).save (e, r) ->
-      if e then $log 'e', e
-      res.send r
-
+    @svc.create req.user, req.body, (r) -> res.send r
 
   update: (req, res) =>
     usr = req.user

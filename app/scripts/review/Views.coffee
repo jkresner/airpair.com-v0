@@ -66,7 +66,6 @@ class exports.BookExpertView extends BB.BadassView
 
 
 class exports.BookView extends BB.ModelSaveView
-  logging: on
   el: '#book'
   tmpl: require './templates/BookInfo'
   events:
@@ -77,13 +76,14 @@ class exports.BookView extends BB.ModelSaveView
     @listenTo @request, 'change', @renderExperts
     @listenTo @model, 'change', @renderPay
   renderExperts: ->
-    @model.set requestId: @request.id, 'lineItems': []
-    pricing = @request.get('pricing')
-    @$('ul').html ''
-    for s in @request.get('suggested')
-      item = suggestion: s, qty: 0, total: 0, pricing: @request.get('pricing'), unitPrice: s.suggestedRate[pricing].total
-      @model.get('lineItems').push item
-      @$('ul').append( new exports.BookExpertView(suggestion:s,request:@request,model:@model).render().el )
+    if @request.get('suggested')?
+      @model.set requestId: @request.id, 'lineItems': []
+      pricing = @request.get('pricing')
+      @$('ul').html ''
+      for s in @request.get('suggested')
+        item = suggestion: s, qty: 0, total: 0, pricing: @request.get('pricing'), unitPrice: s.suggestedRate[pricing].total
+        @model.get('lineItems').push item
+        @$('ul').append( new exports.BookExpertView(suggestion:s,request:@request,model:@model).render().el )
     @
   renderPay: ->
     @$('#pay').toggle @mget('total') isnt 0
@@ -98,7 +98,6 @@ class exports.BookView extends BB.ModelSaveView
   getViewData: ->
     @model.attributes
   renderSuccess: (model, resp, opts) ->
-    $log 'resp', resp
     @$('#paykey').val resp.payKey
     @$('#submitBtn').click()
 

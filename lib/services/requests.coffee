@@ -25,6 +25,13 @@ module.exports = class RequestsService extends DomainService
       sug.events.push @newEvent(usr, "viewed")
     @model.findByIdAndUpdate request._id, up, (e, r) ->
 
+  create: (usr, request, callback) =>
+    request.userId = usr._id
+    request.events = [@newEvent(usr, "created")]
+    request.status = 'received'
+    new @model( request ).save (e, r) ->
+      if e then $log 'e', e
+      callback r
 
   getByIdSmart: (id, usr, callback) =>
     @model.findOne({ _id: id }).lean().exec (e, r) =>
