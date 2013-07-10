@@ -25,6 +25,13 @@ module.exports = class RequestsService extends DomainService
       sug.events.push @newEvent(usr, "viewed")
     @model.findByIdAndUpdate request._id, up, (e, r) ->
 
+  create: (usr, request, callback) =>
+    request.userId = usr._id
+    request.events = [@newEvent(usr, "created")]
+    request.status = 'received'
+    new @model( request ).save (e, r) ->
+      if e then $log 'e', e
+      callback r
 
   getByIdSmart: (id, usr, callback) =>
     @model.findOne({ _id: id }).lean().exec (e, r) =>
@@ -44,14 +51,14 @@ module.exports = class RequestsService extends DomainService
           request = @publicView r
 
         for s in r.suggested
-          s.suggestedRate = @rates.calcSuggestedRate r, s.expert
+          s.suggestedRate = @rates.calcSuggestedRates r, s.expert
 
       callback request
 
   update: (id, data, callback) ->
     @model.findByIdAndUpdate(id, data).lean().exec (e, r) =>
       for s in r.suggested
-        s.suggestedRate = @rates.calcSuggestedRate r, s.expert
+        s.suggestedRate = @rates.calcSuggestedRates r, s.expert
 
       callback r
 
@@ -64,7 +71,7 @@ module.exports = class RequestsService extends DomainService
         rs = {} if rs is null
         for r in rs
           for s in r.suggested
-            s.suggestedRate = @rates.calcSuggestedRate r, s.expert
+            s.suggestedRate = @rates.calcSuggestedRates r, s.expert
         callback rs
 
   # Used for history

@@ -1,0 +1,25 @@
+<h2><em>{ </em>Order summary<em> }</em></h2>
+
+<table class="table table-striped">
+  <tr>
+    <th>Name</th>
+    <th>Qty</th>
+    <th>Unit Price</th>
+    <th>Price</th>
+  </tr>
+
+
+{{#each lineItems }}
+  {{#if total }}
+    <tr>
+      <td>{{ suggestion.expert.fullName }}</td>
+      <td>{{ qty }}</td>
+      <td>{{ unitPrice }}</td>
+      <td>${{ total }}</td>
+    </tr>
+  {{/if }}
+{{/each}}
+</table>
+
+<h1><span class="muted">Total</span> ${{ total }}</h1>
+

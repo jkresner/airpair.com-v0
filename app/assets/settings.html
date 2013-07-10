@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>airpair, settings</title>
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="/stylesheets/app.css">
+</head>
+
+<body id="settingspage">
+
+  <nav>
+    <div>
+      <a class="logo" href="/" title="Pair programming, code review, architecture advice & more..."><img src="/images/logo4.png" /></a>
+
+      <div class="navbar">
+        <div class="navbar-inner">
+          <ul class="nav">
+            <li><a href="/dashboard">Dashboard</a></li>
+            <li class="divider-vertical"></li>
+            <li class="active"><a href="/settings">Settings</a></li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </nav>
+
+  <div id="settings" class="route">
+    <div id="paymentSettings"></div>
+  </div>
+
+</body>
+
+  <script type="text/javascript">
+    function initApp() {
+      var pageData = {};
+      Router = require('/scripts/settings/Router');
+      window.router = new Router(pageData);
+    }
+  </script>
+  <script src="/javascripts/vendor.js" defer></script>
+  <script src="/javascripts/app.js" defer onload="initApp()"></script>
+
+</html>

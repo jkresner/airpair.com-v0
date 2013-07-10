@@ -1,7 +1,7 @@
 mongoose = require 'mongoose'
 Schema = mongoose.Schema
 
-schema = new Schema
+User = new Schema
   name:         String
   email:        String
   pic:          String
@@ -18,4 +18,5 @@ schema = new Schema
   bitbucketId:  String
   bitbucket:    {}
 
-module.exports = mongoose.model 'User', schema
+
+module.exports = mongoose.model 'User', User

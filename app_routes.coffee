@@ -22,8 +22,12 @@ module.exports = (app) ->
 
   app.get '/dashboard*', loggedIn, (req, r)-> file r, 'dashboard'
 
-  app.get '/review/:id', (req, r)->
+  renderReview = (req, r) ->
     viewData.review req.params.id, req.user, (d) => r.render 'review.html', d
+  app.get '/review/:id', renderReview
+  app.get '/review/book/:id', renderReview
+
+  app.get '/settings*', loggedIn, (req, r)-> file r, 'settings'
 
   # admin pages
   app.get '/adm/tags*', loggedIn, admin, (req, r) -> file r, 'adm/tags'
@@ -39,7 +43,12 @@ module.exports = (app) ->
   require('./lib/api/experts')(app)
   require('./lib/api/requests')(app)
   require('./lib/api/mail')(app)
+  require('./lib/api/orders')(app)
+  require('./lib/api/settings')(app)
 
+
+  app.get '/paypal/success', (req, r) -> r.send 'paypal success'
+  app.get '/paypal/cancel', (req, r) -> r.send 'paypal cancel'
 
   # todo, brush up page
   app.get '/pair-programmers*', (req, r)-> file r, 'pairing'
