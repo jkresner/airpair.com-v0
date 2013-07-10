@@ -1,88 +1,32 @@
-request = require 'superagent'
-CRUDApi = require './_crud'
 TagsSvc = require './../services/tags'
+authz     = require './../identity/authz'
+loggedIn  = authz.LoggedIn isApi:true
 
-class TagsApi extends CRUDApi
+class TagsApi
 
-  model: require './../models/tag'
   svc: new TagsSvc()
 
+  constructor: (app, route) ->
+    app.get     "/api/#{route}", loggedIn, @list
+    #app.get     "/api/#{route}/:id", loggedIn, @detail
+    app.post    "/api/#{route}", loggedIn, @create
+    app.put     "/api/#{route}/:id", loggedIn, @update
+    #app.delete  "/api/#{route}/:id", loggedIn, @delete
+
   create: (req, res) =>
-    console.log 'create', 'addMode', req.body.addMode
-    if req.body.addMode is 'stackoverflow' then @getStackoverflowTag(req, res)
-    else if req.body.addMode is 'github' then @getGithubRepo(req, res)
-    else @model( req.body ).save (e, r) -> res.send r
+    @svc.create req.body.addMode, req.body, (e, r) -> 
+      if e?
+        res.send 400, { errors: { message: e.message } }
+      else
+        res.send r
+
+  update: (req, res) =>
+    $log 'updating', req.params.id, req.body
+    @svc.update req.params.id, req.body, (r) -> 
+      res.send r
+
 
   list: (req, res) => @svc.getAll (r) -> res.send r
-
-  getStackoverflowTag: (req, res) =>
-    encoded = encodeURIComponent req.body.nameStackoverflow
-
-    request
-      .get("http://api.stackexchange.com/tags/#{encoded}/wikis?site=stackoverflow")
-      .end (sres) =>
-
-        if sres.ok
-          d = sres.body.items[0]
-
-          if d?
-            update =
-              name: d.tag_name
-              short: d.tag_name
-              soId: d.tag_name
-              desc: d.excerpt
-
-#            console.log 'update', update
-
-            return @model.findOneAndUpdate soId: d.tag_name, update, { upsert: true }, (e, r) ->
-              res.send r
-
-        return res.send 400, { errros: { message: sres.text } }
-
-
-  getGithubRepo: (req, res) =>
-
-    request
-      .get("https://api.github.com/repos/#{req.body.nameGithub}")
-      .end (sres) =>
-
-        if sres.ok
-          d = sres.body
-
-          if d?
-            if d.watchers_count < 20
-              return res.send 400, { errros: { message: "#{d.full_name} has less than 20 watchers cannot add tag" } }
-
-            search = ghId: d.id
-            if req.body._id? && req.body.soId?
-              search = soId: req.body.soId
-
-            update =
-              name: d.name
-              short: d.name
-              desc: d.description
-              ghId: d.id
-              gh:
-                id: d.id
-                name: d.name
-                full: d.full_name
-                watchers: d.watchers_count
-                language: d.language
-                owner:
-                  id: d.owner.id
-                  login: d.owner.login
-                  url: d.owner.url
-                  avatar: d.owner.avatar_url
-
-              tokens: "#{d.full_name}"
-
-            #console.log 'update', update
-
-            return @model.findOneAndUpdate search, update, { upsert: true }, (e, r) ->
-              res.send r
-
-        return res.send 400, { errros: { message: sres.text } }
-
 
 
 module.exports = (app) -> new TagsApi app,'tags'
