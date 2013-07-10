@@ -23,7 +23,11 @@ module.exports = class DomainService
 
 
   update: (id, data, callback) =>
-    @model.findByIdAndUpdate(id, data).lean().exec (e, r) => callback r
+    ups = _.clone data
+    delete ups._id # so mongo doesn't complain
+    @model.findByIdAndUpdate(id, ups).lean().exec (e, r) => 
+      if e? then $log 'error', e
+      callback r
 
 
   newEvent: (usr, evtName, evtData) ->

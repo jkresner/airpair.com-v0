@@ -1,4 +1,5 @@
-CRUDApi = require './_crud'
+authz     = require './../identity/authz'
+loggedIn  = authz.LoggedIn isApi:true
 SettingsSvc   = require './../services/settings'
 
 class SettingsApi
@@ -6,9 +7,9 @@ class SettingsApi
   svc: new SettingsSvc()
 
   constructor: (app) ->
-    app.get     "/api/settings", @detail
-    app.post    "/api/settings", @create
-    app.put     "/api/settings", @update
+    app.get     "/api/settings", loggedIn, @detail
+    app.post    "/api/settings", loggedIn, @create
+    app.put     "/api/settings", loggedIn, @update
 
   detail: (req, res) =>
     @svc.getByUserId req.user._id, (r) -> res.send r

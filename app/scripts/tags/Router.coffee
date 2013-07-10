@@ -15,11 +15,10 @@ module.exports = class Router extends S.AirpairSessionRouter
 
   appConstructor: (pageData, callback) ->
     d =
-      selectedTags: new M.TagListModel()
       tags: new C.Tags()
     v =
       tagsView: new V.TagsView el: '#list', collection: d.tags
-      tagsInputView: new V.TagsInputView collection: d.tags, model: d.selectedTags
+      #tagsInputView: new V.TagsInputView collection: d.tags, model: d.selectedTags
 
     @resetOrFetch d.tags, pageData.tags
 
