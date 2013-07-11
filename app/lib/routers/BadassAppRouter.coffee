@@ -38,6 +38,8 @@ module.exports = class BadassAppRouter extends Backbone.Router
 
     @app = if @app? then _.extend @app, app else app
 
+    if callback? then callback()
+
     if @logging
       $log 'BadassRouter.app', @app
 
