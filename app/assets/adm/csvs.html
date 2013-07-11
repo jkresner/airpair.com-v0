@@ -6,6 +6,7 @@
     <title>airpair</title>
     <meta name="viewport" content="width=device-width">
     <link rel="stylesheet" href="/stylesheets/app.css">
+    <link rel="stylesheet" href="/stylesheets/admin.css">
 </head>
 
 <body id="admtagspage">
@@ -45,6 +46,7 @@
         $log('loaded')
 
         $.ajax({ url: "/api/experts" }).done(function ( data ) {
+          window.experts = data;
           i = 0;
           csv = '#\tname\temail\ttags\n';
           _.each(data, function(d) {
@@ -56,6 +58,7 @@
         });
 
         $.ajax({ url: "/api/admin/requests" }).done(function ( data ) {
+          window.requests = data;
           csv = '#\tcompany\temail\tname\n';
           i = 0;
           _.each(data, function(d) {
@@ -71,6 +74,7 @@
 
 
         $.ajax({ url: "/api/admin/users" }).done(function ( data ) {
+          window.users = data;
           i = 0;
           csv = '#\tname\temail\n';
           _.each(data, function(d) {
@@ -86,6 +90,31 @@
         });
 
       });
+
+      function findUserByName(name) {
+        usr = _.find(users,function(u) {
+          if (u.google)
+          {
+            return u.google.displayName == name;
+          }
+          else
+          {
+            return false;
+          }
+        });
+
+        if (usr)
+        {
+          if (usr.google) delete(usr.google.token)
+          if (usr.twitter) delete(usr.twitter.token)
+          if (usr.github) delete(usr.github.token)
+          if (usr.linkedin) delete(usr.linkedin.token)
+          if (usr.stack) delete(usr.stack.token)
+          if (usr.bitbucket) delete(user.bitbucket.token)
+        }
+
+        return JSON.stringify(usr);
+      }
 
   </script>
 
