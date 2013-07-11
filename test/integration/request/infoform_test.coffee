@@ -5,7 +5,7 @@ pageData = { session: data.users[0] }
 
 describe "Request: infoForm", ->
 
-  before -> hlpr.setInitApp '/scripts/request/Router'
+  before -> hlpr.setInitApp @, '/scripts/request/Router'
   afterEach -> hlpr.cleanTearDown @
   beforeEach -> hlpr.cleanSetup @, data.fixtures.request
 

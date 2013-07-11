@@ -33,11 +33,11 @@ exports.showsError = (input) ->
 allows us to redefine initApp() from one test to another
 since normally in a badass-backbone app it would be defined on the html
 page and we can't do that from a mocha test harness page """
-exports.setInitApp = (routerPath, sessionUser) ->
+exports.setInitApp = (ctx, routerPath, sessionUser) ->
 
   sessionUser = { authenticated: false } if !sessionUser?
 
-  window.initApp = (pageData) =>
+  window.initApp = (pageData, callback) ->
     # $log 'initApp', routerPath, pageData
 
     pageData = {} if !pageData?
@@ -63,7 +63,10 @@ exports.setInitApp = (routerPath, sessionUser) ->
     if window.router? then Backbone.history.stop()
 
     # set our global router object as normal in badass-backbone convention
-    window.router = new Router pageData
+    window.router = new Router pageData, callback
+    ctx.router = window.router
+    ctx.app = window.router.app
+
 
 """ cleanSetup
 called in conjunction with cleanTearDown:

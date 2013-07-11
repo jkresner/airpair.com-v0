@@ -8,7 +8,7 @@ V = require '/scripts/review/Views'
 describe "Review page: customer", ->
 
   before (done) ->
-    hlpr.setInitApp '/scripts/review/Router'
+    hlpr.setInitApp @, '/scripts/review/Router'
     hlpr.setSession 'jk', =>
       $.post('/api/requests',data.requests[7]).done (r) =>
         @r = r

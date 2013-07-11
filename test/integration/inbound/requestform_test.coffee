@@ -19,7 +19,7 @@ requests = [
 describe "Inbound: RequestView", ->
 
   before (done) ->
-    hlpr.setInitApp '/scripts/inbound/Router'
+    hlpr.setInitApp @, '/scripts/inbound/Router'
     hlpr.setSession 'jk', done
   afterEach -> hlpr.cleanTearDown @
   beforeEach (done) ->

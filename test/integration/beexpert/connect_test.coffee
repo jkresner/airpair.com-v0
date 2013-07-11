@@ -8,7 +8,7 @@ pageData = {}
 
 describe 'BeExpert:Views ConnectView =>', ->
 
-  before -> hlpr.setInitApp '/scripts/beexpert/Router'
+  before -> hlpr.setInitApp @, '/scripts/beexpert/Router'
   afterEach -> hlpr.cleanTearDown @
   beforeEach -> hlpr.cleanSetup @, data.fixtures.beexpert
 

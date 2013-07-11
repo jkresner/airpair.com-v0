@@ -6,7 +6,7 @@ V = require '/scripts/request/Views'
 
 describe 'Request:Views RequestFormView =>', ->
 
-  before -> hlpr.setInitApp '/scripts/request/Router'
+  before -> hlpr.setInitApp @, '/scripts/request/Router'
   afterEach -> hlpr.cleanTearDown @
   beforeEach ->
     hlpr.cleanSetup @, data.fixtures.request
