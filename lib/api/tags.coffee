@@ -15,14 +15,12 @@ class TagsApi
 
   create: (req, res) =>
     @svc.create req.body.addMode, req.body, (e, r) ->
-      $log 'in create callback', e, r
       if e?
         res.send 400, { errors: { message: e.message } }
       else
         res.send r
 
   update: (req, res) =>
-    $log 'updating', req.params.id, req.body
     @svc.update req.params.id, req.body, (r) ->
       res.send r
 
