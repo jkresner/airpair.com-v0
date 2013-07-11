@@ -5,3 +5,4 @@ module.exports =
   requestSuggested: require './requestSuggested'
   tags: require './tags'
   users: require './users'
+  fixtures: require './fixtures'

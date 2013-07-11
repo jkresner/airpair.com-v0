@@ -4,7 +4,6 @@ M = require '/scripts/review/Models'
 C = require '/scripts/review/Collections'
 V = require '/scripts/review/Views'
 
-fixture = "<div id='detail' class='route'><div id='request'></div></div>"
 
 describe "Review page: signed in expert", ->
 
@@ -17,7 +16,7 @@ describe "Review page: signed in expert", ->
 
   beforeEach ->
     window.location = "#"+@r._id
-    hlpr.cleanSetup @, fixture
+    hlpr.cleanSetup @, data.fixtures.review
 
   afterEach ->
     hlpr.cleanTearDown @

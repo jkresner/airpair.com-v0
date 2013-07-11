@@ -5,9 +5,6 @@ C = require '/scripts/review/Collections'
 V = require '/scripts/review/Views'
 
 
-fixture = "<div id='detail' class='route'><div id='request'></div></div>"
-
-
 describe "Review page: anonymous", ->
 
   before (done) ->
@@ -19,7 +16,7 @@ describe "Review page: anonymous", ->
 
   beforeEach ->
     window.location = "#"+@r._id
-    hlpr.cleanSetup @, fixture
+    hlpr.cleanSetup @, data.fixtures.review
 
   afterEach ->
     hlpr.cleanTearDown @

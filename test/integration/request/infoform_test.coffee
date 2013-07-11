@@ -1,14 +1,13 @@
 hlpr = require '/test/ui-helper'
 data = require '/test/data/all'
 
-fixture = "<div id='welcome' class='route'>welcome</div><div id='info' class='route'>info</div>"
 pageData = { session: data.users[0] }
 
 describe "Request: infoForm", ->
 
   before -> hlpr.setInitApp '/scripts/request/Router'
   afterEach -> hlpr.cleanTearDown @
-  beforeEach -> hlpr.cleanSetup @, fixture
+  beforeEach -> hlpr.cleanSetup @, data.fixtures.request
 
   it 'missing full name & email fires validation', (done) ->
     initApp pageData

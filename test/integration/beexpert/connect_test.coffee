@@ -4,17 +4,13 @@ M = require 'scripts/beexpert/Models'
 C = require 'scripts/beexpert/Collections'
 V = require 'scripts/beexpert/Views'
 
-fixture = """<div id='welcome' class='route'>welcome</div>
-          <div id='connect' class='route'><div id="connectForm"></div></div>
-          <div id="info" class="route">info</div>"""
-
 pageData = {}
 
 describe 'BeExpert:Views ConnectView =>', ->
 
   before -> hlpr.setInitApp '/scripts/beexpert/Router'
   afterEach -> hlpr.cleanTearDown @
-  beforeEach -> hlpr.cleanSetup @, fixture
+  beforeEach -> hlpr.cleanSetup @, data.fixtures.beexpert
 
 
   it 'can continue with fabian user details', (done) ->

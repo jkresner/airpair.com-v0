@@ -1,15 +1,13 @@
 hlpr = require '/test/ui-helper'
 data = require '/test/data/all'
 
-fixture = "<div id='welcome' class='route'>welcome</div>
-           <div id='info' class='route'>info</div>"
 pageData = {}
 
 describe "Request: customer signin", ->
 
   before -> hlpr.setInitApp '/scripts/request/Router'
   afterEach -> hlpr.cleanTearDown @
-  beforeEach -> hlpr.cleanSetup @, fixture
+  beforeEach -> hlpr.cleanSetup @, data.fixtures.request
 
   it 'not signed in shows step 1', ->
     initApp session: { authenticated: false }
