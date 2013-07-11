@@ -9,7 +9,7 @@ module.exports = class TagsService extends DomainService
     console.log 'create', 'addMode', addMode
     if addMode is 'stackoverflow' then @getStackoverflowTag(tag, callback)
     else if addMode is 'github' then @getGithubRepo(tag, callback)
-    else @model( tag ).save (e, r) -> res.send r
+    else @model( tag ).save (e, r) -> callback r
 
 
   getStackoverflowTag: (tag, callback) =>
@@ -29,12 +29,11 @@ module.exports = class TagsService extends DomainService
               soId: d.tag_name
               desc: d.excerpt
 
-#            console.log 'update', update
-
             return @model.findOneAndUpdate soId: d.tag_name, update, { upsert: true }, (e, r) ->
-              res.send r
+              callback e, r
 
-        return { e: { message: sres.text } }
+        # console.log 'failed', sres.body
+        return callback { e: { message: "tag #{tag.nameStackoverflow} found" } }
 
 
   getGithubRepo: (tag, callback) =>
