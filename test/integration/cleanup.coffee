@@ -1,6 +1,6 @@
 {expect,dbConnect,dbDestroy} = require('./../server/test-lib-setup')
 
-describe "Server-side suite cleanup", ->
+describe "Integration suite cleanup", ->
 
   before (done) -> dbConnect done
   after (done) -> dbDestroy done
