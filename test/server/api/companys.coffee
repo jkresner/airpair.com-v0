@@ -14,7 +14,6 @@ describe "REST api companys", ->
 
 
   it "can not create company if not authenticated", (done) ->
-    expect(false).to.equal true
     passportMock.setSession 'jk'
     @company = data.companys[1]
     http(app).post('/api/companys/')
