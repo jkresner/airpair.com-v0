@@ -221,7 +221,16 @@ class exports.RequestInfoView extends BB.BadassView
   el: '#info'
   tmpl: require './templates/Info'
   render: ->
-    @$el.html @tmpl @request.extend isCustomer: @request.isCustomer(@session), total: @hrTotal()
+    hasAvailableExperts = false
+    if @request.get('suggested')?
+      for s in @request.get('suggested')
+        if s.status is 'available' then hasAvailableExperts = true
+    d =
+      isCustomer: @request.isCustomer @session
+      total: @hrTotal()
+      hasAvailableExpert: hasAvailableExperts
+
+    @$el.html @tmpl @request.extend(d)
     @
   hrTotal: -> #TODO remove from view and put into model
     t = @mget('budget')

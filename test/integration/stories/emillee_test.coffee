@@ -71,13 +71,15 @@ describe "Story: Emil Lee", ->
       expect($row.find('.edit').attr('href')).to.equal "/find-an-expert/edit/#{@rId}"
       done()
 
-  # it 'can review request with no experts by customer', (done) ->
-  #   {request,requestView} = @app
-  #   v = requestView
-  #   expect( v.$('.brief').html() ).to.equal request.get('brief')
-  #   expect( v.$('#customerReview p').html() ).to.equal 'Experts not yet suggested ... '
-  #   expect( v.$('.book-actions').is('visible') ).to.equal false
-  #   done()
+  it 'can review request with no experts by customer', (done) ->
+    {request,requestView} = @app
+    v = requestView
+
+    @app.request.once 'change', =>
+      expect( v.$('.brief').html() ).to.equal request.get('brief')
+      expect( v.$('#noExpertsYet').html() ).to.equal 'Experts not yet suggested ... '
+      expect( v.$('.book-actions').is('visible') ).to.equal false
+      done()
 
   # it 'can update request by customer', (done) ->
     # {infoFormView,requestFormView} = @app
