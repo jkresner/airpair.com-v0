@@ -1,5 +1,5 @@
 #requestpage .muted { font-size:12px;font-style:italic; }
-#requestpage .save { width:120px; }
+#requestpage .save { width:120px; text-align: center;}
 #requestpage .form-actions { margin:40px 0 0 0;border-top:1px solid gray }
 
 #requestpage .twitter-typeahead input { width:280px; }
