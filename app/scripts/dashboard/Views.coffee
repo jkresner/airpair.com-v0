@@ -24,7 +24,7 @@ class exports.RequestsView extends Backbone.View
   el: '#requestslist'
   tmpl: require './templates/Requests'
   initialize: (args) ->
-    @collection.on 'reset add remove filter', @render, @
+    @listenTo @collection, 'reset add remove filter', @render
   render: ->
     @$el.html @tmpl { hasRequests: @collection.length > 0 }
     $list = @$('tbody').html ''

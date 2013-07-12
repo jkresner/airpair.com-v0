@@ -36,7 +36,7 @@ class exports.BookSummaryView extends BB.BadassView
   el: '#summary'
   tmpl: require './templates/BookSummary'
   initialize: (args) ->
-    @order.on 'change', @render, @
+    @listenTo @order, 'change', @render
   render: ->
     @order.setTotal()
     @$el.html @tmpl @order.toJSON()
@@ -48,7 +48,6 @@ class exports.BookExpertView extends BB.BadassView
   events:
     'change select': 'update'
   initialize: (args) ->
-    # @order.on 'change', @render, @
   render: ->
     @li = @model.lineItem @suggestion._id
     @$el.html @tmpl @li
@@ -240,7 +239,7 @@ class exports.RequestView extends BB.BadassView
     @customerReviewView = new exports.CustomerReviewView args
     expArgs = _.extend args, { model: new M.ExpertReview() }
     @expertReviewView = new exports.ExpertReviewView expArgs
-    @request.on 'change', @render, @
+    @listenTo @request, 'change', @render
   render: ->
     @infoView.render()
     meExpert = @request.suggestion @session.id
