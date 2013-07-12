@@ -7,7 +7,7 @@ describe "Request: infoForm", ->
 
   before (done) ->
     hlpr.setInitApp @, '/scripts/request/Router'
-    hlpr.setSession 'admin', done # note this test is expecting admin user
+    hlpr.setSession 'jk2', done
   beforeEach -> hlpr.cleanSetup @, data.fixtures.request
   afterEach -> hlpr.cleanTearDown @
 
@@ -15,6 +15,9 @@ describe "Request: infoForm", ->
     initApp pageData
     v = @app.infoFormView
     checkValidationErrors = ->
+      v.$("#companyName").val('test 1 inc.')
+      v.$("#companyAbout").val('airpair 1 is fundamentally about sharing knowledge with the community. We use your session recording for educational purposes. Allowing the session recording to be public also helps our experts build a reputation for themselves.')
+
       v.$("#contactName").val('')
       v.$("#contactEmail").val('')
       v.$(".save").click()
@@ -39,6 +42,7 @@ describe "Request: infoForm", ->
     checkValidationErrors = ->
       v.$("#companyName").val('')
       v.$("#companyAbout").val('')
+
       v.$(".save").click()
       expect( hlpr.showsError(v.$("#contactName")) ).to.be.false
       expect( hlpr.showsError(v.$("#contactEmail")) ).to.be.false
