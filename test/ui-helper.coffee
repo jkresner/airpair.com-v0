@@ -59,12 +59,8 @@ exports.setInitApp = (ctx, routerPath, sessionUser) ->
 
       @superConstructor.call @, pageData, callback
 
-    # if we are running test for many routers we make sure the don't clash
-    if window.router? then Backbone.history.stop()
-
     # set our global router object as normal in badass-backbone convention
     window.router = new Router pageData, callback
-    ctx.router = window.router
     ctx.app = window.router.app
 
 
@@ -100,9 +96,12 @@ exports.cleanTearDown = (ctx) ->
 
   # stop our router doing anything before "beforeEach" executes for next test
   if window.router?
-    # so we can press refresh in the browser easily
-    router.navigate '#'
     Backbone.history.stop()
+    # so we can press refresh in the browser easily
+    delete ctx.app
+    delete window.router
+    window.location = '#'
+    # router.navigate '#'
 
 
 # """ createStub used for an object that doesn't yet have
