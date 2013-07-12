@@ -3,3 +3,5 @@ killall node
 brunch w -s -c config-test.coffee &
 mocha test/server/all.coffee
 mocha-phantomjs http://localhost:4444/test/index.html
+mocha test/integration/cleanup.coffee
+killall node
