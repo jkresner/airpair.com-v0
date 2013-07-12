@@ -23,18 +23,21 @@ module.exports = class Router extends S.AirpairSessionRouter
     v =
       requestView: new V.RequestView( request: d.request, session: @app.session )
 
-    reqSuccess = =>
-      if d.request.isCustomer(@app.session)
-        v.bookView = new V.BookView( model: d.order, request: d.request, session: @app.session ).render()
 
-    opts = error: @empty, success: reqSuccess
+    opts =
+      success: =>
+        if d.request.isCustomer(@app.session)
+          v.bookView = new V.BookView( model: d.order, request: d.request, session: @app.session ).render()
+      error: => @empty(v.requestView)
+
     @setOrFetch d.request, pageData.request, opts
     _.extend d, v
 
   initialize: (args) ->
 
-  empty: ->
-    $('#request').replaceWith '<div id="empty"><h2>Could not retrieve request for review</h2></div>'
+  empty: (v) =>
+    if !v? then v = @app.requestView
+    v.$el.replaceWith '<div id="empty"><h2>Could not retrieve request</h2></div>'
 
   detail: (id) ->
     if !id? then return @empty()

@@ -14,15 +14,14 @@ class TagsApi
     #app.delete  "/api/#{route}/:id", loggedIn, @delete
 
   create: (req, res) =>
-    @svc.create req.body.addMode, req.body, (e, r) -> 
+    @svc.create req.body.addMode, req.body, (e, r) ->
       if e?
         res.send 400, { errors: { message: e.message } }
       else
         res.send r
 
   update: (req, res) =>
-    $log 'updating', req.params.id, req.body
-    @svc.update req.params.id, req.body, (r) -> 
+    @svc.update req.params.id, req.body, (r) ->
       res.send r
 
 

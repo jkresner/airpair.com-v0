@@ -4,12 +4,11 @@ M = require '/scripts/review/Models'
 C = require '/scripts/review/Collections'
 V = require '/scripts/review/Views'
 
-fixture = "<div id='detail' class='route'><div id='request'></div></div>"
 
 describe "Review page: signed in expert", ->
 
   before (done) ->
-    hlpr.setInitApp '/scripts/review/Router'
+    hlpr.setInitApp @, '/scripts/review/Router'
     hlpr.setSession 'jk', =>
       $.post('/api/requests', data.requests[7]).done (r) =>
         @r = r
@@ -17,7 +16,7 @@ describe "Review page: signed in expert", ->
 
   beforeEach ->
     window.location = "#"+@r._id
-    hlpr.cleanSetup @, fixture
+    hlpr.cleanSetup @, data.fixtures.review
 
   afterEach ->
     hlpr.cleanTearDown @
@@ -27,8 +26,7 @@ describe "Review page: signed in expert", ->
     hlpr.setSession 'bearMountain', ->
 
     initApp session: data.users[4] # Jeffrey Camealy (not expert)
-    @router = window.router
-    rv = @router.app.requestView
+    rv = @app.requestView
 
     rv.request.once 'sync', =>
       m = rv.request
@@ -49,8 +47,7 @@ describe "Review page: signed in expert", ->
     hlpr.setSession 'artjumble', ->
     expert = data.users[5] # Steven Matthews (suggested)
     initApp session: expert
-    @router = window.router
-    rv = @router.app.requestView
+    rv = @app.requestView
     req = rv.request
     req.once 'sync', =>
 
@@ -73,9 +70,8 @@ describe "Review page: signed in expert", ->
     hlpr.setSession 'artjumble', ->
     expert = data.users[5] # Steven Matthews (suggested)
     initApp session: expert
-    @router = window.router
 
-    rv = @router.app.requestView
+    rv = @app.requestView
     v = rv.expertReviewView
     req = rv.request
 

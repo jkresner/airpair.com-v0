@@ -13,7 +13,7 @@ module.exports = class Router extends S.AirpairSessionRouter
     'info'          : 'info'
     'request'       : 'request'
     'thanks'        : 'thanks'
-    'update/:id'    : 'update'
+    'edit/:id'      : 'edit'
 
   appConstructor: (pageData, callback) ->
     d =
@@ -47,7 +47,7 @@ module.exports = class Router extends S.AirpairSessionRouter
     @app.request.set
       company: @app.company.attributes
 
-  update: (id) ->
+  edit: (id) ->
     @app.request.set '_id': id
     @app.request.fetch success: (model, opts, resp) =>
       @app.company.set '_id': model.get('company')._id

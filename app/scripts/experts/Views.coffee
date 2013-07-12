@@ -12,7 +12,7 @@ class exports.ExpertRowView extends BB.BadassView
   className: 'expert'
   tmpl: require './templates/Row'
   events: { 'click .deleteExpert': 'deleteExpert' }
-  initialize: -> @model.on 'change', @render, @
+  initialize: -> @listenTo @model, 'change', @render
   render: ->
     d = (_.extend @model.toJSON(), { hasLinks: @model.hasLinks() } )
     @$el.html @tmpl d
@@ -27,7 +27,7 @@ class exports.ExpertsView extends Backbone.View
   el: '#experts'
   events: { 'click .select': 'select' }
   initialize: (args) ->
-    @collection.on 'reset add remove filter', @render, @
+    @listenTo @collection, 'reset add remove filter', @render
   render: ->
     $list = @$('tbody').html ''
     for m in @collection.models
