@@ -4,8 +4,7 @@
   {{#each tags}}
     <span class="label label-tag">{{short}}</span>
   {{/each}}
-  <br />
-  {{brief}}</div>
+  <p class="brief">{{brief}}</p></div>
 <br />
 
 
@@ -54,7 +53,9 @@
   {{availability}}</div>
 
 {{#if isCustomer}}
-  <div class="form-actions">
+  {{#if hasAvailableExpert }}
+  <div class="form-actions book-actions">
     <a href="#book/{{_id}}" class="btn btn-warning btn-large">Book expert(s)</a>
   </div>
+  {{/if }}
 {{/if}}

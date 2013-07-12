@@ -1,12 +1,12 @@
 hlpr = require '/test/ui-helper'
-data = require '/test/data/inbound'
+data = require '/test/data/all'
 M = require '/scripts/inbound/Models'
 C = require '/scripts/inbound/Collections'
 V = require '/scripts/inbound/Views'
 
 rI = -1
 cloneReq = (id) ->
-  r = _.clone(_.find data.requests, (r) -> r._id is id)
+  r = _.clone(_.find data.inbound.requests, (r) -> r._id is id)
   delete r._id
   r
 
@@ -16,23 +16,20 @@ requests = [
   cloneReq '51c71ad46c50380200000006'
 ]
 
-fixture = """<div id="list" class="route"><div id="requests"></div></div>
-  <div id="request" class="route"></div>"""
-
 describe "Inbound: RequestView", ->
 
   before (done) ->
-    hlpr.setInitApp '/scripts/inbound/Router'
-    hlpr.setSession 'jk', done
+    hlpr.setInitApp @, '/scripts/inbound/Router'
+    hlpr.setSession 'admin', done
   afterEach -> hlpr.cleanTearDown @
   beforeEach (done) ->
     rI++
     window.location = "#"
-    hlpr.cleanSetup @, fixture
+    hlpr.cleanSetup @, data.fixtures.inbound
     r = new M.Request()
     r.save requests[rI], success: (model) =>
-      data.requests.push model.attributes
-      initApp data
+      data.inbound.requests.push model.attributes
+      initApp data.inbound
       @router = window.router
       @rID = model.id
       done()

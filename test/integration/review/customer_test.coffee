@@ -5,13 +5,10 @@ C = require '/scripts/review/Collections'
 V = require '/scripts/review/Views'
 
 
-fixture = "<div id='detail' class='route'><div id='request'></div></div>"
-
-
 describe "Review page: customer", ->
 
   before (done) ->
-    hlpr.setInitApp '/scripts/review/Router'
+    hlpr.setInitApp @, '/scripts/review/Router'
     hlpr.setSession 'jk', =>
       $.post('/api/requests',data.requests[7]).done (r) =>
         @r = r
@@ -19,17 +16,16 @@ describe "Review page: customer", ->
 
   beforeEach ->
     window.location = "#"+@r._id
-    hlpr.cleanSetup @, fixture
+    hlpr.cleanSetup @, data.fixtures.review
     customer = data.users[1] # JK
     initApp session: customer
-    @router = window.router
 
   afterEach ->
     hlpr.cleanTearDown @
 
 
   it "when reviewing as customer & expert hasn't replied", (done) ->
-    rv = @router.app.requestView
+    rv = @app.requestView
     req = rv.request
     req.once 'change', =>
 
@@ -47,7 +43,7 @@ describe "Review page: customer", ->
 
 
   it "when reviewing as customer & expert has replied", (done) ->
-    rv = @router.app.requestView
+    rv = @app.requestView
     req = rv.request
     req.once 'change', =>
       suggestion = _.extend(req.get('suggested')[0], data.requestSuggested[0])

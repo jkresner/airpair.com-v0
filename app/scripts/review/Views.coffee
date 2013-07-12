@@ -36,7 +36,7 @@ class exports.BookSummaryView extends BB.BadassView
   el: '#summary'
   tmpl: require './templates/BookSummary'
   initialize: (args) ->
-    @order.on 'change', @render, @
+    @listenTo @order, 'change', @render
   render: ->
     @order.setTotal()
     @$el.html @tmpl @order.toJSON()
@@ -48,7 +48,6 @@ class exports.BookExpertView extends BB.BadassView
   events:
     'change select': 'update'
   initialize: (args) ->
-    # @order.on 'change', @render, @
   render: ->
     @li = @model.lineItem @suggestion._id
     @$el.html @tmpl @li
@@ -71,7 +70,9 @@ class exports.BookView extends BB.ModelSaveView
   events:
     'click .pay': 'pay'
   initialize: (args) ->
+    window.PAYPAL = require '/scripts/providers/paypal'
     @$el.html @tmpl()
+    @embeddedPPFlow = new PAYPAL.apps.DGFlow trigger: 'submitBtn',type:'light'
     @summaryView = new exports.BookSummaryView order: @model
     @listenTo @request, 'change', @renderExperts
     @listenTo @model, 'change', @renderPay
@@ -220,7 +221,16 @@ class exports.RequestInfoView extends BB.BadassView
   el: '#info'
   tmpl: require './templates/Info'
   render: ->
-    @$el.html @tmpl @request.extend isCustomer: @request.isCustomer(@session), total: @hrTotal()
+    hasAvailableExperts = false
+    if @request.get('suggested')?
+      for s in @request.get('suggested')
+        if s.status is 'available' then hasAvailableExperts = true
+    d =
+      isCustomer: @request.isCustomer @session
+      total: @hrTotal()
+      hasAvailableExpert: hasAvailableExperts
+
+    @$el.html @tmpl @request.extend(d)
     @
   hrTotal: -> #TODO remove from view and put into model
     t = @mget('budget')
@@ -240,7 +250,7 @@ class exports.RequestView extends BB.BadassView
     @customerReviewView = new exports.CustomerReviewView args
     expArgs = _.extend args, { model: new M.ExpertReview() }
     @expertReviewView = new exports.ExpertReviewView expArgs
-    @request.on 'change', @render, @
+    @listenTo @request, 'change', @render
   render: ->
     @infoView.render()
     meExpert = @request.suggestion @session.id

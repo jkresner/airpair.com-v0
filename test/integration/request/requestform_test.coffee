@@ -4,16 +4,12 @@ M = require '/scripts/request/Models'
 C = require '/scripts/request/Collections'
 V = require '/scripts/request/Views'
 
-fixture = "<div id='welcome' class='route'>welcome</div>
-           <div id='info' class='route'>info</div>
-           <div id='request' class='route'><div id='requestForm'></div></div>"
-
 describe 'Request:Views RequestFormView =>', ->
 
-  before -> hlpr.setInitApp '/scripts/request/Router'
+  before -> hlpr.setInitApp @, '/scripts/request/Router'
   afterEach -> hlpr.cleanTearDown @
   beforeEach ->
-    hlpr.cleanSetup @, fixture
+    hlpr.cleanSetup @, data.fixtures.request
     @defaultData = brief: 'test brief', availability: "I am available", budget: 30, pricing: 'private', hours: '1'
     @request = new M.Request()
     @tags = new C.Tags( data.tags )

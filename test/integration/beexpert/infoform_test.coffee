@@ -4,17 +4,14 @@ M = require 'scripts/beexpert/Models'
 C = require 'scripts/beexpert/Collections'
 V = require 'scripts/beexpert/Views'
 
-fixture = """<div id='welcome' class='route'>welcome</div>
-          <div id='connect' class='route'><div id="connectForm"></div></div>
-          <div id="info" class="route"><div id="infoForm"></div></div>"""
 pageData = {}
 
 describe 'BeExpert:Views InfoFormView =>', ->
 
-  before -> hlpr.setInitApp '/scripts/beexpert/Router'
+  before -> hlpr.setInitApp @, '/scripts/beexpert/Router'
   afterEach -> hlpr.cleanTearDown @
   beforeEach ->
-    hlpr.cleanSetup @, fixture
+    hlpr.cleanSetup @, data.fixtures.beexpert
     @defaultData = _id: null, homepage: 'http://home.co', brief: 'test', rate: 40, status: 'busy', hours: '3-5'
     @expert = new M.Expert()
     @tags = new C.Tags( data.tags )

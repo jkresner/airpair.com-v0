@@ -17,11 +17,6 @@ app.configure ->
   app.use passportMock.initialize(app)
   app.use passport.session()
 
-data =
-  users: require './../data/users'
-  requests: require './../data/requests'
-  companys: require './../data/companys'
-  experts: require './../data/experts'
-  users: require './../data/users'
+data = require './../data/all'
 
 module.exports = {app,data,passportMock}
