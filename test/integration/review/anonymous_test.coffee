@@ -24,10 +24,9 @@ describe "Review page: anonymous", ->
   it 'review an id that does not exist', (done) ->
     window.location = "#"+@r._id.replace '5', '4'
     initApp session: { authenticated: false }
-    @router = window.router
 
-    rv = @router.app.requestView
-    rv.request.once 'error', =>
+    rv = @app.requestView
+    @app.request.once 'error', =>
       m = rv.request
       expect( $('#request').is(':visible') ).to.equal false
       expect( $('#empty').is(':visible') ).to.equal true
@@ -35,8 +34,7 @@ describe "Review page: anonymous", ->
 
   it 'when reviewing as anonymous user', (done) ->
     initApp session: { authenticated: false }
-    @router = window.router
-    rv = @router.app.requestView
+    rv = @app.requestView
 
     rv.request.once 'sync', =>
       m = rv.request
@@ -54,8 +52,7 @@ describe "Review page: anonymous", ->
 
   it '[preloaded] when reviewing as anonymous user', (done) ->
     initApp request: @r, session: { authenticated: false }
-    @router = window.router
-    rv = @router.app.requestView
+    rv = @app.requestView
 
     m = rv.request
 
@@ -65,7 +62,6 @@ describe "Review page: anonymous", ->
     expect( rv.$('#notExpertOrCustomer').is(':empty') ).to.equal false
     expect( rv.$('a.createProfile').is(':visible') ).to.equal true
     done()
-
 
   # it "when click be expert should take to be expert page", (done) ->
     # @stubs.requestFetch = sinon.stub M.Company::, 'fetch', -> @set data.companys[0]

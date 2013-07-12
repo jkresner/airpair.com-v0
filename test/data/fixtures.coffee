@@ -11,7 +11,9 @@ module.exports =
   inbound:   "<div id='list' class='route'><div id='requests'></div></div>
               <div id='request' class='route'></div>"
 
-  review:    "<div id='detail' class='route'><div id='request'></div></div>"
+  review:    "<div id='detail' class='route'><div id='request'></div></div>
+              <div id='book' class='route'></div>
+              <div id='empty' class='route'>"
 
   dashboard: "<div id='requests' class='route'></div>"
 

@@ -1,11 +1,11 @@
 hlpr = require '/test/ui-helper'
 data = require '/test/data/all'
-C = require '/scripts/request/Collections'
+Tags = require('/scripts/request/Collections').Tags
 f = data.fixtures
 
 storySteps = [
   { appName:'request', usr:'emilLee', frag: '#', fixture: f.request }
-  { appName:'dashbaord', usr:'emilLee', frag: '#', fixture: f.dashboard }
+  { appName:'dashboard', usr:'emilLee', frag: '#', fixture: f.dashboard }
   { appName:'review', usr:'emilLee', frag: 'rId', fixture: f.review }
   { appName:'request', usr:'emilLee', frag: '#', fixture: f.request }
   { appName:'review', usr:'anonymous', frag: '#', fixture: f.review }
@@ -24,7 +24,7 @@ describe "Story: Emil Lee", ->
 
 
   before (done) ->
-    @tagsFetch = sinon.stub C.Tags::, 'fetch', -> @set data.tags; @trigger 'sync'
+    @tagsFetch = sinon.stub Tags::, 'fetch', -> @set data.tags; @trigger 'sync'
     done()
 
   beforeEach (done) ->
@@ -60,7 +60,7 @@ describe "Story: Emil Lee", ->
       infoFormView.$('.save').click()
 
   # it 'can see request in dashboard by customer', (done) ->
-
+  #   done()
 
   #   requests
   #   # can see update link

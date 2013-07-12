@@ -26,8 +26,7 @@ describe "Review page: signed in expert", ->
     hlpr.setSession 'bearMountain', ->
 
     initApp session: data.users[4] # Jeffrey Camealy (not expert)
-    @router = window.router
-    rv = @router.app.requestView
+    rv = @app.requestView
 
     rv.request.once 'sync', =>
       m = rv.request
@@ -48,8 +47,7 @@ describe "Review page: signed in expert", ->
     hlpr.setSession 'artjumble', ->
     expert = data.users[5] # Steven Matthews (suggested)
     initApp session: expert
-    @router = window.router
-    rv = @router.app.requestView
+    rv = @app.requestView
     req = rv.request
     req.once 'sync', =>
 
@@ -72,9 +70,8 @@ describe "Review page: signed in expert", ->
     hlpr.setSession 'artjumble', ->
     expert = data.users[5] # Steven Matthews (suggested)
     initApp session: expert
-    @router = window.router
 
-    rv = @router.app.requestView
+    rv = @app.requestView
     v = rv.expertReviewView
     req = rv.request
 

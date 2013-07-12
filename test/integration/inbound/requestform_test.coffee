@@ -20,7 +20,7 @@ describe "Inbound: RequestView", ->
 
   before (done) ->
     hlpr.setInitApp @, '/scripts/inbound/Router'
-    hlpr.setSession 'jk', done
+    hlpr.setSession 'admin', done
   afterEach -> hlpr.cleanTearDown @
   beforeEach (done) ->
     rI++

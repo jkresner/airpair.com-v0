@@ -19,14 +19,13 @@ describe "Review page: customer", ->
     hlpr.cleanSetup @, data.fixtures.review
     customer = data.users[1] # JK
     initApp session: customer
-    @router = window.router
 
   afterEach ->
     hlpr.cleanTearDown @
 
 
   it "when reviewing as customer & expert hasn't replied", (done) ->
-    rv = @router.app.requestView
+    rv = @app.requestView
     req = rv.request
     req.once 'change', =>
 
@@ -44,7 +43,7 @@ describe "Review page: customer", ->
 
 
   it "when reviewing as customer & expert has replied", (done) ->
-    rv = @router.app.requestView
+    rv = @app.requestView
     req = rv.request
     req.once 'change', =>
       suggestion = _.extend(req.get('suggested')[0], data.requestSuggested[0])

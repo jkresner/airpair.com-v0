@@ -70,7 +70,9 @@ class exports.BookView extends BB.ModelSaveView
   events:
     'click .pay': 'pay'
   initialize: (args) ->
+    window.PAYPAL = require '/scripts/providers/paypal'
     @$el.html @tmpl()
+    @embeddedPPFlow = new PAYPAL.apps.DGFlow trigger: 'submitBtn',type:'light'
     @summaryView = new exports.BookSummaryView order: @model
     @listenTo @request, 'change', @renderExperts
     @listenTo @model, 'change', @renderPay

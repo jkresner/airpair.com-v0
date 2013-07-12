@@ -5,14 +5,15 @@ pageData = { session: data.users[0] }
 
 describe "Request: infoForm", ->
 
-  before -> hlpr.setInitApp @, '/scripts/request/Router'
-  afterEach -> hlpr.cleanTearDown @
+  before (done) ->
+    hlpr.setInitApp @, '/scripts/request/Router'
+    hlpr.setSession 'admin', done # note this test is expecting admin user
   beforeEach -> hlpr.cleanSetup @, data.fixtures.request
+  afterEach -> hlpr.cleanTearDown @
 
   it 'missing full name & email fires validation', (done) ->
     initApp pageData
-    v = router.app.infoFormView
-
+    v = @app.infoFormView
     checkValidationErrors = ->
       v.$("#contactName").val('')
       v.$("#contactEmail").val('')
@@ -26,13 +27,14 @@ describe "Request: infoForm", ->
       v.$(".save").click()
       expect( hlpr.showsError(v.$("#contactName")) ).to.be.false
       expect( hlpr.showsError(v.$("#contactEmail")) ).to.be.false
-      done()
 
-    router.app.company.once 'sync', checkValidationErrors, @
+      @app.company.once 'sync', => done()
+
+    @app.company.once 'sync', checkValidationErrors, @
 
   it 'company name & less than 100 words on about company fires validation', (done) ->
     initApp pageData
-    v = router.app.infoFormView
+    v = @app.infoFormView
 
     checkValidationErrors = ->
       v.$("#companyName").val('')
@@ -52,6 +54,7 @@ describe "Request: infoForm", ->
       v.$("#companyAbout").val('airpair is fundamentally about sharing knowledge with the community. We use your session recording for educational purposes. Allowing the session recording to be public also helps our experts build a reputation for themselves.')
       v.$(".save").click()
       expect( hlpr.showsError(v.$("#companyAbout")) ).to.be.false
-      done()
 
-    router.app.company.once 'sync', checkValidationErrors, @
+      @app.company.once 'sync', => done()
+
+    @app.company.once 'sync', checkValidationErrors, @
