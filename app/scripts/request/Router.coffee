@@ -6,6 +6,8 @@ V = require './Views'
 
 module.exports = class Router extends S.AirpairSessionRouter
 
+  # logging: on
+
   pushStateRoot: '/find-an-expert'
 
   routes:
@@ -36,8 +38,9 @@ module.exports = class Router extends S.AirpairSessionRouter
   info: ->
     if !@isAuthenticated() then return @navTo 'welcome'
 
-    @app.company.fetch success: (m, opts, resp) =>
-      m.populateFromGoogle @app.session
+    if @app.company.id == 'me'
+      @app.company.fetch success: (m, opts, resp) =>
+        m.populateFromGoogle @app.session
 
   request: ->
     if !@isAuthenticated() then return @navTo 'welcome'
@@ -48,7 +51,8 @@ module.exports = class Router extends S.AirpairSessionRouter
       company: @app.company.attributes
 
   edit: (id) ->
-    @app.request.set '_id': id
-    @app.request.fetch success: (model, opts, resp) =>
-      @app.company.set '_id': model.get('company')._id
-      @navTo 'info'
+    if !@app.request.id?
+      @app.request.set '_id': id
+      @app.request.fetch success: (model, opts, resp) =>
+        @app.company.set '_id': model.get('company')._id
+        @info()

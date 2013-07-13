@@ -1,11 +1,9 @@
-hlpr = require '/test/ui-helper'
-data = require '/test/data/all'
 M = require '/scripts/review/Models'
 C = require '/scripts/review/Collections'
 V = require '/scripts/review/Views'
 
 
-describe "Review page: signed in expert", ->
+describe "Review: signed in expert", ->
 
   before (done) ->
     hlpr.setInitApp @, '/scripts/review/Router'
