@@ -25,10 +25,10 @@ module.exports = class Router extends S.AirpairSessionRouter
 
 
     opts =
+      error: => @empty(v.requestView)
       success: =>
         if d.request.isCustomer(@app.session)
           v.bookView = new V.BookView( model: d.order, request: d.request, session: @app.session ).render()
-      error: => @empty(v.requestView)
 
     @setOrFetch d.request, pageData.request, opts
     _.extend d, v
