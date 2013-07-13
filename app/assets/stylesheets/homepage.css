@@ -23,7 +23,7 @@ nav div.social { float:right;width:76px }
 .jumbotron p { font-size:18px;font-weight:400;line-height:28px;margin-top:30px;text-align:center; }
 .jumbotron .col { float:left;width:46%;height:240px }
 
-h3 { font-weight: 400;color: #212F3B;font-size: 18px;float:left;line-height: 28px }
+h3 { font-weight: 400;color: #212F3B;font-size: 18px;float:left;/*line-height: 28px*/ }
 h2 { font-size:31.5px;margin:10px 0; }
 h2 span { color: #CC6750 }
 h2.yellow span { color: #99923F; }
@@ -55,6 +55,38 @@ a.green { background: #99923F;border: solid 3px #7F761C }
 
 .privateap { width:420px;height:236px;border:dotted 1px gray;margin:0px auto;position:relative; }
 .privateap i { display:block;margin:90px auto;font-style:normal;text-align:center; }
+
+.landing-page h2 { 
+    margin-top: 40px; 
+}
+
+.landing-page p { 
+    text-align: left; 
+}
+
+.landing-page .button {
+    float: none;
+    width: 190px;
+    padding: 10px 160px;
+    display: inline-block;
+}
+
+.landing-page .jumbotron {
+    height: 1050px;
+}
+
+.landing-page .asession {
+    margin: 30px;
+}
+
+.landing-page hr { 
+    clear:both;
+    border-bottom:dashed 1px #A4A4A5;
+    border-top:none;
+    border-left:none;
+    border-right:none 
+}
+
 
 #how h2 { margin-bottom:30px }
 #how .step { width:31%;float:left;margin-right:20px }
