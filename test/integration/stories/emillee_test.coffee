@@ -81,28 +81,25 @@ describe "Story: Emil Lee", ->
       expect( v.$('.book-actions').is('visible') ).to.equal false
       done()
 
-  # it 'can update request by customer', (done) ->
-    # {infoFormView,requestFormView} = @app
-    # @app.company.once 'sync', =>
-    #   infoFormView.elm('name').val 'WPack'
-    #   infoFormView.elm('url').val ''
-    #   infoFormView.elm('about').val 'Looking to build a professional networking website that helps users continuously accomplish their professional goals. For example, mutual introductions through connections.'
+  it 'can update request by customer', (done) ->
+    {infoFormView,requestFormView,company} = @app
+    company.once 'sync', =>
+      company.once 'sync', =>
+        requestFormView.$('.autocomplete').val('c++').trigger('input')
+        $(requestFormView.$('.tt-suggestion')[0]).click()
+        requestFormView.elm('brief').val 'I want help firstly with CSS / design. I will ask for assistance with building a "business card" online (using HTML / CSS), and then also a profile. After that, would like help building the front end interaction (JS/AJAX) and back end (rails/postgres).'
+        requestFormView.$('#pricingPrivate').click()
+        requestFormView.$('#budget2').click()
+        requestFormView.elm('availability').val('New York. Available after business hours on weekdays, any time weekends.')
 
-    #   @app.company.once 'sync', =>
-    #     requestFormView.$('.autocomplete').val('ruby').trigger('input')
-    #     $(requestFormView.$('.tt-suggestion')[0]).click()
-    #     requestFormView.elm('brief').val 'I want help firstly with CSS / design. I will ask for assistance with building a "business card" online (using HTML / CSS), and then also a profile. After that, would like help building the front end interaction (JS/AJAX) and back end (rails/postgres).'
-    #     requestFormView.$('#pricingOpensource').click()
-    #     requestFormView.$('#budget1').click()
-    #     requestFormView.elm('availability').val('New York. Available after business hours on weekdays, any time weekends.')
+        @app.request.once 'sync', (model, resp, opts) =>
+          expect( model.get('budget') ).to.equal 110
+          expect( model.get('pricing') ).to.equal 'private'
+          expect( model.get('tags').length ).to.equal 2
+          done()
 
-    #     @app.request.once 'sync', =>
-    #       @rId = @app.request.id
-    #       done()
-
-    #     requestFormView.$('.save').click()
-    #   infoFormView.$('.save').click()
-  #   done()
+        requestFormView.$('.save').click()
+      infoFormView.$('.save').click()
 
   # it 'can review request as anonymous', (done) ->
   #   done()
