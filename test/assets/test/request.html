@@ -37,6 +37,7 @@
   <script src="javascripts/test.js" defer></script>
   <script>
     $(function() {
+      require('test/integration/initialize');
       if (window.mochaPhantomJS) { mochaPhantomJS.run(); }
       else { mocha.run(); }
     });
