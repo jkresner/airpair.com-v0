@@ -1,8 +1,8 @@
 Ses    = require('awssum-amazon-ses').Ses
 
-# ses = new Ses
-#     accessKeyId     : process.env.AP_SES_ACCESS_KEY
-#     secretAccessKey : process.env.AP_SES_SECRET_KEY
+ses = new Ses
+    accessKeyId     : process.env.AP_SES_ACCESS_KEY
+    secretAccessKey : process.env.AP_SES_SECRET_KEY
 
 
 emailDefaults =
@@ -16,10 +16,9 @@ emailDefaults =
 
 
 send = (to, data, callback) ->
-  callback()
-  # data = und.defaults(data, emailDefaults)
-  # data.ToAddresses = [to]
-  # ses.SendEmail data, callback
+  data = und.defaults(data, emailDefaults)
+  data.ToAddresses = [to]
+  ses.SendEmail data, callback
 
 
 module.exports = { send }
