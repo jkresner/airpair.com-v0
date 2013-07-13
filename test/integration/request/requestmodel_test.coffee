@@ -1,4 +1,3 @@
-hlpr = require '/test/ui-helper'
 M = require '/scripts/request/Models'
 
 describe 'Request:Model =>', ->

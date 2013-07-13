@@ -1,6 +1,3 @@
-hlpr = require '/test/ui-helper'
-data = require '/test/data/all'
-
 pageData = {}
 
 describe "Request: customer signin", ->

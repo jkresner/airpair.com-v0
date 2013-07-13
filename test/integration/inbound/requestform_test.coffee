@@ -1,5 +1,3 @@
-hlpr = require '/test/ui-helper'
-data = require '/test/data/all'
 M = require '/scripts/inbound/Models'
 C = require '/scripts/inbound/Collections'
 V = require '/scripts/inbound/Views'

@@ -3,48 +3,17 @@
   <meta charset="utf-8">
   <title>Mocha Tests</title>
   <link rel="stylesheet" href="stylesheets/test.css" />
-  <script src="../javascripts/vendor.js"></script>
-  <script src="../javascripts/app.js"></script>
+  <script src="/javascripts/vendor.js"></script>
+  <script src="/javascripts/app.js"></script>
   <script src="javascripts/test-vendor.js"></script>
-  <script>
-    mocha.setup({
-
-      grep: 'Request:',
-      // grep: 'Request: info',
-
-      ui: 'bdd',
-
-      // variables declared in globals are ignored:
-      // https://github.com/cjohansen/Sinon.JS/issues/143
-      globals: [
-        'script*',
-        '__screenCapturePageContext__',
-        'setTimeout',
-        'setInterval',
-        'clearTimeout',
-        'clearInterval',
-        'initApp',
-        'router',
-        'Router',
-        '__e3_',
-        '_xdc_',
-        'jQuery*'
-      ]
-    });
-
-    window.expect = chai.expect;
-  </script>
+  <script src="javascripts/test-data.js"></script>
   <script src="javascripts/test.js" defer></script>
   <script>
     $(function() {
-      require('test/integration/initialize');
-      if (window.mochaPhantomJS) { mochaPhantomJS.run(); }
-      else { mocha.run(); }
+      grep = 'Request:';
+      require('test/integration/initialize')(grep);
     });
   </script>
-  <style>
-
-  </style>
 </head>
 <body>
   <div id="mocha"></div>
