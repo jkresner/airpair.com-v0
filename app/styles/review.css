@@ -1,4 +1,8 @@
 #reviewpage { }
+
+#reviewpage nav ul { float:right;margin:10px 0px 8px 8px;display:inline; }
+#reviewpage nav ul li { float:right;display:block;margin-left:5px }
+
 #reviewpage .main { }
 #reviewpage h2 { font-size:22px; }
 #reviewpage h5 .muted { font-weight:normal;font-size:12px;font-style:italic; }

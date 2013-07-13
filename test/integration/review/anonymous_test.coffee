@@ -1,11 +1,9 @@
-hlpr = require '/test/ui-helper'
-data = require '/test/data/all'
 M = require '/scripts/review/Models'
 C = require '/scripts/review/Collections'
 V = require '/scripts/review/Views'
 
 
-describe "Review page: anonymous", ->
+describe "Review: anonymous", ->
 
   before (done) ->
     hlpr.setInitApp @, '/scripts/review/Router'

@@ -12,8 +12,7 @@ module.exports =
               <div id='request' class='route'></div>"
 
   review:    "<div id='detail' class='route'><div id='request'></div></div>
-              <div id='book' class='route'></div>
-              <div id='empty' class='route'>"
+              <div id='book' class='route'></div>"
 
   dashboard: "<div id='requests' class='route'><div id='requestslist'></div></div>"
 

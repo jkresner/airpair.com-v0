@@ -1,5 +1,3 @@
-hlpr = require '/test/ui-helper'
-data = require '/test/data/all'
 M = require 'scripts/beexpert/Models'
 C = require 'scripts/beexpert/Collections'
 V = require 'scripts/beexpert/Views'

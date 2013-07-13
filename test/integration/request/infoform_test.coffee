@@ -1,6 +1,3 @@
-hlpr = require '/test/ui-helper'
-data = require '/test/data/all'
-
 pageData = { session: data.users[0] }
 
 describe "Request: infoForm", ->
