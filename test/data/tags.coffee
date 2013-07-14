@@ -28,8 +28,9 @@ module.exports = [
     "desc": "An open source asynchronous event-driven network application framework written in Java. Its a NIO client server framework which enables quick and easy development of network applications such as protocol servers and clients",
     "name": "netty", "short": "netty", "soId": "netty" },
   {
-    "_id": "516fbb851dd90b04cddccc9b",
+    "_id": "514825fa2a26ea020000002f",
     "desc": "Ruby on Rails is an open source full-stack web application framework written in Ruby. It follows the popular MVC framework model and is known for its &quot;convention over configuration&quot; approach to application development.",
     "name": "ruby-on-rails", "short": "ruby-on-rails", "soId": "ruby-on-rails"
   }
+  {"_id":"514825fa2a26ea0200000011","name":"CoffeeScript","short":"coffee","soId":"coffeescript"}
 ]

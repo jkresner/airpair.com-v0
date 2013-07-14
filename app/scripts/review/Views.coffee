@@ -12,6 +12,7 @@ Handlebars.registerPartial "Suggestion", require './templates/Suggestion'
 #############################################################################
 
 class exports.SuggestionView extends BB.BadassView
+  className: 'suggestion'
   tmpl: require './templates/Suggestion'
   initialize: (args) ->
     @reviewForm = new exports.CustomerReviewFormView args
@@ -195,7 +196,7 @@ class exports.CustomerReviewView extends BB.BadassView
     @$el.html @tmpl @request.toJSON()
     for s in @request.get('suggested')
       args = model: new M.CustomerReview(s), request: @request, session: @session
-      @$('.ul').append new exports.SuggestionView(args).render().el
+      @$('.suggested').append new exports.SuggestionView(args).render().el
     @
 
 
@@ -224,7 +225,7 @@ class exports.RequestInfoView extends BB.BadassView
     hasAvailableExperts = false
     if @request.get('suggested')?
       for s in @request.get('suggested')
-        if s.status is 'available' then hasAvailableExperts = true
+        if s.expertStatus is 'available' then hasAvailableExperts = true
     d =
       isCustomer: @request.isCustomer @session
       total: @hrTotal()
