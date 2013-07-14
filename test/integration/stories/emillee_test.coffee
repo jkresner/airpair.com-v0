@@ -146,7 +146,7 @@ describe "Stories: Emil Lee", ->
   it 'can review request and accept request as expert richkuo', (done) ->
     v = @app.requestView
     v.request.once 'change', =>
-
+      expect( v.$('.book-actions').is(':visible') ).to.equal false
       v.elm('expertRating').val 5
       v.elm('expertFeedback').val 'My skillset: Back end - Ruby developer with experience using Rails and Sinatra. Front end - Experience with JS, JQuery, and front end frameworks. Design - Experience with Photoshop, CSS, SCSS, Bootstrap, Foundation, UI/UX design. Business - Sales, marketing, product, strategy, data analysis.'
       v.elm('expertStatus').val('available').trigger 'change'
@@ -166,7 +166,7 @@ describe "Stories: Emil Lee", ->
   it 'can review request and decline request as expert', (done) ->
     v = @app.requestView
     v.request.once 'change', =>
-
+      expect( v.$('.book-actions').is(':visible') ).to.equal false
       v.elm('expertRating').val 2
       v.elm('expertFeedback').val "It seems like you need someone whose strength is more on the visual/UX design side, at least to start out. Happy to work with you when you're ready to move on to writing code."
       v.elm('expertStatus').val('abstained').trigger 'change'
@@ -183,8 +183,21 @@ describe "Stories: Emil Lee", ->
 
       done()
 
-  # it 'can review experts and book hours as customer', (done) ->
-  #   done()
+  it 'can review experts and book hours as customer', (done) ->
+    {request,requestView} = @app
+    v = requestView
+
+    request.once 'change', =>
+      expect( v.$('.brief').html() ).to.equal request.get('brief')
+      expect( v.$('.suggested .suggestion').length ).to.equal 3
+      expect( v.$('.book-actions').is(':visible') ).to.equal true
+
+      v.$('.book-actions btn').click()
+
+      # To be continued!
+
+      done()
+
 
   # it 'can schedule call as admin', (done) ->
   #   done()
