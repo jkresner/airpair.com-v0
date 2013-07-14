@@ -2,19 +2,19 @@ Tags = require('/scripts/request/Collections').Tags
 f = data.fixtures
 
 storySteps = [
-  { appName:'request', usr:'emilLee', frag: '#', fixture: f.request }
-  { appName:'dashboard', usr:'emilLee', frag: '#', fixture: f.dashboard }
-  { appName:'review', usr:'emilLee', frag: '#rId', fixture: f.review }
-  { appName:'request', usr:'emilLee', frag: '#edit/rId', fixture: f.request }
-  { appName:'review', usr:'anon', frag: '#rId', fixture: f.review }
-  { appName:'inbound', usr:'jk', frag: '#', fixture: f.inbound }
-  { appName:'review', usr:'richkuo', frag: '#rId', fixture: f.review }
-  { appName:'review', usr:'mattvanhorn', frag: '#rId', fixture: f.review }
-  { appName:'review', usr:'emilLee', frag: '#rId', fixture: f.review }
-  { appName:'inbound', usr:'jk', frag: '#', fixture: f.inbound }
-  { appName:'inbound', usr:'jk', frag: '#', fixture: f.inbound }
-  { appName:'feedback', usr:'mattvanhorn', frag: '#', fixture: f.feedback }
-  { appName:'feedback', usr:'emilLee', frag: '#', fixture: f.feedback }
+  { app:'request', usr:'emilLee', frag: '#', fixture: f.request, pageData: {} }
+  { app:'dashboard', usr:'emilLee', frag: '#', fixture: f.dashboard, pageData: {} }
+  { app:'review', usr:'emilLee', frag: '#rId', fixture: f.review, pageData: {} }
+  { app:'request', usr:'emilLee', frag: '#edit/rId', fixture: f.request, pageData: {} }
+  { app:'review', usr:'anon', frag: '#rId', fixture: f.review, pageData: {} }
+  { app:'inbound', usr:'admin', frag: '#', fixture: f.inbound, pageData: { experts: data.experts, tags: data.tags } }
+  { app:'review', usr:'richkuo', frag: '#rId', fixture: f.review, pageData: {} }
+  { app:'review', usr:'mattvanhorn', frag: '#rId', fixture: f.review, pageData: {} }
+  { app:'review', usr:'emilLee', frag: '#rId', fixture: f.review, pageData: {} }
+  { app:'inbound', usr:'jk', frag: '#', fixture: f.inbound, pageData: {} }
+  { app:'inbound', usr:'jk', frag: '#', fixture: f.inbound, pageData: {} }
+  { app:'feedback', usr:'mattvanhorn', frag: '#', fixture: f.feedback, pageData: {} }
+  { app:'feedback', usr:'emilLee', frag: '#', fixture: f.feedback, pageData: {} }
 ]
 
 testNum = -1
@@ -29,9 +29,10 @@ describe "Stories: Emil Lee", ->
     testNum++
     hlpr.cleanSetup @, storySteps[testNum].fixture
     window.location = storySteps[testNum].frag.replace 'rId', @rId
-    hlpr.setInitApp @, "/scripts/#{storySteps[testNum].appName}/Router"
+    hlpr.setInitApp @, "/scripts/#{storySteps[testNum].app}/Router"
     hlpr.setSession storySteps[testNum].usr, =>
-      initApp({}, done)
+      # $log 'app', storySteps[testNum].app, storySteps[testNum].pageData
+      initApp(storySteps[testNum].pageData, done)
 
   afterEach ->
     hlpr.cleanTearDown @
@@ -77,7 +78,6 @@ describe "Stories: Emil Lee", ->
       expect( v.$('#noExpertsYet').html() ).to.equal 'Experts not yet suggested ... '
       expect( v.$('.book-actions').is(':visible') ).to.equal false
       expect( v.$('.budget').is(':visible') ).to.equal true
-
       done()
 
   it 'can update request by customer', (done) ->
@@ -116,8 +116,32 @@ describe "Stories: Emil Lee", ->
       expect( v.$('#signin').is(':visible') ).to.equal true
       done()
 
-  # it 'can suggest experts as admin', (done) ->
-  #   done()
+  it 'can suggest experts as admin', (done) ->
+    rv = @app.requestView
+
+    @app.requests.once 'sync', =>
+      router.navTo "##{@rId}"
+
+      expect( rv.$el.is(':visible') ).to.equal true
+
+      richkuo = rv.$('[data-id=51a4d2b47021eb0200000009]') # Richard Kuo
+      reQunix = rv.$('[data-id=51a466707021eb0200000004]') # Michael Prins
+      mattvanhorn = rv.$('[data-id=51b0c417900c860200000018]') # Matthew Van Horn
+
+      saved = 0
+      rv.model.on 'sync', =>
+        saved++
+        if saved is 3
+          expect( rv.mget('suggested').length ).to.equal 3
+          expect( rv.mget('suggested')[0].expert._id ).to.equal '51a4d2b47021eb0200000009'
+          expect( rv.mget('suggested')[1].expert._id ).to.equal '51a466707021eb0200000004'
+          expect( rv.mget('suggested')[2].expert._id ).to.equal '51b0c417900c860200000018'
+          done()
+
+      richkuo.click()
+      reQunix.click()
+      mattvanhorn.click()
+
 
   # it 'can review request and accept request as expert', (done) ->
   #   done()
