@@ -33,63 +33,18 @@ class exports.SuggestionView extends BB.BadassView
 ## Book
 #############################################################################
 
-class exports.BookSummaryView extends BB.BadassView
-  el: '#summary'
+
+class exports.OrderView extends BB.ModelSaveView
+  el: '#order'
   tmpl: require './templates/BookSummary'
-  initialize: (args) ->
-    @listenTo @order, 'change', @render
-  render: ->
-    @order.setTotal()
-    @$el.html @tmpl @order.toJSON()
-    @
-
-
-class exports.BookExpertView extends BB.BadassView
-  tmpl: require './templates/BookExpert'
-  events:
-    'change select': 'update'
-  initialize: (args) ->
-  render: ->
-    @li = @model.lineItem @suggestion._id
-    @$el.html @tmpl @li
-    @elm('pricing').val @li.pricing
-    @elm('qty').val @li.qty
-    @
-  update: ->
-    @li = @model.lineItem @suggestion._id
-    @li.type = @elm('pricing').val()
-    @li.qty = parseInt( @elm('qty').val() )
-    @li.unitPrice = @suggestion.suggestedRate[@li.pricing].total
-    @li.total = @li.qty * @li.unitPrice
-    @model.trigger 'change'
-    @render()
-
-
-class exports.BookView extends BB.ModelSaveView
-  el: '#book'
-  tmpl: require './templates/BookInfo'
   events:
     'click .pay': 'pay'
   initialize: (args) ->
-    window.PAYPAL = require '/scripts/providers/paypal'
-    @$el.html @tmpl()
-    @embeddedPPFlow = new PAYPAL.apps.DGFlow trigger: 'submitBtn',type:'light'
-    @summaryView = new exports.BookSummaryView order: @model
-    @listenTo @request, 'change', @renderExperts
-    @listenTo @model, 'change', @renderPay
-  renderExperts: ->
-    if @request.get('suggested')?
-      @model.set requestId: @request.id, 'lineItems': []
-      pricing = @request.get('pricing')
-      @$('ul').html ''
-      for s in @request.get('suggested')
-        item = suggestion: s, qty: 0, total: 0, pricing: @request.get('pricing'), unitPrice: s.suggestedRate[pricing].total
-        @model.get('lineItems').push item
-        @$('ul').append( new exports.BookExpertView(suggestion:s,request:@request,model:@model).render().el )
-    @
-  renderPay: ->
+    @listenTo @model, 'change', @render
+  render: ->
+    @model.setTotal()
+    @$('#summary').html @tmpl @model.toJSON()
     @$('#pay').toggle @mget('total') isnt 0
-    @$('#selecthours').toggle @mget('total') is 0
     @
   pay: (e) ->
     e.preventDefault()
@@ -100,8 +55,54 @@ class exports.BookView extends BB.ModelSaveView
   getViewData: ->
     @model.attributes
   renderSuccess: (model, resp, opts) ->
-    @$('#paykey').val resp.payKey
+    $log 'order', model.attributes
+    @$('#paykey').val model.attributes.payment.payKey
     @$('#submitBtn').click()
+
+
+class exports.BookExpertView extends BB.BadassView
+  className: 'bookableExpert'
+  tmpl: require './templates/BookExpert'
+  events:
+    'change select': 'update'
+  initialize: (args) ->
+  render: ->
+    @li = @model.lineItem @suggestion._id
+    @$el.html @tmpl @li
+    @elm('type').val @li.type
+    @elm('qty').val @li.qty
+    @
+  update: ->
+    @li.type = @elm('type').val()
+    @li.qty = parseInt( @elm('qty').val() )
+    @li.unitPrice = @suggestion.suggestedRate[@li.type].total
+    @li.total = @li.qty * @li.unitPrice
+    @model.trigger 'change'
+    @render()
+
+
+class exports.BookView extends BB.BadassView
+  el: '#book'
+  tmpl: require './templates/BookInfo'
+  initialize: (args) ->
+    @$el.html @tmpl()
+    window.PAYPAL = require '/scripts/providers/paypal'
+    @embeddedPPFlow = new PAYPAL.apps.DGFlow trigger: 'submitBtn',type:'light'
+    @orderView = new exports.OrderView model: @model
+    @listenTo @request, 'change', @render
+    @listenTo @model, 'change', =>
+      @$('#selecthours').toggle @mget('total') is 0
+  render: ->
+    if @request.get('suggested')?
+      @model.set requestId: @request.id, 'lineItems': []
+      defaultPricing = @request.get('pricing')
+      @$('ul').html ''
+      for s in @request.get('suggested')
+        if s.expertStatus is 'available'
+          item = suggestion: s, qty: 0, total: 0, type: defaultPricing, unitPrice: s.suggestedRate[defaultPricing].total
+          @model.get('lineItems').push item
+          @$('ul').append( new exports.BookExpertView(suggestion:s,request:@request,model:@model).render().el )
+    @
 
 
 #############################################################################

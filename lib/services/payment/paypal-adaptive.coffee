@@ -3,6 +3,7 @@ request = require 'superagent'
 
 config =
   docs:
+    AP: 'http://localhost:3333'
     Endpoint: 'https://svcs.sandbox.paypal.com/AdaptivePayments'
     PrimaryReceiver: 'jk-facilitator@airpair.com'
     SECURITYUSERID: 'caller_1312486258_biz_api1.gmail.com',
@@ -11,6 +12,7 @@ config =
     APPLICATIONID: 'APP-80W284485P519543T'
 
   test:
+    AP: 'http://localhost:4444'
     Endpoint: 'https://svcs.sandbox.paypal.com/AdaptivePayments'
     PrimaryReceiver: 'jk-facilitator@airpair.com'
     SECURITYUSERID: 'jk-facilitator_api1.airpair.com',
@@ -19,6 +21,7 @@ config =
     APPLICATIONID: 'APP-80W284485P519543T'
 
   prod:
+    AP: 'http://www.airpair.com'
     Endpoint: 'https://svcs.paypal.com/AdaptivePayments'
     PrimaryReceiver: 'jk@airpair.com'
     SECURITYUSERID: 'jk_api1.airpair.com',
@@ -27,12 +30,12 @@ config =
     APPLICATIONID: 'APP-7AK038815Y6144228'
 
 
-payloadDefault =
+payloadDefault = (cfg) ->
   actionType:      "PAY_PRIMARY"
   currencyCode:    "USD"
   feesPayer:       "EACHRECEIVER"
-  returnUrl:       "http://www.airpair.com/paypal/success"
-  cancelUrl:       "http://www.airpair.com/paypal/cancel"
+  returnUrl:       "#{cfg.AP}/paypal/success"
+  cancelUrl:       "#{cfg.AP}/paypal/cancel"
   requestEnvelope: { errorLanguage:"en_US", detailLevel:"ReturnAll" }
   receiverList:    receiver: []
 
@@ -41,28 +44,31 @@ module.exports = class PaypalAdaptive
 
   cfg: config.test
 
-
   constructor: () ->
-
 
   Pay: (order, callback) ->
     order.paymentType = 'paypal'
     airpairMargin = order.total
-    payload = _.clone payloadDefault
-    payload.memo = "$#{total} #{fullName}"   # {orderId}
+    payload = payloadDefault(@cfg)
+    payload.memo = "$#{order.total} #{order.fullName}"   # {orderId}
 
     for item in order.lineItems
-      airpairMargin -= item.total
-      payeePaypalEmail = item.suggestion.expert.paymentSettings.paypal.id
-      receiverList.receiver.push
+      expertsHrRate = item.suggestion.suggestedRate[item.type].expert
+      expertsTotal = item.qty * expertsHrRate
+      airpairMargin -= expertsTotal
+      payeePaypalEmail = "expert02@airpair.com" # item.suggestion.expert.paymentSettings.paypal.id
+      payload.receiverList.receiver.push
         primary:  false
         email:    payeePaypalEmail
-        amount:   item.total
+        amount:   @formatCurrency(expertsTotal)
 
-    receiverList.receiver.push
+    payload.receiverList.receiver.push
       primary:  true
       email:    @cfg.PrimaryReceiver
-      amount:   airpairMargin
+      amount:   @formatCurrency(order.total)
+
+    order.profit = airpairMargin
+    $log 'PayPal.post.receiverList', payload.receiverList.receiver
 
     @postPayload "#{@cfg.Endpoint}/Pay", payload, callback
 
@@ -78,6 +84,7 @@ module.exports = class PaypalAdaptive
 
 
   postPayload: (endpoint, payload, callback) ->
+    winston.log "PayalPost: #{endpoint}", payload
     request
       .post(endpoint)
       .send(payload)
@@ -88,8 +95,13 @@ module.exports = class PaypalAdaptive
       .set('X-PAYPAL-RESPONSE-DATA-FORMAT', 'JSON')
       .set('X-PAYPAL-APPLICATION-ID', @cfg.APPLICATIONID)
       .end (res) =>
+        $log "PayalResponse: #{endpoint}", res.body
+        winston.log "PayalResponse: #{endpoint}", res.body
         callback res.body
 
+  formatCurrency: (num) =>
+    num = (if isNaN(num) or num is "" or num is null then 0.00 else num)
+    parseFloat(num).toFixed(2)
 
 # payloadExample1 =
 #   actionType:"PAY"

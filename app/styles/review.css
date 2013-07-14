@@ -10,7 +10,7 @@
 #reviewpage #colb { min-height:800px;background:white;width:46%;padding:0 2% 0 2%;float:right }
 
 #reviewpage .customerFeedback hr { margin:10px 0; }
-#reviewpage .expert { float:right;margin-bottom:20px;  }
+#reviewpage .suggested .expert { float:right;margin-bottom:20px;  }
 
 #reviewpage .suggestionInfo { float:left;width:260px }
 #reviewpage .suggestionInfo .label { padding:3px 10px 3px 10px; }
@@ -48,16 +48,18 @@
 
 #reviewpage .leftCol { width:836px }
 #reviewpage .rightCol { width:360px;padding:0 20px 20px 20px;background:white;text-align:center; }
-#reviewpage .form-actions { border-top: 1px solid gray; }
+#reviewpage .form-actions { border-top: 1px solid gray;min-height:50px;margin-bottom:0; }
 
-#reviewpage ul#experts { padding:0;margin:0 }
-#reviewpage ul#experts .expertMini { float:left }
-#reviewpage ul#experts .expertMini .pic { width:80px;height:80px }
-#reviewpage ul#experts .expertOptions { float:left;margin-left:20px }
-#reviewpage ul#experts .expertOptions em { font-weight:normal;font-style:normal;color:gray }
+#reviewpage ul#bookableExperts { padding:0;margin:0;width:100%;min-height:200px }
+#reviewpage ul#bookableExperts .expertMini { float:left }
+#reviewpage ul#bookableExperts .expertMini .pic { width:80px;height:80px }
+#reviewpage ul#bookableExperts .expertOptions { float:left;margin-left:20px }
+#reviewpage ul#bookableExperts .expertOptions em { font-weight:normal;font-style:normal;color:gray }
 
 #reviewpage #selecthours { color:#99923F;font-weight:bold;margin:10px; }
 #reviewpage #book td { vertical-align:top }
 #reviewpage #book .fullName { line-height:16px; }
 #reviewpage #summary table { margin-top:22px; }
 #reviewpage #summary h1 { text-align:right; }
+
+#reviewpage .button-pay { margin:20px 0;width:87%;background:#99923F }
