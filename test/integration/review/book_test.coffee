@@ -19,7 +19,7 @@ describe "Review: book", ->
     initApp session: data.users[6], request: @r
 
   afterEach ->
-    # hlpr.cleanTearDown @
+    hlpr.cleanTearDown @
 
   it "can book expert hours as customer", (done) ->
     rv = @app.requestView
