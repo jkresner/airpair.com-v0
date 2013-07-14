@@ -143,11 +143,45 @@ describe "Stories: Emil Lee", ->
       mattvanhorn.click()
 
 
-  # it 'can review request and accept request as expert', (done) ->
-  #   done()
+  it 'can review request and accept request as expert richkuo', (done) ->
+    v = @app.requestView
+    v.request.once 'change', =>
 
-  # it 'can review request and decline request as expert', (done) ->
-  #   done()
+      v.elm('expertRating').val 5
+      v.elm('expertFeedback').val 'My skillset: Back end - Ruby developer with experience using Rails and Sinatra. Front end - Experience with JS, JQuery, and front end frameworks. Design - Experience with Photoshop, CSS, SCSS, Bootstrap, Foundation, UI/UX design. Business - Sales, marketing, product, strategy, data analysis.'
+      v.elm('expertStatus').val('available').trigger 'change'
+      v.elm('expertComment').val 'This looks great'
+      v.elm('expertAvailability').val 'New York. Available after business hours on weekdays, any time weekends. Eastern time.'
+
+      v.expertReviewView.model.once 'sync', =>
+        m = v.request
+        expect( m.get('suggested')[0].expert.username ).to.equal 'richkuo'
+        expect( m.get('suggested')[0].expertStatus ).to.equal 'available'
+        expect( m.get('suggested')[0].expertComment ).to.equal 'This looks great'
+
+      v.$('.saveFeedback').click()
+
+      done()
+
+  it 'can review request and decline request as expert', (done) ->
+    v = @app.requestView
+    v.request.once 'change', =>
+
+      v.elm('expertRating').val 2
+      v.elm('expertFeedback').val "It seems like you need someone whose strength is more on the visual/UX design side, at least to start out. Happy to work with you when you're ready to move on to writing code."
+      v.elm('expertStatus').val('abstained').trigger 'change'
+      v.elm('expertComment').val 'Nups'
+      v.elm('expertAvailability').val 'Unavailable'
+
+      v.expertReviewView.model.once 'sync', =>
+        m = v.request
+        expect( m.get('suggested')[2].expert.username ).to.equal 'mattvanhorn'
+        expect( m.get('suggested')[2].expertStatus ).to.equal 'abstained'
+        expect( m.get('suggested')[2].expertComment ).to.equal 'Nups'
+
+      v.$('.saveFeedback').click()
+
+      done()
 
   # it 'can review experts and book hours as customer', (done) ->
   #   done()
