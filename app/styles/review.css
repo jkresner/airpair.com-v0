@@ -8,9 +8,9 @@
 #reviewpage h5 .muted { font-weight:normal;font-size:12px;font-style:italic; }
 #reviewpage #cola { height:100%;width:46%;padding:0 2% 3% 1%;float:left; }
 #reviewpage #colb { min-height:800px;background:white;width:46%;padding:0 2% 0 2%;float:right }
+#reviewpage #colb .expert { float:right;margin-bottom:20px;  }
 
 #reviewpage .customerFeedback hr { margin:10px 0; }
-#reviewpage .suggested .expert { float:right;margin-bottom:20px;  }
 
 #reviewpage .suggestionInfo { float:left;width:260px }
 #reviewpage .suggestionInfo .label { padding:3px 10px 3px 10px; }
