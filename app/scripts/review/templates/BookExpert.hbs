@@ -5,7 +5,8 @@
     {{#with suggestion.expert}}
     <div class="fullName">
       {{ name }}
-      {{#if username }}<br />@{{ username }}
+      {{#if username }}
+      <span class="username">@{{ username }}</span>
     {{/if}}
     </div>
     <hr />
@@ -35,7 +36,7 @@
     <div class="control-group">
       {{! <label class="control-label" for="priving">Privacy requirements</label> }}
       <div class="controls">
-          <select name="pricing">
+          <select name="type">
             <option value="opensource">Open source</option>
             <option value="private">Private</option>
             <option value="nda">Non-disclosure agreement</option>
@@ -48,7 +49,7 @@
 <div class="expertOptions">
   Expert total
   <div>
-    <h3>$<span>{{ total }}</span></h3>
-    <h4>$<span>{{ unitPrice }}</spam> <em>x</em> <span>{{ qty }}</span> hrs</h4>
+    <h3>$<span class="total">{{ total }}</span></h3>
+    <h4>$<span class="unitPrice">{{ unitPrice }}</span> <em>x</em> <span class="qty">{{ qty }}</span> hrs</h4>
   </div>
 </div>

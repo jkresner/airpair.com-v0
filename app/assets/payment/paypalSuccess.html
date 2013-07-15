@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>airpair, dashboard</title>
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="/stylesheets/app.css">
+</head>
+
+<body style="border:solid 2px black;height:546px">
+
+  <nav>
+    <div>
+      <a class="logo" href="/" target="_top"><img src="/images/logo4.png" /></a>
+    </div>
+  </nav>
+
+  <div id="paymentSuccess" style="padding:30px">
+    <h1>Thank you!</h1>
+    <p class="success">Your payment was successful.</p>
+    <br />
+    <p>You can purchase additional expert hours at any time
+      from your <a id="aRequestPage" href="#" target="_top">request page</a>.</p>
+    <br />
+    <a href="/" class="button" target="_top">Return to dashboard</a>
+  </div>
+
+  <script type="text/javascript">
+    var pageData = { order: {{{ order }}} };
+    document.getElementById('aRequestPage').href='/review/'+pageData.order.requestId;
+  </script>
+
+</body>
+
+</html>

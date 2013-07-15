@@ -80,45 +80,37 @@ Tests should run on every push. To setup locally
 - docs on sinon chai syntax            chaijs.com/plugins/sinon-chai
 
 
-List of TODO next
+List of TODO next (v.5)
 ===============================================================================
 
+- Admin execute payment for secondary receivers
+- Collect paypal settings from expert on review + Expert agree to call rate
+
+TODO v.6
+===============================================================================
+
+- [H] Admin schedule call & redeem hours
+- [H] "Book me" flows
 - [H] Transactional email
-- [H] Deploy Error logging / mailing
-- [H] Admin
-  - [H] Review Request as Customer
-- [H] Expert Review
-  - [H] Email notification to customer
-- [L] BUG: canceled reason after canceling and then browsing back
-
-TODO v.5
-===============================================================================
-
-- [H] Add linkedIn airpair share
-- [H] User to user messaging system
+- [H] Schedule / google calendar integration
+  - [M] Timezone calculator
+- [H] Chat / User to user messaging system
+- [M] Add linkedIn airpair share
 - [H] Split expert sign up into contact & prefs
-- [H] Write Test for update request
-- [M] Pull out hasLink and mail body saving to request/suggestion
 - [H] Ask if request can be farmed out to the public
-- [M] No suggested experts, signup / shared / refer
+- [M] Add github projects to tags
 - [M] improve tag search
 - [H] Show server error states for customer + expert sign in
-- [M] Protect api calls for owners of objects
 - [M] Mobile homepage
-- [M] Add github projects to tags
-- [H] Scheduling
-  - [M] Timezones
-- Remove experts with un-associated userIds (haven't logged in)
-- [M] Airpair techniques emails (How to intro, share code etc.)
-
+- [L] Remove experts with un-associated userIds (haven't logged in)
+- [L] Airpair techniques emails (How to intro, share code etc.)
+- [L] Pull out hasLink and mail body saving to request/suggestion
 
 TODO low priority
 ===============================================================================
 
-- [M] Downsize mongoHQ
-- [L] Try out two instances with redis
-- [Pete] consider flow: http://nvie.com/posts/a-successful-git-branching-model
-
+- [L] Try two instances with redis ?
+- [L] Downsize mongoHQ
 
 Ideas to airpair on
 ===============================================================================
