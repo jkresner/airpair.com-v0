@@ -1,0 +1,54 @@
+exports = {}
+BB = require './../../lib/BB'
+M = require './Models'
+Shared = require './../shared/Views'
+
+#############################################################################
+##  To render all experts for admin
+#############################################################################
+
+class exports.OrderRowView extends BB.BadassView
+  logging: on
+  tagName: 'tr'
+  className: 'order'
+  tmpl: require './templates/Row'
+  events: { 'click .deleteOrder': 'deleteOrder' }
+  initialize: -> @listenTo @model, 'change', @render
+  render: ->
+    @$el.html @tmpl @model.toJSON()
+    @
+  deleteOrder: ->
+    $log 'deleting', @model.attributes
+    @model.destroy()
+    @$el.remove()
+
+
+class exports.OrdersView extends Backbone.View
+  logging: on
+  el: '#orders'
+  events: { 'click .select': 'select' }
+  initialize: (args) ->
+    @listenTo @collection, 'reset add remove filter', @render
+  render: ->
+    $list = @$('tbody').html ''
+    $log '$list', $list
+    for m in @collection.models
+     $list.append new exports.OrderRowView( model: m ).render().el
+    @$('.count').html @collection.models.length
+    @
+  select: (e) ->
+    e.preventDefault()
+    id = $(e.currentTarget).data('id')
+    expert = _.find @collection.models, (m) -> m.id.toString() == id
+    @model.set expert.attributes
+
+
+class exports.OrderFormView extends BB.ModelSaveView
+  logging: on
+  el: '#orderForm'
+  initialize: (args) ->
+  render: ->
+    @
+
+
+module.exports = exports

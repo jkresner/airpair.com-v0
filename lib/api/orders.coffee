@@ -2,16 +2,22 @@ CRUDApi     = require './_crud'
 OrdersSvc   = require './../services/orders'
 authz       = require './../identity/authz'
 loggedIn    = authz.LoggedIn isApi: true
+admin       = authz.Admin isApi: true
 Roles       = authz.Roles
 
 
-class OrdersApi extends CRUDApi
+class OrdersApi
 
   svc: new OrdersSvc()
 
   constructor: (app, route) ->
+    app.get   "/api/#{route}", admin, @adminList
     app.post  "/api/#{route}", loggedIn, @create
-    super app, route
+
+
+  adminList: (req, res, next) =>
+    @svc.getAll (r) -> res.send r
+
 
   create: (req, res) =>
     order = _.pick req.body, ['total','requestId']

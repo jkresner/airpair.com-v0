@@ -1,0 +1,21 @@
+<td>
+  <a href="#" class="select" data-id="{{ _id }}">{{ _id }}</a> |
+  <a class="delete deleteOrder" href="#" data-id="{{ _id }}">x</a>
+</td>
+<td>
+  {{#if contactPic }}
+    <img src="{{ contactPic }}" />
+  {{else}}
+    <img src="/images/default-avatar.jpg" />
+  {{/if}}
+  <a href="mailto:{{email}}" target="_blank">{{ fullName }}</a>
+  {{ companyName }}
+</td>
+<td class="info">
+  <a href="#" target="_blank" data-id="{{ _requestId }}">{{ requestId }}</a>
+</td>
+<td>
+
+</td>
+<td>{{ total }}</td>
+<td>{{ profit }}</td>

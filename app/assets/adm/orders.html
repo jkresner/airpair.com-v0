@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Orders</title>
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="/stylesheets/app.css">
+    <link rel="stylesheet" href="/stylesheets/admin.css">
+</head>
+
+<body id="admorderspage">
+
+  <nav>
+    <div>
+      <a href="/"><img src="/images/logo4.png" /></a>
+
+      <ul>
+        <li><a href="/adm/inbound" class="zocial">Inbound</a></li>
+        <li><a href="/adm/orders" class="zocial">Orders</a></li>
+        <li><a href="/adm/tags" class="zocial">Tags</a></li>
+        <li><a href="/adm/experts" class="zocial">Experts</a></li>
+        <li><a href="/adm/csvs" class="zocial">CSVs</a></li>
+        <li><a href="https://plus.google.com/hangouts/_?hso=0&gid=140030887085" class="zocial googleplus" target="_blank">Hangout</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div id="list" class="route">
+    <table id="orders" class="table table-striped">
+      <thead>
+        <tr>
+          <th>Order #</th>
+          <th>By</th>
+          <th>Request</th>
+          <th>Total</th>
+          <th>Profit</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <div id="edit" class="route">
+    <h1>Edit expert</h1>
+  </div>
+
+</body>
+
+  <script type="text/javascript">
+    function initApp() {
+      var pageData = {};
+      Router = require('/scripts/orders/Router');
+      window.router = new Router(pageData);
+    }
+  </script>
+  <script src="/javascripts/vendor.js" defer></script>
+  <script src="/javascripts/app.js" defer onload="initApp()"></script>
+
+</html>
