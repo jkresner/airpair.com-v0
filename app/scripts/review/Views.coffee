@@ -56,7 +56,7 @@ class exports.OrderView extends BB.ModelSaveView
   getViewData: ->
     @model.attributes
   renderSuccess: (model, resp, opts) ->
-    $log 'order', model.attributes
+    # $log 'order', model.attributes
     @$('#paykey').val model.attributes.payment.payKey
     @$('#submitBtn').click()
 

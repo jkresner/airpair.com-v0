@@ -59,9 +59,12 @@ describe "Review: book", ->
     expect( $kuo.find('.qty').html() ).to.equal '2'
 
     bv.model.once 'sync', =>
-      $log 'synced'
+      m = bv.model
+      # $log 'synced'
+      expect( m.get('requestId') ).to.equal req.id
+      expect( m.get('total') ).to.equal 160
+      expect( m.get('lineItems').length ).to.equal 1
       done()
 
-    $log 'bv.model', bv.model
     bv.$('.pay').click()
 
