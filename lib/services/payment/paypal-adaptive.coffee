@@ -1,16 +1,8 @@
 request = require 'superagent'
 
-
 config =
-  docs:
-    Endpoint: 'https://svcs.sandbox.paypal.com/AdaptivePayments'
-    PrimaryReceiver: 'jk-facilitator@airpair.com'
-    SECURITYUSERID: 'caller_1312486258_biz_api1.gmail.com',
-    SECURITYPASSWORD: '1312486294',
-    SECURITYSIGNATURE: 'AbtI7HV1xB428VygBUcIhARzxch4AL65.T18CTeylixNNxDZUu0iO87e'
-    APPLICATIONID: 'APP-80W284485P519543T'
-
-  test:
+  dev:
+    AP: 'http://localhost:3333'
     Endpoint: 'https://svcs.sandbox.paypal.com/AdaptivePayments'
     PrimaryReceiver: 'jk-facilitator@airpair.com'
     SECURITYUSERID: 'jk-facilitator_api1.airpair.com',
@@ -19,6 +11,7 @@ config =
     APPLICATIONID: 'APP-80W284485P519543T'
 
   prod:
+    AP: 'http://www.airpair.com'
     Endpoint: 'https://svcs.paypal.com/AdaptivePayments'
     PrimaryReceiver: 'jk@airpair.com'
     SECURITYUSERID: 'jk_api1.airpair.com',
@@ -26,43 +19,60 @@ config =
     SECURITYSIGNATURE: 'AFcWxV21C7fd0v3bYYYRCpSSRl31AQ3FdahDmrAydOM0v6NUkwsQ2Nug'
     APPLICATIONID: 'APP-7AK038815Y6144228'
 
+getEnvConfig = (config) ->
+  env = process.env.Payment_Env
+  if env? && env is 'prod' then return config.prod
+  cfg = config.dev
+  if env? && env is 'staging' then cfg.AP = 'http://staging.airpair.com'
+  if env? && env is 'test' then cfg.AP = 'http://localhost:4444'
+  cfg
 
-payloadDefault =
+payloadDefault = (cfg) ->
   actionType:      "PAY_PRIMARY"
   currencyCode:    "USD"
   feesPayer:       "EACHRECEIVER"
-  returnUrl:       "http://www.airpair.com/paypal/success"
-  cancelUrl:       "http://www.airpair.com/paypal/cancel"
+  returnUrl:       "#{cfg.AP}/paypal/success/"
+  cancelUrl:       "#{cfg.AP}/paypal/cancel"
   requestEnvelope: { errorLanguage:"en_US", detailLevel:"ReturnAll" }
   receiverList:    receiver: []
+
+getExpertPaypalEmail = (item) ->
+  env = process.env.Payment_Env
+  if env? && env is 'prod'
+    item.suggestion.expert.paymentSettings.paypal.id
+  else
+    "expert02@airpair.com"
 
 
 module.exports = class PaypalAdaptive
 
-  cfg: config.test
-
+  cfg: getEnvConfig(config)
 
   constructor: () ->
-
 
   Pay: (order, callback) ->
     order.paymentType = 'paypal'
     airpairMargin = order.total
-    payload = _.clone payloadDefault
-    payload.memo = "$#{total} #{fullName}"   # {orderId}
+    payload = payloadDefault(@cfg)
+    payload.memo = "$#{order.total} #{order.fullName}"   # {orderId}
 
     for item in order.lineItems
-      airpairMargin -= item.total
-      payeePaypalEmail = item.suggestion.expert.paymentSettings.paypal.id
-      receiverList.receiver.push
+      expertsHrRate = item.suggestion.suggestedRate[item.type].expert
+      expertsTotal = item.qty * expertsHrRate
+      airpairMargin -= expertsTotal
+      payeePaypalEmail = getExpertPaypalEmail(item)
+      payload.receiverList.receiver.push
         primary:  false
         email:    payeePaypalEmail
-        amount:   item.total
+        amount:   @formatCurrency(expertsTotal)
 
-    receiverList.receiver.push
+    payload.receiverList.receiver.push
       primary:  true
       email:    @cfg.PrimaryReceiver
-      amount:   airpairMargin
+      amount:   @formatCurrency(order.total)
+
+    order.profit = airpairMargin
+    payload.returnUrl += order._id
 
     @postPayload "#{@cfg.Endpoint}/Pay", payload, callback
 
@@ -78,6 +88,7 @@ module.exports = class PaypalAdaptive
 
 
   postPayload: (endpoint, payload, callback) ->
+    winston.log "PayalPost: #{endpoint}", payload
     request
       .post(endpoint)
       .send(payload)
@@ -88,8 +99,13 @@ module.exports = class PaypalAdaptive
       .set('X-PAYPAL-RESPONSE-DATA-FORMAT', 'JSON')
       .set('X-PAYPAL-APPLICATION-ID', @cfg.APPLICATIONID)
       .end (res) =>
+        # $log "PayalResponse: #{endpoint}", res.body
+        winston.log "PayalResponse: #{endpoint}", res.body
         callback res.body
 
+  formatCurrency: (num) =>
+    num = (if isNaN(num) or num is "" or num is null then 0.00 else num)
+    parseFloat(num).toFixed(2)
 
 # payloadExample1 =
 #   actionType:"PAY"

@@ -2,26 +2,14 @@
   <tr>
     <td class="leftCol">
 
-  <h2><b>{ </b>Book experts<b> }</b></h2>
+  <h2><b>{ </b>Book expert hours<b> }</b></h2>
 
-  <ul id="experts">
+  <ul id="bookableExperts">
 
   </ul>
 
   <div style="clear:both"></div>
   <div class="form-actions">
-
-      <div id="pay" style="padding:5px 0 0 0">
-
-      <form action="https://www.sandbox.paypal.com/webapps/adaptivepayment/flow/pay" target="PPDGFrame" class="standard" style="margin-bottom:10px">
-        <a href="#" class="pay"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_paynowCC_LG.gif" /></a>
-        <input type="image" id="submitBtn" src="" value="">
-        {{! <input id="type" type="hidden" name="expType" value="light"> }}
-        <input id="paykey" type="hidden" name="paykey" value="insert_pay_key">
-      </form>
-
-      </div>
-
 
       <p id="selecthours">Please select at least 1 hour to checkout.</p>
 
@@ -29,7 +17,21 @@
 
 </td>
 <td class="rightCol">
-  <div id="summary">
+  <div id="order">
+      <h2><em>{ </em>Order summary<em> }</em></h2>
+
+      <div id="summary"></div>
+
+      <div id="pay" style="padding:5px 0 0 0">
+
+        <form action="https://www.sandbox.paypal.com/webapps/adaptivepayment/flow/pay" target="PPDGFrame" class="standard button button-pay">
+          <a href="#" class="pay"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_paynowCC_LG.gif" /></a>
+          <input type="image" id="submitBtn" src="" value="">
+          {{! <input id="type" type="hidden" name="expType" value="light"> }}
+          <input id="paykey" type="hidden" name="paykey" value="insert_pay_key">
+        </form>
+
+      </div>
 
   </div>
 </td>
