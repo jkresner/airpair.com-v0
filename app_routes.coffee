@@ -47,8 +47,10 @@ module.exports = (app) ->
   require('./lib/api/settings')(app)
 
 
-  app.get '/paypal/success', (req, r) -> r.send 'paypal success'
   app.get '/paypal/cancel', (req, r) -> r.send 'paypal cancel'
+  app.get '/paypal/success/:id', (req, r) ->
+    viewData.paypalSuccess req.params.id, req.user, (d) =>
+      r.render 'payment/paypalSuccess.html', d
 
   # todo, brush up page
   app.get '/pair-programmers*', (req, r)-> file r, 'pairing'

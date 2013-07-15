@@ -33,18 +33,36 @@ class exports.SuggestionView extends BB.BadassView
 ## Book
 #############################################################################
 
-class exports.BookSummaryView extends BB.BadassView
-  el: '#summary'
+
+class exports.OrderView extends BB.ModelSaveView
+  el: '#order'
   tmpl: require './templates/BookSummary'
+  events:
+    'click .pay': 'pay'
   initialize: (args) ->
-    @listenTo @order, 'change', @render
+    @listenTo @model, 'change', @render
   render: ->
-    @order.setTotal()
-    @$el.html @tmpl @order.toJSON()
+    @model.setTotal()
+    @$('#summary').html @tmpl @model.toJSON()
+    @$('#pay').toggle @mget('total') isnt 0
     @
+  pay: (e) ->
+    if @model.get('total') is 0
+      e.preventDefault()
+      alert('please select at least one hour')
+    else
+      @save(e)
+    false
+  getViewData: ->
+    @model.attributes
+  renderSuccess: (model, resp, opts) ->
+    # $log 'order', model.attributes
+    @$('#paykey').val model.attributes.payment.payKey
+    @$('#submitBtn').click()
 
 
 class exports.BookExpertView extends BB.BadassView
+  className: 'bookableExpert'
   tmpl: require './templates/BookExpert'
   events:
     'change select': 'update'
@@ -52,56 +70,40 @@ class exports.BookExpertView extends BB.BadassView
   render: ->
     @li = @model.lineItem @suggestion._id
     @$el.html @tmpl @li
-    @elm('pricing').val @li.pricing
+    @elm('type').val @li.type
     @elm('qty').val @li.qty
     @
   update: ->
-    @li = @model.lineItem @suggestion._id
-    @li.type = @elm('pricing').val()
+    @li.type = @elm('type').val()
     @li.qty = parseInt( @elm('qty').val() )
-    @li.unitPrice = @suggestion.suggestedRate[@li.pricing].total
+    @li.unitPrice = @suggestion.suggestedRate[@li.type].total
     @li.total = @li.qty * @li.unitPrice
     @model.trigger 'change'
     @render()
 
 
-class exports.BookView extends BB.ModelSaveView
+class exports.BookView extends BB.BadassView
   el: '#book'
   tmpl: require './templates/BookInfo'
-  events:
-    'click .pay': 'pay'
   initialize: (args) ->
-    window.PAYPAL = require '/scripts/providers/paypal'
     @$el.html @tmpl()
+    window.PAYPAL = require '/scripts/providers/paypal'
     @embeddedPPFlow = new PAYPAL.apps.DGFlow trigger: 'submitBtn',type:'light'
-    @summaryView = new exports.BookSummaryView order: @model
-    @listenTo @request, 'change', @renderExperts
-    @listenTo @model, 'change', @renderPay
-  renderExperts: ->
+    @orderView = new exports.OrderView model: @model
+    @listenTo @request, 'change', @render
+    @listenTo @model, 'change', =>
+      @$('#selecthours').toggle @mget('total') is 0
+  render: ->
     if @request.get('suggested')?
       @model.set requestId: @request.id, 'lineItems': []
-      pricing = @request.get('pricing')
+      defaultPricing = @request.get('pricing')
       @$('ul').html ''
       for s in @request.get('suggested')
-        item = suggestion: s, qty: 0, total: 0, pricing: @request.get('pricing'), unitPrice: s.suggestedRate[pricing].total
-        @model.get('lineItems').push item
-        @$('ul').append( new exports.BookExpertView(suggestion:s,request:@request,model:@model).render().el )
+        if s.expertStatus is 'available'
+          item = suggestion: s, qty: 0, total: 0, type: defaultPricing, unitPrice: s.suggestedRate[defaultPricing].total
+          @model.get('lineItems').push item
+          @$('ul').append( new exports.BookExpertView(suggestion:s,request:@request,model:@model).render().el )
     @
-  renderPay: ->
-    @$('#pay').toggle @mget('total') isnt 0
-    @$('#selecthours').toggle @mget('total') is 0
-    @
-  pay: (e) ->
-    e.preventDefault()
-    if @model.get('total') is 0
-      alert('please select at least one hour')
-    else
-      @save(e)
-  getViewData: ->
-    @model.attributes
-  renderSuccess: (model, resp, opts) ->
-    @$('#paykey').val resp.payKey
-    @$('#submitBtn').click()
 
 
 #############################################################################

@@ -1,5 +1,3 @@
-<h2><em>{ </em>Order summary<em> }</em></h2>
-
 <table class="table table-striped">
   <tr>
     <th>Name</th>
@@ -12,9 +10,9 @@
 {{#each lineItems }}
   {{#if total }}
     <tr>
-      <td>{{ suggestion.expert.fullName }}</td>
-      <td>{{ qty }}</td>
-      <td>{{ unitPrice }}</td>
+      <td>{{ suggestion.expert.name }}</td>
+      <td>{{ qty }} hour(s)</td>
+      <td>${{ unitPrice }}</td>
       <td>${{ total }}</td>
     </tr>
   {{/if }}
