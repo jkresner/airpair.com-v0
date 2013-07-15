@@ -83,14 +83,13 @@ Tests should run on every push. To setup locally
 List of TODO next (v.5)
 ===============================================================================
 
-- Collect paypal settings from expert on review + Expert agree to call rate
-- Pay + Order success screen
-- Admin schedule call & redeem hours
 - Admin execute payment for secondary receivers
+- Collect paypal settings from expert on review + Expert agree to call rate
 
 TODO v.6
 ===============================================================================
 
+- [H] Admin schedule call & redeem hours
 - [H] "Book me" flows
 - [H] Transactional email
 - [H] Schedule / google calendar integration

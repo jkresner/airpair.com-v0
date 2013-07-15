@@ -1,18 +1,8 @@
 request = require 'superagent'
 
-
 config =
-  docs:
+  dev:
     AP: 'http://localhost:3333'
-    Endpoint: 'https://svcs.sandbox.paypal.com/AdaptivePayments'
-    PrimaryReceiver: 'jk-facilitator@airpair.com'
-    SECURITYUSERID: 'caller_1312486258_biz_api1.gmail.com',
-    SECURITYPASSWORD: '1312486294',
-    SECURITYSIGNATURE: 'AbtI7HV1xB428VygBUcIhARzxch4AL65.T18CTeylixNNxDZUu0iO87e'
-    APPLICATIONID: 'APP-80W284485P519543T'
-
-  test:
-    AP: 'http://localhost:4444'
     Endpoint: 'https://svcs.sandbox.paypal.com/AdaptivePayments'
     PrimaryReceiver: 'jk-facilitator@airpair.com'
     SECURITYUSERID: 'jk-facilitator_api1.airpair.com',
@@ -29,12 +19,19 @@ config =
     SECURITYSIGNATURE: 'AFcWxV21C7fd0v3bYYYRCpSSRl31AQ3FdahDmrAydOM0v6NUkwsQ2Nug'
     APPLICATIONID: 'APP-7AK038815Y6144228'
 
+getEnvConfig = (config) ->
+  env = process.env.Payment_Env
+  if env? && env is 'prod' then return config.prod
+  cfg = config.dev
+  if env? && env is 'staging' then cfg.AP = 'http://staging.airpair.com'
+  if env? && env is 'test' then cfg.AP = 'http://localhost:4444'
+  cfg
 
 payloadDefault = (cfg) ->
   actionType:      "PAY_PRIMARY"
   currencyCode:    "USD"
   feesPayer:       "EACHRECEIVER"
-  returnUrl:       "#{cfg.AP}/paypal/success"
+  returnUrl:       "#{cfg.AP}/paypal/success/"
   cancelUrl:       "#{cfg.AP}/paypal/cancel"
   requestEnvelope: { errorLanguage:"en_US", detailLevel:"ReturnAll" }
   receiverList:    receiver: []
@@ -42,7 +39,7 @@ payloadDefault = (cfg) ->
 
 module.exports = class PaypalAdaptive
 
-  cfg: config.test
+  cfg: getEnvConfig(config)
 
   constructor: () ->
 
@@ -68,7 +65,7 @@ module.exports = class PaypalAdaptive
       amount:   @formatCurrency(order.total)
 
     order.profit = airpairMargin
-    $log 'PayPal.post.receiverList', payload.receiverList.receiver
+    payload.returnUrl += order._id
 
     @postPayload "#{@cfg.Endpoint}/Pay", payload, callback
 
@@ -95,7 +92,7 @@ module.exports = class PaypalAdaptive
       .set('X-PAYPAL-RESPONSE-DATA-FORMAT', 'JSON')
       .set('X-PAYPAL-APPLICATION-ID', @cfg.APPLICATIONID)
       .end (res) =>
-        $log "PayalResponse: #{endpoint}", res.body
+        # $log "PayalResponse: #{endpoint}", res.body
         winston.log "PayalResponse: #{endpoint}", res.body
         callback res.body
 

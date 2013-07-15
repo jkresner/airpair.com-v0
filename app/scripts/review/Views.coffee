@@ -47,11 +47,12 @@ class exports.OrderView extends BB.ModelSaveView
     @$('#pay').toggle @mget('total') isnt 0
     @
   pay: (e) ->
-    e.preventDefault()
     if @model.get('total') is 0
+      e.preventDefault()
       alert('please select at least one hour')
     else
       @save(e)
+    false
   getViewData: ->
     @model.attributes
   renderSuccess: (model, resp, opts) ->

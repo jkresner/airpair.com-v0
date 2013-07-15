@@ -7,9 +7,7 @@ Roles       = authz.Roles
 
 class OrdersApi extends CRUDApi
 
-  # model: require './../models/request'
   svc: new OrdersSvc()
-  # rates: new RatesSvc()
 
   constructor: (app, route) ->
     app.post  "/api/#{route}", loggedIn, @create
