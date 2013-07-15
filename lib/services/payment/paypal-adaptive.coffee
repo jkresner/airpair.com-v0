@@ -36,6 +36,13 @@ payloadDefault = (cfg) ->
   requestEnvelope: { errorLanguage:"en_US", detailLevel:"ReturnAll" }
   receiverList:    receiver: []
 
+getExpertPaypalEmail = (item) ->
+  env = process.env.Payment_Env
+  if env? && env is 'prod'
+    item.suggestion.expert.paymentSettings.paypal.id
+  else
+    "expert02@airpair.com"
+
 
 module.exports = class PaypalAdaptive
 
@@ -53,7 +60,7 @@ module.exports = class PaypalAdaptive
       expertsHrRate = item.suggestion.suggestedRate[item.type].expert
       expertsTotal = item.qty * expertsHrRate
       airpairMargin -= expertsTotal
-      payeePaypalEmail = "expert02@airpair.com" # item.suggestion.expert.paymentSettings.paypal.id
+      payeePaypalEmail = getExpertPaypalEmail(item)
       payload.receiverList.receiver.push
         primary:  false
         email:    payeePaypalEmail
