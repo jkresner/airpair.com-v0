@@ -54,7 +54,9 @@ module.exports = (app) ->
   app.get '/pair-programmers*', (req, r)-> file r, 'pairing'
 
   # landing pages
-  app.get '/ruby-on-rails-tutoring', (req, r)-> file r, 'landing_pages/ruby_on_rails_tutoring'
+  app.get '/ruby-on-rails-tutoring', (req, r) ->
+    r.cookie 'landingPage', 'ruby-on-rails-tutoring'
+    file r, 'landing_pages/ruby_on_rails_tutoring'
 
   # todo, get agreements
   # app.get '/TOS', (req, r)-> file r, 'legal'

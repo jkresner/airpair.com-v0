@@ -61,6 +61,9 @@ exports.insertOrUpdateUser = (req, done, providerName, profile) ->
   else
     search['_id'] = req.user._id
 
+  if req.cookies.landingPage
+    update['landingPage'] = req.cookies.landingPage
+
   User.findOneAndUpdate search, update, { upsert: true }, (err, user) ->
     # console.log '=================================================='
     # console.log 'findOneAndUpdate', err, done, user
