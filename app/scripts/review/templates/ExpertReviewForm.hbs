@@ -31,9 +31,11 @@
 
       <hr />
 
+      <h2>Your hourly rate <b>{</b> ${{ expertRate }} <b>}</b></h2>
+      <hr />
+
       <h5>Do you want this airpair? <span class="muted">( visible to customer )</h5>
       <div class="control-group">
-        <label class="control-label" for="expertStatus"></label>
         <div class="controls">
           <select name="expertStatus">
             <option value="">... please select</option>
@@ -43,8 +45,13 @@
         </div>
       </div>
 
+      <div class="control-group control-agree" style="display:none">
+        <div class="controls">
+            <input type="checkbox" name="agree" style="float:left" /> <span style="font-size:11px;float:left;margin:0px 0px 10px 8px;color:#CC523E">I agree to my rate of <b>${{expertRate}}</b> per hour on this request.</span>
+        </div>
+      </div>
+
       <div class="control-group">
-        <label class="control-label" for="expertComment"></label>
         <div class="controls">
             <textarea style="margin-bottom:2px" class="hideShowSave" name="expertComment" placeholder="Comment">{{ expertComment }}</textarea>
         </div>

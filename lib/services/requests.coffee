@@ -11,7 +11,7 @@ module.exports = class RequestsService extends DomainService
     _.pick request, ['_id','tags','company','brief','availability']
 
   associatedView: (request) ->
-    _.pick request, ['_id','tags','company','brief','availability','budget','suggested']
+    _.pick request, ['_id','tags','company','brief','availability','budget','pricing','suggested']
 
 
   # log event when the request is viewed

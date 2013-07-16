@@ -112,10 +112,11 @@ class exports.ExpertReviewFormView extends BB.EnhancedFormView
   tmpl: require './templates/ExpertReviewForm'
   viewData: ['expertRating', 'expertFeedback', 'expertStatus', 'expertComment', 'expertAvailability']
   events:
-    'click .saveFeedback': 'save'
+    'click .saveFeedback': 'saveFeedback'
   initialize: (args) ->
   render: ->
-    @$el.html @tmpl @model.toJSON()
+    expertRate = @model.get('suggestedRate')[@request.get('pricing')].expert
+    @$el.html @tmpl @model.extend({expertRate})
     @elm('expertStatus').on 'change', @toggleFormElements
     @enableCharCount 'expertFeedback'
     @setValsFromModel ['expertRating', 'expertStatus']
@@ -125,12 +126,19 @@ class exports.ExpertReviewFormView extends BB.EnhancedFormView
     @renderInputsValid()
     expertStatus = @elm('expertStatus').val()
     @$('.hideShowSave').toggle expertStatus != ''
+    @$('.control-agree').hide()
     if expertStatus is 'available'
       @elm('expertComment').attr 'placeholder', "Comment to the customer on why they should book you for this airpair."
       if @elm('expertAvailability').val() is 'unavailable' then @elm('expertAvailability').val('')
+      @$('.control-agree').show()
     else if expertStatus is 'abstained'
       @elm('expertComment').attr 'placeholder', "Comment to the customer on why you don't want this airpair. E.g. Are you busy this week?"
       @elm('expertAvailability').val('unavailable').hide()
+  saveFeedback: (e) ->
+    if @elm('expertStatus').val() is 'available' && ! @elm('agree').is(':checked')
+      alert('You much agree to your hourly rate, to be available for this request')
+    else
+      @save(e)
   renderSuccess: (model, resp, options) =>
     @request.set model.attributes
 
