@@ -1,6 +1,6 @@
 mongoose = require 'mongoose'
 Schema = mongoose.Schema
-ObjectId = Schema.ObjectId
+{ObjectId, Mixed} = Schema.Types
 
 
 LineItem = new Schema
@@ -13,16 +13,15 @@ LineItem = new Schema
 
 
 schema = new Schema
-  userId:         { type: ObjectId, ref: 'User' }
-  requestId:      { type: ObjectId, ref: 'Request' }
-  email:          { required: true, type: String }
-  fullName:       { required: true, type: String }
+  requestId:      { required: true, type: ObjectId, ref: 'Request' }
+  userId:         { required: true, type: ObjectId, ref: 'User'    }
+  company:        { required: true, type: Mixed    }
   lineItems:      { type: [LineItem] }
   utc:            { type: Date, default: Date }
-  total:          { required: true, type: Number }
-  profit:         { required: true, type: Number }
+  total:          { required: true, type: Number   }
+  profit:         { required: true, type: Number   }
   invoice:        { required: true, type: {} }     # can reference a 3rd party invoice
-  paymentType:    { required: true, type: String }
+  paymentType:    { required: true, type: String   }
   payment:        { required: true, type: {} }
   paymentStatus:  { required: true, type: String, default: 'pending' }
 

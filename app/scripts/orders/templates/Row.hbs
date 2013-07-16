@@ -1,0 +1,32 @@
+<td>
+  <a href="#" class="select" data-id="{{ _id }}">{{ _id }}</a>
+  <br />{{ createdDate }} <b class="{{ paymentStatus }}">{{ paymentStatus }}</b>
+  {{#if isPending }}
+    <a class="delete deleteOrder" href="#" data-id="{{ _id }}">x</a>
+  {{/if }}
+  {{#if isReceived }}
+    <a class="payOut" href="#">Pay experts</a>
+  {{/if }}
+</td>
+<td>
+  {{#if contactPic }}
+    <img src="{{ contactPic }}" />
+  {{else}}
+    <img src="/images/default-avatar.jpg" />
+  {{/if}}
+  <a href="mailto:{{contactEmail}}" target="_blank">{{ contactName }}</a>
+  {{ company.name }}
+</td>
+<td class="info">
+  <a href="#" target="_blank" data-id="{{ _requestId }}">{{ requestId }}</a>
+</td>
+<td>
+  {{#each lineItems}}
+    {{ qtyRedeemed }}/ {{ qty }}
+      {{#with suggestion.expert }}
+        <img class="" src="{{ pic }}" />
+      {{/with}}
+  {{/each}}
+</td>
+<td>{{ total }}</td>
+<td>{{ profit }}</td>
