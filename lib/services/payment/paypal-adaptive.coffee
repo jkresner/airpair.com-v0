@@ -84,11 +84,8 @@ module.exports = class PaypalAdaptive
 
 
   ExecutePayment  : (order, callback) ->
-    $log 'ExecutePayment', order
-
     payload =
       requestEnvelope: { errorLanguage:"en_US", detailLevel:"ReturnAll" }
-      actionType: 'Pay'
       payKey: order.payment.payKey
 
     @postPayload "ExecutePayment", payload, callback

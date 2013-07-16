@@ -1,8 +1,11 @@
 <td>
   <a href="#" class="select" data-id="{{ _id }}">{{ _id }}</a>
-  <br />{{ createdDate }} <b>{{ paymentStatus }}</b>
+  <br />{{ createdDate }} <b class="{{ paymentStatus }}">{{ paymentStatus }}</b>
   {{#if isPending }}
     <a class="delete deleteOrder" href="#" data-id="{{ _id }}">x</a>
+  {{/if }}
+  {{#if isReceived }}
+    <a class="payOut" href="#">Pay experts</a>
   {{/if }}
 </td>
 <td>

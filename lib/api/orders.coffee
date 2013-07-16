@@ -11,8 +11,9 @@ class OrdersApi
   svc: new OrdersSvc()
 
   constructor: (app, route) ->
-    app.get     "/api/admin/#{route}", admin, @adminList
     app.post    "/api/#{route}", loggedIn, @create
+    app.get     "/api/admin/#{route}", admin, @adminList
+    app.put     "/api/#{route}/:id", admin, @payOut
     app.delete  "/api/#{route}/:id", admin, @delete
 
   adminList: (req, res) =>
@@ -41,6 +42,13 @@ class OrdersApi
           expert: _.pick li.suggestion.expert, toPick
 
     @svc.create order, req.user, (r) => res.send r
+
+
+  payOut: (req, res) =>
+    @svc.payOutToExperts req.params.id, (r) ->
+      if r.status? & r.status is 'failed'
+        res.status(400)
+      res.send r
 
 
   delete: (req, res) =>

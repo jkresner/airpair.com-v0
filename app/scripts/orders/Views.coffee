@@ -7,11 +7,13 @@ Shared = require './../shared/Views'
 ##  To render all experts for admin
 #############################################################################
 
-class exports.OrderRowView extends BB.BadassView
+class exports.OrderRowView extends BB.ModelSaveView
   tagName: 'tr'
   className: 'order'
   tmpl: require './templates/Row'
-  events: { 'click .deleteOrder': 'deleteOrder' }
+  events:
+    'click .deleteOrder': 'deleteOrder'
+    'click .payOut': 'payOutToExperts'
   initialize: -> @listenTo @model, 'change', @render
   render: ->
     @$el.html @tmpl @tmplData()
@@ -20,6 +22,7 @@ class exports.OrderRowView extends BB.BadassView
     d = @model.toJSON()
     _.extend d, {
       isPending:          d.paymentStatus is 'pending'
+      isReceived:         d.paymentStatus is 'received'
       contactName:        d.company.contacts[0].fullName
       contactPic:         d.company.contacts[0].pic
       contactEmail:       d.company.contacts[0].email
@@ -28,7 +31,10 @@ class exports.OrderRowView extends BB.BadassView
   deleteOrder: ->
     @model.destroy()
     @$el.remove()
-
+  payOutToExperts: (e) ->
+    @save (e)
+  getViewData: ->
+    payOut: true
 
 class exports.OrdersView extends Backbone.View
   logging: on
