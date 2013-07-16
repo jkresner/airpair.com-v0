@@ -21,6 +21,8 @@ module.exports = class DomainService
   create: (o, callback) =>
     new @model( o ).save (e, r) => callback r
 
+  delete: (o, callback) => 
+    @model.findByIdAndRemove o, {}, (e, r) => callback r
 
   update: (id, data, callback) =>
     ups = _.clone data

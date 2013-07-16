@@ -17,3 +17,5 @@ module.exports =
   dashboard: "<div id='requests' class='route'><div id='requestslist'></div></div>"
 
   feednack:  "<div id='feedback' class='route'></div>"
+
+  tags:      "<div id='list' class='route'></div>"    

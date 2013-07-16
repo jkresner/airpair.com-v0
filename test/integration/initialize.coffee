@@ -41,6 +41,7 @@ module.exports = (grep) ->
     './review/customer_test'
     './review/expert_test'
     './stories/emillee_test'
+    './tags/tagsadmin_test'
   ]
 
   require test for test in tests

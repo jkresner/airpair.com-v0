@@ -6,11 +6,11 @@ module.exports = class TagsService extends DomainService
   model: require './../models/tag'
 
   create: (addMode, tag, callback) ->
-    # console.log 'create', 'addMode', addMode
+    #console.log 'create', 'addMode', addMode
     if addMode is 'stackoverflow' then @getStackoverflowTag(tag, callback)
     else if addMode is 'github' then @getGithubRepo(tag, callback)
-    else @model( tag ).save (e, r) -> callback r
-
+    else @model( tag ).save (e, r) -> 
+      callback e, r
 
   getStackoverflowTag: (tag, callback) =>
     encoded = encodeURIComponent tag.nameStackoverflow
