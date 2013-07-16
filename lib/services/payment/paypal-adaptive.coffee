@@ -32,7 +32,7 @@ payloadDefault = (cfg) ->
   currencyCode:    "USD"
   feesPayer:       "EACHRECEIVER"
   returnUrl:       "#{cfg.AP}/paypal/success/"
-  cancelUrl:       "#{cfg.AP}/paypal/cancel"
+  cancelUrl:       "#{cfg.AP}/paypal/cancel/"
   requestEnvelope: { errorLanguage:"en_US", detailLevel:"ReturnAll" }
   receiverList:    receiver: []
 
@@ -73,21 +73,29 @@ module.exports = class PaypalAdaptive
 
     order.profit = airpairMargin
     payload.returnUrl += order._id
+    payload.cancelUrl += order._id
 
-    @postPayload "#{@cfg.Endpoint}/Pay", payload, callback
+    @postPayload "Pay", payload, callback
 
 
   PaymentDetails  : (payKey, callback) ->
     payload = {}
-    @postPayload "#{@cfg.Endpoint}/PaymentDetails", payload, callback
+    @postPayload "PaymentDetails", payload, callback
 
 
-  ExecutePayment  : (callback) ->
-    payload = {}
-    @postPayload "#{@cfg.Endpoint}/ExecutePayment", payload, callback
+  ExecutePayment  : (order, callback) ->
+    $log 'ExecutePayment', order
+
+    payload =
+      requestEnvelope: { errorLanguage:"en_US", detailLevel:"ReturnAll" }
+      actionType: 'Pay'
+      payKey: order.payment.payKey
+
+    @postPayload "ExecutePayment", payload, callback
 
 
-  postPayload: (endpoint, payload, callback) ->
+  postPayload: (operation, payload, callback) ->
+    endpoint = "#{@cfg.Endpoint}/#{operation}"
     winston.log "PayalPost: #{endpoint}", payload
     request
       .post(endpoint)
@@ -99,7 +107,7 @@ module.exports = class PaypalAdaptive
       .set('X-PAYPAL-RESPONSE-DATA-FORMAT', 'JSON')
       .set('X-PAYPAL-APPLICATION-ID', @cfg.APPLICATIONID)
       .end (res) =>
-        # $log "PayalResponse: #{endpoint}", res.body
+        $log "PayalResponse: #{endpoint}", res.body
         winston.log "PayalResponse: #{endpoint}", res.body
         callback res.body
 

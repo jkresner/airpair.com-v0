@@ -39,7 +39,11 @@ module.exports = class ViewDataService
           tags:     JSON.stringify t
 
   paypalSuccess: (orderId, usr, callback) ->
-    oSvc.markPaid orderId, {}, (o) =>
-      callback
+    oSvc.markPaymentReceived orderId, {}, (o) => callback
+        session: @session usr
+        order: JSON.stringify o
+
+  paypalCancel: (orderId, usr, callback) ->
+    oSvc.getById orderId, (o) => callback
         session: @session usr
         order: JSON.stringify o
