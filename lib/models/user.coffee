@@ -17,7 +17,7 @@ User = new Schema
   stack:        {}
   bitbucketId:  String
   bitbucket:    {}
-  landingPage:  String
+  referrer:     {}
 
 
 module.exports = mongoose.model 'User', User

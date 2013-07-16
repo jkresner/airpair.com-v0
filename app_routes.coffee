@@ -6,6 +6,11 @@ viewData = new ViewDataService()
 
 file = (r, file) -> r.sendfile "./public/#{file}.html"
 
+cookieizeReferrerParams = (req, r) ->
+  for param in ['utm_source', 'utm_medium', 'utm_term', 'utm_content', 'utm_campaign']
+    if req.query[param]
+      r.cookie param, req.query[param]
+
 module.exports = (app) ->
 
   # login / auth routes
@@ -18,7 +23,11 @@ module.exports = (app) ->
   app.get '/find-an-expert*', (req, r)-> file r, 'request'
 
   app.get '/', (req, r) ->
-    if !req.isAuthenticated() then file r, 'homepage' else file r, 'dashboard'
+    if !req.isAuthenticated()
+      cookieizeReferrerParams req, r
+      file r, 'homepage'
+    else
+      file r, 'dashboard'
 
   app.get '/dashboard*', loggedIn, (req, r)-> file r, 'dashboard'
 
@@ -58,6 +67,8 @@ module.exports = (app) ->
   # landing pages
   app.get '/ruby-on-rails-tutoring', (req, r) ->
     r.cookie 'landingPage', 'ruby-on-rails-tutoring'
+    cookieizeReferrerParams req, r
+
     file r, 'landing_pages/ruby_on_rails_tutoring'
 
   # todo, get agreements
