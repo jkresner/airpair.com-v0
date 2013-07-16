@@ -36,6 +36,14 @@ else
 
 app.use passport.session()
 
+# custom middleware
+app.use (req, r, next) ->
+  # cookie-ize incoming referrer params
+  for param in ['utm_source', 'utm_medium', 'utm_term', 'utm_content', 'utm_campaign']
+    if req.query[param]
+      r.cookie param, req.query[param]
+  next()
+
 require('./app_routes')(app)
 
 
