@@ -91,6 +91,8 @@ describe "Review: signed in expert", ->
 
         done()
 
+      v.elm('agree').click()
+      v.elm('payPalEmail').val 'expert02@airpair.com'
       v.elm('expertRating').val 2
       v.elm('expertFeedback').val 'this is an awesome test request this is an awesome test request'
       v.elm('expertStatus').val('available').trigger 'change'

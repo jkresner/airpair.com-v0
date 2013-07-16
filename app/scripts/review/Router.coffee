@@ -20,8 +20,9 @@ module.exports = class Router extends S.AirpairSessionRouter
     d =
       request: new M.Request _id: @defaultFragment
       order: new M.Order()
+      settings: new M.Settings()
     v =
-      requestView: new V.RequestView( request: d.request, session: @app.session )
+      requestView: new V.RequestView( request: d.request, settings: d.settings, session: @app.session )
 
     opts =
       error: => @empty(v.requestView)
@@ -30,6 +31,10 @@ module.exports = class Router extends S.AirpairSessionRouter
           v.bookView = new V.BookView( model: d.order, request: d.request, session: @app.session ).render()
 
     @setOrFetch d.request, pageData.request, opts
+
+    if @app.session.authenticated()
+      @setOrFetch d.settings, pageData.settings
+
     _.extend d, v
 
   initialize: (args) ->

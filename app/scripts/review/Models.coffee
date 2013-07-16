@@ -4,6 +4,7 @@ Shared = require './../shared/Models'
 
 
 exports.User = Shared.User
+exports.Settings = Shared.Settings
 
 
 class exports.Order extends BB.BadassModel
