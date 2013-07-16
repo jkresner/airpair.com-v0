@@ -80,13 +80,7 @@ Tests should run on every push. To setup locally
 - docs on sinon chai syntax            chaijs.com/plugins/sinon-chai
 
 
-List of TODO next (v.5)
-===============================================================================
-
-- Admin execute payment for secondary receivers
-- Collect paypal settings from expert on review + Expert agree to call rate
-
-TODO v.6
+List of TODO next (v.6)
 ===============================================================================
 
 - [H] Admin schedule call & redeem hours
@@ -94,17 +88,21 @@ TODO v.6
 - [H] Transactional email
 - [H] Schedule / google calendar integration
   - [M] Timezone calculator
-- [H] Chat / User to user messaging system
 - [M] Add linkedIn airpair share
 - [H] Split expert sign up into contact & prefs
 - [H] Ask if request can be farmed out to the public
 - [M] Add github projects to tags
 - [M] improve tag search
+- [L] Remove experts with un-associated userIds (haven't logged in)
+- [L] Pull out hasLink and mail body saving to request/suggestion
+
+TODO v.7
+===============================================================================
+
+- [H] Chat / User to user messaging system
 - [H] Show server error states for customer + expert sign in
 - [M] Mobile homepage
-- [L] Remove experts with un-associated userIds (haven't logged in)
 - [L] Airpair techniques emails (How to intro, share code etc.)
-- [L] Pull out hasLink and mail body saving to request/suggestion
 
 TODO low priority
 ===============================================================================

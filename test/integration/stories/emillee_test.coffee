@@ -147,21 +147,24 @@ describe "Stories: Emil Lee", ->
     v = @app.requestView
     v.request.once 'change', =>
       expect( v.$('.book-actions').is(':visible') ).to.equal false
+
+      v.elm('agree').click()
+      v.elm('payPalEmail').val 'expert02@airpair.com'
+
       v.elm('expertRating').val 5
       v.elm('expertFeedback').val 'My skillset: Back end - Ruby developer with experience using Rails and Sinatra. Front end - Experience with JS, JQuery, and front end frameworks. Design - Experience with Photoshop, CSS, SCSS, Bootstrap, Foundation, UI/UX design. Business - Sales, marketing, product, strategy, data analysis.'
       v.elm('expertStatus').val('available').trigger 'change'
       v.elm('expertComment').val 'This looks great'
       v.elm('expertAvailability').val 'New York. Available after business hours on weekdays, any time weekends. Eastern time.'
 
-      v.expertReviewView.model.once 'sync', =>
-        m = v.request
+      v.expertReviewView.model.once 'sync', (m,res,ops) =>
         expect( m.get('suggested')[0].expert.username ).to.equal 'richkuo'
         expect( m.get('suggested')[0].expertStatus ).to.equal 'available'
         expect( m.get('suggested')[0].expertComment ).to.equal 'This looks great'
+        done()
 
       v.$('.saveFeedback').click()
 
-      done()
 
   it 'can review request and decline request as expert', (done) ->
     v = @app.requestView
