@@ -91,7 +91,7 @@ module.exports = class RequestsService extends DomainService
 
     # $log 'updateSuggestionByExpert', usr._id, expertReview.payPalEmail
     pymt = paymentMethods: [{type: 'paypal', isPrimary: true, info: { email: expertReview.payPalEmail }}]
-    @settingsSvc.update usr._id, pymt, (r) => $log 'save.settings', r
+    @settingsSvc.update usr._id, pymt, (r) => #$log 'save.settings', r
 
     ups = expertReview
     data = { suggested: request.suggested, events: request.events }
