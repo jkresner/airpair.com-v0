@@ -8,7 +8,7 @@ M = require './Models'
 
 class exports.TagEditView extends BB.ModelSaveView
   tmpl: require './templates/TagEdit'
-  viewData: ['name','short','desc','tokens', 'soId']  
+  viewData: ['name','short','desc','tokens', 'soId', 'ghId']  
   events:
     'click .save': 'save'
     'click .cancel': -> @remove()
