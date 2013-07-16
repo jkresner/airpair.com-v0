@@ -10,6 +10,11 @@ class exports.Order extends BB.BadassModel
   urlRoot: '/api/orders'
   defaults:
     total: 0
+    lineItems: []
+  setFromRequest: (request) ->
+    @set
+      requestId: request.id
+      company:   request.get 'company'
   lineItem: (index) ->
     # first try lookup by suggestion.Id
     items = @get('lineItems')

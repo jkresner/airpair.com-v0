@@ -10,8 +10,6 @@ module.exports = class OrdersService extends DomainService
   create: (order, user, callback) ->
     order._id = new mongoose.Types.ObjectId;
     order.userId = user._id
-    order.email = user.google._json.email
-    order.fullName = user.google._json.name
 
     # ? if order.email != user.primaryEmail
     # update user's primary email
@@ -35,3 +33,10 @@ module.exports = class OrdersService extends DomainService
     ups = paymentStatus: 'paid'
 
     @update orderId, ups, callback
+
+  delete: (id, callback) =>
+    @model.findOne { _id: id }, (e, r) =>
+      if !r? || r.paymentStatus != "pending"
+        return callback status: "failed to delete order #{id}"
+      @model.find( _id: id ).remove (ee, rr) =>
+        callback status: 'deleted'

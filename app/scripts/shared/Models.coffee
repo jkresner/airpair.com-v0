@@ -103,6 +103,8 @@ class exports.Expert extends BB.SublistModel
 
 class exports.Order extends BB.BadassModel
   urlRoot: '/api/orders'
+  createdDateString: ->
+    moment(@get('utc')).format 'MMM DD'
 
 
 module.exports = exports

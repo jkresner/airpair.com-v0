@@ -1,6 +1,9 @@
 <td>
-  <a href="#" class="select" data-id="{{ _id }}">{{ _id }}</a> |
-  <a class="delete deleteOrder" href="#" data-id="{{ _id }}">x</a>
+  <a href="#" class="select" data-id="{{ _id }}">{{ _id }}</a>
+  <br />{{ createdDate }} <b>{{ paymentStatus }}</b>
+  {{#if isPending }}
+    <a class="delete deleteOrder" href="#" data-id="{{ _id }}">x</a>
+  {{/if }}
 </td>
 <td>
   {{#if contactPic }}
@@ -8,14 +11,19 @@
   {{else}}
     <img src="/images/default-avatar.jpg" />
   {{/if}}
-  <a href="mailto:{{email}}" target="_blank">{{ fullName }}</a>
-  {{ companyName }}
+  <a href="mailto:{{contactEmail}}" target="_blank">{{ contactName }}</a>
+  {{ company.name }}
 </td>
 <td class="info">
   <a href="#" target="_blank" data-id="{{ _requestId }}">{{ requestId }}</a>
 </td>
 <td>
-
+  {{#each lineItems}}
+    {{ qtyRedeemed }}/ {{ qty }}
+      {{#with suggestion.expert }}
+        <img class="" src="{{ pic }}" />
+      {{/with}}
+  {{/each}}
 </td>
 <td>{{ total }}</td>
 <td>{{ profit }}</td>

@@ -8,17 +8,24 @@ Shared = require './../shared/Views'
 #############################################################################
 
 class exports.OrderRowView extends BB.BadassView
-  logging: on
   tagName: 'tr'
   className: 'order'
   tmpl: require './templates/Row'
   events: { 'click .deleteOrder': 'deleteOrder' }
   initialize: -> @listenTo @model, 'change', @render
   render: ->
-    @$el.html @tmpl @model.toJSON()
+    @$el.html @tmpl @tmplData()
     @
+  tmplData: ->
+    d = @model.toJSON()
+    _.extend d, {
+      isPending:          d.paymentStatus is 'pending'
+      contactName:        d.company.contacts[0].fullName
+      contactPic:         d.company.contacts[0].pic
+      contactEmail:       d.company.contacts[0].email
+      createdDate:        @model.createdDateString()
+    }
   deleteOrder: ->
-    $log 'deleting', @model.attributes
     @model.destroy()
     @$el.remove()
 
@@ -31,7 +38,6 @@ class exports.OrdersView extends Backbone.View
     @listenTo @collection, 'reset add remove filter', @render
   render: ->
     $list = @$('tbody').html ''
-    $log '$list', $list
     for m in @collection.models
      $list.append new exports.OrderRowView( model: m ).render().el
     @$('.count').html @collection.models.length

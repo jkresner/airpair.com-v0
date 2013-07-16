@@ -95,7 +95,7 @@ class exports.BookView extends BB.BadassView
       @$('#selecthours').toggle @mget('total') is 0
   render: ->
     if @request.get('suggested')?
-      @model.set requestId: @request.id, 'lineItems': []
+      @model.setFromRequest @request
       defaultPricing = @request.get('pricing')
       @$('ul').html ''
       for s in @request.get('suggested')
