@@ -10,8 +10,6 @@ module.exports = class OrdersService extends DomainService
   create: (order, user, callback) ->
     order._id = new mongoose.Types.ObjectId;
     order.userId = user._id
-    order.email = user.google._json.email
-    order.fullName = user.google._json.name
 
     # ? if order.email != user.primaryEmail
     # update user's primary email
@@ -28,10 +26,32 @@ module.exports = class OrdersService extends DomainService
           winston.errror "order.save.error", e
         callback rr
 
-  markPaid: (orderId, paymentDetail, callback) ->
+
+  markPaymentReceived: (id, paymentDetail, callback) ->
     # perhaps use get payment details call instead of hack status
-    # should check for userId too
+    # ** should check for userId too
+    ups = paymentStatus: 'received'
+    @update id, ups, callback
 
-    ups = paymentStatus: 'paid'
 
-    @update orderId, ups, callback
+  payOutToExperts: (id, callback) ->
+    @model.findOne { _id: id }, (e, r) =>
+      if !r? || r.paymentStatus != "received"
+        return callback status: 'failed', message: "not appropriate to execute payment #{id}"
+
+      @paymentSvc.ExecutePayment r, (resp) =>
+        # $log 'resp', resp
+        if resp.responseEnvelope.ack != 'Success'
+          return callback status: 'failed', message: "failed executing payment #{id}", data: resp
+
+        ups = paymentStatus: 'paidout', payment: r.payment
+        ups.payment.payout = resp
+        @update id, ups, callback
+
+
+  delete: (id, callback) =>
+    @model.findOne { _id: id }, (e, r) =>
+      if !r? || r.paymentStatus != "pending"
+        return callback status: "failed to delete order #{id}"
+      @model.find( _id: id ).remove (ee, rr) =>
+        callback status: 'deleted'

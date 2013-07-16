@@ -95,14 +95,10 @@ class exports.BookView extends BB.BadassView
       @$('#selecthours').toggle @mget('total') is 0
   render: ->
     if @request.get('suggested')?
-      @model.set requestId: @request.id, 'lineItems': []
-      defaultPricing = @request.get('pricing')
-      @$('ul').html ''
-      for s in @request.get('suggested')
-        if s.expertStatus is 'available'
-          item = suggestion: s, qty: 0, total: 0, type: defaultPricing, unitPrice: s.suggestedRate[defaultPricing].total
-          @model.get('lineItems').push item
-          @$('ul').append( new exports.BookExpertView(suggestion:s,request:@request,model:@model).render().el )
+      @model.setFromRequest @request
+      $ul = @$('ul').html('')
+      for li in @model.get('lineItems')
+        $ul.append new exports.BookExpertView(suggestion:li.suggestion,model:@model).render().el
     @
 
 

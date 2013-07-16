@@ -74,3 +74,8 @@ nav img { display:inline-block;width:180px;padding:3px 12px; }
 nav h3 { display:inline-block;color:#999999;padding:16px 6px }
 nav ul { float:right;margin:10px 0px 8px 8px;display:inline; }
 nav ul li { float:right;display:block;margin-left:5px }
+
+#admorderspage #orders img { height: 32px;width: 32px }
+#admorderspage #orders .pending { color:#b94a48; }
+#admorderspage #orders .received { color:#333333 }
+#admorderspage #orders .paidout { color:#468847; }

@@ -100,4 +100,11 @@ class exports.Expert extends BB.SublistModel
     @toggleAttrSublistElement 'tags', tag, (m) -> m._id is value._id
 
 
+
+class exports.Order extends BB.BadassModel
+  urlRoot: '/api/orders'
+  createdDateString: ->
+    moment(@get('utc')).format 'MMM DD'
+
+
 module.exports = exports
