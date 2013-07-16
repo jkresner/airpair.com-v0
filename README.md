@@ -37,7 +37,7 @@ To setup + run locally
 
 6)   Open browser @ http://localhost:3333/
 
-7)   For testing, install PhantomJS & mocha-phantomjs `npm install -g mocha-phantomjs phantomjs`
+7)   For testing, install PhantomJS & mocha-phantomjs `npm install -g mocha mocha-phantomjs phantomjs`
 
 
 Running tests
