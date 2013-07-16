@@ -32,6 +32,7 @@
 #reviewpage #expertReviewForm h4 { color:black; }
 #reviewpage #expertReviewForm select { width:64%!important; }
 #reviewpage #expertReviewForm .hideShowSave { display:none }
+#reviewpage #expertReviewForm .hideShowAvailable { display:none }
 #reviewpage #expertReviewForm .charCount { margin:-20px 13px 0 0;float:right; }
 #reviewpage #expertReviewForm .note { color:#CC523E;font-size:11px;margin-left:3px; }
 

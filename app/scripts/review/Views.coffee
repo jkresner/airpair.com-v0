@@ -106,17 +106,31 @@ class exports.BookView extends BB.BadassView
 ## Review
 #############################################################################
 
+# class exports.ExpertPaymentSettingsView extends BB.ModelSaveView
+#   el: '#expertReviewForm'
+#   tmpl: require './templates/ExpertReviewForm'
+#   viewData: ['expertRating', 'expertFeedback', 'expertStatus', 'expertComment', 'expertAvailability']
+#   events:
+#     'click .saveFeedback': 'saveFeedback'
+#   initialize: (args) ->
+#     @listenTo @settings, 'change', render()
+#   render: ->
+#     @
+
+
 
 class exports.ExpertReviewFormView extends BB.EnhancedFormView
   el: '#expertReviewForm'
   tmpl: require './templates/ExpertReviewForm'
-  viewData: ['expertRating', 'expertFeedback', 'expertStatus', 'expertComment', 'expertAvailability']
+  viewData: ['expertRating', 'expertFeedback', 'expertStatus', 'expertComment', 'expertAvailability','payPalEmail']
   events:
     'click .saveFeedback': 'saveFeedback'
   initialize: (args) ->
   render: ->
     expertRate = @model.get('suggestedRate')[@request.get('pricing')].expert
-    @$el.html @tmpl @model.extend({expertRate})
+    pp = @settings.paymentMethod('paypal')
+    payPalEmail = if pp? then pp.info.email
+    @$el.html @tmpl @model.extend({expertRate,payPalEmail})
     @elm('expertStatus').on 'change', @toggleFormElements
     @enableCharCount 'expertFeedback'
     @setValsFromModel ['expertRating', 'expertStatus']
@@ -126,19 +140,26 @@ class exports.ExpertReviewFormView extends BB.EnhancedFormView
     @renderInputsValid()
     expertStatus = @elm('expertStatus').val()
     @$('.hideShowSave').toggle expertStatus != ''
-    @$('.control-agree').hide()
+    @$('.hideShowAvailable').hide()
     if expertStatus is 'available'
       @elm('expertComment').attr 'placeholder', "Comment to the customer on why they should book you for this airpair."
       if @elm('expertAvailability').val() is 'unavailable' then @elm('expertAvailability').val('')
-      @$('.control-agree').show()
+      @$('.hideShowAvailable').show()
     else if expertStatus is 'abstained'
       @elm('expertComment').attr 'placeholder', "Comment to the customer on why you don't want this airpair. E.g. Are you busy this week?"
       @elm('expertAvailability').val('unavailable').hide()
   saveFeedback: (e) ->
-    if @elm('expertStatus').val() is 'available' && ! @elm('agree').is(':checked')
-      alert('You much agree to your hourly rate, to be available for this request')
+    isAvailable = @elm('expertStatus').val() is 'available'
+    if isAvailable && ! @elm('agree').is(':checked')
+      # $log 'renderInputValid', @renderInputValid, @elm('agree').is(':checked')
+      alert 'You must agree to your hourly rate, to be available for this request'
+      # @renderInputValid @elm('agree'), 'You must agree to your hourly rate, to be available for this request'
+    else if isAvailable && @elm('payPalEmail').val().length < 4
+      # @renderInputValid @elm('payPalEmail'), 'You must supply your PayPal email address'
+      alert 'You must supply your PayPal email address'
     else
       @save(e)
+    false
   renderSuccess: (model, resp, options) =>
     @request.set model.attributes
 

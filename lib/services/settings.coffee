@@ -18,6 +18,8 @@ module.exports = class SettingsService extends DomainService
 
   update: (userId, data, callback) =>
     ups = und.clone data
+    data.userId = userId
     delete ups._id
-    @model.findOneAndUpdate({userId:userId}, ups).lean().exec (e, r) =>
+    @model.findOneAndUpdate({userId:userId}, ups, { upsert: true }).lean().exec (e, r) =>
+      # $log 'save.settings', e, r
       callback r

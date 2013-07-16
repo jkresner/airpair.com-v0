@@ -100,25 +100,9 @@ class RequestApi extends CRUDApi
       if Roles.isRequestOwner(usr, r)
         @updateSuggestionByCustomer(req, res, r)
       else if Roles.isRequestExpert(usr, r) || Roles.isAdmin(usr)
-        @updateSuggestionByExpert(req, res, r)
+        @svc.updateSuggestionByExpert r, usr, req.body, (r) => res.send r
       else
         res.send 403
-
-
-  # TODO, add some validation!!
-  updateSuggestionByExpert: (req, res, r) =>
-    ups = req.body
-    data = { suggested: r.suggested, events: r.events }
-    sug = und.find r.suggested, (s) -> und.idsEqual s.expert.userId, req.user._id
-    sug.events.push @newEvent(req, "expert updated")
-    sug.expertRating = ups.expertRating
-    sug.expertFeedback = ups.expertFeedback
-    sug.expertComment = ups.expertComment
-    sug.expertStatus = ups.expertStatus
-    sug.expertAvailability = ups.expertAvailability
-    data.events.push @newEvent(req, "expert reviewed", ups)
-
-    @svc.update req.params.id, data, (r) => res.send r
 
 
   updateSuggestionByCustomer: (req, res, r) =>

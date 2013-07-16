@@ -1,11 +1,13 @@
 DomainService   = require './_svc'
 Roles           = require './../identity/roles'
 RatesSvc        = require './rates'
+SettingsSvc     = require './settings'
 
 module.exports = class RequestsService extends DomainService
 
   model: require './../models/request'
   rates: new RatesSvc()
+  settingsSvc: new SettingsSvc()
 
   publicView: (request) ->
     _.pick request, ['_id','tags','company','brief','availability']
@@ -81,3 +83,26 @@ module.exports = class RequestsService extends DomainService
       .exec (e, r) ->
         r = {} if r is null
         callback r
+
+
+  updateSuggestionByExpert: (request, usr, expertReview, callback) =>
+    # TODO, add some validation!!
+    # if expertReview.agree
+
+    $log 'updateSuggestionByExpert', usr._id, expertReview.payPalEmail
+    pymt = paymentMethods: [{type: 'paypal', isPrimary: true, info: { email: expertReview.payPalEmail }}]
+    @settingsSvc.update usr._id, pymt, (r) => $log 'save.settings', r
+
+    ups = expertReview
+    data = { suggested: request.suggested, events: request.events }
+    sug = _.find request.suggested, (s) -> _.idsEqual s.expert.userId, usr._id
+    sug.events.push @newEvent(usr, "expert updated")
+    sug.expertRating = ups.expertRating
+    sug.expertFeedback = ups.expertFeedback
+    sug.expertComment = ups.expertComment
+    sug.expertStatus = ups.expertStatus
+    sug.expertAvailability = ups.expertAvailability
+    sug.expert.paymentMethod =
+      type: 'paypal', info: { email: expertReview.payPalEmail }
+    data.events.push @newEvent(usr, "expert reviewed", ups)
+    @update request._id, data, callback
