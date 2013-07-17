@@ -52,6 +52,7 @@
 #reviewpage .form-actions { border-top: 1px solid gray;min-height:50px;margin-bottom:0; }
 
 #reviewpage ul#bookableExperts { padding:0;margin:0;width:100%;min-height:200px }
+#reviewpage ul#bookableExperts .bookableExperts { clear:both;height:160px }
 #reviewpage ul#bookableExperts .expertMini { float:left }
 #reviewpage ul#bookableExperts .expertMini .pic { width:80px;height:80px }
 #reviewpage ul#bookableExperts .expertOptions { float:left;margin-left:20px }
