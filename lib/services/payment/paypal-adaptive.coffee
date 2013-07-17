@@ -39,7 +39,7 @@ payloadDefault = (cfg) ->
 getExpertPaypalEmail = (item) ->
   env = process.env.Payment_Env
   if env? && env is 'prod'
-    item.suggestion.expert.paymentSettings.paypal.id
+    item.suggestion.expert.paymentMethod.info.email
   else
     "expert02@airpair.com"
 
