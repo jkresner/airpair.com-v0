@@ -1,60 +1,30 @@
 M = require '/scripts/tags/Models'
 C = require '/scripts/tags/Collections'
 V = require '/scripts/tags/Views'
-tagsData = require '../../data/tags'
 
-seedData = (cb) ->  
-  # insert tags into mongo
-  count = 0
-  for tag in tagsData
-    mTagData =
-      name: tag.name
-      short: tag.short
-      desc: tag.desc
-      soId: tag.soId
-      ghId: tag.ghId
-      tokens: tag.tokens
+seedData = (cb) ->
+  $.get '/seeddata', (data) -> cb()
 
-    mTag = new M.Tag(mTagData)
-
-    mTag.save mTagData,
-      success: (m, r) ->
-        count++
-        if count == tagsData.length then cb()
-      error: (m, e) ->
-        $log 'error', e
-        count++
-        if count == tagsData.length then cb()        
-
-unseedData = (ctx, cb) ->
-
-  count = 0
-  totalTags = ctx.app.tags.models.length
-
-  while (tag = ctx.app.tags.first())
-    tag.destroy
-      success: (m, r) ->
-        count++
-        if count == totalTags then cb()
-      error: (e, r) ->
-        count++
-        if count == totalTags then cb()
+unseedData = (cb) ->
+  $.get '/seeddata', (data) -> cb()
 
 describe "Tags: tag admin", ->
 
   before (done) ->
     hlpr.setInitApp @, '/scripts/tags/Router'
-    hlpr.setSession 'admin', done
+    seedData ->
+      hlpr.setSession 'admin', done
 
   beforeEach (done) ->
     window.location = "#"
     hlpr.cleanSetup @, data.fixtures.tags
-    seedData ->
-      initApp {}, done
-
+    initApp {}, done 
+  
   afterEach ->
-    unseedData @, =>
-      hlpr.cleanTearDown @
+    hlpr.cleanTearDown @
+
+  after ->
+    unseedData ->
 
   it "can edit a tag as admin", (done) ->
     
