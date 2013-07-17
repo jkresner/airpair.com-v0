@@ -29,7 +29,7 @@ class OrdersApi
       contacts: req.body.company.contacts
 
     for li in req.body.lineItems
-      toPick = ['_id','userId','name','username','rate','email','pic']
+      toPick = ['_id','userId','name','username','rate','email','pic','paymentMethod']
 
       order.lineItems.push
         type: li.type
