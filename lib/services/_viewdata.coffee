@@ -2,9 +2,11 @@ util = require './../../app/scripts/util'
 RequestsSvc = require './../services/requests'
 ExpertsSvc = require './../services/experts'
 TagsSvc = require './../services/tags'
+OrdersSvc = require './../services/orders'
 rSvc = new RequestsSvc()
 eSvc = new ExpertsSvc()
 tSvc = new TagsSvc()
+oSvc = new OrdersSvc()
 
 module.exports = class ViewDataService
 
@@ -35,3 +37,13 @@ module.exports = class ViewDataService
           requests: JSON.stringify r
           experts:  JSON.stringify e
           tags:     JSON.stringify t
+
+  paypalSuccess: (orderId, usr, callback) ->
+    oSvc.markPaymentReceived orderId, {}, (o) => callback
+        session: @session usr
+        order: JSON.stringify o
+
+  paypalCancel: (orderId, usr, callback) ->
+    oSvc.getById orderId, (o) => callback
+        session: @session usr
+        order: JSON.stringify o

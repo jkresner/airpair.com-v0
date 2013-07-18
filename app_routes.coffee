@@ -18,7 +18,10 @@ module.exports = (app) ->
   app.get '/find-an-expert*', (req, r)-> file r, 'request'
 
   app.get '/', (req, r) ->
-    if !req.isAuthenticated() then file r, 'homepage' else file r, 'dashboard'
+    if !req.isAuthenticated()
+      file r, 'homepage'
+    else
+      file r, 'dashboard'
 
   app.get '/dashboard*', loggedIn, (req, r)-> file r, 'dashboard'
 
@@ -33,6 +36,7 @@ module.exports = (app) ->
   app.get '/adm/tags*', loggedIn, admin, (req, r) -> file r, 'adm/tags'
   app.get '/adm/experts*', loggedIn, admin, (req, r) -> file r, 'adm/experts'
   app.get '/adm/csvs*', loggedIn, admin, (req, r) -> file r, 'adm/csvs'
+  app.get '/adm/orders*', loggedIn, admin, (req, r) -> file r, 'adm/orders'
   app.get '/adm/inbound*', loggedIn, admin, (req, r) ->
     viewData.inbound req.user, (d) => r.render 'adm/inbound.html', d
 
@@ -47,14 +51,22 @@ module.exports = (app) ->
   require('./lib/api/settings')(app)
 
 
-  app.get '/paypal/success', (req, r) -> r.send 'paypal success'
-  app.get '/paypal/cancel', (req, r) -> r.send 'paypal cancel'
+  app.get '/paypal/success/:id', (req, r) ->
+    viewData.paypalSuccess req.params.id, req.user, (d) =>
+      r.render 'payment/paypalSuccess.html', d
+  app.get '/paypal/cancel/:id', (req, r) ->
+    viewData.paypalCancel req.params.id, req.user, (d) =>
+      r.render 'payment/paypalCancel.html', d
+
 
   # todo, brush up page
   app.get '/pair-programmers*', (req, r)-> file r, 'pairing'
 
   # landing pages
-  app.get '/ruby-on-rails-tutoring', (req, r)-> file r, 'landing_pages/ruby_on_rails_tutoring'
+  app.get '/ruby-on-rails-tutoring', (req, r) ->
+    r.cookie 'landingPage', 'ruby-on-rails-tutoring'
+
+    file r, 'landing_pages/ruby_on_rails_tutoring'
 
   # todo, get agreements
   # app.get '/TOS', (req, r)-> file r, 'legal'

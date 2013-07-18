@@ -2,6 +2,7 @@
   <h2><em>{ </em>Review request<em> }</em></h2>
 
   <div class="well">
+
     <h5>What'd you think about this request?
       <br />
       <span class="muted"></span>
@@ -31,9 +32,11 @@
 
       <hr />
 
+      <h2>Your hourly rate is <b>{</b> ${{ expertRate }} <b>}</b></h2>
+      <hr />
+
       <h5>Do you want this airpair? <span class="muted">( visible to customer )</h5>
       <div class="control-group">
-        <label class="control-label" for="expertStatus"></label>
         <div class="controls">
           <select name="expertStatus">
             <option value="">... please select</option>
@@ -43,17 +46,30 @@
         </div>
       </div>
 
+      <div class="control-group hideShowAvailable">
+        <div class="controls">
+            <input type="checkbox" name="agree" style="float:left" data-error-style="inline" /> <span style="font-size:11px;float:left;margin:0px 0px 10px 8px;color:#CC523E">I agree to my rate of <b>${{expertRate}}</b> per hour minus paypal charges on this request.</span>
+        </div>
+      </div>
+
       <div class="control-group">
-        <label class="control-label" for="expertComment"></label>
         <div class="controls">
             <textarea style="margin-bottom:2px" class="hideShowSave" name="expertComment" placeholder="Comment">{{ expertComment }}</textarea>
         </div>
       </div>
 
       <div class="control-group">
-        <label class="control-label" for="expertAvailability"></label>
         <div class="controls">
             <textarea class="hideShowSave" name="expertAvailability" placeholder="What is your location, timezone and availability?">{{ expertAvailability }}</textarea>
+        </div>
+      </div>
+
+      <div class="control-group hideShowAvailable" style="clear:both">
+        <hr />
+
+        <h5>Your PayPal email for us to pay into</h5>
+        <div class="controls">
+            <input type="text" name="payPalEmail" placeholder="PayPal email address" style="width:94%" data-error-style="inline" value="{{ payPalEmail }}" />
         </div>
       </div>
 

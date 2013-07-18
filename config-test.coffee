@@ -9,4 +9,6 @@ config.plugins =
   autoReload:
     port: 4434
 
+process.env.Payment_Env = 'test'
+
 exports.config = config

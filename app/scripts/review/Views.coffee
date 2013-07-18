@@ -33,18 +33,36 @@ class exports.SuggestionView extends BB.BadassView
 ## Book
 #############################################################################
 
-class exports.BookSummaryView extends BB.BadassView
-  el: '#summary'
+
+class exports.OrderView extends BB.ModelSaveView
+  el: '#order'
   tmpl: require './templates/BookSummary'
+  events:
+    'click .pay': 'pay'
   initialize: (args) ->
-    @listenTo @order, 'change', @render
+    @listenTo @model, 'change', @render
   render: ->
-    @order.setTotal()
-    @$el.html @tmpl @order.toJSON()
+    @model.setTotal()
+    @$('#summary').html @tmpl @model.toJSON()
+    @$('#pay').toggle @mget('total') isnt 0
     @
+  pay: (e) ->
+    if @model.get('total') is 0
+      e.preventDefault()
+      alert('please select at least one hour')
+    else
+      @save(e)
+    false
+  getViewData: ->
+    @model.attributes
+  renderSuccess: (model, resp, opts) ->
+    # $log 'order', model.attributes
+    @$('#paykey').val model.attributes.payment.payKey
+    @$('#submitBtn').click()
 
 
 class exports.BookExpertView extends BB.BadassView
+  className: 'bookableExpert'
   tmpl: require './templates/BookExpert'
   events:
     'change select': 'update'
@@ -52,72 +70,67 @@ class exports.BookExpertView extends BB.BadassView
   render: ->
     @li = @model.lineItem @suggestion._id
     @$el.html @tmpl @li
-    @elm('pricing').val @li.pricing
+    @elm('type').val @li.type
     @elm('qty').val @li.qty
     @
   update: ->
-    @li = @model.lineItem @suggestion._id
-    @li.type = @elm('pricing').val()
+    @li.type = @elm('type').val()
     @li.qty = parseInt( @elm('qty').val() )
-    @li.unitPrice = @suggestion.suggestedRate[@li.pricing].total
+    @li.unitPrice = @suggestion.suggestedRate[@li.type].total
     @li.total = @li.qty * @li.unitPrice
     @model.trigger 'change'
     @render()
 
 
-class exports.BookView extends BB.ModelSaveView
+class exports.BookView extends BB.BadassView
   el: '#book'
   tmpl: require './templates/BookInfo'
-  events:
-    'click .pay': 'pay'
   initialize: (args) ->
-    window.PAYPAL = require '/scripts/providers/paypal'
     @$el.html @tmpl()
+    window.PAYPAL = require '/scripts/providers/paypal'
     @embeddedPPFlow = new PAYPAL.apps.DGFlow trigger: 'submitBtn',type:'light'
-    @summaryView = new exports.BookSummaryView order: @model
-    @listenTo @request, 'change', @renderExperts
-    @listenTo @model, 'change', @renderPay
-  renderExperts: ->
+    @orderView = new exports.OrderView model: @model
+    @listenTo @request, 'change', @render
+    @listenTo @model, 'change', =>
+      @$('#selecthours').toggle @mget('total') is 0
+  render: ->
     if @request.get('suggested')?
-      @model.set requestId: @request.id, 'lineItems': []
-      pricing = @request.get('pricing')
-      @$('ul').html ''
-      for s in @request.get('suggested')
-        item = suggestion: s, qty: 0, total: 0, pricing: @request.get('pricing'), unitPrice: s.suggestedRate[pricing].total
-        @model.get('lineItems').push item
-        @$('ul').append( new exports.BookExpertView(suggestion:s,request:@request,model:@model).render().el )
+      @model.setFromRequest @request
+      $ul = @$('ul').html('')
+      for li in @model.get('lineItems')
+        $ul.append new exports.BookExpertView(suggestion:li.suggestion,model:@model).render().el
     @
-  renderPay: ->
-    @$('#pay').toggle @mget('total') isnt 0
-    @$('#selecthours').toggle @mget('total') is 0
-    @
-  pay: (e) ->
-    e.preventDefault()
-    if @model.get('total') is 0
-      alert('please select at least one hour')
-    else
-      @save(e)
-  getViewData: ->
-    @model.attributes
-  renderSuccess: (model, resp, opts) ->
-    @$('#paykey').val resp.payKey
-    @$('#submitBtn').click()
 
 
 #############################################################################
 ## Review
 #############################################################################
 
+# class exports.ExpertPaymentSettingsView extends BB.ModelSaveView
+#   el: '#expertReviewForm'
+#   tmpl: require './templates/ExpertReviewForm'
+#   viewData: ['expertRating', 'expertFeedback', 'expertStatus', 'expertComment', 'expertAvailability']
+#   events:
+#     'click .saveFeedback': 'saveFeedback'
+#   initialize: (args) ->
+#     @listenTo @settings, 'change', render()
+#   render: ->
+#     @
+
+
 
 class exports.ExpertReviewFormView extends BB.EnhancedFormView
   el: '#expertReviewForm'
   tmpl: require './templates/ExpertReviewForm'
-  viewData: ['expertRating', 'expertFeedback', 'expertStatus', 'expertComment', 'expertAvailability']
+  viewData: ['expertRating', 'expertFeedback', 'expertStatus', 'expertComment', 'expertAvailability','payPalEmail']
   events:
-    'click .saveFeedback': 'save'
+    'click .saveFeedback': 'saveFeedback'
   initialize: (args) ->
   render: ->
-    @$el.html @tmpl @model.toJSON()
+    expertRate = @model.get('suggestedRate')[@request.get('pricing')].expert
+    pp = @settings.paymentMethod('paypal')
+    payPalEmail = if pp? then pp.info.email
+    @$el.html @tmpl @model.extend({expertRate,payPalEmail})
     @elm('expertStatus').on 'change', @toggleFormElements
     @enableCharCount 'expertFeedback'
     @setValsFromModel ['expertRating', 'expertStatus']
@@ -127,12 +140,26 @@ class exports.ExpertReviewFormView extends BB.EnhancedFormView
     @renderInputsValid()
     expertStatus = @elm('expertStatus').val()
     @$('.hideShowSave').toggle expertStatus != ''
+    @$('.hideShowAvailable').hide()
     if expertStatus is 'available'
       @elm('expertComment').attr 'placeholder', "Comment to the customer on why they should book you for this airpair."
       if @elm('expertAvailability').val() is 'unavailable' then @elm('expertAvailability').val('')
+      @$('.hideShowAvailable').show()
     else if expertStatus is 'abstained'
       @elm('expertComment').attr 'placeholder', "Comment to the customer on why you don't want this airpair. E.g. Are you busy this week?"
       @elm('expertAvailability').val('unavailable').hide()
+  saveFeedback: (e) ->
+    isAvailable = @elm('expertStatus').val() is 'available'
+    if isAvailable && ! @elm('agree').is(':checked')
+      # $log 'renderInputValid', @renderInputValid, @elm('agree').is(':checked')
+      alert 'You must agree to your hourly rate, to be available for this request'
+      # @renderInputValid @elm('agree'), 'You must agree to your hourly rate, to be available for this request'
+    else if isAvailable && @elm('payPalEmail').val().length < 4
+      # @renderInputValid @elm('payPalEmail'), 'You must supply your PayPal email address'
+      alert 'You must supply your PayPal email address'
+    else
+      @save(e)
+    false
   renderSuccess: (model, resp, options) =>
     @request.set model.attributes
 

@@ -4,12 +4,33 @@ Shared = require './../shared/Models'
 
 
 exports.User = Shared.User
+exports.Settings = Shared.Settings
 
 
 class exports.Order extends BB.BadassModel
   urlRoot: '/api/orders'
   defaults:
     total: 0
+  setFromRequest: (request) ->
+    @set
+      lineItems: []
+      requestId: request.id
+      company:   request.get 'company'
+
+    defaultPricing = request.get 'pricing'
+
+    for s in request.get 'suggested'
+      if s.expertStatus is 'available'
+        # $log 'ss', s
+        item =
+        @get('lineItems').push
+          suggestion: s
+          qty: 0
+          total: 0
+          type: defaultPricing
+          unitPrice: s.suggestedRate[defaultPricing].total
+
+
   lineItem: (index) ->
     # first try lookup by suggestion.Id
     items = @get('lineItems')

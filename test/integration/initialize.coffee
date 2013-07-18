@@ -40,6 +40,7 @@ module.exports = (grep) ->
     './review/anonymous_test'
     './review/customer_test'
     './review/expert_test'
+    './review/book_test'
     './stories/emillee_test'
     './tags/tagsadmin_test'
   ]
