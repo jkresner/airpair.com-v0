@@ -28,18 +28,18 @@ class OrdersApi
       name: req.body.company.name
       contacts: req.body.company.contacts
 
+    toPick = ['_id','userId','name','username','rate','email','pic','paymentMethod']
     for li in req.body.lineItems
-      toPick = ['_id','userId','name','username','rate','email','pic','paymentMethod']
-
-      order.lineItems.push
-        type: li.type
-        total: li.total
-        unitPrice: li.unitPrice
-        qty: li.qty
-        suggestion:
-          _id: li.suggestion._id
-          suggestedRate: li.suggestion.suggestedRate
-          expert: _.pick li.suggestion.expert, toPick
+      if li.qty > 0
+        order.lineItems.push
+          type: li.type
+          total: li.total
+          unitPrice: li.unitPrice
+          qty: li.qty
+          suggestion:
+            _id: li.suggestion._id
+            suggestedRate: li.suggestion.suggestedRate
+            expert: _.pick li.suggestion.expert, toPick
 
     @svc.create order, req.user, (r) =>
       if r.payment.responseEnvelope.ack is "Failure"
