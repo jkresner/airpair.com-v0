@@ -41,12 +41,15 @@ class OrdersApi
           suggestedRate: li.suggestion.suggestedRate
           expert: _.pick li.suggestion.expert, toPick
 
-    @svc.create order, req.user, (r) => res.send r
+    @svc.create order, req.user, (r) =>
+      if r.payment.responseEnvelope.ack is "Failure"
+        res.status(400)
+      res.send r
 
 
   payOut: (req, res) =>
     @svc.payOutToExperts req.params.id, (r) ->
-      if r.status? & r.status is 'failed'
+      if r.status? & r.status is 'Failure'
         res.status(400)
       res.send r
 

@@ -38,7 +38,7 @@
 
   <script type="text/javascript">
     function initApp() {
-      var pageData = { session: {{{ session }}}, request: {{{ request }}} };
+      var pageData = { session: {{{ session }}}, request: {{{ request }}}, isProd: {{ isProd }} };
       Router = require('/scripts/review/Router');
       window.router = new Router(pageData);
     }

@@ -25,6 +25,7 @@ module.exports = class ViewDataService
 
   review: (id, usr, callback) ->
     rSvc.getByIdSmart id, usr, (r) => callback
+      isProd:     isProd.toString()
       session:    @session usr
       request:    JSON.stringify r
       tagsString: if r? then util.tagsString(r.tags) else 'Not found'
