@@ -86,7 +86,7 @@ class exports.BookView extends BB.BadassView
   el: '#book'
   tmpl: require './templates/BookInfo'
   initialize: (args) ->
-    @$el.html @tmpl()
+    @$el.html @tmpl useSandbox: !@isProd
     window.PAYPAL = require '/scripts/providers/paypal'
     @embeddedPPFlow = new PAYPAL.apps.DGFlow trigger: 'submitBtn',type:'light'
     @orderView = new exports.OrderView model: @model
