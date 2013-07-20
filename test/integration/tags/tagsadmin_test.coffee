@@ -2,18 +2,18 @@ M = require '/scripts/tags/Models'
 C = require '/scripts/tags/Collections'
 V = require '/scripts/tags/Views'
 
-seedData = (cb) ->
+seedTagData = (cb) ->
   $.get '/seeddata', (data) -> cb()
 
-unseedData = (cb) ->
-  $.get '/seeddata', (data) -> cb()
+unseedTagData = (cb) ->
+  $.get '/unseeddata', (data) -> cb()
 
 describe "Tags: tag admin", ->
 
   before (done) ->
     hlpr.setInitApp @, '/scripts/tags/Router'
-    seedData ->
-      hlpr.setSession 'admin', done
+    hlpr.setSession 'admin', ->
+      seedTagData done
 
   beforeEach (done) ->
     window.location = "#"
@@ -23,8 +23,8 @@ describe "Tags: tag admin", ->
   afterEach ->
     hlpr.cleanTearDown @
 
-  after ->
-    unseedData ->
+  after (done) ->
+    unseedTagData done
 
   it "can edit a tag as admin", (done) ->
     
