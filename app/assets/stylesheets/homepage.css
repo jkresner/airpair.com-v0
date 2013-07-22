@@ -1,3 +1,7 @@
+html, body {
+  height: 100%;
+}
+
 body {
   font-family: Open Sans, helvetica, sans-serif;
   letter-spacing: 0.2px;background: #e2e2e2;color: #333333;font-size: 14px;line-height: 20px;margin:0;
@@ -10,8 +14,17 @@ a:hover { text-decoration:none;color:#ffffff }
 .cf { zoom: 1; }
 
 
-.fold { background:url('/images/bg-top.jpg');
- background-size:100%;width:100%;border-bottom: solid 30px #212F3B; }
+.fold {
+  background:url('/images/bg-top.jpg');
+  background-size:100%;width:100%;/*border-bottom: solid 30px #212F3B;*/
+  height: 100%;
+}
+
+.fold-border {
+  height: 20px;
+  background-color: #212F3B;
+  margin-top: -20px;
+}
 
 nav { border-bottom: dashed 1px #A4A4A5;padding: 20px 10px 6px 10px;margin: 0 40px; }
 nav img { display:inline-block;float:left; width: 120px } /* logo */
