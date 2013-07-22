@@ -13,8 +13,8 @@
     <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,300' type='text/css'>
     <!-- Place apple-touch-icon.png in root dir -->
 
-      <script src="http://ajax.aspnetcdn.com/ajax/jquery/jquery-1.9.0.js"></script>
-      <script type="text/javascript">
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery/jquery-1.9.0.js"></script>
+    <script type="text/javascript">
       (function($){
         $.fn.anchorScroll = function(options) {
           return $(this).each(function(){
@@ -38,13 +38,13 @@
       })($);
 
       $(document).ready(function() {
-      $("#link-logo").anchorScroll();
-      $("#link-what").anchorScroll();
-      $("#link-how").anchorScroll();
-      // $("#link-showme").anchorScroll();
-      // $("#link-why").anchorScroll();
-    });
-        </script>
+        $("#link-logo").anchorScroll();
+        $("#link-what").anchorScroll();
+        $("#link-how").anchorScroll();
+        $("#link-showme").anchorScroll();
+        $("#link-why").anchorScroll();
+      });
+    </script>
 
   </head>
 
@@ -53,10 +53,18 @@
     <a href="#what" id="link-logo"><img src="/images/logo4.png" /></a>
     <div class="navigation">
       <ul>
-        <li><a href="#what" id="link-what">{ what }</a></li>
-        <li><a href="#how" id="link-how">{ how }</a></li>
-        <li>{ show me }</li>
-        <li>{ why }</li>
+        <li class="orange">
+          <a href="#what" id="link-what"><span class="orange">{</span> what <span class="orange">}</span></a>
+        </li>
+        <li class="orange">
+          <a href="#how" id="link-how"><span class="orange">{</span> how <span class="orange">}</span></a>
+        </li>
+        <li class="orange">
+          <a href="#showme" id="link-showme"><span class="orange">{</span> show me <span class="orange">}</span></a>
+        </li>
+        <li class="yellow">
+          <a href="#why" id="link-why"><span class="yellow">{</span> why <span class="yellow">}</span></a>
+        </li>
       </ul>
       <span class="social">
         <a class="zocial twitter icon" href="http://twitter.com/airpair" target="_blank"></a> <a class="zocial facebook icon" href="http://facebook.com/airpair" target="_blank"></a>
@@ -113,7 +121,56 @@
           </div>
 
           <div style="clear:both"></div><br />
-          <a href="/find-an-expert" class="button" style="text-align:center;width:640px">{ Get started! }</a>
+          <a href="/find-an-expert" class="button" style="text-align:center;width:640px">{ get started! }</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class='fold-border'>
+  </div>
+
+  <div class="outer-container" id="showme">
+    <div class="middle-container">
+      <div class="inner-container marketing">
+
+        <div class="asession">
+          <h2><b>{</b> Pair Programming: NodeJS Web Apps & Mocha Testing <b>}</b></h2>
+          <div class="cola">
+
+            <h4>Entrepreneur Feedback</h4>
+            <p class="feedback"><b>Bryan Hughes: </b> Perhaps the most valuable result is that I now know that my project's overall re-design has been vetted by a professional.</p>
+
+            <h4>Expert Feedback</h4>
+            <p class="feedback"><b>Peter Lyons</b> I like helping entrepreneurs & programmers. This gives me a way to do both.</p>
+          </div>
+          <div class="colb">
+            <iframe width="420" height="236" src="http://www.youtube.com/embed/gdi9xDKZ5qg" frameborder="0" allowfullscreen></iframe>
+          </div>
+        </div>
+
+
+        <div class="asession">
+
+          <h2><em>{</em> Expert framework help: Socket.io Deep Dive <em>}</em></h2>
+          <div class="cola">
+            <h4>Entrepreneur Feedback</h4>
+            <p class="feedback"><b>David Crawford:</b> I got answers much faster than I could on my own. I learned a lot and got my money's worth.</p>
+
+            <h4>Expert Feedback</h4>
+            <p class="feedback">
+              <b>Alexandru Vladutu: </b>
+              Besides the awesome feeling you have helping someone (maybe
+              you've experienced helping someone on stackoverflow so
+              you know how it's like), video talk is definitely more
+              productive. You can share code / tips & tricks and answer new
+              questions along the way.
+            </p>
+          </div>
+
+          <div class="colb">
+            <iframe width="420" height="236" src="http://www.youtube.com/embed/HbOhPkv0RVE" frameborder="0" allowfullscreen></iframe>
+          </div>
         </div>
       </div>
     </div>
@@ -123,128 +180,37 @@
   </div>
 
 
+  <div class="outer-container" id="why">
+    <div class="middle-container">
 
-<!--
-  <div class="marketing" style="padding:40px">
-    <h2>5 reasons to use airpair</h2>
+      <div class="inner-container marketing">
+        <div class="asession">
+          <h2><em>{</em> why I started airpair <em>}</em></h2>
 
-    <div class="cola">
+          <div class="colb">
+            <img src="/images/jk.jpg" style="width:440px;float:left;margin-top:20px" />
 
-      <ol>
-        <li>Avoid time wasted in rabbit holes</li>
-        <li>Get peace of mind by vetting your approach</li>
-        <li>Incorporate feedback to minimize technical debt</li>
-        <li>Keep your skills up to date</li>
-        <li>Two heads are better than one</li>
-      </ol>
+            <p><b>Jonathon Kresner: </b> I started airpair to help developers.</p>
+          </div>
 
-      <p><a href="/find-an-expert" style="color:#99923F">> Get started!</a></p>
+          <div class="cola">
+            <p class="feedback">I've ALWAYS loved coding product. When things run smooth & you're knocking out screens, life is grand. But often teams lose their way. Products get delayed and instead of knowing if your market assumptions are right, you're stuck battling technology. I know because I was there in both of my first startups. I needed access to mobile experts and db gurus, even though I consider myself a strong engineer.</p>
 
-    </div>
-
-    <hr />
-  </div> -->
-
-
-<!--
-  <div class="marketing" style="padding:40px">
-    <h2>Ways people use airpair</h2>
-
-    <div class="cola">
-
-      <ol>
-        <li>Pair programming</li>
-        <li>Architecture brainstorming</li>
-        <li>Code review</li>
-        <li>Expert technology spikes</li>
-        <li>Framework deep dive</li>>
-      </ol>
-
-      <p><a href="/find-an-expert" style="color:#99923F">> Get started!</a></p>
-
-    </div>
-
-    <hr />
-  </div> -->
-
-
-
-
-  <div class="marketing">
-
-    <div class="asession">
-        <h2><b>{</b> Pair Programming: NodeJS Web Apps & Mocha Testing <b>}</b></h2>
-      <div class="cola">
-
-        <h4>Entrepreneur Feedback</h4>
-        <p class="feedback"><b>Bryan Hughes: </b> Perhaps the most valuable result is that I now know that my project's overall re-design has been vetted by a professional.</p>
-
-        <h4>Expert Feedback</h4>
-        <p class="feedback"><b>Peter Lyons</b> I like helping entrepreneurs & programmers. This gives me a way to do both.</p>
+            <p class="feedback">airpair is for companies that want to get back on track, or better, start off on the right foot by periodically getting expert help to deliver faster.</p>
+          </div>
+        </div>
       </div>
-      <div class="colb">
-        <iframe width="420" height="236" src="http://www.youtube.com/embed/gdi9xDKZ5qg" frameborder="0" allowfullscreen></iframe>
+
+      <div class="inner-container">
+        <div style="clear:both"></div><br />
+        <a href="/find-an-expert" class="button" style="text-align:center;width:640px">{ find experts }</a>
       </div>
-      <hr />
-    </div>
-
-
-<!--     <div class="asession">
-
-    <h2><b>{</b> Architecture Brainstorm: Moving from Rails to NodeJS <b>}</b></h2>
-   <div class="cola">
-    <h4>Entrepreneur Feedback</h4>
-    <p class="feedback"><b>Bryan Hughes:</b> It was gratifying to hear that the parts I felt were "wrong" to me were the parts he had good alternative suggestions for.
-    </p>
-  </div>
-
-      <div class="colb">
-        <iframe width="420" height="236" src="http://www.youtube.com/embed/KPj_caLNkkY" frameborder="0" allowfullscreen></iframe>
-      </div>
-      <hr />
-    </div>
- -->
-    <div class="asession">
-
-    <h2><em>{</em> Expert framework help: Socket.io Deep Dive <em>}</em></h2>
-   <div class="cola">
-    <h4>Entrepreneur Feedback</h4>
-    <p class="feedback"><b>David Crawford:</b> I got answers much faster than I could on my own. I learned a lot and got my money's worth.</p>
-
-    <h4>Expert Feedback</h4>
-    <p class="feedback"><b>Alexandru Vladutu: </b>
-
-Besides the awesome feeling you have helping someone (maybe
-you've experienced helping someone on stackoverflow so
-you know how it's like), video talk is definitely more
-productive. You can share code / tips & tricks and answer new
-questions along the way.</p>
-     </div>
-
-     <div class="colb">
-        <iframe width="420" height="236" src="http://www.youtube.com/embed/HbOhPkv0RVE" frameborder="0" allowfullscreen></iframe>
-      </div>
-      <hr />
-    </div>
-
-  <div id="why" class="row-fluid marketing c900 asession" style="margin-top:0;margin:auto;height:400px;padding-top:20px">
-    <h2><em>{</em> Why I started airpair <em>}</em></h2>
-
-    <img src="/images/jk.jpg" style="width:440px;float:left;margin-top:20px" />
-
-    <div style="float:right;width:420px">
-    <p><b>Jonathon Kresner: </b> I started airpair to help developers.</p>
-    <p class="feedback">I've ALWAYS loved coding product. When things run smooth & you're knocking out screens, life is grand. But often teams lose their way. Products get delayed and instead of knowing if your market assumptions are right, you're stuck battling technology. I know because I was there in both of my first startups. I needed access to mobile experts and db gurus, even though I consider myself a strong engineer.</p>
-
-    <p class="feedback">airpair is for companies that want to get back on track, or better, start off on the right foot by periodically getting expert help to deliver faster.</p>
-
-    <p>
-      <a class="button" style="width:320px;text-align:center;margin:20px" href="/find-an-expert">{ Find experts }</a>
-    </p>
 
     </div>
   </div>
 
+  <div class='fold-border'>
+  </div>
 
   </div> <!-- /container -->
 
