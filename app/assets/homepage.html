@@ -12,36 +12,80 @@
     <link rel="stylesheet" href="/stylesheets/zocial/zocial.css">
     <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,300' type='text/css'>
     <!-- Place apple-touch-icon.png in root dir -->
+
+      <script src="http://ajax.aspnetcdn.com/ajax/jquery/jquery-1.9.0.js"></script>
+      <script type="text/javascript">
+      (function($){
+        $.fn.anchorScroll = function(options) {
+          return $(this).each(function(){
+            var element = this;
+
+            $(element).click(function (event) { 
+
+              var locationHref = window.location.href;
+              var elementClick = $(element).attr("href");
+
+              var destination = $(elementClick).offset().top;
+
+              $("html,body").animate({ scrollTop: destination}, 400);
+
+              //Stop links default events
+              event.preventDefault();
+              return false;
+            })
+          })
+        }
+      })($);
+
+      $(document).ready(function() {
+      $("#link-logo").anchorScroll();
+      $("#link-what").anchorScroll();
+      $("#link-how").anchorScroll();
+      // $("#link-showme").anchorScroll();
+      // $("#link-why").anchorScroll();
+    });
+        </script>
+
   </head>
 
 <body>
-
-  <div class='fold cf'>
-    <nav class="cf">
-      <img src="/images/logo4.png" />
-      <h3>develop software faster with real-time expert help & pair programming</h3>
-      <!-- <h3>blast through development barriers with expert video chat.</h3> -->
-
-      <div class="social">
+  <nav class="cf">
+    <a href="#what" id="link-logo"><img src="/images/logo4.png" /></a>
+    <div class="navigation">
+      <ul>
+        <li><a href="#what" id="link-what">{ what }</a></li>
+        <li><a href="#how" id="link-how">{ how }</a></li>
+        <li>{ show me }</li>
+        <li>{ why }</li>
+      </ul>
+      <span class="social">
         <a class="zocial twitter icon" href="http://twitter.com/airpair" target="_blank"></a> <a class="zocial facebook icon" href="http://facebook.com/airpair" target="_blank"></a>
-      </div>
-    </nav>
+      </span>
+    </div>
+  </nav>
 
-    <div class="jumbotron cf">
+  <div class='outer-container fold cf' id="what">
+    <div class="middle-container">
+      <div class="inner-container jumbotron cf">
 
-      <img src="/images/jumbfaces.png">
+        <div class="tagline">
+          develop software faster with real-time expert help & pair programming
+        </div>
 
-      <div class="col">
-          <h2><span>{</span> learn <span>}</span></h2>
-          <p>Video chat with experts to enhance your skills and blast through development barriers.</p>
+        <img src="/images/jumbfaces.png">
 
-          <a href="/find-an-expert" class="button">{ get help }</a>
-      </div>
-      <div class="col" style="float:right">
-          <h2 class="yellow"><span>{</span> teach <span>}</span></h2>
-          <p>Get paid by the hour to share your knowledge & help coders through 1:1 online sessions.</p>
+        <div class="col">
+            <h2><span>{</span> learn <span>}</span></h2>
+            <p>Video chat with experts to enhance your skills and blast through development barriers.</p>
 
-          <a href="/be-an-expert" class="button green">{ create profile }</a>
+            <a href="/find-an-expert" class="button">{ get help }</a>
+        </div>
+        <div class="col" style="float:right">
+            <h2 class="yellow"><span>{</span> teach <span>}</span></h2>
+            <p>Get paid by the hour to share your knowledge & help coders through 1:1 online sessions.</p>
+
+            <a href="/be-an-expert" class="button green">{ create profile }</a>
+        </div>
       </div>
     </div>
   </div>
@@ -49,29 +93,36 @@
   <div class='fold-border'>
   </div>
 
-  <div id="how" class="marketing" style="padding:40px">
-    <h2>How does it work?</h2>
+  <div class="outer-container" id="how">
+    <div class="middle-container">
+      <div id="how" class="inner-container marketing">
+        <div class="tagline">how does it work?</div>
 
-    <div>
-      <div class="step">
-        <p><b>1)</b> Supply tech, challenge & budget</p>
-        <img src="/images/homepage/step1brief.png" style="width:250px" />
-      </div>
-      <div class="step">
-        <p><b>2)</b> Get 3 hand picked experts</p>
-        <img src="/images/homepage/step2suggestions.png" style="width:240px" />
-      </div>
-      <div class="step">
-        <p><b>3)</b> Choose, book & jump on video call</p>
-        <img src="/images/homepage/step3call.png" style="width:310px;" />
-      </div>
+        <div>
+          <div class="step">
+            <p><b>1)</b> supply tech, challenge & budget</p>
+            <img src="/images/homepage/step1brief.png" style="width:250px" />
+          </div>
+          <div class="step">
+            <p><b>2)</b> get 3 hand picked experts</p>
+            <img src="/images/homepage/step2suggestions.png" style="width:240px" />
+          </div>
+          <div class="step">
+            <p><b>3)</b> choose, book & jump on video call</p>
+            <img src="/images/homepage/step3call.png" style="width:310px;" />
+          </div>
 
-      <div style="clear:both"></div><br />
-      <a href="/find-an-expert" class="button" style="text-align:center;width:640px">{ Get started! }</a>
+          <div style="clear:both"></div><br />
+          <a href="/find-an-expert" class="button" style="text-align:center;width:640px">{ Get started! }</a>
+        </div>
+      </div>
     </div>
-
-    <hr />
   </div>
+
+  <div class='fold-border'>
+  </div>
+
+
 
 <!--
   <div class="marketing" style="padding:40px">
