@@ -200,13 +200,14 @@
               //Stop links default events
               event.preventDefault();
               return false;
-            })
-          })
+            });
+          });
         }
       })($);
 
       $(document).ready(function() {
         $(".anchorScroll a").anchorScroll();
+        $(".anchorScroll a")[1].click();
       });
     </script>
 

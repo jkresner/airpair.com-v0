@@ -40,7 +40,7 @@ nav img { /* logo */
 
 nav .navigation {
   float:right;
-  margin-top: 17px;
+  margin-top: 16px;
   margin-right: 30px;
 }
 
@@ -86,6 +86,11 @@ nav a:link, nav a:visited {
   text-decoration: none;
 }
 
+nav span.social a {
+  position:relative;
+  top:-2px;
+  display:inline-block;
+}
 
 .tagline {
   color: white;
