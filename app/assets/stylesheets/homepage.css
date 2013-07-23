@@ -53,12 +53,12 @@ nav ul {
 
 nav ul li {
   list-style: none;
-  display: inline;
+  display: inline-block;
   color: white;
   margin-left: 8px;
   margin-right: 8px;
   font-size: 19px;
-  padding: 5px 1px 5px 5px;
+  padding: 5px 5px 7px 5px;
 }
 
 nav span {
