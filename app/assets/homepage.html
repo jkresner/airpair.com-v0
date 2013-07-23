@@ -12,59 +12,16 @@
     <link rel="stylesheet" href="/stylesheets/zocial/zocial.css">
     <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,300' type='text/css'>
     <!-- Place apple-touch-icon.png in root dir -->
-
-    <script src="http://ajax.aspnetcdn.com/ajax/jquery/jquery-1.9.0.js"></script>
-    <script type="text/javascript">
-      (function($){
-        $.fn.anchorScroll = function(options) {
-          return $(this).each(function(){
-            var element = this;
-
-            $(element).click(function (event) { 
-
-              var locationHref = window.location.href;
-              var elementClick = $(element).attr("href");
-
-              var destination = $(elementClick).offset().top;
-
-              $("html,body").animate({ scrollTop: destination}, 400);
-
-              //Stop links default events
-              event.preventDefault();
-              return false;
-            })
-          })
-        }
-      })($);
-
-      $(document).ready(function() {
-        $("#link-logo").anchorScroll();
-        $("#link-what").anchorScroll();
-        $("#link-how").anchorScroll();
-        $("#link-showme").anchorScroll();
-        $("#link-why").anchorScroll();
-      });
-    </script>
-
   </head>
-
 <body>
-  <nav class="cf">
-    <a href="#what" id="link-logo"><img src="/images/logo4.png" /></a>
+  <nav class="cf anchorScroll">
+    <a href="#what"><img src="/images/logo4.png" /></a>
     <div class="navigation">
       <ul>
-        <li class="orange">
-          <a href="#what" id="link-what"><span class="orange">{</span> what <span class="orange">}</span></a>
-        </li>
-        <li class="orange">
-          <a href="#how" id="link-how"><span class="orange">{</span> how <span class="orange">}</span></a>
-        </li>
-        <li class="orange">
-          <a href="#showme" id="link-showme"><span class="orange">{</span> show me <span class="orange">}</span></a>
-        </li>
-        <li class="yellow">
-          <a href="#why" id="link-why"><span class="yellow">{</span> why <span class="yellow">}</span></a>
-        </li>
+        <li><a href="#what"><span>{</span> what <span>}</span></a></li>
+        <li><a href="#how"><span>{</span> how <span>}</span></a></li>
+        <li><a href="#showme"><span>{</span> show me <span>}</span></a></li>
+        <li><a href="#why"><span>{</span> why <span>}</span></a></li>
       </ul>
       <span class="social">
         <a class="zocial twitter icon" href="http://twitter.com/airpair" target="_blank"></a> <a class="zocial facebook icon" href="http://facebook.com/airpair" target="_blank"></a>
@@ -222,6 +179,36 @@
     </div>
 
   </body>
+
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery/jquery-1.9.0.js"></script>
+    <script type="text/javascript">
+      (function($){
+        $.fn.anchorScroll = function(options) {
+          return $(this).each(function(){
+            var element = this;
+            $(element).click(function (event) {
+              $('.anchorScroll li').removeClass('active');
+              $(element).parent().addClass('active');
+
+              var locationHref = window.location.href;
+              var elementClick = $(element).attr("href");
+
+              var destination = $(elementClick).offset().top;
+
+              $("html,body").animate({ scrollTop: destination}, 400);
+
+              //Stop links default events
+              event.preventDefault();
+              return false;
+            })
+          })
+        }
+      })($);
+
+      $(document).ready(function() {
+        $(".anchorScroll a").anchorScroll();
+      });
+    </script>
 
   <script src="/javascripts/providers.js" defer onload="require('scripts/providers/all');"></script>
 

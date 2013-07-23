@@ -23,7 +23,7 @@ a:hover { text-decoration:none;color:#ffffff }
   margin-top: -20px;
 }
 
-nav { 
+nav {
   background-color: #212F3B;
   height: 60px;
   position: fixed;
@@ -32,7 +32,7 @@ nav {
 
 nav img { /* logo */
   display:inline-block;
-  float:left; 
+  float:left;
   width: 120px;
   margin-top: 17px;
   margin-left: 30px;
@@ -61,14 +61,24 @@ nav ul li {
   padding: 5px 1px 5px 5px;
 }
 
-nav span.orange {
+nav span {
   color: #CC6750;
   font-weight: 600;
 }
 
-nav span.yellow {
+nav li:hover {
+  background-color: rgba(153, 146, 63, 0.5);
+  border-radius: 3px;
+}
+
+nav li.active span {
   color: #99923F;
   font-weight: 600;
+}
+
+nav li.active:hover {
+  background-color: rgba(204, 103, 80, 0.5);
+  border-radius: 3px;
 }
 
 nav a:link, nav a:visited {
@@ -76,15 +86,6 @@ nav a:link, nav a:visited {
   text-decoration: none;
 }
 
-nav li.orange:hover {
-  background-color: rgba(153, 146, 63, 0.5);
-  border-radius: 3px;
-}
-
-nav li.yellow:hover {
-  background-color: rgba(204, 103, 80, 0.5);
-  border-radius: 3px;
-}
 
 .tagline {
   color: white;
@@ -185,12 +186,12 @@ a.green { background: #99923F;border: solid 3px #7F761C }
 .privateap { width:420px;height:236px;border:dotted 1px gray;margin:0px auto;position:relative; }
 .privateap i { display:block;margin:90px auto;font-style:normal;text-align:center; }
 
-.landing-page h2 { 
-    margin-top: 40px; 
+.landing-page h2 {
+    margin-top: 40px;
 }
 
-.landing-page p { 
-    text-align: left; 
+.landing-page p {
+    text-align: left;
 }
 
 .landing-page .button {
@@ -208,12 +209,12 @@ a.green { background: #99923F;border: solid 3px #7F761C }
     margin: 30px;
 }
 
-.landing-page hr { 
+.landing-page hr {
     clear:both;
     border-bottom:dashed 1px #A4A4A5;
     border-top:none;
     border-left:none;
-    border-right:none 
+    border-right:none
 }
 
 
