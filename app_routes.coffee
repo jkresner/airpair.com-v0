@@ -65,8 +65,16 @@ module.exports = (app) ->
   # landing pages
   app.get '/ruby-on-rails-tutoring', (req, r) ->
     r.cookie 'landingPage', 'ruby-on-rails-tutoring'
-
     file r, 'landing_pages/ruby_on_rails_tutoring'
+
+  app.get '/code-review', (req, r) ->
+    r.cookie 'landingPage', "code-review"
+    file r, 'landing_pages/codeReview'
+
+  app.get '/code-review/:id', (req, r) ->
+    r.cookie 'landingPage', "code-review-#{req.params.id}"
+    viewData.codeReview req.params.id, req.user, (d) =>
+      r.render 'landing_pages/codeReviewTag.html', d
 
   # todo, get agreements
   # app.get '/TOS', (req, r)-> file r, 'legal'
