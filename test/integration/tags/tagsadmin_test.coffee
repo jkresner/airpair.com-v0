@@ -62,9 +62,12 @@ describe "Tags: tag admin", ->
         expect( m.get 'name' ).to.equal test_name
         expect( m.get 'short' ).to.equal test_short
         expect( m.get 'desc' ).to.equal test_desc
-        expect( m.get 'soId' ).to.equal test_stackid
-        expect( m.get 'ghId' ).to.equal test_githubid             
         expect( m.get 'tokens' ).to.equal test_tokens
+
+        # we don't want to save so and gh on form submit
+        expect( m.get 'soId' ).to.not.equal test_stackid
+        expect( m.get 'ghId' ).to.not.equal test_githubid             
+
         done()
 
       $('a.btn-success', form).click()
