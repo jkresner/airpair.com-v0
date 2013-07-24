@@ -46,6 +46,8 @@ app.use (req, r, next) ->
 
 require('./app_routes')(app)
 
+if cfg.env.mode is 'test'
+  require('./app_routes_test')(app)
 
 app.use (err, req, res, next) ->
   console.log "handleError", err
