@@ -31,13 +31,13 @@
 
     <a href="#" data-id="{{ _id }}" class="delete deleteSuggested btn btn-small btn-danger"><i class="icon-trash icon-white"></i> </a>
 
-    <a href="mailto:{{expert.name}}%20%3c{{expert.email}}%3e?subject=airpair - request canceled {{_id}}?&body={{mailTemplates.canceled}}" class="email btn btn-small btn-warning" target="_blank"><i class="icon-envelope icon-white"></i> canceled</a>
+    <a href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to={{expert.name}}%20%3c{{expert.email}}%3e&su=airpair - request canceled {{_id}}&body={{mailTemplates.canceled}}" class="email btn btn-small btn-warning" target="_blank"><i class="icon-envelope icon-white"></i> canceled</a>
 
-    <a href="mailto:{{expert.name}}%20%3c{{expert.email}}%3e?subject=Another expert was selected for airpair {{_id}}?&body={{mailTemplates.another}}" class="email btn btn-small btn-warning" target="_blank"><i class="icon-envelope icon-white"></i> another</a>
+    <a href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to={{expert.name}}%20%3c{{expert.email}}%3e&su=Another expert was selected for airpair {{_id}}?&body={{mailTemplates.another}}" class="email btn btn-small btn-warning" target="_blank"><i class="icon-envelope icon-white"></i> another</a>
 
-    <a href="mailto:{{expert.name}}%20%3c{{expert.email}}%3e?subject=You've been chosen for airpair {{_id}}?&body={{mailTemplates.chosen}}" class="email btn btn-small btn-warning" target="_blank"><i class="icon-envelope icon-white"></i> chosen</a>
+    <a href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to={{expert.name}}%20%3c{{expert.email}}%3e&su=You've been chosen for airpair {{_id}}?&body={{mailTemplates.chosen}}" class="email btn btn-small btn-warning" target="_blank"><i class="icon-envelope icon-white"></i> chosen</a>
 
-    <a href="mailto:{{expert.name}}%20%3c{{expert.email}}%3e?subject={{tagsString}} airpair?&body={{mailTemplates.suggested}}" class="email btn btn-small btn-warning" target="_blank"><i class="icon-envelope icon-white"></i> suggested</a>
+    <a href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to={{expert.name}}%20%3c{{expert.email}}%3e&su={{tagsString}} airpair?&body={{mailTemplates.suggested}}" class="email btn btn-small btn-warning" target="_blank"><i class="icon-envelope icon-white"></i> suggested</a>
 
     <span class="status label label-{{expertStatus}}">{{ expertStatus }}</span>
 
