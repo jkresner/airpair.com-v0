@@ -33,6 +33,8 @@ class exports.Expert extends Shared.Expert
       pop.pic = "https://secure.gravatar.com/avatar/#{pop.gh.gravatar_id}"
     if !pop.pic? && pop.so? && pop.so.profile_image?
       pop.pic = pop.so.profile_image
+    if !pop.pic? && pop.tw? && pop.tw.pic?
+      pop.pic = pop.tw.pic.value
 
   fromGPlus: (gplus, userId) ->
     _id:        undefined  # wipe over 'me'
@@ -63,7 +65,7 @@ class exports.Expert extends Shared.Expert
 
   fromTwitter: (tw) ->
     if tw?
-      username: tw.username, tw: { id: tw.id, username: tw.username }
+      username: tw.username, tw: { id: tw.id, username: tw.username, pic: tw.photos[0] }
 
   fromGithub: (gh) ->
     if gh?

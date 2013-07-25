@@ -26,7 +26,7 @@ class CRUDApi
 ###############################################################################
 
   detail: (req, res) =>
-    $log 'CRUD.detail', req.user
+    # $log 'CRUD.detail', req.user
     @model.findOne { _id: req.params.id }, (e, r) =>
       if @logging then $log 'detail:', e, r
       res.send r
@@ -37,8 +37,10 @@ class CRUDApi
 
 
   create: (req, res) =>
+    # $log 'CRUD.create', req.body
     new @model( req.body ).save (e, r) =>
       if @logging then $log 'created:', e, r
+      if e? then $log 'created.error:', e
       res.send r
 
 
