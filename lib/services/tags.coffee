@@ -37,11 +37,64 @@ module.exports = class TagsService extends DomainService
               callback e, r
 
         # console.log 'failed', sres.body
-        return callback { e: { message: "tag #{tag.nameStackoverflow} found" } }
-
+        return callback { message: "tag #{tag.nameStackoverflow} found" }
 
   getGithubRepo: (tag, callback) =>
-    throw new Error 'gittag not implemented'
+
+    request
+      .get("https://api.github.com/repos/#{tag.nameGithub}")
+      .end (sres) =>
+        if sres.ok
+          d = sres.body
+          if d?
+            if d.watchers_count < 20
+              return callback { message: "Can not add #{d.full_name} as it has less than 20 watchers." }
+
+            update = null
+
+            if tag._id?
+              search = _id: tag._id
+
+              update =
+               ghId: d.id
+               gh:
+                id: d.id
+                name: d.name
+                full: d.full_name
+                watchers: d.watchers_count
+                language: d.language
+                owner:
+                  id: d.owner.id
+                  login: d.owner.login
+                  url: d.owner.url
+                  avatar: d.owner.avatar_url
+
+            else
+              update =
+                name: d.name
+                short: d.name
+                desc: d.description
+                ghId: d.id
+                gh:
+                  id: d.id
+                  name: d.name
+                  full: d.full_name
+                  watchers: d.watchers_count
+                  language: d.language
+                  owner:
+                    id: d.owner.id
+                    login: d.owner.login
+                    url: d.owner.url
+                    avatar: d.owner.avatar_url
+                tokens: "#{d.full_name}"
+ 
+            return @model.findOneAndUpdate search, update, { upsert: true }, (e, r) ->
+              callback e, r
+        # failed - tag not found
+        return callback { message: "tag #{tag.nameGithub} not found" }
+
+  #getGithubRepo: (tag, callback) =>
+  #  throw new Error 'gittag not implemented'
     # request
     #   .get("https://api.github.com/repos/#{req.body.nameGithub}")
     #   .end (sres) =>

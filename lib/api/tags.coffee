@@ -8,7 +8,7 @@ class TagsApi
 
   constructor: (app, route) ->
     app.get     "/api/#{route}", loggedIn, @list
-    #app.get     "/api/#{route}/:id", loggedIn, @detail
+    app.get     "/api/#{route}/:id", loggedIn, @detail
     app.post    "/api/#{route}", loggedIn, @create
     app.put     "/api/#{route}/:id", loggedIn, @update
     app.delete  "/api/#{route}/:id", loggedIn, @delete
@@ -29,6 +29,10 @@ class TagsApi
       res.send r
 
   list: (req, res) => @svc.getAll (r) -> res.send r
+
+  detail: (req, res) => 
+    @svc.getById req.params.id, (r) ->
+      res.send r
 
 
 module.exports = (app) -> new TagsApi app,'tags'

@@ -12,13 +12,38 @@ class exports.TagEditView extends BB.ModelSaveView
   events:
     'click .save': 'save'
     'click .cancel': -> @remove()
+    'click .fetchGH': 'fetchGH'    
   initialize: ->
   render: ->
     @$el.html @tmpl @model.toJSON()
     @
   renderSuccess: (model,resp,options) =>
-    @remove()
-    
+  fetchGH: =>
+    @$messageCenter = @elm("messageCenter")
+    $.ajax 
+      type: 'POST'
+      dataType: 'json'
+      contentType: 'application/json'
+      url:  '/api/tags'
+      data: JSON.stringify
+        _id: @model.get('_id')
+        name: @model.get('name')
+        nameGithub: @$("[name='nameGithub']").val()
+        addMode: 'github'
+      success: () =>
+        @model.fetch
+          success: () =>
+            @render()
+            @$('.alert-success').fadeIn(800).fadeOut(5000)
+          error: () =>
+            $log 'error fetching model after successful fetching of GH'
+
+      error: (err) =>
+        @model.fetch
+          success: () =>
+            @renderInputInvalid @$messageCenter, JSON.parse(err.responseText).errors.message
+          error: () =>
+            @renderInputInvalid @$messageCenter, JSON.parse(err.responseText).errors.message
 
 class exports.TagRowView extends BB.BadassView
   className: 'tag label'
