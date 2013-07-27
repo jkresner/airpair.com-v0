@@ -42,10 +42,12 @@ class exports.UsersView extends BB.BadassView
   #   expert = _.find @collection.models, (m) -> m.id.toString() == id
   #   @model.set expert.attributes
 
-class exports.UserView extends BB.BadassView
+class exports.UserView extends BB.ModelSaveView
   el: '#user'
   tmpl: require './templates/Form'
-
+  viewData: ['email']
+  events:
+    'click .save': 'save'
   initialize: (args) ->
     @listenTo @model, 'change', @render
   render: ->
