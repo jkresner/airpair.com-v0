@@ -12,7 +12,7 @@ module.exports = class Router extends S.AirpairSessionRouter
 
   routes:
     'list'        : 'list'
-    'edit'        : 'edit'
+    'edit/:id'    : 'edit'
 
   appConstructor: (pageData, callback) ->
     d =
@@ -20,7 +20,7 @@ module.exports = class Router extends S.AirpairSessionRouter
       users: new C.Users()
     v =
       usersView: new V.UsersView collection: d.users, model: d.selected
-      # userView: new V.UserView el: '#userPreview', model: d.selected
+      userView: new V.UserView model: d.selected
 
     @resetOrFetch d.users, pageData.users
 
@@ -28,3 +28,9 @@ module.exports = class Router extends S.AirpairSessionRouter
 
   initialize: (args) ->
     @navTo 'list'
+
+  edit: (id) ->
+    user = @app.users.findWhere _id: id
+    # $log 'editing user', user.toJSON()
+    # $('#editheading').html user.get('google').displayName
+    @app.selected.set user.attributes

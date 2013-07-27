@@ -42,6 +42,15 @@ class exports.UsersView extends BB.BadassView
   #   expert = _.find @collection.models, (m) -> m.id.toString() == id
   #   @model.set expert.attributes
 
+class exports.UserView extends BB.BadassView
+  el: '#user'
+  tmpl: require './templates/Form'
 
+  initialize: (args) ->
+    @listenTo @model, 'change', @render
+  render: ->
+    # @$el.html @model.get('google').displayName
+    @$el.html @tmpl @model.toJSON()
+    @
 
 module.exports = exports
