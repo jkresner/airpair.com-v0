@@ -26,6 +26,10 @@
 #adminboundpage #request #reqBudget { width:50px; }
 #adminboundpage #request #reqPricing { width:140px; }
 
+#adminboundpage #request .farm-links { padding:10px 5px }
+#adminboundpage #request .farm-links .zocial { float:left;clear:left;margin-top:0px;padding:0 4px 0 0;font-size:8px }
+#adminboundpage #request .farm-links input { font-size:8px;width:100%;height:14px;padding:2px 0px; }
+
 #adminboundpage .table-events td { padding:0 }
 #adminboundpage #company-controls { font-weight:bold;margin-bottom:0 }
 #adminboundpage dl { margin-bottom:6px }
