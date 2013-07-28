@@ -50,6 +50,10 @@ module.exports = (app) ->
   require('./lib/api/orders')(app)
   require('./lib/api/settings')(app)
 
+  # todo, brush up page
+  app.get '/pair-programmers*', (req, r)-> file r, 'pairing'
+
+  require('./app_landing')(app)
 
   app.get '/paypal/success/:id', (req, r) ->
     viewData.paypalSuccess req.params.id, req.user, (d) =>
@@ -58,23 +62,6 @@ module.exports = (app) ->
     viewData.paypalCancel req.params.id, req.user, (d) =>
       r.render 'payment/paypalCancel.html', d
 
-
-  # todo, brush up page
-  app.get '/pair-programmers*', (req, r)-> file r, 'pairing'
-
-  # landing pages
-  app.get '/ruby-on-rails-tutoring', (req, r) ->
-    r.cookie 'landingPage', 'ruby-on-rails-tutoring'
-    file r, 'landing_pages/ruby_on_rails_tutoring'
-
-  app.get '/code-review', (req, r) ->
-    r.cookie 'landingPage', "code-review"
-    file r, 'landing_pages/codeReview'
-
-  app.get '/code-review/:id', (req, r) ->
-    r.cookie 'landingPage', "code-review-#{req.params.id}"
-    viewData.codeReview req.params.id, req.user, (d) =>
-      r.render 'landing_pages/codeReviewTag.html', d
 
   # todo, get agreements
   # app.get '/TOS', (req, r)-> file r, 'legal'

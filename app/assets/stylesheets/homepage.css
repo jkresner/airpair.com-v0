@@ -19,7 +19,7 @@ nav h3 { margin: 3px 30px 0 30px;color:white; } /* tagline */
 nav div.social { float:right;width:76px }
 
 .jumbotron { height:612px;width:900px;margin:0 auto;color:white;text-align:center;color:white; }
-.jumbotron img { width:350px;margin:50px auto 40px auto;display:block }
+.jumbotron img.main { width:350px;margin:50px auto 40px auto;display:block }
 .jumbotron p { font-size:18px;font-weight:400;line-height:28px;margin-top:30px;text-align:center; }
 .jumbotron .col { float:left;width:46%;height:240px }
 
@@ -56,12 +56,12 @@ a.green { background: #99923F;border: solid 3px #7F761C }
 .privateap { width:420px;height:236px;border:dotted 1px gray;margin:0px auto;position:relative; }
 .privateap i { display:block;margin:90px auto;font-style:normal;text-align:center; }
 
-.landing-page h2 { 
-    margin-top: 40px; 
+.landing-page h2 {
+    margin-top: 40px;
 }
 
-.landing-page p { 
-    text-align: left; 
+.landing-page p {
+    text-align: left;
 }
 
 .landing-page .button {
@@ -79,12 +79,12 @@ a.green { background: #99923F;border: solid 3px #7F761C }
     margin: 30px;
 }
 
-.landing-page hr { 
+.landing-page hr {
     clear:both;
     border-bottom:dashed 1px #A4A4A5;
     border-top:none;
     border-left:none;
-    border-right:none 
+    border-right:none
 }
 
 
@@ -96,3 +96,5 @@ a.green { background: #99923F;border: solid 3px #7F761C }
 #how h3 { font-weight:bold; }
 #how i { color:gray;font-style:normal;font-weight:normal; }
 #how h3 em { color:#7F761C;font-style:normal; }
+
+.pw-widget { float:right; }
