@@ -1,3 +1,6 @@
+ViewDataService = require('./lib/services/_viewdata')
+vdSvc = new ViewDataService()
+
 track = (pageName) =>
   (req, r, next) ->
     r.cookie 'landingPage', pageName
@@ -15,7 +18,7 @@ module.exports = (app) ->
     file r, 'landing_pages/codeReview'
 
   app.get '/code-review/:id', track('code-review/tag'), (req, r) ->
-    viewData.codeReview req.params.id, req.user, (d) =>
+    vdSvc.codeReview req.params.id, req.user, (d) =>
       r.render 'landing_pages/codeReviewTag.html', d
 
   app.get '/pair-programming', (track 'pair-programming'), (req, r) ->
