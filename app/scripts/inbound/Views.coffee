@@ -84,6 +84,7 @@ class exports.RequestInfoView extends BB.ModelSaveView
   el: '#info'
   tmpl: require './templates/RequestInfo'
   tmplCompany: require './templates/RequestInfoCompany'
+  tmplFarmLinks: require './templates/RequestFarmLinks'
   initialize: ->
     @$el.html @tmpl @model.toJSON()
     @$('#status').on 'change', @toggleCanceledIncompleteFields
@@ -98,6 +99,7 @@ class exports.RequestInfoView extends BB.ModelSaveView
     @$('.status').addClass "label-#{@model.get('status')}"
     @$('.status').html @model.get('status')
     @toggleCanceledIncompleteFields()
+    @$('.farm-links').html @tmplFarmLinks @model.extend { reqUrl: "http://www.airpair.com/review/#{@model.id}", term: encodeURI(@model.tagsString()), month: new moment().format("MMM") }
     @
   toggleCanceledIncompleteFields: =>
     @$('#canceled-control-group').toggle @$('#status').val() == 'canceled'
