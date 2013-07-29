@@ -48,6 +48,31 @@ class exports.RequestsView extends BB.BadassView
 
 
 #############################################################################
+##  To farm request (share out to different social channels)
+#############################################################################
+
+
+class exports.RequestFarmView extends BB.ModelSaveView
+  el: '#farm'
+  tmpl: require './templates/RequestFarm'
+  initialize: ->
+    @listenTo @model, 'change', @render
+  render: ->
+    if !@mget('base')? then return @
+    rate = @mget('budget') - @mget('base')[@mget('pricing')]
+    month = new moment().format("MMM").toLowerCase()
+    term = encodeURIComponent @model.tagsString()
+    tmplData =
+      url: "http://www.airpair.com/review/#{@model.id}?utm_medium=farm-link&utm_campaign=farm-#{month}&utm_term=#{term}"
+      urlEncoded: "http://www.airpair.com/review/#{@model.id}%3Futm_medium=farm-link%26utm_campaign=farm-#{month}"
+      tagsString: @model.tagsString()
+      hrRate: rate
+      bitly: 'https://bitly.com/shorten/?url='
+    @$el.html @tmpl @model.extendJSON tmplData
+    @
+
+
+#############################################################################
 ##  To edit request
 #############################################################################
 
@@ -84,7 +109,6 @@ class exports.RequestInfoView extends BB.ModelSaveView
   el: '#info'
   tmpl: require './templates/RequestInfo'
   tmplCompany: require './templates/RequestInfoCompany'
-  tmplFarmLinks: require './templates/RequestFarmLinks'
   initialize: ->
     @$el.html @tmpl @model.toJSON()
     @$('#status').on 'change', @toggleCanceledIncompleteFields
@@ -99,7 +123,6 @@ class exports.RequestInfoView extends BB.ModelSaveView
     @$('.status').addClass "label-#{@model.get('status')}"
     @$('.status').html @model.get('status')
     @toggleCanceledIncompleteFields()
-    @$('.farm-links').html @tmplFarmLinks @model.extend { reqUrl: "http://www.airpair.com/review/#{@model.id}", term: encodeURI(@model.tagsString()), month: new moment().format("MMM") }
     @
   toggleCanceledIncompleteFields: =>
     @$('#canceled-control-group').toggle @$('#status').val() == 'canceled'
