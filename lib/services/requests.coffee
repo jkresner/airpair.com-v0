@@ -74,6 +74,7 @@ module.exports = class RequestsService extends DomainService
         for r in rs
           for s in r.suggested
             s.suggestedRate = @rates.calcSuggestedRates r, s.expert
+          r.base = @rates.base
         callback rs
 
   # Used for history
