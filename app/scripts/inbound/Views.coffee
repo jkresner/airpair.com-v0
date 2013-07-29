@@ -58,6 +58,7 @@ class exports.RequestFarmView extends BB.ModelSaveView
   initialize: ->
     @listenTo @model, 'change', @render
   render: ->
+    if !@mget('base')? then return @
     rate = @mget('budget') - @mget('base')[@mget('pricing')]
     month = new moment().format("MMM").toLowerCase()
     term = encodeURIComponent @model.tagsString()
