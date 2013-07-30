@@ -39,3 +39,21 @@ describe 'BeExpert:Views ConnectView =>', ->
     expect( v.$('.save').length ).to.equal 0
     expect( v.$('#mininumConnect').is(':visible') ).to.be.true
     done()
+
+
+
+  it 'can continue w no google image and twitter account using jan petrovic user details', (done) ->
+    @stubs.expertFetch = sinon.stub M.Expert::, 'fetch', -> @set {}
+    @stubs.success = sinon.stub V.ConnectView::, 'renderSuccess', ->
+
+    initApp { session: data.users[11] }
+
+    v = router.app.connectView
+    v.render()
+    expect( v.$('.save').length ).to.equal 1
+    expect( v.$('#mininumConnect').length ).to.equal 0
+    v.model.on 'sync', =>
+      expect(@stubs.success.calledOnce).to.be.true
+      done()
+
+    v.$('.save').click()

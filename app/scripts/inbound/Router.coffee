@@ -13,6 +13,7 @@ module.exports = class Router extends S.AirpairSessionRouter
   routes:
     'list'         : 'list'
     'request/:id'  : 'request'
+    'farm/:id'  : 'farm'
     'closed'       : 'closed'
     'canceled'     : 'canceled'
     ':id'          : 'request'
@@ -26,6 +27,7 @@ module.exports = class Router extends S.AirpairSessionRouter
     v =
       requestsView: new V.RequestsView collection: d.requests, model: d.selected
       requestView: new V.RequestView model: d.selected, collection: d.requests, tags: d.tags, experts: d.experts
+      farmingView: new V.RequestFarmView model: d.selected
 
     @resetOrFetch d.requests, pageData.requests
     @resetOrFetch d.experts, pageData.experts

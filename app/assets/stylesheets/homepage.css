@@ -123,7 +123,8 @@ nav span.social a {
   text-align: center;
 }
 
-.jumbotron img { width:350px;margin:50px auto 40px auto;display:block }
+.jumbotron { height:612px;width:900px;margin:0 auto;color:white;text-align:center;color:white; }
+.jumbotron img.main { width:350px;margin:50px auto 40px auto;display:block }
 .jumbotron p { font-size:18px;font-weight:400;line-height:28px;margin-top:30px;text-align:center; }
 .jumbotron .col { float:left;width:46%;height:240px }
 
@@ -231,3 +232,5 @@ a.green { background: #99923F;border: solid 3px #7F761C }
 #how h3 { font-weight:bold; }
 #how i { color:gray;font-style:normal;font-weight:normal; }
 #how h3 em { color:#7F761C;font-style:normal; }
+
+.pw-widget { float:right; }

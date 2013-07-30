@@ -5,12 +5,16 @@ module.exports = class TagsService extends DomainService
 
   model: require './../models/tag'
 
+  search: (searchTerm, callback) ->
+    # Poor implementation of search, should checkout mongo-text-search or elastic-search
+    @model.findOne { $or: [ { soId: searchTerm }, { ghId: searchTerm } ] }, (e, r) -> callback r
+
   create: (addMode, tag, callback) ->
-    # console.log 'create', 'addMode', addMode
+    #console.log 'create', 'addMode', addMode
     if addMode is 'stackoverflow' then @getStackoverflowTag(tag, callback)
     else if addMode is 'github' then @getGithubRepo(tag, callback)
-    else @model( tag ).save (e, r) -> callback r
-
+    else @model( tag ).save (e, r) -> 
+      callback e, r
 
   getStackoverflowTag: (tag, callback) =>
     encoded = encodeURIComponent tag.nameStackoverflow

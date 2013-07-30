@@ -11,7 +11,7 @@ class TagsApi
     #app.get     "/api/#{route}/:id", loggedIn, @detail
     app.post    "/api/#{route}", loggedIn, @create
     app.put     "/api/#{route}/:id", loggedIn, @update
-    #app.delete  "/api/#{route}/:id", loggedIn, @delete
+    app.delete  "/api/#{route}/:id", loggedIn, @delete
 
   create: (req, res) =>
     @svc.create req.body.addMode, req.body, (e, r) ->
@@ -24,6 +24,9 @@ class TagsApi
     @svc.update req.params.id, req.body, (r) ->
       res.send r
 
+  delete: (req, res) =>
+    @svc.delete req.params.id, (r) ->
+      res.send r
 
   list: (req, res) => @svc.getAll (r) -> res.send r
 
