@@ -1,20 +1,57 @@
-<p>{{ _id}}</p>
-<label>name</label><input name="name" type="text" value="{{ name }}"/>
-<label>short name</label><input name="short" type="text" value="{{ short }}"/>
-<label>description</label><input name="desc" type="text" value="{{ desc }}"/>
-<label>stackID</label><input name="soId" type="text" value="{{ soId }}"/>
-<label>githubID</label><input name="ghId" type="text" value="{{ ghId }}"/>
-<label>tokens</label><input name="tokens" type="text" value="{{ tokens }}"/>
-<a href="#" class="btn btn-success save">save</a>
-<a href="#" class="btn cancel">cancel</a>
+<div class="row">
+	<div class="span12" data-error-style="inline">
+		<div class="alert alert-error">
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+			<h4>Error</h4>
+		</div>
+	</div>
+</div>
 
-{{! <div class="alert alert-error"></div>
-<div class="stackoverflow">
-  <div class="input-prepend">
-    <span class="add-on" style="font-size:11px">stackoverflow.com/questions/tagged/</span>
-    <input type="text" class="newStackoverflow span2" name="nameStackoverflow"  data-error-style="inline" />
-
-    <a href="#add-skill" class="btn btn-success save-so">add</a>
-    <a href="#" class="btn cancel">cancel</a>
-  </div>
-</div> }}
+<div class="row">
+	<div class="span12" data-error-style="inline">
+		<div class="alert alert-success" style="float:left;margin-left:20px;width:300px">
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+			<h4>Saved</h4>
+		</div>
+	</div>
+</div>
+<div class="control-group" >
+	<div class="controls controls-brief">
+		<div class="row">
+			<div class="span4">
+				<h3>Airpair Data</h3>
+				<label style="display:inline">ID</label>
+				<span>{{ _id}}</span>
+				<label>name</label><input name="name" type="text" value="{{ name }}"/>
+				<label>short name</label><input name="short" type="text" value="{{ short }}"/>
+				<label>description</label><input name="desc" type="text" value="{{ desc }}"/>
+				<label>tokens</label><input name="tokens" type="text" value="{{ tokens }}"/>
+				<br/>
+				<a href="#" class="btn btn-success save">save</a>
+				<a href="#" class="btn cancel">cancel</a>
+			</div>
+			<div class="span4">
+				<h3>Stackoverflow Data</h3>
+				{{!-- <label>stackID</label><input name="soId" type="text" value="{{ soId "/> 
+				<br/>
+				<a href="#" class="btn btn-info fetchSO">get stack data</a> }}
+				<p>stack stuff coming soon!</p>
+			</div>
+			<div class="span4">
+				<h3>Github Data</h3>
+					<label>Github Repo</label><input name="ghId" type="text" value="{{ ghId }}"/>
+					<br/>
+					<a href="#" class="btn btn-info fetchGH">get github data</a>
+					<label>ID</label><input name="gh.id" type="text" value="{{ gh.id }}"/>
+					<label>Name</label><input name="gh.name" type="text" value="{{ gh.name }}"/>
+					<label>Full Name</label><input name="gh.full" type="text" value="{{ gh.full }}"/>
+					<label>Watchers</label><input name="gh.watchers" type="text" value="{{ gh.watchers }}"/>
+					<label>Language</label><input name="gh.language" type="text" value="{{ gh.language }}"/>
+					<label>Owner ID</label><input name="gh.owner.id" type="text" value="{{ gh.owner.id }}"/>
+					<label>Owner Login</label><input name="gh.owner.login" type="text" value="{{ gh.owner.login }}"/>
+					<label>Owner URL</label><input name="gh.owner.url" type="text" value="{{ gh.owner.url }}"/>
+					<label>Owner Avatar</label><input name="gh.owner.avatar" type="text" value="{{ gh.owner.avatar }}"/>
+			</div>
+		</div>
+ 	</div>
+</div>
