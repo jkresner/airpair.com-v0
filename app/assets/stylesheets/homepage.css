@@ -4,18 +4,43 @@ html, body {
 
 body {
   font-family: Open Sans, helvetica, sans-serif;
-  letter-spacing: 0.2px;background: #e2e2e2;color: #333333;font-size: 14px;line-height: 20px;margin:0;
+  letter-spacing: 0.2px;
+  background: #e2e2e2;
+  color: #333333;
+  font-size: 14px;
+  margin:0;
+  padding-top: 60px;
 }
 
 a:hover { text-decoration:none;color:#ffffff }
 
-.cf:before, .cf:after { content: ""; display: table; }
-.cf:after { clear: both; }
-.cf { zoom: 1; }
-
-
-.fold {
+h1 {
+  font-size: 34px;
+  font-weight: 300;
+  letter-spacing: 1px;
+  line-height: 48px;
 }
+
+h2 {
+  font-size: 30px;
+  margin: 10px 0;
+  letter-spacing: 1px;
+}
+
+h3 {
+  font-weight: 400;
+  color: #212F3B;
+  font-size: 18px;
+}
+
+p {
+  font-style: 16px;
+  font-weight: 400;
+  line-height: 25px;
+  letter-spacing: 0.5px;
+  margin-top: 0;
+}
+
 
 .fold-border {
   height: 20px;
@@ -28,6 +53,7 @@ nav {
   height: 60px;
   position: fixed;
   width: 100%;
+  top: 0;
 }
 
 nav img { /* logo */
@@ -64,21 +90,25 @@ nav ul li {
 nav span {
   color: #CC6750;
   font-weight: 600;
+  -webkit-transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
 }
 
-nav li:hover {
-  background-color: rgba(153, 146, 63, 0.5);
-  border-radius: 3px;
+nav li span {
+  color: #CC6750;
+  font-weight: 600;
+  opacity: 0;
+}
+
+nav li:hover span {
+  opacity: 1;
 }
 
 nav li.active span {
+  opacity: 1;
   color: #99923F;
-  font-weight: 600;
-}
-
-nav li.active:hover {
-  background-color: rgba(204, 103, 80, 0.5);
-  border-radius: 3px;
 }
 
 nav a:link, nav a:visited {
@@ -93,9 +123,7 @@ nav span.social a {
 }
 
 .tagline {
-  color: white;
-  font-size: 27px;
-  width: 600px;
+  width: 700px;
   margin: 0 auto auto auto;
   padding-bottom: 50px;
   line-height: 36px;
@@ -103,33 +131,25 @@ nav span.social a {
 }
 
 .outer-container {
-  display: table;
-  height: 100%;
   width: 100%;
-
   background:url('/images/bg-top.jpg');
   background-size:100%;
-}
-
-.middle-container {
-  display: table-cell;
-  vertical-align: middle;
+  padding: 100px 0;
 }
 
 .inner-container {
-  margin: 60px auto;
-  width: 900px;
+  margin: 10px auto;
+  width: 940px;
   color: white;
-  text-align: center;
 }
 
-.jumbotron { height:612px;width:900px;margin:0 auto;color:white;text-align:center;color:white; }
+.jumbotron { height:612px; text-align: center; }
 .jumbotron img.main { width:350px;margin:50px auto 40px auto;display:block }
 .jumbotron p { font-size:18px;font-weight:400;line-height:28px;margin-top:30px;text-align:center; }
 .jumbotron .col { float:left;width:46%;height:240px }
 
-h3 { font-weight: 400;color: #212F3B;font-size: 18px;float:left;/*line-height: 28px*/ }
-h2 { font-size:29.5px;margin:10px 0; }
+
+
 h2 span { color: #CC6750 }
 h2.yellow span { color: #99923F; }
 
@@ -155,29 +175,24 @@ a.green { background: #99923F;border: solid 3px #7F761C }
 .marketing { margin:0 auto;max-width:940px;font-size:14px; }
 .marketing .faces { width:250px;margin-top:-10px;padding-right:70px;float:right; }
 .marketing p + h4 { margin-top: 28px; }
-.marketing p.feedback { font-size:18px; }
+.marketing p.feedback { font-size:16px;}
 .marketing hr { height:30px;clear:both;
     border-bottom:dashed 1px gray;border-top:none;border-left:none;border-right:none }
 
 .cola {
   float: left;
   clear: left;
-  width: 415px;
-  margin-left: 20px;
-  margin-right: 6px;
+  width: 405px;
+  margin-right: 40px;
 }
 
 .colb {
   float:right;
-  width:422px;
-  margin-left:8px;
-  height:100%;
-  margin-top:40px;
-  margin-right: 20px;
+  width:410px;
 }
 
 .asession {
-  padding:16px 0px;
+  padding:40px;
   clear:both;
   min-height:340px;
   background-color: rgba(0, 0, 0, 0.1);
@@ -185,7 +200,17 @@ a.green { background: #99923F;border: solid 3px #7F761C }
   margin: 40px 0px;
 }
 
-.asession h4 { color:gray;font-size:1.2em;margin-bottom:5px }
+.asession h2 {
+  text-align: center;
+  margin: 0 0 50px 0;
+}
+
+.asession h4 {
+  font-size: 1.2em;
+  margin: 0 0 5px 0;
+  color: #CC523E;
+}
+
 .asession h2 b { color:#CC523E }
 .asession h2 em { color:#7F761C;font-style:normal; }
 
@@ -234,3 +259,8 @@ a.green { background: #99923F;border: solid 3px #7F761C }
 #how h3 em { color:#7F761C;font-style:normal; }
 
 .pw-widget { float:right; }
+
+
+.cf:before, .cf:after { content: ""; display: table; }
+.cf:after { clear: both; }
+.cf { zoom: 1; }
