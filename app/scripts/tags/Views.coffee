@@ -12,38 +12,20 @@ class exports.TagEditView extends BB.ModelSaveView
   events:
     'click .save': 'save'
     'click .cancel': -> @remove()
-    'click .fetchGH': 'fetchGH'    
+    'click .fetchGH': (e) -> @saveWithMode e, 'github'
   initialize: ->
   render: ->
     @$el.html @tmpl @model.toJSON()
     @
-  renderSuccess: (model,resp,options) =>
-  fetchGH: =>
-    @$messageCenter = @elm("messageCenter")
-    $.ajax 
-      type: 'POST'
-      dataType: 'json'
-      contentType: 'application/json'
-      url:  '/api/tags'
-      data: JSON.stringify
-        _id: @model.get('_id')
-        name: @model.get('name')
-        nameGithub: @$("[name='nameGithub']").val()
-        addMode: 'github'
-      success: () =>
-        @model.fetch
-          success: () =>
-            @render()
-            @$('.alert-success').fadeIn(800).fadeOut(5000)
-          error: () =>
-            $log 'error fetching model after successful fetching of GH'
-
-      error: (err) =>
-        @model.fetch
-          success: () =>
-            @renderInputInvalid @$messageCenter, JSON.parse(err.responseText).errors.message
-          error: () =>
-            @renderInputInvalid @$messageCenter, JSON.parse(err.responseText).errors.message
+  renderError: (model, errors) => # overriding until server responds in standard way
+    errMsg = JSON.parse errors.responseText
+    #@errorSummary.html(errMsg.errors.message).fadeIn()
+    #above line should work, but doesn't so for now doing below
+    @$('.alert-error').html(errMsg.errors.message).fadeIn()
+  saveWithMode: (e, mode) =>
+    @.viewData= ['ghId']
+    @model.set addMode: mode
+    @save e
 
 class exports.TagRowView extends BB.BadassView
   className: 'tag label'
@@ -51,12 +33,14 @@ class exports.TagRowView extends BB.BadassView
   events:
     'click a.edit': 'showTagDetail'  
   initialize: ->
-    @listenTo @model, 'change', @render
+    @listenTo @model, 'change', @updateName
   render: ->
     @$el.html @tmpl @model.toJSON()
     @
+  updateName: =>
+    @$('a.edit').text @model.get('short')
   showTagDetail: (e) ->
-    #e.preventDefault()
+    e.preventDefault()
     @$el.append new exports.TagEditView(model: @model).render().el
     false
 

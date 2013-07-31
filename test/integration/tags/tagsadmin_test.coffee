@@ -90,23 +90,24 @@ describe "Tags: tag admin", ->
       expect(d.is(':visible')).to.equal true
 
       # set the github project to bootstrap
-      test_githubid = 'twitter/bootstrap'
+      test_githubid = 'twbs/bootstrap'
 
       form = $(d, 'div')
-      $('input[name=nameGithub]', form).val(test_githubid)
+      #$('input[name=nameGithub]', form).val(test_githubid)
+      $('input[name=ghId]', form).val(test_githubid)
 
       m.on 'sync', (m) ->
-        expect( m.get 'ghId' ).to.equal '2126244'
+        expect( m.get 'ghId' ).to.equal test_githubid
         expect( m.get('gh').id).to.equal 2126244
         expect( m.get('gh').name).to.equal 'bootstrap'
         expect( m.get('gh').full).to.equal test_githubid
         expect( m.get('gh').watchers).to.be.above 50000
-        expect( m.get('gh').language).to.equal 'JavaScript'
+        expect( m.get('gh').language).to.equal 'CSS'
         expect( m.get('gh').owner).to.deep.equal
-          avatar: 'https://secure.gravatar.com/avatar/2f4a8254d032a8ec5e4c48d461e54fcc?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-org-420.png'
-          url: 'https://api.github.com/users/twitter'
-          login: 'twitter'
-          id: 50278
+          avatar: 'https://secure.gravatar.com/avatar/025073862721c9b5af4a0269eabecb8e?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-org-420.png'
+          url: 'https://api.github.com/users/twbs'
+          login: 'twbs'
+          id: 2918581
 
         done()
 
@@ -129,23 +130,16 @@ describe "Tags: tag admin", ->
       # set the github project to bootstrap
       d = $('[href="#tag/' + m.id + '"]').parent()
       form = $(d, 'div')
-      test_githubid = 'twitter/bootstrap'      
-      $('input[name=nameGithub]', form).val(test_githubid)
+      test_githubid = 'twbs/bootstrap'      
+      $('input[name=ghId]', form).val(test_githubid)
 
-      msgspan = $('div.controls span.error-message')
-      msgDiv = $('div[name=messageCenter]')
-      msgFirstParent = msgDiv.parent()
-      msgParent = msgFirstParent.parent()
-      
-      # verify the error message is displayed
-      m.on 'sync', (m) =>
-
-        msgSpan = $('span.error-message', msgParent)
-        expect( msgSpan.text() ).to.equal 'E11000 duplicate key error index: airpair_test.tags.$ghId_1  dup key: { : "2126244" }'
+      tagSaveFailed = =>
+        expect( v.$('.alert-error').text() ).to.equal 'E11000 duplicate key error index: airpair_test.tags.$ghId_1  dup key: { : "twbs/bootstrap" }'        
         done()
 
-      # trigger the fetching from github
-      $('.fetchGH', form).click()        
+      m.once 'error', tagSaveFailed, @
+
+      $('.fetchGH', form).click()
 
   it "can not create tag with less than 20 watchers", (done) ->
     v = @app.tagsView
@@ -160,27 +154,18 @@ describe "Tags: tag admin", ->
       v.$('[href="#tag/' + m.id + '"]').click()
 
       # set the github project to one w under 20 watchers
-
-      # set the github project to bootstrap
       d = $('[href="#tag/' + m.id + '"]').parent()
       form = $(d, 'div')
       test_githubid = 'Genability/genability-java'
-      $('input[name=nameGithub]', form).val(test_githubid)
+      $('input[name=ghId]', form).val(test_githubid)
 
-      msgspan = $('div.controls span.error-message')
-      msgDiv = $('div[name=messageCenter]')
-      msgFirstParent = msgDiv.parent()
-      msgParent = msgFirstParent.parent()
-      
-      # verify the error message is displayed
-      m.on 'sync', (m) =>
-
-        msgSpan = $('span.error-message', msgParent)
-        expect( msgSpan.text() ).to.equal 'Can not add ' + test_githubid + ' as it has less than 20 watchers.'
+      tagSaveFailed = =>
+        expect( v.$('.alert-error').text() ).to.equal 'Can not add ' + test_githubid + ' as it has less than 20 watchers.'
         done()
 
-      # trigger the fetching from github
-      $('.fetchGH', form).click()        
+      m.once 'error', tagSaveFailed, @
+
+      $('.fetchGH', form).click()
 
   it "does not save github id if project not found", (done) ->
     v = @app.tagsView
@@ -198,20 +183,12 @@ describe "Tags: tag admin", ->
       d = $('[href="#tag/' + m.id + '"]').parent()
       form = $(d, 'div')
       test_githubid = 'asdf/wxyz'
-      $('input[name=nameGithub]', form).val(test_githubid)
+      $('input[name=ghId]', form).val(test_githubid)
 
-      msgspan = $('div.controls span.error-message')
-      msgDiv = $('div[name=messageCenter]')
-      msgFirstParent = msgDiv.parent()
-      msgParent = msgFirstParent.parent()
-      
-      # verify the error message is displayed
-      m.on 'sync', (m) =>
-
-        msgSpan = $('span.error-message', msgParent)
-        expect( msgSpan.text() ).to.equal 'tag ' + test_githubid + ' not found'
+      tagSaveFailed = =>
+        expect( v.$('.alert-error').text() ).to.equal 'tag ' + test_githubid + ' not found'
         done()
 
-      # trigger the fetching from github
-      $('.fetchGH', form).click()
+      m.once 'error', tagSaveFailed, @
 
+      $('.fetchGH', form).click()

@@ -21,8 +21,11 @@ class TagsApi
         res.send r
 
   update: (req, res) =>
-    @svc.update req.params.id, req.body, (r) ->
-      res.send r
+    @svc.update req.body.addMode, req.params.id, req.body, (e, r) ->
+      if e?
+        res.send 400, { errors: { message: e.message } }
+      else
+        res.send r
 
   delete: (req, res) =>
     @svc.delete req.params.id, (r) ->

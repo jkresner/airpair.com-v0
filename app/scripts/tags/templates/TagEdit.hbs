@@ -1,17 +1,22 @@
-<div class="control-group">
-	<div class="controls controls-brief">
-		<div class="row">
-			<div class="span12" data-error-style="inline" name="messageCenter">
-				<div class="alert alert-success" style="float:left;margin-left:20px;width:300px">
-					<button type="button" class="close" data-dismiss="alert">&times;</button>
-					<h4>Saved</h4>
-				</div>
-			</div>
+<div class="row">
+	<div class="span12" data-error-style="inline">
+		<div class="alert alert-error">
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+			<h4>Error</h4>
 		</div>
 	</div>
-</div>	
-{{! <div class="control-group" >
-	<div class="controls controls-brief"> }}
+</div>
+
+<div class="row">
+	<div class="span12" data-error-style="inline">
+		<div class="alert alert-success" style="float:left;margin-left:20px;width:300px">
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+			<h4>Saved</h4>
+		</div>
+	</div>
+</div>
+<div class="control-group" >
+	<div class="controls controls-brief">
 		<div class="row">
 			<div class="span4">
 				<h3>Airpair Data</h3>
@@ -34,7 +39,7 @@
 			</div>
 			<div class="span4">
 				<h3>Github Data</h3>
-					<label>Github Repo</label><input name="nameGithub" type="text" value="{{ ghId }}"/>
+					<label>Github Repo</label><input name="ghId" type="text" value="{{ ghId }}"/>
 					<br/>
 					<a href="#" class="btn btn-info fetchGH">get github data</a>
 					<label>ID</label><input name="gh.id" type="text" value="{{ gh.id }}"/>
@@ -48,16 +53,5 @@
 					<label>Owner Avatar</label><input name="gh.owner.avatar" type="text" value="{{ gh.owner.avatar }}"/>
 			</div>
 		</div>
-{{! 	</div>
-</div> }}
-
-{{! <div class="alert alert-error"></div>
-<div class="stackoverflow">
-  <div class="input-prepend">
-    <span class="add-on" style="font-size:11px">stackoverflow.com/questions/tagged/</span>
-    <input type="text" class="newStackoverflow span2" name="nameStackoverflow"  data-error-style="inline" />
-
-    <a href="#add-skill" class="btn btn-success save-so">add</a>
-    <a href="#" class="btn cancel">cancel</a>
-  </div>
-</div> }}
+ 	</div>
+</div>
