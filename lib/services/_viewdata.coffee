@@ -39,10 +39,17 @@ module.exports = class ViewDataService
           experts:  JSON.stringify e
           tags:     JSON.stringify t
 
-  codeReview: (tagSearchTerm, usr, callback) ->
-    tSvc.search tagSearchTerm, (o) => callback
-      session: @session usr
-      tag: o
+  landingTag: (tagSearchTerm, usr, callback) ->
+    tSvc.search tagSearchTerm, (o) =>
+      vd =
+        session: @session usr
+        tag:     o
+      if o?
+        tSvc.cms o._id, (c) =>
+          vd.tagCms = if c? then c else {}
+          callback vd
+      else
+        callback vd
 
   paypalSuccess: (orderId, usr, callback) ->
     oSvc.markPaymentReceived orderId, {}, (o) => callback
