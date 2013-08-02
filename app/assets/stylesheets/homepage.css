@@ -12,6 +12,8 @@ body {
   padding-top: 60px;
 }
 
+a {color: white; text-decoration: none;}
+
 a:hover { text-decoration:none;color:#ffffff }
 
 h1 {
@@ -19,6 +21,7 @@ h1 {
   font-weight: 300;
   letter-spacing: 1px;
   line-height: 48px;
+  margin: 0;
 }
 
 h2 {
@@ -29,8 +32,10 @@ h2 {
 
 h3 {
   font-weight: 400;
-  color: #212F3B;
-  font-size: 18px;
+  color: #0E1419;
+  font-size: 24px;
+  line-height: 38px;
+  margin: 0;
 }
 
 p {
@@ -54,6 +59,7 @@ nav {
   position: fixed;
   width: 100%;
   top: 0;
+  z-index: 1000;
 }
 
 nav img { /* logo */
@@ -75,6 +81,7 @@ nav ul {
   top: -11px;
   display: inline-block;
   margin-right: 35px;
+  margin-top: 0;
 }
 
 nav ul li {
@@ -125,7 +132,7 @@ nav span.social a {
 .tagline {
   width: 700px;
   margin: 0 auto auto auto;
-  padding-bottom: 50px;
+  padding-bottom: 90px;
   line-height: 36px;
   text-align: center;
 }
@@ -134,7 +141,11 @@ nav span.social a {
   width: 100%;
   background:url('/images/bg-top.jpg');
   background-size:100%;
-  padding: 100px 0;
+  padding: 80px 0;
+}
+
+.last-outer-container {
+  padding-bottom: 300px;
 }
 
 .inner-container {
@@ -143,11 +154,62 @@ nav span.social a {
   color: white;
 }
 
+/************** Jumbotron **************/
+
 .jumbotron { height:612px; text-align: center; }
 .jumbotron img.main { width:350px;margin:50px auto 40px auto;display:block }
-.jumbotron p { font-size:18px;font-weight:400;line-height:28px;margin-top:30px;text-align:center; }
 .jumbotron .col { float:left;width:46%;height:240px }
+.jumbotron p {float: left; margin-left: 340px; color: #0E1419;}
+.jumbotron p a {color: #99923F;}
+.jumbotron p a:hover {color: #CC867A;}
+.jumbotron .tagline {padding-bottom: 50px;}
+.jumbotron .button {
+  margin: 30px 0 10px 244px;
+  width: 400px;
+}
 
+.jumbotron .button:hover {
+  margin: 30px 0 10px 254px;
+}
+
+.jumbo-sub-head {
+  padding: 40px;
+  padding-top: 60px;
+  clear: both;
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  height: 250px;
+}
+
+
+.service-spinner {
+  float: left;
+  text-align: center;
+  width: 235px;
+}
+
+.service-spinner h3 {
+  margin-top: 20px;
+  color: white;
+  font-size: 18px;
+  font-weight: 400;
+}
+
+a.spinner-bg {
+  background: #CC6750;
+}
+
+.arrow-up {
+  width: 0;
+  height: 0;
+  border-left: 200px solid transparent;
+  border-right: 200px solid transparent;
+  border-bottom: 50px solid rgba(0, 0, 0, 0.1);
+  margin: 0 auto;
+  margin-top: 40px;
+}
+
+/************** End Jumbotron **************/
 
 
 h2 span { color: #CC6750 }
@@ -160,13 +222,13 @@ h2.yellow span { color: #99923F; }
   color:white;
   border:solid 3px #CC523E;
   font-size:18px;
-  margin:20px 90px;
+  margin:20px 142px;
   float:left;
   -webkit-transition: margin .2s;
   text-decoration:none;width:180px;
 }
 
-.button:hover { margin: 20px 100px; -webkit-transition: margin .2s; }
+.button:hover { margin: 20px 152px; -webkit-transition: margin .2s; }
 .button-gray { background:#d3d3d3;border:solid 3px darkgray }
 
 a.green { background: #99923F;border: solid 3px #7F761C }
@@ -197,7 +259,7 @@ a.green { background: #99923F;border: solid 3px #7F761C }
   min-height:340px;
   background-color: rgba(0, 0, 0, 0.1);
   border-radius: 5px;
-  margin: 40px 0px;
+  margin-bottom: 40px;
 }
 
 .asession h2 {
@@ -208,7 +270,7 @@ a.green { background: #99923F;border: solid 3px #7F761C }
 .asession h4 {
   font-size: 1.2em;
   margin: 0 0 5px 0;
-  color: #CC523E;
+  color: #212F3B;
 }
 
 .asession h2 b { color:#CC523E }
@@ -250,15 +312,26 @@ a.green { background: #99923F;border: solid 3px #7F761C }
 
 
 #how h2 { margin-bottom:30px }
-#how .step { width:31%;float:left;margin-right:20px }
+.step {margin-bottom: 50px;}
+#how .step { width:280px;float:left;margin-right:50px }
+.last {margin-right: 0 !important;}
 #how p { font-size:17px }
 #how b { color:#CC6750; }
-#how img { border:solid 1px #d3d3d3;margin:30px 0px 20px 0px; }
+.step img {
+  max-width: 280px;
+  background: rgba(0,0,0,0.1);
+  border-radius: 5px;
+}
 #how h3 { font-weight:bold; }
 #how i { color:gray;font-style:normal;font-weight:normal; }
 #how h3 em { color:#7F761C;font-style:normal; }
 
 .pw-widget { float:right; }
+
+footer {
+  background: #212F3B;
+  padding: 20px;
+}
 
 
 .cf:before, .cf:after { content: ""; display: table; }
