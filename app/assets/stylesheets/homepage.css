@@ -16,6 +16,10 @@ a {color: white; text-decoration: none;}
 
 a:hover { text-decoration:none;color:#ffffff }
 
+ul {
+  padding: 0;
+}
+
 h1 {
   font-size: 34px;
   font-weight: 300;
@@ -32,7 +36,7 @@ h2 {
 
 h3 {
   font-weight: 400;
-  color: #0E1419;
+  color: #a3a3a3;
   font-size: 24px;
   line-height: 38px;
   margin: 0;
@@ -62,7 +66,7 @@ nav {
   z-index: 1000;
 }
 
-nav img { /* logo */
+nav img.logo { /* logo */
   display:inline-block;
   float:left;
   width: 120px;
@@ -79,19 +83,18 @@ nav .navigation {
 nav ul {
   position: relative;
   top: -11px;
-  display: inline-block;
   margin-right: 35px;
   margin-top: 0;
 }
 
 nav ul li {
   list-style: none;
-  display: inline-block;
+  float: left;
   color: white;
   margin-left: 8px;
   margin-right: 8px;
   font-size: 19px;
-  padding: 5px 5px 7px 5px;
+  padding: 10px 5px 7px 5px;
 }
 
 nav span {
@@ -126,7 +129,16 @@ nav a:link, nav a:visited {
 nav span.social a {
   position:relative;
   top:-2px;
-  display:inline-block;
+  float: right;
+}
+
+nav ul li img {
+  margin-top: -2px;
+  margin-left: 0;
+}
+
+nav ul li img:hover {
+  margin-top: -4px;
 }
 
 .tagline {
@@ -178,7 +190,7 @@ nav span.social a {
   clear: both;
   background-color: rgba(0, 0, 0, 0.1);
   border-radius: 5px;
-  height: 250px;
+  height: 400px;
 }
 
 
@@ -240,6 +252,18 @@ a.green { background: #99923F;border: solid 3px #7F761C }
 .marketing p.feedback { font-size:16px;}
 .marketing hr { height:30px;clear:both;
     border-bottom:dashed 1px gray;border-top:none;border-left:none;border-right:none }
+.marketing img.spinning {
+  margin: 30px 0 0 75px;
+}
+
+.marketing img.spinning:hover {
+  -webkit-animation: spinAround 2s linear infinite;
+  -moz-animation: spinAround 2s linear infinite;
+  animation: spinAround 2s linear infinite;
+}
+
+
+
 
 .cola {
   float: left;
@@ -256,7 +280,6 @@ a.green { background: #99923F;border: solid 3px #7F761C }
 .asession {
   padding:40px;
   clear:both;
-  min-height:340px;
   background-color: rgba(0, 0, 0, 0.1);
   border-radius: 5px;
   margin-bottom: 40px;
@@ -271,6 +294,14 @@ a.green { background: #99923F;border: solid 3px #7F761C }
   font-size: 1.2em;
   margin: 0 0 5px 0;
   color: #212F3B;
+}
+
+.asession a {
+  color: #99923F;
+}
+
+.asession a:hover {
+  color: #CC6750;
 }
 
 .asession h2 b { color:#CC523E }
@@ -327,6 +358,45 @@ a.green { background: #99923F;border: solid 3px #7F761C }
 #how h3 em { color:#7F761C;font-style:normal; }
 
 .pw-widget { float:right; }
+
+/************************** Landing Pages *******************/
+
+#tech li {
+  margin: -1px;
+  padding: 0;
+  display: inline-block;
+  list-style: none;
+  width: 175px;
+  font-size: 11px;
+  background: white;
+  border-radius: 50%;
+  height: 135px;
+  padding-top: 40px;
+  box-shadow: 0 0 0 15px rgba(153, 146, 63,0.8);
+  position: relative;
+  z-index: 100;
+  -webkit-transition: box-shadow 0.2s ease-in-out;
+  -moz-transition: box-shadow 0.2s ease-in-out;
+  -o-transition: box-shadow 0.2s ease-in-out;
+  transition: box-shadow 0.2s ease-in-out;
+}
+
+#tech li img {
+  height: 70px;
+}
+
+#tech li a {
+  text-align: center;
+  color: gray;
+}
+
+#tech li:hover {
+  box-shadow: 0 0 0 15px #B25747;
+  z-index: 101;
+}
+
+
+/************************** End Landing Pages *******************/
 
 footer {
   background: #212F3B;
