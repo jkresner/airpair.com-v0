@@ -37,6 +37,7 @@ module.exports = (app) ->
   app.get '/adm/experts*', loggedIn, admin, (req, r) -> file r, 'adm/experts'
   app.get '/adm/csvs*', loggedIn, admin, (req, r) -> file r, 'adm/csvs'
   app.get '/adm/orders*', loggedIn, admin, (req, r) -> file r, 'adm/orders'
+  app.get '/adm/users*', loggedIn, admin, (req, r) -> file r, 'adm/users'
   app.get '/adm/inbound*', loggedIn, admin, (req, r) ->
     viewData.inbound req.user, (d) => r.render 'adm/inbound.html', d
 
