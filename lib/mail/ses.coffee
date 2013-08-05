@@ -1,8 +1,8 @@
 Ses    = require('awssum-amazon-ses').Ses
 
 ses = new Ses
-    accessKeyId     : process.env.AP_SES_ACCESS_KEY
-    secretAccessKey : process.env.AP_SES_SECRET_KEY
+    accessKeyId     : 'yoyo' #process.env.AP_SES_ACCESS_KEY
+    secretAccessKey : 'hoho' #process.env.AP_SES_SECRET_KEY
 
 
 emailDefaults =
