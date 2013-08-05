@@ -1,19 +1,25 @@
 request = require 'superagent'
 DomainService   = require './_svc'
 
+
 module.exports = class TagsService extends DomainService
 
   model: require './../models/tag'
+  cmsModel: require './../models/tagCms'
 
   search: (searchTerm, callback) ->
     # Poor implementation of search, should checkout mongo-text-search or elastic-search
     @model.findOne { $or: [ { soId: searchTerm }, { ghId: searchTerm } ] }, (e, r) -> callback r
 
+  cms: (id, callback) ->
+    @cmsModel.findOne { _id: id }, (e, r) -> callback r
+
+
   create: (addMode, tag, callback) ->
     #console.log 'create', 'addMode', addMode
     if addMode is 'stackoverflow' then @getStackoverflowTag(tag, callback)
     else if addMode is 'github' then @getGithubRepo(tag, callback)
-    else @model( tag ).save (e, r) -> 
+    else @model( tag ).save (e, r) ->
       callback e, r
 
   getStackoverflowTag: (tag, callback) =>
