@@ -9,6 +9,9 @@ nav .divider-vertical { margin:0!important; }
 /*nav ul { float:right;margin:10px 0px 8px 8px;display:inline; }*/
 /*nav ul li { float:right;display:block;margin-left:5px;border:solid 1px black;background:#eeeeee;padding:6px 16px;border-radius:2px }*/
 
+nav .twitter { background:url('/images/icons/twitter.png') }
+nav .facebook { background:url('/images/icons/facebook.png') }
+
 div.route { margin-top:20px;width:1240px;margin:auto;display:none; }
 div.main { margin-top:20px;width:1280px;margin:auto }
 a.delete { color:red; }

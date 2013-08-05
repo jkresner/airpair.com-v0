@@ -74,17 +74,10 @@ nav img.logo { /* logo */
   margin-left: 30px;
 }
 
-nav .navigation {
+nav ul.navigation {
   float:right;
-  margin-top: 16px;
-  margin-right: 30px;
-}
-
-nav ul {
-  position: relative;
-  top: -11px;
-  margin-right: 35px;
-  margin-top: 0;
+  margin-right:20px;
+  margin-top: 7px;
 }
 
 nav ul li {
@@ -126,19 +119,36 @@ nav a:link, nav a:visited {
   text-decoration: none;
 }
 
-nav span.social a {
-  position:relative;
-  top:-2px;
-  float: right;
+nav ul.social {
+  float:right;
+  position: relative;
+  margin-right: 35px;
+  margin-top: 2px;
 }
 
-nav ul li img {
-  margin-top: -2px;
-  margin-left: 0;
+nav ul.social li {
+  list-style: none;
+  float: left;
+  margin-left: 3px;
+  margin-right: 3px;
+  padding: 10px 2px 10px 2px;
+}
+
+nav ul.social li a {
+  display:block;
+  height:36px;
+  width:36px;
 }
 
 nav ul li img:hover {
   margin-top: -4px;
+}
+
+nav .twitter {
+  background:url('/images/icons/twitter.png')
+}
+nav .facebook {
+  background:url('/images/icons/facebook.png')
 }
 
 .tagline {
@@ -207,7 +217,7 @@ nav ul li img:hover {
   font-weight: 400;
 }
 
-a.spinner-bg {
+.service-spinner .hi-icon {
   background: #CC6750;
 }
 

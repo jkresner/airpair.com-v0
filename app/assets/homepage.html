@@ -16,17 +16,20 @@
   </head>
 <body>
   <nav class="cf anchorScroll">
-    <a href="/"><img class="logo" src="/images/logo4.png" /></a>
-    <div class="navigation">
-      <ul>
-        <li><a href="#what"><span>{</span> what <span>}</span></a></li>
-        <li><a href="#how"><span>{</span> how <span>}</span></a></li>
-        <li><a href="#showme"><span>{</span> show me <span>}</span></a></li>
-        <li><a href="#why"><span>{</span> why <span>}</span></a></li>
-        <li><a href="http://twitter.com/airpair" target="_blank"><img src="/images/twitter.png"></a></li>
-        <li><a href="http://facebook.com/airpair" target="_blank"><img src="/images/facebook.png"></a></li>
-      </ul>
-    </div>
+    <a href="/"><img class="logo" src="/images/logos/header.png" /></a>
+
+    <ul class="social">
+      <li><a href="http://twitter.com/airpair" target="_blank" class="twitter"></a></li>
+      <li><a href="http://facebook.com/airpair" target="_blank" class="facebook"></a></li>
+    </ul>
+
+    <ul class="navigation">
+      <li><a href="#what"><span>{</span> what <span>}</span></a></li>
+      <li><a href="#how"><span>{</span> how <span>}</span></a></li>
+      <li><a href="#showme"><span>{</span> show me <span>}</span></a></li>
+      <li><a href="#why"><span>{</span> why <span>}</span></a></li>
+    </ul>
+
   </nav>
 
   <div class='outer-container fold cf' id="what">
@@ -34,34 +37,32 @@
       <div class="jumbotron cf">
         <div class="inner-container">
           <div class="tagline">
-            <h1>Develop Software Faster</h1>
-            <h3>with real-time expert help & pair programming</h3>
+            <h1>Better Software, Faster.</h1>
+            <h3>with real-time expert help via video chat & screen sharing</h3>
           </div>
-
-          <!--<img src="/images/jumbfaces.png" class="main">-->
 
             <div class="cf">
                     <article class="service-spinner">
                     <div class="hi-icon-wrap hi-icon-effect-6">
-                      <a href="/pair-programming" class="hi-icon hi-icon-pencil spinner-bg"></a>
+                      <a href="/pair-programming" class="hi-icon hi-icon-pair"></a>
                       <a href="/pair-programming"><h3>pair programming<img src="/images/arrow-right.png"></h3></a>
                     </div>
                       </article>
                       <article class="service-spinner">
                     <div class="hi-icon-wrap hi-icon-effect-6">
-                      <a href="/code-review" class="hi-icon hi-icon-cog spinner-bg"></a>
+                      <a href="/code-review" class="hi-icon hi-icon-code-review"></a>
                       <a href="/code-review"><h3>code review<img src="/images/arrow-right.png"></h3></a>
                     </div>
                       </article>
                       <article class="service-spinner">
                     <div class="hi-icon-wrap hi-icon-effect-6">
-                      <a href="/problem-solving" class="hi-icon hi-icon-contract spinner-bg"></a>
+                      <a href="/problem-solving" class="hi-icon hi-icon-problem-solving"></a>
                       <a href="/problem-solving"><h3>problem solving<img src="/images/arrow-right.png"></h3></a>
                     </div>
                       </article>
                       <article class="service-spinner">
                     <div class="hi-icon-wrap hi-icon-effect-6">
-                      <a href="/code-mentoring" class="hi-icon hi-icon-support spinner-bg"></a>
+                      <a href="/code-mentoring" class="hi-icon hi-icon-code-mentoring"></a>
                       <a href="/code-mentoring"><h3>code mentoring<img src="/images/arrow-right.png"></h3></a>
                     </div>
                       </article>
@@ -72,7 +73,7 @@
         <div class="jumbo-sub-head">
           <div class="inner-container">
             <h2 class="yellow"><span>{</span> develop software better <span>}</span></h2>
-            <h3>video chat with experts to enhance your skills and blast through barriers</h3>
+            <h3>work in tandem with experts to enhance your skills and blast through barriers</h3>
 
             <a href="/find-an-expert" class="button green">{ get help }</a>
             <p>already a pro? <a href="">apply</a> to be an expert</a></p>
@@ -185,13 +186,13 @@
         <div class="asession cf">
           <h2><em>{</em> why I started airpair <em>}</em></h2>
 
-          <div class="cola">
-            <img src="/images/jk.jpg" style="width:415px;float:left;" />
+          <div class="cola" style="width:260px;padding-left:20px">
+            <img src="/images/homepage/jk.png" style="width:250px;float:left;" />
 
-            <p><b>Jonathon Kresner: </b> I started airpair to help developers.</p>
+            <p style="clear:left"><b>Jonathon Kresner: </b><br /> I started airpair to help developers.</p>
           </div>
 
-          <div class="colb">
+          <div class="colb" style="width:500px;padding:0px 20px">
             <p class="feedback">I've ALWAYS loved coding product. When things run smooth & you're knocking out screens, life is grand. But often teams lose their way. Products get delayed and instead of knowing if your market assumptions are right, you're stuck battling technology. I know because I was there in both of my first startups. I needed access to mobile experts and db gurus, even though I consider myself a strong engineer.</p>
 
             <p class="feedback">airpair is for companies that want to get back on track, or better, start off on the right foot by periodically getting expert help to deliver faster.</p>
@@ -242,7 +243,7 @@
 
       $(document).ready(function() {
         $(".anchorScroll a").anchorScroll();
-        $(".anchorScroll a")[1].click();
+        $(".anchorScroll .navigation a")[0].click();
       });
     </script>
 

@@ -67,18 +67,18 @@
 	content: "\e002";
 }
 
-.hi-icon-support:before {
+.hi-icon-code-mentoring:before {
 	/* content: "\e000"; */
-	content: url(/images/cube.png);
+	content: url(/images/icons/code-mentoring.png);
 }
 
 .hi-icon-locked:before {
 	content: "\e001";
 }
 
-.hi-icon-cog:before {
+.hi-icon-gear:before {
 	/*content: "\e003";*/
-	content: url(/images/gear.png);
+	content: url(/images/icons/gear.png);
 }
 
 .hi-icon-clock:before {
@@ -103,7 +103,17 @@
 
 .hi-icon-pencil:before {
 	/*content: "\e00b";*/
-	content: url(/images/bug-fix.png);
+	content: url(/images/icons/bug-fix.png);
+}
+
+.hi-icon-pair:before {
+	/*content: "\e00b";*/
+	content: url(/images/icons/pair.png);
+}
+
+.hi-icon-code-review:before {
+	/*content: "\e00b";*/
+	content: url(/images/icons/code-review.png);
 }
 
 .hi-icon-link:before {
@@ -134,9 +144,8 @@
 	content: "\e012";
 }
 
-.hi-icon-contract:before {
-	/*content: "\e013";*/
-	content: url(/images/time.png);
+.hi-icon-problem-solving:before {
+	content: url(/images/icons/problem-solving.png);
 }
 
 .hi-icon-star:before {
@@ -582,6 +591,13 @@
 	text-transform: none;
 	display: block;
 }
+
+@-moz-document url-prefix() {
+    .hi-icon-effect-6 .hi-icon:before {
+        font-size:255px;
+    }
+}
+
 .hi-icon-effect-6 .hi-icon {
 	height: 175px;
 	width: 175px;
