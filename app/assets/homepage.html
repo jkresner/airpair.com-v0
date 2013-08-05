@@ -15,21 +15,18 @@
     <!-- Place apple-touch-icon.png in root dir -->
   </head>
 <body>
-  <nav class="cf anchorScroll">
-    <a href="/"><img class="logo" src="/images/logos/header.png" /></a>
-
+  <nav class="cf">
+    <a class="logo" href="/"></a>
     <ul class="social">
       <li><a href="http://twitter.com/airpair" target="_blank" class="twitter"></a></li>
       <li><a href="http://facebook.com/airpair" target="_blank" class="facebook"></a></li>
     </ul>
-
     <ul class="navigation">
       <li><a href="#what"><span>{</span> what <span>}</span></a></li>
       <li><a href="#how"><span>{</span> how <span>}</span></a></li>
       <li><a href="#showme"><span>{</span> show me <span>}</span></a></li>
       <li><a href="#why"><span>{</span> why <span>}</span></a></li>
     </ul>
-
   </nav>
 
   <div class='outer-container fold cf' id="what">
@@ -42,32 +39,31 @@
           </div>
 
             <div class="cf">
-                    <article class="service-spinner">
-                    <div class="hi-icon-wrap hi-icon-effect-6">
-                      <a href="/pair-programming" class="hi-icon hi-icon-pair"></a>
-                      <a href="/pair-programming"><h3>pair programming<img src="/images/arrow-right.png"></h3></a>
-                    </div>
-                      </article>
-                      <article class="service-spinner">
-                    <div class="hi-icon-wrap hi-icon-effect-6">
-                      <a href="/code-review" class="hi-icon hi-icon-code-review"></a>
-                      <a href="/code-review"><h3>code review<img src="/images/arrow-right.png"></h3></a>
-                    </div>
-                      </article>
-                      <article class="service-spinner">
-                    <div class="hi-icon-wrap hi-icon-effect-6">
-                      <a href="/problem-solving" class="hi-icon hi-icon-problem-solving"></a>
-                      <a href="/problem-solving"><h3>problem solving<img src="/images/arrow-right.png"></h3></a>
-                    </div>
-                      </article>
-                      <article class="service-spinner">
-                    <div class="hi-icon-wrap hi-icon-effect-6">
-                      <a href="/code-mentoring" class="hi-icon hi-icon-code-mentoring"></a>
-                      <a href="/code-mentoring"><h3>code mentoring<img src="/images/arrow-right.png"></h3></a>
-                    </div>
-                      </article>
-
-                  </div><!--/ row-->
+              <article class="service-spinner">
+                <div class="hi-icon-wrap hi-icon-effect-6">
+                  <a href="/pair-programming" class="hi-icon hi-icon-pair"></a>
+                  <a href="/pair-programming"><h3>pair programming<img src="/images/arrow-right.png"></h3></a>
+                </div>
+              </article>
+              <article class="service-spinner">
+                <div class="hi-icon-wrap hi-icon-effect-6">
+                  <a href="/code-review" class="hi-icon hi-icon-code-review"></a>
+                  <a href="/code-review"><h3>code review<img src="/images/arrow-right.png"></h3></a>
+                </div>
+              </article>
+              <article class="service-spinner">
+                <div class="hi-icon-wrap hi-icon-effect-6">
+                  <a href="/problem-solving" class="hi-icon hi-icon-problem-solving"></a>
+                  <a href="/problem-solving"><h3>problem solving<img src="/images/arrow-right.png"></h3></a>
+                </div>
+              </article>
+              <article class="service-spinner">
+                <div class="hi-icon-wrap hi-icon-effect-6">
+                  <a href="/code-mentoring" class="hi-icon hi-icon-code-mentoring"></a>
+                  <a href="/code-mentoring"><h3>code mentoring<img src="/images/arrow-right.png"></h3></a>
+                </div>
+                </article>
+            </div>
         </div>
         <div class="arrow-up"></div>
         <div class="jumbo-sub-head">
@@ -225,7 +221,7 @@
           return $(this).each(function(){
             var element = this;
             $(element).click(function (event) {
-              $('.anchorScroll li').removeClass('active');
+              $('.navigation li').removeClass('active');
               $(element).parent().addClass('active');
 
               var locationHref = window.location.href;
@@ -242,8 +238,8 @@
       })($);
 
       $(document).ready(function() {
-        $(".anchorScroll a").anchorScroll();
-        $(".anchorScroll .navigation a")[0].click();
+        $(".navigation a").anchorScroll();
+        $(".navigation a")[0].click();
       });
     </script>
 
