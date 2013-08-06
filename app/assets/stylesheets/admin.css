@@ -1,3 +1,5 @@
+nav a.zocial { padding:0; }
+
 #admexpertspage {}
 #admexpertspage .main { display:none }
 #admexpertspage #experts { float:left;width:900px }
