@@ -2,7 +2,16 @@ body { background:none repeat scroll 0 0 #E2E2E2 }
 
 nav { background:url('/images/bg-top-short.jpg');height:70px;border-bottom:solid 1px #d3d3d3}
 nav > div { padding-top:6px;height:54px;width:1240px;margin:auto;border-bottom:solid 1px white; }
-nav .logo { float:left; }
+nav a.logo {
+  display:inline-block;
+  float:left;
+  width: 180px;
+  height: 60px;
+  margin-top: 3px;
+  margin-left: 12px;
+  background: url('/images/logos/header_old.png') no-repeat;
+}
+
 nav img { display:inline-block;width:180px;padding:3px 12px; }
 nav .navbar-inner { float:right;margin-top:5px;padding:0px 5px; }
 nav .divider-vertical { margin:0!important; }
