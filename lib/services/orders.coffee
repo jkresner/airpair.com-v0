@@ -1,4 +1,5 @@
 DomainService   = require './_svc'
+Roles           = require './../identity/roles'
 PaypalAdaptiveSvc = require './../services/payment/paypal-adaptive'
 mongoose = require 'mongoose'
 
@@ -19,6 +20,7 @@ module.exports = class OrdersService extends DomainService
 
     @paymentSvc.Pay order, (r) =>
       order.payment = r
+      $log "order.payment", order
       winston.log "order.payment", order
       new @model( order ).save (e, rr) ->
         if e?
@@ -27,11 +29,19 @@ module.exports = class OrdersService extends DomainService
         callback rr
 
 
-  markPaymentReceived: (id, paymentDetail, callback) ->
-    # perhaps use get payment details call instead of hack status
-    # ** should check for userId too
-    ups = paymentStatus: 'received'
-    @update id, ups, callback
+  markPaymentReceived: (id, usr, paymentDetail, callback) ->
+    @model.findOne { _id: id }, (e, r) =>
+      if Roles.isOrderOwner(usr, r) || Roles.isAdmin(usr)
+        @paymentSvc.PaymentDetails r, (resp) =>
+          # INCOMPLETE = customer has paid but chained payment not executed
+          # CREATED = customer has NOT yet paid
+          if resp.status == 'INCOMPLETE'
+            ups = paymentStatus: 'received'
+            @update id, ups, callback
+          else
+            callback { e: 'update failed, not in INCOMPLETE state', data: resp }
+      else
+        callback { e: 'update failed, does not belong to user' }
 
 
   payOutToExperts: (id, callback) ->

@@ -390,6 +390,9 @@ a.green { background: #99923F;border: solid 3px #7F761C }
   -moz-transition: box-shadow 0.2s ease-in-out;
   -o-transition: box-shadow 0.2s ease-in-out;
   transition: box-shadow 0.2s ease-in-out;
+
+  text-align: center;
+  color: gray;
 }
 
 #tech li img {
@@ -398,7 +401,7 @@ a.green { background: #99923F;border: solid 3px #7F761C }
 
 #tech li a {
   text-align: center;
-  color: gray;
+  color: gray;  
 }
 
 #tech li:hover {

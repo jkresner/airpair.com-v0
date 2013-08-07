@@ -53,6 +53,7 @@ class exports.OrdersView extends Backbone.View
     id = $(e.currentTarget).data('id')
     expert = _.find @collection.models, (m) -> m.id.toString() == id
     @model.set expert.attributes
+    alert("order #{id} selected")
 
 
 class exports.OrderFormView extends BB.ModelSaveView

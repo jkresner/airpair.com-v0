@@ -2,7 +2,8 @@
   <a href="#" class="select" data-id="{{ _id }}">{{ _id }}</a>
   <br />{{ createdDate }} <b class="{{ paymentStatus }}">{{ paymentStatus }}</b>
   {{#if isPending }}
-    <a class="delete deleteOrder" href="#" data-id="{{ _id }}">x</a>
+    <a class="refresh refreshOrder" href="/paypal/success/{{ _id }}" data-id="{{ _id }}" style="color:green" target="_blank">r</a>
+    | <a class="delete deleteOrder" href="#" data-id="{{ _id }}">x</a>
   {{/if }}
   {{#if isReceived }}
     <a class="payOut" href="#">Pay experts</a>
@@ -10,15 +11,17 @@
 </td>
 <td>
   {{#if contactPic }}
-    <img src="{{ contactPic }}" />
+    <img src="{{ contactPic }}" style="float:left;margin:5px" />
   {{else}}
-    <img src="/images/default-avatar.jpg" />
+    <img src="/images/default-avatar.jpg" style="float:left;margin:5px" />
   {{/if}}
-  <a href="mailto:{{contactEmail}}" target="_blank">{{ contactName }}</a>
-  {{ company.name }}
+    <div style="float:left">
+      <a href="mailto:{{contactEmail}}" target="_blank">{{ contactName }}</a>
+      <br />{{ company.name }}
+    </div>
 </td>
 <td class="info">
-  <a href="#" target="_blank" data-id="{{ _requestId }}">{{ requestId }}</a>
+  <a href="/adm/inbound/request/{{ requestId }}" target="_blank" data-id="{{ _requestId }}">{{ requestId }}</a>
 </td>
 <td>
   {{#each lineItems}}

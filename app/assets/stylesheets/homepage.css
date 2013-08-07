@@ -354,17 +354,27 @@ a.green { background: #99923F;border: solid 3px #7F761C }
 }
 
 
-#how h2 { margin-bottom:30px }
+/*#how h2 { margin-bottom:30px }*/
 .step {margin-bottom: 50px;}
 #how .step { width:280px;float:left;margin-right:50px }
 .last {margin-right: 0 !important;}
-#how p { font-size:17px }
+#how p { 
+  font-size: 17px;
+  text-align: center;
+  margin-bottom: 22px;
+}
 #how b { color:#CC6750; }
 .step img {
   max-width: 280px;
   background: rgba(0,0,0,0.1);
   border-radius: 5px;
 }
+
+.step h2 {
+  text-align: center;
+  margin-bottom: 0;
+}
+
 #how h3 { font-weight:bold; }
 #how i { color:gray;font-style:normal;font-weight:normal; }
 #how h3 em { color:#7F761C;font-style:normal; }
