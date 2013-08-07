@@ -42,13 +42,13 @@ h3 {
   margin: 0;
 }
 
-p {
+/*p {
   font-style: 16px;
   font-weight: 400;
   line-height: 25px;
   letter-spacing: 0.5px;
   margin-top: 0;
-}
+}*/
 
 
 .fold-border {
@@ -183,7 +183,7 @@ nav .facebook {
 .jumbotron { height:612px; text-align: center; }
 .jumbotron img.main { width:350px;margin:50px auto 40px auto;display:block }
 .jumbotron .col { float:left;width:46%;height:240px }
-.jumbotron p {float: left; margin-left: 340px; color: #0E1419;}
+.jumbotron p.apply {float: left; margin-left: 340px; color: #0E1419;}*/
 .jumbotron p a {color: #99923F;}
 .jumbotron p a:hover {color: #CC867A;}
 .jumbotron .tagline {padding-bottom: 50px;}
