@@ -12,6 +12,13 @@ body {
   padding-top: 60px;
 }
 
+@media (max-width: 640px) {
+  body {
+    width: 1000px;
+  }
+}
+
+
 a {color: white; text-decoration: none;}
 
 a:hover { text-decoration:none;color:#ffffff }
