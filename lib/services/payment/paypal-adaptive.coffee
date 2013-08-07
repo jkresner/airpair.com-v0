@@ -54,7 +54,7 @@ module.exports = class PaypalAdaptive
     order.paymentType = 'paypal'
     airpairMargin = order.total
     payload = payloadDefault(@cfg)
-    payload.memo = "$#{order.total} #{order.fullName}"   # {orderId}
+    payload.memo = "#{order.company.contacts[0].fullName}"   # {orderId}
 
     for item in order.lineItems
       expertsHrRate = item.suggestion.suggestedRate[item.type].expert
@@ -78,12 +78,15 @@ module.exports = class PaypalAdaptive
     @postPayload "Pay", payload, callback
 
 
-  PaymentDetails  : (payKey, callback) ->
-    payload = {}
+  PaymentDetails: (order, callback) ->
+    payload =
+      requestEnvelope: { errorLanguage:"en_US", detailLevel:"ReturnAll" }
+      payKey: order.payment.payKey
+
     @postPayload "PaymentDetails", payload, callback
 
 
-  ExecutePayment  : (order, callback) ->
+  ExecutePayment: (order, callback) ->
     payload =
       requestEnvelope: { errorLanguage:"en_US", detailLevel:"ReturnAll" }
       payKey: order.payment.payKey
@@ -104,7 +107,7 @@ module.exports = class PaypalAdaptive
       .set('X-PAYPAL-RESPONSE-DATA-FORMAT', 'JSON')
       .set('X-PAYPAL-APPLICATION-ID', @cfg.APPLICATIONID)
       .end (res) =>
-        # $log "PayalResponse: #{endpoint}", payload, res.body
+        $log "PayalResponse: #{endpoint}", payload, res.body
         winston.log "PayalResponse: #{endpoint}", res.body
         callback res.body
 
