@@ -26,10 +26,15 @@
 
         <form action="https://www.{{#if useSandbox}}sandbox.{{/if}}paypal.com/webapps/adaptivepayment/flow/pay" target="PPDGFrame" class="standard button button-pay">
           <a href="#" class="pay"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_paynowCC_LG.gif" /></a>
-          <input type="image" id="submitBtn" src="" value="">
+          <input type="image" id="submitBtn" src="" value="" style="display:none">
           <input id="paykey" type="hidden" name="paykey" value="insert_pay_key">
         </form>
 
+      </div>
+
+      <div class="alert alert-error">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <h4>Error</h4>
       </div>
 
   </div>
