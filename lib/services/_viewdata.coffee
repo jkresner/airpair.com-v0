@@ -45,6 +45,8 @@ module.exports = class ViewDataService
         session: @session usr
         tag:     o
       if o?
+        vd.tag.img = o.soId
+        if o.soId[0] is '.' then vd.tag.img = o.soId.substring(1) # for '.net'
         tSvc.cms o._id, (c) =>
           vd.tagCms = if c? then c else {}
           callback vd
