@@ -183,8 +183,19 @@ nav .facebook {
 .jumbotron { height:612px; text-align: center; }
 .jumbotron img.main { width:350px;margin:50px auto 40px auto;display:block }
 .jumbotron .col { float:left;width:46%;height:240px }
-.jumbotron p.apply {float: left; margin-left: 340px; color: #0E1419;}*/
+.jumbotron p.apply {
+  float: left; 
+  margin: 0; 
+  text-align: center;
+  color: #0E1419;
+  width: 100%;
+  font-size: 14px;
+
+}
 .jumbotron p a {color: #99923F;}
+.jumbotron p a.apply {
+  color: #99923F;
+}
 .jumbotron p a:hover {color: #CC867A;}
 .jumbotron .tagline {padding-bottom: 50px;}
 .jumbotron .button {
