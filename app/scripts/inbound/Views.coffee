@@ -82,7 +82,8 @@ class CustomerMailTemplates
   tmplMatched: require './../../mail/customerRequestMatched'
   tmplFollowup: require './../../mail/customerRequestFollowup'
   constructor: (request) ->
-    r = request.extendJSON tagsString: request.tagsString()
+    isOpensource = request.get('pricing') == 'opensource'
+    r = request.extendJSON tagsString: request.tagsString(), isOpensource: isOpensource
     @received = encodeURIComponent(@tmplReceived r)
     @review = encodeURIComponent(@tmplReview r)
     @matched = encodeURIComponent(@tmplMatched r)
