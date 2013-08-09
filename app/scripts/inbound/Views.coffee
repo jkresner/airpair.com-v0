@@ -97,8 +97,9 @@ class ExpertMailTemplates
   constructor: (request, expertId) ->
     suggestion = request.suggestion expertId
     contact = request.contact 0
+    suggestedExpertRate = suggestion.suggestedRate[request.get('pricing')].expert
     # $log 'suggestion', suggestion, contact, request
-    r = request.extendJSON { tagsString: request.tagsString(), suggestion: suggestion, contact: contact }
+    r = request.extendJSON { tagsString: request.tagsString(), suggestion: suggestion, contact: contact, suggestedExpertRate: suggestedExpertRate }
     @another = encodeURIComponent(@tmplAnother r)
     @canceled = encodeURIComponent(@tmplCancelled r)
     @chosen = encodeURIComponent(@tmplChosen r)
