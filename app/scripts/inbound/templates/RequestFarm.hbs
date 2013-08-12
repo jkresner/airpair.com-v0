@@ -1,7 +1,6 @@
 <div class="form-actions" style="margin-top:0">
   <div class="controls">
     <a href="#request/{{ _id }}" class="btn btn-inverse">Back</a>
-    <a href="http://www.youtube.com/my_videos?o=U" class="btn btn-error">YouTube</a>
   </div>
 </div>
 
@@ -37,18 +36,17 @@
 
 <label for="farm-tweet-airpair">Tweet by @airpair</label>
 
-<a href="{{bitly}}{{urlEncoded}}%26utm_source=twitter-airpair" class="zocial appnet icon" target="_blank"></a>
+<a href="#" class="zocial appnet icon shorten"></a>
 <input id="farm-tweet-airpair" type="text" onclick="this.select();" value="{{url}}%26utm_source=twitter-airpair" class="url" />
 
 <hr />
 
 <label for="farm-irc-freenode">Freenode IRC</label>
 
-<a href="{{bitly}}{{urlEncoded}}%26utm_source=irc-freenode" class="zocial appnet icon" target="_blank"></a>
+<a href="#" class="zocial appnet icon shorten"></a>
 <input id="farm-irc-freenode" type="text" onclick="this.select();" value="{{url}}&utm_source=irc-freenode" class="url" />
 
 <textarea onclick="this.select();">WANTED: Few hours of remote help with {{ tagsString }} for ${{ hrRate }}/hr. Details ==> {{url}}&utm_source=irc-freenode</textarea>
-
 
 <hr />
 
@@ -56,24 +54,12 @@
 
 <label for="farm-linkedin-group">LinkedIN Groups</label>
 
-<a href="{{bitly}}{{urlEncoded}}%26utm_source=linkedin-group" class="zocial appnet icon" target="_blank"></a>
-
+<a id="linkedInShorten" href="#" class="zocial appnet icon shorten"></a>
 <input id="farm-linkedin-group" type="text" onclick="this.select();" value="{{url}}&utm_source=linkedin-group" class="url" />
 
 <input type="text" onclick="this.select();" value="${{hrRate}}/hr for remote consulting help with {{ tagsString }}" />
 
-<textarea onclick="this.select();" rows="5">
---
-We're looking for a few hours of remote pair programming & code review help with {{ tagsString }}.
-
-
-Full details => {{url}}&utm_source=linkedin-group
-
-
---
-Regular micro opportunities at,
-http://twitter.com/airpair
---
+<textarea id="linkedInJobPostMessage" onclick="this.select();" rows="5">
 </textarea>
 
 
@@ -83,7 +69,7 @@ http://twitter.com/airpair
 
 <label for="farm-meetup-group">Meetup Group</label>
 
-<a href="{{bitly}}{{urlEncoded}}%26utm_source=linkedin-group" class="zocial appnet icon" target="_blank"></a>
+<a href="#" class="zocial appnet icon shorten"></a>
 <input id="farm-meetup-group" type="text" onclick="this.select();" value="{{url}}&utm_source=meetup-group" class="url" />
 
 <hr />

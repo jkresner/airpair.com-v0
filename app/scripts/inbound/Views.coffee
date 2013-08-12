@@ -55,6 +55,11 @@ class exports.RequestsView extends BB.BadassView
 class exports.RequestFarmView extends BB.ModelSaveView
   el: '#farm'
   tmpl: require './templates/RequestFarm'
+  tmplLinkedIn: require './templates/RequestFarmLinkedIn'
+  bitlyUrl: "https://api-ssl.bitly.com/v3"
+  accessToken: "b93731e13c8660c7700aca6c3934660ea16fbd5f"
+  events:
+    'click .shorten': 'shorten'
   initialize: ->
     @listenTo @model, 'change', @render
   render: ->
@@ -69,7 +74,16 @@ class exports.RequestFarmView extends BB.ModelSaveView
       hrRate: rate
       bitly: 'https://bitly.com/shorten/?url='
     @$el.html @tmpl @model.extendJSON tmplData
+    @shorten target: @$('#linkedInShorten')
     @
+  shorten: (e) ->
+    $input = $(e.target).next()
+    encodedLnk = encodeURIComponent $input.val()
+    $.ajax(url:"#{@bitlyUrl}/shorten?access_token=#{@accessToken}&longUrl=#{encodedLnk}").done (r) =>
+      $input.val "http://airpa.ir/#{r.data.hash}"
+      if $input.attr('id') is 'farm-linkedin-group'
+        $('#linkedInJobPostMessage').html @tmplLinkedIn { link: $input.val(), tagsString: @model.tagsString() }
+    false
 
 
 #############################################################################
