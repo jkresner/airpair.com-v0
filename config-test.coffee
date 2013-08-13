@@ -1,5 +1,8 @@
 {config} = require './config'
 
+# include watch (build) test directory
+config.paths = watched: ['app','vendor', 'test']
+
 config.db = "airpair_test"
 
 config.env.mode = 'test'

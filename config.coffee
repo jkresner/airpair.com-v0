@@ -2,6 +2,11 @@
 
 exports.config =
 
+
+  # do not watch (build) test directory
+  paths:
+    watched: ['app','vendor']
+
   env:
     mode: 'dev'
 
