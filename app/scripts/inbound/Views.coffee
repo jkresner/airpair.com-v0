@@ -56,6 +56,7 @@ class exports.RequestFarmView extends BB.ModelSaveView
   el: '#farm'
   tmpl: require './templates/RequestFarm'
   tmplLinkedIn: require './templates/RequestFarmLinkedIn'
+  tmplTwitter: require './templates/RequestFarmTwitter'
   bitlyUrl: "https://api-ssl.bitly.com/v3"
   accessToken: "b93731e13c8660c7700aca6c3934660ea16fbd5f"
   events:
@@ -64,25 +65,29 @@ class exports.RequestFarmView extends BB.ModelSaveView
     @listenTo @model, 'change', @render
   render: ->
     if !@mget('base')? then return @
-    rate = @mget('budget') - @mget('base')[@mget('pricing')]
+    @rate = @mget('budget') - @mget('base')[@mget('pricing')]
     month = new moment().format("MMM").toLowerCase()
     term = encodeURIComponent @model.tagsString()
     tmplData =
       url: "http://www.airpair.com/review/#{@model.id}?utm_medium=farm-link&utm_campaign=farm-#{month}&utm_term=#{term}"
       urlEncoded: "http://www.airpair.com/review/#{@model.id}%3Futm_medium=farm-link%26utm_campaign=farm-#{month}"
       tagsString: @model.tagsString()
-      hrRate: rate
+      hrRate: @rate
       bitly: 'https://bitly.com/shorten/?url='
     @$el.html @tmpl @model.extendJSON tmplData
     @shorten target: @$('#linkedInShorten')
     @
   shorten: (e) ->
+    $log 'shorted', e, e.target
     $input = $(e.target).next()
     encodedLnk = encodeURIComponent $input.val()
     $.ajax(url:"#{@bitlyUrl}/shorten?access_token=#{@accessToken}&longUrl=#{encodedLnk}").done (r) =>
       $input.val "http://airpa.ir/#{r.data.hash}"
+      tmplData = link: $input.val(), tagsString: @model.tagsString(), hrRate: @rate
       if $input.attr('id') is 'farm-linkedin-group'
-        $('#linkedInJobPostMessage').html @tmplLinkedIn { link: $input.val(), tagsString: @model.tagsString() }
+        @$('#linkedInJobPostMessage').html @tmplLinkedIn tmplData
+      if $input.attr('id') is 'farm-tweet-airpair'
+        window.open @tmplTwitter(tmplData)
     false
 
 
