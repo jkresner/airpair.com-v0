@@ -1,11 +1,16 @@
+urlParser = require('url')
 ViewDataService = require('./lib/services/_viewdata')
 vdSvc = new ViewDataService()
 
 track = (pageName) =>
   (req, r, next) ->
-    if req.params? && req.params.id?
-      pageName += "/#{req.params.id}"
-    r.cookie 'landingPage', pageName
+    if !req.cookies.landingPage
+      referrerHost = urlParser.parse(req.headers.referer).host if req.headers.referer
+
+      if req.headers.referer is undefined or referrerHost != req.headers.host
+        if req.params? && req.params.id?
+          pageName += "/#{req.params.id}"
+        r.cookie 'landingPage', pageName
     next()
 
 file = (r, file) -> r.sendfile "./public/#{file}.html"
