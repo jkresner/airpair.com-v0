@@ -78,7 +78,6 @@ class exports.RequestFarmView extends BB.ModelSaveView
     @shorten target: @$('#linkedInShorten')
     @
   shorten: (e) ->
-    $log 'shorted', e, e.target
     $input = $(e.target).next()
     encodedLnk = encodeURIComponent $input.val()
     $.ajax(url:"#{@bitlyUrl}/shorten?access_token=#{@accessToken}&longUrl=#{encodedLnk}").done (r) =>
