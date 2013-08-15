@@ -13,10 +13,18 @@
  {{#with company}}
  <dl>
   <dt>Company</dt>
-  <dd>{{name}}</dd>
-  {{#if url}}
-  <dt style="display:none">Url</dt>
-  <dd style="font-weight:normal"><a href="http://{{ url }}" target="_blank">http://{{ url }}</a></dd>
+  <dd>
+    {{#if ../associatedWithRequest}}
+      {{name}}
+    {{else}}
+      <a href="javascript:alert('You must be assigned to this request to see the company name')">Hidden</a>
+    {{/if}}
+  </dd>
+  {{#if ../associatedWithRequest}}
+    {{#if url}}
+    <dt style="display:none">Url</dt>
+    <dd style="font-weight:normal"><a href="http://{{ url }}" target="_blank">http://{{ url }}</a></dd>
+    {{/if}}
   {{/if}}
   <dt style="display:none">About</dt>
   <dd>{{about}}}</dd>
@@ -34,7 +42,15 @@
 
     <dl>
       <dt>Name</dt>
-      <dd>{{fullName}}</dd>
+      <dd>
+
+        {{#if ../../associatedWithRequest}}
+          {{fullName}}
+        {{else}}
+          <a href="javascript:alert('You must be assigned to this request to see the contact name')">Hidden</a>
+        {{/if}}
+
+      </dd>
       {{#if isCustomer}}
         <dt>Email</dt>
         <dd>{{email}}</dd>

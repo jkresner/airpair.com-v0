@@ -255,8 +255,10 @@ class exports.RequestInfoView extends BB.BadassView
         if s.expertStatus is 'available' then hasAvailableExperts = true
     d =
       isCustomer: @request.isCustomer @session
+      meExpert: @request.suggestion @session.id
       total: @hrTotal()
       hasAvailableExpert: hasAvailableExperts
+    d.associatedWithRequest = d.meExpert || d.isCustomer
 
     @$el.html @tmpl @request.extend(d)
     @
