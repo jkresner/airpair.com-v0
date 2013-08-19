@@ -54,7 +54,7 @@ module.exports = class PaypalAdaptive
     order.paymentType = 'paypal'
     airpairMargin = order.total
     payload = payloadDefault(@cfg)
-    payload.memo = "#{order.company.contacts[0].fullName}"   # {orderId}
+    payload.memo = "http://airpair.com/review/#{order.requestId}"
 
     for item in order.lineItems
       expertsHrRate = item.suggestion.suggestedRate[item.type].expert
