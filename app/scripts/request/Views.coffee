@@ -117,8 +117,7 @@ class exports.RequestFormView extends BB.ModelSaveView
     # @$('.calcph').html("$#{base} + <i>$#{add}</i> = $#{base+add}")
     @$(".#{val}").show()
   renderSuccess: (model, response, options) =>
-    @$('.alert-success').fadeIn(800).fadeOut(5000)
-    router.navigate '#thanks', { trigger: true }
+    router.navTo 'thanks'
   getViewData: ->
     brief: @elm("brief").val()
     hours: @elm("hours").val()
