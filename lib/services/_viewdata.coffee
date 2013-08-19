@@ -47,6 +47,8 @@ module.exports = class ViewDataService
       if o?
         vd.tag.img = o.soId
         if o.soId[0] is '.' then vd.tag.img = o.soId.substring(1) # for '.net'
+        vd.tag.lowercase_name = vd.tag.name.toLowerCase()
+        vd.tag.lowercase_short = vd.tag.short.toLowerCase()
         tSvc.cms o._id, (c) =>
           vd.tagCms = if c? then c else {}
           callback vd

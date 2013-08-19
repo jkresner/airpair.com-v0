@@ -1,123 +1,196 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <script src="//cdn.optimizely.com/js/280598780.js"></script>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>{{ tag.name }} Problem Solving via Expert Video Chat!</title>
-    <meta name="viewport" content="width=device-width">
+    <title>Software Problem Solving</title>
     <meta name="author" content="airpair, inc.">
-    <meta name="keywords" content="Remote {{ tag.name }} Code Review, Code Reviewers for {{ tag.name }} apps, Review my {{ tag.name }} code, {{ tag.name }} Project Code Reviews, Peer Code Review Tools">
-    <meta name="description" content="Improve your software code quality, deliver software projects faster, ship less programming bugs and more with Airpair's {{ tag.name }} Code Review as a Service.">
-    <link rel="stylesheet" href="/stylesheets/homepage.css">
+    <meta name="keywords" content="Mentoring, Online Mentoring, Online Code Mentoring Service, Software Mentoring, Remote Code Mentoring, Remote Mentoring, One on One Mentoring, Tutoring, Online Tutoring, Software Tutoring, Remote Code Tutoring, Remote Tutoring, One on One Tutoring, {{ tag.name }} Mentoring, {{ tag.short }} Mentoring, {{ tag.name }} Tutoring, {{ tag.name }} Mentoring">
+
+    <meta name="description" content="Accelerate technical learning via one-on-one mentoring with a subject matter expert via screen sharing and video chat.">
+    <link rel="stylesheet" href="/stylesheets/landing_jk.css">
+    <link rel="stylesheet" href="/stylesheets/icon-hover-effects.css">
+    <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,300' type='text/css'>
+    <script src="//cdn.optimizely.com/js/280598780.js"></script>
   </head>
 <body>
-
-
   <style type="text/css">
     body { letter-spacing:0 }
     .cf a { color:white; }
     .cf a:hover { color:gray; }
-    .cf h3 { margin-top:5px; }
-    .cf p { font-weight:normal;text-align:center;font-size:16px; }
-    .jumbotron h1 { margin:50px 0 30px 0; }
+    .cf h3 { margin-top:32px; }
+    .jumbotron  p { font-weight:normal;text-align:center;font-size:16px;margin:auto; }
+    .techicon {
+      border-radius:45px;
+      box-shadow: 0 0 0 6px #B25747;
+      position: relative;
+      -webkit-transition: box-shadow 0.2s ease-in-out;
+      -moz-transition: box-shadow 0.2s ease-in-out;
+      -o-transition: box-shadow 0.2s ease-in-out;
+      transition: box-shadow 0.2s ease-in-out;
+      overflow:hidden;
+      max-width:240px;
+      height:120px;
+      background:white;
+      margin:40px auto 0px auto
+    }
   </style>
 
-  <div class='fold cf'>
-    <nav class="cf">
-      <img src="/images/logo4.png" />
-      <h3>Improve your {{ tag.name }} code base with Airpair's "Real-time problem solving Service"</h3>
+  <nav class="cf">
+    <a class="logo" href="/"></a>
+    <ul class="social">
+      <li><a href="http://twitter.com/airpair" target="_blank" class="twitter"></a></li>
+      <li><a href="http://facebook.com/airpair" target="_blank" class="facebook"></a></li>
+    </ul>
+    <ul class="navigation">
+      <li><a href="/pair-programming"><span>{</span> pair programming <span>}</span></a></li>
+      <li><a href="/code-review"><span>{</span> code review <span>}</span></a></li>
+      <li class="active"><a href="/problem-solving"><span>{</span> problem solving <span>}</span></a></li>
+      <li><a href="/code-mentoring"><span>{</span> code mentoring <span>}</span></a></li>
+    </ul>
+  </nav>
 
-      <div class="pw-widget pw-size-medium">
-        <a class="pw-button-twitter"></a>
-        <a class="pw-button-linkedin"></a>
-        <a class="pw-button-googleplus"></a>
-        <a class="pw-button-facebook"></a>
-        <a class="pw-button-email"></a>
-        <a class="pw-button-post"></a>
+  <div class='outer-container cf fold' id="languages">
+    <div class="middle-container">
+      <div class="jumbotron cf">
+        <div class="inner-container">
+          <div class="tagline">
+            <h1>Real-Time Help with Complex {{ tag.name }} Problems</h1>
+
+            <div class="techicon">
+              <img src="/images/tech/{{ tag.img }}.jpeg" alt="{{ tag.name }} Code Review" style="height:90%;margin:6px" />
+            </div>
+            
+            <h3>blast through roadblocks, get out of rat holes, and get {{ tag.lowercase_short}} bugs fixed faster by jumping on a video call with a technical expert</h3>
+          </div>
+        </div>
+        <div class="arrow-up"></div>
+        <div class="jumbo-sub-head">
+          <div class="inner-container">
+            <h2 class="yellow"><span>{</span> get unstuck! <span>}</span></h2>
+            <h3>speed up finding the solution to your {{ tag.lowercase_name }} problem by getting a subject matter expert to help you via screen sharing and video chat</h3>
+
+            <a href="/find-an-expert" class="button green">{ get started with an airpair expert }</a>
+            <!-- <p>or click a language above to learn more</a></p> -->
+          </div>
+        </div>
       </div>
-    </nav>
-
-    <div class="jumbotron cf">
-
-      <h1>Ship better code with {{ tag.name }} Code Reviews!</h1>
-
-      <div style="overflow:hidden;border-radius:60px;max-width:240px;height:120px;background:white;border:solid 1px gray;margin:auto">
-        <img src="/images/tech/{{ tag.img }}.jpeg" alt="{{ tag.name }}  Code Review" style="height:90%;margin:6px" />
-      </div>
-
-      <p style="margin-bottom:30px">Whether you've outsourced your project, inherited someone else's {{ tag.name }} code, just built your first {{ tag.short }} app or an {{ tag.name }} expert interested in comparing with others - <i><a href="/code-review" title="Code reviews">code reviews</a> are a proven, cost effective way to find defects in your software.</i></p>
-
-      <div class="col">
-          <h2><span>{</span> Get reviewed <span>}</span></h2>
-          <p>Video chat with experts to find bugs, improve performance and learn skills to improve your code.</p>
-
-          <a href="/find-an-expert" class="button">{ get help }</a>
-      </div>
-      <div class="col" style="float:right">
-          <h2 class="yellow"><span>{</span> Review code <span>}</span></h2>
-          <p>Get paid by the hour to review code, share your knowledge & help coders learn to improve their apps.</p>
-
-          <a href="/be-an-expert" class="button green">{ create profile }</a>
-      </div>
-
     </div>
   </div>
 
-  <div id="how" class="marketing" style="padding:40px">
 
-      <h2><span>{</span> What Airpair online Code Review session are like <span>}</span></h2>
+  <div class='fold-border'>
+  </div>
 
-      <div class="asession">
-        <p style="float:right;width:300px;margin-top:0"><b>Bryan's feedback:</b> <i style="font-style:italic!important">"Following a brief description of my project with airpair, I was able to choose <a href="http://peterlyons.com/" target="_blank">Peter Lyons</a>, a developer with great credentials and expertise that matched my goals. He patiently explained concepts and cemented the abstract tutorials I had done to real-world examples. Peter followed up the sessions with outlines and code examples – I didn’t expect that & really appreciated it. <br /><br />Perhaps the most valuable result is that I now know that my project’s overall re-design has been vetted by an expert.</i></p>
+  <div class="outer-container cf" id="should">
+    <div class="middle-container">
+      <div id="how" class="inner-container marketing">
+        <div class="tagline"><h1>Will an AirPair Expert Help Me?</h1></div>
 
-        <iframe width="560" height="315" src="http://www.youtube.com/embed/mljwYWiFz2E" frameborder="0" allowfullscreen></iframe>
+        <div class="asession cf">
+          <div class="cola" style="width:265px">
+            <img src="/images/landing/question.png" class="spinning" alt="questionmark" style="margin-left:20px;margin-top:20%">
+          </div>
 
-        <p style="margin-top:30px">Airpair {{ tag.name }} experts can help you find issues in your {{ tag.short }} code. Common problem areas include architecture, security, error handling, scalability and performance. Participating in {{ tag.name }} code reviews can be a great way for you and your team to improve you software development skills.</p>
+          <div class="colb" style="width:525px">
+            <p class="feedback">
+              Spending hours, sometimes days, researching a problem or trying to track down a bug is a well known part of the software development process.  Thankfully, in the modern Internet era, there's plenty of resources available, from <a target="_blank" href="http://www.microsoft.com/visualstudio/eng">advanced</a> <a target="_blank" href="https://developer.apple.com/xcode/">IDEs</a> that help track down performance issues, to developer-focused forums like <a target="_blank" href="http://www.stackoverflow.com">StackOverflow</a>, to AirPair's own on-demand experts.
+            </p>
 
-          <a href="/find-an-expert" class="button" style="width:700px;text-align:center">{ learn to improve your app with a {{ tag.short }} expert! }</a>
+            <p class="feedback">            
+              When you find yourself stuck on a software problem, an AirPair technical expert is a tactical resource you can use across a wide set of technologies for help with:
 
-        <hr />
-      </div>
+              <ul style="width:90%;margin-left:auto;margin-right:auto;font-size:15px">
+                <li>Finding performance bottlenecks</li>
+                <li>Tracking down memory management issues</li>
+                <li>Fixing complex bugs</li>
+                <li>Integration issues</li>
+                <li>Anything else that strikes your fancy. How you choose to spend your time with an expert is totally up to you!</li>
+              </ul>
+            </p>
 
-    <h2>How does a {{ tag.name }} code review on Airpair work?</h2>
+            <p class="feedback">
+              Our customers find that booking a few hours with an expert can help them save days, even weeks, solving complex technical problems.
+            </p>            
 
-    <p>If you want to make sure your {{ tag.short }} code and overall application architecture is up to date, Airpair's "Code Review as a Service" lets you <a href="/find-an-expert">find a {{ tag.name }} expert</a> and connect over video chat in 3 simple steps. </p>
+          </div>
+        </div>
 
-    <div>
-      <div class="step">
-        <p><b>1)</b> Supply tech stack info & budget</p>
-        <img src="/images/homepage/step1brief.png" style="width:250px" />
-      </div>
-      <div class="step">
-        <p><b>2)</b> Get 3 hand picked experts</p>
-        <img src="/images/homepage/step2suggestions.png" style="width:240px" />
-      </div>
-      <div class="step">
-        <p><b>3)</b> Choose, pay & jump on video call</p>
-        <img src="/images/homepage/step3call.png" style="width:310px;" />
-      </div>
+          <a href="/find-an-expert" class="button green" style="text-align:center;width:640px">{ get started with an expert }</a>
 
-
-    <p>
-      <a class="button" style="width:700px;text-align:center" href="/find-an-expert">{ Find {{ tag.short }} code review experts }</a>
-    </p>
-
-   </div>
-
-  </div> <!-- /container -->
-
-
-  <div style="clear:both;height:40px"></div>
-    <div class="footer" style="background:black;height:0px;padding:20px;color:white">
-      <div>
-        &copy; <a href="http://airpair.com/" style="color:white">airpair, inc.</a> 2013
       </div>
     </div>
+  </div>
+
+  <div class='fold-border'>
+  </div>
+
+  <div class="outer-container cf" id="view-session">
+    <div class="middle-container">
+      <div class="inner-container marketing">
+        <div class="tagline"><h1>What is a Problem Solving Session Like?</h1></div>
+
+        <div class="asession cf">
+          <div class="colb">
+
+            <h4>Rob's feedback</h4>
+            <p class="feedback">
+              "Completed 2 great sessions! The first one we worked through some Ruby on Rails issues that we were stuck on. Great job by our expert, he was very knowledgeable. The 2nd session was focused on a jQuery lightbox plugin that we were having trouble with. Our expert stepped through it with us and not only fixed it, but showed us new techniques for troubleshooting jQuery and javascript. I highly recommend Airpair, we are a very satisfied customer.""
+            </p>
+            <i> - Rob Daniels</i></p>
+          </div>
+          <div class="cola">
+            <iframe width="420" height="236" src="http://www.youtube.com/embed/Kopl6_z4Q3w?start=510" frameborder="0" allowfullscreen></iframe>
+            <p>
+              Airpair experts are available for most languages and tech stacks, including Ruby-on-Rails, JavaScript, Backbone.js, iOS, Android, .NET, and <a href="#languages">many more</a>.
+            </p>
+          </div>
+        </div>
+        <div class="inner-container">
+          <div style="clear:both"></div><br />
+          <a href="/find-an-expert" class="button" style="text-align:center;width:640px">{ find an expert }</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class='fold-border'>
+  </div>
+
+
+  <div class="outer-container cf" id="testimony">
+    <div class="middle-container">
+      <div id="how" class="inner-container marketing">
+        <div class="tagline"><h1>AirPair Experts Help You Solve Problems Faster</h1></div>
+
+        <div class="asession cf">
+          <div class="cola">
+          </div>
+
+          <div class="span8">
+            <h4>Alyssa Ravasio</h4>
+            <p class="feedback">
+              "As an entrepreneur, I can't afford to not use {airpair}. Time is my most scarce resource, and with airpair I accomplish in a hour what might take me a day on my own. It's an incredible service - can't believe it hasn't existed until now. It's a critical part of product strategy, it helps me move faster, and that's invaluable. Here's my recent sessions where Mike helps me build a web scraper with node.js"  <a href="http://youtu.be/Ykq76QSKIEw">Watch session</a>
+            </p>
+
+            <h4>Ross Fuhrman</h4>
+            <p class="feedback">
+              "My first experience with AirPair was amazing. I'm working on a RubyMotion app at work and had a pair to work with me on my problems within a day. We were able to work through the major hurdle that caused me to seek out an AirPair session within the first hour. You can see us get a UPC scanner running <a target="_blank" href="http://youtu.be/YWU6NcMdO-Y">http://youtu.be/YWU6NcMdO-Y</a> and the source code is here <a target="_blank" href="https://github.com/markrick">https://github.com/markrick</a>.... In the next two hours, we went over a bunch of smaller items <a target="_blank" href="http://youtu.be/WQROftTbNvw">http://youtu.be/WQROftTbNvw</a>.  A+++++"
+            </p>
+
+            <h4>Brandon Cato</h4>
+            <p class="feedback">
+              "Airpair saved our team a bunch of time. I probably could've spent the next few weeks trying to hack together what we did in a few hours, but I'm glad I didn't have to." 
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+      &copy; <a href="http://airpair.com/">airpair, inc. 2013 | </a>
+  </footer>
 
   </body>
-
-  <script src="/javascripts/providers.js" defer onload="require('scripts/providers/all');"></script>
-  <script src="http://i.po.st/static/v3/post-widget.js#publisherKey=miu9e01ukog3g0nk72m6" type="text/javascript"></script>
 
 </html>
