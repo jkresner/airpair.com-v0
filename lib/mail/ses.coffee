@@ -16,8 +16,8 @@ emailDefaults =
 
 
 send = (to, data, callback) ->
-  data = und.defaults(data, emailDefaults)
   data.ToAddresses = [to]
+  data = _.defaults(data, emailDefaults)
   ses.SendEmail data, callback
 
 

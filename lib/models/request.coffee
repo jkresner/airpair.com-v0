@@ -1,5 +1,7 @@
 mongoose = require 'mongoose'
 Schema = mongoose.Schema
+mailman = require '../mail/mailman'
+
 {ObjectId, Mixed} = Schema.Types
 
 """
@@ -47,7 +49,7 @@ Call = new Schema
   devEndorsed:      String
 
 
-schema = new Schema
+RequestSchema = new Schema
   userId:           { required: true, type: ObjectId }
   company:          { required: true, type: Mixed    }
   tags:             [{}]
@@ -64,5 +66,13 @@ schema = new Schema
   suggested:        [Suggestion]
   calls:            [Call]
 
-
-module.exports = mongoose.model 'Request', schema
+RequestSchema.methods.notifyAdmins = (params, callback) ->
+  console.log('call')
+  mailman.sendEmail({
+    templateName: "admNewRequest"
+    subject: "New airpair request: #{@hours} hours, #{@budget}$"
+    request: @
+    to: "l@lucasvo.com"
+    callback: (e) ->
+  })
+module.exports = mongoose.model 'Request', RequestSchema

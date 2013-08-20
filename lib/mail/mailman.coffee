@@ -23,6 +23,11 @@ renderEmail = (d, templateName, callback) ->
   }, (error, results) -> callback(error, results)
 
 
+sendEmail = (options) ->
+  renderEmail(options, options.templateName, (e, rendered) ->
+    rendered.Subject = options.subject
+    ses.send(options.to, rendered, options.callback)
+  )
 
 expertReviewRequest = (data) ->
   renderEmail data, "expertReviewRequest", (err, rendered) ->
@@ -34,4 +39,5 @@ expertReviewRequest = (data) ->
     ses.send "jk@airpair.com", rendered, ->
 
 
-module.exports = {expertReviewRequest}
+
+module.exports = {expertReviewRequest, sendEmail}

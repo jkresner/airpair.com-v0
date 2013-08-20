@@ -31,8 +31,9 @@ module.exports = class RequestsService extends DomainService
     request.userId = usr._id
     request.events = [@newEvent(usr, "created")]
     request.status = 'received'
-    new @model( request ).save (e, r) ->
+    new @model(request).save (e, r) =>
       if e then $log 'e', e
+      r.notifyAdmins()
       callback r
 
   getByIdSmart: (id, usr, callback) =>
