@@ -1,6 +1,5 @@
 mongoose = require 'mongoose'
 Schema = mongoose.Schema
-mailman = require '../mail/mailman'
 
 {ObjectId, Mixed} = Schema.Types
 
@@ -66,13 +65,4 @@ RequestSchema = new Schema
   suggested:        [Suggestion]
   calls:            [Call]
 
-RequestSchema.methods.notifyAdmins = (params, callback) ->
-  console.log('call')
-  mailman.sendEmail({
-    templateName: "admNewRequest"
-    subject: "New airpair request: #{@hours} hours, #{@budget}$"
-    request: @
-    to: "l@lucasvo.com"
-    callback: (e) ->
-  })
 module.exports = mongoose.model 'Request', RequestSchema
