@@ -10,7 +10,14 @@ SV = require './../shared/Views'
 class exports.WelcomeView extends BB.BadassView
   el: '#welcome'
   tmpl: require './templates/Welcome'
-  render: -> @$el.html @tmpl()
+  events: { 'click .track': 'track' }
+  initialize: ->
+    @e = addjs.events.customerSignup
+  render: ->
+    if !@timer? then @timer = new addjs.Timer(@e.category).start()
+    @$el.html @tmpl()
+  track: (e) ->
+    addjs.trackEvent @e.category, @e.name, @e.uri, @timer.timeSpent()
 
 #############################################################################
 ##  Contact Info
@@ -29,14 +36,17 @@ class exports.CompanyContactView extends BB.ModelSaveView
 
 
 class exports.InfoFormView extends BB.EnhancedFormView
+  # logging: on
   el: '#info'
   tmpl: require './../shared/templates/CompanyForm'
   events: { 'click .save': 'validatePrimaryContactAndSave' }
   initialize: ->
+    @e = addjs.events.customerInfo
     @$el.html @tmpl @model.toJSON()
     @contactView = new exports.CompanyContactView(el: '#primaryContact', model: new M.CompanyContact(num:1)).render()
     @model.on 'change', @render, @
   render: ->
+    if !@timer? then @timer = new addjs.Timer(@e.category).start()
     @setValsFromModel ['name','url','about']
     @contactView.render @model.get('contacts')[0]
     @$(".btn-cancel").toggle @request.id?
@@ -59,6 +69,7 @@ class exports.InfoFormView extends BB.EnhancedFormView
     else
       @save e
   renderSuccess: (model, response, options) =>
+    addjs.trackEvent @e.category, @e.name, @e.uri, @timer.timeSpent()
     router.navTo 'request'
 
 
@@ -67,11 +78,13 @@ class exports.InfoFormView extends BB.EnhancedFormView
 #############################################################################
 
 class exports.RequestFormView extends BB.ModelSaveView
+  # logging: on
   el: '#requestForm'
   tmpl: require './templates/RequestForm'
   events:
     'click .save': 'save'
   initialize: ->
+    @e = addjs.events.customerRequest
     @$el.html @tmpl {}
     @tagsInput = new SV.TagsInputView model: @model, collection: @tags
     @$('input:radio').on 'click', @selectRB
@@ -81,6 +94,7 @@ class exports.RequestFormView extends BB.ModelSaveView
     @elm('brief').on 'input', =>
       @$('#breifCount').html(@elm('brief').val().length+ ' chars')
   render: ->
+    if !@timer? then @timer = new addjs.Timer(@e.category).start()
     if @model.hasChanged('tags') then return
     @$(".stepNum").toggle !@model.get('_id')?
     @setValsFromModel ['brief','availability','hours']
@@ -117,6 +131,7 @@ class exports.RequestFormView extends BB.ModelSaveView
     # @$('.calcph').html("$#{base} + <i>$#{add}</i> = $#{base+add}")
     @$(".#{val}").show()
   renderSuccess: (model, response, options) =>
+    addjs.trackEvent @e.category, @e.name, @e.uri, @timer.timeSpent()
     router.navTo 'thanks'
   getViewData: ->
     brief: @elm("brief").val()

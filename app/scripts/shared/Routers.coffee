@@ -1,9 +1,12 @@
 exports = {}
 M = require './Models'
 BB = require './../../lib/BB'
-
+AddJS = require '/lib/addjs/index'
 
 class exports.AirpairRouter extends BB.BadassAppRouter
+
+  preConstructorHook: ->
+    window.addjs = new AddJS providers: { ga: { logging: on } }
 
   # load external providers like google analytics, user-voice etc.
   loadExternalProviders: ->
@@ -12,9 +15,14 @@ class exports.AirpairRouter extends BB.BadassAppRouter
     require '/scripts/providers/all'
 
 
+
 class exports.AirpairSessionRouter extends BB.SessionRouter
 
   model: M.User
+
+
+  preConstructorHook: ->
+    window.addjs = new AddJS providers: { ga: { logging: on } }
 
   # load external providers like google analytics, user-voice etc.
   loadExternalProviders: ->
