@@ -51,6 +51,7 @@ schema = new Schema
   userId:           { required: true, type: ObjectId }
   company:          { required: true, type: Mixed    }
   tags:             [{}]
+  owner:            String
   brief:            { required: true, type: String   }
   budget:           { required: true, type: Number   }
   hours:            { required: true, type: String   }
