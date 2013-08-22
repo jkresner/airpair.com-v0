@@ -20,6 +20,7 @@ class exports.OrderRowView extends BB.ModelSaveView
     @
   tmplData: ->
     d = @model.toJSON()
+    if d.payment.error? then d.error = d.payment.error[0]
     _.extend d, {
       isPending:          d.paymentStatus is 'pending'
       isReceived:         d.paymentStatus is 'received'
@@ -39,14 +40,20 @@ class exports.OrderRowView extends BB.ModelSaveView
 class exports.OrdersView extends Backbone.View
   logging: on
   el: '#orders'
-  events: { 'click .select': 'select' }
+  tmpl: require './templates/RowsSummary'
+  events: { 'click .selectOrder': 'select' }
   initialize: (args) ->
     @listenTo @collection, 'reset add remove filter', @render
   render: ->
     $list = @$('tbody').html ''
-    for m in @collection.models
-     $list.append new exports.OrderRowView( model: m ).render().el
-    @$('.count').html @collection.models.length
+    totalRevenue = 0
+    totalProfit = 0
+    orderCount = @collection.models.length
+    for m in @collection.models.reverse()
+      $list.append new exports.OrderRowView( model: m ).render().el
+      totalProfit += m.get 'profit'
+      totalRevenue += m.get 'total'
+    @$('#rowsSummary').html @tmpl {totalProfit,totalRevenue,orderCount}
     @
   select: (e) ->
     e.preventDefault()
