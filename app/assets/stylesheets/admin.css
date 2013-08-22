@@ -27,11 +27,15 @@ nav a.zocial { padding:0; }
 #adminboundpage #requests td { font-size:11px;line-height:15px }
 #adminboundpage #requests img { width:32px;height:32px; }
 
-#adminboundpage #requests .r { width:100px; }
-#adminboundpage #requests .c { width:200px; }
-#adminboundpage #requests .t { width:340px; }
-#adminboundpage #requests .s { width:200px; }
+#adminboundpage #requests .r { width:110px; }
+#adminboundpage #requests .o { width:70px; }
+#adminboundpage #requests .c { width:220px; }
+#adminboundpage #requests .t { width:380px; }
+#adminboundpage #requests .s { width:220px; }
 #adminboundpage #requests .label-tags { font-weight:normal;margin:2px 0; }
+#adminboundpage #requests .label-owner { margin:10px 10px 10px 0;width:20px;text-align:center }
+#adminboundpage #requests .label-jk { background-color:orange; }
+#adminboundpage #requests .label-mi { background-color:purple; }
 
 #adminboundpage #request textarea { width:90%;height:100px;font-size:11px; }
 #adminboundpage #request legend { margin-bottom:2px;line-height:24px;background:black;padding:4px;color:white; }
