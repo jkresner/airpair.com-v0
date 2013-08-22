@@ -20,6 +20,7 @@ class exports.OrderRowView extends BB.ModelSaveView
     @
   tmplData: ->
     d = @model.toJSON()
+    if d.payment.error? then d.error = d.payment.error[0]
     _.extend d, {
       isPending:          d.paymentStatus is 'pending'
       isReceived:         d.paymentStatus is 'received'
@@ -40,7 +41,7 @@ class exports.OrdersView extends Backbone.View
   logging: on
   el: '#orders'
   tmpl: require './templates/RowsSummary'
-  events: { 'click .select': 'select' }
+  events: { 'click .selectOrder': 'select' }
   initialize: (args) ->
     @listenTo @collection, 'reset add remove filter', @render
   render: ->

@@ -1,12 +1,17 @@
 <td class="total">${{ total }}</td>
 <td>
-  <span>{{ createdDate }}</span> <b class="{{ paymentStatus }}">{{ paymentStatus }}</b>
-  {{#if isPending }}
-    <a class="refresh refreshOrder" href="/paypal/success/{{ _id }}" data-id="{{ _id }}" style="color:green" target="_blank">r</a>
-    | <a class="delete deleteOrder" href="#" data-id="{{ _id }}">x</a>
-  {{/if }}
-  {{#if isReceived }}
-    <a class="payOut" href="#">Pay experts</a>
+  <span>{{ createdDate }}</span>
+  {{#if payment.error }}
+    <a href="javascript:alert('{{error.message }}')" style="color:red">ERROR</a>
+  {{else}}
+    <b class="{{ paymentStatus }}">{{ paymentStatus }}</b>
+    {{#if isPending }}
+      <a class="refresh refreshOrder" href="/paypal/success/{{ _id }}" data-id="{{ _id }}" style="color:green" target="_blank">r</a>
+      | <a class="delete deleteOrder" href="#" data-id="{{ _id }}">x</a>
+    {{/if }}
+    {{#if isReceived }}
+      <a class="payOut" href="#">Pay experts</a>
+    {{/if }}
   {{/if }}
   <a href="#" class="selectOrder" data-id="{{ _id }}">{{ _id }}</a>
 </td>
