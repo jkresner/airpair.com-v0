@@ -267,7 +267,7 @@ class exports.RequestView extends BB.ModelSaveView
   async: off
   el: '#request'
   tmpl: require './templates/Request'
-  viewData: ['budget','pricing','status','availability','brief','canceledDetail','incompleteDetail']
+  viewData: ['owner','budget','pricing','status','availability','brief','canceledDetail','incompleteDetail']
   events:
     'click .save': 'save'
     'click .deleteRequest': 'deleteRequest'

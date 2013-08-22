@@ -1,6 +1,6 @@
 <legend>Info</legend>
 
-<div class="control-group">
+<div class="control-group" style="float:left">
   <label class="control-label" for="reqStatus">Status
     <span class="label status"></span>
   </label>
@@ -16,6 +16,19 @@
     </select>
   </div>
 </div>
+
+<div class="control-group" style="float:left;margin:20px 0px 0 20px">
+  <label class="control-label" for="reqOwner">Owner</label>
+  <div class="controls">
+    <select id="reqOwner" name="owner">
+      <option value="">please select ...</option>
+      <option value="jk">jk</option>
+      <option value="mi">mi</option>
+    </select>
+  </div>
+</div>
+
+<div style="clear:both"></div>
 
 <div id="canceled-control-group" class="control-group" style="display:none">
   <label class="control-label" for="reqCanceledDetail">Canceled Reason</label>

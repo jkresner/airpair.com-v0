@@ -1,5 +1,8 @@
 <td><a class="edit" href="#request/{{ _id }}" data-id="{{ _id }}">{{ status }}</a> {{ createdDate }}</td>
 <td>
+  <span class="label label-owner label-{{ owner }}">{{ owner }}</span>
+</td>
+<td>
     {{#if contactPic }}
       <img src="{{ contactPic }}" />
     {{else}}
@@ -19,4 +22,3 @@
   {{/each}}
 </td>
 <td>{{ callCompleteCount }} / {{ callCount }}</td>
-<td>-</td>
