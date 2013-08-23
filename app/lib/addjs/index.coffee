@@ -26,9 +26,9 @@ module.exports = class Addjs
 
   trackEvent: (category, action, label, value, bounce) ->
     for k, p of @providers
-      p.trackEvent(arguments)
+      p.trackEvent.apply(p, arguments)
 
 
   trackSocial: (network, socialAction, opt_target, opt_pagePath) ->
     for k, p of @providers
-      p.trackSocial(arguments)
+      p.trackSocial.apply(p, arguments)

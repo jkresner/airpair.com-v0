@@ -69,7 +69,7 @@ class exports.InfoFormView extends BB.EnhancedFormView
     else
       @save e
   renderSuccess: (model, response, options) =>
-    addjs.trackEvent @e.category, @e.name, @e.uri, @timer.timeSpent()
+    addjs.trackEvent @e.category, @e.name, @elm('fullName').val(), @timer.timeSpent()
     router.navTo 'request'
 
 
@@ -131,7 +131,7 @@ class exports.RequestFormView extends BB.ModelSaveView
     # @$('.calcph').html("$#{base} + <i>$#{add}</i> = $#{base+add}")
     @$(".#{val}").show()
   renderSuccess: (model, response, options) =>
-    addjs.trackEvent @e.category, @e.name, @e.uri, @timer.timeSpent()
+    addjs.trackEvent @e.category, @e.name, @model.contact(0).fullName, @timer.timeSpent()
     router.navTo 'thanks'
   getViewData: ->
     brief: @elm("brief").val()
