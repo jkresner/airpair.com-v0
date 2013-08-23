@@ -184,8 +184,8 @@ nav .facebook {
 .jumbotron img.main { width:350px;margin:50px auto 40px auto;display:block }
 .jumbotron .col { float:left;width:46%;height:240px }
 .jumbotron p.apply {
-  float: left; 
-  margin: 0; 
+  float: left;
+  margin: 0;
   text-align: center;
   color: #0E1419;
   width: 100%;
@@ -412,7 +412,7 @@ a.green { background: #99923F;border: solid 3px #7F761C }
 
 #tech li a {
   text-align: center;
-  color: gray;  
+  color: gray;
 }
 
 #tech li:hover {
@@ -420,6 +420,54 @@ a.green { background: #99923F;border: solid 3px #7F761C }
   z-index: 101;
 }
 
+#cost p {
+  font-size: 17px;
+  margin:0px auto 40px auto;
+  text-align:center;
+}
+
+#cost table {
+  width:900px;
+  margin:auto;
+}
+
+#cost table th {
+  width:140px;
+  padding:20px 10px;
+  background-color:rgba(0, 0, 0, 0.1);
+  text-align:center;
+
+}
+
+#cost table th i {
+  font-weight:normal;
+  font-style:normal;;
+}
+
+#cost table td {
+  color:#A3A3A3;
+  width:140px;
+  padding:40px 10px;
+  background-color:rgba(0, 0, 0, 0.1);
+  text-align:center;
+  font-size:12px;
+}
+
+
+#cost table td div {
+  font-size:14px;
+  color:white;
+  font-weight:bold;
+}
+
+#cost table td em {
+  margin-top:20px;
+  display:block;
+  font-size:12px;
+  color:#d3d3d3;
+  font-weight:normal;
+  font-style:normal;
+}
 
 /************************** End Landing Pages *******************/
 
