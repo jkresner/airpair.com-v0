@@ -1,0 +1,312 @@
+<html lang="en">
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+    <title>Airpair Invoice</title>
+
+<style type="text/css">
+body {
+    background: none repeat scroll 0 0 #FFFFFF;
+    color: #333333;
+    font: 75% Arial,Helvetica,sans-serif;
+    margin: 0 5px;
+    padding: 0;
+}
+
+#page { margin: 0 auto;
+  position: relative;
+  width: 760px;
+}
+
+#content {
+  clear: both;
+  margin-top: 0.5em;
+  overflow: auto;
+  padding: 0 5px;
+}
+
+#main {
+  line-height: 1.5;
+}
+
+div#invoice {
+  border: 1px solid #CCCCCC;
+  overflow: visible;
+}
+
+div#invoiceInfo, div#invoiceItems, div#conPaymentMethod {
+    margin: 20px;
+}
+
+.layout1, .layout2, .layout2a, .layout2b, .layout2c, .layout2d, .layout3 {
+    clear: both;
+    overflow: visible;
+}
+
+div#invoice div.pageCurl {
+    background: url("/images/foldedCorner34.gif") no-repeat scroll right top transparent;
+    float: right;
+    position: relative;
+    right: -21px;
+    top: -21px;
+}
+
+div#invoice div.layout2 div.col {
+    width: 50%;
+}
+div#invoiceHeader div.layout2 div.col {
+    margin-bottom: 10px;
+}
+#page .layout2 div.col {
+    width: 369px;
+}
+#content div.col {
+    float: left;
+}
+
+div#invoice div.layout2 div.col {
+    width: 50%;
+}
+div#invoiceHeader div.layout2 div.col {
+    margin-bottom: 10px;
+}
+#page .layout2 div.col {
+    width: 369px;
+}
+#content div.col.last {
+    float: right;
+    margin-right: 0;
+}
+#content div.col {
+    float: left;
+}
+
+div#invoice div.pageCurl h3 {
+    color: #CCCCCC;
+    float: right;
+    font-size: 1.8em;
+    padding: 1em 2em 0 0;
+    text-transform: uppercase;
+}
+
+div#invoice table {
+    margin: 0;
+    width: 100%;
+}
+table.basic {
+  -moz-border-bottom-colors: none;
+  -moz-border-left-colors: none;
+  -moz-border-right-colors: none;
+  -moz-border-top-colors: none;
+  border-collapse: separate;
+  border-color: #EEEEEE #EEEEEE -moz-use-text-color;
+  border-image: none;
+  border-spacing: 0;
+  border-style: solid solid none;
+  border-width: 1px 1px medium;
+}
+
+div#invoice table#invoiceSummary th.date {
+    width: 60px;
+}
+div#invoice table#invoiceSummary th {
+    font-weight: bold;
+}
+table.basic th {
+    background-color: #E8F1FA;
+    border-bottom: 1px solid #FFFFFF;
+    border-right: 1px solid #FFFFFF;
+    font-size: 12px;
+    padding: 6px 8px;
+    text-align: left;
+    vertical-align: bottom;
+}
+
+table.header-y tr:first-child td {
+    border-top: medium none;
+}
+table.basic td {
+    border-bottom: 1px solid #EEEEEE;
+    padding: 8px 10px 8px 8px;
+}
+table td {
+    background-color: #FFFFFF;
+    font-weight: normal;
+    line-height: 1.2em;
+    padding: 0.2em 0.4em;
+    text-align: left;
+    vertical-align: top;
+}
+
+div#invoice div#totalTerms {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    border-color: -moz-use-text-color #EEEEEE #EEEEEE;
+    border-image: none;
+    border-right: 1px solid #EEEEEE;
+    border-style: none solid solid;
+    border-width: medium 1px 1px;
+    padding-top: 30px;
+    width: auto;
+}
+
+div#invoice div#totalTerms .body {
+    border-top: 1px solid #EEEEEE;
+    width: 100%;
+}
+
+div#invoice table#invoiceTotals {
+    border-left: 1px solid #EEEEEE;
+    float: right;
+    margin-top: 1px;
+    width: 49%;
+}
+
+      #invDetails {margin:1em 0;}
+      #invDetails .review table {margin: .5em 0;}
+      #invDetails .review table th {font-weight:bold; color: #333;}
+      #invDetails .review table td, .review table th {background-color: transparent;}
+      #invNum #invDate {padding-left: 20px;}
+      #note {width: 320px;}
+      form#formAddPayment.error .error span.help {padding: 0.1em 0 0.1em 20px;}
+      .lightbox .loading {text-align:center;background:url(/en_US/i/icon/icon_animated_prog_42wx42h.gif) center no-repeat;}
+      #calPanel_payDate {z-index:19;}
+      #disclaimer {font-style:italic; color:#757575;}
+      .statusBox{margin:20px 0 20px 0;}
+      span.buttonAsLink input {overflow:auto;}
+      #headline{overflow:hidden;}
+      .cont{vertical-align:bottom !important;}
+      .buttons {position:relative;}
+      .footerbranding {position:absolute; top:1px; right:0; color:#757575; font-style:italic;}
+      .footerbranding img {margin-left:4px; vertical-align:middle;}
+      .paybtn_logos {height:30px; margin:20px 0; position:relative;}
+      .paybtn_logos .button, .paybtn_logos #xptCardIcons {float:left;}
+      .paybtn_logos .ppmn {position:absolute; top:-18px; right:0;}
+      .rtl .paybtn_logos .button, .rtl .paybtn_logos #xptCardIcons {float:right;}
+      .rtl .paybtn_logos .ppmn, .rtl .footerbranding {left:0; right:auto;}
+      .invSecurebox {float:right;margin-bottom:1.1em;}
+      .rtl .invSecurebox {float:left;}
+      .rtl div#invoice div.pageCurl {background-image: none;float: left;}
+  </style>
+  <style type="text/css">
+    form#rosetta {display:none;}
+    table th { padding-top: 8px; }
+  </style>
+</head>
+<body>
+
+
+
+<div id="page" class="">
+  <div id="content">
+    <div id="headline"><h2>Invoice details</h2></div>
+
+    <div id="main">
+
+      <div id="invoice" class="layout1">
+
+        <div id="invoiceInfo">
+          <div id="invoiceHeader">
+            <div class="layout2">
+              <div class="col first">
+                <img border="0" alt="Airpair logo" src="/images/logos/ap200x75.png">
+              </div>
+              <div class="col last">
+                <div class="pageCurl">
+                  <h3>Invoice</h3>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="layout2">
+            <div class="col first"><h3>airpair, inc.</h3>
+              <div>
+                <div>Jonathon&nbsp;Kresner</div>
+                <div>1396 Pacifc Ave<br>San Francisco,&nbsp;CA&nbsp;94109<br>United   States<br></div>
+              </div>
+              <div class="busInfoSpacing">
+                <div>Phone: 646-420-3522</div>
+                <div>jk@airpair.com</div>
+              </div>
+            </div>
+            <div class="col last">
+              <table summary="Invoice details" id="invoiceDetails" class="basic header-y">
+                <tbody>
+                  <tr>
+                    <th>Invoice number</th>
+                    <td>0103&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <th>Invoice date</th>
+                    <td>8/23/2013&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <th>Due date</th>
+                    <td>-</td>
+                  </tr>
+                </tbody>
+              </table>
+
+            </div>
+          </div>
+          <div class="layout2">
+            <div class="col first billShip"><h3>Bill To</h3><div> <b>Rob Daniels</b> <br>r.daniels@gmail.com</div>
+          </div>
+          <div class="col last billShip"></div>
+        </div>
+        <div class="clear">&nbsp;</div>
+      </div>
+      <div id="invoiceItems" class="layout1">
+        <table summary="Invoice summary" id="invoiceSummary" class="basic">
+          <thead>
+            <tr>
+              <th class="date">Date</th>
+              <th>Description</th>
+              <th class="quantity textright">Quantity</th>
+              <th nowrap="" class="unitCost textright">Unit price</th>
+              <th class="amount textright">Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>8/22/2013&nbsp;</td>
+              <td>Pedro Nascimento (private session)&nbsp;</td>
+              <td class="textright">8.25</td>
+              <td nowrap="" class="textright invamtformat">$110.00</td>
+              <td nowrap="" class="textright invamtformat"><span>$907.50</span></td>
+            </tr>
+          </tbody>
+        </table>
+        <div id="totalTerms">
+          <div class="body">
+            <table summary="Invoice totals" id="invoiceTotals">
+              <tbody>
+                <tr><th class="subtotal">Subtotal</th>
+                  <td class="subtotal invamtformat">$907.50</td>
+                </tr>
+                <tr>
+                  <th>Discount</th>
+                  <td class="invamtformat">$-183.75</td>
+                </tr>
+                <tr>
+                  <th class="invoiceTotal">Total</th>
+                  <td class="invoiceTotal invamtformat">$723.75&nbsp;USD</td>
+                </tr>
+              </tbody>
+            </table>
+            <div id="invoiceTerms"></div>
+            <div class="clear">&nbsp;</div>
+          </div>
+        </div>
+      </div>
+      </div>
+
+      <div class="layout1"></div>
+
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
