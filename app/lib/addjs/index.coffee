@@ -1,6 +1,6 @@
 Events = require './events'
 AddjsGoogleAnalytics = require './googleanalytics'
-# AddjsMixPanel = require './addjs/mixpanel'
+AddjsMixPanel = require './mixpanel'
 # AddjsOptimizely = require './addjs/optimizely'
 
 module.exports = class Addjs
@@ -17,8 +17,8 @@ module.exports = class Addjs
     if config.providers.ga
       @providers.ga = new AddjsGoogleAnalytics config.providers.ga
 
-    # if config.providers.mixpanel
-    #   providers.mp = new AddjsMixPanel config.providers.mixpanel
+    if config.providers.mp
+      @providers.mp = new AddjsMixPanel config.providers.mp
 
     # if config.providers.optimizely
     #   providers.op = new AddjsOptimizely config.providers.optimizely
@@ -32,3 +32,8 @@ module.exports = class Addjs
   trackSocial: (network, socialAction, opt_target, opt_pagePath) ->
     for k, p of @providers
       p.trackSocial.apply(p, arguments)
+
+
+  trackPageView: (url, data) ->
+    for k, p of @providers
+      p.trackPageView.apply(p, arguments)

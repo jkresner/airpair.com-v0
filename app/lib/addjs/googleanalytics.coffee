@@ -23,3 +23,10 @@ module.exports = class AddjsGoogleAnalytics
 
     if ga?
       ga 'send', 'social', network, socialAction, opt_target, opt_pagePath
+
+
+  trackPageView: (url, data) ->
+    console.log 'Addjs.GA.trackPageView', url, data
+    if ga?
+      ga 'send', 'pageview', url
+
