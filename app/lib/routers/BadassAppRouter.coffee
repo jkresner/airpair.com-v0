@@ -34,7 +34,7 @@ module.exports = class BadassAppRouter extends Backbone.Router
 
     @defaultFragment = @getDefaultFragment()
 
-    $log 'preConstructorHook', @preConstructorHook
+    # $log 'preConstructorHook', @preConstructorHook
     if @preConstructorHook? then @preConstructorHook()
 
     app = @appConstructor pageData, callback
