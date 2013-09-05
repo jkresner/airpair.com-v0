@@ -1,8 +1,6 @@
 # See docs at http://brunch.readthedocs.org/en/latest/config.html.
 
 exports.config =
-
-
   # do not watch (build) test directory
   paths:
     watched: ['app','vendor']

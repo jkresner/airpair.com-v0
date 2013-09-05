@@ -2,13 +2,14 @@ DomainService   = require './_svc'
 Roles           = require './../identity/roles'
 RatesSvc        = require './rates'
 SettingsSvc     = require './settings'
+mailman = require '../mail/mailman'
 
 module.exports = class RequestsService extends DomainService
 
   model: require './../models/request'
   rates: new RatesSvc()
   settingsSvc: new SettingsSvc()
-
+  mailman: mailman
   publicView: (request) ->
     _.pick request, ['_id','tags','company','brief','availability']
 
@@ -31,8 +32,9 @@ module.exports = class RequestsService extends DomainService
     request.userId = usr._id
     request.events = [@newEvent(usr, "created")]
     request.status = 'received'
-    new @model( request ).save (e, r) ->
+    new @model(request).save (e, r) =>
       if e then $log 'e', e
+      @notifyAdmins(r)
       callback r
 
   getByIdSmart: (id, usr, callback) =>
@@ -107,3 +109,11 @@ module.exports = class RequestsService extends DomainService
       type: 'paypal', info: { email: expertReview.payPalEmail }
     data.events.push @newEvent(usr, "expert reviewed", ups)
     @update request._id, data, callback
+
+  notifyAdmins: (model) ->
+    @mailman.sendEmailToAdmins({
+      templateName: "admNewRequest"
+      subject: "New airpair request: #{model.company.contacts[0].fullName} #{model.budget}$"
+      request: model
+      callback: ->
+    })
