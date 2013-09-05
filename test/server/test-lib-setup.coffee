@@ -9,7 +9,8 @@ chai.use require 'sinon-chai'
 
 connect = (done) ->
   return done() if mongoose.connections[0]._listening
-  mongoose.connect 'localhost/airpair_test', done
+  mongoose.connect 'localhost/airpair_test'
+  done()
 
 destroy = (done) ->
   return done() if suiteCtx?  # set in /test/server/all.coffee

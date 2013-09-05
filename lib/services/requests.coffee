@@ -9,7 +9,7 @@ module.exports = class RequestsService extends DomainService
   model: require './../models/request'
   rates: new RatesSvc()
   settingsSvc: new SettingsSvc()
-
+  mailman: mailman
   publicView: (request) ->
     _.pick request, ['_id','tags','company','brief','availability']
 
@@ -111,10 +111,9 @@ module.exports = class RequestsService extends DomainService
     @update request._id, data, callback
 
   notifyAdmins: (model) ->
-    mailman.sendEmailToAdmins({
+    @mailman.sendEmailToAdmins({
       templateName: "admNewRequest"
-      subject: "New airpair request: #{@hours} hours, #{@budget}$"
+      subject: "New airpair request: #{model.company.contacts[0].fullName} #{model.budget}$"
       request: model
       callback: ->
     })
-

@@ -15,9 +15,10 @@ emailDefaults =
 
 
 send = (to, data, callback) ->
-  data.ToAddresses = [to]
+  if not to.length then to = [to]
+  data.ToAddresses = to
   data = _.defaults(data, emailDefaults)
-  ses.SendEmail data, callback
+  if cfg.env.mode is 'test' then callback() else ses.SendEmail data, callback
 
 
 module.exports = { send }

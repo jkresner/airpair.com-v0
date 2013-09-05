@@ -3,15 +3,16 @@
 
 require('./../../../lib/api/requests')(app)
 
+# Creates a request and let's you run a test on it
 createReq = (reqData, callback) ->
-  newReq = und.clone reqData
+  newReq = _.clone reqData
   delete newReq._id
   http(app).post("/api/requests")
     .send(newReq)
     .expect(200)
     .end (e, r) =>
       if e? then $log 'error', e
-      newReq = und.clone r.body
+      newReq = _.clone r.body
       callback newReq
 
 
