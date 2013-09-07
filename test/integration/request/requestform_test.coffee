@@ -8,7 +8,7 @@ describe 'Request:Views RequestFormView =>', ->
   afterEach -> hlpr.cleanTearDown @
   beforeEach ->
     hlpr.cleanSetup @, data.fixtures.request
-    @defaultData = brief: 'test brief', availability: "I am available", budget: 30, pricing: 'private', hours: '1', contacts: [ { fullName: "test" } ]
+    @defaultData = brief: 'test brief', availability: "I am available", budget: 30, pricing: 'private', hours: '1', company: { contacts: [ { fullName: "test" } ] }
     @request = new M.Request()
     @tags = new C.Tags( data.tags )
     @stubs.companyFetch = sinon.stub M.Company::, 'fetch', -> @set data.companys[0]
