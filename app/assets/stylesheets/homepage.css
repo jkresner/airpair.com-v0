@@ -176,7 +176,7 @@ nav .facebook {
 }
 
 .last-outer-container {
-  padding-bottom: 300px;
+  padding-bottom: 180px;
 }
 
 .inner-container {
@@ -392,6 +392,22 @@ a.green { background: #99923F;border: solid 3px #7F761C }
 #how p { margin-top:20px; }
 
 .pw-widget { float:right; }
+
+.avatar {
+  box-shadow: 0px 0px 3px 0px #a3a3a3;
+  border: 1px solid #c9c9c9;
+  background-color: #fff;
+  /*padding: 3px;*/
+  height: 139px;
+  width: 139px;
+  border-radius: 150px;
+}
+
+#why .why-brief {
+  text-align: center;
+  width: 282px;
+}
+
 
 /************************** Landing Pages *******************/
 
