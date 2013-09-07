@@ -12,7 +12,8 @@ module.exports = class Addjs
 
   constructor: (config) ->
 
-    console.log 'Addjs.constructor', config, @providers
+    if @logging is on
+      console.log 'Addjs.constructor', config, @providers
 
     if config.providers.ga
       @providers.ga = new AddjsGoogleAnalytics config.providers.ga
