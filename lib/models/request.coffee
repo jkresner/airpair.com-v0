@@ -1,5 +1,6 @@
 mongoose = require 'mongoose'
 Schema = mongoose.Schema
+
 {ObjectId, Mixed} = Schema.Types
 
 """
@@ -48,10 +49,11 @@ Call = new Schema
   devEndorsed:      String
 
 
-schema = new Schema
+RequestSchema = new Schema
   userId:           { required: true, type: ObjectId }
   company:          { required: true, type: Mixed    }
   tags:             [{}]
+  owner:            String
   brief:            { required: true, type: String   }
   budget:           { required: true, type: Number   }
   hours:            { required: true, type: String   }
@@ -65,5 +67,4 @@ schema = new Schema
   suggested:        [Suggestion]
   calls:            [Call]
 
-
-module.exports = mongoose.model 'Request', schema
+module.exports = mongoose.model 'Request', RequestSchema

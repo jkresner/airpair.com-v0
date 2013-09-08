@@ -3,6 +3,7 @@ express       = require 'express'
 passport      = require 'passport'
 passportMock  = require './test-passport'
 
+global.cfg = require('./../../config-test').config
 
 app = express()
 

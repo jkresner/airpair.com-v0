@@ -161,7 +161,7 @@ nav .facebook {
 }
 
 .tagline {
-  width: 700px;
+  width: 800px;
   margin: 0 auto auto auto;
   padding-bottom: 90px;
   line-height: 36px;
@@ -176,7 +176,7 @@ nav .facebook {
 }
 
 .last-outer-container {
-  padding-bottom: 300px;
+  padding-bottom: 180px;
 }
 
 .inner-container {
@@ -365,7 +365,7 @@ a.green { background: #99923F;border: solid 3px #7F761C }
 .step {margin-bottom: 50px;}
 #how .step { width:280px;float:left;margin-right:50px }
 .last {margin-right: 0 !important;}
-#how p { 
+#how p {
   font-size: 17px;
   text-align: center;
   margin-bottom: 22px;
@@ -379,14 +379,35 @@ a.green { background: #99923F;border: solid 3px #7F761C }
 
 .step h2 {
   text-align: center;
-  margin-bottom: 0;
+  margin-bottom: 10px;
+  background-color:#CC523E;
+  width:40px;
+  margin:auto;
+  border-radius:20px
 }
 
 #how h3 { font-weight:bold; }
-#how i { color:gray;font-style:normal;font-weight:normal; }
 #how h3 em { color:#7F761C;font-style:normal; }
+#how i { color:gray;font-style:normal;font-weight:normal; }
+#how p { margin-top:20px; }
 
 .pw-widget { float:right; }
+
+.avatar {
+  box-shadow: 0px 0px 3px 0px #a3a3a3;
+  border: 1px solid #c9c9c9;
+  background-color: #fff;
+  /*padding: 3px;*/
+  height: 139px;
+  width: 139px;
+  border-radius: 150px;
+}
+
+#why .why-brief {
+  text-align: center;
+  width: 282px;
+}
+
 
 /************************** Landing Pages *******************/
 

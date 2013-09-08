@@ -57,3 +57,7 @@ module.exports = (app) ->
 
   app.get '/problem-solving/:id', track('problemSolving'), tagData,
     viewOrFile('problemSolving')
+
+  app.get '/so-confirmation', track('so-confirmation'), (req, r) ->
+    file r, 'landing/stackOverflowConfirmation'
+

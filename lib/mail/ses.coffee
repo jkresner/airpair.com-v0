@@ -1,9 +1,8 @@
-Ses    = require('awssum-amazon-ses').Ses
+Ses = require('awssum-amazon-ses').Ses
 
 ses = new Ses
     accessKeyId     : process.env.AP_SES_ACCESS_KEY
     secretAccessKey : process.env.AP_SES_SECRET_KEY
-
 
 emailDefaults =
   #CcAddresses: []
@@ -16,9 +15,10 @@ emailDefaults =
 
 
 send = (to, data, callback) ->
-  data = und.defaults(data, emailDefaults)
-  data.ToAddresses = [to]
-  ses.SendEmail data, callback
+  if not to.length then to = [to]
+  data.ToAddresses = to
+  data = _.defaults(data, emailDefaults)
+  if cfg.env.mode is 'test' then callback() else ses.SendEmail data, callback
 
 
 module.exports = { send }

@@ -51,7 +51,7 @@ class exports.OrderRowView extends BB.ModelSaveView
     payOut: true
 
 class exports.OrdersView extends Backbone.View
-  logging: on
+  # logging: on
   el: '#orders'
   tmpl: require './templates/RowsSummary'
   events: { 'click .selectOrder': 'select' }
@@ -61,10 +61,15 @@ class exports.OrdersView extends Backbone.View
     $list = @$('tbody').html ''
     totalRevenue = 0
     totalProfit = 0
+<<<<<<< HEAD
     hourCount = 0
     orderCount = @collection.filteredModels.length
     expertIds = []
     for m in @collection.filteredModels #.reverse()
+=======
+    orderCount = @collection.models.length
+    for m in @collection.models
+>>>>>>> master
       $list.append new exports.OrderRowView( model: m ).render().el
       totalProfit += m.get 'profit'
       totalRevenue += m.get 'total'
@@ -86,7 +91,7 @@ class exports.OrdersView extends Backbone.View
 
 
 class exports.OrderFormView extends BB.ModelSaveView
-  logging: on
+  # logging: on
   el: '#orderForm'
   initialize: (args) ->
   render: ->

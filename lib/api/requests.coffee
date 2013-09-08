@@ -59,7 +59,7 @@ class RequestApi extends CRUDApi
       if !(Roles.isAdmin(usr, r) || Roles.isRequestOwner(usr, r))
         return res.send 403
 
-      data = und.clone req.body
+      data = _.clone req.body
       delete data._id # so mongo doesn't complain
 
       if data.status is "canceled" && !data.canceledDetail
@@ -87,8 +87,8 @@ class RequestApi extends CRUDApi
 
       if r.suggested?
         for s in r.suggested
-          match = und.find req.body.suggested, (sug) ->
-            und.objectIdsEqual sug._id, s._id
+          match = _.find req.body.suggested, (sug) ->
+            _.objectIdsEqual sug._id, s._id
           if !match?
             evts.push @newEvent(req, "removed suggested #{s.expert.username}")
 

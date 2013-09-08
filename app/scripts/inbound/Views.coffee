@@ -75,7 +75,7 @@ class exports.RequestFarmView extends BB.ModelSaveView
       hrRate: @rate
       bitly: 'https://bitly.com/shorten/?url='
     @$el.html @tmpl @model.extendJSON tmplData
-    @shorten target: @$('#linkedInShorten')
+    # @shorten target: @$('#linkedInShorten')
     @
   shorten: (e) ->
     $input = $(e.target).next()
@@ -136,7 +136,7 @@ class exports.RequestInfoView extends BB.ModelSaveView
     @tagsInput = new SV.TagsInputView model: @model, collection: @tags
     @listenTo @model, 'change', @render
   render: ->
-    @setValsFromModel ['brief','availability','status','canceledReason','incompleteDetail','budget','pricing']
+    @setValsFromModel ['brief','availability','status','owner','canceledReason','incompleteDetail','budget','pricing']
     mailTemplates = new CustomerMailTemplates @model
     tmplCompanyData = _.extend { mailTemplates: mailTemplates, tagsString: @model.tagsString() }, @mget('company')
     @$('#company-controls').html @tmplCompany(tmplCompanyData)
@@ -268,7 +268,7 @@ class exports.RequestView extends BB.ModelSaveView
   async: off
   el: '#request'
   tmpl: require './templates/Request'
-  viewData: ['budget','pricing','status','availability','brief','canceledDetail','incompleteDetail']
+  viewData: ['owner','budget','pricing','status','availability','brief','canceledDetail','incompleteDetail']
   events:
     'click .save': 'save'
     'click .deleteRequest': 'deleteRequest'
