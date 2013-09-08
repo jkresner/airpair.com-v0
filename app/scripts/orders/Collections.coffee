@@ -5,7 +5,6 @@ Models = require './Models'
 class exports.Orders extends BB.FilteringCollection
   model: Models.Order
   url: '/api/admin/orders'
-<<<<<<< HEAD
   comparator: (m) ->
     -1 * new moment(m.get('utc')).unix()
   _filter: (f) ->
@@ -28,8 +27,5 @@ class exports.Orders extends BB.FilteringCollection
         mom.year() == n.yr && mom.month() == n.mth
 
     return r
-=======
-  comparator: (m) -> -1 * new Date(m.get('utc')).getTime()
->>>>>>> master
 
 module.exports = exports

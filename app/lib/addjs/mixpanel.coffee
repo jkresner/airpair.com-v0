@@ -11,7 +11,8 @@ module.exports = class AddjsMixPanel
 
 
   trackSession: ->
-    console.log 'Addjs.MP.trackSession', @superProps
+    if @logging is on
+      console.log 'Addjs.MP.trackSession', @superProps
     if mixpanel?
       if @superProps? && @superProps.email?
         mixpanel.alias @superProps.email
