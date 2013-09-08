@@ -116,7 +116,8 @@ class ExpertMailTemplates
   constructor: (request, expertId) ->
     suggestion = request.suggestion expertId
     contact = request.contact 0
-    suggestedExpertRate = suggestion.suggestedRate[request.get('pricing')].expert
+    try
+      suggestedExpertRate = suggestion.suggestedRate[request.get('pricing')].expert
     # $log 'suggestion', suggestion, contact, request
     r = request.extendJSON { tagsString: request.tagsString(), suggestion: suggestion, contact: contact, suggestedExpertRate: suggestedExpertRate }
     @another = encodeURIComponent(@tmplAnother r)
@@ -234,8 +235,8 @@ class exports.RequestSuggestedView extends BB.BadassView
         s.expert.hasLinks = new M.Expert(s.expert).hasLinks()
 
         mailTemplates = new ExpertMailTemplates @model, s.expert._id
-
-        rates = s.suggestedRate[@model.get('pricing')]
+        try
+          rates = s.suggestedRate[@model.get('pricing')]
         tmplData = _.extend { requestId: @model.id, mailTemplates: mailTemplates, tagsString: @model.tagsString(), rates: rates }, s
         @$el.append @tmpl tmplData
     @

@@ -12,8 +12,9 @@ module.exports = class Router extends S.AirpairSessionRouter
 
   routes:
     'list'         : 'list'
+    'inactive'     : 'inactive'
     'request/:id'  : 'request'
-    'farm/:id'  : 'farm'
+    'farm/:id'     : 'farm'
     'closed'       : 'closed'
     'canceled'     : 'canceled'
     ':id'          : 'request'
@@ -37,6 +38,11 @@ module.exports = class Router extends S.AirpairSessionRouter
 
   initialize: (args) ->
     @navTo 'list'
+
+  inactive: ->
+    $('#list').show()
+    @app.requests.url = '/api/admin/requests/inactive'
+    @app.requests.fetch()
 
   request: (id) ->
     if @app.requests.length == 0 then return
