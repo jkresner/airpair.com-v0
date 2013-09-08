@@ -67,7 +67,7 @@ module.exports = class RequestsService extends DomainService
   # Used for dashboard
   getActive: (callback) ->
     @model.find({})
-      .where('status').in(['received', 'incomplete', 'review', 'scheduled'])
+      .where('status').in(['received','incomplete','review','scheduled','holding'])
       .lean()
       .exec (e, rs) =>
         rs = {} if rs is null
