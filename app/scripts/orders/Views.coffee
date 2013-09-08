@@ -7,6 +7,19 @@ Shared = require './../shared/Views'
 ##  To render all experts for admin
 #############################################################################
 
+class exports.FiltersView extends BB.BadassView
+  el: '#filters'
+  events:
+    'click .btn': 'filterOrders'
+  initialize: ->
+  filterOrders: (e) ->
+    $btn = $(e.currentTarget)
+    @$('button').removeClass('btn-warning')
+    $btn.addClass('btn-warning')
+    @collection.filterFilteredModels
+      filter: $btn.text().toLowerCase()
+      mth: $btn.data('mth')
+
 class exports.OrderRowView extends BB.ModelSaveView
   tagName: 'tr'
   className: 'order'
@@ -48,12 +61,21 @@ class exports.OrdersView extends Backbone.View
     $list = @$('tbody').html ''
     totalRevenue = 0
     totalProfit = 0
-    orderCount = @collection.models.length
-    for m in @collection.models.reverse()
+    hourCount = 0
+    orderCount = @collection.filteredModels.length
+    expertIds = []
+    for m in @collection.filteredModels #.reverse()
       $list.append new exports.OrderRowView( model: m ).render().el
       totalProfit += m.get 'profit'
       totalRevenue += m.get 'total'
-    @$('#rowsSummary').html @tmpl {totalProfit,totalRevenue,orderCount}
+      for li in m.get 'lineItems'
+        hourCount += li.qty
+        expertIds.push li.suggestion.expert._id
+    filteredModelsJson = _.pluck @collection.filteredModels, 'attributes'
+    requestCount = _.uniq(_.pluck filteredModelsJson, 'requestId').length
+    customerCount = _.uniq(_.pluck filteredModelsJson, 'userId').length
+    expertCount = _.uniq(expertIds).length
+    @$('#rowsSummary').html @tmpl {totalProfit,totalRevenue,customerCount,requestCount,hourCount,orderCount,expertCount}
     @
   select: (e) ->
     e.preventDefault()
