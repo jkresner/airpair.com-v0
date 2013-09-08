@@ -21,6 +21,7 @@ module.exports = class Router extends S.AirpairSessionRouter
     v =
       ordersView: new V.OrdersView collection: d.orders, model: d.selected
       orderView: new V.OrderFormView model: d.selected
+      filtersView: new V.FiltersView collection: d.orders
 
     @resetOrFetch d.orders, pageData.experts
     _.extend d, v

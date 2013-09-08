@@ -14,6 +14,7 @@ class RequestApi extends CRUDApi
 
   constructor: (app, route) ->
     app.get  "/api/admin/#{route}", admin, @admin
+    app.get  "/api/admin/#{route}/inactive", admin, @inactive
     app.put  "/api/#{route}/:id/suggestion", loggedIn, @updateSuggestion
     app.get  "/api/#{route}/:id", @detail
     super app, route
@@ -30,6 +31,11 @@ class RequestApi extends CRUDApi
 
   admin: (req, res, next) =>
     @svc.getAll (r) -> res.send r
+
+
+  inactive: (req, res, next) =>
+    @svc.getInactive (r) -> res.send r
+
 
   list: (req, res) =>
     @svc.getByUserId req.user._id, (r) -> res.send r
