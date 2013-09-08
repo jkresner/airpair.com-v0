@@ -18,7 +18,7 @@ class exports.Company extends BB.BadassModel
     contacts:       []
   validation:
     name:           { required: true }
-    about:          { rangeLength: [140, 5000], msg: 'Provide reasonable detail (min 140 chars) about your company so experts can asses if they are a good match. Sometimes we find you experts that have both technical & relevant industry experience.' }
+    about:          { rangeLength: [100, 5000], msg: 'Provide reasonable detail (min 100 chars) about your company so experts can asses if they are a good match. Sometimes we find you experts that have both technical & relevant industry experience.' }
 
 
 class exports.CompanyContact extends BB.BadassModel
@@ -33,7 +33,7 @@ class exports.Request extends BB.SublistModel
   validation:
     userId:         { required: true }
     company:        { required: true }
-    brief:          { rangeLength: [200, 5000], msg: 'Provide as much detail as possible (min 200 chars) on what you want to work on. Experts ignore requests when they cant tell if they can help.'}
+    brief:          { required: true, msg: 'Provide as much detail as possible (min one sentence / 80 chars) on what you want to work on.'}
     budget:         { required: true }
     availability:   { required: true, msg: 'Please detail your timezone, urgency & availability' }
     tags:           { fn: 'validateNonEmptyArray', msg: 'At least one technology tag required' }

@@ -8,7 +8,7 @@ describe 'Request:Views RequestFormView =>', ->
   afterEach -> hlpr.cleanTearDown @
   beforeEach ->
     hlpr.cleanSetup @, data.fixtures.request
-    @defaultData = brief: 'test brief', availability: "I am available", budget: 30, pricing: 'private', hours: '1'
+    @defaultData = brief: 'test brief', availability: "I am available", budget: 30, pricing: 'private', hours: '1', company: { contacts: [ { fullName: "test" } ] }
     @request = new M.Request()
     @tags = new C.Tags( data.tags )
     @stubs.companyFetch = sinon.stub M.Company::, 'fetch', -> @set data.companys[0]
@@ -121,16 +121,17 @@ describe 'Request:Views RequestFormView =>', ->
 
     v.tagsInput.newForm.model.once 'error', tagSavedFailed, @
 
-  it 'filling in all details with less than 250 char brief does not wipe brief', ->
-    v = router.app.requestFormView
-    v.$('.autocomplete').val('c').trigger('input')
-    $(v.$('.tt-suggestion')[0]).click()
-    v.elm('brief').val 'baaaaah'
-    v.elm('availability').val 'now biatch!'
-    v.$('.save').click()
+  # *** Now only checks for required
+  # it 'filling in all details with less than 250 char brief does not wipe brief', ->
+  #   v = router.app.requestFormView
+  #   v.$('.autocomplete').val('c').trigger('input')
+  #   $(v.$('.tt-suggestion')[0]).click()
+  #   v.elm('brief').val 'baaaaah'
+  #   v.elm('availability').val 'now biatch!'
+  #   v.$('.save').click()
 
-    expect( hlpr.showsError(v.elm("brief")) ).to.be.true
-    expect( v.elm("brief").val() ).to.equal 'baaaaah'
+  #   expect( hlpr.showsError(v.elm("brief")) ).to.be.true
+  #   expect( v.elm("brief").val() ).to.equal 'baaaaah'
 
 
   it 'choosing a tag doesnt effect other field', ->

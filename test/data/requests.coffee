@@ -19,7 +19,11 @@ module.exports = [
     brief: 'At various times I need help with Objective-C for iOS.',
     canceledReason: '',
     company:
-      contacts: [ {} ]
+      contacts: [
+        {
+          "fullName": "Jonathon Kresner", "email": "jk@airpair.com", "gmail": "jk@airpair.com",
+          "userId": "5175efbfa3802cc4d5a5e6ed", "_id": "51b259ac22ddda020000000b"
+        }]
       about: 'We like to test airpair.com in a way that makes our systems safe, secure, fast and beautiful.\n\nWe approach testing as a trade off more than pure TDD. JavaScript is an amazing language, but is kind of dangerous so test coverage is important, but not at the expense of speed to market.\n\nSinon is a great framework and brunch comes with mocha-phantom support.'
       url: 'testing.airpair.com'
       name: 'Test Co.'

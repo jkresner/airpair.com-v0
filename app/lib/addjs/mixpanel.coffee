@@ -11,7 +11,8 @@ module.exports = class AddjsMixPanel
 
 
   trackSession: ->
-    console.log 'Addjs.MP.trackSession', @superProps
+    if @logging is on
+      console.log 'Addjs.MP.trackSession', @superProps
     if mixpanel?
       if @superProps? && @superProps.email?
         mixpanel.alias @superProps.email
@@ -32,13 +33,16 @@ module.exports = class AddjsMixPanel
 
 
   trackLink: (selector, category, action, label)->
-    console.log 'Addjs.MP.trackLink', action, { category, label }
+    if @logging is on
+      console.log 'Addjs.MP.trackLink', action, { category, label }
+
     if mixpanel?
       mixpanel.track_links( action, { category, label } )
 
 
   trackPageView: (url, data) ->
-    console.log 'Addjs.MP.trackPageView', url, data
+    if @logging is on
+      console.log 'Addjs.MP.trackPageView', url, data
     if mixpanel?
       mixpanel.track_pageview url, data
 
