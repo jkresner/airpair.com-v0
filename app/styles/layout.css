@@ -12,6 +12,17 @@ nav a.logo {
   background: url('/images/logos/header_old.png') no-repeat;
 }
 
+nav .contactus {
+  font-family: Open Sans, helvetica, sans-serif;
+  color: #888888;
+  margin-top: 14px;
+  padding-left: 11px;
+  font-size: 15px;
+  border: none;
+  width: 200px;
+  float: left;
+}
+
 nav img { display:inline-block;width:180px;padding:3px 12px; }
 nav .navbar-inner { float:right;margin-top:5px;padding:0px 5px; }
 nav .divider-vertical { margin:0!important; }
