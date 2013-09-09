@@ -5,14 +5,14 @@ module.exports = class AddjsMixPanel
     if args && args.logging then @logging = on
 
     if @logging is on
-      console.log 'Addjs.MP.constructor', @, args
+      console.log 'Addjs.MP.constructor', @debug(), args
 
     if args.superProps then @superProps = args.superProps
 
 
   trackSession: ->
     if @logging is on
-      console.log 'Addjs.MP.trackSession', @superProps
+      console.log 'Addjs.MP.trackSession', @debug(), @superProps, mixpanel
     if mixpanel?
       if @superProps? && @superProps.email?
         mixpanel.alias @superProps.email
@@ -20,13 +20,11 @@ module.exports = class AddjsMixPanel
           $email: @superProps.email
           $gravatar: @superProps.picture
 
-      # mixpanel.register @superProps
-
 
 
   trackEvent: (category, action, label, value) ->
     if @logging is on
-      console.log 'Addjs.MP.Event', action, { category, label, value }
+      console.log 'Addjs.MP.Event', @debug(), action, { category, label, value }
 
     if mixpanel?
       mixpanel.track( action, { category, label, value } )
@@ -34,7 +32,7 @@ module.exports = class AddjsMixPanel
 
   trackLink: (selector, category, action, label)->
     if @logging is on
-      console.log 'Addjs.MP.trackLink', action, { category, label }
+      console.log 'Addjs.MP.trackLink', @debug(), action, { category, label }
 
     if mixpanel?
       mixpanel.track_links( action, { category, label } )
@@ -42,9 +40,12 @@ module.exports = class AddjsMixPanel
 
   trackPageView: (url, data) ->
     if @logging is on
-      console.log 'Addjs.MP.trackPageView', url, data
+      console.log 'Addjs.MP.trackPageView', @debug(), url, data
     if mixpanel?
       mixpanel.track_pageview url, data
+
+  debug: ->
+    "init[#{mixpanel?}]"
 
   # trackSocial: (network, socialAction, opt_target, opt_pagePath) ->
 

@@ -16,9 +16,12 @@ class exports.WelcomeView extends BB.BadassView
   render: ->
     if !@timer? then @timer = new addjs.Timer(@e.category).start()
     @$el.html @tmpl()
-    addjs.providers.mp.trackLink '.signinBtn-google', @e.category, @e.name, @e.uri
-  track: (e) ->
-    addjs.providers.ga.trackEvent @e.category, @e.name, @e.uri, @timer.timeSpent()
+  track: (e) =>
+    e.preventDefault()
+    addjs.trackEvent @e.category, @e.name, @e.uri, @timer.timeSpent()
+    setTimeout @oauthRedirect, 400
+  oauthRedirect: ->
+    window.location = '/auth/google?return_to=/find-an-expert'
 
 
 #############################################################################
