@@ -83,6 +83,14 @@ nav a.logo { /* logo */
   background: url('/images/logos/header.png') no-repeat;
 }
 
+nav .contactus {
+  float: left;
+  color: #888888;
+  margin-top: 20px;
+  margin-left: 6px;
+  font-size: 15px;
+}
+
 nav ul.navigation {
   float:right;
   margin-right:20px;
