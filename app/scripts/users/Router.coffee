@@ -18,11 +18,14 @@ module.exports = class Router extends S.AirpairSessionRouter
     d =
       selected: new M.User()
       users: new C.Users()
+      companys: new C.Companys()
     v =
+      companysView: new V.CompanysView collection: d.companys, model: d.selected
       usersView: new V.UsersView collection: d.users, model: d.selected
-      userView: new V.UserView model: d.selected
+      # userView: new V.UserView model: d.selected
 
     @resetOrFetch d.users, pageData.users
+    @resetOrFetch d.companys, pageData.companys
 
     _.extend d, v
 

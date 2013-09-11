@@ -10,4 +10,8 @@ exports.User = class User extends Shared.User
     email:           { required: true }
 
 
+exports.Company = class Company extends BB.BadassModel
+  urlRoot: '/api/companys'
+
+
 module.exports = exports

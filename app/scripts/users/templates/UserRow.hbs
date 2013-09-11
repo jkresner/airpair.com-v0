@@ -1,12 +1,14 @@
 <td class="info">
   <a href="#edit/{{ _id }}" data-id="{{ _id }}">{{ google._json.name }}</a>
-  <br /><a href="mailto:{{ email }}">{{ email }}</a>
+  <a href="mailto:{{ email }}">{{ email }}</a>
   <a class="delete deleteUser" href="#" data-id="{{ _id }}">x</a>
 </td>
 <td>
   {{ google._json.email }}
 </td>
-<td>
+<td class="r">
   {{ referrer.landingPage }}
 </td>
-<td></td>
+<td>
+  {{ created }}
+</td>
