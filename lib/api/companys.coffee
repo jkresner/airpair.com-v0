@@ -1,18 +1,19 @@
-authz     = require './../identity/authz'
-admin     = authz.Admin isApi: true
+CompanysSvc = require './../services/companys'
+authz       = require './../identity/authz'
+loggedIn    = authz.LoggedIn isApi:true
+admin       = authz.Admin isApi: true
 
 
-CRUDApi = require './_crud'
+class CompanyApi
 
+  svc: new CompanysSvc()
 
-class CompanyApi extends CRUDApi
-
-  model: require './../models/company'
-
-  constructor: (app) ->
-    app.get     "/api/company/me", @detail
-    app.get     "/api/admin/companys", admin, @adminlist
-    app.delete  "/api/companys/:id", admin, @delete
+  constructor: (app, route) ->
+    app.get     "/api/#{route}/:id", loggedIn, @detail
+    app.get     "/api/admin/#{route}", admin, @adminlist
+    app.post    "/api/#{route}", loggedIn, @create
+    app.put     "/api/#{route}/:id", loggedIn, @update
+    app.delete  "/api/#{route}/:id", admin, @delete
 
   detail: (req, res) =>
 
@@ -20,19 +21,19 @@ class CompanyApi extends CRUDApi
 
     if req.params.id is 'me'
       search = 'contacts.userId': req.user._id
-      #$log 'companyApi', search
 
-    @model.findOne search, (e, r) ->
-      r = {} if r is null
-      res.send r
+    @svc.searchOne search, (r) -> res.send r
+
+  adminlist: (req, res) => @svc.getAll (r) -> res.send r
+
+  create: (req, res) =>
+    @svc.create req.body, (r) -> res.send r
+
+  update: (req, res) =>
+    @svc.update req.params.id, req.body, (r) -> res.send r
 
   delete: (req, res) =>
-    @model.findByIdAndRemove req.params.id, (r) ->
-      res.send r
-
-  adminlist: (req, res) =>
-    $log 'users.adminlist'
-    @model.find {}, (e, r) -> res.send r
+    @svc.delete req.params.id, (r) -> res.send r
 
 
 module.exports = (app) -> new CompanyApi app, 'companys'

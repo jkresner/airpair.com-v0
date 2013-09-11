@@ -17,17 +17,24 @@ module.exports = class DomainService
   getByUserId: (id, callback) =>
     @model.find userId: id, (e, r) -> callback r
 
+  search: (search, callback) =>
+    @model.find search, (e, r) -> callback r
+
+  searchOne: (search, callback) =>
+    @model.findOne search, (e, r) ->
+      r = {} if r is null
+      callback r
 
   create: (o, callback) =>
     new @model( o ).save (e, r) => callback r
 
-  delete: (id, callback) => 
+  delete: (id, callback) =>
     @model.findByIdAndRemove id, (e, r) => callback r
 
   update: (id, data, callback) =>
     ups = _.clone data
     delete ups._id # so mongo doesn't complain
-    @model.findByIdAndUpdate(id, ups).lean().exec (e, r) => 
+    @model.findByIdAndUpdate(id, ups).lean().exec (e, r) =>
       if e? then $log 'error', e
       callback r
 
