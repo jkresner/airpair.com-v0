@@ -38,3 +38,12 @@ module.exports = class Addjs
   trackPageView: (url, data) ->
     for k, p of @providers
       p.trackPageView.apply(p, arguments)
+
+
+  trackLanding: (url, data) ->
+    for k, p of @providers
+      p.trackLanding.apply(p, arguments)
+
+
+
+      mixpanel.register_once({ 'landing page': window.location.href });

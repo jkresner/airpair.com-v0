@@ -4,6 +4,7 @@ addjsevents = {}
 addEvent = (category, name, uri, qty, qtyFreq, desc) ->
   addjsevents[name] = { category, name, uri, qty, qtyFreq, desc }
 
+addEvent 'landing', 'pair-programming', '/pair-programming', 100, 'week', 'customer lands on a landing page'
 
 addEvent 'request', 'customerSignup', '/find-an-expert', 100, 'week', 'customer creates account via google login'
 

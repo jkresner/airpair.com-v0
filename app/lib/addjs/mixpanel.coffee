@@ -12,7 +12,7 @@ module.exports = class AddjsMixPanel
 
   trackSession: ->
     if @logging is on
-      console.log 'Addjs.MP.trackSession', @debug(), @superProps, mixpanel
+      console.log 'Addjs.MP.trackSession', @debug(), @superProps
     if mixpanel?
       if @superProps? && @superProps.email?
         mixpanel.alias @superProps.email
@@ -43,6 +43,14 @@ module.exports = class AddjsMixPanel
       console.log 'Addjs.MP.trackPageView', @debug(), url, data
     if mixpanel?
       mixpanel.track_pageview url, data
+
+
+  trackLanding: (url, data) ->
+    if @logging is on
+      console.log 'Addjs.MP.trackPageView', @debug(), url, data
+    if mixpanel?
+      mixpanel.register_once _.extend({url}, data)
+
 
   debug: ->
     "init[#{mixpanel?}]"
