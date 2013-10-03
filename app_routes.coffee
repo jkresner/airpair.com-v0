@@ -12,7 +12,6 @@ module.exports = (app) ->
   require('./lib/auth/base')(app)
 
   # pages
-  app.get '/about', (req, r)-> file r, 'homepage'
   app.get '/login', (req, r)-> file r, 'login'
   app.get '/be-an-expert*', (req, r)-> file r, 'beexpert'
   app.get '/find-an-expert*', (req, r)-> file r, 'request'
@@ -51,9 +50,6 @@ module.exports = (app) ->
   require('./lib/api/orders')(app)
   require('./lib/api/settings')(app)
 
-  # todo, brush up page
-  app.get '/pair-programmers*', (req, r)-> file r, 'pairing'
-
   require('./app_landing')(app)
 
   app.get '/paypal/success/:id', (req, r) ->
@@ -69,9 +65,6 @@ module.exports = (app) ->
   # app.get '/privacy', (req, r)-> file r, 'legal'
   # app.get '/support', (req, r)-> file r, 'login'
 
-  # todo, brush up page
-  app.get '/edu/tags', (req, r) -> file r, 'edu/tags'
-
   # dev stuff
-  app.get '/error-test', (req, r)-> throw new Error('my silly error')
-  app.get '/adm/mail', loggedIn, admin, (req, r) -> file r, 'adm/mail'
+  # app.get '/error-test', (req, r)-> throw new Error('my silly error')
+  # app.get '/adm/mail', loggedIn, admin, (req, r) -> file r, 'adm/mail'
