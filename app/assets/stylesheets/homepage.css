@@ -457,6 +457,7 @@ a.green { background: #99923F;border: solid 3px #7F761C }
 /************************** End Landing Pages *******************/
 
 footer {
+  color: white;
   background: #212F3B;
   padding: 20px;
 }
