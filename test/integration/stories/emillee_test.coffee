@@ -192,7 +192,7 @@ describe "Stories: Emil Lee", ->
 
     request.once 'change', =>
       expect( v.$('.brief').html() ).to.equal request.get('brief')
-      expect( v.$('.suggested .suggestion').length ).to.equal 3
+      expect( v.$('.suggested .suggestion').length ).to.equal 1
       expect( v.$('.book-actions').is(':visible') ).to.equal true
 
       v.$('.book-actions .btn').click()
