@@ -130,6 +130,8 @@ class exports.RequestInfoView extends BB.ModelSaveView
   el: '#info'
   tmpl: require './templates/RequestInfo'
   tmplCompany: require './templates/RequestInfoCompany'
+  events:
+    'click #receivedBtn': 'updateStatusToHolding'
   initialize: ->
     @$el.html @tmpl @model.toJSON()
     @$('#status').on 'change', @toggleCanceledIncompleteFields
@@ -148,6 +150,13 @@ class exports.RequestInfoView extends BB.ModelSaveView
   toggleCanceledIncompleteFields: =>
     @$('#canceled-control-group').toggle @$('#status').val() == 'canceled'
     @$('#incomplete-control-group').toggle @$('#status').val() == 'incomplete'
+  updateStatusToHolding: ->
+    if @mget('status') is 'received'
+      @model.set status: 'holding'
+      @model.save success: =>
+        m = @collection.findWhere(_id: @model.id)
+        m.set @model.attributes
+        @collection.trigger 'sync'  # for the requests view to re-render
 
 
 class exports.RequestSuggestionsView extends BB.BadassView

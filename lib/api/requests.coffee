@@ -62,6 +62,10 @@ class RequestApi extends CRUDApi
       data = _.clone req.body
       delete data._id # so mongo doesn't complain
 
+      if data.status is "holding"
+        evts.push @newEvent req, "send received email"
+        data.owner = Roles.getAdminInitials usr.google.id
+
       if data.status is "canceled" && !data.canceledDetail
         return @tFE res, 'Update', 'canceledDetail', 'Must supply canceled reason'
       else if r.status != "canceled" && data.status is "canceled"
