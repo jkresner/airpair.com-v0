@@ -35,7 +35,8 @@ describe "Review: customer", ->
       expect( rv.$('#customerReview').is(':empty') ).to.equal false
       expect( rv.$('#notExpertOrCustomer').is(':empty') ).to.equal true
 
-      expect( rv.customerReviewView.$('.label-waiting').is(':visible') ).to.equal true
+      # 10/6/13 Removed waiting experts from suggestions view
+      # expect( rv.customerReviewView.$('.label-waiting').is(':visible') ).to.equal true
 
       done()
 
