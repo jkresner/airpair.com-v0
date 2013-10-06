@@ -32,7 +32,8 @@ describe "Review: book", ->
     expect( req.get('suggested')[1].expertStatus ).to.equal 'waiting'
     expect( req.get('suggested')[2].expertStatus ).to.equal 'available'
     expect( req.get('suggested')[2].expert.username ).to.equal 'richkuo'
-    expect( rv.$('.suggested .suggestion').length ).to.equal 3
+    # 10/6/13 No longer showing waiting experts so only will be in suggestion view
+    expect( rv.$('.suggested .suggestion').length ).to.equal 2
     expect( rv.$('.book-actions').is(':visible') ).to.equal true
 
     expect( rv.$('.book-actions .btn').attr('href') ).to.equal "#book/#{@r._id}"
