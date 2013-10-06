@@ -4,6 +4,10 @@ adminIds = [
   '108020560370226386889' #EZ
 ]
 
+adminInitials = {}
+adminInitials['117132380360243205600'] = 'jk'
+adminInitials['112300854530824394263'] = 'mi'
+adminInitials['108020560370226386889'] = 'ec'
 
 module.exports =
 
@@ -28,3 +32,6 @@ module.exports =
       if und.idsEqual s.expert.userId, user._id
         return true
     false
+
+  getAdminInitials: (googleId) ->
+    adminInitials[googleId]
