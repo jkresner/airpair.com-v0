@@ -99,9 +99,9 @@ class CustomerMailTemplates
   tmplReview: require './../../mail/customerRequestReview'
   tmplMatched: require './../../mail/customerRequestMatched'
   tmplFollowup: require './../../mail/customerRequestFollowup'
-  constructor: (request) ->
+  constructor: (request, session) ->
     isOpensource = request.get('pricing') == 'opensource'
-    r = request.extendJSON tagsString: request.tagsString(), isOpensource: isOpensource
+    r = request.extendJSON tagsString: request.tagsString(), isOpensource: isOpensource, session: session.toJSON()
     @received = encodeURIComponent(@tmplReceived r)
     @review = encodeURIComponent(@tmplReview r)
     @matched = encodeURIComponent(@tmplMatched r)
@@ -113,13 +113,13 @@ class ExpertMailTemplates
   tmplCancelled: require './../../mail/expertRequestCancelled'
   tmplChosen: require './../../mail/expertRequestChosen'
   tmplSuggested: require './../../mail/expertRequestSuggested'
-  constructor: (request, expertId) ->
+  constructor: (request, session, expertId) ->
     suggestion = request.suggestion expertId
     contact = request.contact 0
     try
       suggestedExpertRate = suggestion.suggestedRate[request.get('pricing')].expert
     # $log 'suggestion', suggestion, contact, request
-    r = request.extendJSON { tagsString: request.tagsString(), suggestion: suggestion, contact: contact, suggestedExpertRate: suggestedExpertRate }
+    r = request.extendJSON { tagsString: request.tagsString(), suggestion: suggestion, contact: contact, suggestedExpertRate: suggestedExpertRate, session: session.toJSON() }
     @another = encodeURIComponent(@tmplAnother r)
     @canceled = encodeURIComponent(@tmplCancelled r)
     @chosen = encodeURIComponent(@tmplChosen r)
@@ -139,7 +139,7 @@ class exports.RequestInfoView extends BB.ModelSaveView
     @listenTo @model, 'change', @render
   render: ->
     @setValsFromModel ['brief','availability','status','owner','canceledReason','incompleteDetail','budget','pricing']
-    mailTemplates = new CustomerMailTemplates @model
+    mailTemplates = new CustomerMailTemplates @model, @session
     tmplCompanyData = _.extend { mailTemplates: mailTemplates, tagsString: @model.tagsString() }, @mget('company')
     @$('#company-controls').html @tmplCompany(tmplCompanyData)
     @$('[data-toggle="popover"]').popover()
@@ -243,7 +243,7 @@ class exports.RequestSuggestedView extends BB.BadassView
         s.tags =  @mget 'tags'
         s.expert.hasLinks = new M.Expert(s.expert).hasLinks()
 
-        mailTemplates = new ExpertMailTemplates @model, s.expert._id
+        mailTemplates = new ExpertMailTemplates @model, @session, s.expert._id
         try
           rates = s.suggestedRate[@model.get('pricing')]
         tmplData = _.extend { requestId: @model.id, mailTemplates: mailTemplates, tagsString: @model.tagsString(), rates: rates }, s
@@ -285,9 +285,9 @@ class exports.RequestView extends BB.ModelSaveView
     @$el.html @tmpl()
     @navView = new exports.RequestNavView el: '#requestNav', model: @model
     @eventsView = new exports.RequestEventsView el: '#events', model: @model
-    @infoView = new exports.RequestInfoView model: @model, tags: @tags, parentView: @
+    @infoView = new exports.RequestInfoView model: @model, tags: @tags, session: @session, parentView: @
     @suggestionsView = new exports.RequestSuggestionsView model: @model, collection: @experts, parentView: @
-    @suggestedView = new exports.RequestSuggestedView model: @model, collection: @experts, parentView: @
+    @suggestedView = new exports.RequestSuggestedView model: @model, collection: @experts, session: @session, parentView: @
     @callsView = new exports.RequestCallsView el: '#calls', model: @model, parentView: @
   renderSuccess: (model, response, options) =>
     @$('.alert-success').fadeIn(800).fadeOut(5000)

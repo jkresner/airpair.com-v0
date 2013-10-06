@@ -18,6 +18,7 @@ module.exports = class Router extends S.AirpairSessionRouter
     ':id'          : 'request'
 
   appConstructor: (pageData, callback) ->
+
     d =
       selected: new M.Request()
       requests: new C.Requests()
@@ -25,7 +26,7 @@ module.exports = class Router extends S.AirpairSessionRouter
       experts: new C.Experts()
     v =
       requestsView: new V.RequestsView collection: d.requests, model: d.selected
-      requestView: new V.RequestView model: d.selected, collection: d.requests, tags: d.tags, experts: d.experts
+      requestView: new V.RequestView model: d.selected, collection: d.requests, tags: d.tags, experts: d.experts, session: @app.session
       farmingView: new V.RequestFarmView model: d.selected
 
     @resetOrFetch d.requests, pageData.requests
