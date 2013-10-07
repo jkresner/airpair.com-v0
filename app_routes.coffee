@@ -29,6 +29,8 @@ module.exports = (app) ->
   app.get '/review/:id', renderReview
   app.get '/review/book/:id', renderReview
 
+  app.get '/book/:id', (req, r) -> file r, 'book'
+
   app.get '/settings*', loggedIn, (req, r)-> file r, 'settings'
 
   # admin pages
