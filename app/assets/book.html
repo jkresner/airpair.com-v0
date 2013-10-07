@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>airpair, {{ tagsString }} request</title>
+    <title>airpair, {{ expertName }} request</title>
     <meta charset="utf-8">
     <meta name="robots" content="noindex, nofollow" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -26,7 +26,7 @@
       </ul>
     </div>
   </nav>
-
+  <h1>Book {{ expertName }}</h1>
   <div id="detail" class="route">
     <div id="request">
     </div>
@@ -38,7 +38,8 @@
 
   <script type="text/javascript">
     function initApp() {
-      /*var pageData = { session: {{{ session }}}, request: {{{ request }}}, isProd: {{ isProd }} };
+      var pageData = { session: {{{ session }}}, expert: {{{ expert }}}};
+      /*
       Router = require('/scripts/review/Router');
       window.router = new Router(pageData);*/
     }

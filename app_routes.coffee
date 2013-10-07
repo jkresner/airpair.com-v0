@@ -29,7 +29,9 @@ module.exports = (app) ->
   app.get '/review/:id', renderReview
   app.get '/review/book/:id', renderReview
 
-  app.get '/book/:id', (req, r) -> file r, 'book'
+  renderBook = (req, r) ->
+    viewData.book req.params.id, req.user, (d) => r.render 'book.html', d
+  app.get '/book/:id', renderBook
 
   app.get '/settings*', loggedIn, (req, r)-> file r, 'settings'
 
