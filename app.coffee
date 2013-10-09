@@ -3,6 +3,8 @@ require './lib/util/globals'
 $log "--------------------------------------------------------"
 $log "In app file", process.cwd(), 'isProd', isProd
 
+mixpanel.track 'app start'
+
 express       = require 'express'
 passport      = require 'passport'
 

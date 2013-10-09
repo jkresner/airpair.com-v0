@@ -46,6 +46,7 @@
     "handlebars": "1.x.x",
     "hbs": "2.3.x",
 
+    "mixpanel": "0.0.18",
     "awssum-amazon-ses": "1.x.x",
 
     "mocha": "~1.12.0",

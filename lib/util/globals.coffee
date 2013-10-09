@@ -3,6 +3,10 @@ global.$log     = console.log
 global.und      = require 'underscore'
 global._        = global.und
 global.winston  = require 'winston'   # logging
+
+Mixpanel        = require('mixpanel')
+global.mixpanel = Mixpanel.init cfg.analytics.mixpanel.id
+
 require './winstonConfig'
 
 global.und.objectIdsEqual = (uid1, uid2) ->

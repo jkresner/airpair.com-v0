@@ -8,6 +8,10 @@ exports.config =
   env:
     mode: 'dev'
 
+  analytics:
+    mixpanel: 
+      id: '7689506d104a2280998971f50e121dcc'
+
   db: 'airpair_dev'
 
   server:
