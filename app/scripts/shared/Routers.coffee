@@ -1,12 +1,13 @@
 exports = {}
 M = require './Models'
 BB = require './../../lib/BB'
-AddJS = require '/lib/addjs/index'
+AddJS = require '/scripts/providers/addjs/index'
 
 class exports.AirpairRouter extends BB.BadassAppRouter
 
   preConstructorHook: ->
-    window.addjs = new AddJS providers: { ga: { logging: off }, mp: { logging: off } }
+    if !addjs? 
+      window.addjs = new AddJS providers: { ga: { logging: off }, mp: { logging: off } }
 
   # load external providers like google analytics, user-voice etc.
   loadExternalProviders: ->
@@ -30,12 +31,13 @@ class exports.AirpairSessionRouter extends BB.SessionRouter
       { email, name, picture, id } = google._json
       superProps = { email, name, picture, id }
 
-    window.addjs = new AddJS
-      providers: { ga: { logging: off }, mp: { logging: on, superProps: superProps } }
+    if !addjs? 
+      window.addjs = new AddJS
+        providers: { ga: { logging: off }, mp: { logging: on, superProps: superProps } }
 
   # load external providers like google analytics, user-voice etc.
   loadExternalProviders: ->
-
+    $log 'AirpairSessionRouter.loadExternalProviders'
     # bring in Google analytics, uservoice & other 3rd party things
     require '/scripts/providers/all'
 
