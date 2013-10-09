@@ -10,7 +10,7 @@ addEvent 'landing-ad-so', 'rails-help', '/help-with-rails', 100, 'week', 'custom
 
 addEvent 'landing', 'pair-programming', '/pair-programming', 100, 'week', 'customer lands on a landing page'
 
-addEvent 'request', 'customerLetsGetStarted', '/find-an-expert', 100, 'week', 'customer creates account via google login'
+addEvent 'request', 'customerWelcome', '/find-an-expert', 100, 'week', 'customer creates account via google login'
 
 addEvent 'request', 'customerLogin', '/find-an-expert', 100, 'week', 'customer tried to login via google'
 

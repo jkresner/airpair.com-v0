@@ -13,18 +13,18 @@ class exports.WelcomeView extends BB.BadassView
   events: { 'click .track': 'track' }
   initialize: ->
     @e = addjs.events.customerLogin
-    @e2 = addjs.events.customerLetsGetStarted
+    @e2 = addjs.events.customerWelcome
   render: ->
     if !@timer? then @timer = new addjs.Timer(@e.category).start()    
     @$el.html @tmpl()
-    trackLetsGetStarted = => addjs.trackEvent @e2.category, @e2.name, @e2.uri, 0
-    setTimeout trackLetsGetStarted, 400
+    trackWelcome = => addjs.trackEvent @e2.category, @e2.name, @e2.uri, 0
+    setTimeout trackWelcome, 400
   track: (e) =>
     e.preventDefault()
     addjs.trackEvent @e.category, @e.name, @e.uri, @timer.timeSpent()
     setTimeout @oauthRedirect, 400
   oauthRedirect: ->
-    window.location = '/auth/google?return_to=/find-an-expert'
+    window.location = "/auth/google?return_to=/find-an-expert&mixpanelId=#{mixpanel.get_distinct_id()}"
 
 
 #############################################################################

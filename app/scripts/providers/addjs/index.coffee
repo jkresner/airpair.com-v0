@@ -41,7 +41,7 @@ module.exports = class Addjs
 
 
   trackLanding: (data) ->
-    urlWithoutQuery = window.location.href.split('?')[0]
+    urlWithoutQuery = window.location.pathname
     for k, p of @providers
       p.trackLanding.call(p, urlWithoutQuery, data)
       # mixpanel.register_once({ 'landing page': window.location.href });

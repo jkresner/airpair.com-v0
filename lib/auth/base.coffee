@@ -19,7 +19,8 @@ passport.serializeUser (user, done) ->
 passport.deserializeUser (id, done) ->
   User.findById id, (err, user) ->
     console.log '=================================================='
-    console.log 'deserializeUser.id', id, user.google._json.email
+    email = if user? then user.google._json.email else "anonymous"
+    console.log 'deserializeUser.id', id, email
     done err, user
 
 ######## Shared
@@ -61,15 +62,18 @@ exports.insertOrUpdateUser = (req, done, providerName, profile) ->
   else
     search['_id'] = req.user._id
 
-
   update['referrer'] = {}
   for cookieName in ['landingPage', 'utm_source', 'utm_medium', 'utm_term', 'utm_content', 'utm_campaign']
     if req.cookies[cookieName]
       update['referrer'][cookieName] = req.cookies[cookieName]
 
+  User.findOne search, (err, user) ->
+    $log 'check user', !user?, user
+    if !user? then mixpanel.track 'signUp', { distinct_id: req.session.mixpanelId }
+
   User.findOneAndUpdate search, update, { upsert: true }, (err, user) ->
-    # console.log '=================================================='
-    # console.log 'findOneAndUpdate', err, done, user
+    console.log '=================================================='
+    console.log 'findOneAndUpdate', err, done, user
     done(err, user)
 
 
@@ -90,10 +94,17 @@ setReturnTo = (req, r, next) ->
     $log 'req.session.returnTo', ref
   next()
 
+setMixPanelId = (req, r, next) ->
+  ref = req.query["mixpanelId"]
+  if ref?
+    req.session.mixpanelId = ref
+    $log 'req.session.mixpanelId', ref
+  next()
+
 module.exports = (app) ->
   app.get     '/logout', logout
   app.get     '/failed-login', (req, r) -> r.send 'something went wrong with login ...'
-  app.get     '/auth/google', setReturnTo, google.connect
+  app.get     '/auth/google', setReturnTo, setMixPanelId, google.connect
   app.get     '/auth/google/callback', google.connect, google.done
   app.get     '/auth/github', github.connect
   app.get     '/auth/github/callback', github.connect, github.done

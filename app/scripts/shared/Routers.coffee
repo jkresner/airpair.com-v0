@@ -37,7 +37,6 @@ class exports.AirpairSessionRouter extends BB.SessionRouter
 
   # load external providers like google analytics, user-voice etc.
   loadExternalProviders: ->
-    $log 'AirpairSessionRouter.loadExternalProviders'
     # bring in Google analytics, uservoice & other 3rd party things
     require '/scripts/providers/all'
 
