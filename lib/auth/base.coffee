@@ -67,9 +67,10 @@ exports.insertOrUpdateUser = (req, done, providerName, profile) ->
     if req.cookies[cookieName]
       update['referrer'][cookieName] = req.cookies[cookieName]
 
-  User.findOne search, (err, user) ->
-    $log 'check user', !user?, user
-    if !user? then mixpanel.track 'signUp', { distinct_id: req.session.mixpanelId }
+  if req.session.mixpanelId?
+    User.findOne search, (err, user) ->
+      $log 'check user', !user?, user
+      if !user? then mixpanel.track 'signUp', { distinct_id: req.session.mixpanelId }
 
   User.findOneAndUpdate search, update, { upsert: true }, (err, user) ->
     console.log '=================================================='
