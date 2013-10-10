@@ -41,6 +41,9 @@ app.use passport.session()
 
 require('./app_routes')(app)
 
+if cfg.env is 'test'
+  require('./app_test_routes')(app)
+
 app.use (err, req, res, next) ->
   console.log "handleError", err
   winston.error "error #{req.url}", err if cfg.isProd
