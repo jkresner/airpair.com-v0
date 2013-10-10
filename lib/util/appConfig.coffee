@@ -14,6 +14,11 @@ c.analytics =
 c.SES_ACCESS_KEY = process.env.AP_SES_ACCESS_KEY ? 'blah'
 c.SES_SECRET_KEY = process.env.AP_SES_SECRET_KEY ? 'gah'
 
+c.payment =
+  stripe:
+    publishedKey: 'pk_test_aj305u5jk2uN1hrDQWdH0eyl'
+    secretKey:    'sk_test_8WOe71OlRWPyB3rDRcnthSCc'
+
 if c.env is 'test'
   process.env.Payment_Env = 'test'
   c.SES_ACCESS_KEY = 'test'
@@ -21,6 +26,9 @@ if c.env is 'test'
 
 if c.env is 'prod'
   c.analytics.mixpanel.id = '076cac7a822e2ca5422c38f8ab327d62'
+  c.payment.stripe =
+    publishedKey: 'pk_live_FEGruKDm6OZyagTHqhXWvV8G'
+    secretKey:    'sk_live_qSxo06x8iwaYuIIw1Bkx7hszc'
 
 global.cfg = c
 
