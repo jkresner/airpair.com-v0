@@ -16,7 +16,7 @@ winston.add winston.transports.Console, logConsoleConfig
 logConsoleConfig =
   level:          'error' # process.env.AP_CONSOLE_LOG_LEVEL || 'info'
   timestamp:      true
-  #colorize:      not isProd
+  #colorize:      not cfg.isProd
 
 winston.add winston.transports.File, logFileConfig
 
@@ -30,4 +30,4 @@ logEmailConfig =
   sesSubject:     'ap error'
 
 
-winston.add(winstonses, logEmailConfig) if isProd
+winston.add(winstonses, logEmailConfig) if cfg.isProd

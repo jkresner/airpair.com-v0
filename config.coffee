@@ -1,34 +1,22 @@
-# See docs at http://brunch.readthedocs.org/en/latest/config.html.
-
 exports.config =
-  # do not watch (build) test directory
-  paths:
-    watched: ['app','vendor']
 
-  env:
-    mode: 'dev'
-
-  analytics:
-    mixpanel: 
-      id: '7689506d104a2280998971f50e121dcc'
-
-  db: 'airpair_dev'
+  # do not build test directory in debug or release (only test)
+  paths:        watched: ['app','vendor']
 
   server:
+    env:  'dev'
     path: 'app.coffee'
     port: 3333
     base: '/'
     run: yes
 
-  coffeelint:
-    pattern: /^app\/.*\.coffee$/
-    options:
-      indentation:
-        value: 2
-        level: "error"
+  overrides:
+    test:
+      paths:    watched: ['app','vendor', 'test']
+      plugins:  autoReload: enabled: false
+      server:   { port: 4444, env: 'test' }
 
   files:
-
     javascripts:
       joinTo:
        'javascripts/app.js': /^app/
@@ -48,7 +36,6 @@ exports.config =
           'vendor/scripts/backbone.validation.js'
           'vendor/scripts/backbone.validation_bootstrap.js'
         ]
-
     stylesheets:
       joinTo:
         'stylesheets/app.css': /^(app|vendor)/
@@ -59,8 +46,14 @@ exports.config =
           'vendor/styles/bootstrap.css'
         ]
         after: ['vendor/styles/helpers.css']
-
     templates:
       joinTo: 'javascripts/app.js'
 
-global.cfg = exports.config
+  coffeelint:
+    pattern: /^app\/.*\.coffee$/
+    options:
+      indentation:
+        value: 2
+        level: "error"
+
+global.brunch = exports.config.server

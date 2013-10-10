@@ -13,7 +13,7 @@
     "npm": "1.2.x"
   },
   "scripts": {
-    "postinstall": "brunch build -c config-release.coffee"
+    "postinstall": "brunch b -e prod"
   },
   "dependencies": {
     "coffee-script": "1.6.x",
@@ -23,7 +23,7 @@
     "handlebars-brunch": "> 1.0 < 1.5",
     "uglify-js-brunch": "> 1.0 < 1.5",
     "clean-css-brunch": "> 1.0 < 1.5",
-    "brunch": "1.x",
+    "brunch": "1.7.8",
     "underscore": "1.4.x",
     "async": "~0.2.8",
     "express": "3.x",

@@ -1,6 +1,6 @@
 #!/bin/sh
 killall node
-brunch w -s -c config-test.coffee &
+brunch w -e test &
 mocha test/server/all.coffee
 SUCCESS=$?
 if [ $SUCCESS = "0" ]
