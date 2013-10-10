@@ -27,7 +27,7 @@ migrate = (d, all_tags) ->
 
   tags = []
   for s in d.skills
-    t = und.find all_tags, (t) -> t.soId == s.soId
+    t = _.find all_tags, (t) -> t.soId == s.soId
     if t?
       # $log 'found tag match', t.name, s.name
       tags.push name: t.name, short: t.short, soId: t.soId, ghId: t.ghId

@@ -45,7 +45,7 @@ class CRUDApi
 
 
   update: (req, res) =>
-    data = und.clone req.body
+    data = _.clone req.body
     delete data._id # so mongo doesn't complain
     @model.findByIdAndUpdate req.params.id, data, (e, r) =>
       if @logging then $log 'updated:', e, r

@@ -92,7 +92,7 @@ class RequestApi extends CRUDApi
       if r.suggested?
         for s in r.suggested
           match = _.find req.body.suggested, (sug) ->
-            _.objectIdsEqual sug._id, s._id
+            _.idsEqual sug._id, s._id
           if !match?
             evts.push @newEvent(req, "removed suggested #{s.expert.username}")
 

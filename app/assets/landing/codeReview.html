@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="/stylesheets/landing_jk.css">
     <link rel="stylesheet" href="/stylesheets/icon-hover-effects.css">
     <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,300' type='text/css'>
-    <script src="//cdn.optimizely.com/js/280598780.js"></script>
   </head>
 <body>
 
@@ -201,6 +200,15 @@
 
   </body>
 
-  <script src="/javascripts/providers.js" defer onload="require('scripts/providers/all');"></script>
+  <script type="text/javascript">
+
+    function initPage()
+    {
+      require('scripts/providers/all');
+      addjs.trackLanding({});
+    }
+
+  </script>
+  <script src="/javascripts/providers.js" defer onload="initPage()"></script>
 
 </html>

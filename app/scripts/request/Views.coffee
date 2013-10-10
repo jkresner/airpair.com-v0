@@ -12,16 +12,19 @@ class exports.WelcomeView extends BB.BadassView
   tmpl: require './templates/Welcome'
   events: { 'click .track': 'track' }
   initialize: ->
-    @e = addjs.events.customerSignup
+    @e = addjs.events.customerLogin
+    @e2 = addjs.events.customerWelcome
   render: ->
-    if !@timer? then @timer = new addjs.Timer(@e.category).start()
+    if !@timer? then @timer = new addjs.Timer(@e.category).start()    
     @$el.html @tmpl()
+    trackWelcome = => addjs.trackEvent @e2.category, @e2.name, @e2.uri, 0
+    setTimeout trackWelcome, 400
   track: (e) =>
     e.preventDefault()
     addjs.trackEvent @e.category, @e.name, @e.uri, @timer.timeSpent()
     setTimeout @oauthRedirect, 400
   oauthRedirect: ->
-    window.location = '/auth/google?return_to=/find-an-expert'
+    window.location = "/auth/google?return_to=/find-an-expert&mixpanelId=#{mixpanel.get_distinct_id()}"
 
 
 #############################################################################
@@ -46,10 +49,11 @@ class exports.InfoFormView extends BB.EnhancedFormView
   tmpl: require './../shared/templates/CompanyForm'
   events: { 'click .save': 'validatePrimaryContactAndSave' }
   initialize: ->
-    @e = addjs.events.customerInfo
+    @e = addjs.events.customerInfoNew
     @$el.html @tmpl @model.toJSON()
     @contactView = new exports.CompanyContactView(el: '#primaryContact', model: new M.CompanyContact(num:1)).render()
     @model.on 'change', @render, @
+    @model.once 'change', => @isReturnCustomer = @model.id?  
   render: ->
     if !@timer? then @timer = new addjs.Timer(@e.category).start()
     @setValsFromModel ['name','url','about']
@@ -74,7 +78,10 @@ class exports.InfoFormView extends BB.EnhancedFormView
     else
       @save e
   renderSuccess: (model, response, options) =>
+    if @isReturnCustomer
+      @e.name = "customerInfoRepeat"
     addjs.trackEvent @e.category, @e.name, @elm('fullName').val(), @timer.timeSpent()
+
     router.navTo 'request'
 
 
@@ -96,6 +103,7 @@ class exports.RequestFormView extends BB.ModelSaveView
     @$('.pricing input:radio').on 'click', @showPricingExplanation
     @$('.budget input:radio').on 'click', @showBudgetExplanation
     @listenTo @model, 'change', @render
+    @model.once 'change', => @isRequestUpdate = @model.id?  
     @elm('brief').on 'input', =>
       @$('#breifCount').html(@elm('brief').val().length+ ' chars')
   render: ->
@@ -136,6 +144,8 @@ class exports.RequestFormView extends BB.ModelSaveView
     # @$('.calcph').html("$#{base} + <i>$#{add}</i> = $#{base+add}")
     @$(".#{val}").show()
   renderSuccess: (model, response, options) =>
+    if @isRequestUpdate
+      @e.name = "customerRequestUpdate"
     addjs.trackEvent @e.category, @e.name, @model.contact(0).fullName, @timer.timeSpent()
     router.navTo 'thanks'
   getViewData: ->

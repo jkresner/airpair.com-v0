@@ -1,9 +1,15 @@
+process.env.Env = 'test'
+console.log "--------------------------------------------------------"
+console.log "In app TEST file", process.cwd(), 'isTest', true
+console.log "--------------------------------------------------------"
+
+require './../../lib/util/appConfig'
 require './../../lib/util/globals'
+
 express       = require 'express'
 passport      = require 'passport'
 passportMock  = require './test-passport'
 
-global.cfg = require('./../../config-test').config
 
 app = express()
 
