@@ -2,12 +2,17 @@ global.isProd   = process.env.MONGOHQ_URL?
 global.$log     = console.log
 global.und      = require 'underscore'
 global._        = global.und
+Mixpanel        = require 'mixpanel'
 global.winston  = require 'winston'   # logging
-
-Mixpanel        = require('mixpanel')
-global.mixpanel = Mixpanel.init cfg.analytics.mixpanel.id
-
 require './winstonConfig'
+
+if isProd
+  winston.error "ap restart"
+  global.cfg = require('./config-release').config
+
+$log 'SETRUPPP.cfg', cfg
+global.mixpanel = Mixpanel.init cfg.analytics.mixpanel.id
+mixpanel.track 'app start'
 
 global.und.objectIdsEqual = (uid1, uid2) ->
   return false if !uid1? || !uid2?

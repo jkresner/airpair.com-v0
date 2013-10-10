@@ -1,16 +1,10 @@
-require './lib/util/globals'
-
 $log "--------------------------------------------------------"
 $log "In app file", process.cwd(), 'isProd', isProd
 
-mixpanel.track 'app start'
+require './lib/util/globals'
 
 express       = require 'express'
 passport      = require 'passport'
-
-if isProd
-  winston.error "ap restart"
-  global.cfg = require('./config-release').config
 
 # setup our express app
 app = express()
