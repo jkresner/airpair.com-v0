@@ -29,7 +29,7 @@ module.exports =
   isRequestExpert: (user, request) ->
     return false if !user?
     for s in request.suggested
-      if und.idsEqual s.expert.userId, user._id
+      if _.idsEqual s.expert.userId, user._id
         return true
     false
 

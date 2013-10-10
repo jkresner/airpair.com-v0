@@ -195,7 +195,14 @@
 
   </body>
 
-  <script src="/javascripts/providers.js" defer onload="require('scripts/providers/all');"></script>
-  <script src="http://i.po.st/static/v3/post-widget.js#publisherKey=miu9e01ukog3g0nk72m6" type="text/javascript"></script>
+  <script type="text/javascript">
 
+    function initPage()
+    {
+      require('scripts/providers/all');
+      addjs.trackLanding({});
+    }
+
+  </script>
+  <script src="/javascripts/providers.js" defer onload="initPage()"></script>
 </html>

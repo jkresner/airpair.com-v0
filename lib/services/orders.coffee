@@ -37,6 +37,10 @@ module.exports = class OrdersService extends DomainService
           # CREATED = customer has NOT yet paid
           if resp.status == 'INCOMPLETE'
             ups = paymentStatus: 'received'
+  
+            mixpanel.track 'customerPayment', { distinct_id: usr.google._json.email, total: r.total }
+            mixpanel.people.track_charge usr.google._json.email, r.total
+            
             @update id, ups, callback
           else
             callback { e: 'update failed, not in INCOMPLETE state', data: resp }

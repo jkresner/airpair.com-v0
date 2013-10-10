@@ -47,9 +47,10 @@ module.exports = class AddjsMixPanel
 
   trackLanding: (url, data) ->
     if @logging is on
-      console.log 'Addjs.MP.trackPageView', @debug(), url, data
+      console.log 'Addjs.MP.trackLanding', @debug(), url, data
     if mixpanel?
-      mixpanel.register_once _.extend({url}, data)
+      data.url = url
+      mixpanel.track( 'landingPage', data )
 
 
   debug: ->

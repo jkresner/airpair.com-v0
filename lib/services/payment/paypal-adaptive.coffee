@@ -107,8 +107,9 @@ module.exports = class PaypalAdaptive
       .set('X-PAYPAL-RESPONSE-DATA-FORMAT', 'JSON')
       .set('X-PAYPAL-APPLICATION-ID', @cfg.APPLICATIONID)
       .end (res) =>
-        $log "PayalResponse: #{endpoint}", payload, res.body
-        winston.log "PayalResponse: #{endpoint}", res.body
+        if cfg.isProd
+          $log "PayalResponse: #{endpoint}", payload, res.body
+          winston.log "PayalResponse: #{endpoint}", res.body
         callback res.body
 
   formatCurrency: (num) =>
