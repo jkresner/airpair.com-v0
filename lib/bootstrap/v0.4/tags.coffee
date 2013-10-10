@@ -1,4 +1,3 @@
-und = require 'underscore'
 Tag = require './../models/tag'
 v0_skillsdata = require './data/v0.3/skills'
 stackoverflow_tagWikisdata = require './data/stackoverflow/wikis'
@@ -11,7 +10,7 @@ migrateFromSkill = (s) ->
 
 
 migrateFromStack = (t) ->
-  match = und.find v0_skillsdata, (s) -> s.soId == t.tag_name
+  match = _.find v0_skillsdata, (s) -> s.soId == t.tag_name
 
   if match?
     update = desc: t.excerpt

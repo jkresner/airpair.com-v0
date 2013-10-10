@@ -26,7 +26,7 @@ migrate = (d, all_tags, all_experts, all_users) ->
     userId: all_users[0]._id
     brief: d.brief
     canceledReason: d.canceledReason
-    company: und.clone(v0_3company)
+    company: _.clone(v0_3company)
     calls: d.calls
     budget: 50
     hours: "1"
@@ -35,18 +35,18 @@ migrate = (d, all_tags, all_experts, all_users) ->
     events: d.events
     status: d.status
 
-  comp = und.clone( und.find(v0_3_companys,(c)->c._id == d.companyId) )
+  comp = _.clone( _.find(v0_3_companys,(c)->c._id == d.companyId) )
   # $log 'd.companyEmail', d.companyEmail
   if comp?
     r.company.name = comp.name
     r.company.about = comp.about
     r.company.url = comp.url
-    c = und.clone comp.contacts[0]
-    r.company.contacts = [ und.extend(und.clone(v0_3cont), {fullName: c.fullName, email: c.email, gmail: c.gmail}) ]
+    c = _.clone comp.contacts[0]
+    r.company.contacts = [ _.extend(_.clone(v0_3cont), {fullName: c.fullName, email: c.email, gmail: c.gmail}) ]
 
   tags = []
   for s in d.skills
-    t = und.find all_tags, (t) -> t.soId == s.soId
+    t = _.find all_tags, (t) -> t.soId == s.soId
     if t?
       tags.push name: t.name, short: t.short, soId: t.soId, ghId: t.ghId
   r.tags = tags
@@ -62,7 +62,7 @@ migrate = (d, all_tags, all_experts, all_users) ->
 
   suggested = []
   for c in d.suggested
-    t = und.find all_experts, (m) -> m._id.toString() is c.dev._id
+    t = _.find all_experts, (m) -> m._id.toString() is c.dev._id
     if t?
       e =
         _id: t._id
