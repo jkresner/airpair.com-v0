@@ -20,7 +20,7 @@ module.exports = class OrdersService extends DomainService
 
     @paymentSvc.Pay order, (r) =>
       order.payment = r
-      $log "order.payment", order
+      $log "order.payment", order if cfg.isProd
       winston.log "order.payment", order
       new @model( order ).save (e, rr) ->
         if e?

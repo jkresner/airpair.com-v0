@@ -33,7 +33,7 @@ class exports.AirpairSessionRouter extends BB.SessionRouter
 
     if !addjs? 
       window.addjs = new AddJS
-        providers: { ga: { logging: off }, mp: { logging: on, superProps: superProps } }
+        providers: { ga: { logging: off }, mp: { logging: off, superProps: superProps } }
 
   # load external providers like google analytics, user-voice etc.
   loadExternalProviders: ->
