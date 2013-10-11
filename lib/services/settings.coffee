@@ -1,5 +1,6 @@
-DomainService   = require './_svc'
-SettingsSvc = require './../services/settings'
+DomainService  = require './_svc'
+StripeService  = require './payment/stripe'
+# stripeSvc = new StripeService()
 
 module.exports = class SettingsService extends DomainService
 
@@ -23,3 +24,18 @@ module.exports = class SettingsService extends DomainService
     @model.findOneAndUpdate({userId:userId}, ups, { upsert: true }).lean().exec (e, r) =>
       # $log 'save.settings', e, r
       callback r
+
+
+  addStripeCustomerId: (usr, token, callback) =>
+    $log 'addStripeCustomerId', usr, token
+    @getByUserId usr._id, (r) =>
+      stripeSvc.createCustomer usr.google._json.email, token, (customer) =>
+        $log 'customer', customer
+        r.paymentMethods.push { type: 'stripe', customerId: customer.id }
+        @update usr._id, r, (rr) => callback rr
+
+  getStripeCustomerId: (settings) =>
+    for method in settings.paymentMethods
+      if method.type is 'stripe'
+        if method.customerId? then return method.customerId
+    'null'

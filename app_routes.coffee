@@ -52,12 +52,24 @@ module.exports = (app) ->
 
   require('./app_landing')(app)
 
-  app.get '/paypal/success/:id', (req, r) ->
+  app.get '/paypal/success/:id', loggedIn, (req, r) ->
     viewData.paypalSuccess req.params.id, req.user, (d) =>
       r.render 'payment/paypalSuccess.html', d
-  app.get '/paypal/cancel/:id', (req, r) ->
+
+  app.get '/paypal/cancel/:id', loggedIn, (req, r) ->
     viewData.paypalCancel req.params.id, req.user, (d) =>
       r.render 'payment/paypalCancel.html', d
+
+  app.get '/payment/checkout-stripe', loggedIn, (req, r) ->
+    viewData.stripeCheckout req.user, req.query, (d) =>
+      r.render 'payment/stripeCheckout.html', d
+    
+  app.post '/payment/stripe-charge', (req, r) ->
+    viewData.stripeCharge null, req.user, req.body.token, (d) =>
+      r.render 'payment/stripeSuccess.html', d
+    
+    $log 'req', req.user, req.body
+    r.send 200
 
 
   # todo, get agreements
