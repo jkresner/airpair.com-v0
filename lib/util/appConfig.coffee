@@ -4,7 +4,7 @@ c = {}
 # process.env.Env should be set in the environment
 process.env.Env = brunch.env if !process.env.Env? && brunch?
 c.env      = process.env.Env
-c.isProd   = @env is 'prod'
+c.isProd   = c.env is 'prod'
 
 c.mongoUri = process.env.MONGOHQ_URL || "mongodb://localhost/airpair_#{c.env}"
 
