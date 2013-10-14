@@ -33,7 +33,7 @@ To setup + run locally
 
 4)   Install npm package `npm install`
 
-5)   Run brunch server `brunch w -s` or `brunch watch --server`
+5)   Run brunch server `brunch w` or `brunch watch`
 
 6)   Open browser @ http://localhost:3333/
 
@@ -57,10 +57,10 @@ Running tests
 
    First run brunch in test mode (test db/users etc.)
 
-   `brunch w -s -c config-test`
+   `brunch w -e test`
 
    Then execute tests
-
+   
    `http://localhost:4444/test/index.html` (in browser w mocha)
 
    `mocha-phantomjs http://localhost:4444/test/index.html` (in terminal w mocha-phantomjs)
