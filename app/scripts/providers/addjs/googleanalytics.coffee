@@ -34,5 +34,5 @@ module.exports = class AddjsGoogleAnalytics
     if @logging is on
       console.log 'Addjs.GA.trackPageView', url, data
     if ga?
-      d = _.extend({url}, data)
+      data.url = url
       ga 'send', 'event', 'landing', url

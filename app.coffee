@@ -41,8 +41,6 @@ app.use passport.session()
 
 require('./app_routes')(app)
 
-$log 'still going after app_test_routes'
-
 if cfg.env is 'test'
   require('./app_test_routes')(app)
 
@@ -51,11 +49,8 @@ app.use (err, req, res, next) ->
   winston.error "error #{req.url}", err if cfg.isProd
   res.status(500).sendfile "./public/500.html"
 
-$log 'still going before utm middleware'
-
 # exports.startServer is called automatically in brunch watch mode, but needs invoking in normal node
 exports.startServer = (port, path, callback) ->
-  $log "about to start server", port, path
   p = process.env.PORT || port
   $log "started on port: #{p}, path #{path}"
   app.listen p
