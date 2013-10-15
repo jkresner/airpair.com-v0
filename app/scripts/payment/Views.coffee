@@ -12,21 +12,16 @@ class exports.RegisterView extends BB.BadassView
   el: '#stripe'
   tmpl: require './templates/Register'
   initialize: (args) ->
+    require '/scripts/providers/stripe.v2'    
     @model.once 'sync', @render, @
   render: ->
     @$el.html @tmpl()
 
-    $('[data-stripe=number]').val("4242 4242 4242 4242");
-    $('[data-stripe=cvc]').val("424");
-    $('[data-stripe=exp-month]').val("10");
-    $('[data-stripe=exp-year]').val("14");
-
-    @$form = $(@$el.find('form')[0])
-
+    @$form = @$('form')
     @$form.on 'submit', (e) => 
       e.preventDefault()
       # Disable the submit button to prevent repeated clicks
-      @$form.find('button').prop 'disabled', true
+      @$('button').prop 'disabled', true
       Stripe.card.createToken @$form, @stripeResponseHandler
       false
 
@@ -34,8 +29,8 @@ class exports.RegisterView extends BB.BadassView
   stripeResponseHandler: (status, response) =>
     if response.error
       # Show the errors on the form
-      @$form.find('.payment-errors').text response.error.message
-      @$form.find('button').prop 'disabled', false
+      @$('.payment-errors').text response.error.message
+      @$('button').prop 'disabled', false
     else 
       # token contains id, last4, and card type
       token = response.id
