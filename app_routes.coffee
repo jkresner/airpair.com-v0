@@ -60,6 +60,10 @@ module.exports = (app) ->
     viewData.paypalCancel req.params.id, req.user, (d) =>
       r.render 'payment/paypalCancel.html', d
 
+  app.get '/payment/register-stripe', loggedIn, (req, r) ->
+    viewData.stripeCheckout req.user, req.query, (d) =>
+      r.render 'payment/stripeRegister.html', d
+
   app.get '/payment/checkout-stripe', loggedIn, (req, r) ->
     viewData.stripeCheckout req.user, req.query, (d) =>
       r.render 'payment/stripeCheckout.html', d
