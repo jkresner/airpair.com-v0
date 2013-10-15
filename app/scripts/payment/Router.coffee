@@ -11,7 +11,7 @@ module.exports = class Router extends S.AirpairSessionRouter
   pushStateRoot: '/payment/register-stripe'
 
   routes:
-    ''            : ''
+    ''            : 'stripe'
 
   appConstructor: (pageData, callback) ->
     d =
