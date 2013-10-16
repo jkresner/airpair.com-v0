@@ -41,9 +41,8 @@ class exports.RegisterView extends BB.BadassView
       @model.save stripeCreate: { token: token, email: email }, { success: @stripeCustomerSuccess }
 
   stripeCustomerSuccess: (model, resp, opts) =>
-    $log 'got a customer yeah!', model.attributes
-
     @$el.html 'success'
+    @model.unset 'stripeCreate'    
 
 
 module.exports = exports

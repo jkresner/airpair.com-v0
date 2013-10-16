@@ -18,6 +18,8 @@ module.exports =
 
   feedback:  "<div id='feedback' class='route'></div>"
 
-  tags:      "<div id='list' class='route'></div>"    
+  tags:      "<div id='list' class='route'></div>"  
 
-  stripeReg: "<div id='stripe' class='route'></div>"    
+  stripeReg: "<div id='stripe' class='route'></div>"
+
+  settings:  "<div id='settings' class='route'><div id='paymentSettings'></div></div>"

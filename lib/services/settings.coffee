@@ -24,19 +24,18 @@ module.exports = class SettingsService extends DomainService
 
 
   update: (userId, data, callback) =>
-    @getByUserId userId, (settings) =>
-      ups = _.clone data
-      ups.paymentMethods = settings.paymentMethods
-      ups.userId = userId
-      delete ups._id
-      # (JK 2013.10.15) very sorry I know this is bad code ...
-      save = () => 
-        $log 'settings update', ups
-        @model.findOneAndUpdate({userId:userId}, ups, { upsert: true }).lean().exec (e, r) =>
-          # $log 'save.settings', e, r
-          callback r
+    ups = _.clone data
+    # ups.paymentMethods = settings.paymentMethods
+    ups.userId = userId
+    delete ups._id
+    # (JK 2013.10.15) very sorry I know this is bad code ...
+    save = () => 
+      $log 'settings update', ups
+      @model.findOneAndUpdate({userId:userId}, ups, { upsert: true }).lean().exec (e, r) =>
+        # $log 'save.settings', e, r
+        callback r
 
-      if data.stripeCreate? then @addStripeCustomerSettings(ups, save) else save()
+    if data.stripeCreate? then @addStripeCustomerSettings(ups, save) else save()
 
 
   addStripeCustomerSettings: (d, callback) =>
