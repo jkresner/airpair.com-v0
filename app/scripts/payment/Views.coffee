@@ -37,7 +37,8 @@ class exports.RegisterView extends BB.BadassView
       # Insert the token into the form so it gets submitted to the server
       # $form.append($('<input type="hidden" name="stripeToken" />').val(token));
       # // and submit   
-      @model.save tempToken: token, { success: @stripeCustomerSuccess }
+      email = @session.get('google')._json.email
+      @model.save stripeCreate: { token: token, email: email }, { success: @stripeCustomerSuccess }
 
   stripeCustomerSuccess: (model, resp, opts) =>
     $log 'got a customer yeah!', model.attributes

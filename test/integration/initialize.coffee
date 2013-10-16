@@ -41,7 +41,8 @@ module.exports = (grep) ->
     './review/customer_test'
     './review/expert_test'
     './review/book_test'
-    './payment/stripeRegister_test'    
+    './settings/stripeRegister_test'
+    './settings/paypalSettings_test'
     './tags/tagsadmin_test'
     './stories/emillee_test'
   ]

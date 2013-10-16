@@ -18,7 +18,6 @@ class SettingsApi
     @svc.create req.user._id, req.body, (r) -> res.send r
 
   update: (req, res) =>
-    $log 'api updating', req.user._id
     @svc.update req.user._id, req.body, (r) -> res.send r
 
 

@@ -20,4 +20,4 @@ module.exports =
 
   tags:      "<div id='list' class='route'></div>"    
 
-  stripe:    "<div id='stripe' class='route'></div>"    
+  stripeReg: "<div id='stripe' class='route'></div>"    

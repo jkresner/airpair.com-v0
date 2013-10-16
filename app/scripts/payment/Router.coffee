@@ -17,7 +17,7 @@ module.exports = class Router extends S.AirpairSessionRouter
     d =
       settings: new M.Settings()
     v =
-      registerView: new V.RegisterView model: d.settings
+      registerView: new V.RegisterView model: d.settings, session: @app.session
 
     if @app.session.authenticated()
       @setOrFetch d.settings, pageData.settings
