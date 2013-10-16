@@ -4,7 +4,8 @@ mongoose = require 'mongoose'
 describe "Server-side suite", ->
 
   before (done) ->
-    mongoose.connect "mongodb://localhost/airpair_test", done
+    mongoose.connect "mongodb://localhost/airpair_test", ->
+      mongoose.connection.db.executeDbCommand { dropDatabase:1 }, done
 
   describe 'ui/models/request', (done) -> require './ui/models/request'
   describe 'api/companys', (done) -> require './api/companys'
