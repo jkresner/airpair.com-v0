@@ -13,7 +13,9 @@ class exports.PaymentSettingsView extends BB.ModelSaveView
     'click .save': 'save'
   initialize: ->
   render: ->
-    @$el.html @tmpl @model.paymentMethod('paypal')
+    @$el.html @tmpl()
+    paypalSettings = @model.paymentMethod('paypal')
+    if paypalSettings? then @elm('paypalEmail').val paypalSettings.email
     @
   getViewData: ->
     pp = type: 'paypal', isPrimary: true, info: { email: @elm('paypalEmail').val() }

@@ -35,7 +35,7 @@
   <script type="text/javascript">
     
     function initApp() {
-      var pageData = { customerId: {{{ customerId }}}, session: {{{ session }}}, pk: '{{{pk}}}' };
+      var pageData = { settings: {{{ customerId }}}, session: {{{ session }}}, pk: '{{{pk}}}' };
       Router = require('/scripts/payment/Router');
       window.router = new Router(pageData);
     }

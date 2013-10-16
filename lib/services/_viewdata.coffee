@@ -32,7 +32,7 @@ module.exports = class ViewDataService
     sSvc.getByUserId usr._id, (r) => 
       callback _.extend {total,qty,unitPrice,pk}, 
         session:    @session usr
-        customerId: sSvc.getStripeCustomerId(r)
+        customerId: JSON.stringify r
 
   review: (id, usr, callback) ->
     rSvc.getByIdSmart id, usr, (r) => callback
