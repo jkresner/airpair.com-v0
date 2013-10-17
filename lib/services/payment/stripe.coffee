@@ -14,7 +14,12 @@ module.exports = class StripeService
       callback customer
 
    
-  createCharge: (usr, charge, token, callback) ->
-  
-    # Update settings 
-    stripe.charges.create { email: 'foobar@example.org' }, callback
+  createCharge: (order, callback) ->
+    order.paymentType = 'paypal'
+    customerId = order.payWith.info.customerId
+
+    # Make a charge
+    stripe.charges.create { customer: customerId, amount: order.total, currency: "usd" }, (err, charge) => 
+      $log 'err', err, 'charge', charge
+      
+      callback charge

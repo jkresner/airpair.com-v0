@@ -14,6 +14,7 @@ module.exports = class Router extends S.AirpairSessionRouter
     ':id'         : 'detail'
     'detail/:id'  : 'detail'
     'book/:id'    : 'book'
+    'book/stripe' : 'bookStripe'    
     ''            : 'empty'
 
   appConstructor: (pageData, callback) ->
@@ -50,6 +51,10 @@ module.exports = class Router extends S.AirpairSessionRouter
 
     if @app.session.id is '5175efbfa3802cc4d5a5e6ed'
       $('nav ul').append("<li><a href='/adm/inbound/#{@app.request.id}'' class='zocial'>request admin</a><li>")
+
+  bookStripe: ->
+    @app.order.set 'payWith', @app.settings.paymentMethod 'stripe'
+    @routeTo 'book/#{@app.request.id}'
 
   book: (id) ->
     if !id? then return @empty()
