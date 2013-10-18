@@ -25,10 +25,12 @@ module.exports = class AddjsMixPanel
           $created: @peopleProps.created_at
 
   setPeopleProps: (props) ->
-    mixpanel.people.set_once props
+    if mixpanel?
+      mixpanel.people.set_once props
 
   incrementPeopleProp: (propName) ->
-    mixpanel.people.increment propName
+    if mixpanel?
+      mixpanel.people.increment propName
 
   trackEvent: (category, action, label, value) ->
     if @logging is on
