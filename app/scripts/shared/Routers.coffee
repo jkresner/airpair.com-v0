@@ -28,8 +28,8 @@ class exports.AirpairSessionRouter extends BB.SessionRouter
     { google } = @app.session.attributes
     superProps = {}
     if google?
-      { email, name, picture, id } = google._json
-      superProps = { email, name, picture, id }
+      { email, name, picture, id, family_name, given_name } = google._json
+      superProps = { email, name, picture, id, family_name, given_name }
 
     if !addjs? 
       window.addjs = new AddJS
