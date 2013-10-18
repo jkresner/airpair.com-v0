@@ -9,18 +9,24 @@ module.exports = class Router extends S.AirpairSessionRouter
   pushStateRoot: '/settings'
 
   routes:
-    'settings'        : 'settings'
+    'payment'         : 'payment'
+    'stripe'          : 'stripe'
 
   appConstructor: (pageData, callback) ->
     d =
       settings: new M.Settings()
     v =
       paymentSettingsView: new V.PaymentSettingsView model: d.settings
+      stripeRegisterView: new V.StripeRegisterView model: d.settings
 
-    @setOrFetch d.settings, pageData.settings, { success: =>
-      v.paymentSettingsView.render() }
+    @setOrFetch d.settings, pageData.settings
+
+    Stripe.setPublishableKey pageData.pk
 
     _.extend d, v
 
   initialize: (args) ->
-    @navTo 'settings'
+    @navTo 'payment'
+
+  stripe: ->
+    $log 'stripeRegister'

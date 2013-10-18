@@ -29,7 +29,8 @@ module.exports = (app) ->
   app.get '/review/:id', renderReview
   app.get '/review/book/:id', renderReview
 
-  app.get '/settings*', loggedIn, (req, r)-> file r, 'settings'
+  app.get '/settings*', loggedIn, (req, r)->  r.render 'settings.html', 
+    { stripePK: cfg.payment.stripe.publishedKey }
 
   # admin pages
   app.get '/adm/tags*', loggedIn, admin, (req, r) -> file r, 'adm/tags'

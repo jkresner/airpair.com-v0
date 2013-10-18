@@ -11,13 +11,13 @@ module.exports = class Router extends S.AirpairSessionRouter
   pushStateRoot: '/payment/register-stripe'
 
   routes:
-    ''            : 'stripe'
+    'stripe'            : 'stripe'
 
   appConstructor: (pageData, callback) ->
     d =
       settings: new M.Settings()
-    v =
-      registerView: new V.RegisterView model: d.settings, session: @app.session
+    v = {}
+      # registerView: new V.RegisterView model: d.settings, session: @app.session
 
     if @app.session.authenticated()
       @setOrFetch d.settings, pageData.settings
@@ -27,3 +27,4 @@ module.exports = class Router extends S.AirpairSessionRouter
     _.extend d, v
 
   initialize: (args) ->
+    @routeTo 'stripe'
