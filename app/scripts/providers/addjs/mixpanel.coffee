@@ -21,6 +21,7 @@ module.exports = class AddjsMixPanel
           $gravatar: @superProps.picture
           LastName: @superProps.family_name
           FirstName: @superProps.given_name
+          Name: @superProps.name          
 
 
   trackEvent: (category, action, label, value) ->
