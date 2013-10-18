@@ -19,9 +19,9 @@ module.exports = class AddjsMixPanel
         mixpanel.people.set_once
           $email: @superProps.email
           $gravatar: @superProps.picture
+          $name: @superProps.name          
           LastName: @superProps.family_name
           FirstName: @superProps.given_name
-          Name: @superProps.name          
 
 
   trackEvent: (category, action, label, value) ->
