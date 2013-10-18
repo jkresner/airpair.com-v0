@@ -28,12 +28,13 @@ class exports.AirpairSessionRouter extends BB.SessionRouter
     { google } = @app.session.attributes
     superProps = {}
     if google?
+      created_at = new Date(parseInt(@app.session.id.toString().slice(0,8), 16)*1000)
       { email, name, picture, id, family_name, given_name } = google._json
-      superProps = { email, name, picture, id, family_name, given_name }
+      peopleProps = { email, name, picture, id, family_name, given_name, created_at }
 
     if !addjs? 
       window.addjs = new AddJS
-        providers: { ga: { logging: off }, mp: { logging: off, superProps: superProps } }
+        providers: { ga: { logging: off }, mp: { logging: off, peopleProps: peopleProps } }
 
   # load external providers like google analytics, user-voice etc.
   loadExternalProviders: ->
