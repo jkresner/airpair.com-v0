@@ -10,7 +10,7 @@ PaymentMethod = new Schema
 
 
 Settings = new Schema
-  userId:           { type: ObjectId, ref: 'User' }
+  userId:           { type: ObjectId, ref: 'User', unique: true, sparse: true }
   paymentMethods:   [PaymentMethod]
 
 

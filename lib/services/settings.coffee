@@ -8,7 +8,7 @@ module.exports = class SettingsService extends DomainService
 
   getByUserId: (userId, callback) =>
     @model.findOne({ userId: userId }).lean().exec (e, r) =>
-      $log 'settings getByUserId', userId
+      # $log 'settings getByUserId', userId
       if ! r? then r = {}
       callback r
 
@@ -16,9 +16,8 @@ module.exports = class SettingsService extends DomainService
   create: (userId, data, callback) =>
     data.userId = userId.toString()
     save = => 
-      $log 'settings create', data
       new @model( data ).save (e, r) => 
-        $log '@model.save', e, r
+        # $log '@model.save', e, r
         callback r
     if data.stripeCreate? then @addStripeCustomerSettings(data, save) else save()
 
@@ -30,7 +29,6 @@ module.exports = class SettingsService extends DomainService
     delete ups._id
     # (JK 2013.10.15) very sorry I know this is bad code ...
     save = () => 
-      $log 'settings update', ups
       @model.findOneAndUpdate({userId:userId}, ups, { upsert: true }).lean().exec (e, r) =>
         # $log 'save.settings', e, r
         callback r
@@ -45,7 +43,6 @@ module.exports = class SettingsService extends DomainService
     # make sure we only have one stripe customer settings
     d.paymentMethods = _.without d.paymentMethods, _.findWhere(d.paymentMethods, {type: 'stripe'})
 
-    $log 'addStripeCustomerSettings', email, token, d
     stripeSvc.createCustomer email, token, (customer) =>
       isPrimary = d.paymentMethods.length == 0  
       d.paymentMethods.push { type: 'stripe', info: customer, isPrimary: isPrimary }

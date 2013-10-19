@@ -15,46 +15,36 @@ class exports.StripeRegisterView extends BB.BadassView
     @model.once 'sync', @render, @
   render: ->
     @$el.html @tmpl()
-
     @$form = @$('form')
     @$form.on 'submit', (e) => 
       e.preventDefault()
-      # Disable the submit button to prevent repeated clicks
-      @$('button').prop 'disabled', true
-      Stripe.card.createToken @$form, @stripeResponseHandler
-      false
-
+      @$('button').prop 'disabled', true  # Disable submitBtn to prevent repeat clicks
+      Stripe.card.createToken @$form, @responseHandler
     @
-  stripeResponseHandler: (status, response) =>
-    if response.error
-      # Show the errors on the form
+  responseHandler: (status, response) =>
+    if response.error # Show the errors on the form
       @$('.payment-errors').text response.error.message
       @$('button').prop 'disabled', false
     else 
-      # token contains id, last4, and card type
-      token = response.id
-      # Insert the token into the form so it gets submitted to the server
-      # $form.append($('<input type="hidden" name="stripeToken" />').val(token));
-      # // and submit   
+      token = response.id  # token contains id, last4, and card type 
       email = @session.get('google')._json.email
       @model.save stripeCreate: { token: token, email: email }, { success: @stripeCustomerSuccess }
-
   stripeCustomerSuccess: (model, resp, opts) =>
-    @$el.html 'success'
-    @model.unset 'stripeCreate'    
+    @model.unset 'stripeCreate'
+    @successAction()    
+  successAction: => # give the power to override this action so we can put the view in different flows
+    router.navTo '#'
 
 
 class exports.StripeSettingsView extends BB.BadassView
   el: '#stripeSettings'
   tmpl: require './templates/StripeSettings'  
   initialize: (args) ->
-    @listenTo @model, 'change', @render
+    @listenTo @model, 'sync', @render
   render: ->
     stripeSettings = @model.paymentMethod 'stripe'
-    if stripeSettings?
-      @$el.html 'stripe is setup'
-    else  
-      @$el.html "<a href='#stripe'>add stripe</a>" 
+    @$el.html @tmpl {stripeSettings}
+
 
 #############################################################################
 ##
@@ -67,11 +57,11 @@ class exports.PayalSettingsView extends BB.ModelSaveView
   events:
     'click .save': 'save'
   initialize: ->
-    @listenTo @model, 'change', @render
+    @listenTo @model, 'sync', @render
   render: ->
     @$el.html @tmpl()
     paypalSettings = @model.paymentMethod('paypal')
-    if paypalSettings? then @elm('paypalEmail').val paypalSettings.email
+    if paypalSettings? then @elm('paypalEmail').val paypalSettings.info.email
     @
   getViewData: ->
     pp = type: 'paypal', isPrimary: true, info: { email: @elm('paypalEmail').val() }
@@ -79,7 +69,7 @@ class exports.PayalSettingsView extends BB.ModelSaveView
 
 
 class exports.PaymentSettingsView extends BB.ModelSaveView
-  el: '#paymentSettings'
+  el: '#payment'
   initialize: (args) ->
     @paypalView = new exports.PayalSettingsView args
     @stripeView = new exports.StripeSettingsView args

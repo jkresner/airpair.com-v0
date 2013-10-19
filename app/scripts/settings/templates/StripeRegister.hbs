@@ -1,11 +1,11 @@
-<p style="width:55%">To setup billing so that you only have to edit your credit card information this one time, we are going to charge you a $10 membership fee. The fee will be credited as a discount on your first AirPair session.</p>
-
-<img src="https://stripe.com/img/navigation/logo-small.png" alt="Stripe logo" />
+<p style="width:55%">To setup billing so that you only have to edit your credit card information  one time, we are going to charge your card $10. This amount will be credited as a discount on your first AirPair session.</p>
 
 <hr />
 
 <form action="" method="POST" id="payment-form">
   <span class="payment-errors text-error"></span>
+
+  <img src="https://stripe.com/img/navigation/logo-small.png" alt="Stripe logo" style="float:right" />
 
   <div class="control-group">
     <label class="control-label">Card Number</label>
@@ -17,9 +17,9 @@
   <div class="control-group">
     <label class="control-label">CVC</label>
     <div class="controls">
-      <input type="text" size="4" idname="cvc" placeholder="CVC" data-stripe="number"/>
+      <input type="text" size="4" placeholder="CVC" data-stripe="cvc"/>
     </div>
-  </div>
+  </div>  
 
   <div class="control-group">
     <label class="control-label">Expiration (MM/YYYY)</label>
@@ -31,7 +31,7 @@
   </div>
   
   <div class="form-actions" style="border-top:1px solid gray">
-     <button class="button" type="submit">Setup Billing</button>
+     <button class="button" type="submit">Setup billing</button>
   </div>
 
 </form>

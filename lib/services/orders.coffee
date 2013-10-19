@@ -31,16 +31,14 @@ module.exports = class OrdersService extends DomainService
 
     savePaymentResponse = (paymentResponse) => 
       order.payment = paymentResponse
-      $log "order.payment", order if cfg.isProd
-      winston.log "order.payment", order
       new @model(order).save (e, rr) ->
         if e?
-          $log "order.save.error", e, o.payment
+          $log "order.save.error", e
           winston.errror "order.save.error", e
         callback rr
 
-    if order.payWith? && order.payWith.type is 'stripe'
-      stripSvc.createCharge order, savePaymentResponse
+    if order.paymentMethod? && order.paymentMethod.type == 'stripe'
+      @stripSvc.createCharge order, savePaymentResponse
     else
       @paypalSvc.Pay order, savePaymentResponse
         

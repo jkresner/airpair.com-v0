@@ -55,7 +55,6 @@ class exports.UserRowView extends BB.BadassView
 
     created = new Date(parseInt(@model.id.toString().slice(0,8), 16)*1000)
     @$el.html @tmpl @model.extend {created}
-
     @
   deleteUser: ->
     $log 'deleting', @model.attributes

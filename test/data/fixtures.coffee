@@ -20,6 +20,10 @@ module.exports =
 
   tags:      "<div id='list' class='route'></div>"  
 
-  stripeReg: "<div id='stripe' class='route'></div>"
-
-  settings:  "<div id='settings' class='route'><div id='paymentSettings'></div></div>"
+  settings:  "<div id='payment' class='route'>
+                <div id='paypalSettings'></div>
+                <div id='stripeSettings'></div>
+              </div>
+              <div id='stripe' class='route'>
+                <div id='stripeRegister'></div>
+              </div>"

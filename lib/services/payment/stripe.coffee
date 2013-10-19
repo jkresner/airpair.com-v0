@@ -15,11 +15,17 @@ module.exports = class StripeService
 
    
   createCharge: (order, callback) ->
-    order.paymentType = 'paypal'
-    customerId = order.payWith.info.customerId
+    order.paymentType = 'stripe'
+    customerId = order.paymentMethod.info.id
+
+    payload = customer: customerId, amount: order.total, currency: "usd"
 
     # Make a charge
-    stripe.charges.create { customer: customerId, amount: order.total, currency: "usd" }, (err, charge) => 
-      $log 'err', err, 'charge', charge
-      
+    stripe.charges.create payload, (err, charge) => 
+      # $log 'err', err, 'charge', charge
+     
+      if cfg.isProd
+        $log "StripeResponse: ", payload, charge
+        winston.log "StripResponse: ", charge
+
       callback charge
