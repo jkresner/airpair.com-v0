@@ -21,4 +21,16 @@ addEvent 'request', 'customerInfoNew', '/find-an-expert/info', 90, 'week', 'cust
 addEvent 'request', 'customerRequest', '/find-an-expert/request', 50, 'week', 'customer saves contact info first time'
 
 
+
+addEvent 'beexpert', 'expertWelcome', '/be-an-expert', 100, 'week', 'expert creates account via google login'
+
+addEvent 'beexpert', 'expertLogin', '/be-an-expert', 100, 'week', 'expert tried to login via google'
+
+addEvent 'beexpert', 'expertSignup', '/be-an-expert', 100, 'week', 'expert creates account via google login'
+
+addEvent 'beexpert', 'expertConnect', '/be-an-expert/', 90, 'week', 'expert saves contact info first time'
+
+addEvent 'beexpert', 'expertInfo', '/be-an-expert/in', 50, 'week', 'customer saves contact info first time'
+
+
 module.exports = addjsevents

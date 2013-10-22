@@ -12,7 +12,22 @@ exports.ExpertView = SV.ExpertView
 class exports.WelcomeView extends BB.BadassView
   el: '#welcome'
   tmpl: require './templates/Welcome'
-  render: -> @$el.html @tmpl()
+  events: { 'click .track': 'track' }
+  initialize: ->
+    @e = addjs.events.expertLogin
+    @e2 = addjs.events.expertWelcome
+  render: ->
+    if !@timer? then @timer = new addjs.Timer(@e.category).start()    
+    @$el.html @tmpl()
+    trackWelcome = => addjs.trackEvent @e2.category, @e2.name, @e2.uri, 0
+    setTimeout trackWelcome, 400
+  track: (e) =>
+    e.preventDefault()
+    addjs.trackEvent @e.category, @e.name, @e.uri, @timer.timeSpent()
+    setTimeout @oauthRedirect, 400
+  oauthRedirect: ->
+    window.location = "/auth/google?return_to=/be-an-expert&mixpanelId=#{mixpanel.get_distinct_id()}"
+
 
 #############################################################################
 ##
@@ -25,6 +40,7 @@ class exports.ConnectView extends BB.ModelSaveView
     'click .save': 'save'
   initialize: -> # we call render explicitly, only need to once on page load
   render: ->
+    @e = addjs.events.expertConnect
     @model.setFromUser @session
     @$el.html @tmpl @model.extend hasUsername: @mget('username')?
     @$(".btn-cancel").toggle @mget('_id')?
@@ -33,6 +49,7 @@ class exports.ConnectView extends BB.ModelSaveView
     router.navigate '#info', { trigger: true }
     t = @model.get 'tags'
     if t? && t.length is 0 then @model.set 'tags', null
+    addjs.trackEvent @e.category, @e.name, @model.get('name')
   getViewData: ->
     @model.extend updated: new Date()
 
@@ -46,12 +63,14 @@ class exports.InfoFormView extends BB.ModelSaveView
   tmpl: require './templates/InfoForm'
   events: { 'click .save': 'save' }
   initialize: ->
+    @e = addjs.events.expertInfo
     @firstRender = yes
     @$el.html @tmpl {}
     @tagsInput = new SV.TagsInputView model: @model, collection: @tags
     @$('input:radio').on 'click', @selectRB
     @listenTo @model, 'change', @render
   render: ->
+    if !@timer? then @timer = new addjs.Timer(@e.category).start()
     return if @model.hasChanged('tags') && !@firstRender
     @setValsFromModel ['homepage','brief','hours']
     @$(":radio[value=#{@model.get('rate')}]").prop('checked',true).click()
@@ -64,7 +83,9 @@ class exports.InfoFormView extends BB.ModelSaveView
     group.find("label").removeClass 'checked'
     rb.prev().addClass 'checked'
   renderSuccess: (model, response, options) =>
-    router.navigate '#thanks', { trigger: true }
+    router.navTo 'thanks'
+    addjs.trackEvent @e.category, @e.name, @model.get('name'), @timer.timeSpent()
+    addjs.providers.mp.setPeopleProps isExpert : 'Y'
   getViewData: ->
     homepage: @elm('homepage').val()
     brief: @elm('brief').val()

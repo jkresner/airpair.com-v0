@@ -153,10 +153,7 @@ class exports.RequestInfoView extends BB.ModelSaveView
   updateStatusToHolding: ->
     if @mget('status') is 'received'
       @model.set status: 'holding'
-      @model.save success: =>
-        m = @collection.findWhere(_id: @model.id)
-        m.set @model.attributes
-        @collection.trigger 'sync'  # for the requests view to re-render
+      @parentView.save null
 
 
 class exports.RequestSuggestionsView extends BB.BadassView
