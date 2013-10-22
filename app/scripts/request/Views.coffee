@@ -81,6 +81,7 @@ class exports.InfoFormView extends BB.EnhancedFormView
     if @isReturnCustomer
       @e.name = "customerInfoRepeat"
     addjs.trackEvent @e.category, @e.name, @elm('fullName').val(), @timer.timeSpent()
+    addjs.providers.mp.setPeopleProps isCustomer : 'Y'
 
     router.navTo 'request'
 
@@ -146,7 +147,11 @@ class exports.RequestFormView extends BB.ModelSaveView
   renderSuccess: (model, response, options) =>
     if @isRequestUpdate
       @e.name = "customerRequestUpdate"
+    else
+      addjs.providers.mp.incrementPeopleProp "requestCount"
+
     addjs.trackEvent @e.category, @e.name, @model.contact(0).fullName, @timer.timeSpent()
+
     router.navTo 'thanks'
   getViewData: ->
     brief: @elm("brief").val()

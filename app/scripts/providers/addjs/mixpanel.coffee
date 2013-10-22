@@ -7,20 +7,30 @@ module.exports = class AddjsMixPanel
     if @logging is on
       console.log 'Addjs.MP.constructor', @debug(), args
 
-    if args.superProps then @superProps = args.superProps
+    if args.peopleProps then @peopleProps = args.peopleProps
 
 
   trackSession: ->
     if @logging is on
-      console.log 'Addjs.MP.trackSession', @debug(), @superProps
+      console.log 'Addjs.MP.trackSession', @debug(), @peopleProps
     if mixpanel?
-      if @superProps? && @superProps.email?
-        mixpanel.alias @superProps.email
+      if @peopleProps? && @peopleProps.email?
+        mixpanel.alias @peopleProps.email
         mixpanel.people.set_once
-          $email: @superProps.email
-          $gravatar: @superProps.picture
+          $email: @peopleProps.email
+          $gravatar: @peopleProps.picture
+          $name: @peopleProps.name          
+          $last_name: @peopleProps.family_name
+          $first_name: @peopleProps.given_name
+          $created: @peopleProps.created_at
 
+  setPeopleProps: (props) ->
+    if mixpanel?
+      mixpanel.people.set_once props
 
+  incrementPeopleProp: (propName) ->
+    if mixpanel?
+      mixpanel.people.increment propName
 
   trackEvent: (category, action, label, value) ->
     if @logging is on

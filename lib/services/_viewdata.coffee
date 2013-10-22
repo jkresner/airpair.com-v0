@@ -41,6 +41,11 @@ module.exports = class ViewDataService
       request:    JSON.stringify r
       tagsString: if r? then util.tagsString(r.tags) else 'Not found'
 
+  book: (id, usr, callback) ->
+    eSvc.getById id, (r) => callback
+      session:    @session usr
+      expert:     JSON.stringify r
+      expertName: r.name
   inbound: (usr, callback) ->
     tSvc.getAll (t) =>
       eSvc.getAll (e) =>
