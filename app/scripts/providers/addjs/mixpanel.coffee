@@ -15,7 +15,7 @@ module.exports = class AddjsMixPanel
       console.log 'Addjs.MP.trackSession', @debug(), @peopleProps
     if mixpanel?
       if @peopleProps? && @peopleProps.email?
-        mixpanel.alias @peopleProps.email
+        mixpanel.identify @peopleProps.email
         mixpanel.people.set_once
           $email: @peopleProps.email
           $gravatar: @peopleProps.picture

@@ -70,7 +70,9 @@ exports.insertOrUpdateUser = (req, done, providerName, profile) ->
   if req.session.mixpanelId?
     User.findOne search, (err, user) ->
       $log 'check user', !user?, user
-      if !user? then mixpanel.track 'signUp', { distinct_id: req.session.mixpanelId }
+      if !user?  
+        mixpanel.alias req.session.mixpanelId, update.google._json.email
+        mixpanel.track 'signUp', { distinct_id: update.google._json.email }
 
   User.findOneAndUpdate search, update, { upsert: true }, (err, user) ->
     console.log '=================================================='
