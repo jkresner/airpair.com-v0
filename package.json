@@ -47,6 +47,7 @@
     "hbs": "2.3.x",
 
     "mixpanel": "0.0.18",
+    "stripe": "1.3.0",
     "awssum-amazon-ses": "1.x.x",
 
     "mocha": "~1.12.0",

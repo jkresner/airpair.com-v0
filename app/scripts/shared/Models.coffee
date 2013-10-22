@@ -105,7 +105,7 @@ class exports.Settings extends BB.BadassModel
   url: -> '/api/settings'
 
   defaults:
-    'paymentMethods': [ { type: 'paypal', isPrimary: true, info: {} } ]
+    'paymentMethods': [] # { type: 'paypal', isPrimary: true, info: {} }
 
   paymentMethod: (index) ->
     pms = @get('paymentMethods')

@@ -11,9 +11,11 @@ module.exports = class Router extends S.AirpairSessionRouter
   pushStateRoot: '/review'
 
   routes:
-    ':id'         : 'detail'
+    'stripe/book' : 'stripeBook'    
     'detail/:id'  : 'detail'
     'book/:id'    : 'book'
+    'thankyou/:id': 'thankyou'
+    ':id'         : 'detail'
     ''            : 'empty'
 
   appConstructor: (pageData, callback) ->
@@ -23,6 +25,7 @@ module.exports = class Router extends S.AirpairSessionRouter
       settings: new M.Settings()
     v =
       requestView: new V.RequestView( request: d.request, settings: d.settings, session: @app.session, isProd: pageData.isProd )
+      thankyouView: new V.ThankYouView( model: d.request )
 
     opts =
       error: => @empty(v.requestView)
@@ -31,6 +34,9 @@ module.exports = class Router extends S.AirpairSessionRouter
           v.bookView = new V.BookView( model: d.order, request: d.request, session: @app.session, isProd: pageData.isProd ).render()
 
     @setOrFetch d.request, pageData.request, opts
+
+    d.settings.on 'change', =>        # set stripe booking mode
+      d.order.set 'paymentMethod', d.settings.paymentMethod 'stripe'
 
     if @app.session.authenticated()
       @setOrFetch d.settings, pageData.settings
@@ -50,6 +56,10 @@ module.exports = class Router extends S.AirpairSessionRouter
 
     if @app.session.id is '5175efbfa3802cc4d5a5e6ed'
       $('nav ul').append("<li><a href='/adm/inbound/#{@app.request.id}'' class='zocial'>request admin</a><li>")
+
+  # stripeBook: ->
+    # @app.order.set 'paymentMethod', @app.settings.paymentMethod 'stripe'
+    # @navTo "book/#{@app.request.id}"
 
   book: (id) ->
     if !id? then return @empty()

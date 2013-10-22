@@ -3,10 +3,12 @@ RequestsSvc = require './../services/requests'
 ExpertsSvc = require './../services/experts'
 TagsSvc = require './../services/tags'
 OrdersSvc = require './../services/orders'
+SettingsSvc = require './../services/settings'
 rSvc = new RequestsSvc()
 eSvc = new ExpertsSvc()
 tSvc = new TagsSvc()
 oSvc = new OrdersSvc()
+sSvc = new SettingsSvc()  
 
 module.exports = class ViewDataService
 
@@ -22,6 +24,15 @@ module.exports = class ViewDataService
       u = authenticated : false
 
     JSON.stringify u
+
+  stripeCheckout: (usr, order, callback) ->
+    {qty,unitPrice} = order
+    total = qty * unitPrice
+    pk = global.cfg.payment.stripe.publishedKey
+    sSvc.getByUserId usr._id, (r) => 
+      callback _.extend {total,qty,unitPrice,pk}, 
+        session:    @session usr
+        customerId: JSON.stringify r
 
   review: (id, usr, callback) ->
     rSvc.getByIdSmart id, usr, (r) => callback
@@ -59,6 +70,12 @@ module.exports = class ViewDataService
           callback vd
       else
         callback vd
+
+  stripeCharge: (orderId, usr, token, callback) ->
+    # oSvc.markPaymentReceived orderId, usr, {}, (o) => callback
+    oSvc.markPaymentReceived orderId, usr, {}, (o) => callback
+      session: @session usr
+      order: JSON.stringify o
 
   paypalSuccess: (orderId, usr, callback) ->
     oSvc.markPaymentReceived orderId, usr, {}, (o) => callback

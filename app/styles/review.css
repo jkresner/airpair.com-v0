@@ -65,3 +65,6 @@
 #reviewpage #summary h1 { text-align:right; }
 
 #reviewpage .button-pay { margin:20px 0;width:87%;background:#99923F }
+#reviewpage #order .stripe a { width:80%;margin:40px 15px 5px 15px }
+#reviewpage #order .stripe p { color:gray }
+

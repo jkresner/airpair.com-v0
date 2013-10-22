@@ -1,5 +1,6 @@
-DomainService   = require './_svc'
-SettingsSvc = require './../services/settings'
+DomainService  = require './_svc'
+StripeService  = require './payment/stripe'
+stripeSvc = new StripeService()
 
 module.exports = class SettingsService extends DomainService
 
@@ -7,19 +8,49 @@ module.exports = class SettingsService extends DomainService
 
   getByUserId: (userId, callback) =>
     @model.findOne({ userId: userId }).lean().exec (e, r) =>
+      # $log 'settings getByUserId', userId
       if ! r? then r = {}
       callback r
 
 
-  create: (userId, o, callback) =>
-    o.userId = userId.toString()
-    new @model( o ).save (e, r) => callback r
+  create: (userId, data, callback) =>
+    data.userId = userId.toString()
+    save = => 
+      new @model( data ).save (e, r) => 
+        # $log '@model.save', e, r
+        callback r
+    if data.stripeCreate? then @addStripeCustomerSettings(data, save) else save()
 
 
   update: (userId, data, callback) =>
     ups = _.clone data
-    data.userId = userId
+    # ups.paymentMethods = settings.paymentMethods
+    ups.userId = userId
     delete ups._id
-    @model.findOneAndUpdate({userId:userId}, ups, { upsert: true }).lean().exec (e, r) =>
-      # $log 'save.settings', e, r
-      callback r
+    # (JK 2013.10.15) very sorry I know this is bad code ...
+    save = () => 
+      @model.findOneAndUpdate({userId:userId}, ups, { upsert: true }).lean().exec (e, r) =>
+        # $log 'save.settings', e, r
+        callback r
+
+    if data.stripeCreate? then @addStripeCustomerSettings(ups, save) else save()
+
+
+  addStripeCustomerSettings: (d, callback) =>
+    {email,token} = d.stripeCreate
+    delete d.stripeCreate
+
+    # make sure we only have one stripe customer settings
+    d.paymentMethods = _.without d.paymentMethods, _.findWhere(d.paymentMethods, {type: 'stripe'})
+
+    stripeSvc.createCustomer email, token, (customer) =>
+      isPrimary = d.paymentMethods.length == 0  
+      d.paymentMethods.push { type: 'stripe', info: customer, isPrimary: isPrimary }
+      callback()
+
+
+  getStripeCustomerId: (settings) =>
+    for method in settings.paymentMethods
+      if method.type is 'stripe'
+        if method.customerId? then return method.customerId
+    'null'

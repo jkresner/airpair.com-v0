@@ -9,8 +9,8 @@ describe "Review: book", ->
     hlpr.setInitApp @, '/scripts/review/Router'
     hlpr.setSession 'emilLee', =>
       $.post('/api/requests',data.requests[8]).done (r) =>
-        $.get("/api/requests/#{r._id}").done (r) =>
-          @r = r
+        $.get("/api/requests/#{r._id}").done (rr) => # so we get expert pricing form the service
+          @r = rr
           done()
 
   beforeEach ->

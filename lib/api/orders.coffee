@@ -27,6 +27,7 @@ class OrdersApi
       _id: req.body.company._id
       name: req.body.company.name
       contacts: req.body.company.contacts
+    order.paymentMethod = req.body.paymentMethod
 
     toPick = ['_id','userId','name','username','rate','email','pic','paymentMethod']
     for li in req.body.lineItems
@@ -42,7 +43,7 @@ class OrdersApi
             expert: _.pick li.suggestion.expert, toPick
 
     @svc.create order, req.user, (r) =>
-      if r.payment.responseEnvelope.ack is "Failure"
+      if r.payment.responseEnvelope? && r.payment.responseEnvelope.ack is "Failure"
         res.status(400)
       res.send r
 

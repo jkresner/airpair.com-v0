@@ -8,6 +8,13 @@
     <link rel="stylesheet" href="/stylesheets/app.css">
 </head>
 
+<style type="text/css">
+  #paypalSettings { width:48%;float:left;border-right:solid 1px #d3d3d3;padding-right:20px; }
+  .payTypeImg { background:white;padding:3px;border:solid 1px black;width:60px;height:24px; }
+  .payTypeImg img { width:100%; }
+  #stripeSettings { width:48%;float:left;margin-left:20px; }
+</style>
+
 <body id="settingspage">
 
   <nav>
@@ -27,15 +34,33 @@
     </div>
   </nav>
 
-  <div id="settings" class="route">
-    <div id="paymentSettings"></div>
+  <div id="payment" class="route">
+
+    <h3>Payment Settings</h3>
+
+    <p style="margin:20px 0;font-svize:11px;color:gray">We're currently experimenting with different payment providers (paypal+stripe). We've had requests for bitcoin options and others. If you have a strong preference for other providers, <a href="mailto:team@airpair.com">let us know</a>.
+    <br /><br />Our expert payout policy is to pay on completion of the chunks you've been booked. I.e. if you're booked for a 1 hour call - we will pay you after the call. If you've been booked for 5 hours, we will pay you on completion of your 5 hours. Paying out in blocks allows us to minimize the payment collection fees you pay to the payment providers. It also reduces our administration overhead.</p>
+
+    <hr />
+
+    <div id="paypalSettings"></div> 
+
+    <div id="stripeSettings"></div>
+
   </div>
+
+  <div id="stripe" class="route">
+
+    <h3>Stripe Setup</h3>
+    <div id="stripeRegister"></div>
+  </div>
+
 
 </body>
 
   <script type="text/javascript">
     function initApp() {
-      var pageData = {};
+      var pageData = { stripePK: '{{{stripePK}}}' }
       Router = require('/scripts/settings/Router');
       window.router = new Router(pageData);
     }

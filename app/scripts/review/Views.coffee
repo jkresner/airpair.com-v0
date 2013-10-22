@@ -34,6 +34,15 @@ class exports.SuggestionView extends BB.BadassView
 #############################################################################
 
 
+class exports.ThankYouView extends BB.ModelSaveView
+  el: '#thankyou'
+  tmpl: require './templates/ThankYou'
+  initialize: (args) ->
+    @listenTo @model, 'change', @render
+  render: ->
+    @$el.html @tmpl { requestId: @model.id }
+
+
 class exports.OrderView extends BB.ModelSaveView
   el: '#order'
   tmpl: require './templates/BookSummary'
@@ -45,6 +54,9 @@ class exports.OrderView extends BB.ModelSaveView
     @model.setTotal()
     @$('#summary').html @tmpl @model.toJSON()
     @$('#pay').toggle @mget('total') isnt 0
+    if @isStripeMode()
+      @$('#pay').html('<a class="pay button" href="#">Confirm hours</a><p>Your credit card on file will be charged</p>')
+      @$('#pay').addClass('stripe')
     @
   pay: (e) ->
     if @model.get('total') is 0
@@ -57,8 +69,13 @@ class exports.OrderView extends BB.ModelSaveView
     @model.attributes
   renderSuccess: (model, resp, opts) ->
     # $log 'order', model.attributes
-    @$('#paykey').val model.attributes.payment.payKey
-    @$('#submitBtn').click()
+    if @isStripeMode()
+      router.navTo "#thankyou/#{router.app.request.id}"
+    else    
+      @$('#paykey').val model.attributes.payment.payKey
+      @$('#submitBtn').click()
+  isStripeMode: =>
+    @model.get('paymentMethod')? && @model.get('paymentMethod').type is 'stripe'
 
 
 class exports.BookExpertView extends BB.BadassView

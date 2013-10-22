@@ -1,0 +1,25 @@
+<div class="payTypeImg">
+  <img src="https://stripe.com/img/navigation/logo-small.png" alt="Stripe logo" />
+</div>
+<br />
+
+{{#if stripeSettings }}
+  <p style="color:green;font-size:16px">Billing info is setup. Thank you!</p>
+  <p> We will automatically charge your card when you request hours or monthly if you have signed up for an AirPair membership. </p>
+
+  <div style="clear:both"></div>
+
+  <div class="form-actions">
+    <a href="#stripe" class="setup button">Change billing info</a>
+  </div>
+
+{{else}}
+  Setup billing info through stripe. Enter your credit card once and don't worry about pulling out your card every time you need help fast.
+
+  <div style="clear:both"></div>
+
+  <div class="form-actions">
+    <a href="#stripe" class="setup button">Setup billing info</a>
+  </div>
+  
+{{/if}} 

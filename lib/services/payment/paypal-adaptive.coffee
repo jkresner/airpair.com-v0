@@ -52,26 +52,21 @@ module.exports = class PaypalAdaptive
 
   Pay: (order, callback) ->
     order.paymentType = 'paypal'
-    airpairMargin = order.total
     payload = payloadDefault(@cfg)
     payload.memo = "http://airpair.com/review/#{order.requestId}"
 
     for item in order.lineItems
-      expertsHrRate = item.suggestion.suggestedRate[item.type].expert
-      expertsTotal = item.qty * expertsHrRate
-      airpairMargin -= expertsTotal
       payeePaypalEmail = getExpertPaypalEmail(item)
       payload.receiverList.receiver.push
         primary:  false
         email:    payeePaypalEmail
-        amount:   @formatCurrency(expertsTotal)
+        amount:   @formatCurrency(item.expertsTotal)
 
     payload.receiverList.receiver.push
       primary:  true
       email:    @cfg.PrimaryReceiver
       amount:   @formatCurrency(order.total)
 
-    order.profit = airpairMargin
     payload.returnUrl += order._id
     payload.cancelUrl += order._id
 
