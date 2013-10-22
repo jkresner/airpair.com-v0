@@ -25,6 +25,7 @@ module.exports = (grep) ->
     ui:'bdd'
     grep: grep
     globals: globalIgnores
+    timeout: 5000
 
   window.expect = chai.expect;
 
