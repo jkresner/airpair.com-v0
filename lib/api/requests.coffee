@@ -62,7 +62,7 @@ class RequestApi extends CRUDApi
       data = _.clone req.body
       delete data._id # so mongo doesn't complain
 
-      if data.status is "holding"
+      if data.status is "holding" && (!data.owner?||data.owner=='')
         evts.push @newEvent req, "send received email"
         data.owner = Roles.getAdminInitials usr.google.id
 
