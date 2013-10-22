@@ -34,6 +34,15 @@ class exports.SuggestionView extends BB.BadassView
 #############################################################################
 
 
+class exports.ThankYouView extends BB.ModelSaveView
+  el: '#thankyou'
+  tmpl: require './templates/ThankYou'
+  initialize: (args) ->
+    @listenTo @model, 'change', @render
+  render: ->
+    @$el.html @tmpl { requestId: @model.id }
+
+
 class exports.OrderView extends BB.ModelSaveView
   el: '#order'
   tmpl: require './templates/BookSummary'
@@ -61,12 +70,13 @@ class exports.OrderView extends BB.ModelSaveView
   renderSuccess: (model, resp, opts) ->
     # $log 'order', model.attributes
     if @isStripeMode()
-      router.navTo '#thankyou'
+      router.navTo "#thankyou/#{router.app.request.id}"
     else    
       @$('#paykey').val model.attributes.payment.payKey
       @$('#submitBtn').click()
   isStripeMode: =>
     @model.get('paymentMethod')? && @model.get('paymentMethod').type is 'stripe'
+
 
 class exports.BookExpertView extends BB.BadassView
   className: 'bookableExpert'
