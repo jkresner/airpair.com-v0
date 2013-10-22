@@ -64,6 +64,7 @@ describe "Review: book with stripe", ->
         expect( m.get('requestId') ).to.equal req.id
         expect( m.get('total') ).to.equal 160
         expect( m.get('lineItems').length ).to.equal 1
+        expect( m.get('paymentStatus') ).to.equal 'received'
         done()
 
       bv.$('.pay').click()

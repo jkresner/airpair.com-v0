@@ -23,7 +23,6 @@ module.exports = class StripeService
     # Make a charge
     stripe.charges.create payload, (err, charge) => 
       # $log 'err', err, 'charge', charge
-     
       if cfg.isProd
         $log "StripeResponse: ", payload, charge
         winston.log "StripResponse: ", charge

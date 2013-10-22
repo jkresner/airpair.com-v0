@@ -14,6 +14,9 @@ module.exports = class OrdersService extends DomainService
     order._id = new mongoose.Types.ObjectId;
     order.userId = user._id
 
+    payWith = 'paypal'
+    if order.paymentMethod? && order.paymentMethod.type == 'stripe' then payWith = 'stripe' 
+
     # ? if order.email != user.primaryEmail
     # update user's primary email
 
@@ -31,6 +34,10 @@ module.exports = class OrdersService extends DomainService
 
     savePaymentResponse = (paymentResponse) => 
       order.payment = paymentResponse
+
+      if payWith is 'stripe' && !paymentResponse.failure_code? 
+        order.paymentStatus = 'received'
+      
       new @model(order).save (e, rr) ->
         if e?
           $log "order.save.error", e
