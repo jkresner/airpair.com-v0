@@ -82,7 +82,6 @@ class exports.InfoFormView extends BB.EnhancedFormView
       @e.name = "customerInfoRepeat"
     addjs.trackEvent @e.category, @e.name, @elm('fullName').val(), @timer.timeSpent()
     addjs.providers.mp.setPeopleProps isCustomer : 'Y'
-
     router.navTo 'request'
 
 
