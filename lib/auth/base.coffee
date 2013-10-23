@@ -70,10 +70,11 @@ exports.insertOrUpdateUser = (req, done, providerName, profile) ->
   # We are only tracking sign ups from known flows (1:Request,2:BeExpert)
   if req.session.mixpanelId?
     User.findOne search, (err, user) ->
-      # $log 'calling alias?', !user?, user
+      $log 'calling alias?', !user?, user
       if !user?  
         mixpanel.alias req.session.mixpanelId, update.google._json.email, =>
-          mixpanel.track 'signUp', { distinct_id: update.google._json.email }
+          $log 'calling track Signup'
+          mixpanel.track 'signUp', { distinct_id: req.session.mixpanelId }
 
   User.findOneAndUpdate search, update, { upsert: true }, (err, user) ->
     console.log '=================================================='
