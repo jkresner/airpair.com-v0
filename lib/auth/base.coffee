@@ -77,7 +77,7 @@ exports.insertOrUpdateUser = (req, done, providerName, profile) ->
   $log 'mpIdExists', mpId?, mpId  
   if mpId?
     User.findOne search, (err, user) ->
-      $log 'userExists', user?, user.google.displayName
+      $log 'userExists', user?, user
       if !user?  
         mixpanel.alias mpId, update.google._json.email, =>
           $log 'alias callback', update.google._json.email, mpId
