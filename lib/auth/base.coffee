@@ -67,22 +67,27 @@ exports.insertOrUpdateUser = (req, done, providerName, profile) ->
     if req.cookies[cookieName]
       update['referrer'][cookieName] = req.cookies[cookieName]
 
+  saveUser = => User.findOneAndUpdate search, update, { upsert: true }, (err, user) ->
+    console.log '=================================================='
+    console.log 'findOneAndUpdate', err, done, user
+    done(err, user)
+
   # We are only tracking sign ups from known flows (1:Request,2:BeExpert)
   mpId = req.session.mixpanelId if req.session
-  $log 'mpId', mpId?, mpId  
+  $log 'mpIdExists', mpId?, mpId  
   if mpId?
     User.findOne search, (err, user) ->
-      $log 'findOne', user?, user
+      $log 'userExists', user?, user.google.displayName
       if !user?  
         mixpanel.alias mpId, update.google._json.email, =>
           $log 'alias callback', update.google._json.email, mpId
           mixpanel.track 'signUp', { distinct_id: mpId }, =>
             console.log 'signUp mixpanel.track callback'
+      saveUser()
+  else
+    saveUser()
 
-  User.findOneAndUpdate search, update, { upsert: true }, (err, user) ->
-    console.log '=================================================='
-    console.log 'findOneAndUpdate', err, done, user
-    done(err, user)
+
 
 
 ######## Load Providers
