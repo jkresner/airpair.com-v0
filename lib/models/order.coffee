@@ -24,6 +24,7 @@ schema = new Schema
   paymentType:    { required: true, type: String   }
   payment:        { required: true, type: {} }
   paymentStatus:  { required: true, type: String, default: 'pending' }
-
+  utm:            { required: false, type: {} }
+  
 
 module.exports = mongoose.model 'Order', schema

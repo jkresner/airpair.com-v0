@@ -28,6 +28,7 @@ class OrdersApi
       name: req.body.company.name
       contacts: req.body.company.contacts
     order.paymentMethod = req.body.paymentMethod
+    order.utm = req.body.utm
 
     toPick = ['_id','userId','name','username','rate','email','pic','paymentMethod']
     for li in req.body.lineItems

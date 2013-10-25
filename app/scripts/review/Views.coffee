@@ -59,6 +59,16 @@ class exports.OrderView extends BB.ModelSaveView
       @$('#pay').addClass('stripe')
     @
   pay: (e) ->
+    if mixpanel.get_property('utm_source')?
+      utm_values = 
+        utm_source: mixpanel.get_property('utm_source')
+        utm_medium: mixpanel.get_property('utm_medium')
+        utm_term: mixpanel.get_property('utm_term')
+        utm_content: mixpanel.get_property('utm_content')
+        utm_campaign: mixpanel.get_property('utm_campaign')
+
+      @model.set('utm', utm_values)
+
     if @model.get('total') is 0
       e.preventDefault()
       alert('please select at least one hour')

@@ -59,7 +59,16 @@ module.exports = class OrdersService extends DomainService
           if resp.status == 'INCOMPLETE'
             ups = paymentStatus: 'received'
   
-            mixpanel.track 'customerPayment', { distinct_id: usr.google._json.email, total: r.total }
+            props = { distinct_id: usr.google._json.email, total: r.total, profit: r.profit }
+
+            if r.utm?
+              props.utm_source = r.utm.utm_source
+              props.utm_medium = r.utm.utm_medium
+              props.utm_term = r.utm.utm_term
+              props.utm_content = r.utm.utm_content
+              props.utm_campaign = r.utm.utm_campaign
+        
+            mixpanel.track 'customerPayment', props
             mixpanel.people.track_charge usr.google._json.email, r.total
             
             @update id, ups, callback
