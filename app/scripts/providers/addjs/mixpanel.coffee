@@ -28,6 +28,14 @@ module.exports = class AddjsMixPanel
       $first_name: @peopleProps.given_name
       $created: @peopleProps.created_at
 
+    if mixpanel.get_property('utm_source')?
+      mixpanel.people.set_once
+        utm_source: mixpanel.get_property('utm_source')
+        utm_medium: mixpanel.get_property('utm_medium')
+        utm_term: mixpanel.get_property('utm_term')
+        utm_content: mixpanel.get_property('utm_content')
+        utm_campaign: mixpanel.get_property('utm_campaign')
+
   setPeopleProps: (props) ->
     if mixpanel?
       mixpanel.people.set_once props
