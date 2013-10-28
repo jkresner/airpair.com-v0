@@ -9,7 +9,7 @@ adminInitials = {}
 adminInitials['117132380360243205600'] = 'jk'
 adminInitials['112300854530824394263'] = 'mi'
 adminInitials['113874948210413798988'] = 'dt'
-adminInitials['105821070919354205173‎'] = 'il'
+adminInitials['105821070919354205173'] = 'il'
 
 module.exports =
 
