@@ -52,7 +52,7 @@ app.use (err, req, res, next) ->
 # exports.startServer is called automatically in brunch watch mode, but needs invoking in normal node
 exports.startServer = (port, path, callback) ->
   p = process.env.PORT || port
-  $log "started on port: http://localhost:#{p}, path #{path}"
+  $log "started on port: #{p}, path #{path}"
   app.listen p
 
 if cfg.isProd
