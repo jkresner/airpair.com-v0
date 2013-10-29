@@ -59,7 +59,7 @@ class exports.OrderView extends BB.ModelSaveView
       @$('#pay').addClass('stripe')
     @
   pay: (e) ->
-    if mixpanel.get_property('utm_source')?
+    if mixpanel? && mixpanel.get_property('utm_source')?
       utm_values = 
         utm_source: mixpanel.get_property('utm_source')
         utm_medium: mixpanel.get_property('utm_medium')
