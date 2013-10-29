@@ -4,7 +4,7 @@
   {{#each tags}}
     <span class="label label-tag">{{short}}</span>
   {{/each}}
-  <p class="brief">{{brief}}</p></div>
+  <div class="brief">{{markdown brief}}</div></div>
 <br />
 
 
@@ -27,7 +27,7 @@
     {{/if}}
   {{/if}}
   <dt style="display:none">About</dt>
-  <dd>{{about}}}</dd>
+  <dd>{{markdown about}}</dd>
   <dt>Contact</dt>
   <dd class="contact">
     {{#each contacts}}
@@ -66,7 +66,7 @@
 {{/with}}
 
 <div style="clear:both"><label><b>Availability</b></label>
-  {{availability}}</div>
+  {{markdown availability}}</div>
 
 {{#if isCustomer}}
   {{#if hasAvailableExpert }}
