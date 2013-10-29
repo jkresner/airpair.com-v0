@@ -14,6 +14,10 @@ Handlebars.registerHelper "localDateTimeSeconds", (utcDateString) ->
   day = moment utcDateString
   day.local().format("MMM DD HH:mm:ss")
 
+Handlebars.registerHelper 'markdown', (text) ->
+  result = marked(text);
+  new Handlebars.SafeString result
+
 
 exports.TagsInputView = TagViews.TagsInputView
 
