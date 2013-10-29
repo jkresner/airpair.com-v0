@@ -74,7 +74,7 @@ describe "Stories: Emil Lee", ->
     v = requestView
 
     request.once 'change', =>
-      expect( v.$('.brief').html() ).to.equal request.get('brief')
+      expect( v.$('.brief').text().trim()).to.equal request.get('brief')
       expect( v.$('#noExpertsYet').html() ).to.equal 'Experts not yet suggested ... '
       expect( v.$('.book-actions').is(':visible') ).to.equal false
       expect( v.$('.budget').is(':visible') ).to.equal true
@@ -110,7 +110,7 @@ describe "Stories: Emil Lee", ->
 
     request.once 'change', =>
       expect( v.$('.budget').is(':visible') ).to.equal false
-      expect( v.$('.brief').html() ).to.equal request.get('brief')
+      expect( v.$('.brief').text().trim() ).to.equal request.get('brief')
       expect( v.$('.book-actions').is(':visible') ).to.equal false
       expect( v.$('#notExpertOrCustomer').is(':visible') ).to.equal true
       expect( v.$('#signin').is(':visible') ).to.equal true
@@ -191,7 +191,7 @@ describe "Stories: Emil Lee", ->
     v = requestView
 
     request.once 'change', =>
-      expect( v.$('.brief').html() ).to.equal request.get('brief')
+      expect( v.$('.brief').text().trim() ).to.equal request.get('brief')
       expect( v.$('.suggested .suggestion').length ).to.equal 1
       expect( v.$('.book-actions').is(':visible') ).to.equal true
 
