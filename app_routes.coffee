@@ -7,8 +7,8 @@ viewData = new ViewDataService()
 file = (r, file) -> r.sendfile "./public/#{file}.html"
 
 loggedInHttpsRedirect = (req, res, next) ->
-  $log 'loggedInHttpsRedirect', req.isAuthenticated, req.secure, cfg.isProd
-  if req.isAuthenticated && !req.secure && cfg.isProd
+  $log 'loggedInHttpsRedirect', req.isAuthenticated(), req.secure, cfg.isProd, req.url
+  if req.isAuthenticated() && !req.secure && cfg.isProd
     return res.redirect "https://www.airpair.com#{req.url}"
   next()
 
