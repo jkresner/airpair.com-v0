@@ -3,22 +3,15 @@ BitBucketStrategy = require('passport-bitbucket').Strategy
 config =
   dev:
     consumerKey: 'QNw3HsMSKzM6ptP4G4',
-    consumerSecret: 'Cx5pvK2ZEjsymVxME42hSffkzkaQ9Buf',
-    callbackURL: "http://localhost:3333/auth/bitbucket/callback"
-    passReqToCallback: true
+    consumerSecret: 'Cx5pvK2ZEjsymVxME42hSffkzkaQ9Buf'
 
   staging:
     consumerKey: 'aLajWwZkcLY7jThvWZ',
-    consumerSecret: 'gJtv3zmpzFJvh4V3kvzfegAxDKWcYw8h',
-    callbackURL: "http://staging.airpair.com/auth/bitbucket/callback"
-    passReqToCallback: true
+    consumerSecret: 'gJtv3zmpzFJvh4V3kvzfegAxDKWcYw8h'
 
   prod:
     consumerKey: 'WpdhX5mWW4wmLuDPwA',
-    consumerSecret: 'uZveS97GysRW6EzjfQhERSB2SpkyBeSJ',
-    callbackURL: "http://www.airpair.com/auth/bitbucket/callback"
-    passReqToCallback: true
-
+    consumerSecret: 'uZveS97GysRW6EzjfQhERSB2SpkyBeSJ'
 
 class BitBucket
 
@@ -26,6 +19,8 @@ class BitBucket
     @auth = auth
     @passport = passport
     envConfig = @auth.getEnvConfig(config)
+    envConfig.callbackURL = "#{cfg.oauthHost}/auth/bitbucket/callback"
+    envConfig.passReqToCallback = true
     passport.use 'bitbucket-authz', new BitBucketStrategy envConfig, @verifyCallback
 
   # Process the response from the external provider

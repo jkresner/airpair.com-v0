@@ -5,22 +5,16 @@ config =
     clientID:          '1451'
     clientSecret:      'CCkJpq3BY3e)lZFNsgkCkA(('
     key:               'dTtlx1WL0TJvOKPfoU88yg(('
-    callbackURL:        "http://localhost:3333/auth/stackexchange/callback"
-    passReqToCallback:  true
 
   staging:
     clientID:          '1489'
     clientSecret:      '4cwYFL7O*I9xrmFm6wmGYQ(('
     key:               'tfYVUqc1*XmoIgqvCZH3Gg(('
-    callbackURL:        "http://staging.airpair.com/auth/stackexchange/callback"
-    passReqToCallback:  true
 
   prod:
     clientID:          '1432'
     clientSecret:      'oA5O0hVgWg3muObSVC8mSQ(('
     key:               'h0fVRSYpv0*MAKD7HXj5bw(('
-    callbackURL:        "http://www.airpair.com/auth/stackexchange/callback"
-    passReqToCallback:  true
 
 
 class StackExchange
@@ -29,6 +23,8 @@ class StackExchange
     @auth = auth
     @passport = passport
     envConfig = @auth.getEnvConfig(config)
+    envConfig.callbackURL = "#{cfg.oauthHost}/auth/stackexchange/callback"
+    envConfig.passReqToCallback = true
     @passport.use 'stack-authz', new StackExchangeStrategy envConfig, @verifyCallback
 
   # Process the response from the external provider
