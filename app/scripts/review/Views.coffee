@@ -149,10 +149,12 @@ class exports.BookView extends BB.BadassView
 class exports.ExpertReviewFormView extends BB.EnhancedFormView
   el: '#expertReviewForm'
   tmpl: require './templates/ExpertReviewForm'
-  viewData: ['expertRating', 'expertFeedback', 'expertStatus', 'expertComment', 'expertAvailability','payPalEmail']
+  viewData: ['expertRating', 'expertFeedback', 'expertStatus', 'expertComment',
+    'expertAvailability','payPalEmail']
   events:
     'click .saveFeedback': 'saveFeedback'
   initialize: (args) ->
+    @listenTo @settings, 'change', @render
   render: ->
     expertRate = @model.get('suggestedRate')[@request.get('pricing')].expert
     pp = @settings.paymentMethod('paypal')
