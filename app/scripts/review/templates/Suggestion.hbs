@@ -12,9 +12,9 @@
 
       {{#if expertComment }}
         <div><b>{{expert.name}} said</b></div>
-        <p>{{ expertComment }}</p>
+        {{markdown expertComment }}
         <b>Availability</b>
-        <p>{{ expertAvailability }}</p>
+        {{markdown expertAvailability }}
       {{/if}}
 
     </div>
