@@ -7,6 +7,7 @@ viewData = new ViewDataService()
 file = (r, file) -> r.sendfile "./public/#{file}.html"
 
 loggedInHttpsRedirect = (req, res, next) ->
+  $log 'loggedInHttpsRedirect', req.isAuthenticated, req.secure, cfg.isProd
   if req.isAuthenticated && !req.secure && cfg.isProd
     return res.redirect "https://www.airpair.com#{req.url}"
   next()
@@ -30,6 +31,7 @@ module.exports = (app) ->
   app.get '/dashboard*', loggedIn, (req, r)-> file r, 'dashboard'
 
   renderReview = (req, r) ->
+    $log 'renderReview'
     viewData.review req.params.id, req.user, (d) => r.render 'review.html', d
   app.get '/review/:id', loggedInHttpsRedirect, renderReview
   app.get '/review/book/:id', loggedInHttpsRedirect, renderReview
