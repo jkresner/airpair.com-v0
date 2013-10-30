@@ -6,6 +6,11 @@ viewData = new ViewDataService()
 
 file = (r, file) -> r.sendfile "./public/#{file}.html"
 
+loggedInHttpsRedirect = (req, res, next) ->
+  if req.isAuthenticated && !req.secure && cfg.isProd
+    return res.redirect 'https://' + req.get('host') + req.url
+  next()
+
 module.exports = (app) ->
 
   # login / auth routes
@@ -26,8 +31,8 @@ module.exports = (app) ->
 
   renderReview = (req, r) ->
     viewData.review req.params.id, req.user, (d) => r.render 'review.html', d
-  app.get '/review/:id', renderReview
-  app.get '/review/book/:id', renderReview
+  app.get '/review/:id', loggedInHttpsRedirect, renderReview
+  app.get '/review/book/:id', loggedInHttpsRedirect, renderReview
 
   app.get '/settings*', loggedIn, (req, r)->  r.render 'settings.html', 
     { stripePK: cfg.payment.stripe.publishedKey }
