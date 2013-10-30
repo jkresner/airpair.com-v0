@@ -11,9 +11,8 @@ loggedInHttpsRedirect = (req, res, next) ->
   $log '*** req.host', req.host, 'req.secure', req.secure
   $log '*** req.protocol', req.protocol
   $log '*** req.isAuthenticated()', req.isAuthenticated()
-  $log '*** req.connection.encrypted', req.connection.encrypted
   $log '*** req.headers["x-forwarded-proto"]', req.headers['x-forwarded-proto']
-  isHttpsOrigin = req.headers['x-forwarded-proto']
+  isHttpsOrigin = req.headers['x-forwarded-proto'] is 'https'
 
   if req.isAuthenticated() && !isHttpsOrigin && cfg.isProd
     return res.redirect "https://www.airpair.com#{req.url}"
