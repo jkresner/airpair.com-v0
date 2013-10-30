@@ -8,9 +8,8 @@ file = (r, file) -> r.sendfile "./public/#{file}.html"
 
 loggedInHttpsRedirect = (req, res, next) ->
   $log '*** loggedInHttpsRedirect', req.url
-  $log '*** req.get("host")', req.get('host'), 'req.secure', req.secure
-  $log '*** req.headers.protocol', req.headers.protocol
-  $log '*** request.headers.host', request.headers.host
+  $log '*** req.host', req.host, 'req.secure', req.secure
+  $log '*** req.protocol', req.protocol
   $log '*** req.isAuthenticated()', req.isAuthenticated()
   $log '*** req.connection.encrypted', req.connection.encrypted
   $log '*** req.headers["x-forwarded-proto"]', req.headers['x-forwarded-proto']
