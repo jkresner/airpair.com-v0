@@ -16,7 +16,7 @@ module.exports = class AddjsMixPanel
     if mixpanel?
       if @peopleProps? && @peopleProps.email?
         $log 'beforeTimeout', mixpanel.get_distinct_id, mixpanel
-        setTimeout @identify, 400
+        setTimeout @identify, 700
   identify: =>
     $log 'afterTimeout', mixpanel.get_distinct_id, mixpanel
     mixpanel.identify @peopleProps.email
