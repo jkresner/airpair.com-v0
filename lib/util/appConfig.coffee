@@ -19,16 +19,23 @@ c.payment =
     publishedKey: 'pk_test_aj305u5jk2uN1hrDQWdH0eyl'
     secretKey:    'sk_test_8WOe71OlRWPyB3rDRcnthSCc'
 
+c.oauthHost = 'http://localhost:3333'
+
 if c.env is 'test'
   process.env.Payment_Env = 'test'
   c.SES_ACCESS_KEY = 'test'
   c.SES_SECRET_KEY = 'test'
+  c.oauthHost = 'http://localhost:4444'
 
 if c.env is 'prod'
   c.analytics.mixpanel.id = '076cac7a822e2ca5422c38f8ab327d62'
   c.payment.stripe =
     publishedKey: 'pk_live_FEGruKDm6OZyagTHqhXWvV8G'
     secretKey:    'sk_live_qSxo06x8iwaYuIIw1Bkx7hszc'
+  c.oauthHost = 'https://www.airpair.com' #note https
+
+# option to overwrite in staging etc.
+c.oauthHost = process.env.oauthHost if process.env.oauthHost? 
 
 global.cfg = c
 

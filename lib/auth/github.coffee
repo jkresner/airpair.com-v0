@@ -4,22 +4,16 @@ config =
   dev:
     clientID:          '378dac2743563e96c747'
     clientSecret:      'f52d233259426f769850a13c95bfc3dbe7e3dbf2'
-    callbackURL:       'http://localhost:3333/auth/github/callback'
-    passReqToCallback: true
     customHeaders:      {"User-Agent" : "airpair-com"}
 
   staging:
     clientID:           'e4917fcf822c02fd04f6'
     clientSecret:       '14292d0a3f665f73dde448fc90ff6c402ab6da9b'
-    callbackURL:        "http://staging.airpair.com/auth/github/callback"
-    passReqToCallback:  true
     customHeaders:      {"User-Agent" : "airpair-com"}
 
   prod:
     clientID:          '5adb6a29c586908f8161'
     clientSecret:      'c4182b3402aa93dd6465e99ca90f2650a0596997'
-    callbackURL:       'http://www.airpair.com/auth/github/callback'
-    passReqToCallback: true
     customHeaders:      {"User-Agent" : "airpair-com"}
 
 
@@ -29,6 +23,8 @@ class Github
     @auth = auth
     @passport = passport
     envConfig = @auth.getEnvConfig(config)
+    envConfig.callbackURL = "#{cfg.oauthHost}/auth/github/callback"
+    envConfig.passReqToCallback = true
     passport.use 'github-authz', new GitHubStrategy envConfig, @verifyCallback
 
   # Process the response from the external provider

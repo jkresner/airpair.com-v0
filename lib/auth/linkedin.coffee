@@ -2,22 +2,17 @@ LinkedInStrategy = require('passport-linkedin').Strategy
 
 config =
   dev:
-    consumerKey: 'sy5n2q8o2i49',  #linkedIN api key
-    consumerSecret: 'lcKjdbFSNG3HfZsd', #linkedIn secret key
-    callbackURL: "http://localhost:3333/auth/linkedin/callback"
-    passReqToCallback: true
+    consumerKey: 'sy5n2q8o2i49'  #linkedIN api key
+    consumerSecret: 'lcKjdbFSNG3HfZsd' #linkedIn secret key
 
   staging:
-    consumerKey: 'rgd74pv5o45c',  #linkedIN api key
-    consumerSecret: 'd6fTF24fLvDe51zf', #linkedIn secret key
-    callbackURL: "http://staging.airpair.com/auth/linkedin/callback"
-    passReqToCallback: true
+    consumerKey: 'rgd74pv5o45c'  #linkedIN api key
+    consumerSecret: 'd6fTF24fLvDe51zf' #linkedIn secret key
 
   prod:
     consumerKey: 'sy5n2q8o2i49',  #linkedIN api key
-    consumerSecret: 'lcKjdbFSNG3HfZsd', #linkedIn secret key
-    callbackURL: "http://www.airpair.com/auth/linkedin/callback"
-    passReqToCallback: true
+    consumerSecret: 'lcKjdbFSNG3HfZsd' #linkedIn secret key
+
 
 
 class LinkedIn
@@ -25,7 +20,9 @@ class LinkedIn
   constructor: (auth, passport) ->
     @auth = auth
     @passport = passport
-    envConfig = @auth.getEnvConfig(config)
+    envConfig = @auth.getEnvConfig(config)    
+    envConfig.callbackURL = "#{cfg.oauthHost}/auth/linkedin/callback"
+    envConfig.passReqToCallback = true
     passport.use 'linkedin-authz', new LinkedInStrategy envConfig, @verifyCallback
 
   # Process the response from the external provider

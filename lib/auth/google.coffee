@@ -4,20 +4,14 @@ config =
   dev:
     clientID:           '739031114792.apps.googleusercontent.com'
     clientSecret:       '8_1NuinvGy6ybpu0m2srvYjm'
-    callbackURL:        "http://localhost:3333/auth/google/callback"
-    passReqToCallback:  true
 
   staging:
     clientID:           '140030887085.apps.googleusercontent.com'
     clientSecret:       'jeynX5cSK5Zjv6kvIFLDs2uA'
-    callbackURL:        "http://staging.airpair.com/auth/google/callback"
-    passReqToCallback:  true
 
   prod:
     clientID:           '140030887085-c7ffv2q96gc56ejmnbpsp433anvqaukf.apps.googleusercontent.com'
     clientSecret:       '1iB16yFbTgF4iJ3kB7C1lUwj'
-    callbackURL:        "http://www.airpair.com/auth/google/callback"
-    passReqToCallback:  true
 
 
 class Google
@@ -25,7 +19,10 @@ class Google
   constructor: (auth, passport) ->
     @auth = auth
     @passport = passport
-    envConfig = @auth.getEnvConfig(config)
+    envConfig = @auth.getEnvConfig(config)    
+    envConfig.callbackURL = "#{cfg.oauthHost}/auth/google/callback"
+    $log 'envConfig.callbackURL.google', envConfig.callbackURL
+    envConfig.passReqToCallback = true
     passport.use 'google-authz', new GoogleStrategy envConfig, @verifyCallback
 
   # Process the response from the external provider

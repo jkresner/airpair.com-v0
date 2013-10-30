@@ -2,23 +2,16 @@ TwitterStrategy = require('passport-twitter').Strategy
 
 config =
   dev:
-    consumerKey: '8eIvjnVbj0BkMiUVQP0ZQ',
-    consumerSecret: 'OwrnjqCz3BeRswKLuDJqdzMQlgdDZi9F3hFZPIbxgVM',
-    callbackURL: "http://localhost:3333/auth/twitter/callback"
-    passReqToCallback: true
+    consumerKey: '8eIvjnVbj0BkMiUVQP0ZQ'
+    consumerSecret: 'OwrnjqCz3BeRswKLuDJqdzMQlgdDZi9F3hFZPIbxgVM'
 
   staging:
-    consumerKey: 'hzcDmWTPJZFooDh6r0v9A',
-    consumerSecret: 'NwA4bJc6RFAGeSbpYwuEX0CdiTuoDj3qzyXj9uCQNs',
-    callbackURL: "http://staging.airpair.com/auth/twitter/callback"
-    passReqToCallback: true
+    consumerKey: 'hzcDmWTPJZFooDh6r0v9A'
+    consumerSecret: 'NwA4bJc6RFAGeSbpYwuEX0CdiTuoDj3qzyXj9uCQNs'
 
   prod:
-    consumerKey: '8eIvjnVbj0BkMiUVQP0ZQ',
-    consumerSecret: 'OwrnjqCz3BeRswKLuDJqdzMQlgdDZi9F3hFZPIbxgVM',
-    callbackURL: "http://www.airpair.com/auth/twitter/callback"
-    passReqToCallback: true
-
+    consumerKey: '8eIvjnVbj0BkMiUVQP0ZQ'
+    consumerSecret: 'OwrnjqCz3BeRswKLuDJqdzMQlgdDZi9F3hFZPIbxgVM'
 
 class Twitter
 
@@ -26,6 +19,8 @@ class Twitter
     @auth = auth
     @passport = passport
     envConfig = @auth.getEnvConfig(config)
+    envConfig.callbackURL = "#{cfg.oauthHost}/auth/twitter/callback"
+    envConfig.passReqToCallback = true    
     passport.use 'twitter-authz', new TwitterStrategy envConfig, @verifyCallback
 
   # Process the response from the external provider
