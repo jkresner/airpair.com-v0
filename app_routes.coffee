@@ -7,11 +7,11 @@ viewData = new ViewDataService()
 file = (r, file) -> r.sendfile "./public/#{file}.html"
 
 loggedInHttpsRedirect = (req, res, next) ->
-  $log '*** loggedInHttpsRedirect', req.url
-  $log '*** req.host', req.host, 'req.secure', req.secure
-  $log '*** req.protocol', req.protocol
-  $log '*** req.isAuthenticated()', req.isAuthenticated()
-  $log '*** req.headers["x-forwarded-proto"]', req.headers['x-forwarded-proto']
+  $log '*1** loggedInHttpsRedirect', req.url
+  $log '*2** req.host', req.host, 'req.secure', req.secure
+  $log '*3** req.protocol', req.protocol
+  $log '*4** req.headers["x-forwarded-proto"]', req.headers['x-forwarded-proto']
+  $log '*5** req.isAuthenticated()', req.isAuthenticated()
   isHttpsOrigin = req.headers['x-forwarded-proto'] is 'https'
 
   if req.isAuthenticated() && !isHttpsOrigin && cfg.isProd
@@ -37,7 +37,7 @@ module.exports = (app) ->
   app.get '/dashboard*', loggedIn, (req, r)-> file r, 'dashboard'
 
   renderReview = (req, r) ->
-    $log 'renderReview'
+    $log '*6** renderReview'
     viewData.review req.params.id, req.user, (d) => r.render 'review.html', d
   app.get '/review/:id', loggedInHttpsRedirect, renderReview
   app.get '/review/book/:id', loggedInHttpsRedirect, renderReview
