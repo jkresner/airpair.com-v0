@@ -1,5 +1,5 @@
 <fieldset>
-  <legend><b>{</b> Contact info <b>}</b>
+  <legend>Contact info
   <span class="stepNum">Step 2 of 3</span>
   </legend>
 
@@ -18,7 +18,7 @@
   <div id="companyInfo">
     <div>
       <div class="control-group">
-        <label class="control-label" for="companyName">Company name</label>
+        <label class="control-label" for="companyName">Company (or app) name</label>
         <div class="controls">
           <input style="width:320px" type="text" id="companyName" name="name" placeholder="Company (or app) name" value="{{ name }}" data-error-style="inline">
         </div>
@@ -33,11 +33,12 @@
         </div>
       </div>
       <div class="control-group">
-        <label class="control-label" for="companyAbout">What does your company / app do?</label>
+        <label class="control-label" for="companyAbout">What does your company (or app) do?</label>
         <div class="controls">
           <span class="charCount"></span>
           <textarea class="input-block-level" id="companyAbout" name="about" placeholder="Tell us about your industry / problems are you solving" value="{{ soId }}" data-error-style="inline"></textarea>
         </div>
+         <span class="muted">Please supply min 50 chars about your company or app so can we find you experts that may have both technical & relevant industry experience.</span>
       </div>
     </div>
   </div>

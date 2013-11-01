@@ -254,6 +254,22 @@ nav .facebook {
 h2 span { color: #CC6750 }
 h2.yellow span { color: #99923F; }
 
+.header-button {
+  background:#CC6750;
+  padding:1px 20px 5px;
+  border-radius: 0.5em;
+  color:white;
+  border:solid 3px #CC523E;
+  font-size:18px;
+  /*margin:20px 142px;*/
+  text-decoration:none;
+  display: inline-block;
+  width:auto !important;  
+  height:auto !important;  
+  margin-left: 4px;
+  /*float: right;*/
+  
+}
 .button {
   background:#CC6750;
   padding:10px 20px;

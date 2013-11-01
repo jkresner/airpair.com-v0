@@ -18,7 +18,7 @@ class exports.Company extends BB.BadassModel
     contacts:       []
   validation:
     name:           { required: true }
-    about:          { rangeLength: [100, 5000], msg: 'Provide reasonable detail (min 100 chars) about your company so experts can asses if they are a good match. Sometimes we find you experts that have both technical & relevant industry experience.' }
+    about:          { rangeLength: [50, 5000], msg: 'Provide reasonable detail.' }
 
 
 class exports.CompanyContact extends BB.BadassModel
