@@ -14,6 +14,7 @@ module.exports = class Router extends S.AirpairSessionRouter
     'welcome'       : 'welcome'
     'info'          : 'info'
     'request'       : 'request'
+    'confirm'       : 'confirm'
     'thanks'        : 'thanks'
     'edit/:id'      : 'edit'
 
@@ -26,6 +27,7 @@ module.exports = class Router extends S.AirpairSessionRouter
       welcomeView: new V.WelcomeView()
       infoFormView: new V.InfoFormView model: d.company, request: d.request
       requestFormView: new V.RequestFormView model: d.request, tags: d.tags
+      confirmEmailView: new V.ConfirmEmailView model: d.company, request: d.request
 
     _.extend d, v
 

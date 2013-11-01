@@ -151,7 +151,7 @@ class exports.RequestFormView extends BB.ModelSaveView
 
     addjs.trackEvent @e.category, @e.name, @model.contact(0).fullName, @timer.timeSpent()
 
-    router.navTo 'thanks'
+    router.navTo 'confirm'
   getViewData: ->
     brief: @elm("brief").val()
     hours: @elm("hours").val()
@@ -159,6 +159,38 @@ class exports.RequestFormView extends BB.ModelSaveView
     budget: @$("[name='budget']:checked").val()
     pricing: @$("[name='pricing']:checked").val()
     tags: @tagsInput.getViewData()
+
+
+class exports.ConfirmEmailView extends BB.EnhancedFormView
+  logging: on
+  el: '#confirm'
+  tmpl: require './templates/ConfirmEmail'
+  events: { 'click .save': 'saveEmail' }
+  viewData: ['email']
+  initialize: ->
+    @e = addjs.events.customerEmailConfirm
+    @listenTo @model, 'change:contacts', @render
+  saveEmail: (e) ->
+    e.preventDefault()
+    confirmedEmail = @elm('email').val()
+    currentEmail = @model.get('contacts')[0].email
+    if confirmedEmail == currentEmail
+      @renderSuccess()
+      addjs.trackEvent @e.category, 'customerEmailChange', currentEmail+'|'+confirmedEmail
+    else 
+      @save e
+  getViewData: ->
+    email = @elm('email').val()
+    contacts = @model.get('contacts')
+    contacts[0].email = email
+    contacts: contacts
+  render: ->
+    @$el.html @tmpl { email: @model.get('contacts')[0].email }
+    @
+  renderSuccess: (model, response, options) =>
+    addjs.trackEvent @e.category, @e.name, @model.get('contacts')[0].fullName
+    @request.save 'company': @model.attributes
+    router.navTo 'thanks'
 
 
 #############################################################################
