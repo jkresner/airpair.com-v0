@@ -162,7 +162,6 @@ class exports.RequestFormView extends BB.ModelSaveView
 
 
 class exports.ConfirmEmailView extends BB.EnhancedFormView
-  logging: on
   el: '#confirm'
   tmpl: require './templates/ConfirmEmail'
   events: { 'click .save': 'saveEmail' }
