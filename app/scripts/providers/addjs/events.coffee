@@ -20,6 +20,8 @@ addEvent 'request', 'customerInfoNew', '/find-an-expert/info', 90, 'week', 'cust
 
 addEvent 'request', 'customerRequest', '/find-an-expert/request', 50, 'week', 'customer saves contact info first time'
 
+addEvent 'request', 'customerEmailConfirm', '/find-an-expert/confirm', 50, 'week', 'customer confirms their contact email is correct'
+
 
 
 addEvent 'beexpert', 'expertWelcome', '/be-an-expert', 100, 'week', 'expert creates account via google login'
