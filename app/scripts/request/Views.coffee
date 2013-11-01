@@ -175,8 +175,8 @@ class exports.ConfirmEmailView extends BB.EnhancedFormView
     currentEmail = @model.get('contacts')[0].email
     if confirmedEmail == currentEmail
       @renderSuccess()
-      addjs.trackEvent @e.category, 'customerEmailChange', currentEmail+'|'+confirmedEmail
     else 
+      addjs.trackEvent @e.category, 'customerEmailChange', currentEmail+' | '+confirmedEmail
       @save e
   getViewData: ->
     email = @elm('email').val()
