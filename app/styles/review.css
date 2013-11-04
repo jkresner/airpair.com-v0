@@ -68,3 +68,17 @@
 #reviewpage #order .stripe a { width:80%;margin:40px 15px 5px 15px }
 #reviewpage #order .stripe p { color:gray }
 
+#reviewpage .satisfactionText {
+	float: left;
+	width: 64%;
+	margin-left: 55px;
+	margin-top: 32px;
+}
+
+#reviewpage .satisfactionImage {
+	margin-right: 130px;
+}
+
+#reviewpage .satisfactionImage img {
+	 width:100px;
+}

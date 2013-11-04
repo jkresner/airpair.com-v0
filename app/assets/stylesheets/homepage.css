@@ -415,6 +415,27 @@ a.green { background: #99923F;border: solid 3px #7F761C }
 #how i { color:gray;font-style:normal;font-weight:normal; }
 #how p { margin-top:20px; }
 
+#how .satisfactionGuarantee {
+  float:left;
+  margin-left:152px;
+  margin-bottom:25px;
+}
+
+#how .satisfactionText {
+  float:left;
+  margin-top:15px;
+  margin-left:27px;
+}
+
+#how .satisfactionImage {
+  float:left;
+  margin-left:30px;
+}
+
+#how .satisfactionImage img {
+  width:100px;
+}
+
 .pw-widget { float:right; }
 
 .avatar {
