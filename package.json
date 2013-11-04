@@ -13,6 +13,7 @@
     "npm": "1.2.x"
   },
   "scripts": {
+    "test": "./build/git-hooks/pre-push",
     "postinstall": "brunch b -e prod"
   },
   "dependencies": {
