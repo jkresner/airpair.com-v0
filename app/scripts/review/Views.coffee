@@ -54,8 +54,9 @@ class exports.OrderView extends BB.ModelSaveView
     @model.setTotal()
     @$('#summary').html @tmpl @model.toJSON()
     @$('#pay').toggle @mget('total') isnt 0
-    if @isStripeMode()
-      @$('#pay').html('<a class="pay button" href="#">Confirm hours</a><p>Your credit card on file will be charged</p>')
+    @isStripeMode = @mget('paymentMethod')? && @mget('paymentMethod').type is 'stripe'
+    if @isStripeMode
+      @$('#pay').html('<a class="pay payStripe button" href="#">Confirm hours</a><p>Your credit card on file will be charged</p>')
       @$('#pay').addClass('stripe')
     @
   pay: (e) ->
@@ -74,22 +75,21 @@ class exports.OrderView extends BB.ModelSaveView
         @model.set('utm', utm_values)
 
       eventName = 'customerTryPayPaypal'
-      eventName = 'customerTryStripe' if @isStripeMode()
+      eventName = 'customerTryStripe' if @isStripeMode
       addjs.trackEvent "request", eventName, "/review/book/#{@model.get('requestId')}"
       
       @save(e)
     false
   getViewData: ->
     @model.attributes
-  renderSuccess: (model, resp, opts) ->
-    # $log 'order', model.attributes
-    if @isStripeMode()
+  renderSuccess: (model, resp, opts) =>
+    $log 'order', model.attributes
+    if @isStripeMode
       router.navTo "#thankyou/#{router.app.request.id}"
     else    
       @$('#paykey').val model.attributes.payment.payKey
       @$('#submitBtn').click()
-  isStripeMode: =>
-    @model.get('paymentMethod')? && @model.get('paymentMethod').type is 'stripe'
+    
 
 
 class exports.BookExpertView extends BB.BadassView

@@ -25,6 +25,8 @@ describe "Stories: Emil Lee", ->
     @tagsFetch = sinon.stub Tags::, 'fetch', -> @set data.tags; @trigger 'sync'
     done()
 
+  after -> @tagsFetch.restore()
+
   beforeEach (done) ->
     testNum++
     hlpr.cleanSetup @, storySteps[testNum].fixture

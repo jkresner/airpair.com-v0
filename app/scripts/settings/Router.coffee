@@ -30,4 +30,4 @@ module.exports = class Router extends S.AirpairSessionRouter
     @navTo 'payment'
 
   stripe: ->
-    $log 'stripeRegister'
+    # $log 'stripeRegister'
