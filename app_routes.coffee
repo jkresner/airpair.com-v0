@@ -6,17 +6,17 @@ viewData = new ViewDataService()
 
 file = (r, file) -> r.sendfile "./public/#{file}.html"
 
-loggedInHttpsRedirect = (req, res, next) ->
-  $log '*1** loggedInHttpsRedirect', req.url
-  $log '*2** req.host', req.host, 'req.secure', req.secure
-  $log '*3** req.protocol', req.protocol
-  $log '*4** req.headers["x-forwarded-proto"]', req.headers['x-forwarded-proto']
-  $log '*5** req.isAuthenticated()', req.isAuthenticated()
-  isHttpsOrigin = req.headers['x-forwarded-proto'] is 'https'
+# loggedInHttpsRedirect = (req, res, next) ->
+  # $log '*1** loggedInHttpsRedirect', req.url
+  # $log '*2** req.host', req.host, 'req.secure', req.secure
+  # $log '*3** req.protocol', req.protocol
+  # $log '*4** req.headers["x-forwarded-proto"]', req.headers['x-forwarded-proto']
+  # $log '*5** req.isAuthenticated()', req.isAuthenticated()
+  # isHttpsOrigin = req.headers['x-forwarded-proto'] is 'https'
 
-  if req.isAuthenticated() && !isHttpsOrigin && cfg.isProd
-    return res.redirect "https://www.airpair.com#{req.url}"
-  next()
+  # if req.isAuthenticated() && !isHttpsOrigin && cfg.isProd
+  #   return res.redirect "https://www.airpair.com#{req.url}"
+  # next()
 
 module.exports = (app) ->
 
@@ -39,8 +39,8 @@ module.exports = (app) ->
   renderReview = (req, r) ->
     $log '*6** renderReview'
     viewData.review req.params.id, req.user, (d) => r.render 'review.html', d
-  app.get '/review/:id', loggedInHttpsRedirect, renderReview
-  app.get '/review/book/:id', loggedInHttpsRedirect, renderReview
+  app.get '/review/:id', renderReview
+  app.get '/review/book/:id', renderReview
 
   app.get '/settings*', loggedIn, (req, r)->  r.render 'settings.html', 
     { stripePK: cfg.payment.stripe.publishedKey }
