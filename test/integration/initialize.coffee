@@ -21,7 +21,7 @@ module.exports = (grep) ->
   ]
 
   mocha.setup
-    timeout: 3000
+    timeout: 5000
     ui:'bdd'
     grep: grep
     globals: globalIgnores
