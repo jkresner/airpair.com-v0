@@ -60,9 +60,16 @@
 
   <script type="text/javascript">
     function initApp() {
-      var pageData = {};
-      Router = require('/scripts/dashboard/Router');
-      window.router = new Router(pageData);
+      if (window.location.host == "www.airpair.com" && window.location.protocol != 'https:') 
+      { 
+        window.location = "https://www.airpair.com/dashboard"; 
+      }
+      else
+      {
+        var pageData = {};
+        Router = require('/scripts/dashboard/Router');
+        window.router = new Router(pageData);
+      }
     }
   </script>
   <script src="/javascripts/vendor.js" defer></script>
