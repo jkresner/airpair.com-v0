@@ -27,7 +27,7 @@
 #requestpage .personal-info-group { float:left;width:300px; }
 #requestpage #companyInfo { width:500px;float:left;margin-left:40px; }
 #requestpage #companyInfo input {  }
-#requestpage #companyInfo textarea { width:98%;height:250px; }
+#requestpage #companyInfo textarea { width:98%;height:200px; }
 #requestpage #companyForm { float:left; }
 #requestpage #companyHelp { float:left;width:180px;padding:100px 80px;background:#d1d1d1; }
 

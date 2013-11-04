@@ -54,38 +54,42 @@ class exports.OrderView extends BB.ModelSaveView
     @model.setTotal()
     @$('#summary').html @tmpl @model.toJSON()
     @$('#pay').toggle @mget('total') isnt 0
-    if @isStripeMode()
-      @$('#pay').html('<a class="pay button" href="#">Confirm hours</a><p>Your credit card on file will be charged</p>')
+    @isStripeMode = @mget('paymentMethod')? && @mget('paymentMethod').type is 'stripe'
+    if @isStripeMode
+      @$('#pay').html('<a class="pay payStripe button" href="#">Confirm hours</a><p>Your credit card on file will be charged</p>')
       @$('#pay').addClass('stripe')
     @
   pay: (e) ->
-    if mixpanel? && mixpanel.get_property('utm_source')?
-      utm_values = 
-        utm_source: mixpanel.get_property('utm_source')
-        utm_medium: mixpanel.get_property('utm_medium')
-        utm_term: mixpanel.get_property('utm_term')
-        utm_content: mixpanel.get_property('utm_content')
-        utm_campaign: mixpanel.get_property('utm_campaign')
-
-      @model.set('utm', utm_values)
-
     if @model.get('total') is 0
       e.preventDefault()
       alert('please select at least one hour')
     else
+      if mixpanel? && mixpanel.get_property('utm_source')?
+        utm_values = 
+          utm_source: mixpanel.get_property('utm_source')
+          utm_medium: mixpanel.get_property('utm_medium')
+          utm_term: mixpanel.get_property('utm_term')
+          utm_content: mixpanel.get_property('utm_content')
+          utm_campaign: mixpanel.get_property('utm_campaign')
+
+        @model.set('utm', utm_values)
+
+      eventName = 'customerTryPayPaypal'
+      eventName = 'customerTryStripe' if @isStripeMode
+      addjs.trackEvent "request", eventName, "/review/book/#{@model.get('requestId')}"
+      
       @save(e)
     false
   getViewData: ->
     @model.attributes
-  renderSuccess: (model, resp, opts) ->
-    # $log 'order', model.attributes
-    if @isStripeMode()
+  renderSuccess: (model, resp, opts) =>
+    $log 'order', model.attributes
+    if @isStripeMode
       router.navTo "#thankyou/#{router.app.request.id}"
     else    
       @$('#paykey').val model.attributes.payment.payKey
       @$('#submitBtn').click()
-  isStripeMode: =>
-    @model.get('paymentMethod')? && @model.get('paymentMethod').type is 'stripe'
+    
 
 
 class exports.BookExpertView extends BB.BadassView
@@ -154,7 +158,6 @@ class exports.ExpertReviewFormView extends BB.EnhancedFormView
   events:
     'click .saveFeedback': 'saveFeedback'
   initialize: (args) ->
-    @listenTo @settings, 'change', @render
   render: ->
     expertRate = @model.get('suggestedRate')[@request.get('pricing')].expert
     pp = @settings.paymentMethod('paypal')
@@ -210,13 +213,16 @@ class exports.ExpertReviewView extends BB.BadassView
     @$el.html @tmpl()
     @reviewFormView = new exports.ExpertReviewFormView args
     @detailView = new exports.ExpertReviewDetailView args
+    @listenTo @settings, 'change', @render
   render: (editing) ->
-    @editing = @model.get('expertFeedback') is undefined
-    @editing = editing if editing?
-    @reviewFormView.render() if @editing
-    @reviewFormView.$el.toggle @editing
-    @detailView.render() if !@editing
-    @detailView.$el.toggle !@editing
+    meExpert = @request.suggestion @session.id
+    if meExpert
+      @editing = @model.get('expertFeedback') is undefined
+      @editing = editing if editing?
+      @reviewFormView.render() if @editing
+      @reviewFormView.$el.toggle @editing
+      @detailView.render() if !@editing
+      @detailView.$el.toggle !@editing
     @
 
 

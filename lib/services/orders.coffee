@@ -10,14 +10,14 @@ module.exports = class OrdersService extends DomainService
   paypalSvc: new PaypalAdaptiveSvc()
   stripSvc: new StripeSvc()  
 
-  create: (order, user, callback) ->
+  create: (order, usr, callback) ->
     order._id = new mongoose.Types.ObjectId;
-    order.userId = user._id
+    order.userId = usr._id
 
     payWith = 'paypal'
     if order.paymentMethod? && order.paymentMethod.type == 'stripe' then payWith = 'stripe' 
 
-    # ? if order.email != user.primaryEmail
+    # ? if order.email != usr.primaryEmail
     # update user's primary email
 
     # 3rd party invoice integration ?
@@ -37,7 +37,8 @@ module.exports = class OrdersService extends DomainService
 
       if payWith is 'stripe' && !paymentResponse.failure_code? 
         order.paymentStatus = 'received'
-      
+        @trackPayment usr, order
+        
       new @model(order).save (e, rr) ->
         if e?
           $log "order.save.error", e
@@ -49,6 +50,20 @@ module.exports = class OrdersService extends DomainService
     else
       @paypalSvc.Pay order, savePaymentResponse
         
+  trackPayment: (usr, order) ->
+    r = order
+    props = { distinct_id: usr.google._json.email, total: r.total, profit: r.profit }
+
+    if r.utm?
+      props.utm_source = r.utm.utm_source
+      props.utm_medium = r.utm.utm_medium
+      props.utm_term = r.utm.utm_term
+      props.utm_content = r.utm.utm_content
+      props.utm_campaign = r.utm.utm_campaign
+
+    mixpanel.track 'customerPayment', props
+    mixpanel.people.track_charge usr.google._json.email, r.total
+               
 
   markPaymentReceived: (id, usr, paymentDetail, callback) ->
     @model.findOne { _id: id }, (e, r) =>
@@ -58,19 +73,8 @@ module.exports = class OrdersService extends DomainService
           # CREATED = customer has NOT yet paid
           if resp.status == 'INCOMPLETE'
             ups = paymentStatus: 'received'
-  
-            props = { distinct_id: usr.google._json.email, total: r.total, profit: r.profit }
-
-            if r.utm?
-              props.utm_source = r.utm.utm_source
-              props.utm_medium = r.utm.utm_medium
-              props.utm_term = r.utm.utm_term
-              props.utm_content = r.utm.utm_content
-              props.utm_campaign = r.utm.utm_campaign
-        
-            mixpanel.track 'customerPayment', props
-            mixpanel.people.track_charge usr.google._json.email, r.total
-            
+            @trackPayment usr, r
+    
             @update id, ups, callback
           else
             callback { e: 'update failed, not in INCOMPLETE state', data: resp }

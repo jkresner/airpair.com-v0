@@ -21,7 +21,7 @@ module.exports = (grep) ->
   ]
 
   mocha.setup
-    timeout: 3000
+    timeout: 5000
     ui:'bdd'
     grep: grep
     globals: globalIgnores
@@ -46,6 +46,8 @@ module.exports = (grep) ->
     # './settings/paypal_test'
     './tags/tagsadmin_test'
     './stories/emillee_test'
+    './stories/ramon_test'  
+    './stories/bchristie_test'  
   ]
 
   require test for test in tests
