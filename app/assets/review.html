@@ -34,11 +34,12 @@
 
   <div id="book" class="route"></div>
 
-  <div id="thankyou" class="route"></div>  
+  <div id="thankyou" class="route"></div>
 
 </body>
 
   <script type="text/javascript">
+    window.useOlark = true;
     function initApp() {
       var pageData = { session: {{{ session }}}, request: {{{ request }}}, isProd: {{ isProd }} };
       Router = require('/scripts/review/Router');
@@ -47,5 +48,4 @@
   </script>
   <script src="/javascripts/vendor.js" defer></script>
   <script src="/javascripts/app.js" defer onload="initApp()"></script>
-
 </html>
