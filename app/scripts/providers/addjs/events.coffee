@@ -22,7 +22,13 @@ addEvent 'request', 'customerRequest', '/find-an-expert/request', 50, 'week', 'c
 
 addEvent 'request', 'customerEmailConfirm', '/find-an-expert/confirm', 50, 'week', 'customer confirms their contact email is correct'
 
+addEvent 'request', 'customerTryPayPaypal', '/review', 50, 'week', 'customer hit the pay button with paypal'
 
+addEvent 'request', 'customerTryPayStripe', '/review', 50, 'week', 'customer hit the confirm button with stripe'
+
+addEvent 'request', 'customerOrderCreated', '/review', 50, 'week', 'order was successfully created'
+
+addEvent 'request', 'customerPayment', '/review/*', 50, 'week', 'customer paid with paypal'
 
 addEvent 'beexpert', 'expertWelcome', '/be-an-expert', 100, 'week', 'expert creates account via google login'
 
