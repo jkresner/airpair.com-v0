@@ -11,7 +11,7 @@ config =
     APPLICATIONID: 'APP-80W284485P519543T'
 
   prod:
-    AP: 'http://www.airpair.com'
+    AP: 'https://www.airpair.com'
     Endpoint: 'https://svcs.paypal.com/AdaptivePayments'
     PrimaryReceiver: 'jk@airpair.com'
     SECURITYUSERID: 'jk_api1.airpair.com',
@@ -53,7 +53,7 @@ module.exports = class PaypalAdaptive
   Pay: (order, callback) ->
     order.paymentType = 'paypal'
     payload = payloadDefault(@cfg)
-    payload.memo = "http://airpair.com/review/#{order.requestId}"
+    payload.memo = "https://airpair.com/review/#{order.requestId}"
 
     for item in order.lineItems
       payeePaypalEmail = getExpertPaypalEmail(item)
