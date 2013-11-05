@@ -151,7 +151,6 @@ class exports.BookView extends BB.BadassView
 
 
 class exports.ExpertReviewFormView extends BB.EnhancedFormView
-  logging: on
   el: '#expertReviewForm'
   tmpl: require './templates/ExpertReviewForm'
   viewData: ['expertRating', 'expertFeedback', 'expertStatus', 'expertComment',
@@ -220,7 +219,6 @@ class exports.ExpertReviewView extends BB.BadassView
     if meExpert?
       @editing = @model.get('expertFeedback') is undefined
       @editing = editing if editing?
-      $log 'ExpertReviewView.render', @editing, 'meExpert', meExpert, 'editing', editing
       @reviewFormView.render() if @editing
       @reviewFormView.$el.toggle @editing
       @detailView.render() if !@editing
