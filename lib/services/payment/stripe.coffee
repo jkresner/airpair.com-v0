@@ -10,7 +10,7 @@ module.exports = class StripeService
   createCustomer: (email, token, callback) ->
 
     stripe.customers.create { email: email, card: token }, (err, customer) => 
-      # $log 'err', err, 'customer', customer
+      $log 'err', err, 'customer', customer
       callback customer
 
    

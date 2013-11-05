@@ -83,7 +83,6 @@ class exports.OrderView extends BB.ModelSaveView
   getViewData: ->
     @model.attributes
   renderSuccess: (model, resp, opts) =>
-    $log 'order', model.attributes
     if @isStripeMode
       router.navTo "#thankyou/#{router.app.request.id}"
     else    
