@@ -66,19 +66,23 @@ p {
 
 nav {
   background-color: #212F3B;
-  height: 60px;
+  height: 80px;
   position: fixed;
   width: 100%;
   top: 0;
   z-index: 1000;
 }
 
+nav .tech { background:#172430;text-align:center;font-size:13px;padding:5px; }
+nav .tech a { margin-right:14px;color:#d3d3d3!important; }
+nav .tech a:hover { color:white!important; }
+
 nav a.logo { /* logo */
   display:inline-block;
   float:left;
   width: 120px;
   height: 40px;
-  margin-top: 17px;
+  margin-top: 10px;
   margin-left: 30px;
   background: url('/images/logos/header.png') no-repeat;
 }
@@ -86,15 +90,15 @@ nav a.logo { /* logo */
 nav .contactus {
   float: left;
   color: #888888;
-  margin-top: 20px;
-  margin-left: 6px;
+  margin-top: 13px;
+  margin-left: 8px;
   font-size: 15px;
 }
 
 nav ul.navigation {
   float:right;
   margin-right:20px;
-  margin-top:6px;
+  margin-top:2px;
 }
 
 nav ul li {
@@ -140,7 +144,7 @@ nav ul.social {
   float:right;
   position: relative;
   margin-right: 35px;
-  margin-top: 2px;
+  margin-top: -3px;
 }
 
 nav ul.social li {
@@ -256,7 +260,7 @@ h2.yellow span { color: #99923F; }
 
 .header-button {
   background:#CC6750;
-  padding:1px 20px 5px;
+  padding:1px 20px 4px;
   border-radius: 0.5em;
   color:white;
   border:solid 3px #CC523E;

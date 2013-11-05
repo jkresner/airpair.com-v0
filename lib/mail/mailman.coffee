@@ -26,7 +26,7 @@ sendEmail = (options) ->
   )
 
 sendEmailToAdmins = (options) ->
-  options.to = ['mi@airpair.com', 'jk@airpair.com', 'really.ez@gmail.com']
+  options.to = ['mi@airpair.com', 'jk@airpair.com', 'il@airpair.com']
   sendEmail(options)
 
 expertReviewRequest = (data) ->
