@@ -130,10 +130,10 @@ describe "Stories: Emil Lee", ->
       reQunix = rv.$('[data-id=51a466707021eb0200000004]') # Michael Prins
       mattvanhorn = rv.$('[data-id=51b0c417900c860200000018]') # Matthew Van Horn
 
-      saved = 0
       rv.model.on 'sync', =>
-        saved++
-        if saved is 3
+        # times out with an error if this were to fail
+        expect()
+        if rv.mget('suggested').length is 3
           expect( rv.mget('suggested').length ).to.equal 3
           expect( rv.mget('suggested')[0].expert._id ).to.equal '51a4d2b47021eb0200000009'
           expect( rv.mget('suggested')[1].expert._id ).to.equal '51a466707021eb0200000004'

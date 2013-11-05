@@ -16,5 +16,6 @@ describe "Server-side suite", ->
 
   after (done) ->
     mongoose.connection.db.executeDbCommand { dropDatabase:1 }, (err, result) ->
+      if err then return done err
       console.log 'ran server tests & destroyed DB'
       mongoose.connection.close done

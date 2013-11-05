@@ -10,12 +10,16 @@ chai.use require 'sinon-chai'
 connect = (done) ->
   return done() if mongoose.connections[0]._listening
   mongoose.connect 'localhost/airpair_test'
-  done()
+  mongoose.connection.on 'connected', done
 
 destroy = (done) ->
   return done() if suiteCtx?  # set in /test/server/all.coffee
   mongoose.connection.db.executeDbCommand { dropDatabase:1 }, (e, r) ->
-    mongoose.connection.close done
+    if e then return done e
+    console.log 'Actually dropped the DB.'
+    mongoose.connection.close ->
+      console.log 'Closed mongoose connection.'
+      done()
 
 
 module.exports =

@@ -1,7 +1,7 @@
 users = require './../data/users'
 
 data = users: []
-data.users.anon = authenticated: false
+data.users.anon = false
 data.users.admin = users[0]  # jk@airpair.com
 data.users.jk = users[1]  # jkresner@gmail.com
 data.users.jk2 = users[2]  # jk@airpair.co
