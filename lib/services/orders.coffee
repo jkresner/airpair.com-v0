@@ -44,7 +44,7 @@ module.exports = class OrdersService extends DomainService
       new @model(order).save (e, rr) ->
         if e?
           $log "order.save.error", e
-          winston.errror "order.save.error", e
+          winston.error "order.save.error", e
         callback rr
 
     if order.paymentMethod? && order.paymentMethod.type == 'stripe'

@@ -21,7 +21,6 @@ class OrdersApi
 
 
   create: (req, res) =>
-    $log '#1 Order.create'
     order = _.pick req.body, ['total','requestId']
     order.lineItems = []
     order.company =
@@ -30,8 +29,6 @@ class OrdersApi
       contacts: req.body.company.contacts
     order.paymentMethod = req.body.paymentMethod
     order.utm = req.body.utm
-    
-    $log '#2 Order.mapped', order
     
     toPick = ['_id','userId','name','username','rate','email','pic','paymentMethod']
     for li in req.body.lineItems
@@ -46,8 +43,6 @@ class OrdersApi
             suggestedRate: li.suggestion.suggestedRate
             expert: _.pick li.suggestion.expert, toPick
 
-    $log '#2 Order.lineItems', order.lineItems
-    
     @svc.create order, req.user, (r) =>
       if r.payment.responseEnvelope? && r.payment.responseEnvelope.ack is "Failure"
         res.status(400)

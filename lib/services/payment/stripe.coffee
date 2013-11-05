@@ -18,7 +18,7 @@ module.exports = class StripeService
     order.paymentType = 'stripe'
     customerId = order.paymentMethod.info.id
 
-    payload = customer: customerId, amount: order.total, currency: "usd"
+    payload = customer: customerId, amount: order.total*100, currency: "usd"
 
     # Make a charge
     stripe.charges.create payload, (err, charge) => 
