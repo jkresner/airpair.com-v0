@@ -216,9 +216,10 @@ class exports.ExpertReviewView extends BB.BadassView
     @listenTo @settings, 'change', @render
   render: (editing) ->
     meExpert = @request.suggestion @session.id
-    if meExpert
+    if meExpert?
       @editing = @model.get('expertFeedback') is undefined
       @editing = editing if editing?
+      $log 'ExpertReviewView.render', editing, 'meExpert', meExpert
       @reviewFormView.render() if @editing
       @reviewFormView.$el.toggle @editing
       @detailView.render() if !@editing
