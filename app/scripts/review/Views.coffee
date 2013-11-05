@@ -75,7 +75,7 @@ class exports.OrderView extends BB.ModelSaveView
         @model.set('utm', utm_values)
 
       eventName = 'customerTryPayPaypal'
-      eventName = 'customerTryStripe' if @isStripeMode
+      eventName = 'customerTryPayStripe' if @isStripeMode
       addjs.trackEvent "request", eventName, "/review/book/#{@model.get('requestId')}"
       
       @save(e)
