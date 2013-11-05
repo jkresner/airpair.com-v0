@@ -44,8 +44,9 @@ module.exports = class SettingsService extends DomainService
     d.paymentMethods = _.without d.paymentMethods, _.findWhere(d.paymentMethods, {type: 'stripe'})
 
     stripeSvc.createCustomer email, token, (customer) =>
-      isPrimary = d.paymentMethods.length == 0  
-      d.paymentMethods.push { type: 'stripe', info: customer, isPrimary: isPrimary }
+      if customer?
+        isPrimary = d.paymentMethods.length == 0  
+        d.paymentMethods.push { type: 'stripe', info: customer, isPrimary: isPrimary }
       callback()
 
 
