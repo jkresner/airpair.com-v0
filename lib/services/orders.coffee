@@ -37,7 +37,7 @@ module.exports = class OrdersService extends DomainService
     savePaymentResponse = (paymentResponse) => 
       order.payment = paymentResponse
 
-      if payWith is 'stripe' && !paymentResponse.failure_code? 
+      if payWith is 'stripe' && paymentResponse? && !paymentResponse.failure_code? 
         order.paymentStatus = 'received'
         @trackPayment usr, order
         
