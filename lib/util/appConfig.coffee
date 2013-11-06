@@ -31,7 +31,7 @@ if c.env is 'prod'
   c.analytics.mixpanel.id = '076cac7a822e2ca5422c38f8ab327d62'
   c.payment.stripe =
     publishedKey: 'pk_live_FEGruKDm6OZyagTHqhXWvV8G'
-    secretKey:    'sk_live_qSxo06x8iwaYuIIw1Bkx7hszc'
+    secretKey:    'sk_live_qSxo06x8iwaYuIIw1Bkx7hsz'
   c.oauthHost = 'https://www.airpair.com' #note https
 
 # option to overwrite in staging etc.

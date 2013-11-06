@@ -32,17 +32,19 @@ module.exports = class OrdersService extends DomainService
 
     order.profit = airpairMargin
 
+    $log '#3 Order.profit', order
+
     savePaymentResponse = (paymentResponse) => 
       order.payment = paymentResponse
 
-      if payWith is 'stripe' && !paymentResponse.failure_code? 
+      if payWith is 'stripe' && paymentResponse? && !paymentResponse.failure_code? 
         order.paymentStatus = 'received'
-        @trackPayment usr, order
+        @trackPayment usr, order, 'stripe'
         
       new @model(order).save (e, rr) ->
         if e?
           $log "order.save.error", e
-          winston.errror "order.save.error", e
+          winston.error "order.save.error", e
         callback rr
 
     if order.paymentMethod? && order.paymentMethod.type == 'stripe'
@@ -50,9 +52,9 @@ module.exports = class OrdersService extends DomainService
     else
       @paypalSvc.Pay order, savePaymentResponse
         
-  trackPayment: (usr, order) ->
+  trackPayment: (usr, order, type) ->
     r = order
-    props = { distinct_id: usr.google._json.email, total: r.total, profit: r.profit }
+    props = { usr: usr.google._json.email, distinct_id: usr.google._json.email, total: r.total, profit: r.profit, type: type }
 
     if r.utm?
       props.utm_source = r.utm.utm_source
@@ -73,7 +75,7 @@ module.exports = class OrdersService extends DomainService
           # CREATED = customer has NOT yet paid
           if resp.status == 'INCOMPLETE'
             ups = paymentStatus: 'received'
-            @trackPayment usr, r
+            @trackPayment usr, r, 'paypal'
     
             @update id, ups, callback
           else
