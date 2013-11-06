@@ -26,8 +26,10 @@ class CompanyApi
 
   adminlist: (req, res) => @svc.getAll (r) -> res.send r
 
-  create: (req, res) =>
-    @svc.create req.body, (r) -> res.send r
+  create: (req, res, next) =>
+    @svc.create req.body, (e, r) ->
+      if e then return next e
+      res.send r
 
   update: (req, res) =>
     @svc.update req.params.id, req.body, (r) -> res.send r

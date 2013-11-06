@@ -19,8 +19,8 @@ createReq = (reqData, callback) ->
 describe "REST api requests", ->
   @testNum = 0
 
-  before (done) -> dbConnect done
-  after (done) -> dbDestroy done
+  before dbConnect
+  after (done) -> dbDestroy @, done
   beforeEach -> @testNum++
 
   it "should get first request", (done) ->

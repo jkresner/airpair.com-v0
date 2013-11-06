@@ -26,7 +26,7 @@ module.exports = class DomainService
       callback r
 
   create: (o, callback) =>
-    new @model( o ).save (e, r) => callback r
+    new @model( o ).save callback
 
   delete: (id, callback) =>
     @model.findByIdAndRemove id, (e, r) => callback r

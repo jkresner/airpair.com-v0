@@ -8,8 +8,8 @@ require('./../../../lib/api/experts')(app)
 describe "REST api experts", ->
 
   @testNum = 0
-  before (done) -> dbConnect done
-  after (done) -> dbDestroy done
+  before dbConnect
+  after (done) -> dbDestroy @, done
   beforeEach -> @testNum++
 
 

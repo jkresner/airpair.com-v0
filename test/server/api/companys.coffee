@@ -8,19 +8,28 @@ require('./../../../lib/api/companys')(app)
 describe "REST api companys", ->
 
   @testNum = 0
-  before (done) -> dbConnect done
-  after (done) -> dbDestroy done
+  before dbConnect
+  after (done) -> dbDestroy @, done
   beforeEach -> @testNum++
 
 
   it "can not create company if not authenticated", (done) ->
-    passportMock.setSession 'jk'
+    passportMock.setSession 'anon'
     @company = data.companys[1]
     http(app).post('/api/companys/')
       .set('Accept', 'application/json')
       .send(@company)
       .expect(403)
       .expect({})
+      .end done
+
+  it "creates company if authenticated", (done) ->
+    passportMock.setSession 'jk'
+    @company = data.companys[1]
+    http(app).post('/api/companys/')
+      .set('Accept', 'application/json')
+      .send(@company)
+      .expect(200)
       .end (err, res) =>
         d = res.body
         expect(d.name).to.equal @company.name

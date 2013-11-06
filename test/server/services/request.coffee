@@ -7,10 +7,8 @@ svc = new RequestsService()
 describe "RequestsService", ->
   @testNum = 0
 
-  before (done) ->
-    dbConnect done
-  after (done) ->
-    dbDestroy done
+  before dbConnect
+  after (done) -> dbDestroy @, done
   beforeEach () ->
     @testNum++
 
