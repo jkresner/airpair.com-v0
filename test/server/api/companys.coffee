@@ -9,9 +9,7 @@ describe "REST api companys", ->
 
   @testNum = 0
   before dbConnect
-  after (done) ->
-    this.timeout 5000 # db destruction takes a long time
-    dbDestroy done
+  after (done) -> dbDestroy @, done
   beforeEach -> @testNum++
 
 
