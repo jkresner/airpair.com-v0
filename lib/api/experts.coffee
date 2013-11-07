@@ -14,9 +14,12 @@ class ExpertApi extends CRUDApi
     app.get  "/api/#{route}", admin, @list
     super app, route
 
-  list: (req, res) => @svc.getAll (r) -> res.send r
+  list: (req, res, next) =>
+    @svc.getAll (e, r) ->
+      if e then return next e
+      res.send r
 
-  detail: (req, res) =>
+  detail: (req, res, next) =>
 
     search = '_id': req.params.id
 
@@ -29,6 +32,7 @@ class ExpertApi extends CRUDApi
         search = email: req.user.google._json.email
         $log 'detail req.user by email', search
         @model.findOne search, (e, r) =>
+          if e then return next e
           r = {} if r is null
           res.send r
 

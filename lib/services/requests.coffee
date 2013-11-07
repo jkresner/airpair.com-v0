@@ -34,11 +34,13 @@ module.exports = class RequestsService extends DomainService
     request.status = 'received'
     new @model(request).save (e, r) =>
       if e then $log 'e', e
+      if e then return callback e
       @notifyAdmins(r)
-      callback r
+      callback null, r
 
   getByIdSmart: (id, usr, callback) =>
     @model.findOne({ _id: id }).lean().exec (e, r) =>
+      if e then return callback e
       request = null
 
       if r?
@@ -57,14 +59,15 @@ module.exports = class RequestsService extends DomainService
         for s in r.suggested
           s.suggestedRate = @rates.calcSuggestedRates r, s.expert
 
-      callback request
+      callback null, request
 
   update: (id, data, callback) ->
     @model.findByIdAndUpdate(id, data).lean().exec (e, r) =>
+      if e then return callback e
       for s in r.suggested
         s.suggestedRate = @rates.calcSuggestedRates r, s.expert
 
-      callback r
+      callback null, r
 
   # Used for dashboard
   getActive: (callback) ->
@@ -72,20 +75,22 @@ module.exports = class RequestsService extends DomainService
       .where('status').in(['received','incomplete','review','scheduled','holding'])
       .lean()
       .exec (e, rs) =>
+        if e then return callback e
         rs = {} if rs is null
         for r in rs
           for s in r.suggested
             s.suggestedRate = @rates.calcSuggestedRates r, s.expert
           r.base = @rates.base
-        callback rs
+        callback null, rs
 
   # Used for history
   getInactive: (callback) ->
     @model.find({})
       .where('status').in(['canceled', 'completed'])
       .exec (e, r) ->
+        if e then return callback e
         r = {} if r is null
-        callback r
+        callback null, r
 
 
   updateSuggestionByExpert: (request, usr, expertReview, callback) =>
@@ -94,7 +99,8 @@ module.exports = class RequestsService extends DomainService
 
     # $log 'updateSuggestionByExpert', usr._id, expertReview.payPalEmail
     pymt = paymentMethods: [{type: 'paypal', isPrimary: true, info: { email: expertReview.payPalEmail }}]
-    @settingsSvc.update usr._id, pymt, (r) => #$log 'save.settings', r
+    @settingsSvc.update usr._id, pymt, (e, r) =>
+      if e then $log 'save.settings error:', e, r
 
     ups = expertReview
     data = { suggested: request.suggested, events: request.events }
@@ -115,5 +121,6 @@ module.exports = class RequestsService extends DomainService
       templateName: "admNewRequest"
       subject: "New airpair request: #{model.company.contacts[0].fullName} #{model.budget}$"
       request: model
-      callback: ->
+      callback: (e) ->
+        if e then $log 'notifyAdmins error', e
     })

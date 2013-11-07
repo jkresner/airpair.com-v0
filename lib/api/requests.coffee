@@ -30,30 +30,40 @@ class RequestApi extends CRUDApi
 
 
   admin: (req, res, next) =>
-    @svc.getAll (r) -> res.send r
+    @svc.getAll (e, r) ->
+      if e then return next e
+      res.send r
 
 
   inactive: (req, res, next) =>
-    @svc.getInactive (r) -> res.send r
+    @svc.getInactive (e, r) ->
+      if e then return next e
+      res.send r
 
 
-  list: (req, res) =>
-    @svc.getByUserId req.user._id, (r) -> res.send r
+  list: (req, res, next) =>
+    @svc.getByUserId req.user._id, (e, r) ->
+      if e then return next e
+      res.send r
 
-  detail: (req, res) =>
+  detail: (req, res, next) =>
     user = req.user
-    @svc.getByIdSmart req.params.id, user, (r) =>
+    @svc.getByIdSmart req.params.id, user, (e, r) =>
+      if e then return next e
       if r? then res.send r else res.send(400, {})
 
-  create: (req, res) =>
-    @svc.create req.user, req.body, (r) -> res.send r
+  create: (req, res, next) =>
+    @svc.create req.user, req.body, (e, r) ->
+      if e then return next e
+      res.send r
 
-  update: (req, res) =>
+  update: (req, res, next) =>
     usr = req.user
     search = _id: req.params.id
     evts = []
 
     @model.findOne search, (e, r) =>
+      if e then return next e
 
       # stop users updating other users requests (need a better solution!)
       if !(Roles.isAdmin(usr, r) || Roles.isRequestOwner(usr, r))
@@ -101,21 +111,26 @@ class RequestApi extends CRUDApi
 
       data.events.push.apply(data.events, evts)
 
-      @svc.update req.params.id, data, (r) => res.send r
+      @svc.update req.params.id, data, (e, r) =>
+        if e then return next e
+        res.send r
 
 
-  updateSuggestion: (req, res) =>
+  updateSuggestion: (req, res, next) =>
     usr = req.user
     @model.findOne { _id: req.params.id }, (e, r) =>
+      if e then return next e
       if Roles.isRequestOwner(usr, r)
-        @updateSuggestionByCustomer(req, res, r)
+        @updateSuggestionByCustomer(req, res, next, r)
       else if Roles.isRequestExpert(usr, r) || Roles.isAdmin(usr)
-        @svc.updateSuggestionByExpert r, usr, req.body, (r) => res.send r
+        @svc.updateSuggestionByExpert r, usr, req.body, (e, r) =>
+          if e then return next e
+          res.send r
       else
         res.send 403
 
 
-  updateSuggestionByCustomer: (req, res, r) =>
+  updateSuggestionByCustomer: (req, res, next, r) =>
     ups = req.body
     data = { suggested: r.suggested, events: r.events }
     sug = _.find r.suggested, (s) ->
@@ -126,7 +141,9 @@ class RequestApi extends CRUDApi
     if ups.expertStatus? then sug.expertStatus = ups.expertStatus
     data.events.push @newEvent req, "customer expert review", ups
 
-    @svc.update req.params.id, data, (r) => res.send r
+    @svc.update req.params.id, data, (e, r) =>
+      if e then return next e
+      res.send r
 
 
-module.exports = (app) -> new RequestApi app,'requests'
+module.exports = (app) -> new RequestApi app, 'requests'

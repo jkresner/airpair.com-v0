@@ -9,7 +9,7 @@ class UserApi
     app.get     "/api/users/me", @detail
     app.get     "/api/admin/users", admin, @adminlist
 
-  detail: (req, res) =>
+  detail: (req, res, next) =>
 
     if req.isAuthenticated()
       user = _.clone req.user
@@ -19,15 +19,18 @@ class UserApi
       if user.github then delete user.github.token
       if user.stack then delete user.stack.token
     else
+      # not sure this will work right
+      # user = false # tricks passport into thinking they are loggedout
       user = authenticated : false
 
     res.send user
 
 
-  adminlist: (req, res) =>
+  adminlist: (req, res, next) =>
     $log 'users.adminlist'
-    @model.find {}, (e, r) -> res.send r
-
+    @model.find {}, (e, r) ->
+      if e then return next e
+      res.send r
 
 
 module.exports = (app) -> new UserApi(app)

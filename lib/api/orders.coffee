@@ -16,11 +16,13 @@ class OrdersApi
     app.put     "/api/#{route}/:id", admin, @payOut
     app.delete  "/api/#{route}/:id", admin, @delete
 
-  adminList: (req, res) =>
-    @svc.getAll (r) -> res.send r
+  adminList: (req, res, next) =>
+    @svc.getAll (e, r) ->
+      if e then return next e
+      res.send r
 
 
-  create: (req, res) =>
+  create: (req, res, next) =>
     order = _.pick req.body, ['total','requestId']
     order.lineItems = []
     order.company =
@@ -29,7 +31,7 @@ class OrdersApi
       contacts: req.body.company.contacts
     order.paymentMethod = req.body.paymentMethod
     order.utm = req.body.utm
-    
+
     toPick = ['_id','userId','name','username','rate','email','pic','paymentMethod']
     for li in req.body.lineItems
       if li.qty > 0
@@ -43,21 +45,25 @@ class OrdersApi
             suggestedRate: li.suggestion.suggestedRate
             expert: _.pick li.suggestion.expert, toPick
 
-    @svc.create order, req.user, (r) =>
+    @svc.create order, req.user, (e, r) =>
+      if e then return next e
       if r.payment.responseEnvelope? && r.payment.responseEnvelope.ack is "Failure"
         res.status(400)
       res.send r
 
 
   payOut: (req, res) =>
-    @svc.payOutToExperts req.params.id, (r) ->
+    @svc.payOutToExperts req.params.id, (e, r) ->
+      if e then return next e
       if r.status? & r.status is 'Failure'
         res.status(400)
       res.send r
 
 
   delete: (req, res) =>
-    @svc.delete req.params.id, (r) -> res.send r
+    @svc.delete req.params.id, (e, r) ->
+      if e then return next e
+      res.send r
 
 
 module.exports = (app) -> new OrdersApi app, 'orders'

@@ -9,18 +9,17 @@ module.exports = class TagsService extends DomainService
 
   search: (searchTerm, callback) ->
     # Poor implementation of search, should checkout mongo-text-search or elastic-search
-    @model.findOne { $or: [ { soId: searchTerm }, { ghId: searchTerm } ] }, (e, r) -> callback r
+    @model.findOne { $or: [ { soId: searchTerm }, { ghId: searchTerm } ] }, callback
 
   cms: (id, callback) ->
-    @cmsModel.findOne { _id: id }, (e, r) -> callback r
+    @cmsModel.findOne { _id: id }, callback
 
 
   create: (addMode, tag, callback) ->
     #console.log 'create', 'addMode', addMode
     if addMode is 'stackoverflow' then @getStackoverflowTag(tag, callback)
     else if addMode is 'github' then @getGithubRepo(tag, callback)
-    else @model( tag ).save (e, r) ->
-      callback e, r
+    else @model( tag ).save callback
 
   getStackoverflowTag: (tag, callback) =>
     encoded = encodeURIComponent tag.nameStackoverflow
@@ -29,21 +28,19 @@ module.exports = class TagsService extends DomainService
       .get("http://api.stackexchange.com/tags/#{encoded}/wikis?site=stackoverflow")
       .end (sres) =>
 
-        if sres.ok
-          d = sres.body.items[0]
+        error = { e: { message: "tag #{tag.nameStackoverflow} not found" } }
+        if not sres.ok then return callback error
 
-          if d?
-            update =
-              name: d.tag_name
-              short: d.tag_name
-              soId: d.tag_name
-              desc: d.excerpt
+        d = sres.body.items[0]
 
-            return @model.findOneAndUpdate soId: d.tag_name, update, { upsert: true }, (e, r) ->
-              callback e, r
+        if not d? then return callback error
 
-        # console.log 'failed', sres.body
-        return callback { e: { message: "tag #{tag.nameStackoverflow} found" } }
+        update =
+          name: d.tag_name
+          short: d.tag_name
+          soId: d.tag_name
+          desc: d.excerpt
+        return @model.findOneAndUpdate soId: d.tag_name, update, { upsert: true }, callback
 
 
   getGithubRepo: (tag, callback) =>

@@ -1,3 +1,4 @@
+
 moment = require 'moment'
 
 module.exports = class DomainService
@@ -6,37 +7,40 @@ module.exports = class DomainService
   # Used to dump full list of customers
   getAll: (callback) ->
     @model.find {}, (e, r) ->
+      if e then return callback e
       r = {} if r is null
-      callback r
+      callback null, r
 
 
   getById: (id, callback) =>
-    @model.findOne { _id: id }, (e, r) => callback r
+    @model.findOne { _id: id }, callback
 
 
   getByUserId: (id, callback) =>
-    @model.find userId: id, (e, r) -> callback r
+    @model.find userId: id, callback
 
   search: (search, callback) =>
-    @model.find search, (e, r) -> callback r
+    @model.find search, callback
 
   searchOne: (search, callback) =>
     @model.findOne search, (e, r) ->
+      if e then return callback e
       r = {} if r is null
-      callback r
+      callback null, r
 
   create: (o, callback) =>
     new @model( o ).save callback
 
   delete: (id, callback) =>
-    @model.findByIdAndRemove id, (e, r) => callback r
+    @model.findByIdAndRemove id, callback
 
   update: (id, data, callback) =>
     ups = _.clone data
     delete ups._id # so mongo doesn't complain
     @model.findByIdAndUpdate(id, ups).lean().exec (e, r) =>
       if e? then $log 'error', e
-      callback r
+      if e then return callback(e)
+      callback null, r
 
 
   newEvent: (usr, evtName, evtData) ->

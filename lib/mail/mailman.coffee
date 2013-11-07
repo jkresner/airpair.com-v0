@@ -29,12 +29,14 @@ sendEmailToAdmins = (options) ->
   options.to = ['mi@airpair.com', 'jk@airpair.com', 'il@airpair.com']
   sendEmail(options)
 
-expertReviewRequest = (data) ->
+expertReviewRequest = (data, callback) ->
   renderEmail data, "expertReviewRequest", (err, rendered) ->
+    if e then return callback e
+
     rendered.Subject = "Request this!"
     $log 'expertReviewRequest.rendered', rendered
 
     #@bug eventually: req.user.google._json.email
-    ses.send "jk@airpair.com", rendered, ->
+    ses.send "jk@airpair.com", rendered, callback
 
 module.exports = {expertReviewRequest, sendEmail, sendEmailToAdmins}
