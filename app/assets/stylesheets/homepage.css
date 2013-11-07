@@ -268,11 +268,11 @@ h2.yellow span { color: #99923F; }
   /*margin:20px 142px;*/
   text-decoration:none;
   display: inline-block;
-  width:auto !important;  
-  height:auto !important;  
+  width:auto !important;
+  height:auto !important;
   margin-left: 4px;
   /*float: right;*/
-  
+
 }
 .button {
   background:#CC6750;
@@ -507,3 +507,8 @@ footer {
 .cf:before, .cf:after { content: ""; display: table; }
 .cf:after { clear: both; }
 .cf { zoom: 1; }
+
+/* for olark */
+#habla_window_div #habla_topbar_div {
+  background-color: #CC523E !important;
+}
