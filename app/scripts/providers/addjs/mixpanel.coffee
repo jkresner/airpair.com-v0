@@ -15,14 +15,15 @@ module.exports = class AddjsMixPanel
       console.log 'Addjs.MP.trackSession', @debug(), @peopleProps
     if mixpanel?
       if @peopleProps? && @peopleProps.email?
-        setTimeout @identify, 900
-  
+        @identify()
+
   identify: =>
+    $log 'identify', mixpanel
     mixpanel.identify @peopleProps.email
     mixpanel.people.set_once
       $email: @peopleProps.email
       $gravatar: @peopleProps.picture
-      $name: @peopleProps.name          
+      $name: @peopleProps.name
       $last_name: @peopleProps.family_name
       $first_name: @peopleProps.given_name
       $created: @peopleProps.created_at

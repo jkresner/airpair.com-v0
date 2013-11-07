@@ -6,7 +6,7 @@ AddJS = require '/scripts/providers/addjs/index'
 class exports.AirpairRouter extends BB.BadassAppRouter
 
   preConstructorHook: ->
-    if !addjs? 
+    if !addjs?
       window.addjs = new AddJS providers: { ga: { logging: off }, mp: { logging: off } }
 
   # load external providers like google analytics, user-voice etc.
@@ -32,7 +32,7 @@ class exports.AirpairSessionRouter extends BB.SessionRouter
       { email, name, picture, id, family_name, given_name } = google._json
       peopleProps = { email, name, picture, id, family_name, given_name, created_at }
 
-    if !addjs? 
+    if !addjs?
       window.addjs = new AddJS
         providers: { ga: { logging: off }, mp: { logging: off, peopleProps: peopleProps } }
 
@@ -40,8 +40,6 @@ class exports.AirpairSessionRouter extends BB.SessionRouter
   loadExternalProviders: ->
     # bring in Google analytics, uservoice & other 3rd party things
     require '/scripts/providers/all'
-
-    addjs.providers.mp.trackSession()
 
 
   isAuthenticated: ->
