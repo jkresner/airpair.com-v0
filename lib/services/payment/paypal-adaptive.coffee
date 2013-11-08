@@ -102,11 +102,11 @@ module.exports = class PaypalAdaptive
       .set('X-PAYPAL-RESPONSE-DATA-FORMAT', 'JSON')
       .set('X-PAYPAL-APPLICATION-ID', @cfg.APPLICATIONID)
       .end (err, res) =>
-        if err then callback err
+        if err then return callback err
         if cfg.isProd
           $log "PayalResponse: #{endpoint}", payload, res.body
           winston.log "PayalResponse: #{endpoint}", res.body
-        callback res.body
+        callback null, res.body
 
   formatCurrency: (num) =>
     num = (if isNaN(num) or num is "" or num is null then 0.00 else num)

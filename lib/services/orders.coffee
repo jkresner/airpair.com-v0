@@ -70,8 +70,11 @@ module.exports = class OrdersService extends DomainService
 
   markPaymentReceived: (id, usr, paymentDetail, callback) ->
     @model.findOne { _id: id }, (e, r) =>
+      if e then return callback e
+
       if Roles.isOrderOwner(usr, r) || Roles.isAdmin(usr)
-        @paypalSvc.PaymentDetails r, (resp) =>
+        @paypalSvc.PaymentDetails r, (e, resp) =>
+          if e then return callback e
           # INCOMPLETE = customer has paid but chained payment not executed
           # CREATED = customer has NOT yet paid
           if resp.status == 'INCOMPLETE'
@@ -80,17 +83,19 @@ module.exports = class OrdersService extends DomainService
 
             @update id, ups, callback
           else
-            callback { e: 'update failed, not in INCOMPLETE state', data: resp }
+            callback null, { e: 'update failed, not in INCOMPLETE state', data: resp }
       else
-        callback { e: 'update failed, does not belong to user' }
+        callback null, { e: 'update failed, does not belong to user' }
 
 
   payOutToExperts: (id, callback) ->
     @model.findOne { _id: id }, (e, r) =>
+      if e then return callback e
       if !r? || r.paymentStatus != "received"
         return callback status: 'failed', message: "not appropriate to execute payment #{id}"
 
-      @paypalSvc.ExecutePayment r, (resp) =>
+      @paypalSvc.ExecutePayment r, (e, resp) =>
+        if e then return callback e
         # $log 'resp', resp
         if resp.responseEnvelope.ack != 'Success'
           return callback status: 'failed', message: "failed executing payment #{id}", data: resp
@@ -102,7 +107,9 @@ module.exports = class OrdersService extends DomainService
 
   delete: (id, callback) =>
     @model.findOne { _id: id }, (e, r) =>
+      if e then return callback e
       if !r? || r.paymentStatus != "pending"
         return callback status: "failed to delete order #{id}"
       @model.find( _id: id ).remove (ee, rr) =>
+        if e then return callback ee
         callback status: 'deleted'
