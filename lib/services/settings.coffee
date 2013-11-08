@@ -16,7 +16,8 @@ module.exports = class SettingsService extends DomainService
 
   create: (userId, data, callback) =>
     data.userId = userId.toString()
-    save = =>
+    save = (e) =>
+      if e then return next e
       new @model( data ).save (e, r) =>
         # $log '@model.save', e, r
         callback e, r
@@ -29,7 +30,8 @@ module.exports = class SettingsService extends DomainService
     ups.userId = userId
     delete ups._id
     # (JK 2013.10.15) very sorry I know this is bad code ...
-    save = () =>
+    save = (e) =>
+      if e then return callback e
       @model.findOneAndUpdate({userId:userId}, ups, { upsert: true }).lean().exec (e, r) =>
         # $log 'save.settings', e, r
         callback e, r

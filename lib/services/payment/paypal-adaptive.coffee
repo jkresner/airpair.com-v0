@@ -101,7 +101,8 @@ module.exports = class PaypalAdaptive
       .set('X-PAYPAL-REQUEST-DATA-FORMAT', 'JSON')
       .set('X-PAYPAL-RESPONSE-DATA-FORMAT', 'JSON')
       .set('X-PAYPAL-APPLICATION-ID', @cfg.APPLICATIONID)
-      .end (res) =>
+      .end (err, res) =>
+        if err then callback err
         if cfg.isProd
           $log "PayalResponse: #{endpoint}", payload, res.body
           winston.log "PayalResponse: #{endpoint}", res.body

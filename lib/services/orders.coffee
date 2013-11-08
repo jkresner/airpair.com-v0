@@ -34,7 +34,8 @@ module.exports = class OrdersService extends DomainService
 
     $log '#3 Order.profit', order
 
-    savePaymentResponse = (paymentResponse) =>
+    savePaymentResponse = (e, paymentResponse) =>
+      if e then return callback e
       order.payment = paymentResponse
 
       if payWith is 'stripe' && paymentResponse? && !paymentResponse.failure_code?
