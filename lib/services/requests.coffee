@@ -33,7 +33,7 @@ module.exports = class RequestsService extends DomainService
     request.events = [@newEvent(usr, "created")]
     request.status = 'received'
     new @model(request).save (e, r) =>
-      if e then $log 'e', e
+      if e then $log 'request.create error:', e
       if e then return callback e
       @notifyAdmins(r)
       callback null, r

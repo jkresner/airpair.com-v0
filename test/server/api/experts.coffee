@@ -19,13 +19,15 @@ describe "REST api experts", ->
       .send( @expert )
       .expect(200)
       .end (err, res) =>
+        if err then return done err
         d = res.body
         expect(d.userId).to.equal @expert.userId
         expertId = res.body._id
 
         http(app).get("/api/experts/#{expertId}")
           .expect(200)
-          .end (errr, ress) =>
+          .end (err, ress) =>
+            if err then return done err
             d = res.body
             expect(d.userId).to.equal @expert.userId
             expect(d.name).to.equal @expert.name

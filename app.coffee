@@ -45,7 +45,8 @@ if cfg.env is 'test'
   require('./app_test_routes')(app)
 
 app.use (err, req, res, next) ->
-  console.log "handleError #{req.url}", err.stack
+  obj = (err and err.stack) or err or new Error('500 Error')
+  console.log "handleError #{req.url}", obj
   winston.error "error #{req.url} #{err}" if cfg.isProd
   res.status(500).sendfile "./public/500.html"
 
