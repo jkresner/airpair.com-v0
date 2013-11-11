@@ -15,6 +15,10 @@ exports.config =
       paths:    watched: ['app','vendor', 'test']
       plugins:  autoReload: enabled: false
       server:   { port: 4444, env: 'test' }
+    prod:
+      optimize: true
+      sourceMaps: false
+
 
   files:
     javascripts:
