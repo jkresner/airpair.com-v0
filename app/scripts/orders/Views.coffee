@@ -80,8 +80,8 @@ class exports.OrdersView extends Backbone.View
   select: (e) ->
     e.preventDefault()
     id = $(e.currentTarget).data('id')
-    expert = _.find @collection.models, (m) -> m.id.toString() == id
-    @model.set expert.attributes
+    order = _.find @collection.models, (m) -> m.id.toString() == id
+    @model.set order.attributes
     alert("order #{id} selected")
 
 

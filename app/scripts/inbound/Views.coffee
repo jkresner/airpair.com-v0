@@ -101,6 +101,8 @@ class CustomerMailTemplates
   tmplFollowup: require './../../mail/customerRequestFollowup'
   constructor: (request, session) ->
     isOpensource = request.get('pricing') == 'opensource'
+    firstName = request.contact(0).fullName.split(' ')[0]
+    request.contact(0).firstName = firstName
     r = request.extendJSON tagsString: request.tagsString(), isOpensource: isOpensource, session: session.toJSON()
     @received = encodeURIComponent(@tmplReceived r)
     @review = encodeURIComponent(@tmplReview r)
@@ -115,6 +117,7 @@ class ExpertMailTemplates
   tmplSuggested: require './../../mail/expertRequestSuggested'
   constructor: (request, session, expertId) ->
     suggestion = request.suggestion expertId
+    suggestion.expert.firstName = suggestion.expert.name.split(' ')[0]
     contact = request.contact 0
     try
       suggestedExpertRate = suggestion.suggestedRate[request.get('pricing')].expert

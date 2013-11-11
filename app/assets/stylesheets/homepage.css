@@ -77,6 +77,27 @@ nav .tech { background:#172430;text-align:center;font-size:13px;padding:5px; }
 nav .tech a { margin-right:14px;color:#d3d3d3!important; }
 nav .tech a:hover { color:white!important; }
 
+nav .tech .android { display:none }
+nav .tech .angular { }
+nav .tech .backbone { }
+nav .tech .devops { }
+nav .tech .cpp { display:none }
+nav .tech .css { display:none }
+nav .tech .ember { display:none }
+nav .tech .git { }
+nav .tech .html { display:none }
+nav .tech .ios { }
+nav .tech .java { display:none }
+nav .tech .js { }
+nav .tech .net { }
+nav .tech .node { }
+nav .tech .perf { }
+nav .tech .php { }
+nav .tech .python { }
+nav .tech .ruby { }
+nav .tech .rails { }
+nav .tech .wp { display:none }
+
 nav a.logo { /* logo */
   display:inline-block;
   float:left;
