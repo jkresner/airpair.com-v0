@@ -16,7 +16,7 @@ class exports.StripeRegisterView extends BB.BadassView
   render: ->
     @$el.html @tmpl()
     @$form = @$('form')
-    @$form.on 'submit', (e) => 
+    @$form.on 'submit', (e) =>
       e.preventDefault()
       @$('button').prop 'disabled', true  # Disable submitBtn to prevent repeat clicks
       Stripe.card.createToken @$form, @responseHandler
@@ -25,20 +25,23 @@ class exports.StripeRegisterView extends BB.BadassView
     if response.error # Show the errors on the form
       @$('.payment-errors').text response.error.message
       @$('button').prop 'disabled', false
-    else 
-      token = response.id  # token contains id, last4, and card type 
+    else
+      token = response.id  # token contains id, last4, and card type
       email = @session.get('google')._json.email
       @model.save stripeCreate: { token: token, email: email }, { success: @stripeCustomerSuccess }
   stripeCustomerSuccess: (model, resp, opts) =>
     @model.unset 'stripeCreate'
-    @successAction()    
+    name = @session.get('google').displayName
+    addjs.trackEvent 'request', 'customerSetStripeInfo', name
+    addjs.providers.mp.setPeopleProps paymentInfoSet: 'stripe'
+    @successAction()
   successAction: => # give the power to override this action so we can put the view in different flows
     router.navTo '#'
 
 
 class exports.StripeSettingsView extends BB.BadassView
   el: '#stripeSettings'
-  tmpl: require './templates/StripeSettings'  
+  tmpl: require './templates/StripeSettings'
   initialize: (args) ->
     @listenTo @model, 'sync', @render
   render: ->
