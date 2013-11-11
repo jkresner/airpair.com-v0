@@ -39,7 +39,7 @@ module.exports = class DomainService
     delete ups._id # so mongo doesn't complain
     @model.findByIdAndUpdate(id, ups).lean().exec (e, r) =>
       if e? then $log 'error', e
-      if e then return callback(e)
+      if e then return callback e
       callback null, r
 
 

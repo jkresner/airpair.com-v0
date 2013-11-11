@@ -31,7 +31,7 @@ sendEmailToAdmins = (options) ->
 
 expertReviewRequest = (data, callback) ->
   renderEmail data, "expertReviewRequest", (err, rendered) ->
-    if e then return callback e
+    if err then return callback err
 
     rendered.Subject = "Request this!"
     $log 'expertReviewRequest.rendered', rendered

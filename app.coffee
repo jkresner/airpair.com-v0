@@ -45,9 +45,9 @@ if cfg.env is 'test'
   require('./app_test_routes')(app)
 
 app.use (err, req, res, next) ->
-  obj = (err and err.stack) or err or new Error('500 Error')
+  obj = (err and err.stack) or err
   console.log "handleError #{req.url}", obj
-  winston.error "error #{req.url} #{err}" if cfg.isProd
+  winston.error "error #{req.url} #{obj}" if cfg.isProd
   res.status(500).sendfile "./public/500.html"
 
 # exports.startServer is called automatically in brunch watch mode, but needs invoking in normal node
