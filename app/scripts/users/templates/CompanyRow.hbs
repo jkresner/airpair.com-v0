@@ -5,7 +5,12 @@
 <td>
   <b>{{ c.fullName }}</b>
   <br />
-  {{ c.email }}
+  <a href="mailto:{{ c.email }}">{{ c.email }}</a>
+
+  {{#if c.phone}}
+    <br />
+    {{ c.phone }}
+  {{/if}}
 </td>
 <td class="r">
   <p style="width:500px">{{ about }}</p>
