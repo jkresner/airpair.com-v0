@@ -16,7 +16,8 @@ track = (pageName) =>
 file = (r, file) -> r.sendfile "./public/#{file}.html"
 
 tagData = (req, r, next) ->
-    vdSvc.landingTag req.params.id, req.user, (d) =>
+    vdSvc.landingTag req.params.id, req.user, (e, d) =>
+      if e then return next e
       r.viewData = d
       next()
 
