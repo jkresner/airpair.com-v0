@@ -11,14 +11,19 @@ class SettingsApi
     app.post    "/api/settings", loggedIn, @create
     app.put     "/api/settings", loggedIn, @update
 
-  detail: (req, res) =>
-    @svc.getByUserId req.user._id, (r) -> res.send r
+  detail: (req, res, next) =>
+    @svc.getByUserId req.user._id, (e, r) ->
+      if e then return next e
+      res.send r
 
-  create: (req, res) =>
-    @svc.create req.user._id, req.body, (r) -> res.send r
+  create: (req, res, next) =>
+    @svc.create req.user._id, req.body, (e, r) ->
+      if e then return next e
+      res.send r
 
-  update: (req, res) =>
-    @svc.update req.user._id, req.body, (r) -> res.send r
-
+  update: (req, res, next) =>
+    @svc.update req.user._id, req.body, (e, r) ->
+      if e then return next e
+      res.send r
 
 module.exports = (app) -> new SettingsApi app, 'settings'

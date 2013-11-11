@@ -1,10 +1,10 @@
 global.suiteCtx = true
+{dbConnect,dbDestroy} = require './test-lib-setup'
 mongoose = require 'mongoose'
 
 describe "Server-side suite", ->
 
-  before (done) ->
-    mongoose.connect "mongodb://localhost/airpair_test", done
+  before dbConnect
 
   describe 'ui/models/request', (done) -> require './ui/models/request'
   describe 'api/companys', (done) -> require './api/companys'
@@ -15,7 +15,5 @@ describe "Server-side suite", ->
 
 
   after (done) ->
-    mongoose.connection.db.executeDbCommand { dropDatabase:1 }, (err, result) ->
-      if err then return done err
-      console.log 'ran server tests & destroyed DB'
-      mongoose.connection.close done
+    suiteCtx = false
+    dbDestroy @, done

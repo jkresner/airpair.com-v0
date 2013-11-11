@@ -8,14 +8,14 @@ module.exports = class OrdersService extends DomainService
 
   model: require './../models/order'
   paypalSvc: new PaypalAdaptiveSvc()
-  stripSvc: new StripeSvc()  
+  stripSvc: new StripeSvc()
 
   create: (order, usr, callback) ->
     order._id = new mongoose.Types.ObjectId;
     order.userId = usr._id
 
     payWith = 'paypal'
-    if order.paymentMethod? && order.paymentMethod.type == 'stripe' then payWith = 'stripe' 
+    if order.paymentMethod? && order.paymentMethod.type == 'stripe' then payWith = 'stripe'
 
     # ? if order.email != usr.primaryEmail
     # update user's primary email
@@ -28,30 +28,31 @@ module.exports = class OrdersService extends DomainService
       expertsHrRate = item.suggestion.suggestedRate[item.type].expert
       # item.expertsTotal is not persisted to the orderItem
       item.expertsTotal = item.qty * expertsHrRate
-      airpairMargin -= item.expertsTotal            
+      airpairMargin -= item.expertsTotal
 
     order.profit = airpairMargin
 
     $log '#3 Order.profit', order
 
-    savePaymentResponse = (paymentResponse) => 
+    savePaymentResponse = (e, paymentResponse) =>
+      if e then return callback e
       order.payment = paymentResponse
 
-      if payWith is 'stripe' && paymentResponse? && !paymentResponse.failure_code? 
+      if payWith is 'stripe' && paymentResponse? && !paymentResponse.failure_code?
         order.paymentStatus = 'received'
         @trackPayment usr, order, 'stripe'
-        
+
       new @model(order).save (e, rr) ->
         if e?
           $log "order.save.error", e
           winston.error "order.save.error", e
-        callback rr
+        callback e, rr
 
     if order.paymentMethod? && order.paymentMethod.type == 'stripe'
       @stripSvc.createCharge order, savePaymentResponse
     else
       @paypalSvc.Pay order, savePaymentResponse
-        
+
   trackPayment: (usr, order, type) ->
     r = order
     props = { usr: usr.google._json.email, distinct_id: usr.google._json.email, total: r.total, profit: r.profit, type: type }
@@ -65,31 +66,36 @@ module.exports = class OrdersService extends DomainService
 
     mixpanel.track 'customerPayment', props
     mixpanel.people.track_charge usr.google._json.email, r.total
-               
+
 
   markPaymentReceived: (id, usr, paymentDetail, callback) ->
     @model.findOne { _id: id }, (e, r) =>
+      if e then return callback e
+
       if Roles.isOrderOwner(usr, r) || Roles.isAdmin(usr)
-        @paypalSvc.PaymentDetails r, (resp) =>
+        @paypalSvc.PaymentDetails r, (e, resp) =>
+          if e then return callback e
           # INCOMPLETE = customer has paid but chained payment not executed
           # CREATED = customer has NOT yet paid
           if resp.status == 'INCOMPLETE'
             ups = paymentStatus: 'received'
             @trackPayment usr, r, 'paypal'
-    
+
             @update id, ups, callback
           else
-            callback { e: 'update failed, not in INCOMPLETE state', data: resp }
+            callback null, { e: 'update failed, not in INCOMPLETE state', data: resp }
       else
-        callback { e: 'update failed, does not belong to user' }
+        callback null, { e: 'update failed, does not belong to user' }
 
 
   payOutToExperts: (id, callback) ->
     @model.findOne { _id: id }, (e, r) =>
+      if e then return callback e
       if !r? || r.paymentStatus != "received"
         return callback status: 'failed', message: "not appropriate to execute payment #{id}"
 
-      @paypalSvc.ExecutePayment r, (resp) =>
+      @paypalSvc.ExecutePayment r, (e, resp) =>
+        if e then return callback e
         # $log 'resp', resp
         if resp.responseEnvelope.ack != 'Success'
           return callback status: 'failed', message: "failed executing payment #{id}", data: resp
@@ -101,7 +107,9 @@ module.exports = class OrdersService extends DomainService
 
   delete: (id, callback) =>
     @model.findOne { _id: id }, (e, r) =>
+      if e then return callback e
       if !r? || r.paymentStatus != "pending"
         return callback status: "failed to delete order #{id}"
       @model.find( _id: id ).remove (ee, rr) =>
+        if e then return callback ee
         callback status: 'deleted'

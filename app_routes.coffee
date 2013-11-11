@@ -34,19 +34,23 @@ module.exports = (app) ->
     else
       file r, 'dashboard'
 
-  app.get '/dashboard*', loggedIn, (req, r)-> file r, 'dashboard'
+  app.get '/dashboard*', loggedIn, (req, r) -> file r, 'dashboard'
 
-  renderReview = (req, r) ->
+  renderReview = (req, r, next) ->
     $log '*6** renderReview'
-    viewData.review req.params.id, req.user, (d) => r.render 'review.html', d
+    viewData.review req.params.id, req.user, (e, d) =>
+      if e then return next e
+      r.render 'review.html', d
   app.get '/review/:id', renderReview
   app.get '/review/book/:id', renderReview
 
-  app.get '/settings*', loggedIn, (req, r)->  r.render 'settings.html', 
+  app.get '/settings*', loggedIn, (req, r) ->  r.render 'settings.html',
     { stripePK: cfg.payment.stripe.publishedKey }
 
-  # renderBook = (req, r) ->
-  #   viewData.book req.params.id, req.user, (d) => r.render 'book.html', d
+  # renderBook = (req, r, next) ->
+  #   viewData.book req.params.id, req.user, (e, d) =>
+  #     if e then return next e
+  #     r.render 'book.html', d
   # app.get '/book/:id', renderBook
 
   # admin pages
@@ -55,8 +59,10 @@ module.exports = (app) ->
   app.get '/adm/csvs*', loggedIn, admin, (req, r) -> file r, 'adm/csvs'
   app.get '/adm/orders*', loggedIn, admin, (req, r) -> file r, 'adm/orders'
   app.get '/adm/users*', loggedIn, admin, (req, r) -> file r, 'adm/users'
-  app.get '/adm/inbound*', loggedIn, admin, (req, r) ->
-    viewData.inbound req.user, (d) => r.render 'adm/inbound.html', d
+  app.get '/adm/inbound*', loggedIn, admin, (req, r, next) ->
+    viewData.inbound req.user, (e, d) =>
+      if e then return next e
+      r.render 'adm/inbound.html', d
 
   # api
   require('./lib/api/users')(app)
@@ -70,26 +76,31 @@ module.exports = (app) ->
 
   require('./app_landing')(app)
 
-  app.get '/paypal/success/:id', loggedIn, (req, r) ->
-    viewData.paypalSuccess req.params.id, req.user, (d) =>
+  app.get '/paypal/success/:id', loggedIn, (req, r, next) ->
+    viewData.paypalSuccess req.params.id, req.user, (e, d) =>
+      if e then return next e
       r.render 'payment/paypalSuccess.html', d
 
-  app.get '/paypal/cancel/:id', loggedIn, (req, r) ->
-    viewData.paypalCancel req.params.id, req.user, (d) =>
+  app.get '/paypal/cancel/:id', loggedIn, (req, r, next) ->
+    viewData.paypalCancel req.params.id, req.user, (e, d) =>
+      if e then return next e
       r.render 'payment/paypalCancel.html', d
 
-  app.get '/payment/register-stripe', loggedIn, (req, r) ->
-    viewData.stripeCheckout req.user, req.query, (d) =>
+  app.get '/payment/register-stripe', loggedIn, (req, r, next) ->
+    viewData.stripeCheckout req.user, req.query, (e, d) =>
+      if e then return next e
       r.render 'payment/stripeRegister.html', d
 
-  app.get '/payment/checkout-stripe', loggedIn, (req, r) ->
-    viewData.stripeCheckout req.user, req.query, (d) =>
+  app.get '/payment/checkout-stripe', loggedIn, (req, r, next) ->
+    viewData.stripeCheckout req.user, req.query, (e, d) =>
+      if e then return next e
       r.render 'payment/stripeCheckout.html', d
-    
-  app.post '/payment/stripe-charge', (req, r) ->
-    viewData.stripeCharge null, req.user, req.body.token, (d) =>
+
+  app.post '/payment/stripe-charge', (req, r, next) ->
+    viewData.stripeCharge null, req.user, req.body.token, (e, d) =>
+      if e then return next e
       r.render 'payment/stripeSuccess.html', d
-    
+
     $log 'req', req.user, req.body
     r.send 200
 

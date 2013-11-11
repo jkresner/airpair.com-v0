@@ -13,22 +13,27 @@ class TagsApi
     app.put     "/api/#{route}/:id", loggedIn, @update
     app.delete  "/api/#{route}/:id", loggedIn, @delete
 
-  create: (req, res) =>
+  create: (req, res, next) =>
     @svc.create req.body.addMode, req.body, (e, r) ->
       if e?
         res.send 400, { errors: { message: e.message } }
       else
         res.send r
 
-  update: (req, res) =>
-    @svc.update req.params.id, req.body, (r) ->
+  update: (req, res, next) =>
+    @svc.update req.params.id, req.body, (e, r) ->
+      if e then return next e
       res.send r
 
-  delete: (req, res) =>
-    @svc.delete req.params.id, (r) ->
+  delete: (req, res, next) =>
+    @svc.delete req.params.id, (e, r) ->
+      if e then return next e
       res.send r
 
-  list: (req, res) => @svc.getAll (r) -> res.send r
+  list: (req, res, next) =>
+    @svc.getAll (e, r) ->
+      if e then return next e
+      res.send r
 
 
-module.exports = (app) -> new TagsApi app,'tags'
+module.exports = (app) -> new TagsApi app, 'tags'

@@ -16,11 +16,12 @@ describe "RequestsService", ->
     user = data.users[3]
     request = data.requests[3]
     sendMailMock = sinon.stub svc.mailman, 'sendEmailToAdmins', ->
-    callback = ->
+    callback = (e) ->
+      if e then return done e
       expect(sendMailMock.calledWith(sinon.match.has("subject", "New airpair request: Roger Toor 90$"))).to.equal true
       expect(sendMailMock.calledOnce).to.equal true
-      done()
       sendMailMock.restore()
+      done()
 
     svc.create(user, request, callback)
 

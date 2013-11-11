@@ -15,27 +15,36 @@ class CompanyApi
     app.put     "/api/#{route}/:id", loggedIn, @update
     app.delete  "/api/#{route}/:id", admin, @delete
 
-  detail: (req, res) =>
+  detail: (req, res, next) =>
 
     search = '_id': req.params.id
 
     if req.params.id is 'me'
       search = 'contacts.userId': req.user._id
 
-    @svc.searchOne search, (r) -> res.send r
+    @svc.searchOne search, (e, r) ->
+      if e then return next e
+      res.send r
 
-  adminlist: (req, res) => @svc.getAll (r) -> res.send r
+  adminlist: (req, res, next) =>
+    @svc.getAll (e, r) ->
+      if e then return next e
+      res.send r
 
   create: (req, res, next) =>
     @svc.create req.body, (e, r) ->
       if e then return next e
       res.send r
 
-  update: (req, res) =>
-    @svc.update req.params.id, req.body, (r) -> res.send r
+  update: (req, res, next) =>
+    @svc.update req.params.id, req.body, (e, r) ->
+      if e then return next e
+      res.send r
 
-  delete: (req, res) =>
-    @svc.delete req.params.id, (r) -> res.send r
+  delete: (req, res, next) =>
+    @svc.delete req.params.id, (e, r) ->
+      if e then return next e
+      res.send r
 
 
 module.exports = (app) -> new CompanyApi app, 'companys'

@@ -8,7 +8,7 @@ rSvc = new RequestsSvc()
 eSvc = new ExpertsSvc()
 tSvc = new TagsSvc()
 oSvc = new OrdersSvc()
-sSvc = new SettingsSvc()  
+sSvc = new SettingsSvc()
 
 module.exports = class ViewDataService
 
@@ -29,34 +29,45 @@ module.exports = class ViewDataService
     {qty,unitPrice} = order
     total = qty * unitPrice
     pk = global.cfg.payment.stripe.publishedKey
-    sSvc.getByUserId usr._id, (r) => 
-      callback _.extend {total,qty,unitPrice,pk}, 
+    sSvc.getByUserId usr._id, (e, r) =>
+      if e then return callback e
+      callback null, _.extend {total,qty,unitPrice,pk},
         session:    @session usr
         customerId: JSON.stringify r
 
   review: (id, usr, callback) ->
-    rSvc.getByIdSmart id, usr, (r) => callback
-      isProd:     cfg.isProd.toString()
-      session:    @session usr
-      request:    JSON.stringify r
-      tagsString: if r? then util.tagsString(r.tags) else 'Not found'
+    rSvc.getByIdSmart id, usr, (e, r) =>
+      if e then return callback e
+      callback null,
+        isProd:     cfg.isProd.toString()
+        session:    @session usr
+        request:    JSON.stringify r
+        tagsString: if r? then util.tagsString(r.tags) else 'Not found'
 
   book: (id, usr, callback) ->
-    eSvc.getById id, (r) => callback
-      session:    @session usr
-      expert:     JSON.stringify r
-      expertName: r.name
+    eSvc.getById id, (e, r) =>
+      if e then return callback e
+      callback null,
+        session:    @session usr
+        expert:     JSON.stringify r
+        expertName: r.name
+
   inbound: (usr, callback) ->
-    tSvc.getAll (t) =>
-      eSvc.getAll (e) =>
-        rSvc.getActive (r) => callback
-          session:  @session usr
-          requests: JSON.stringify r
-          experts:  JSON.stringify e
-          tags:     JSON.stringify t
+    tSvc.getAll (e, t) =>
+      if e then return callback e
+      eSvc.getAll (e, expert) =>
+        if e then return callback e
+        rSvc.getActive (e, r) =>
+          if e then return callback e
+          callback null,
+            session:  @session usr
+            requests: JSON.stringify r
+            experts:  JSON.stringify expert
+            tags:     JSON.stringify t
 
   landingTag: (tagSearchTerm, usr, callback) ->
-    tSvc.search tagSearchTerm, (o) =>
+    tSvc.search tagSearchTerm, (e, o) =>
+      if e then return callback e
       vd =
         session: @session usr
         tag:     o
@@ -65,24 +76,31 @@ module.exports = class ViewDataService
         if o.soId[0] is '.' then vd.tag.img = o.soId.substring(1) # for '.net'
         vd.tag.lowercase_name = vd.tag.name.toLowerCase()
         vd.tag.lowercase_short = vd.tag.short.toLowerCase()
-        tSvc.cms o._id, (c) =>
+        tSvc.cms o._id, (e, c) =>
+          if e then return callback e
           vd.tagCms = if c? then c else {}
-          callback vd
+          callback null, vd
       else
-        callback vd
+        callback null, vd
 
   stripeCharge: (orderId, usr, token, callback) ->
     # oSvc.markPaymentReceived orderId, usr, {}, (o) => callback
-    oSvc.markPaymentReceived orderId, usr, {}, (o) => callback
-      session: @session usr
-      order: JSON.stringify o
+    oSvc.markPaymentReceived orderId, usr, {}, (e, o) =>
+      if e then return callback e
+      callback null,
+        session: @session usr
+        order: JSON.stringify null, o
 
   paypalSuccess: (orderId, usr, callback) ->
-    oSvc.markPaymentReceived orderId, usr, {}, (o) => callback
-      session: @session usr
-      order: JSON.stringify o
+    oSvc.markPaymentReceived orderId, usr, {}, (e, o) =>
+      if e then return callback e
+      callback null,
+        session: @session usr
+        order: JSON.stringify o
 
   paypalCancel: (orderId, usr, callback) ->
-    oSvc.getById orderId, (o) => callback
-      session: @session usr
-      order: JSON.stringify o
+    oSvc.getById orderId, (e, o) =>
+      if e then return callback e
+      callback null,
+        session: @session usr
+        order: JSON.stringify o
