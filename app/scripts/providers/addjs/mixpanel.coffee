@@ -18,7 +18,6 @@ module.exports = class AddjsMixPanel
         @identify()
 
   identify: =>
-    $log 'identify', mixpanel
     mixpanel.identify @peopleProps.email
     mixpanel.people.set_once
       $email: @peopleProps.email
