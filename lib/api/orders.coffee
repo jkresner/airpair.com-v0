@@ -60,7 +60,7 @@ class OrdersApi
       res.send r
 
 
-  delete: (req, res) =>
+  delete: (req, res, next) =>
     @svc.delete req.params.id, (e, r) ->
       if e then return next e
       res.send r
