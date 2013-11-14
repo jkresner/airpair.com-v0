@@ -30,6 +30,8 @@ addEvent 'request', 'customerOrderCreated', '/review', 50, 'week', 'order was su
 
 addEvent 'request', 'customerPayment', '/review/*', 50, 'week', 'customer paid with paypal'
 
+addEvent 'request', 'customerBookExpert', '/@*', 50, 'week', 'customer paid with paypal'
+
 addEvent 'beexpert', 'expertWelcome', '/be-an-expert', 100, 'week', 'expert creates account via google login'
 
 addEvent 'beexpert', 'expertLogin', '/be-an-expert', 100, 'week', 'expert tried to login via google'

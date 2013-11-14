@@ -47,11 +47,11 @@ module.exports = (app) ->
   app.get '/settings*', loggedIn, (req, r) ->  r.render 'settings.html',
     { stripePK: cfg.payment.stripe.publishedKey }
 
-  # renderBook = (req, r, next) ->
-  #   viewData.book req.params.id, req.user, (e, d) =>
-  #     if e then return next e
-  #     r.render 'book.html', d
-  # app.get '/book/:id', renderBook
+  renderBook = (req, r, next) ->
+    viewData.book req.params.id, req.user, (e, d) =>
+      if e then return next e
+      r.render 'book.html', d
+  app.get '/@:id', renderBook
 
   # admin pages
   app.get '/adm/tags*', loggedIn, admin, (req, r) -> file r, 'adm/tags'

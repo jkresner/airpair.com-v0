@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>airpair, {{ expertName }} request</title>
+    <title>airpair, {{ expertName }} book</title>
     <meta charset="utf-8">
     <meta name="robots" content="noindex, nofollow" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -14,34 +14,40 @@
     <link rel="stylesheet" href="/stylesheets/app.css">
 </head>
 
-<body id="reviewpage">
+<body id="bookpage">
 
   <nav>
     <div>
       <a href="/" title="Pair programming, code review, architecture advice & more..." class="logo"></a>
-
-      <ul>
-        <li><a href="/dashboard" class="zocial cal">dashboard</a></li>
-        <li><a href="/find-an-expert" class="zocial call">new request</a></li>
-      </ul>
     </div>
   </nav>
   <h1>Book {{ expertName }}</h1>
-  <div id="detail" class="route">
-    <div id="request">
-    </div>
-  </div>
 
-  <div id="book" class="route"></div>
+  {{#with expert}}
+    {{> Expert }}
+  {{/with}}
+
+  {{#if isAnonymous }}
+  <div id="signin">
+
+    <a href="#auth/google" class="signinBtn-google track">
+      <img src="/images/signin/google.png"/>
+    </a>
+    <p style="font-size:16px">Sign in with google to book your AirPair session.</p>
+  </div>
+  {{/if}}
+
+
+  <!-- <div id="book" class="route"></div> -->
 
 </body>
 
   <script type="text/javascript">
     function initApp() {
-      var pageData = { session: {{{ session }}}, expert: {{{ expert }}}};
-      /*
-      Router = require('/scripts/review/Router');
-      window.router = new Router(pageData);*/
+      var pageData = { session: {{{ session }}}, expert: {{{ expertstr }}}};
+
+      Router = require('/scripts/book/Router');
+      window.router = new Router(pageData);
     }
   </script>
   <script src="/javascripts/vendor.js" defer></script>
