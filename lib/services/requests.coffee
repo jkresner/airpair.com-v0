@@ -2,7 +2,7 @@ DomainService   = require './_svc'
 Roles           = require './../identity/roles'
 RatesSvc        = require './rates'
 SettingsSvc     = require './settings'
-mailman = require '../mail/mailman'
+mailman         = require '../mail/mailman'
 
 module.exports = class RequestsService extends DomainService
 
@@ -117,10 +117,12 @@ module.exports = class RequestsService extends DomainService
     @update request._id, data, callback
 
   notifyAdmins: (model) ->
+    tags = model.tags.map((o) -> o.short).join(' ')
     @mailman.sendEmailToAdmins({
       templateName: "admNewRequest"
       subject: "New airpair request: #{model.company.contacts[0].fullName} #{model.budget}$"
       request: model
+      tags: tags
       callback: (e) ->
         if e then $log 'notifyAdmins error', e
     })
