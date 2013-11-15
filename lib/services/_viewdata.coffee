@@ -10,6 +10,7 @@ tSvc = new TagsSvc()
 oSvc = new OrdersSvc()
 sSvc = new SettingsSvc()
 
+
 module.exports = class ViewDataService
 
   session: (user) ->
@@ -48,9 +49,11 @@ module.exports = class ViewDataService
     eSvc.getById id, (e, r) =>
       if e then return callback e
       callback null,
-        session:    @session usr
-        expert:     JSON.stringify r
-        expertName: r.name
+        isAnonymous: !usr?
+        session:     @session usr
+        expert:      r
+        expertstr:   JSON.stringify r
+        expertName:  r.name
 
   inbound: (usr, callback) ->
     tSvc.getAll (e, t) =>

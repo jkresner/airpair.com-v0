@@ -5,6 +5,7 @@ require './lib/util/appConfig'
 require './lib/util/globals'
 express       = require 'express'
 passport      = require 'passport'
+hbs           = require('hbs')
 
 # setup our express app
 app = express()
@@ -13,7 +14,10 @@ app = express()
 {MongoSessionStore} = require('./app_mongoose')(app, express)
 mongoSessionStore = new MongoSessionStore url: "#{cfg.mongoUri}/sessions"
 
-app.engine('html', require('hbs').__express)
+# expose all client side shared templates as partials to the server
+# this lets us render almost the whole page server-side for SEO speed
+hbs.registerPartials(__dirname + '/app/scripts/shared/templates')
+app.engine('html', hbs.__express)
 app.set('view engine', 'hbs')
 app.set('views', __dirname + '/public')
 
