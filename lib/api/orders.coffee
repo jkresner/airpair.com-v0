@@ -52,7 +52,7 @@ class OrdersApi
       res.send r
 
 
-  payOut: (req, res) =>
+  payOut: (req, res, next) =>
     @svc.payOutToExperts req.params.id, (e, r) ->
       if e then return next e
       if r.status? & r.status is 'Failure'
