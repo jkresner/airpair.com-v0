@@ -26,7 +26,7 @@ logEmailConfig =
   sesAccessKey:   process.env.AP_SES_ACCESS_KEY
   sesSecretKey:   process.env.AP_SES_SECRET_KEY
   sesFrom:        'airpair <jk@airpair.com>'
-  sesTo:          'airpair <jk@airpair.com>'
+  sesTo:          ['airpair <jk@airpair.com>', 'dtrejo <dt@airpair.com>']
   sesSubject:     'ap error'
 
 
