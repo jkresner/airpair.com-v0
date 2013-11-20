@@ -52,6 +52,11 @@ app.use (err, req, res, next) ->
   winston.error "handleError #{req.url} #{str}" if cfg.isProd
   res.status(500).sendfile "./public/500.html"
 
+process.on 'uncaughtException', (err) ->
+  console.log "uncaughtException #{err.stack}"
+  winston.error "uncaughtException #{err.stack}" if cfg.isProd
+  process.exit 1
+
 # exports.startServer is called automatically in brunch watch mode, but needs invoking in normal node
 exports.startServer = (port, path, callback) ->
   p = process.env.PORT || port
