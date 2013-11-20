@@ -59,9 +59,9 @@ class CRUDApi
 
   delete: (req, res, next) =>
     @model.find( _id: req.params.id ).remove (e, r) ->
-    if @logging then $log 'deleted:', e, r
-    if e then return next e
-    res.send { status: 'deleted' }
+      if @logging then $log 'deleted:', e, r
+      if e then return next e
+      res.send { status: 'deleted' }
 
 
   utcNow: ->
