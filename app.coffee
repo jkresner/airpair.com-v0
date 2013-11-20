@@ -5,6 +5,7 @@ require './lib/util/appConfig'
 require './lib/util/globals'
 express       = require 'express'
 passport      = require 'passport'
+inspect       = require('util').inspect
 
 # setup our express app
 app = express()
@@ -46,9 +47,15 @@ if cfg.env is 'test'
 
 app.use (err, req, res, next) ->
   obj = (err and err.stack) or err
-  console.log "handleError #{req.url}", obj
-  winston.error "error #{req.url} #{obj}" if cfg.isProd
+  str = inspect obj, { depth: null }
+  console.log "handleError #{req.url} #{str}"
+  winston.error "handleError #{req.url} #{str}" if cfg.isProd
   res.status(500).sendfile "./public/500.html"
+
+process.on 'uncaughtException', (err) ->
+  console.log "uncaughtException #{err.stack}"
+  winston.error "uncaughtException #{err.stack}" if cfg.isProd
+  process.exit 1
 
 # exports.startServer is called automatically in brunch watch mode, but needs invoking in normal node
 exports.startServer = (port, path, callback) ->
