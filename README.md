@@ -27,7 +27,7 @@ To setup + run locally
 
 1)   Install mongoDB
 
-1)   Install brunch.io `npm install brunch -g`
+1)   Install brunch.io & coffee-script `npm install brunch coffee-script -g`
 
 3)   Run mongo `mongod`
 
