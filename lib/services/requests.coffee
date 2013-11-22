@@ -11,10 +11,10 @@ module.exports = class RequestsService extends DomainService
   settingsSvc: new SettingsSvc()
   mailman: mailman
   publicView: (request) ->
-    _.pick request, ['_id','tags','company','brief','availability']
+    _.pick request, ['_id','tags','company','brief','availability','owner']
 
   associatedView: (request) ->
-    _.pick request, ['_id','tags','company','brief','availability','budget','pricing','suggested']
+    _.pick request, ['_id','tags','company','brief','availability','budget','pricing','suggested','owner']
 
 
   # log event when the request is viewed
