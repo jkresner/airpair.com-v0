@@ -35,18 +35,25 @@ Suggestion = new Schema
   suggestedRate:      Number     # can be altered by admin or expert
   customerRating:     Number
   customerFeedback:   String
-  messageThreadId:    ObjectId
 
 
 Call = new Schema
-  expert:           {}
-  time:             Date
-  recordingUrls:    []
-  type:             String        # opensource, private, subscription
-  devRate:          Number
-  fee:              Number
-  review:           String
-  devEndorsed:      String
+  orderId:          { required: true, type: ObjectId, ref: 'Order' }
+  expertId:         { required: true, type: ObjectId, ref: 'Expert', index: true }
+  expert:           { required: true, type: {} }
+  hours:            { required: true, type: Number }
+  type:             String   # opensource, private, nda, subscription, off-line
+  time:             { required: true, type: Date, index: true }
+  gCal:             { required: true, type: {} }
+  recordings:       { required: true, type: [{}] }
+  expertEndorsed:   String   # If the expert wants the session featured (or hidden)
+  expertReview:     {}   # Experts feedback on how the session went
+  expertShare:      {}   # Tacking Expert sharing activity
+  customerReview:   {}   # Customer's feedback on how the session went
+  customerShare:    {}   # Tacking Customer sharing activity
+  cms:              {}   # permalink, title, transcript, expertMeta, customerMeta
+  airpairRating:    { type: Number }  # How we sort session by awesomeness
+
 
 
 RequestSchema = new Schema
