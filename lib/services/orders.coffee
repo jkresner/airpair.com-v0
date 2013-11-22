@@ -32,8 +32,6 @@ module.exports = class OrdersService extends DomainService
 
     order.profit = airpairMargin
 
-    $log '#3 Order.profit', order
-
     savePaymentResponse = (e, paymentResponse) =>
       if e then return callback e
       order.payment = paymentResponse
