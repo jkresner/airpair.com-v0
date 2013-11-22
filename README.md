@@ -27,7 +27,7 @@ To setup + run locally
 
 1)   Install mongoDB
 
-1)   Install brunch.io `npm install brunch -g`
+1)   Install brunch.io & coffee-script `npm install brunch coffee-script -g`
 
 3)   Run mongo `mongod`
 
@@ -118,3 +118,23 @@ Ideas to airpair on
 
 [Un-assigned]
 - Update schema: https://github.com/visionmedia/node-migrate
+
+
+# Onboarding
+
+- follow instructions in higher up in this file, README.md
+- learn how to do pipeline. someone will take you through it
+  e.g. https://trello.com/c/kRkudmGQ/365-take-david-through-pipeline-request
+- add yourself to roles.coffee
+- install
+    - editor
+      - cs highlighting
+      - cs compile
+    - latest version of git [impt; without this, pre-push will not work]
+    - coffeescript
+    - mongo 2.4
+- watch some of <http://www.youtube.com/watch?v=e0N_2T7Tdf8&feature=player_detailpage#t=718>
+- get a <your-initals>@airpair.com address
+- add yourself to the error emails (TODO: eng alias)
+- add your color to the badges CSS for claiming a request
+
