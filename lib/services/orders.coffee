@@ -111,5 +111,5 @@ module.exports = class OrdersService extends DomainService
       if !r? || r.paymentStatus != "pending"
         return callback status: "failed to delete order #{id}"
       @model.find( _id: id ).remove (ee, rr) =>
-        if e then return callback ee
-        callback status: 'deleted'
+        if ee then return callback ee
+        callback null, status: 'deleted'
