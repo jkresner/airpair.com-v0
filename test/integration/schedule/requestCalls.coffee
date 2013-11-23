@@ -23,23 +23,10 @@ describe "REST api request calls", ->
   after (done) -> dbDestroy @, done
   beforeEach -> @testNum++
 
+  it "cannot create call without being customer (owner) of request", (done) ->
+
+
   it "cannot create call without order credit as customer", (done) ->
-    # passportMock.setSession 'admin'
-    # createReq data.requests[1], (req) =>
-    #   http(app).get('/api/requests')
-    #     .end (err, res) =>
-    #       d = res.body[0]
-    #       expect(d.userId).to.equal data.users[0]._id
-    #       expect(d.events.length).to.equal 1
-    #       expect(d.company.name).to.equal req.company.name
-    #       expect(d.company.contacts.length).to.equal 1
-    #       expect(d.status).to.equal 'received'
-    #       expect(d.hours).to.equal req.hours
-    #       expect(d.brief).to.equal req.brief
-    #       expect(d.budget).to.equal req.budget
-    #       expect(d.pricing).to.equal req.pricing
-    #       expect(d.availability).to.equal req.availability
-    #       done()
 
 
   it "can create call (with order credit) as customer", (done) ->
@@ -48,6 +35,9 @@ describe "REST api request calls", ->
     # integrate with gCalender
     # send customer an email asking to confirm
     # assert call.status is 'pending'
+
+
+  it "cannot confirm/decline call without being call expert", (done) ->
 
 
   it "can confirm call as expert", (done) ->
@@ -75,6 +65,7 @@ describe "REST api request calls", ->
     # send customer email with recording + review link
     # send expert email with recording + review link
 
+  it "cannot review call without being call expert/customer", (done) ->
 
   it "can review call as customer", (done) ->
     # check call completed
