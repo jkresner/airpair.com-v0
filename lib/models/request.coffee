@@ -43,6 +43,7 @@ Call = new Schema
   expert:           { required: true, type: {} }
   hours:            { required: true, type: Number }
   type:             String   # opensource, private, nda, subscription, off-line
+  status:           { required: true, type: String }  # pending, confirmed, declined
   time:             { required: true, type: Date, index: true }
   gCal:             { required: true, type: {} }
   recordings:       { required: true, type: [{}] }
@@ -51,9 +52,10 @@ Call = new Schema
   expertShare:      {}   # Tacking Expert sharing activity
   customerReview:   {}   # Customer's feedback on how the session went
   customerShare:    {}   # Tacking Customer sharing activity
-  cms:              {}   # permalink, title, transcript, expertMeta, customerMeta
+  cms:              {}   # title, transcript, expertMeta, customerMeta
+  cmsStatus:        { request: true, type: String, default: 'nocontent' }  # nocontent, pending, incomplete, approved
+  cmsPermalink:     { required: true, type: ObjectId, unique: true, sparse: true } # index for quick search
   airpairRating:    { type: Number }  # How we sort session by awesomeness
-
 
 
 RequestSchema = new Schema
