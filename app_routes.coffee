@@ -37,12 +37,13 @@ module.exports = (app) ->
   app.get '/dashboard*', loggedIn, (req, r) -> file r, 'dashboard'
 
   renderReview = (req, r, next) ->
-    $log '*6** renderReview'
     viewData.review req.params.id, req.user, (e, d) =>
       if e then return next e
       r.render 'review.html', d
   app.get '/review/:id', renderReview
   app.get '/review/book/:id', renderReview
+
+  app.get '/schedule*', loggedIn, (req, r) -> file r, 'schedule'
 
   app.get '/settings*', loggedIn, (req, r) ->  r.render 'settings.html',
     { stripePK: cfg.payment.stripe.publishedKey }
