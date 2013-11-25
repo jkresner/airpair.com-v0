@@ -26,11 +26,17 @@ class exports.Experts extends BB.FilteringCollection
 
     return r
 
-
 class exports.Requests extends BB.FilteringCollection
   model: Models.Request
   url: '/api/admin/requests'
   comparator: (m) -> m.get('events')[0].utc
-
+  _filter: (f) ->
+    owner = f.filter.toLowerCase()
+    r = @models
+    if owner is 'all' then return r
+    r = _.filter r, (m) =>
+      m.get('owner') == owner
+    console.log r
+    r
 
 module.exports = exports
