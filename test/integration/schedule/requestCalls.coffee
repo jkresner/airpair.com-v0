@@ -23,11 +23,6 @@ describe "REST api request calls", ->
   after (done) -> dbDestroy @, done
   beforeEach -> @testNum++
 
-  it "cannot create call without being customer (owner) of request", (done) ->
-
-
-  it "cannot create call without order credit as customer", (done) ->
-
 
   it "can create call (with order credit) as customer", (done) ->
     # check experts calendar availability
@@ -37,7 +32,10 @@ describe "REST api request calls", ->
     # assert call.status is 'pending'
 
 
-  it "cannot confirm/decline call without being call expert", (done) ->
+  it "cannot create call without order credit as customer", (done) ->
+
+
+  it "cannot create call without being customer (owner) of request", (done) ->
 
 
   it "can confirm call as expert", (done) ->
@@ -53,28 +51,33 @@ describe "REST api request calls", ->
     # send admin email with wtf was the customer thinking?
 
 
+  it "cannot confirm/decline call without being call expert", (done) ->
+
+
+  it "can complete call with session recording info", (done) ->
+    # update call
+    # update order (with status of completed hours)
+    # send customer email with recording + review link
+    # send expert email with recording + review link
+
+
   it "can get requests by call by times", (done) ->
 
 
   it "can get requests by expert (in calls)", (done) ->
 
 
-  it "can update call with session recording info", (done) ->
-    # update call
-    # update order (with status of completed hours)
-    # send customer email with recording + review link
-    # send expert email with recording + review link
-
-  it "cannot review call without being call expert/customer", (done) ->
-
-  it "can review call as customer", (done) ->
+  it "can give feedback on call as customer", (done) ->
     # check call completed
     # update call
 
 
-  it "can review call as expert", (done) ->
+  it "can give feedback on call as expert", (done) ->
     # check call completed
     # update call
+
+
+  it "cannot give feedback on call without being call expert/customer", (done) ->
 
 
   it "can update call cms (as customer?)", (done) ->
