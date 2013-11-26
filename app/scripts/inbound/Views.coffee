@@ -1,12 +1,38 @@
-
 exports = {}
 BB = require './../../lib/BB'
 M = require './Models'
 SV = require './../shared/Views'
+storage = require('../util').storage
 
 #############################################################################
 ##  To render requests rows for admin
 #############################################################################
+
+class exports.FiltersView extends BB.BadassView
+  el: '#filters'
+  events:
+    'click .btn': 'filterRequests'
+  initialize: ->
+    owner = storage('inbound.owner')
+    @collection.once 'reset', =>
+      if owner
+        @highlightBtn $(".btn:contains(#{owner})")
+        @filterByOwner owner
+
+  filterRequests: (e) ->
+    $btn = $(e.currentTarget)
+    @highlightBtn $btn
+    @filterByOwner $btn.text()
+
+  highlightBtn: ($btn) ->
+    # save currently selected button to localstorage
+    storage('inbound.owner', $btn.text()) # keep the case
+    $btn.siblings('button').removeClass('btn-warning')
+    $btn.addClass('btn-warning')
+
+  filterByOwner: (owner) ->
+    @collection.filterFilteredModels
+      filter: owner
 
 class exports.RequestRowView extends BB.BadassView
   tagName: 'tr'
@@ -34,11 +60,11 @@ class exports.RequestsView extends BB.BadassView
   el: '#requests'
   tmpl: require './templates/Requests'
   initialize: (args) ->
-    @listenTo @collection, 'sync', @render # filter sort
+    @listenTo @collection, 'sync filter', @render # filter sort
   render: ->
-    @$el.html @tmpl( count: @collection.length )
+    @$el.html @tmpl( count: @collection.filteredModels.length )
 
-    for m in @collection.models
+    for m in @collection.filteredModels
       sts = m.get('status')
       @$("##{sts} tbody").append new exports.RequestRowView( model: m ).render().el
 
