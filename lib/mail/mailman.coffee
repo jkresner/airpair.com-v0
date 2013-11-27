@@ -10,18 +10,18 @@ renderHandlebars = (data, templatePath, callback) ->
     rendered = templateFn data
     callback null, rendered
 
-renderEmail = (d, templateName, callback) ->
-  htmlPath = "#{__dirname}/templates/#{templateName}.html.hbs"
-  txtPath = "#{__dirname}/templates/#{templateName}.txt.hbs"
-  async.parallel {
-    Html: async.apply renderHandlebars, d, htmlPath
-    Text: async.apply renderHandlebars, d, txtPath
-  }, (error, results) -> callback(error, results)
-
 class Mailman
+  renderEmail: (d, templateName, callback) ->
+    htmlPath = "#{__dirname}/templates/#{templateName}.html.hbs"
+    txtPath = "#{__dirname}/templates/#{templateName}.txt.hbs"
+    async.parallel {
+      Html: async.apply renderHandlebars, d, htmlPath
+      Text: async.apply renderHandlebars, d, txtPath
+    }, (error, results) -> callback(error, results)
+
   # TODO change call signature to `options, callback`. And test everything.
-  sendEmail: (options) ->
-    renderEmail(options, options.templateName, (e, rendered) ->
+  sendEmail: (options) =>
+    @renderEmail(options, options.templateName, (e, rendered) ->
       rendered.Subject = options.subject
       ses.send(options.to, rendered, options.callback)
     )
@@ -37,7 +37,7 @@ class Mailman
     @sendEmail(options)
 
   expertReviewRequest: (data, callback) ->
-    renderEmail data, "expertReviewRequest", (err, rendered) ->
+    @renderEmail data, "expertReviewRequest", (err, rendered) ->
       if err then return callback err
 
       rendered.Subject = "Request this!"
