@@ -20,12 +20,41 @@
       </div>
   </nav>
 
-  <!-- airpair/schedule/new/{requestid} -->
+  <!-- airpair/schedulepage/new/{requestid}
+
+  Y expertId:         { required: true, type: ObjectId, ref: 'Expert', index: true }
+  Y expert:           { required: true, type: {} }
+  Y time:             { required: true, type: Date, index: true }
+  Y hours:            { required: true, type: Number }
+  Y gCal:             { required: true, type: {} }
+
+  -->
+
 
   <div id="list" class="route"></div>
 
 
-  <div id="new" class="route"></div>
+  <div id="new" class="route">
+
+    <div class="step0"> <!-- Only show step if more than one expert available to book -->
+      <h2>Choose expert for call</h2>
+
+      <div id="bookableExpert">
+        {{each bookable}}
+          <img class="expertPic" src="{{expert.pic}}" />
+          Available {{ expert.qtyAvailable }} Hours <a href="">Book more</a>
+        {{/each}}
+      </div>
+
+    </div>
+
+    <div class="step1">
+
+      <div class="dateTimePicker"></div>
+
+    </div>
+
+  </div>
 
   <!-- airpair/schedule/confirm/{requestid} -->
 

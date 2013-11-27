@@ -12,13 +12,13 @@ ExpertPayout = new Schema
 
 
 LineItem = new Schema
-  total:          { required: true, type: Number }
-  unitPrice:      { required: true, type: Number }
-  qty:            { required: true, type: Number }
-  qtyRedeemed:    { required: true, type: Number, default: 0 }
-  qtyCompleted:   { required: true, type: Number, default: 0 }
-  type:           { required: true, type: String } # open-source, private, nda
-  suggestion:     { required: true, type: {} }
+  total:              { required: true, type: Number }
+  unitPrice:          { required: true, type: Number }
+  qty:                { required: true, type: Number }
+  qtyCompleted:       { required: true, type: Number, default: 0 }
+  qtyRedeemedCallIds: { required: true, type: [], default: [] } # tricky qtyRedeemed alternative
+  type:               { required: true, type: String } # open-source, private, nda
+  suggestion:         { required: true, type: {} }
 
 
 schema = new Schema

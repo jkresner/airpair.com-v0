@@ -38,7 +38,6 @@ Suggestion = new Schema
 
 
 Call = new Schema
-  orderId:          { required: true, type: ObjectId, ref: 'Order' }
   expertId:         { required: true, type: ObjectId, ref: 'Expert', index: true }
   expert:           { required: true, type: {} }
   hours:            { required: true, type: Number }
