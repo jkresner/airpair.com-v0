@@ -42,11 +42,9 @@ module.exports = class DomainService
       if e then return callback e
       callback null, r
 
-
-  # too many paramaters? from my reading so far, request.user is always
-  # defined, but for now I am going to leave it like this
-  # when we code review, considering removing the usr parameter.
-  newEvent: (request, usr, evtName, evtData) =>
+  # be sure that request.user is a user object
+  newEvent: (request, evtName, evtData) =>
+    usr = request.user
     byUser = 'anon'
     if usr? && (usr.authenticated != false)
       byUser =
@@ -62,10 +60,12 @@ module.exports = class DomainService
 
     # only notify if the request is claimed
     if !request.owner then return evt
+
     # do not notify for views
     # notify for anything an expert does
+    #   'expert updated' not important, b/c it is the same as 'expert reviewed'
     # notify for anything a customer does
-    importantEvents = ['expert updated', 'expert reviewed', 'customer updated',
+    importantEvents = ['expert reviewed', 'customer updated',
       'customer expert review' #, 'customer payed' TODO
     ]
     if evtName in importantEvents

@@ -17,18 +17,20 @@ module.exports = class RequestsService extends DomainService
 
   # log event when the request is viewed
   addViewEvent: (request, usr, evtName) =>
-    evt = @newEvent request, usr, evtName
+    request.user = usr
+    evt = @newEvent request, evtName
     up = { events: _.clone(request.events) }
     up.events.push evt
     if evt.name is "expert view"
       up.suggested = request.suggested
       sug = _.find request.suggested, (s) -> _.idsEqual s.expert.userId, evt.by.id
-      sug.events.push @newEvent(request, usr, "viewed")
+      sug.events.push @newEvent(request, "viewed")
     @model.findByIdAndUpdate request._id, up, (e, r) ->
 
   create: (usr, request, callback) =>
     request.userId = usr._id
-    request.events = [@newEvent(request, usr, "created")]
+    request.user = usr
+    request.events = [@newEvent request, "created"]
     request.status = 'received'
     new @model(request).save (e, r) =>
       if e then $log 'request.create error:', e
@@ -103,7 +105,8 @@ module.exports = class RequestsService extends DomainService
     ups = expertReview
     data = { suggested: request.suggested, events: request.events }
     sug = _.find request.suggested, (s) -> _.idsEqual s.expert.userId, usr._id
-    sug.events.push @newEvent(request, usr, "expert updated")
+    request.user = usr
+    sug.events.push @newEvent(request, "expert updated")
     sug.expertRating = ups.expertRating
     sug.expertFeedback = ups.expertFeedback
     sug.expertComment = ups.expertComment
@@ -111,7 +114,7 @@ module.exports = class RequestsService extends DomainService
     sug.expertAvailability = ups.expertAvailability
     sug.expert.paymentMethod =
       type: 'paypal', info: { email: expertReview.payPalEmail }
-    data.events.push @newEvent(request, usr, "expert reviewed", ups)
+    data.events.push @newEvent(request, "expert reviewed", ups)
     @update request._id, data, callback
 
   notifyAdmins: (model) ->
