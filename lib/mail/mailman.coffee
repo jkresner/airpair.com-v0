@@ -18,26 +18,32 @@ renderEmail = (d, templateName, callback) ->
     Text: async.apply renderHandlebars, d, txtPath
   }, (error, results) -> callback(error, results)
 
+class Mailman
+  # TODO change call signature to `options, callback`. And test everything.
+  sendEmail: (options) ->
+    renderEmail(options, options.templateName, (e, rendered) ->
+      rendered.Subject = options.subject
+      ses.send(options.to, rendered, options.callback)
+    )
 
-sendEmail = (options) ->
-  renderEmail(options, options.templateName, (e, rendered) ->
-    rendered.Subject = options.subject
-    ses.send(options.to, rendered, options.callback)
-  )
+  sendEmailToAdmins: (options) ->
+    options.to = ['mi@airpair.com', 'jk@airpair.com', 'il@airpair.com',
+      'dt@airpair.com']
+    @sendEmail(options)
 
-sendEmailToAdmins = (options) ->
-  options.to = ['mi@airpair.com', 'jk@airpair.com', 'il@airpair.com',
-    'dt@airpair.com']
-  sendEmail(options)
+  sendEmailToOwner: (options, callback) ->
+    options.to = "#{options.owner}@airpair.com"
+    options.callback = callback
+    @sendEmail(options)
 
-expertReviewRequest = (data, callback) ->
-  renderEmail data, "expertReviewRequest", (err, rendered) ->
-    if err then return callback err
+  expertReviewRequest: (data, callback) ->
+    renderEmail data, "expertReviewRequest", (err, rendered) ->
+      if err then return callback err
 
-    rendered.Subject = "Request this!"
-    $log 'expertReviewRequest.rendered', rendered
+      rendered.Subject = "Request this!"
+      $log 'expertReviewRequest.rendered', rendered
 
-    #@bug eventually: req.user.google._json.email
-    ses.send "jk@airpair.com", rendered, callback
+      #@bug eventually: req.user.google._json.email
+      ses.send "jk@airpair.com", rendered, callback
 
-module.exports = {expertReviewRequest, sendEmail, sendEmailToAdmins}
+module.exports = new Mailman()
