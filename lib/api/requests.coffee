@@ -25,9 +25,8 @@ class RequestApi extends CRUDApi
 ###############################################################################
 
   ## Temporary
-  newEvent: (req, evtName, evtData) ->
-    @svc.newEvent req.user, evtName, evtData
-
+  newEvent: ->
+    @svc.newEvent.apply @svc, arguments
 
   admin: (req, res, next) =>
     @svc.getAll (e, r) ->
@@ -73,41 +72,41 @@ class RequestApi extends CRUDApi
       delete data._id # so mongo doesn't complain
 
       if data.status is "holding" && (!data.owner?||data.owner=='')
-        evts.push @newEvent req, "send received email"
+        evts.push @newEvent req, req.user "send received email"
         data.owner = Roles.getAdminInitials usr.google.id
 
       if data.status is "canceled" && !data.canceledDetail
         return @tFE res, 'Update', 'canceledDetail', 'Must supply canceled reason'
       else if r.status != "canceled" && data.status is "canceled"
-        evts.push @newEvent req, "canceled"
+        evts.push @newEvent req, req.user, "canceled"
 
       if data.status is "incomplete" && !data.incompleteDetail
         return @tFE res, 'Update', 'incompleteDetail', 'Must supply incomplete reason'
       else if r.status != "incomplete" && data.status is "incomplete"
-        evts.push @newEvent req, "incomplete"
+        evts.push @newEvent req, req.user, "incomplete"
 
       for s in req.body.suggested
 
         if !s.events?
           data.status = "review"
-          reqEvt = @newEvent(req, "suggested #{s.expert.username}")
+          reqEvt = @newEvent(req, req.user, "suggested #{s.expert.username}")
           evts.push reqEvt
 
           # make sure our suggested rate is less than our budget!
           # s.suggestedRate = @rates.calcSuggestedRate r, s.expert
 
           s.expertStatus = "waiting"
-          s.events = [ @newEvent(req, "first contacted") ]
+          s.events = [ @newEvent(req, req.user, "first contacted") ]
 
       if r.suggested?
         for s in r.suggested
           match = _.find req.body.suggested, (sug) ->
             _.idsEqual sug._id, s._id
           if !match?
-            evts.push @newEvent(req, "removed suggested #{s.expert.username}")
+            evts.push @newEvent(req, req.user, "removed suggested #{s.expert.username}")
 
       if evts.length is 0
-        evts.push @newEvent req, "updated"
+        evts.push @newEvent req, req.user, "updated"
 
       data.events.push.apply(data.events, evts)
 
@@ -135,11 +134,11 @@ class RequestApi extends CRUDApi
     data = { suggested: r.suggested, events: r.events }
     sug = _.find r.suggested, (s) ->
       _.idsEqual s.expert.userId, ups.expert.userId
-    sug.events.push @newEvent(req, "customer updated")
+    sug.events.push @newEvent(req, req.user, "customer updated")
     sug.customerRating = ups.customerRating
     sug.customerFeedback = ups.customerFeedback
     if ups.expertStatus? then sug.expertStatus = ups.expertStatus
-    data.events.push @newEvent req, "customer expert review", ups
+    data.events.push @newEvent req, req.user, "customer expert review", ups
 
     @svc.update req.params.id, data, (e, r) =>
       if e then return next e

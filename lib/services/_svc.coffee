@@ -1,8 +1,8 @@
-
-moment = require 'moment'
+moment  = require 'moment'
+mailman = require '../mail/mailman'
 
 module.exports = class DomainService
-
+  mailman: mailman
 
   # Used to dump full list of customers
   getAll: (callback) ->
@@ -43,7 +43,10 @@ module.exports = class DomainService
       callback null, r
 
 
-  newEvent: (usr, evtName, evtData) ->
+  # too many paramaters? from my reading so far, request.user is always
+  # defined, but for now I am going to leave it like this
+  # when we code review, considering removing the usr parameter.
+  newEvent: (request, usr, evtName, evtData) =>
     byUser = 'anon'
     if usr? && (usr.authenticated != false)
       byUser =
@@ -57,4 +60,25 @@ module.exports = class DomainService
 
     if evtData? then evt.data = evtData
 
+    # only notify if the request is claimed
+    if !request.owner then return evt
+    # do not notify for views
+    # notify for anything an expert does
+    # notify for anything a customer does
+    importantEvents = ['expert updated', 'expert reviewed', 'customer updated',
+      'customer expert review' #, 'customer payed' TODO
+    ]
+    if evtName in importantEvents
+        # send email to owner admin
+        options = {
+          templateName: 'importantRequestEvent'
+          subject: "[#{request.owner}] '#{evtName}' triggered by #{byUser.name}"
+          owner: request.owner # e.g. 'mi'
+          request: request
+          evtName: evtName
+          user: byUser.name
+          expertStatus: evtData && evtData.expertStatus
+        }
+        @mailman.sendEmailToOwner options, (e) ->
+          if e then $log 'sendEmailToOwner importantRequestEvent error', e
     evt
