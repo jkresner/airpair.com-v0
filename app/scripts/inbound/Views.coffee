@@ -291,7 +291,12 @@ class exports.RequestCallsView extends BB.BadassView
 class exports.RequestEventsView extends BB.BadassView
   tmpl: require './templates/RequestEvents'
   initialize: -> @listenTo @model, 'change', @render
-  render: -> @$el.html @tmpl { events: @model.get('events').reverse() }
+  render: ->
+    # most recent events at the top of the list
+    events = @model.get('events').sort (a, b) ->
+        new Date(a.utc).getTime() - new Date(b.utc).getTime()
+      .reverse()
+    @$el.html @tmpl { events: events }
 
 class exports.RequestNavView extends BB.BadassView
   tmpl: require './templates/RequestNav'
