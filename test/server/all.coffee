@@ -12,7 +12,7 @@ describe "Server-side suite", ->
   describe 'api/requests', (done) -> require './api/requests'
   describe 'services/rates', (done) -> require './services/rates'
   describe 'services/request', (done) -> require './services/request'
-
+  describe 'mail/mailman', (done) -> require './mail/mailman'
 
   after (done) ->
     suiteCtx = false

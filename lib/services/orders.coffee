@@ -64,6 +64,7 @@ module.exports = class OrdersService extends DomainService
       props.utm_content = r.utm.utm_content
       props.utm_campaign = r.utm.utm_campaign
 
+    # TODO add a "customer payed" event to the request's log
     mixpanel.track 'customerPayment', props
     mixpanel.people.track_charge usr.google._json.email, r.total
 
