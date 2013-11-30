@@ -42,7 +42,7 @@ module.exports = class DomainService
       if e then return callback e
       callback null, r
 
-
+  # TODO: next time someone wants to change newEvent code, first refactor
   newEvent: (usr, evtName, evtData) ->
     byUser = 'anon'
     if usr? && (usr.authenticated != false)

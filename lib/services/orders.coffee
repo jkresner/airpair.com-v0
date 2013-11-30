@@ -1,14 +1,18 @@
-DomainService   = require './_svc'
-Roles           = require './../identity/roles'
-PaypalAdaptiveSvc = require './../services/payment/paypal-adaptive'
-StripeSvc = require './../services/payment/stripe'
 mongoose = require 'mongoose'
+mailman = require '../mail/mailman'
+Roles = require '../identity/roles'
+
+DomainService = require './_svc'
+PaypalAdaptiveSvc = require '../services/payment/paypal-adaptive'
+RequestService = require './requests'
+StripeSvc = require '../services/payment/stripe'
 
 module.exports = class OrdersService extends DomainService
 
   model: require './../models/order'
   paypalSvc: new PaypalAdaptiveSvc()
   stripSvc: new StripeSvc()
+  requestSvc: new RequestService()
 
   create: (order, usr, callback) ->
     order._id = new mongoose.Types.ObjectId;
@@ -54,19 +58,38 @@ module.exports = class OrdersService extends DomainService
       @paypalSvc.Pay order, savePaymentResponse
 
   trackPayment: (usr, order, type) ->
-    r = order
-    props = { usr: usr.google._json.email, distinct_id: usr.google._json.email, total: r.total, profit: r.profit, type: type }
+    props = {
+      usr: usr.google._json.email, distinct_id: usr.google._json.email,
+      total: order.total, profit: order.profit, type: type
+    }
 
-    if r.utm?
-      props.utm_source = r.utm.utm_source
-      props.utm_medium = r.utm.utm_medium
-      props.utm_term = r.utm.utm_term
-      props.utm_content = r.utm.utm_content
-      props.utm_campaign = r.utm.utm_campaign
+    if order.utm?
+      props.utm_source   = order.utm.utm_source
+      props.utm_medium   = order.utm.utm_medium
+      props.utm_term     = order.utm.utm_term
+      props.utm_content  = order.utm.utm_content
+      props.utm_campaign = order.utm.utm_campaign
 
     mixpanel.track 'customerPayment', props
-    mixpanel.people.track_charge usr.google._json.email, r.total
+    mixpanel.people.track_charge usr.google._json.email, order.total
 
+    # add event to request's log
+    @requestSvc.getById order.requestId, (e, request) =>
+      if e
+        return winston.error 'trackPayment.@requestSvc.getById.error' + e.stack
+      request.events.push @newEvent(usr, 'customer paid')
+
+      options = {
+        user: usr.google && usr.google.displayName
+        evtName: 'customer paid'
+        owner: request.owner
+        requestId: request._id
+      }
+      mailman.importantRequestEvent options
+
+      @requestSvc.update request.id, { events: request.events }, (e) =>
+        if e
+          return winston.error 'trackPayment.@requestSvc.update.error' + e.stack
 
   markPaymentReceived: (id, usr, paymentDetail, callback) ->
     @model.findOne { _id: id }, (e, r) =>
