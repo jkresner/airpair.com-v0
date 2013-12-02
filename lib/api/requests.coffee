@@ -5,6 +5,7 @@ authz       = require './../identity/authz'
 admin       = authz.Admin isApi: true
 loggedIn    = authz.LoggedIn isApi: true
 Roles       = authz.Roles
+mailman    = require '../mail/mailman'
 
 class RequestApi extends CRUDApi
 
@@ -130,20 +131,29 @@ class RequestApi extends CRUDApi
         res.send 403
 
 
-  updateSuggestionByCustomer: (req, res, next, r) =>
+  updateSuggestionByCustomer: (req, res, next, pairReq) =>
     ups = req.body
-    data = { suggested: r.suggested, events: r.events }
-    sug = _.find r.suggested, (s) ->
+    data = { suggested: pairReq.suggested, events: pairReq.events }
+    sug = _.find pairReq.suggested, (s) ->
       _.idsEqual s.expert.userId, ups.expert.userId
     sug.events.push @newEvent(req, "customer updated")
+
     sug.customerRating = ups.customerRating
     sug.customerFeedback = ups.customerFeedback
     if ups.expertStatus? then sug.expertStatus = ups.expertStatus
     data.events.push @newEvent req, "customer expert review", ups
 
+    options = {
+      user: req.user.google && req.user.google.displayName
+      evtName: "customer expert review"
+      owner: pairReq.owner
+      requestId: req.params.id
+      expertStatus: ups.expertStatus
+    }
+    mailman.importantRequestEvent options
+
     @svc.update req.params.id, data, (e, r) =>
       if e then return next e
       res.send r
-
 
 module.exports = (app) -> new RequestApi app, 'requests'

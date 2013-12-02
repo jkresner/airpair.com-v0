@@ -114,6 +114,16 @@ module.exports = class RequestsService extends DomainService
     sug.expert.paymentMethod =
       type: 'paypal', info: { email: expertReview.payPalEmail }
     data.events.push @newEvent(usr, "expert reviewed", ups)
+
+    options = {
+      user: usr.google && usr.google.displayName
+      evtName: "expert reviewed"
+      owner: request.owner
+      requestId: request._id
+      expertStatus: ups.expertStatus
+    }
+    mailman.importantRequestEvent options
+
     @update request._id, data, callback
 
   notifyAdmins: (model) ->

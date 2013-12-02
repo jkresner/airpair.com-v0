@@ -10,34 +10,57 @@ renderHandlebars = (data, templatePath, callback) ->
     rendered = templateFn data
     callback null, rendered
 
-renderEmail = (d, templateName, callback) ->
-  htmlPath = "#{__dirname}/templates/#{templateName}.html.hbs"
-  txtPath = "#{__dirname}/templates/#{templateName}.txt.hbs"
-  async.parallel {
-    Html: async.apply renderHandlebars, d, htmlPath
-    Text: async.apply renderHandlebars, d, txtPath
-  }, (error, results) -> callback(error, results)
+class Mailman
+  renderEmail: (d, templateName, callback) ->
+    htmlPath = "#{__dirname}/templates/#{templateName}.html.hbs"
+    txtPath = "#{__dirname}/templates/#{templateName}.txt.hbs"
+    async.parallel {
+      Html: async.apply renderHandlebars, d, htmlPath
+      Text: async.apply renderHandlebars, d, txtPath
+    }, (error, results) -> callback(error, results)
 
+  # TODO change call signature to `options, callback`. And test everything.
+  sendEmail: (options) =>
+    @renderEmail(options, options.templateName, (e, rendered) ->
+      rendered.Subject = options.subject
+      ses.send(options.to, rendered, options.callback)
+    )
 
-sendEmail = (options) ->
-  renderEmail(options, options.templateName, (e, rendered) ->
-    rendered.Subject = options.subject
-    ses.send(options.to, rendered, options.callback)
-  )
+  sendEmailToAdmins: (options) ->
+    options.to = ['mi@airpair.com', 'jk@airpair.com', 'il@airpair.com',
+      'dt@airpair.com']
+    @sendEmail(options)
 
-sendEmailToAdmins = (options) ->
-  options.to = ['mi@airpair.com', 'jk@airpair.com', 'il@airpair.com',
-    'dt@airpair.com']
-  sendEmail(options)
+  importantRequestEvent: (options, callback) ->
+    if !callback then callback = (e) ->
+      if e then return console.log e.stack
 
-expertReviewRequest = (data, callback) ->
-  renderEmail data, "expertReviewRequest", (err, rendered) ->
-    if err then return callback err
+    ### what we need
+    owner
+    user: user.google.displayName || 'anon'
+    expertStatus
+    evtName
+    request._id
+    callback
+    ###
 
-    rendered.Subject = "Request this!"
-    $log 'expertReviewRequest.rendered', rendered
+    options.user = options.user || 'anon'
 
-    #@bug eventually: req.user.google._json.email
-    ses.send "jk@airpair.com", rendered, callback
+    if !options.owner then return callback()
+    options.templateName = 'importantRequestEvent'
+    options.to = "#{options.owner}@airpair.com"
+    options.subject = "[#{options.owner}] '#{options.evtName}' triggered by #{options.user}"
+    options.callback = callback
+    @sendEmail(options)
 
-module.exports = {expertReviewRequest, sendEmail, sendEmailToAdmins}
+  expertReviewRequest: (data, callback) ->
+    @renderEmail data, "expertReviewRequest", (err, rendered) ->
+      if err then return callback err
+
+      rendered.Subject = "Request this!"
+      $log 'expertReviewRequest.rendered', rendered
+
+      #@bug eventually: req.user.google._json.email
+      ses.send "jk@airpair.com", rendered, callback
+
+module.exports = new Mailman()
