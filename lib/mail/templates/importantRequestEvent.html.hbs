@@ -1,7 +1,13 @@
-{{user}} triggered a "{{evtName}}" event on the following request:
+{{user}} [{{evtName}}] {{tagsString}} request by {{customerName}}
 
-https://www.airpair.com/adm/inbound/request/{{ requestId }}
-
+https://www.airpair.com/adm/inbound/request/{{requestId}}
 {{#if expertStatus}}
-  Expert status: {{expertStatus}}
+  {{user}}: {{expertStatus}}
 {{/if}}
+
+Previously:
+{{#each suggested}}
+  {{this.expert.name}}: {{this.status}}
+{{else}}
+    No experts suggested.
+{{/each}}

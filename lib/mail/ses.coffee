@@ -15,7 +15,7 @@ emailDefaults =
 
 
 send = (to, data, callback) ->
-  if not to.length then to = [to]
+  if typeof to == 'string' then to = [to]
   data.ToAddresses = to
   data = _.defaults(data, emailDefaults)
   if cfg.env is 'test' or cfg.env is 'dev'
