@@ -32,6 +32,8 @@ describe "Review: signed in expert", ->
       expect( m.has 'budget' ).to.equal false
       expect( m.has 'suggested' ).to.equal false
       expect( m.has 'events' ).to.equal false
+      expect( m.has 'owner' ).to.equal true
+      expect( m.get 'owner' ).to.equal 'mi'
 
       expect( rv.$('#expertReviewForm').is(':empty') ).to.equal true
       expect( rv.$('#expertReviewDetail').is(':empty') ).to.equal true
@@ -99,7 +101,6 @@ describe "Review: signed in expert", ->
       v.elm('expertComment').val 'siiiiic testing'
       v.elm('expertAvailability').val 'anytime!'
       v.$('.saveFeedback').click()
-
 
   # it "after reviewing as suggestedExpert should show reviewed screen filled out", (done) ->
   #   hlpr.setSession 'artjumble', ->

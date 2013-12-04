@@ -292,6 +292,7 @@ module.exports = [
     brief: "I need better coverage for my review screen. I need better coverage for my review screen.\nI need better coverage for my review screen. I need better coverage for my review screen.\nI need better coverage for my review screen. I need better coverage for my review screen.\nI need better coverage for my review screen. I need better coverage for my review screen. I need better coverage for my review screen. I need better coverage for my review screen.\nI need better coverage for my review screen. I need better coverage for my review screen.\nI need better coverage for my review screen. I need better coverage for my review screen.\nI need better coverage for my review screen. I need better coverage for my review screen.",
     budget: 90,
     canceledDetail: "",
+    owner: "mi",
     company: {
       "_id": "5181ed3e312c520200000004",
       "contacts": [
