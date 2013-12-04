@@ -60,7 +60,7 @@ Running tests
    `brunch w -e test`
 
    Then execute tests
-   
+
    `http://localhost:4444/test/index.html` (in browser w mocha)
 
    `mocha-phantomjs http://localhost:4444/test/index.html` (in terminal w mocha-phantomjs)
