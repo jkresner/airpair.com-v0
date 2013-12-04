@@ -79,13 +79,14 @@ module.exports = class OrdersService extends DomainService
         return winston.error 'trackPayment.@requestSvc.getById.error' + e.stack
       request.events.push @newEvent(usr, 'customer paid')
 
-      options = {
+      mailman.importantRequestEvent
         user: usr.google && usr.google.displayName
         evtName: 'customer paid'
         owner: request.owner
         requestId: request._id
-      }
-      mailman.importantRequestEvent options
+        customerName: request.company.contacts[0].fullName
+        tags: request.tags
+        suggested: request.suggested
 
       @requestSvc.update request.id, { events: request.events }, (e) =>
         if e

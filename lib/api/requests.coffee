@@ -143,14 +143,15 @@ class RequestApi extends CRUDApi
     if ups.expertStatus? then sug.expertStatus = ups.expertStatus
     data.events.push @newEvent req, "customer expert review", ups
 
-    options = {
+    mailman.importantRequestEvent
       user: req.user.google && req.user.google.displayName
       evtName: "customer expert review"
       owner: pairReq.owner
       requestId: req.params.id
       expertStatus: ups.expertStatus
-    }
-    mailman.importantRequestEvent options
+      customerName: pairReq.company.contacts[0].fullName
+      tags: pairReq.tags
+      suggested: pairReq.suggested
 
     @svc.update req.params.id, data, (e, r) =>
       if e then return next e

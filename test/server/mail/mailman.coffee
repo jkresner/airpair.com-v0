@@ -1,7 +1,8 @@
-{sinon, expect} = require './../test-lib-setup'
-{data} = require './../test-app-setup'
+{sinon, expect} = require '../test-lib-setup'
+{data} = require '../test-app-setup'
 
-mailman = require('./../../../lib/mail/mailman')
+mailman = require '../../../lib/mail/mailman'
+tagsString = require('../../../app/scripts/util').tagsString
 
 describe "mailman", ->
   # @testNum = 0
@@ -29,29 +30,35 @@ describe "mailman", ->
     mailman.importantRequestEvent options, callback
 
   it "should correctly render emails for important events", (done) ->
-    user = data.users[3]
+    user = data.users[5] # artjumble is an expert on request 7
     request = data.requests[7] # owner is mi
     # console.log user
 
-    options = {
+    options =
       owner: request.owner # e.g. 'mi'
       requestId: "TESTID"
       evtName: 'expert updated'
       user: user.google.displayName
       expertStatus: "thisisanexpertstatus"
-    }
+      customerName: request.company.contacts[0].fullName
+      tags: request.tags
+      suggested: request.suggested
+
     options.templateName = 'importantRequestEvent'
     options.to = "#{options.owner}@airpair.com"
-    options.subject = "[#{options.owner}] '#{options.evtName}' triggered by #{options.user}"
+
+    options.tagsString = tagsString(options.tags)
+    {owner, evtName, customerName, user, tagsString} = options
+    options.subject =
+      "[#{owner}] #{user} [#{evtName}] #{tagsString} request by #{customerName}"
 
     mailman.renderEmail options, 'importantRequestEvent', (e, rendered) ->
       if e then return done e
       rendered.Subject = options.subject
-
-      str = """Fabian Schmengler triggered a "expert updated" event on the following request:\n\nhttps://www.airpair.com/adm/inbound/request/TESTID\n\n\n  Expert status: thisisanexpertstatus\n\n"""
+      str = """Steve Mathews [expert updated] tdd request by Jonathon Kresner\n\nhttps://www.airpair.com/adm/inbound/request/TESTID\n\n  Steve Mathews: thisisanexpertstatus\n\n\nPreviously:\n\n  Steve Mathews: \n\n"""
       expect(rendered.Text).to.equal str
       expect(rendered.Html).to.equal str
-      expect(rendered.Subject).to.equal '[mi] \'expert updated\' triggered by Fabian Schmengler'
+      expect(rendered.Subject).to.equal '[mi] Steve Mathews [expert updated] tdd request by Jonathon Kresner'
       done()
 
   it "should NOT send importantRequestEvent email if the request has no owner", ->
