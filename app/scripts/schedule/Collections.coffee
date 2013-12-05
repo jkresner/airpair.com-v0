@@ -1,7 +1,6 @@
 exports = {}
 BB = require './../../lib/BB'
 Models = require './Models'
-# <<<<<<< Updated upstream
 
 # class exports.Orders extends BB.FilteringCollection
 #   model: Models.Order
@@ -33,7 +32,6 @@ Models = require './Models'
 #     bookable
 
 #     ###
-# =======
 Shared = require './../shared/Collections'
 
 exports.Requests = Shared.Requests

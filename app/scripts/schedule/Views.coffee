@@ -3,91 +3,49 @@ BB = require './../../lib/BB'
 M = require './Models'
 SV = require './../shared/Views'
 
-# <<<<<<< Updated upstream
-# #############################################################################
-# ##
-# #############################################################################
-
-# class exports.ListView extends BB.BadassView
-#   el: '#list'
-#   # tmpl: require './templates/Welcome'
-#   # events: { 'click .track': 'track' }
-#   # initialize: ->
-#   #   @e = addjs.events.customerLogin
-#   #   @e2 = addjs.events.customerWelcome
-#   # render: ->
-#   #   if !@timer? then @timer = new addjs.Timer(@e.category).start()
-#   #   @$el.html @tmpl()
-#   #   trackWelcome = => addjs.trackEvent @e2.category, @e2.name, @e2.uri, 0
-#   #   setTimeout trackWelcome, 400
-
-# =======
 # schedule form
 class exports.ScheduleFormView extends BB.ModelSaveView
-  # todo
+  # todo delete
   logging: on
   el: '#scheduleForm'
   tmpl: require './templates/ScheduleForm'
   events:
-    'click .save': 'save'
-    'keyup .expert input': 'updateDuration'
+    'change input:radio': 'updateBalance' #todo get this to work
+    'click #create': 'create'
   initialize: ->
     @listenTo @model, 'change', @render
     @render()
 
   render: ->
-    # todo stuff
     console.log 'renderrrr', @model.attributes
-
-    experts = @model.get('suggested') || []
-    experts = experts.filter (e) ->
-      e.expertStatus == 'available'
-
-    @$el.html @tmpl { experts }
-    @renderBalance()
+    available = @model.get('suggested') || []
+    available = available
+      .filter (e) ->
+        console.log(e.expertStatus)
+        e.expertStatus == 'available'
+      .map (e) ->
+        e.balance = 3 # todo get balance from order object
+        e
+    @$el.html @tmpl { available }
     @
 
-  renderBalance: ->
-    experts = @model.get('suggested')
-    if !experts then return
+  updateBalance: (e) ->
+    console.log('ub', e, this)
 
-    reducer = (prev, cur) ->
-      prev + (cur.duration || 0)
+  create: (e) ->
+    e.preventDefault()
+    data = @getUserData()
+    console.log 'create', e, this, data
 
-    balance = experts.reduce reducer, 0
-    hours = parseInt(@model.get('hours'), 10)
-    @$el.find('#balance').text balance
-    @$el.find('#hours').text hours
+    # todo save it
+    # order = new M.Order(data)
+    # order.save (err) ->
+    #   if err then console.log err
 
-    if balance > hours
-      return @$el.find('#warning').show()
-    @$el.find('#warning').hide()
-
-  # todo only allow numbers
-  updateDuration: _.debounce ((e) ->
-    el = $ e.currentTarget
-    id = el.attr 'data-expertId'
-    duration = parseInt(el.val(), 10)
-
-    sug = @model.get 'suggested'
-    expertIndex = -1
-    expert = sug.some (e, i) ->
-      expertIndex = i
-      e._id == id
-
-    # do nothing if it is not changing
-    if duration == sug[expertIndex].duration
-      return
-
-    if isNaN(duration) || !isFinite(duration) || duration < 0
-      duration = 0
-
-    console.log('updateduration', id, duration)
-    el.val(duration)
-    sug[expertIndex].duration = duration
-    @model.set 'suggested', sug
-    @renderBalance()
-  ), 250
+  getUserData: ->
+    expertId: $('input:radio:checked').val()
+    duration: parseInt($('#duration').val(), 10)
+    time: $('#date').val()
 
 class exports.ScheduledView extends BB.BadassView
   # todo
@@ -97,7 +55,6 @@ class exports.ScheduledView extends BB.BadassView
   initialize: ->
     @listenTo @model, 'change', @render
     @render()
-
   render: ->
 
 module.exports = exports
