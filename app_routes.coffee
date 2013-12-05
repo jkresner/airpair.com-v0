@@ -43,7 +43,6 @@ module.exports = (app) ->
   app.get '/review/:id', renderReview
   app.get '/review/book/:id', renderReview
 
-  app.get '/schedule*', loggedIn, (req, r) -> file r, 'schedule'
 
   app.get '/settings*', loggedIn, (req, r) ->  r.render 'settings.html',
     { stripePK: cfg.payment.stripe.publishedKey }
@@ -60,6 +59,7 @@ module.exports = (app) ->
   app.get '/adm/csvs*', loggedIn, admin, (req, r) -> file r, 'adm/csvs'
   app.get '/adm/orders*', loggedIn, admin, (req, r) -> file r, 'adm/orders'
   app.get '/adm/users*', loggedIn, admin, (req, r) -> file r, 'adm/users'
+  app.get '/adm/schedule*', loggedIn, (req, r) -> file r, 'adm/schedule'
   app.get '/adm/inbound*', loggedIn, admin, (req, r, next) ->
     viewData.inbound req.user, (e, d) =>
       if e then return next e

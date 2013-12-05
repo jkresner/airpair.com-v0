@@ -1,0 +1,63 @@
+<fieldset>
+
+  <div class="alert alert-error">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <h4>Error</h4>
+  </div>
+
+  <h2>Expert</h2>
+  <label><input selected type="radio" value="1">James <span class="balance" title="hours balance">3</span></label>
+  <label><input type="radio" value="2">Timmy <span class="balance" title="hours balance">4</span></label>
+  <label><input type="radio" value="3">Bobby <span class="balance" title="hours balance">1</span></label>
+
+  <label><h2>Duration</h2>
+  <input type="text" value="1">
+  <div class="input-group">
+    <input type="text" class="form-control" value="1">
+    <span class="input-group-addon">hours</span>
+  </div>
+
+  Balance: <span id="expertBalance">3</span>
+  </label>
+
+  <label><h2>Date &amp; Time</h2>
+  <input type="text" placeholder="e.g. Dec 9th 3pm PST">
+  </label>
+
+  <div class="form-actions">
+    <a href="save" class="save button">Submit</a>
+    <a href="#info" class="back button button-gray">Back</a>
+  </div>
+
+  <hr>
+  <br><br><br>
+
+   <table>
+    <tbody>
+      <tr><th>expert</th><th># hours</th></tr>
+      {{#each experts}}
+      <tr class="expert">
+        <td>{{this.expert.name}}</td>
+        <td>
+          &nbsp;<input type="text" class="duration" value="{{this.duration}}" data-expertId="{{this._id}}">
+        </td>
+      </tr>
+      {{else}}
+      <tr>No experts have been suggested</tr>
+      {{/each}}
+      <tr></tr>
+    </tbody>
+  </table>
+  <p>Total hours: <span id="balance"></span>
+    <span id="warning">— Not enough available hours!</span>
+  </p>
+  <p>Hours available to book: <span id="hours"></span></p>
+
+  <div style="clear:both"></div>
+
+  <div class="form-actions">
+    <a href="save" class="save button">Submit</a>
+    <a href="#info" class="back button button-gray">Back</a>
+  </div>
+
+</fieldset>
