@@ -5,38 +5,29 @@ V = require './Views'
 
 
 module.exports = class Router extends S.AirpairSessionRouter
-
-  pushStateRoot: '/schedule'
+  logging: on
+  pushStateRoot: '/adm'
 
   routes:
-    'new/:id'          : 'new'
-    'confirm/:id'      : 'confirm'
-    'list/:id'         : 'list'
+    'schedule/:id': 'schedule'
 
   appConstructor: (pageData, callback) ->
-    requestId = @defaultFragment
-      .replace('/new/','')
-      .replace('/confirm/','')
-      .replace('/list/','')
-
+    # todo: better way?
+    id = @defaultFragment.substring(@defaultFragment.lastIndexOf('/') + 1)
     d =
-      request: new M.Request _id: requestId
-      orders: new C.Orders()
+      request: new M.Request _id: id
     v =
-      listView: new V.ListView model: d.request, collection: d.orders
+      scheduleFormView: new V.ScheduleFormView model: d.request
+      scheduledView: new V.ScheduledView model: d.request
 
-
-    d.orders.requestId = requestId
 
     @setOrFetch d.request, pageData.request
-    @setOrFetch d.orders, pageData.orders
 
     _.extend d, v
 
   initialize: (args) ->
 
-  new: (id) ->
-
-  confirm: (id) ->
-
-  list: (id) ->
+  schedule: (id) ->
+    console.log 'schedule:', id
+    # if @app.request.id then return
+    # @app.request.set '_id': id
