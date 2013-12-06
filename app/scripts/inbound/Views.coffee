@@ -83,10 +83,13 @@ class exports.RequestFarmView extends BB.ModelSaveView
   tmpl: require './templates/RequestFarm'
   tmplLinkedIn: require './templates/RequestFarmLinkedIn'
   tmplTwitter: require './templates/RequestFarmTwitter'
+  tmplStackOverflow: require './templates/RequestFarmStackOverflow'
   bitlyUrl: "https://api-ssl.bitly.com/v3"
   accessToken: "b93731e13c8660c7700aca6c3934660ea16fbd5f"
   events:
     'click .shorten': 'shorten'
+    'keyup .tag,.firstname,.lastname,.email,.problem': 'updateEmail'
+
   initialize: ->
     @listenTo @model, 'change', @render
   render: ->
@@ -114,7 +117,33 @@ class exports.RequestFarmView extends BB.ModelSaveView
       if $input.attr('id') is 'farm-tweet-airpair'
         window.open @tmplTwitter(tmplData)
     false
+  updateEmail: (e) ->
+    none = 'XXXXX'
+    inputs = $.makeArray($('.so .firstname, .so .lastname, .so .email, .so .problem, .so .tag'))
+    data = inputs.reduce (prev, cur) ->
+      cur = $(cur)
+      name = cur.attr 'class'
+      prev[name] = cur.val().trim() || none
+      prev
+    , {}
 
+    data.rate = @mget('budget') - @mget('base')[@mget('pricing')]
+
+    month = new moment().format("MMM").toLowerCase()
+    term = encodeURIComponent @model.tagsString()
+    data.requesturl = "http://www.airpair.com/review/#{@model.id}?utm_medium=farm-link&utm_campaign=farm-#{month}&utm_term=#{term}"
+
+    $('#so-gmailsearch').attr 'href',
+      "https://mail.google.com/mail/u/0/?shva=1#search/%22#{data.firstname}+#{data.lastname}%22+OR+#{data.email}"
+
+    subject = encodeURIComponent "1-2 hrs Help with #{data.tag}?"
+    body = @tmplStackOverflow data
+    console.log(body)
+    to = encodeURIComponent "\"#{data.firstname} #{data.lastname}\" <#{data.email}>"
+    href = "https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=#{to}&su=#{subject}"
+    console.log(href.length)
+    $('#so-gmail').attr 'href', href
+    $('#so-emailtext').html(body)
 
 #############################################################################
 ##  To edit request
