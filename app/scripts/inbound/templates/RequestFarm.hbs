@@ -76,3 +76,42 @@
 
 <label for="farm-remote-pair-programmers">Remote Pair Programmers Group</label>
 <input id="farm-remote-pair-programmers" type="text" onclick="this.select();" value="{{url}}&utm_source=remote-pair-programmers-group" class="url" />
+
+<hr />
+
+<h4>Farm Stack Overflow via Email</h4>
+<ol>
+  <li><a target="_blank" href="https://rapportive.com/">Make sure you have rapportive installed.</a></li>
+  <li>
+  {{#each tags}}
+  Top <a href="http://stackoverflow.com/tags/{{this.name}}/topusers"
+    target="_blank">{{this.name}}</a> users.<br>
+  {{else}}
+  <p>Please add tags to the request. Find top experts for TAGNAME at
+  http://stackoverflow.com/tags/TAGNAME/topusers</p>
+  {{/each}}
+  </li>
+</ol>
+
+<p class="so">
+  3. Fill out these fields<br>
+  <input type="text" class="tag" placeholder="tag"><br><br>
+  <input type="text" class="firstname" placeholder="firstname"><br><br>
+  <input type="text" class="lastname" placeholder="lastname"><br><br>
+  <input type="text" class="email" placeholder="email"><br><br>
+  <input type="text" class="problem" placeholder="problem"><br><br>
+  {{!--
+  these can be taken from this page
+  <input type="text" name="requesturl" placeholder="requesturl"><br>
+  <input type="text" name="tag" placeholder="tag"><br> --}}
+</p>
+
+<p>4. <a id="so-gmailsearch" target="_blank" href="">Check that you haven't emailed them before</a>
+</p>
+
+<p>6. Copy this text (don't include any grey background text)</p>
+<div id="so-emailtext">
+
+</div>
+<p>6. Send your email <a href="" id="so-gmail" target="_blank">+ Send</a>
+  (paste into the body of the email)</p>
