@@ -1,0 +1,32 @@
+<h4>Farm Stack Overflow via Email</h4>
+
+<div class="twocol">
+
+  <ol class="lcol">
+    <li><a target="_blank" href="https://rapportive.com/">Make sure you have rapportive installed.</a></li>
+    <li>
+    Find Top Answerers: {{#each tags}}
+    <a href="http://stackoverflow.com/tags/{{this.name}}/topusers"
+      target="_blank" class="label">{{this.name}}</a>
+    {{else}}
+    <p>Please add tags to the request. Find top experts for TAGNAME at
+    http://stackoverflow.com/tags/TAGNAME/topusers</p>
+    {{/each}}
+    </li>
+    <li>
+      Fill out email template fields<br>
+      <input type="text" name="tag" placeholder="tag"><br><br>
+      <input type="text" name="problem" placeholder="learn how to ____"><br><br>
+    </li>
+    <li>
+      Put in contact details and check that we haven't email already<br>
+      <input type="text" name="firstName" placeholder="firstname"><br><br>
+      <input type="text" name="lastName" placeholder="lastname"><br><br>
+      <input type="text" name="email" placeholder="email"><br><br>
+    </li>
+  </ol>
+
+  <div id="emailResult" class="rcol">
+  </div>
+
+</div>

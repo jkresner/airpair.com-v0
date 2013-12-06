@@ -78,72 +78,61 @@ class exports.RequestsView extends BB.BadassView
 #############################################################################
 
 
+class exports.RequestFarmEmailView extends BB.ModelSaveView
+  logging: on
+  el: '#farmEmail'
+  tmpl: require './templates/RequestFarmEmail'
+  tmplResult: require './templates/RequestFarmEmailResult'
+  events:
+    'change input': 'setModel'
+  initialize: ->
+    @$el.html @tmpl @request.toJSON()
+    @model = new BB.BadassModel() # Note model does not have server state
+    @listenTo @model, 'change', @renderEmail
+  setModel: (e) ->
+    $input = $(e.target)
+    @model.set $input.attr('name'), $input.val()
+  renderEmail: (e) ->
+    console.log 're'
+    fd = @request.getFarmData()
+    fd.url = "http://www.airpair.com/review/#{@request.id}?utm_medium=farm-link&utm_campaign=farm-#{fd.month}&utm_term=#{fd.term}"
+
+    @$('#emailResult').html @tmplResult @model.extend(fd)
+    @
+
+
 class exports.RequestFarmView extends BB.ModelSaveView
+  logging: on
   el: '#farm'
   tmpl: require './templates/RequestFarm'
   tmplLinkedIn: require './templates/RequestFarmLinkedIn'
   tmplTwitter: require './templates/RequestFarmTwitter'
-  tmplStackOverflow: require './templates/RequestFarmStackOverflow'
   bitlyUrl: "https://api-ssl.bitly.com/v3"
   accessToken: "b93731e13c8660c7700aca6c3934660ea16fbd5f"
   events:
     'click .shorten': 'shorten'
-    'keyup .tag,.firstname,.lastname,.email,.problem': 'updateEmail'
-
   initialize: ->
     @listenTo @model, 'change', @render
   render: ->
     if !@mget('base')? then return @
-    @rate = @mget('budget') - @mget('base')[@mget('pricing')]
-    month = new moment().format("MMM").toLowerCase()
-    term = encodeURIComponent @model.tagsString()
-    tmplData =
-      url: "http://www.airpair.com/review/#{@model.id}?utm_medium=farm-link&utm_campaign=farm-#{month}&utm_term=#{term}"
-      urlEncoded: "http://www.airpair.com/review/#{@model.id}%3Futm_medium=farm-link%26utm_campaign=farm-#{month}"
-      tagsString: @model.tagsString()
-      hrRate: @rate
-      bitly: 'https://bitly.com/shorten/?url='
-    @$el.html @tmpl @model.extendJSON tmplData
-    # @shorten target: @$('#linkedInShorten')
+    @fd = @model.getFarmData()
+    @fd.url = "http://www.airpair.com/review/#{@model.id}?utm_medium=farm-link&utm_campaign=farm-#{@fd.month}&utm_term=#{@fd.term}"
+    @$el.html @tmpl @model.extendJSON @fd
+    if @emailTemplateView? then @emailTemplateView.remove()
+    @emailTemplateView = new exports.RequestFarmEmailView request: @model
     @
   shorten: (e) ->
     $input = $(e.target).next()
     encodedLnk = encodeURIComponent $input.val()
     $.ajax(url:"#{@bitlyUrl}/shorten?access_token=#{@accessToken}&longUrl=#{encodedLnk}").done (r) =>
       $input.val "http://airpa.ir/#{r.data.hash}"
-      tmplData = link: $input.val(), tagsString: @model.tagsString(), hrRate: @rate
+      tmplData = link: $input.val(), tagsString: @fd.tagsString, hrRate: @fd.hrRate
       if $input.attr('id') is 'farm-linkedin-group'
         @$('#linkedInJobPostMessage').html @tmplLinkedIn tmplData
       if $input.attr('id') is 'farm-tweet-airpair'
         window.open @tmplTwitter(tmplData)
     false
-  updateEmail: (e) ->
-    none = 'XXXXX'
-    inputs = $.makeArray($('.so .firstname, .so .lastname, .so .email, .so .problem, .so .tag'))
-    data = inputs.reduce (prev, cur) ->
-      cur = $(cur)
-      name = cur.attr 'class'
-      prev[name] = cur.val().trim() || none
-      prev
-    , {}
 
-    data.rate = @mget('budget') - @mget('base')[@mget('pricing')]
-
-    month = new moment().format("MMM").toLowerCase()
-    term = encodeURIComponent @model.tagsString()
-    data.requesturl = "http://www.airpair.com/review/#{@model.id}?utm_medium=farm-link&utm_campaign=farm-#{month}&utm_term=#{term}"
-
-    $('#so-gmailsearch').attr 'href',
-      "https://mail.google.com/mail/u/0/?shva=1#search/%22#{data.firstname}+#{data.lastname}%22+OR+#{data.email}"
-
-    subject = encodeURIComponent "1-2 hrs Help with #{data.tag}?"
-    body = @tmplStackOverflow data
-    console.log(body)
-    to = encodeURIComponent "\"#{data.firstname} #{data.lastname}\" <#{data.email}>"
-    href = "https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=#{to}&su=#{subject}"
-    console.log(href.length)
-    $('#so-gmail').attr 'href', href
-    $('#so-emailtext').html(body)
 
 #############################################################################
 ##  To edit request
