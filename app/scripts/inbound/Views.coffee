@@ -79,7 +79,6 @@ class exports.RequestsView extends BB.BadassView
 
 
 class exports.RequestFarmEmailView extends BB.ModelSaveView
-  logging: on
   el: '#farmEmail'
   tmpl: require './templates/RequestFarmEmail'
   tmplResult: require './templates/RequestFarmEmailResult'
@@ -102,7 +101,6 @@ class exports.RequestFarmEmailView extends BB.ModelSaveView
 
 
 class exports.RequestFarmView extends BB.ModelSaveView
-  logging: on
   el: '#farm'
   tmpl: require './templates/RequestFarm'
   tmplLinkedIn: require './templates/RequestFarmLinkedIn'
