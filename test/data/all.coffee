@@ -7,3 +7,4 @@ module.exports =
   users: require './users'
   inbound: require './inbound'
   fixtures: require './fixtures'
+  orders: require './orders'

@@ -3,7 +3,7 @@
 
 require('./../../../lib/api/requests')(app)
 
-createReq = require('./createReq')(app)
+createReq = require('../util/createRequest')(app)
 
 describe "REST api requests", ->
   @testNum = 0

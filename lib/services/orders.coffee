@@ -72,6 +72,7 @@ module.exports = class OrdersService extends DomainService
     mixpanel.people.track_charge usr.google._json.email, order.total
 
     # add event to request's log
+    # TODO: when mongo can't find an ID, it returns null as the result.
     @requestSvc.getById order.requestId, (e, request) =>
       if e
         return winston.error 'trackPayment.@requestSvc.getById.error' + e.stack
