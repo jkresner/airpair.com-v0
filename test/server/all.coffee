@@ -9,6 +9,7 @@ describe "Server-side suite", ->
   describe 'ui/models/request', (done) -> require './ui/models/request'
   describe 'api/companys', (done) -> require './api/companys'
   describe 'api/experts', (done) -> require './api/experts'
+  describe 'api/orders', (done) -> require './api/orders'
   describe 'api/requests', (done) -> require './api/requests'
   describe 'services/rates', (done) -> require './services/rates'
   describe 'services/request', (done) -> require './services/request'
