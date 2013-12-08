@@ -1,8 +1,8 @@
 {sinon, expect} = require '../test-lib-setup'
-{data} = require '../test-app-setup'
+{data}          = require '../test-app-setup'
 
-mailman = require '../../../lib/mail/mailman'
-tagsString = require('../../../app/scripts/util').tagsString
+mailman         = require '../../../lib/mail/mailman'
+util            = require '../../../app/scripts/util'
 
 describe "mailman", ->
   # @testNum = 0
@@ -47,7 +47,7 @@ describe "mailman", ->
     options.templateName = 'importantRequestEvent'
     options.to = "#{options.owner}@airpair.com"
 
-    options.tagsString = tagsString(options.tags)
+    options.tagsString = util.tagsString(options.tags)
     {owner, evtName, customerName, user, tagsString} = options
     options.subject =
       "[#{owner}] #{user} [#{evtName}] #{tagsString} request by #{customerName}"

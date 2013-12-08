@@ -2,7 +2,7 @@ ses =         require './ses'
 async =       require 'async'
 fs =          require 'fs'
 handlebars =  require 'handlebars'
-tagsString =  require('../../app/scripts/util.coffee').tagsString
+util =        require '../../app/scripts/util.coffee'
 
 renderHandlebars = (data, templatePath, callback) ->
   fs.readFile templatePath, "utf-8", (error, templateData) ->
@@ -57,7 +57,7 @@ class Mailman
     options.templateName = 'importantRequestEvent'
     options.to = "#{options.owner}@airpair.com"
 
-    options.tagsString = tagsString(options.tags)
+    options.tagsString = util.tagsString(options.tags)
     {owner, evtName, customerName, user, tagsString} = options
     options.subject =
       "[#{owner}] #{user} [#{evtName}] #{tagsString} request by #{customerName}"
