@@ -115,17 +115,18 @@ module.exports = class RequestsService extends DomainService
       type: 'paypal', info: { email: expertReview.payPalEmail }
     data.events.push @newEvent(usr, "expert reviewed", ups)
 
-    mailman.importantRequestEvent
-      user: usr.google && usr.google.displayName
-      evtName: "expert reviewed"
-      owner: request.owner
-      requestId: request._id
-      expertStatus: ups.expertStatus
-      customerName: request.company.contacts[0].fullName
-      tags: request.tags
-      suggested: request.suggested
-
-    @update request._id, data, callback
+    @update request._id, data, (e, updatedRequest)->
+      if e then return callback e
+      mailman.importantRequestEvent
+        user: usr.google && usr.google.displayName
+        evtName: "expert reviewed"
+        owner: updatedRequest.owner
+        requestId: updatedRequest._id
+        expertStatus: ups.expertStatus
+        customerName: updatedRequest.company.contacts[0].fullName
+        tags: updatedRequest.tags
+        suggested: updatedRequest.suggested
+      callback(null, updatedRequest)
 
   notifyAdmins: (model) ->
     tags = model.tags.map((o) -> o.short).join(' ')
