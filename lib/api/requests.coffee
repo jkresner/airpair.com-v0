@@ -1,17 +1,14 @@
 CRUDApi     = require './_crud'
 RequestsSvc = require './../services/requests'
-# RatesSvc        = require './../services/rates'
 authz       = require './../identity/authz'
 admin       = authz.Admin isApi: true
 loggedIn    = authz.LoggedIn isApi: true
 Roles       = authz.Roles
-mailman    = require '../mail/mailman'
 
 class RequestApi extends CRUDApi
 
-  model: require './../models/request'
-  svc: new RequestsSvc()
-  # rates: new RatesSvc()
+  model:    require '../models/request'
+  svc:      new RequestsSvc()
 
   constructor: (app, route) ->
     app.get  "/api/admin/#{route}", admin, @admin
@@ -47,16 +44,19 @@ class RequestApi extends CRUDApi
       if e then return next e
       res.send r
 
+
   detail: (req, res, next) =>
     user = req.user
     @svc.getByIdSmart req.params.id, user, (e, r) =>
       if e then return next e
       if r? then res.send r else res.send(400, {})
 
+
   create: (req, res, next) =>
     @svc.create req.user, req.body, (e, r) ->
       if e then return next e
       res.send r
+
 
   update: (req, res, next) =>
     usr = req.user
@@ -114,6 +114,8 @@ class RequestApi extends CRUDApi
 
       @svc.update req.params.id, data, (e, r) =>
         if e then return next e
+        # if Roles.isRequestOwner(usr, r) && r.status != 'received'
+        #   @mailman.importantRequestEvent "customer updated", usr, r
         res.send r
 
 
@@ -122,39 +124,13 @@ class RequestApi extends CRUDApi
     @model.findOne { _id: req.params.id }, (e, r) =>
       if e then return next e
       if Roles.isRequestOwner(usr, r)
-        @updateSuggestionByCustomer(req, res, next, r)
+        throw new Error('Customer update suggestion not implemented')
+        #@updateSuggestionByCustomer(req, res, next, r)
       else if Roles.isRequestExpert(usr, r) || Roles.isAdmin(usr)
         @svc.updateSuggestionByExpert r, usr, req.body, (e, r) =>
           if e then return next e
           res.send r
       else
         res.send 403
-
-
-  updateSuggestionByCustomer: (req, res, next, pairReq) =>
-    ups = req.body
-    data = { suggested: pairReq.suggested, events: pairReq.events }
-    sug = _.find pairReq.suggested, (s) ->
-      _.idsEqual s.expert.userId, ups.expert.userId
-    sug.events.push @newEvent(req, "customer updated")
-
-    sug.customerRating = ups.customerRating
-    sug.customerFeedback = ups.customerFeedback
-    if ups.expertStatus? then sug.expertStatus = ups.expertStatus
-    data.events.push @newEvent req, "customer expert review", ups
-
-    mailman.importantRequestEvent
-      user: req.user.google && req.user.google.displayName
-      evtName: "customer expert review"
-      owner: pairReq.owner
-      requestId: req.params.id
-      expertStatus: ups.expertStatus
-      customerName: pairReq.company.contacts[0].fullName
-      tags: pairReq.tags
-      suggested: pairReq.suggested
-
-    @svc.update req.params.id, data, (e, r) =>
-      if e then return next e
-      res.send r
 
 module.exports = (app) -> new RequestApi app, 'requests'

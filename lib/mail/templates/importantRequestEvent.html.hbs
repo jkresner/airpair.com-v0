@@ -1,13 +1,11 @@
 {{user}} [{{evtName}}] {{tagsString}} request by {{customerName}}
 
-https://www.airpair.com/adm/inbound/request/{{requestId}}
-{{#if expertStatus}}
-  {{user}}: {{expertStatus}}
-{{/if}}
+<p>https://www.airpair.com/adm/inbound/request/{{requestId}}</p>
 
-Previously:
+<p>
 {{#each suggested}}
-  {{this.expert.name}}: {{this.status}}
+  {{this.expert.name}}: {{this.expertStatus}}<br />
 {{else}}
     No experts suggested.
 {{/each}}
+</p>

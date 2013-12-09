@@ -17,10 +17,12 @@ emailDefaults =
 send = (to, data, callback) ->
   if typeof to == 'string' then to = [to]
   data.ToAddresses = to
+  # $log 'ses.send', to, data.Subject, data.Text
   data = _.defaults(data, emailDefaults)
   if cfg.env is 'test' or cfg.env is 'dev'
-    return callback()
-  ses.SendEmail data, callback
-
+    if callback? then callback()
+  else
+    ses.SendEmail data, callback || (e) ->
+      if e then $log e.stack
 
 module.exports = { send }
