@@ -1,6 +1,10 @@
 <td class="total">${{ total }}</td>
 <td>
-  <span>{{ createdDate }}</span>
+  <span>
+<a href="#edit/{{ _id }}" class="selectOrder">
+    <img src="/images/{{ paymentType }}-favicon.ico" class="favicon"> {{ createdDate }}</a>
+  </span>
+  <br />
   {{#if payment.error }}
     <a href="javascript:alert('{{error.message }}')" style="color:red">ERROR</a>
   {{else}}
@@ -9,13 +13,8 @@
       <a class="refresh refreshOrder" href="/paypal/success/{{ _id }}" data-id="{{ _id }}" style="color:green" target="_blank">r</a>
       | <a class="delete deleteOrder" href="#" data-id="{{ _id }}">x</a>
     {{/if }}
-    {{#if isReceived }}
-      <a class="payOut" href="#">Pay experts</a>
-      | <a class="delete deleteOrder" href="#" data-id="{{ _id }}"><i class="icon-remove-sign"> </i></a>
-    {{/if }}
   {{/if }}
-  <a href="#edit/{{ _id }}" class="selectOrder">
-    <img src="/images/{{ paymentType }}-favicon.ico" class="favicon"> view {{ _id }}</a>
+
 </td>
 <td>
   {{#if contactPic }}
@@ -29,7 +28,19 @@
     </div>
 </td>
 <td class="info">
-  <a href="/adm/inbound/request/{{ requestId }}" target="_blank" data-id="{{ _requestId }}">{{ requestId }}</a>
+   <a href="/adm/inbound/request/{{ requestId }}" target="_blank" data-id="{{ _requestId }}" class="selectOrder">{{ requestId }}</a>
+</td>
+<td style="text-align:right">
+  {{#if isPaypal }}
+    {{#if isReceived }}
+    <a class="payOut" href="#">payout</a>
+    {{/if }}
+    {{#if isPaidout}}
+      {{#each lineItems}}
+        <b class="paidout">paid</b>
+      {{/each}}
+    {{/if}}
+  {{/if }}
 </td>
 <td>
   {{#each lineItems}}

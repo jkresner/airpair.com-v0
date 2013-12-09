@@ -37,6 +37,9 @@ class exports.OrderRowView extends BB.ModelSaveView
     _.extend d, {
       isPending:          d.paymentStatus is 'pending'
       isReceived:         d.paymentStatus is 'received'
+      isPaidout:          d.paymentStatus is 'paidout'
+      isPaypal:           d.paymentType is 'paypal'
+      isStripe:           d.paymentType is 'isStripe'
       contactName:        d.company.contacts[0].fullName
       contactPic:         d.company.contacts[0].pic
       contactEmail:       d.company.contacts[0].email
