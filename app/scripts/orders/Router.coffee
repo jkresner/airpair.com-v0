@@ -11,8 +11,8 @@ module.exports = class Router extends S.AirpairSessionRouter
   enableExternalProviders: off  # don't want uservoice + ga on admin
 
   routes:
-    'list'        : 'list'
-    'edit'        : 'edit'
+    'list'    : 'list'
+    'edit/:id': 'edit'
 
   appConstructor: (pageData, callback) ->
     d =
@@ -20,7 +20,7 @@ module.exports = class Router extends S.AirpairSessionRouter
       orders: new C.Orders()
     v =
       ordersView: new V.OrdersView collection: d.orders, model: d.selected
-      orderView: new V.OrderFormView model: d.selected
+      orderView: new V.OrderView model: d.selected
       filtersView: new V.FiltersView collection: d.orders
 
     @resetOrFetch d.orders, pageData.experts
@@ -28,3 +28,16 @@ module.exports = class Router extends S.AirpairSessionRouter
 
   initialize: (args) ->
     @navTo 'list'
+
+  edit: (id) ->
+    if @app.orders.length == 0 then return
+
+    if !id?
+      return
+    else
+      d = _.find @app.orders.models, (m) -> m.get('_id').toString() == id
+      if !d? then return @navigate '#', true
+      else
+        @app.selected.clear { silent: true }
+        @app.selected.set d.attributes
+

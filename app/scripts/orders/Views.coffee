@@ -54,7 +54,6 @@ class exports.OrdersView extends Backbone.View
   # logging: on
   el: '#orders'
   tmpl: require './templates/RowsSummary'
-  events: { 'click .selectOrder': 'select' }
   initialize: (args) ->
     @listenTo @collection, 'reset add remove filter', @render
   render: ->
@@ -77,20 +76,15 @@ class exports.OrdersView extends Backbone.View
     expertCount = _.uniq(expertIds).length
     @$('#rowsSummary').html @tmpl {totalProfit,totalRevenue,customerCount,requestCount,hourCount,orderCount,expertCount}
     @
-  select: (e) ->
-    e.preventDefault()
-    id = $(e.currentTarget).data('id')
-    order = _.find @collection.models, (m) -> m.id.toString() == id
-    @model.set order.attributes
-    alert("order #{id} selected")
 
 
-class exports.OrderFormView extends BB.ModelSaveView
+class exports.OrderView extends BB.ModelSaveView
   # logging: on
-  el: '#orderForm'
+  el: '#order'
   initialize: (args) ->
+    @listenTo @model, 'change', @render
   render: ->
+    @$('pre').text JSON.stringify(@model.toJSON(), null, 2)
     @
-
 
 module.exports = exports
