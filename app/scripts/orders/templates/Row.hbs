@@ -14,7 +14,8 @@
       | <a class="delete deleteOrder" href="#" data-id="{{ _id }}"><i class="icon-remove-sign"> </i></a>
     {{/if }}
   {{/if }}
-  <a href="#edit/{{ _id }}" class="selectOrder">view {{ _id }}</a>
+  <a href="#edit/{{ _id }}" class="selectOrder">
+    <img src="/images/{{ paymentType }}-favicon.ico" class="favicon"> view {{ _id }}</a>
 </td>
 <td>
   {{#if contactPic }}
