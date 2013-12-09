@@ -256,36 +256,6 @@ describe "REST api requests", ->
             done()
 
 
-  it "can update suggestion by customer", (done) ->
-    passportMock.setSession 'jk'
-    req = data.requests[3]
-    sug = data.requests[4].suggested[0]
-    req.suggested = [ data.requests[4].suggested[0] ]
-    req.suggested[0].expertStatus = "waiting"
-    req.suggested[0].events = [{}]
-
-    createReq req, (e, up) =>
-      if e then return done e
-      ups = expert: sug.expert , expertStatus: 'unwanted', customerFeedback: 'no way', expertRating: 1
-
-      http(app).put("/api/requests/#{up._id}/suggestion")
-        .send(ups)
-        .end (err, res) ->
-          d = res.body
-          expect( d.events.length ).to.equal 2
-          expect( d.events[1].name ).to.equal "customer expert review"
-          expect( d.events[1].by.name ).to.equal 'Jonathon Kresner'
-
-          expect( d.suggested[0].expertStatus ).to.equal = 'unwanted'
-          expect( d.suggested[0].customerFeedback ).to.equal = ups.customerFeedback
-          expect( d.suggested[0].customerRating ).to.equal = ups.customerRating
-
-          expect( d.suggested[0].events.length ).to.equal = 2
-          expect( d.suggested[0].events[1].name ).to.equal = "customer updated"
-
-          done()
-
-
   it "can say no to suggestion by expert", (done) ->
     passportMock.setSession 'admin'
     req = data.requests[5]

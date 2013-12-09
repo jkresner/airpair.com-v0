@@ -2,14 +2,14 @@ DomainService   = require './_svc'
 Roles           = require './../identity/roles'
 RatesSvc        = require './rates'
 SettingsSvc     = require './settings'
-mailman         = require '../mail/mailman'
 
 module.exports = class RequestsService extends DomainService
 
+  mailman: require '../mail/mailman'
   model: require './../models/request'
   rates: new RatesSvc()
   settingsSvc: new SettingsSvc()
-  mailman: mailman
+
   publicView: (request) ->
     _.pick request, ['_id','tags','company','brief','availability','owner']
 
@@ -115,25 +115,18 @@ module.exports = class RequestsService extends DomainService
       type: 'paypal', info: { email: expertReview.payPalEmail }
     data.events.push @newEvent(usr, "expert reviewed", ups)
 
-    mailman.importantRequestEvent
-      user: usr.google && usr.google.displayName
-      evtName: "expert reviewed"
-      owner: request.owner
-      requestId: request._id
-      expertStatus: ups.expertStatus
-      customerName: request.company.contacts[0].fullName
-      tags: request.tags
-      suggested: request.suggested
-
-    @update request._id, data, callback
+    @update request._id, data, (e, updatedRequest) =>
+      if e then return callback e
+      @mailman.importantRequestEvent "expert reviewed #{ups.expertStatus}", usr, updatedRequest
+      callback(null, updatedRequest)
 
   notifyAdmins: (model) ->
     tags = model.tags.map((o) -> o.short).join(' ')
-    @mailman.sendEmailToAdmins({
+    @mailman.sendEmailToAdmins
       templateName: "admNewRequest"
       subject: "New airpair request: #{model.company.contacts[0].fullName} #{model.budget}$"
       request: model
       tags: tags
-      callback: (e) ->
+      (e) ->
         if e then $log 'notifyAdmins error', e
-    })
+

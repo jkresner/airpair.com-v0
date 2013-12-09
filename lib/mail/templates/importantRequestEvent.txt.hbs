@@ -5,9 +5,8 @@ https://www.airpair.com/adm/inbound/request/{{requestId}}
   {{user}}: {{expertStatus}}
 {{/if}}
 
-Previously:
 {{#each suggested}}
-  {{this.expert.name}}: {{this.status}}
+  {{this.expert.name}}: {{this.expertStatus}}
 {{else}}
     No experts suggested.
 {{/each}}

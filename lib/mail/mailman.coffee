@@ -21,16 +21,16 @@ class Mailman
     }, (error, results) -> callback(error, results)
 
   # TODO change call signature to `options, callback`. And test everything.
-  sendEmail: (options) =>
+  sendEmail: (options, callback) =>
     @renderEmail(options, options.templateName, (e, rendered) ->
       rendered.Subject = options.subject
-      ses.send(options.to, rendered, options.callback)
+      ses.send(options.to, rendered, callback)
     )
 
-  sendEmailToAdmins: (options) ->
+  sendEmailToAdmins: (options, callback) ->
     options.to = ['mi@airpair.com', 'jk@airpair.com', 'il@airpair.com',
       'dt@airpair.com']
-    @sendEmail(options)
+    @sendEmail(options, callback)
 
   ###
     the options object should have these properties:
@@ -47,23 +47,26 @@ class Mailman
 
     callback # this is created automatically for you
   ###
-  importantRequestEvent: (options, callback) ->
-    if !callback then callback = (e) ->
-      if e then return console.log e.stack
+  importantRequestEvent: (evtName, usr, request, callback) ->
+    if !request.owner? then return callback && callback()
 
-    options.user = options.user || 'anon'
+    o =
+      evtName: evtName
+      user: (usr.google && usr.google.displayName) || 'anon'
+      owner: request.owner
+      requestId: request._id
+      customerName: request.company.contacts[0].fullName
+      tags: request.tags
+      tagsString: util.tagsString(request.tags)
+      suggested: request.suggested
 
-    if !options.owner then return callback()
-    options.templateName = 'importantRequestEvent'
-    options.to = "#{options.owner}@airpair.com"
+    o.templateName = 'importantRequestEvent'
+    o.to = "#{o.owner}@airpair.com"
+    o.subject =
+      "[#{o.owner}] #{o.user} [#{o.evtName}] #{o.tagsString} request by #{o.customerName}"
 
-    options.tagsString = util.tagsString(options.tags)
-    {owner, evtName, customerName, user, tagsString} = options
-    options.subject =
-      "[#{owner}] #{user} [#{evtName}] #{tagsString} request by #{customerName}"
+    @sendEmail o, callback
 
-    options.callback = callback
-    @sendEmail(options)
 
   expertReviewRequest: (data, callback) ->
     @renderEmail data, "expertReviewRequest", (err, rendered) ->
