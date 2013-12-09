@@ -138,6 +138,7 @@ nav ul li { float:right;display:block;margin-left:5px }
 #admorderspage #filters { float:right;display:block;padding:10px 0px; }
 #admorderspage #orders { margin-top:25px;clear:both; }
 #admorderspage #orders img { height: 32px;width: 32px }
+#admorderspage #orders img.favicon { height: 8px;width: 8px; }
 #admorderspage #orders th { padding:2px 6px; }
 #admorderspage #rowsSummary th { color:black;background:#FAA732 }
 #admorderspage #orders .pending { color:#b94a48; }
