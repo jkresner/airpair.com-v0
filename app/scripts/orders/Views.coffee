@@ -26,7 +26,8 @@ class exports.OrderRowView extends BB.ModelSaveView
   tmpl: require './templates/Row'
   events:
     'click .deleteOrder': 'deleteOrder'
-    'click .payOut': 'payOutToExperts'
+    'click .payOutPayPalAdaptive': 'payOutPayPalAdaptive'
+    'click .payOutPaypalSingle':   'payOutPaypalSingleExpert'
   initialize: -> @listenTo @model, 'change', @render
   render: ->
     @$el.html @tmpl @tmplData()
@@ -34,12 +35,24 @@ class exports.OrderRowView extends BB.ModelSaveView
   tmplData: ->
     d = @model.toJSON()
     if d.payment.error? then d.error = d.payment.error[0]
+
+    successfulPayouts = d.payouts.filter (p) -> p.status == 'success'
+    # now each lineitem knows whether it is paidout, simplifying templating
+    pendingId = (@model.get('payoutOptions') || {}).lineItemId
+    d.lineItems = d.lineItems.map (li) =>
+      paidOut = (successfulPayouts.filter (p) -> p.lineItemId == li._id)[0]
+      if paidOut
+        li.linePaidout = true
+      if pendingId == li._id
+        li.linePayoutPending = true
+      li
+
     _.extend d, {
       isPending:          d.paymentStatus is 'pending'
       isReceived:         d.paymentStatus is 'received'
       isPaidout:          d.paymentStatus is 'paidout'
       isPaypal:           d.paymentType is 'paypal'
-      isStripe:           d.paymentType is 'isStripe'
+      isStripe:           d.paymentType is 'stripe'
       contactName:        d.company.contacts[0].fullName
       contactPic:         d.company.contacts[0].pic
       contactEmail:       d.company.contacts[0].email
@@ -48,7 +61,24 @@ class exports.OrderRowView extends BB.ModelSaveView
   deleteOrder: ->
     @model.destroy()
     @$el.remove()
-  payOutToExperts: (e) ->
+  payOutPayPalAdaptive: (e) ->
+    @model.set 'payoutOptions', { type: 'paypalAdaptive' }
+    @save (e)
+  payOutPaypalSingleExpert: (e) =>
+    lineItemId = $(e.target).data('id')
+
+    # no double-clicking! Also only allow one payout request to be in-progress.
+    if @model.get 'pendingPayout'
+      return
+    @model.set 'pendingPayout', true
+
+    # the important part
+    @model.set 'payoutOptions', { type: 'paypalSingle', lineItemId: lineItemId }
+
+    onSave = =>
+      @model.set 'pendingPayout', false
+
+    @renderSuccess = @renderError = onSave
     @save (e)
   getViewData: ->
     payOut: true

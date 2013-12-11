@@ -3,6 +3,15 @@ Schema = mongoose.Schema
 {ObjectId, Mixed} = Schema.Types
 
 
+ExpertPayout = new Schema
+  type:           { required: true, type: String } # paypal, coinbase, mtgox etc.
+  lineItemId:     { required: true, type: ObjectId, ref: 'LineItem' }
+  # TODO: save req, res in the service
+  req:            { required: true, type: String } # Will have provider paymentId
+  res:            { required: true, type: String }
+  status:         { required: true, type: String } # success, error
+
+
 LineItem = new Schema
   total:          { required: true, type: Number }
   unitPrice:      { required: true, type: Number }
@@ -23,8 +32,9 @@ schema = new Schema
   invoice:        { required: true, type: {} }     # can reference a 3rd party invoice
   paymentType:    { required: true, type: String   }
   payment:        { required: true, type: {} }
+  payouts:        { type: [ExpertPayout] }
   paymentStatus:  { required: true, type: String, default: 'pending' }
   utm:            { required: false, type: {} }
-  
+
 
 module.exports = mongoose.model 'Order', schema

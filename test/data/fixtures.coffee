@@ -18,7 +18,7 @@ module.exports =
 
   feedback:  "<div id='feedback' class='route'></div>"
 
-  tags:      "<div id='list' class='route'></div>"  
+  tags:      "<div id='list' class='route'></div>"
 
   settings:  "<div id='payment' class='route'>
                 <div id='paypalSettings'></div>
@@ -27,3 +27,11 @@ module.exports =
               <div id='stripe' class='route'>
                 <div id='stripeRegister'></div>
               </div>"
+  orders:   "<div id='list' class='route'>
+              <table id='orders' class='table table-striped'>
+                <thead>
+                  <tr id='rowsSummary'></tr>
+                </thead>
+                <tbody></tbody>
+              </table>3
+            </div>"
