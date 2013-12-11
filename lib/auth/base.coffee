@@ -69,8 +69,7 @@ exports.insertOrUpdateUser = (req, done, providerName, profile) ->
 
   saveUser = =>
     User.findOneAndUpdate search, update, { upsert: true }, (err, user) ->
-      console.log '=================================================='
-      console.log 'findOneAndUpdate', err, done, user
+      console.log 'findOneAndUpdate', err && err.stack, JSON.stringify(user)
       done(err, user)
 
   # We are only tracking sign ups from known flows (1:Request,2:BeExpert)
