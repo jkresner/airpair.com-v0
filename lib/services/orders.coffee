@@ -114,9 +114,11 @@ module.exports = class OrdersService extends DomainService
       return @payOutPayPalSingle id, payoutOptions.lineItemId, callback
     return callback new Error "Payout[#{payoutOptions.type}] not implemented"
 
-  _successfulPayouts: (payouts) ->
+  _successfulPayoutIds: (payouts) ->
     payouts.filter (p) ->
       p.status == 'success'
+    .map (p) ->
+      p.lineItemId
 
   # allows flexibility to pay each expert individually via paypal
   payOutPayPalSingle: (id, lineItemId, callback) ->
@@ -129,6 +131,11 @@ module.exports = class OrdersService extends DomainService
       lineItem = (order.lineItems.filter (l) -> l.id == lineItemId)[0]
       if !lineItem then return callback new Error 'No such lineItem id'
 
+      successfulPayoutIds = @_successfulPayoutIds(order.payouts)
+      if _.contains successfulPayoutIds, lineItemId
+        message = "cannot pay out the same expert twice #{id}"
+        return callback status: 'failed', message: message
+
       order = @_calculateProfitAndPayouts order
       @paypalSvc.PaySingle order, lineItem, (e, req, res) =>
         if e then return callback e
@@ -140,7 +147,7 @@ module.exports = class OrdersService extends DomainService
         order.payouts.push { type: 'paypal', status: 'success', lineItemId, req, res }
         ups = { payouts: order.payouts }
 
-        if @_successfulPayouts(order.payouts).length == order.lineItems.length
+        if @_successfulPayoutIds(order.payouts).length == order.lineItems.length
           ups.paymentStatus = 'paidout'
 
         @update id, ups, callback
