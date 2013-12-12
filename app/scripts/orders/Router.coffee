@@ -30,14 +30,10 @@ module.exports = class Router extends S.AirpairSessionRouter
     @navTo 'list'
 
   edit: (id) ->
-    if @app.orders.length == 0 then return
+    if !id? then return
 
-    if !id?
-      return
-    else
-      d = _.find @app.orders.models, (m) -> m.get('_id').toString() == id
-      if !d? then return @navigate '#', true
-      else
-        @app.selected.clear { silent: true }
-        @app.selected.set d.attributes
+    d = _.find @app.orders.models, (m) -> m.get('_id').toString() == id
+    if !d? then return @navigate '#', true
 
+    @app.selected.clear { silent: true }
+    @app.selected.set d.attributes
