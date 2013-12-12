@@ -92,7 +92,12 @@ describe "Stories: Bruce Christie", ->
 
   it 'can review experts and book hours as customer with stripe', (done) ->
     {request,settings,requestView} = @app
-    settings.once 'sync', =>
+
+    synced = 0
+    settings.once 'sync', => synced++; if synced == 2 then test()
+    request.once 'sync', => synced++; if synced == 2 then test()
+
+    test = =>
       v = requestView
       expect( v.$('.suggested .suggestion').length ).to.equal 2
       expect( v.$('.book-actions').is(':visible') ).to.equal true
@@ -141,12 +146,14 @@ describe "Stories: Bruce Christie", ->
       selectors = lineIds.map (id) => ".payOutPaypalSingle[data-id=#{id}]"
       buttons = $ selectors
       expect(buttons.length).to.equal 2
+      expect(order.get('paymentStatus')).to.equal 'received'
 
       order.once 'sync', (model) =>
         # expect that the first expert re-renders to say "paidout"
         el = $ "[data-id=#{lineIds[0]}]"
         expect(el.length).to.equal 1
         expect(el.hasClass('paidout')).to.equal true
+        expect(order.get('paymentStatus')).to.equal 'received'
 
         order.once 'sync', (model) =>
           # make sure the first expert is still paidout

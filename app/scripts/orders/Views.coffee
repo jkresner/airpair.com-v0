@@ -36,15 +36,13 @@ class exports.OrderRowView extends BB.ModelSaveView
     d = @model.toJSON()
     if d.payment.error? then d.error = d.payment.error[0]
 
-    successfulPayouts = d.payouts.filter (p) -> p.status == 'success'
     # now each lineitem knows whether it is paidout, simplifying templating
+    successfulPayoutIds = @model.successfulPayoutIds()
     pendingId = (@model.get('payoutOptions') || {}).lineItemId
     d.lineItems = d.lineItems.map (li) =>
-      paidOut = (successfulPayouts.filter (p) -> p.lineItemId == li._id)[0]
-      if paidOut
-        li.linePaidout = true
-      if pendingId == li._id
-        li.linePayoutPending = true
+      li.linePaidout = _.contains successfulPayoutIds, li._id
+      # hide the link so you can't double-click / double-payout:
+      li.linePayoutPending = pendingId == li._id
       li
 
     _.extend d, {
@@ -66,19 +64,7 @@ class exports.OrderRowView extends BB.ModelSaveView
     @save (e)
   payOutPaypalSingleExpert: (e) =>
     lineItemId = $(e.target).data('id')
-
-    # no double-clicking! Also only allow one payout request to be in-progress.
-    if @model.get 'pendingPayout'
-      return
-    @model.set 'pendingPayout', true
-
-    # the important part
     @model.set 'payoutOptions', { type: 'paypalSingle', lineItemId: lineItemId }
-
-    onSave = =>
-      @model.set 'pendingPayout', false
-
-    @renderSuccess = @renderError = onSave
     @save (e)
   getViewData: ->
     payOut: true
