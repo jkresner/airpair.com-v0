@@ -44,7 +44,7 @@
     <a class="payOutAdaptive" href="#">payout</a>
     {{/if}}{{/if }}
 
-    {{#if isStripe}}{{#if isReceived }}
+    {{#if isStripe}}
       {{#each lineItems}}
         {{#if linePaidout}}
           <b class="paidout" data-id="{{ _id }}">paid</b>
@@ -56,7 +56,7 @@
           {{/if}}
         {{/if}}
       {{/each}}
-    {{/if}}{{/if}}
+    {{/if}}
 
   {{/if}} {{!-- end if isPaidout --}}
 </td>
