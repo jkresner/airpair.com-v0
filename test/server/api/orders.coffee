@@ -24,7 +24,7 @@ describe "REST api orders", ->
       .end done
 
   it "creates order if authenticated", (done) ->
-    @timeout(3000)
+    @timeout 4000
     passportMock.setSession 'bchristie'
 
     order = data.orders[1]

@@ -11,7 +11,6 @@ module.exports = class StripeService
 
     stripe.customers.create { email: email, card: token }, (err, customer) =>
       if err then return callback err
-      $log 'err', err, 'customer', customer
       callback null, customer
 
   createCharge: (order, callback) ->
@@ -22,9 +21,8 @@ module.exports = class StripeService
 
     # Make a charge
     stripe.charges.create payload, (err, charge) =>
-      $log 'err', err, 'charge', charge
+      if err then return callback err
       if cfg.isProd
         $log "StripeResponse: ", payload, charge
         winston.log "StripResponse: ", charge
-
-      callback err, charge
+      callback null, charge

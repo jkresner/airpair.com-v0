@@ -26,7 +26,8 @@ class exports.OrderRowView extends BB.ModelSaveView
   tmpl: require './templates/Row'
   events:
     'click .deleteOrder': 'deleteOrder'
-    'click .payOut': 'payOutToExperts'
+    'click .payOutPayPalAdaptive': 'payOutPayPalAdaptive'
+    'click .payOutPaypalSingle':   'payOutPaypalSingleExpert'
   initialize: -> @listenTo @model, 'change', @render
   render: ->
     @$el.html @tmpl @tmplData()
@@ -34,9 +35,24 @@ class exports.OrderRowView extends BB.ModelSaveView
   tmplData: ->
     d = @model.toJSON()
     if d.payment.error? then d.error = d.payment.error[0]
+    # now each lineitem knows whether it is paidout, simplifying templating
+    successfulPayoutIds = @model.successfulPayoutIds()
+    opts = @model.get('payoutOptions') || {}
+    pendingId = opts.lineItemId
+    d.lineItems = d.lineItems.map (li) =>
+      li.linePaidout = _.contains successfulPayoutIds, li._id
+      # hide the link so you can't double-click / double-payout:
+      li.linePayoutPending = pendingId == li._id
+      if opts.type == 'paypalAdaptive'
+        li.linePayoutPending = true
+      li
+
     _.extend d, {
       isPending:          d.paymentStatus is 'pending'
       isReceived:         d.paymentStatus is 'received'
+      isPaidout:          d.paymentStatus is 'paidout'
+      isPaypal:           d.paymentType is 'paypal'
+      isStripe:           d.paymentType is 'stripe'
       contactName:        d.company.contacts[0].fullName
       contactPic:         d.company.contacts[0].pic
       contactEmail:       d.company.contacts[0].email
@@ -45,7 +61,20 @@ class exports.OrderRowView extends BB.ModelSaveView
   deleteOrder: ->
     @model.destroy()
     @$el.remove()
-  payOutToExperts: (e) ->
+  payOutPayPalAdaptive: (e) ->
+    @model.set 'payoutOptions', { type: 'paypalAdaptive' }
+    @renderError = (m, xhr) =>
+      try
+        res = JSON.parse xhr.responseText
+      catch e
+        res = data: error: [
+          message: "got bad json from server: #{e.message}"
+        ]
+      @model.set('payment', res.data)
+    @save (e)
+  payOutPaypalSingleExpert: (e) =>
+    lineItemId = $(e.target).data('id')
+    @model.set 'payoutOptions', { type: 'paypalSingle', lineItemId: lineItemId }
     @save (e)
   getViewData: ->
     payOut: true
@@ -54,7 +83,6 @@ class exports.OrdersView extends Backbone.View
   # logging: on
   el: '#orders'
   tmpl: require './templates/RowsSummary'
-  events: { 'click .selectOrder': 'select' }
   initialize: (args) ->
     @listenTo @collection, 'reset add remove filter', @render
   render: ->
@@ -77,20 +105,15 @@ class exports.OrdersView extends Backbone.View
     expertCount = _.uniq(expertIds).length
     @$('#rowsSummary').html @tmpl {totalProfit,totalRevenue,customerCount,requestCount,hourCount,orderCount,expertCount}
     @
-  select: (e) ->
-    e.preventDefault()
-    id = $(e.currentTarget).data('id')
-    order = _.find @collection.models, (m) -> m.id.toString() == id
-    @model.set order.attributes
-    alert("order #{id} selected")
 
 
-class exports.OrderFormView extends BB.ModelSaveView
+class exports.OrderView extends BB.ModelSaveView
   # logging: on
-  el: '#orderForm'
+  el: '#order'
   initialize: (args) ->
+    @listenTo @model, 'change', @render
   render: ->
+    @$('pre').text JSON.stringify(@model.toJSON(), null, 2)
     @
-
 
 module.exports = exports

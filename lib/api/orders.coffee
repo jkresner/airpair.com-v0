@@ -13,7 +13,7 @@ class OrdersApi
   constructor: (app, route) ->
     app.post    "/api/#{route}", loggedIn, @create
     app.get     "/api/admin/#{route}", admin, @adminList
-    app.put     "/api/#{route}/:id", admin, @payOut
+    app.put     "/api/#{route}/:id", admin, @update
     app.delete  "/api/#{route}/:id", admin, @delete
 
   adminList: (req, res, next) =>
@@ -52,12 +52,15 @@ class OrdersApi
       res.send r
 
 
-  payOut: (req, res, next) =>
-    @svc.payOutToExperts req.params.id, (e, r) ->
-      if e then return next e
-      if r.status? & r.status is 'Failure'
-        res.status(400)
-      res.send r
+  update: (req, res, next) =>
+    if req.body.payoutOptions
+      opts = req.body.payoutOptions
+      delete req.body.payoutOptions
+      return @svc.payOut req.params.id, opts, req.body, (e, r) ->
+        if e && e.status then return res.send(400, e) # backbone will render errors
+        if e then return next e
+        return res.send r
+    return res.send(400, 'updating orders not yet implemented')
 
 
   delete: (req, res, next) =>
