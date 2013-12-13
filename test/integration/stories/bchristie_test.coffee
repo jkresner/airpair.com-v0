@@ -168,6 +168,11 @@ describe "Stories: Bruce Christie", ->
 
           # check the model knows it is paid out
           expect(order.get('paymentStatus')).to.equal "paidout"
+          expect(order.get('payouts').length).to.equal 2
+          expect(order.get('payouts')[0].req).to.be.a 'object'
+          expect(order.get('payouts')[0].res).to.be.a 'object'
+          expect(order.get('payouts')[1].req).to.be.a 'object'
+          expect(order.get('payouts')[1].res).to.be.a 'object'
           done()
 
         $(selectors[1]).click() # need to query for it again b/c of re-render
