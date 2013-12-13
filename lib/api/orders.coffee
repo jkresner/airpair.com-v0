@@ -57,8 +57,7 @@ class OrdersApi
       opts = req.body.payoutOptions
       delete req.body.payoutOptions
       return @svc.payOut req.params.id, opts, req.body, (e, r) ->
-        # TODO: when payOut has problems it should trigger 400 responses, not
-        # only 500 errors.
+        if e && e.status then return res.send(400, e) # backbone will render errors
         if e then return next e
         return res.send r
     return res.send(400, 'updating orders not yet implemented')

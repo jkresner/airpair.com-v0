@@ -6,7 +6,7 @@
     </a>
   </span>
   <br />
-  {{#if payment.error }}
+  {{#if error }}
     <a href="javascript:alert('{{error.message }}')" style="color:red">ERROR</a>
   {{else}}
     <b class="{{ paymentStatus }}">{{ paymentStatus }}</b>
@@ -41,7 +41,7 @@
   {{else}}
 
     {{#if isPaypal }}{{#if isReceived }}
-    <a class="payOutAdaptive" href="#">payout</a>
+    <a class="payOutPayPalAdaptive" href="#">payout</a>
     {{/if}}{{/if }}
 
     {{#if isStripe}}

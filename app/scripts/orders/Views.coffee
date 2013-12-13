@@ -35,14 +35,16 @@ class exports.OrderRowView extends BB.ModelSaveView
   tmplData: ->
     d = @model.toJSON()
     if d.payment.error? then d.error = d.payment.error[0]
-
     # now each lineitem knows whether it is paidout, simplifying templating
     successfulPayoutIds = @model.successfulPayoutIds()
-    pendingId = (@model.get('payoutOptions') || {}).lineItemId
+    opts = @model.get('payoutOptions') || {}
+    pendingId = opts.lineItemId
     d.lineItems = d.lineItems.map (li) =>
       li.linePaidout = _.contains successfulPayoutIds, li._id
       # hide the link so you can't double-click / double-payout:
       li.linePayoutPending = pendingId == li._id
+      if opts.type == 'paypalAdaptive'
+        li.linePayoutPending = true
       li
 
     _.extend d, {
@@ -61,6 +63,14 @@ class exports.OrderRowView extends BB.ModelSaveView
     @$el.remove()
   payOutPayPalAdaptive: (e) ->
     @model.set 'payoutOptions', { type: 'paypalAdaptive' }
+    @renderError = (m, xhr) =>
+      try
+        res = JSON.parse xhr.responseText
+      catch e
+        res = data: error: [
+          message: "got bad json from server: #{e.message}"
+        ]
+      @model.set('payment', res.data)
     @save (e)
   payOutPaypalSingleExpert: (e) =>
     lineItemId = $(e.target).data('id')
