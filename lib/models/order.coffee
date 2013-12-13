@@ -6,8 +6,8 @@ Schema = mongoose.Schema
 ExpertPayout = new Schema
   type:           { required: true, type: String } # paypal, coinbase, mtgox etc.
   lineItemId:     { required: true, type: ObjectId, ref: 'LineItem' }
-  req:            { required: true, type: String } # Will have provider paymentId
-  res:            { required: true, type: String }
+  req:            { required: true, type: Mixed } # Will have provider paymentId
+  res:            { required: true, type: Mixed }
   status:         { required: true, type: String } # success, error
 
 
