@@ -1,4 +1,5 @@
 util = require './../../app/scripts/util'
+async = require 'async'
 RequestsSvc = require './../services/requests'
 ExpertsSvc = require './../services/experts'
 TagsSvc = require './../services/tags'
@@ -53,17 +54,21 @@ module.exports = class ViewDataService
         expertName: r.name
 
   inbound: (usr, callback) ->
-    tSvc.getAll (e, t) =>
+    fns =
+      tags: (cb) ->
+        tSvc.getAll cb
+      experts: (cb) ->
+        eSvc.getAll cb
+      requests: (cb) ->
+        rSvc.getActive cb
+
+    async.parallel fns, (e, results) =>
       if e then return callback e
-      eSvc.getAll (e, expert) =>
-        if e then return callback e
-        rSvc.getActive (e, r) =>
-          if e then return callback e
-          callback null,
-            session:  @session usr
-            requests: JSON.stringify r
-            experts:  JSON.stringify expert
-            tags:     JSON.stringify t
+      callback null,
+        session:  @session usr
+        requests: JSON.stringify results.requests
+        experts:  JSON.stringify results.experts
+        tags:     JSON.stringify results.tags
 
   landingTag: (tagSearchTerm, usr, callback) ->
     tSvc.search tagSearchTerm, (e, o) =>
