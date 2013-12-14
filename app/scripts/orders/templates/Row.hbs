@@ -41,7 +41,11 @@
   {{else}}
 
     {{#if isPaypal }}{{#if isReceived }}
-    <a class="payOutPayPalAdaptive" href="#">payout</a>
+      {{#if payoutOptions}}
+      <b>payout</b> {{!-- feedback for the user that it's in progress --}}
+      {{else}}
+      <a class="payOutPayPalAdaptive" href="#">payout</a>
+      {{/if}}
     {{/if}}{{/if }}
 
     {{#if isStripe}}

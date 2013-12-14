@@ -133,7 +133,7 @@ module.exports = class OrdersService extends DomainService
 
       successfulPayoutIds = @_successfulPayoutIds(order.payouts)
       if _.contains successfulPayoutIds, lineItemId
-        message = "cannot pay out the same expert twice #{id}"
+        message = "cannot pay out the same lineItem twice #{id}"
         return callback status: 'failed', message: message
 
       order = @_calculateProfitAndPayouts order
