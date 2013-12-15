@@ -1,0 +1,37 @@
+
+<div class="alert alert-success">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <h4>Request save</h4>
+</div>
+
+<div class="alert alert-error">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <h4>Error</h4>
+</div>
+
+<div class="form-actions nav-top">
+  <div class="controls">
+    <a href="#list" class="btn">Back</a>
+    <a href="#deletecard/{{card._id}}" class="btn btn-danger deleteCard">delete</a>
+  </div>
+</div>
+
+<div id="canceled-control-group" class="control-group">
+  <label class="control-label">Details</label>
+  <div class="controls">
+    <pre>{{ cardJSON }}</pre>
+  </div>
+</div>
+
+
+{{#each card.info.sharers}}
+  <p><b>{{email}}</b> <a href="#" data-id="{{_id}}" style="color:red">Un-share</a>
+{{/each}}
+
+<hr />
+<div id="canceled-control-group" class="control-group">
+  <label class="control-label" for="shareEmail">Share card with email</label>
+  <div class="controls">
+    <input type="text" name="shareEmail" placeholder="Email"><a href="#" class="btn btn-warning btn-small share">Share</a>
+  </div>
+</div>

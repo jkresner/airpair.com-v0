@@ -58,7 +58,8 @@ module.exports = (app) ->
   app.get '/adm/experts*', loggedIn, admin, (req, r) -> file r, 'adm/experts'
   app.get '/adm/csvs*', loggedIn, admin, (req, r) -> file r, 'adm/csvs'
   app.get '/adm/orders*', loggedIn, admin, (req, r) -> file r, 'adm/orders'
-  app.get '/adm/users*', loggedIn, admin, (req, r) -> file r, 'adm/users'
+  app.get '/adm/companys*', loggedIn, admin, (req, r) -> r.render 'adm/companys.html',
+    { stripePK: cfg.payment.stripe.publishedKey }
   app.get '/adm/inbound*', loggedIn, admin, (req, r, next) ->
     viewData.inbound req.user, (e, d) =>
       if e then return next e

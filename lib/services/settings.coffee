@@ -1,5 +1,5 @@
-DomainService  = require './_svc'
-StripeService  = require './payment/stripe'
+DomainService = require './_svc'
+StripeService = require './payment/stripe'
 stripeSvc = new StripeService()
 
 module.exports = class SettingsService extends DomainService
@@ -7,7 +7,7 @@ module.exports = class SettingsService extends DomainService
   model: require './../models/settings'
 
   getByUserId: (userId, callback) =>
-    @model.findOne({ userId: userId }).lean().exec (e, r) =>
+    @model.findOne({ userId }).lean().exec (e, r) =>
       # $log 'settings getByUserId', userId
       if e then return callback e
       if ! r? then r = {}
@@ -15,6 +15,7 @@ module.exports = class SettingsService extends DomainService
 
 
   create: (userId, data, callback) =>
+    if !data? then data = { paymentMethods: [] }
     data.userId = userId.toString()
     save = (e) =>
       if e then return next e
