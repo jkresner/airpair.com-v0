@@ -11,4 +11,7 @@ exports.Order = class Order extends Shared.Order
     .map (p) ->
       p.lineItemId
 
+  isLineItemPaidOut: (li) =>
+    _.contains @successfulPayoutIds(), li._id
+
 module.exports = exports
