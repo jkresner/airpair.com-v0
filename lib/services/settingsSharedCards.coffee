@@ -86,11 +86,8 @@ module.exports = class SharedCardsService extends SettingsService
 
   shareCard: (id, email, callback) =>
     @_getStuff id, email, (usr, usrSettings, shared, card) =>
-      # $log 'CARD.sharers', card.info.sharers
-      # $log 'usrSettings', usrSettings
-
       for s in card.info.sharers
-        if s? then return callback "Already shared card with #{email}"
+        if s.userId is usr._id then return callback "Already shared card w #{email}"
 
       # make sure we only have one stripe customer settings
       existingStripe = _.findWhere usrSettings.paymentMethods, {type: 'stripe'}
@@ -106,16 +103,19 @@ module.exports = class SharedCardsService extends SettingsService
 
 
   unshareCard: (id, email, callback) =>
-    @getByUserId usr._id, (e, d) =>
-      if !d.paymentMethods? then throw new Error "Cannot unshare card when settings for user #{user.email} don't exits"
-      @getSharedCards (r) =>
-        card = @getCard id
-        sharer = _.find card.info.sharers, (s) -> _.idsEqual s.userId, usr._id
-        if !sharer? then throw new Error "Cannot unshare card for #{usr.email}"
+    @_getStuff id, email, (usr, usrSettings, shared, card) =>
+      sharer = _.find card.info.sharers, (s) -> _.idsEqual s.userId, usr._id
+      if !sharer? then throw new Error "#{email} not a card sharer"
+
+      # make sure we only have one stripe customer settings
+      c = _.findWhere usrSettings.paymentMethods, { 'info._id': id }
+      uPayMethods = _.without usrSettings.paymentMethods, c
+
+      $log 'uPayMethods', uPayMethods
+      @_updPM usrSettings._id, uPayMethods, (e) =>
+        if e? then return callback e
         card.info.sharers = _.without card.info.sharers, sharer
-        $log 'unshareCard.paymentMethods', r.paymentMethods, id, usr
-        @_updPM r._id, r.paymentMethods, (e) -> if e? then callback e
-        @_updPM d._id, d.paymentMethods, callback
+        @_updPM shared._id, shared.paymentMethods, callback
 
 
   # update the payment Methods for both the user and the shared cards

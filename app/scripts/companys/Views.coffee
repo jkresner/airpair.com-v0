@@ -13,6 +13,7 @@ class exports.StripeRegisterView extends Settings.StripeRegisterView
 
 class exports.CardEditView extends BB.ModelSaveView
   logging: on
+  async: off
   el: '#editcard'
   tmpl: require './templates/CardEdit'
   viewData: []
@@ -31,11 +32,13 @@ class exports.CardEditView extends BB.ModelSaveView
   shareCard: (e) ->
     email = @elm('shareEmail').val()
     card = @updates.get 'card'
-    $log 'shareCard', email, card
     @model.set 'share', { email, card }
     @save e
-  unshareCard: ->
-
+  unshareCard: (e) ->
+    email = $(e.target).data 'email'
+    card = @updates.get 'card'
+    @model.set 'unshare', { email, card }
+    @save e
   removeCard: ->
 
 

@@ -1,14 +1,4 @@
 
-<div class="alert alert-success">
-  <button type="button" class="close" data-dismiss="alert">&times;</button>
-  <h4>Request save</h4>
-</div>
-
-<div class="alert alert-error">
-  <button type="button" class="close" data-dismiss="alert">&times;</button>
-  <h4>Error</h4>
-</div>
-
 <div class="form-actions nav-top">
   <div class="controls">
     <a href="#list" class="btn">Back</a>
@@ -25,7 +15,7 @@
 
 
 {{#each card.info.sharers}}
-  <p><b>{{email}}</b> <a href="#" data-id="{{_id}}" style="color:red">Un-share</a>
+  <p><b>{{email}}</b> <a href="#" data-email="{{email}}" class="unshare">unshare</a>
 {{/each}}
 
 <hr />
@@ -34,4 +24,15 @@
   <div class="controls">
     <input type="text" name="shareEmail" placeholder="Email"><a href="#" class="btn btn-warning btn-small share">Share</a>
   </div>
+</div>
+
+
+<div class="alert alert-success">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <h4>Request save</h4>
+</div>
+
+<div class="alert alert-error">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <h4>Error</h4>
 </div>
