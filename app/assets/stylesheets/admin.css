@@ -41,7 +41,8 @@ nav a.zocial { padding:0; }
 #adminboundpage #requests .label-jk { background-color: #FFB878; }
 #adminboundpage #requests .label-mi { background-color: #9A9CFF; }
 #adminboundpage #requests .label-il { background-color: #7AE7BF; }
-#adminboundpage #requests .label-dt { background-color: #DBADFF; }
+#adminboundpage #requests .label-dt { background-color: #51B749; }
+#adminboundpage #requests .label-pl { background-color: #DC2127; }
 
 
 #adminboundpage #request textarea { width:90%;height:100px;font-size:11px; }
