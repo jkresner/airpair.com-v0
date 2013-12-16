@@ -8,11 +8,12 @@
   <br />
   {{#if error }}
     <a href="javascript:alert('{{error.message }}')" style="color:red">ERROR</a>
+    | <a class="delete deleteOrder" href="#" data-id="{{ _id }}" title="Delete this order">x</a>
   {{else}}
     <b class="{{ paymentStatus }}">{{ paymentStatus }}</b>
     {{#if isPending }}
       <a class="refresh refreshOrder" href="/paypal/success/{{ _id }}" data-id="{{ _id }}" style="color:green" target="_blank">r</a>
-      | <a class="delete deleteOrder" href="#" data-id="{{ _id }}">x</a>
+      | <a class="delete deleteOrder" href="#" data-id="{{ _id }}" title="Delete this order">x</a>
     {{/if }}
   {{/if }}
 
