@@ -1,5 +1,7 @@
 nav a.zocial { padding:0; }
 
+.admin-nav { margin-top:0;padding:15px 10px; }
+
 #admexpertspage {}
 #admexpertspage .main { display:none }
 #admexpertspage #experts { float:left;width:900px }
@@ -17,7 +19,7 @@ nav a.zocial { padding:0; }
 #admorderspage td { padding:2px 0px 2px 8px;font-size:12px; }
 #admorderspage td span { display:inline-block;width:40px; }
 #admorderspage .expertPic { width:16px!important;height:16px!important }
-
+#admorderspage pre { font-size: 11px; line-height: 1.2;}
 
 #adminboundpage .form-actions { margin-top:0;padding:15px 10px; }
 #adminboundpage #filters { float:right;display:block;padding:10px 0px; }

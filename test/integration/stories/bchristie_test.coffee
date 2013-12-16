@@ -2,10 +2,11 @@ Tags = require('/scripts/request/Collections').Tags
 f = data.fixtures
 
 storySteps = [
-  { app:'settings', usr:'bchristie', frag: '#', fixture: f.settings, pageData: { stripePK: 'pk_test_aj305u5jk2uN1hrDQWdH0eyl' } }  
+  { app:'settings', usr:'bchristie', frag: '#', fixture: f.settings, pageData: { stripePK: 'pk_test_aj305u5jk2uN1hrDQWdH0eyl' } }
   { app:'request', usr:'bchristie', frag: '#', fixture: f.request, pageData: {} }
   { app:'inbound', usr:'admin', frag: '#', fixture: f.inbound, pageData: { experts: data.experts, tags: data.tags } }
   { app:'review', usr:'bchristie', frag: '#rId', fixture: f.review, pageData: {} }
+  { app:'orders', usr: 'admin', frag: '#', fixture: f.orders, pageData: {} }
 ]
 
 testNum = -1
@@ -29,7 +30,7 @@ describe "Stories: Bruce Christie", ->
       initApp(storySteps[testNum].pageData, done)
 
   afterEach ->
-    hlpr.cleanTearDown @  
+    hlpr.cleanTearDown @
 
   it 'can create stripe settings', (done) ->
     psv = @app.paymentSettingsView
@@ -39,7 +40,7 @@ describe "Stories: Bruce Christie", ->
 
       expect( rv.$el.is(':visible') ).to.equal false
       psv.$('.setup').click()
-      router.navTo psv.$('.setup').attr('href') #not sure why had to do this        
+      router.navTo psv.$('.setup').attr('href') #not sure why had to do this
 
       rv.$('[data-stripe=number]').val("4242 4242 4242 4242")
       rv.$('[data-stripe=cvc]').val("424")
@@ -86,14 +87,19 @@ describe "Stories: Bruce Christie", ->
       router.navTo "##{@rId}"
 
       @app.selected.save { suggested: request.suggested }, success: (model) =>
-        expect( @app.selected.get('suggested').length ).to.equal 1
+        expect( @app.selected.get('suggested').length ).to.equal 2
         done()
 
   it 'can review experts and book hours as customer with stripe', (done) ->
     {request,settings,requestView} = @app
-    settings.once 'sync', =>
+
+    synced = 0
+    settings.once 'sync', => synced++; if synced == 2 then test()
+    request.once 'sync', => synced++; if synced == 2 then test()
+
+    test = =>
       v = requestView
-      expect( v.$('.suggested .suggestion').length ).to.equal 1
+      expect( v.$('.suggested .suggestion').length ).to.equal 2
       expect( v.$('.book-actions').is(':visible') ).to.equal true
 
       v.$('.book-actions .btn').click()
@@ -105,17 +111,70 @@ describe "Stories: Bruce Christie", ->
       expect( bv.$('#pay').is(':visible') ).to.equal false
 
       $bookableExperts = bv.$('.bookableExpert')
-      expect( $bookableExperts.length ).to.equal 1
+      expect( $bookableExperts.length ).to.equal 2
       $paulC = $($bookableExperts[0])
+      $steveM = $($bookableExperts[1])
+
       $paulC.find('[name=qty]').val('2').trigger 'change'
       expect( bv.$('#pay').is(':visible') ).to.equal true
+      $steveM.find('[name=qty]').val('1').trigger 'change'
+
       $log 'payStripe', bv.$('.payStripe'), bv.$('.payStripe').is(':visible')
       expect( bv.$('.payStripe').is(':visible') ).to.equal true
 
       bv.model.once 'sync', (model) =>
-        expect( model.get('total') ).to.equal 180
+        expect( model.get('total') ).to.equal 180 + 90
         done()
 
       bv.$('.payStripe').click()
 
+  it 'can pay out customer\'s experts individually as admin', (done) ->
+    this.timeout 20000
+    {orders, ordersView} = @app
+    ###
+    wait for orders to sync, get bruce's order
+    click payout for each expert
+    wait for the order model to sync
+    check that everyone is successfully paid out
+    ###
+    orders.once 'sync', =>
+      window.orders = orders
+      order = (orders.models.filter (o) => o.get('requestId') == @rId)[0]
 
+      lineIds = order.get('lineItems').map (l) -> l._id
+      expect(lineIds.length).to.equal 2
+      selectors = lineIds.map (id) => ".payOutPaypalSingle[data-id=#{id}]"
+      buttons = $ selectors
+      expect(buttons.length).to.equal 2
+      expect(order.get('paymentStatus')).to.equal 'received'
+
+      order.once 'sync', (model) =>
+        # expect that the first expert re-renders to say "paidout"
+        el = $ "[data-id=#{lineIds[0]}]"
+        expect(el.length).to.equal 1
+        expect(el.hasClass('paidout')).to.equal true
+        expect(order.get('paymentStatus')).to.equal 'received'
+
+        order.once 'sync', (model) =>
+          # make sure the first expert is still paidout
+          el = $ "[data-id=#{lineIds[0]}]"
+          expect(el.length).to.equal 1
+          expect(el.hasClass('paidout')).to.equal true
+
+          # make sure the second expert is now paidout
+          el = $ "[data-id=#{lineIds[1]}]"
+          expect(el.length).to.equal 1
+          expect(el.hasClass('paidout')).to.equal true
+
+          # check the model knows it is paid out
+          expect(order.get('paymentStatus')).to.equal "paidout"
+          expect(order.get('payouts').length).to.equal 2
+          expect(order.get('payouts')[0].req).to.be.a 'object'
+          expect(order.get('payouts')[0].res).to.be.a 'object'
+          expect(order.get('payouts')[1].req).to.be.a 'object'
+          expect(order.get('payouts')[1].res).to.be.a 'object'
+          done()
+
+        $(selectors[1]).click() # need to query for it again b/c of re-render
+
+      $(selectors[0]).click()

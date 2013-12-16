@@ -46,7 +46,7 @@ module.exports = class HasErrorStateView extends BadassView
     if input.length
       @renderInputInvalid input, msg
     else
-      $log "WARN: input not found for #{selector}"
+      $log "WARN: input not found for #{attr}. ERROR: #{JSON.stringify(msg)}"
 
 
   renderInputsValid: -> $log 'Subclass & renderInputsValid'
