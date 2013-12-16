@@ -64,5 +64,5 @@ exports.startServer = (port, path, callback) ->
   $log "started on port: #{p}, path #{path}"
   app.listen p
 
-if cfg.isProd
+if cfg.isProd || !module.parent
   exports.startServer()
