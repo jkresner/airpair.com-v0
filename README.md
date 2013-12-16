@@ -125,7 +125,8 @@ Ideas to airpair on
 - follow instructions in higher up in this file, README.md
 - learn how to do pipeline. someone will take you through it
   e.g. https://trello.com/c/kRkudmGQ/365-take-david-through-pipeline-request
-- add yourself to roles.coffee
+- get a <your-initals>@airpair.com address
+- add yourself to roles.coffee using the gPlus id of your airpair email.
 - install
     - editor
       - cs highlighting
@@ -134,7 +135,5 @@ Ideas to airpair on
     - coffeescript
     - mongo 2.4
 - watch some of <http://www.youtube.com/watch?v=e0N_2T7Tdf8&feature=player_detailpage#t=718>
-- get a <your-initals>@airpair.com address
-- add yourself to the error emails (TODO: eng alias)
-- add your color to the badges CSS for claiming a request
-
+- add yourself to the error emails (winstonConfig), new request (mailman)  (TODO: eng alias)
+- add your color to the badges CSS for claiming a request (admin.css, `label-<initials>`)
