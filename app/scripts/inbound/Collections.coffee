@@ -36,7 +36,6 @@ class exports.Requests extends BB.FilteringCollection
     if owner is 'all' then return r
     r = _.filter r, (m) =>
       m.get('owner') == owner || !m.get('owner')
-    console.log r
     r
 
 module.exports = exports
