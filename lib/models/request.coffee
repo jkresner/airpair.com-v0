@@ -23,6 +23,7 @@ Suggestion expertStatus
   available     : expert wants the call
   unwanted      : customer does not want the expert
 """
+VALID_CALL_TYPES = ['opensource', 'private', 'nda', 'subscription', 'offline']
 
 Suggestion = new Schema
   events:             [{}]
@@ -38,10 +39,14 @@ Suggestion = new Schema
 
 
 Call = new Schema
-  expertId:         { required: true, type: ObjectId, ref: 'Expert', index: true }
+  expertId:           { required: true, type: ObjectId, ref: 'Expert', index: true }
   # expert:           { required: true, type: {} }
-  # hours:            { required: true, type: Number }
-  # type:             String   # opensource, private, nda, subscription, off-line
+  # hours:              { required: true, type: Number }
+  type:               {
+                        type: String,
+                        enum: VALID_CALL_TYPES,
+                        required: true
+                      }
   # status:           { required: true, type: String }  # pending, confirmed, declined
   # time:             { required: true, type: Date, index: true }
   # gCal:             { required: true, type: {} }
@@ -65,7 +70,7 @@ RequestSchema = new Schema
   brief:            { required: true, type: String   }
   budget:           { required: true, type: Number   }
   hours:            { required: true, type: String   }
-  pricing:          { required: true, type: String   }
+  pricing:          { required: true, type: String, enum: VALID_CALL_TYPES   }
   events:           { required: true, type: [{}]     }
   status:           { required: true, type: String   }
   incompleteDetail: String
