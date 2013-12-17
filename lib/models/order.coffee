@@ -16,7 +16,7 @@ LineItem = new Schema
   unitPrice:          { required: true, type: Number }
   qty:                { required: true, type: Number }
   qtyCompleted:       { required: true, type: Number, default: 0 }
-  qtyRedeemedCallIds: { required: true, type: [], default: [] } # tricky qtyRedeemed alternative
+  qtyRedeemedCallIds: { type: Array, default: [] } # tricky qtyRedeemed alternative
   type:               { required: true, type: String } # open-source, private, nda
   suggestion:         { required: true, type: {} }
 
