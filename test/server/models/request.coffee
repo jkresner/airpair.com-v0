@@ -78,8 +78,22 @@ describe "requestCalls REST API", ->
     request = new Request VALID_REQUEST
     request.calls.push
       expertId: expertId1
+      type: 'opensource'
     request.save (error, request2) ->
       expect(error).to.be.null
       expect(request2).to.exist
       expect(request2.calls).to.have.length(1)
+      expect(request2.calls[0].type).to.equal('opensource')
+      expect(request2.calls[0].expertId.equals(expertId1)).to.be.true
+      done()
+
+  it "request.calls.type should enforce valid type values", (done) ->
+    expertId1 = new ObjectId
+    request = new Request VALID_REQUEST
+    request.calls.push
+      expertId: expertId1
+      type: 'thisisaninvalidcalltype'
+    request.validate (error) ->
+      expect(error).to.exist
+      expect(error.name).to.equal('ValidationError')
       done()
