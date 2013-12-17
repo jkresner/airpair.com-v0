@@ -79,7 +79,6 @@ describe "requestCalls REST API", ->
     request.calls.push
       expertId: expertId1
     request.save (error, request2) ->
-      console.log error
       expect(error).to.be.null
       expect(request2).to.exist
       expect(request2.calls).to.have.length(1)
