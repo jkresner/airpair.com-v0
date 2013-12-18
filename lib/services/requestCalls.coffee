@@ -1,8 +1,11 @@
 # DomainService  = require './_svc'
 
+Order = new require 'lib/models/order'
+Request = new require 'lib/models/request'
+
 module.exports = class RequestCallsService
 
-  model: require './../models/settings'
+  model: require './../models/request'
 
   getByCallPermalink: (permalink, callback) =>
     # find by permalink
@@ -11,10 +14,41 @@ module.exports = class RequestCallsService
 
   getByExpertId: (expertId, callback) => throw new Error 'not imp'
 
-  create: (userId, data, callback) =>
-    {request, orders} = data
-    # Update request
-    # Update orders
+  create: (userId, requestId, call, callback) =>
+    expertTotal = 0
+    callIdSet = []
+    Order.find { requestId }, (err, orders) =>
+      if err then return callback err
+      orders.map (order) ->
+        order.lineItems.filter (lineItem) ->
+          console.log lineItem.suggestion.expert._id, call.expertId
+          _.idsEqual lineItem.suggestion.expert._id, call.expertId
+        .map (lineItem) ->
+          console.log lineItem
+          expertTotal += lineItem.qty
+          callIdSet = callIdSet.concat lineItem.qtyRedeemedCallIds
+          console.log callIdSet
+
+      Request.find { 'calls._id': '$in': callIdSet }, (err, requests) =>
+        if err then return callback err
+        calls = _.pluck(requests, 'calls')
+        calls = _.flatten(calls)
+        durations = _.pluck(calls, 'duration')
+        redeemedDuration = @sum durations
+
+        expertBalance = expertTotal - redeemedDuration
+
+        if expertBalance + call.duration > expertTotal
+          message = 'Not enough hours: buy more or cancel unfulfilled calls.'
+          callback new Error message
+
+        # TODO update order
+        Request.findByIdAndUpdate requestId, $push: calls: call, callback
+
+  sum: (list) ->
+    add = (prev, cur) ->
+      prev + cur
+    list.reduce add, 0
 
   expertReply: (userId, data, callback) =>
     { callId, status } = data # stats (accept / decline)
