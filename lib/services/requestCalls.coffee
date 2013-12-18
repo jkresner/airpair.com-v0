@@ -21,13 +21,10 @@ module.exports = class RequestCallsService
       if err then return callback err
       orders.map (order) ->
         order.lineItems.filter (lineItem) ->
-          console.log lineItem.suggestion.expert._id, call.expertId
           _.idsEqual lineItem.suggestion.expert._id, call.expertId
         .map (lineItem) ->
-          console.log lineItem
           expertTotal += lineItem.qty
           callIdSet = callIdSet.concat lineItem.qtyRedeemedCallIds
-          console.log callIdSet
 
       Request.find { 'calls._id': '$in': callIdSet }, (err, requests) =>
         if err then return callback err
