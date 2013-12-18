@@ -6,6 +6,7 @@ requestsSvc = new RequestsService()
 
 OrdersService = require 'lib/services/orders'
 ordersSvc = new OrdersService()
+async = require 'async'
 
 RequestCallsService = require 'lib/services/requestCalls'
 svc = new RequestCallsService()
@@ -18,15 +19,21 @@ describe "RequestCallsService", ->
   beforeEach () ->
     @testNum++
 
-  runCreateCallSuccess = (order, done) ->
+  saveOrdersForRequest = (orders, request, user, callback) ->
+    createOrder = (order, cb) ->
+      order = _.omit order, "_id"
+      order.requestId = request._id
+      ordersSvc.create order, user, cb
+    async.map orders, createOrder, callback
+
+  runCreateCallSuccess = (orders, call, done) ->
     request = data.requests[10] # experts[0] = paul, experts[1] = matthews
+    request = _.omit request, "_id"
     user = data.users[13]  # bchristie
-    call = data.calls[1] # expert is paul
 
     requestsSvc.create user, request, (err, newRequest) ->
       if err then done err
-      order.requestId = newRequest._id
-      ordersSvc.create order, user, (err, newOrder) ->
+      saveOrdersForRequest orders, newRequest, user, (err, newOrders) ->
         if err then done err
         svc.create user._id, newRequest._id, call, (err, newRequestWithCall) ->
           if err then done err
@@ -39,13 +46,17 @@ describe "RequestCallsService", ->
 
   it "can book a 1hr call using 1 order and 1 lineitem", (done) ->
     @timeout 0
-    order = data.orders[5] # expert is paul, 2 line items
-    runCreateCallSuccess order, done
+    call = data.calls[1] # expert is paul
+    orders = [data.orders[5]] # expert is paul, 2 line items
+    runCreateCallSuccess orders, call, done
 
   it "can book a 2hr call given 2 orders and 2 lineItems", (done) ->
     @timeout 0
-    runCreateCallSuccess data.orders[5], done
+    call = data.calls[2] # duration 2
+    orders = [data.orders[5], data.orders[5]]
+    runCreateCallSuccess orders, call, done
 
   # it "cannot book a 1hr call given 2 orders and 2 completed lineItems", (done) ->
+
 
   # it "cannot book a 1hr call given 2 orders and 2 redeemed lineItems", (done) ->

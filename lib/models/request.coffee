@@ -47,6 +47,7 @@ Call = new Schema
                         enum: VALID_CALL_TYPES,
                         required: true
                       }
+  duration:           { required: true, type: Number }
   # status:           { required: true, type: String }  # pending, confirmed, declined
   # time:             { required: true, type: Date, index: true }
   # gCal:             { required: true, type: {} }
