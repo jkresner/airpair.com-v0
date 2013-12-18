@@ -39,6 +39,7 @@ To setup + run locally
 
 7)   For testing, install PhantomJS & mocha-phantomjs `npm install -g mocha mocha-phantomjs phantomjs`
 
+8)   Run "npm run hooks" to set up the pre-push hooks"
 
 Running tests
 ===============================================================================
