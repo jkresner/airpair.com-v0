@@ -37,7 +37,7 @@ module.exports = class RequestCallsService
 
         if call.duration > expertBalance
           message = 'Not enough hours: buy more or cancel unfulfilled calls.'
-          callback new Error message
+          return callback new Error message
 
         # TODO update order
         Request.findByIdAndUpdate requestId, $push: calls: call, callback
