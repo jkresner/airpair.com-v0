@@ -18,10 +18,8 @@ describe "RequestCallsService", ->
   beforeEach () ->
     @testNum++
 
-  it "can book a 1hr call using 1 order and 1 lineitem", (done) ->
-    @timeout 0
+  runCreateCallSuccess = (order, done) ->
     request = data.requests[10] # experts[0] = paul, experts[1] = matthews
-    order = data.orders[1] # expert is paul
     user = data.users[13]  # bchristie
     call = data.calls[1] # expert is paul
 
@@ -39,10 +37,15 @@ describe "RequestCallsService", ->
           expect(newCall.type).to.equal request.pricing
           done()
 
-  # it "can book a 1hr call using 2 orders and 2 lineitems", (done) ->
+  it "can book a 1hr call using 1 order and 1 lineitem", (done) ->
+    @timeout 0
+    order = data.orders[5] # expert is paul, 2 line items
+    runCreateCallSuccess order, done
 
-  # it "can book a 2hr call using 2 orders and 2 lineitems", (done) ->
+  it "can book a 2hr call given 2 orders and 2 lineItems", (done) ->
+    @timeout 0
+    runCreateCallSuccess data.orders[5], done
 
-  # it "cannot book a 1hr call using 2 orders and 2 completed lineitems", (done) ->
+  # it "cannot book a 1hr call given 2 orders and 2 completed lineItems", (done) ->
 
-  # it "cannot book a 1hr call using 2 orders and 2 redeemed lineitems", (done) ->
+  # it "cannot book a 1hr call given 2 orders and 2 redeemed lineItems", (done) ->
