@@ -1,3 +1,4 @@
+users = require './users'
 module.exports = [
 
   # 0) not used
@@ -13,4 +14,79 @@ module.exports = [
   # (here we only have one expert, but that does not matter, it's still an
   # adaptive payment)
   {"total":160,"requestId":"52a79dc7a45edbed22000017","lineItems":[{"type":"private","total":160,"unitPrice":80,"qty":2,"suggestion":{"_id":"51b2087622ddda0200000004","suggestedRate":{"opensource":{"expert":40,"total":60},"private":{"expert":40,"total":80},"nda":{"expert":60,"total":130}},"expert":{"_id":"51a4d2b47021eb0200000009","userId":"51a4d2a466a6f999a465f2f1","name":"Richard Kuo","username":"richkuo","rate":"70","email":"richard.p.kuo@gmail.com","pic":"https://secure.gravatar.com/avatar/10f800e74ff94ada0ef4cb483d183939"}},"expertsTotal":80}],"company":{"_id":"51af95ea900c860200000005","name":"WPack","contacts":[{"_id":"51af95ea900c860200000006","timezone":"GMT-0400 (Eastern Da","twitter":"","pic":"","userId":"51af958f66a6f999a465f37a","phone":"","title":"","gmail":"ehl258@stern.nyu.edu","email":"ehl258@stern.nyu.edu","fullName":"Emil Lee"}]},"_id":"52a79dc7a45edbed22000018","userId":"51af958f66a6f999a465f37a","invoice":{},"profit":80}
+
+  # 4) Michael Hue
+  # TODO what is this really? doesn't look like the others.
+  {"company":{"_id":"5240b80b5a0afd020000000f","name":"Clickbooq","contacts":[{"fullName":"Michael Heu","email":"mheuclickbooq@gmail.com","gmail":"mheuclickbooq@gmail.com","title":"","phone":"","userId":"5240897566a6f999a465f855","pic":"https://lh6.googleusercontent.com/-9knyZuWI_LA/AAAAAAAAAAI/AAAAAAAAACw/pmds4bFjD4Q/photo.jpg","twitter":"","timezone":"GMT-0700 (PDT)","_id":"5240ba8f5a0afd0200000012"}]},"payment":{"responseEnvelope":{"timestamp":"2013-10-30T15:32:43.762-07:00","ack":"Success","correlationId":"2d80ab74eb648","build":"7935900"},"payKey":"AP-0UY773337E442410M","paymentExecStatus":"CREATED"},"paymentType":"paypal","profit":200,"requestId":"5240ba2c5a0afd0200000011","total":600,"userId":"5240897566a6f999a465f855","paymentStatus":"received","utc":"2013-10-30T22:32:43.000Z","lineItems":[{"type":"private","total":600,"unitPrice":120,"qty":5,"suggestion":{"_id":"5241c438c20d3f020000000f","suggestedRate":{"opensource":{"expert":80,"total":100},"private":{"expert":80,"total":120},"nda":{"expert":100,"total":170}},"expert":{"_id":"5230d1a9746ee90200000018","userId":"5230d19766a6f999a465f7e0","name":"Ari Lerner","username":"auser","rate":160,"email":"writeari@gmail.com","pic":"https://lh4.googleusercontent.com/-3dziILZDWd8/AAAAAAAAAAI/AAAAAAAAAGk/o_qw9Ihr4i8/photo.jpg","paymentMethod":{"info":{"email":"arilerner@mac.com"},"type":"paypal"}}},"_id":"5271890b1c380a0200000007","qtyRedeemed":0}]}
+
+  # 5) Order with 2 line items
+  {
+    "company": {"_id": "52a4ba0991935b000000002b", "contacts": [{"_id": "52a4ba0991935b000000002c", "email": "bqchristie@gmail.com", "firstName": "bruce", "fullName": "bruce christie", "gmail": "bqchristie@gmail.com", "phone": "", "pic": "https://lh6.googleusercontent.com/-Vwjei17buyc/AAAAAAAAAAI/AAAAAAAAAAA/VzQekIoMebs/photo.jpg", "timezone": "GMT-0800 (PST)", "title": "", "twitter": "", "userId": "5244496866a6f999a465f877"} ], "name": "Bruce Christie"},
+    "lineItems": [
+      {
+        "qty": 1,
+        "suggestion": {
+          "_id": "52445f41d81957020000000a",
+          "expert": {
+            "_id": "52372c73a9b270020000001c",
+            "email": "paul@canavese.org",
+            "name": "Paul Canavese",
+            "paymentMethod": {
+              "info": {
+                "email": "consulting@canaveses.org"
+              },
+              "type": "paypal"
+            },
+            "pic": "https://secure.gravatar.com/avatar/af2766a3f9d6f81447da51e0d9af9e67",
+            "rate": 70,
+            "userId": "52372c3366a6f999a465f804",
+            "username": "canavese"
+          },
+          "suggestedRate": {
+            "nda": {
+              "expert": 90,
+              "total": 160
+            },
+            "opensource": {
+              "expert": 70,
+              "total": 90
+            },
+            "private": {
+              "expert": 70,
+              "total": 110
+            }
+          }
+        },
+        "total": 90,
+        "type": "opensource",
+        "unitPrice": 90
+      }, {
+        "qty": 1,
+        "suggestion": {
+          "_id": "52445f41d81957020000000a",
+          "expert": users[5],
+          "suggestedRate": {
+            "nda": {
+              "expert": 90,
+              "total": 160
+            },
+            "opensource": {
+              "expert": 70,
+              "total": 90
+            },
+            "private": {
+              "expert": 70,
+              "total": 110
+            }
+          }
+        },
+        "total": 90,
+        "type": "opensource",
+        "unitPrice": 90
+      }
+    ],
+    "paymentMethod": {"info": {"account_balance": 0, "cards": {"count": 1, "data": [{"address_city": null, "address_country": null, "address_line1": null, "address_line1_check": null, "address_line2": null, "address_state": null, "address_zip": null, "address_zip_check": null, "country": "US", "customer": "cus_35N03uIhfJPhzU", "cvc_check": "pass", "exp_month": 10, "exp_year": 2014, "fingerprint": "DMfzzf5aobPBRDZg", "id": "card_35N0JRtcbhMuNs", "last4": "4242", "name": null, "object": "card", "type": "Visa"} ], "object": "list", "url": "/v1/customers/cus_35N03uIhfJPhzU/cards"}, "created": 1386527228, "default_card": "card_35N0JRtcbhMuNs", "delinquent": false, "description": null, "discount": null, "email": "bqchristie@gmail.com", "id": "cus_35N03uIhfJPhzU", "livemode": false, "object": "customer", "subscription": null }, "isPrimary": true, "type": "stripe"},
+    "requestId": "52a4ba0991935b000000002d",
+    "total": 180
+  }
 ]

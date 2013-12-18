@@ -8,3 +8,4 @@ module.exports =
   inbound: require './inbound'
   fixtures: require './fixtures'
   orders: require './orders'
+  calls: require './calls'

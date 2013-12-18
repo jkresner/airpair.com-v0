@@ -38,7 +38,7 @@ node_modules/
 tmp/
 
 # Brunch build folder
-public/
+public
 
 npm-debug.log
 

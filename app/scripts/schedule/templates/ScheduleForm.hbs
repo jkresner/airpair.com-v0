@@ -1,0 +1,29 @@
+{{!-- todo use bootstrap styles, error classes, backbone validation --}}
+<fieldset>
+
+  <div class="alert alert-error">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <h4>Error</h4>
+  </div>
+
+  <h4>Experts</h4>
+  {{#each available}}
+  <label><input type="radio" value="{{this._id}}" name="experts">{{this.expert.name}} <span class="balance" title="hours balance">{{this.balance}}</span></label>
+  {{else}}
+  <p>No experts are <code>available</code></p>
+  {{/each}}
+
+  <label><h4>Duration</h4>
+  <input id="duration" type="text" value="1"> hours.
+
+  Balance: <span id="expertBalance">n/a</span>
+  </label>
+
+  <label><h4>Date &amp; Time &amp; Timezone</h4>
+  <input id="date" type="text" placeholder="e.g. Dec 9th 3pm PST">
+  </label>
+
+  <div class="form-actions">
+    <button id="create" class="save button">+ Create Call</button>
+  </div>
+</fieldset>

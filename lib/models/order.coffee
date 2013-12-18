@@ -12,12 +12,20 @@ ExpertPayout = new Schema
 
 
 LineItem = new Schema
-  total:          { required: true, type: Number }
-  unitPrice:      { required: true, type: Number }
-  qty:            { required: true, type: Number }
-  qtyRedeemed:    { required: true, type: Number, default: 0 }
-  type:           { required: true, type: String } # open-source, private, nda
-  suggestion:     { required: true, type: {} }
+  total:              { required: true, type: Number }
+  unitPrice:          { required: true, type: Number }
+
+  # total number of hours the customer bought
+  qty:                { required: true, type: Number }
+
+  # number of hours that have recordings for them
+  qtyCompleted:       { required: true, type: Number, default: 0 }
+
+  # scheduled/pending calls
+  qtyRedeemedCallIds: { type: Array, default: [] }
+
+  type:               { required: true, type: String } # open-source, private, nda
+  suggestion:         { required: true, type: {} }
 
 
 schema = new Schema

@@ -13,6 +13,7 @@ class OrdersApi
   constructor: (app, route) ->
     app.post    "/api/#{route}", loggedIn, @create
     app.get     "/api/admin/#{route}", admin, @adminList
+    app.get     "/api/#{route}/request/:id", loggedIn, @requestList
     app.put     "/api/#{route}/:id", admin, @update
     app.delete  "/api/#{route}/:id", admin, @delete
 
@@ -21,6 +22,11 @@ class OrdersApi
       if e then return next e
       res.send r
 
+  requestList: (req, res, next) =>
+    # TODO protect so only request owner can view orders
+    @svc.search { requestId: req.params.id }, (e, r) ->
+      if e then return next e
+      res.send r
 
   create: (req, res, next) =>
     order = _.pick req.body, ['total','requestId']

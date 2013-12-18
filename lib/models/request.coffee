@@ -23,6 +23,7 @@ Suggestion expertStatus
   available     : expert wants the call
   unwanted      : customer does not want the expert
 """
+VALID_CALL_TYPES = ['opensource', 'private', 'nda', 'subscription', 'offline']
 
 Suggestion = new Schema
   events:             [{}]
@@ -35,18 +36,31 @@ Suggestion = new Schema
   suggestedRate:      Number     # can be altered by admin or expert
   customerRating:     Number
   customerFeedback:   String
-  messageThreadId:    ObjectId
 
 
 Call = new Schema
-  expert:           {}
-  time:             Date
-  recordingUrls:    []
-  type:             String        # opensource, private, subscription
-  devRate:          Number
-  fee:              Number
-  review:           String
-  devEndorsed:      String
+  expertId:           { required: true, type: ObjectId, ref: 'Expert', index: true }
+  # expert:           { required: true, type: {} }
+  # hours:              { required: true, type: Number }
+  type:               {
+                        type: String,
+                        enum: VALID_CALL_TYPES,
+                        required: true
+                      }
+  duration:           { required: true, type: Number }
+  # status:           { required: true, type: String }  # pending, confirmed, declined
+  # time:             { required: true, type: Date, index: true }
+  # gCal:             { required: true, type: {} }
+  # recordings:       { required: true, type: [{}] }
+  # expertEndorsed:   String   # If the expert wants the session featured (or hidden)
+  # expertReview:     {}   # Experts feedback on how the session went
+  # expertShare:      {}   # Tacking Expert sharing activity
+  # customerReview:   {}   # Customer's feedback on how the session went
+  # customerShare:    {}   # Tacking Customer sharing activity
+  # cms:              {}   # title, transcript, expertMeta, customerMeta
+  # cmsStatus:        { request: true, type: String, default: 'nocontent' }  # nocontent, pending, incomplete, approved
+  # cmsPermalink:     { required: true, type: ObjectId, unique: true, sparse: true } # index for quick search
+  # airpairRating:    { type: Number }  # How we sort session by awesomeness
 
 
 RequestSchema = new Schema
@@ -57,7 +71,7 @@ RequestSchema = new Schema
   brief:            { required: true, type: String   }
   budget:           { required: true, type: Number   }
   hours:            { required: true, type: String   }
-  pricing:          { required: true, type: String   }
+  pricing:          { required: true, type: String, enum: VALID_CALL_TYPES   }
   events:           { required: true, type: [{}]     }
   status:           { required: true, type: String   }
   incompleteDetail: String
