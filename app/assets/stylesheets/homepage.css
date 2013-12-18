@@ -81,9 +81,9 @@ nav .tech .android { display:none }
 nav .tech .angular { }
 nav .tech .backbone { }
 nav .tech .devops { }
-nav .tech .cpp { display:none }
+nav .tech .cpp { }
 nav .tech .css { display:none }
-nav .tech .ember { display:none }
+nav .tech .ember { }
 nav .tech .git { }
 nav .tech .html { display:none }
 nav .tech .ios { }
@@ -96,7 +96,7 @@ nav .tech .php { }
 nav .tech .python { }
 nav .tech .ruby { }
 nav .tech .rails { }
-nav .tech .wp { display:none }
+nav .tech .wp { }
 
 nav a.logo { /* logo */
   display:inline-block;
