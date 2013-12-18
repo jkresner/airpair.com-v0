@@ -43,6 +43,7 @@ module.exports = class DomainService
       callback null, r
 
   # TODO: next time someone wants to change newEvent code, first refactor
+  # TODO when refactoring have a separate collection for all of them
   newEvent: (usr, evtName, evtData) ->
     byUser = 'anon'
     if usr? && (usr.authenticated != false)
