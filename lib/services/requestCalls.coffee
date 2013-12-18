@@ -35,7 +35,7 @@ module.exports = class RequestCallsService
 
         expertBalance = expertTotal - redeemedDuration
 
-        if expertBalance + call.duration > expertTotal
+        if call.duration > expertBalance
           message = 'Not enough hours: buy more or cancel unfulfilled calls.'
           callback new Error message
 
