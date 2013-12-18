@@ -32,7 +32,6 @@ module.exports = class RequestCallsService
         calls = _.flatten(calls)
         durations = _.pluck(calls, 'duration')
         redeemedDuration = @sum durations
-
         expertBalance = expertTotal - redeemedDuration
 
         if call.duration > expertBalance

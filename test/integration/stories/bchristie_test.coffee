@@ -138,7 +138,6 @@ describe "Stories: Bruce Christie", ->
     check that everyone is successfully paid out
     ###
     orders.once 'sync', =>
-      window.orders = orders
       order = (orders.models.filter (o) => o.get('requestId') == @rId)[0]
 
       lineIds = order.get('lineItems').map (l) -> l._id

@@ -7,6 +7,7 @@ requestsSvc = new RequestsService()
 OrdersService = require 'lib/services/orders'
 ordersSvc = new OrdersService()
 async = require 'async'
+ObjectId = require('mongoose').Types.ObjectId
 
 RequestCallsService = require 'lib/services/requestCalls'
 svc = new RequestCallsService()
@@ -63,10 +64,32 @@ describe "RequestCallsService", ->
       if err then done err
       saveOrdersForRequest orders, newRequest, (err, newOrders) ->
         if err then done err
-        debugger
         svc.create user._id, newRequest._id, call, (err, newRequestWithCall) ->
           expect(err).to.exist
           expect(err.message).to.match /Not enough/i
           done()
 
-  # it "cannot book a 1hr call given 2 orders and 2 redeemed lineItems", (done) ->
+  it "cannot book a 1hr call given 1 orders and 1 redeemed lineItems", (done) ->
+    # prepare a synthetic request object for saving
+    requestData = _.clone request
+    request.calls = []
+    # we want 2 calls with given IDs so we can mark them as redeemed in the order
+    request.calls.push _.clone data.calls[1]
+    request.calls.push _.clone data.calls[1]
+    request.calls[0]._id = new ObjectId
+    request.calls[1]._id = new ObjectId
+    # save the request to the DB
+    requestsSvc.create user, request, (err, newRequest) ->
+      if err then done err
+      order = _.clone data.orders[5]
+      # we want the order to mark both of these calls as already redeemed
+      order.lineItems[0].qtyRedeemedCallIds = _.pluck newRequest.calls, "_id"
+      # save the order
+      saveOrdersForRequest [order], newRequest, (err, newOrders) ->
+        if err then done err
+        # data.calls[1] has duration 1, which is what we need here
+        svc.create user._id, newRequest._id, data.calls[1], (err, newRequestWithCall) ->
+          # it should fail because all calls are already redeemed
+          expect(err).to.exist
+          expect(err.message).to.match /Not enough/i
+          done()
