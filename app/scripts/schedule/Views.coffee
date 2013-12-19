@@ -17,16 +17,14 @@ class exports.ScheduleFormView extends BB.ModelSaveView
     @render()
 
   render: ->
-    console.log 'renderrrr', @model.attributes
     available = @model.get('suggested') || []
     available = available
       .filter (e) ->
-        console.log(e.expertStatus)
         e.expertStatus == 'available'
       .map (e) ->
         e.balance = 3 # todo get balance from order object
         e
-    @$el.html @tmpl { available }
+    @$el.html @tmpl { available, _id: @model.get('_id') }
     @
 
   updateBalance: (e) ->
