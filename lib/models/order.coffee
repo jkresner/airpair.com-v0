@@ -32,7 +32,7 @@ schema = new Schema
   requestId:      { required: true, type: ObjectId, ref: 'Request' }
   userId:         { required: true, type: ObjectId, ref: 'User'    }
   company:        { required: true, type: Mixed  }
-  lineItems:      { type: [LineItem] }
+  lineItems:      Array
   utc:            { type: Date, default: Date }
   total:          { required: true, type: Number   }
   profit:         { required: true, type: Number   }
