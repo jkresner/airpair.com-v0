@@ -9,7 +9,7 @@ brunch w -e test &
 test_pid=$!
 mocha test/server/all.coffee
 success=$?
-if [[ ${success} ]]; then
+if [[ ${success} == "0" ]]; then
   mocha-phantomjs "http://localhost:${test_port}/test/index.html"
   success=$?
   mocha test/integration/cleanup.coffee
