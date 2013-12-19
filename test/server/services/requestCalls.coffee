@@ -50,14 +50,21 @@ describe "RequestCallsService", ->
 
   it "can book a 1hr call using 1 order and 1 available lineitem for paul", ->
     call = data.calls[1] # expert is paul
-    orders = [data.orders[5]] # expert is paul, 2 line items
+    orders = [_.clone data.orders[5]] # expert is paul, 2 line items
     expect(svc._canScheduleCall orders, call).to.be.true
 
-  it "can book a 1hr call using 1 order and 1 available lineitem", (done) ->
+    modified = svc._modifyOrdersWithCallDuration orders, call
+    expect(modified).to.have.length 1
+    expect(modified[0].lineItems[0].redeemedCalls[0].qtyRedeemed).to.equal 1
+
+  it.only "can book a 1hr call using 1 order and 1 available lineitem", (done) ->
     @timeout 0
     call = data.calls[1] # expert is paul
-    orders = [data.orders[5]] # expert is paul, 2 line items
-    runCreateCallSuccess orders, call, done
+    orders = [_.clone data.orders[5]] # expert is paul, 2 line items
+    runCreateCallSuccess orders, call, (err, results) ->
+      order = results.orders[0]
+      expect(order.lineItems[0].redeemedCalls[0].qtyRedeemed).to.equal 1
+      done()
 
   it "can book a 2hr call given 2 orders and 2 available lineItems", (done) ->
     @timeout 0

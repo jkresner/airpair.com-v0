@@ -14,9 +14,11 @@ module.exports = class RequestCallsService
 
   getByExpertId: (expertId, callback) => throw new Error 'not imp'
 
+  # TODO make this a client-side require-able function
   _canScheduleCall: (orders, call) =>
     expertTotal = 0
     expertRedeemed = 0
+
     orders.map (order) =>
       order.lineItems.filter (lineItem) =>
         _.idsEqual lineItem.suggestion.expert._id, call.expertId
@@ -28,19 +30,51 @@ module.exports = class RequestCallsService
 
     call.duration <= expertBalance
 
+  _qtyRemaining: (lineItem) ->
+    lineItem.qty - @sum _.pluck lineItem.redeemedCalls, 'qtyRedeemed'
+
+  # TODO another function to reduce the duration of a call / subtracting hours from orders
+  _modifyOrdersWithCallDuration: (orders, call) =>
+    allocatedSoFar = 0
+    done = false
+    modified = []
+    for order in orders
+      if done then break
+      order.lineItems.filter (lineItem) =>
+        _.idsEqual lineItem.suggestion.expert._id, call.expertId
+      .map (lineItem) =>
+        if done then return
+        redeemedCall = { callId: call._id, qtyRedeemed: 0, qtyCompleted: 0 }
+        lineItem.redeemedCalls.push redeemedCall
+        allocated = Math.min call.duration, @_qtyRemaining(lineItem)
+        allocatedSoFar += allocated
+        redeemedCall.qtyRedeemed += allocated
+        modified.push order
+        done = allocatedSoFar == call.duration
+    modified
+
+  _saveOrdersWithCallDuration: (orders, call) =>
+    modified = _modifyOrdersWithCallDuration orders, call
+
+    saveOrder = (order, cb) ->
+      Order.findByIdAndUpdate order._id, order, cb
+    async.map modified, saveOrder, callback
+
   create: (userId, requestId, call, callback) =>
 
-    # TODO make this a client-side require-able function
+    # change oldest orders first
+    Order.find { requestId }, { sort: 'utc' }, (err, orders) =>
 
-    Order.find { requestId }, (err, orders) =>
       if err then return callback err
 
       if !@_canScheduleCall orders, call
         message = 'Not enough hours: buy more or cancel unfulfilled calls.'
         return callback new Error message
 
-      # TODO update order
-      Request.findByIdAndUpdate requestId, $push: calls: call, callback
+      tasks =
+        request: (cb) -> Request.findByIdAndUpdate requestId, $push: calls: call, cb
+        orders: (cb) -> _saveOrdersWithCallDuration orders, call, cb
+      async.parallel tasks, callback
 
   sum: (list) ->
     add = (prev, cur) ->
