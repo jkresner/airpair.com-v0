@@ -43,6 +43,17 @@ describe "RequestCallsService", ->
           expect(newCall.type).to.equal request.pricing
           done()
 
+  it "cant book a 1hr call without any orders", ->
+    call = data.calls[1]
+    orders = []
+    expect(svc._canScheduleCall orders, call).to.be.false
+
+  it "can book a 1hr call using 1 order and 1 available lineitem for paul", ->
+    call = data.calls[1] # expert is paul
+    orders = [data.orders[5]] # expert is paul, 2 line items
+    expect(svc._canScheduleCall orders, call).to.be.true
+  return
+
   it "can book a 1hr call using 1 order and 1 available lineitem", (done) ->
     @timeout 0
     call = data.calls[1] # expert is paul
