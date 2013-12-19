@@ -9,6 +9,7 @@ class exports.ScheduleFormView extends BB.ModelSaveView
   logging: on
   el: '#scheduleForm'
   tmpl: require './templates/ScheduleForm'
+  viewData: ['duration', 'date']
   events:
     'change input:radio': 'updateBalance' #todo get this to work
     'click #create': 'create'
@@ -32,18 +33,14 @@ class exports.ScheduleFormView extends BB.ModelSaveView
 
   create: (e) ->
     e.preventDefault()
-    data = @getUserData()
-    console.log 'create', e, this, data
+    requestCall = new M.RequestCall @getViewData()
+    requestCall.requestId = @model.get('_id')
+    requestCall.save()
 
-    # todo save it
-    # order = new M.Order(data)
-    # order.save (err) ->
-    #   if err then console.log err
-
-  getUserData: ->
-    expertId: $('input:radio:checked').val()
-    duration: parseInt($('#duration').val(), 10)
-    time: $('#date').val()
+  getViewData: ->
+    callData = @getValsFromInputs @viewData
+    callData.expertId = $('input:radio:checked').val()
+    callData
 
 class exports.ScheduledView extends BB.BadassView
   # todo

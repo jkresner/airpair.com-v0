@@ -63,7 +63,7 @@ module.exports = class RequestCallsService
   create: (userId, requestId, call, callback) =>
 
     # change oldest orders first
-    Order.find { requestId }, { sort: 'utc' }, (err, orders) =>
+    Order.find({ requestId }).sort('utc').exec (err, orders) =>
 
       if err then return callback err
 

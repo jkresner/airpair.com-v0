@@ -1,7 +1,7 @@
 authz     = require './../identity/authz'
+admin = authz.Admin()
 loggedIn  = authz.LoggedIn isApi:true
 CallsSvc   = require './../services/requestCalls'
-
 
 class RequestCallsApi  # Always passing back requests
 
@@ -24,4 +24,4 @@ class RequestCallsApi  # Always passing back requests
 
   update: (req, res, next) =>
 
-module.exports = (app) -> new CallsApi app, 'request'
+module.exports = (app) -> new RequestCallsApi app, 'requests'
