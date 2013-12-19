@@ -25,6 +25,7 @@ module.exports = [
     "lineItems": [
       {
         "qty": 1,
+        "redeemedCalls": [],
         "suggestion": {
           "_id": "52445f41d81957020000000a",
           "expert": {
@@ -62,6 +63,7 @@ module.exports = [
         "unitPrice": 90
       }, {
         "qty": 1,
+        "redeemedCalls": [],
         "suggestion": {
           "_id": "52445f41d81957020000000a",
           "expert": users[5],
