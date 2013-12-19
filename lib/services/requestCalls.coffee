@@ -42,15 +42,6 @@ module.exports = class RequestCallsService
       # TODO update order
       Request.findByIdAndUpdate requestId, $push: calls: call, callback
 
-      # expertBalance = 0
-      # for order in orders
-      #   for lineItem in order.lineItems
-      #     totalRedeemed = 0
-      #     if _.idsEqual lineItem.suggestion.expert._id, call.expertId
-      #       for redeemedCall in lineItem.redeemedCall
-      #         totalRedeemed += redeemedCall.qtyRedeemed
-      #     expertBalance = lineItem.qty - totalRedeemed
-
   sum: (list) ->
     add = (prev, cur) ->
       prev + cur

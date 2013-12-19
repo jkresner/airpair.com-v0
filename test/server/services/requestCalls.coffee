@@ -52,7 +52,6 @@ describe "RequestCallsService", ->
     call = data.calls[1] # expert is paul
     orders = [data.orders[5]] # expert is paul, 2 line items
     expect(svc._canScheduleCall orders, call).to.be.true
-  return
 
   it "can book a 1hr call using 1 order and 1 available lineitem", (done) ->
     @timeout 0
@@ -86,15 +85,21 @@ describe "RequestCallsService", ->
     request.calls = []
     # we want 2 calls with given IDs so we can mark them as redeemed in the order
     request.calls.push _.clone data.calls[1]
-    request.calls.push _.clone data.calls[1]
+    # request.calls.push _.clone data.calls[1]
     request.calls[0]._id = new ObjectId
-    request.calls[1]._id = new ObjectId
+    # request.calls[1]._id = new ObjectId
     # save the request to the DB
     requestsSvc.create user, request, (err, newRequest) ->
       if err then done err
       order = _.clone data.orders[5]
       # we want the order to mark both of these calls as already redeemed
-      order.lineItems[0].qtyRedeemedCallIds = _.pluck newRequest.calls, "_id"
+      expect(newRequest.calls)
+      expect(newRequest.calls.length).equals 1
+      callId = newRequest.calls[0]._id
+      expect(callId).to.be.a 'object' # ObjectId
+
+      order.lineItems[0].redeemedCalls.push { callId, qtyRedeemed: 1 }
+
       # save the order
       saveOrdersForRequest [order], newRequest, (err, newOrders) ->
         if err then done err
