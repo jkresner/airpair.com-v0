@@ -10,9 +10,10 @@ class exports.ScheduleFormView extends BB.ModelSaveView
   logging: on
   el: '#scheduleForm'
   tmpl: require './templates/ScheduleForm'
-  viewData: ['duration', 'date']
+  viewData: ['duration', 'date', 'expertId']
   events:
-    'change input:radio': 'updateBalance' #todo get this to work
+    'change input:radio': -> @model.set 'expertId', @elm('expertId').val()
+    'change [name=type]': -> @model.set 'type', @elm('type').val()
     'click #create': 'save'
   initialize: ->
     @listenTo @request, 'change', @render
@@ -20,38 +21,26 @@ class exports.ScheduleFormView extends BB.ModelSaveView
     @listenTo @model, 'change', @render
 
   render: ->
-    suggested = @request.get('suggested') || []
+    return if @collection.isEmpty() || !@request.get('userId')?
     orders = @collection.toJSON()
+    selectedExpert = null
+    suggested = @request.get('suggested') || []
     suggested = suggested
-      .filter (suggestion) ->
+      .filter (suggestion) =>
         suggestion.expertStatus == 'available'
-      .map (suggestion) ->
-        availability = expertAvailability orders, suggestion.expert._id
-        suggestion.expert.balance = availability.expertBalance
+      .map (suggestion) =>
+        suggestion.expert.balance = expertAvailability orders, suggestion.expert._id
+        if @mget('expertId') == suggestion.expert._id
+          suggestion.expert.selected = suggestion.expert
+          selectedExpert = suggestion.expert
+
+        suggestion.expert.balance.byTypeArray = _.values(suggestion.expert.balance.byType)
         suggestion
 
-    d = @model.extendJSON { available: suggested, requestId: @model.requestId }
+    d = @model.extendJSON { available: suggested, selectedExpert, requestId: @model.requestId }
     @$el.html @tmpl d
     @
 
-  updateBalance: (e) ->
-    @model.set 'expertId', @elm('expertId').val()
-
-    console.log 'ub', @elm('expertId').val(), e, @
-    # @elm('type')
-    # @elm('duration')
-
-  # create: (e) ->
-  #   e.preventDefault()
-  #   requestCall = new M.RequestCall @getViewData()
-  #   requestCall.requestId = @model.get('_id')
-  #   requestCall.save()
-
-  getViewData: ->
-    callData = @getValsFromInputs @viewData
-    # callData.expertId = $('input:radio:checked').val()
-    $log 'callData', callData
-    callData
 
 # class exports.ScheduledView extends BB.BadassView
 #   # todo

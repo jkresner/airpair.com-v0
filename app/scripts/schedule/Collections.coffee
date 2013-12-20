@@ -7,9 +7,6 @@ class exports.Orders extends BB.FilteringCollection
   model: Models.Order
   url: -> "/api/orders/request/#{@requestId}"
 
-  initialize: (options) ->
-    {@requestId} = options
-
 Shared = require './../shared/Collections'
 exports.Requests = Shared.Requests
 

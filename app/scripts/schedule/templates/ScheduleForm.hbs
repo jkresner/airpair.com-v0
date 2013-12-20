@@ -11,46 +11,53 @@
 
   <h4>Experts</h4>
   {{#each available}}
-    <label>
-      <img src="{{expert.pic}}" alt="{{expert.name}}">
+    {{#with expert}}
+    <label{{#if selected}} class="selected"{{/if}}>
+      <img src="{{pic}}" alt="{{name}}">
       <br />
-      <input type="radio" value="{{expert._id}}" name="expertId">
-      {{expert.name}}
-      <span class="balance" title="hours balance">{{expert.balance}}</span>
+      <input type="radio" value="{{_id}}" name="expertId" {{#if selected}} checked{{/if}}/>
+      {{name}}
+      <span class="balance" title="hours balance">{{balance.total}}</span>
     </label>
+    {{/with}}
   {{else}}
     <p>No experts are <code>available</code></p>
   {{/each}}
 
-  {{#if expertId }}
+  {{#selectedExpert}}
 
-    <label>
-      <h4>Type</h4>
-      <div class="input-append">
+    <div class="control-group">
+      <label class="control-label" for="type">Type</label>
+      <div class="controls">
         <select name="type">
-          <option>Open-source</option>
-          <option>Private</option>
+          {{#each balance.byTypeArray}}
+          <option>{{type}}</option>
+          {{/each}}
         </select>
-        <span class="add-on">hours</span>
       </div>
-    </label>
+    </div>
 
-
-    <label>
-      <h4>Duration</h4>
-      <div class="input-append">
-        <input class="span2" name="duration" type="text" value="1">
-        <span class="add-on">hours</span>
+    <div class="control-group">
+      <label class="control-label" for="duration">Duration</label>
+      <div class="controls">
+        <select name="duration">
+          <option>1 hour</option>
+          <option>2 hours</option>
+          <option>3 hours</option>
+        </select>
       </div>
+    </div>
 
-      <!-- <p>Balance: <span id="expertBalance">n/a</span></p> -->
-    </label>
+    <!-- <p>Balance: <span id="expertBalance">n/a</span></p> -->
 
-    <label><h4>Date &amp; Time &amp; Timezone</h4>
-    <input name="date" type="text" placeholder="e.g. Dec 9th 3pm PST">
-    </label>
+    <div class="control-group">
+      <label class="control-label" for="duration">Date &amp; Time &amp; Timezone</label>
+      <div class="controls">
+        <input name="date" type="text" placeholder="e.g. Dec 9th 3pm PST">
+      </div>
+    </div>
 
-  {{/if}}
+  {{/selectedExpert}}
 
 
   <div class="form-actions">

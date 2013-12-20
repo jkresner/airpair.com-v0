@@ -17,7 +17,8 @@ module.exports = class Router extends S.AirpairSessionRouter
     d =
       request: new M.Request _id: id
       requestCall: new M.RequestCall requestId: id
-      orders: new C.Orders requestId: id
+      orders: new C.Orders
+    d.orders.requestId = id
     v =
       scheduleFormView: new V.ScheduleFormView
         model: d.requestCall, request: d.request, collection: d.orders
@@ -28,10 +29,3 @@ module.exports = class Router extends S.AirpairSessionRouter
     @setOrFetch d.orders, pageData.orders
 
     _.extend d, v
-
-  initialize: (args) ->
-
-  schedule: (id) ->
-    console.log 'schedule:', id
-    # if @app.request.id then return
-    # @app.request.set '_id': id
