@@ -8,6 +8,8 @@ exports.Request = class Request extends Shared.Request
 
 exports.RequestCall = class RequestCall extends BB.BadassModel
   urlRoot: -> "/api/requests/#{@requestId}/calls"
+  initialize: (args) ->
+    @requestId = args.requestId
 
 exports.Order = Shared.Order
 

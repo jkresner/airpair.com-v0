@@ -5,7 +5,7 @@ V = require './Views'
 
 
 module.exports = class Router extends S.AirpairSessionRouter
-  logging: on
+  # logging: on
   pushStateRoot: '/adm'
 
   routes:
@@ -16,11 +16,12 @@ module.exports = class Router extends S.AirpairSessionRouter
     id = @defaultFragment.substring(@defaultFragment.lastIndexOf('/') + 1)
     d =
       request: new M.Request _id: id
+      requestCall: new M.RequestCall requestId: id
       orders: new C.Orders requestId: id
     v =
       scheduleFormView: new V.ScheduleFormView
-        model: d.request, collection: d.orders
-      scheduledView: new V.ScheduledView model: d.request
+        model: d.requestCall, request: d.request, collection: d.orders
+      # scheduledView: new V.ScheduledView model: d.request
 
 
     @setOrFetch d.request, pageData.request

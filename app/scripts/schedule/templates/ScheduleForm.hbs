@@ -1,5 +1,7 @@
 {{!-- todo use bootstrap styles, error classes, backbone validation --}}
-<a class="btn" href="/adm/inbound/request/{{_id}}">Back</a>
+<div class="form-actions admin-nav">
+  <a class="btn" href="/adm/inbound/request/{{requestId}}">Back</a>
+</div>
 <h2>Schedule a Call</h2>
 <fieldset>
   <div class="alert alert-error">
@@ -10,28 +12,46 @@
   <h4>Experts</h4>
   {{#each available}}
     <label>
-      <img src="{{this.expert.pic}}" alt="{{this.expert.name}}">
-      <input type="radio" value="{{this.expert._id}}" name="experts">
-      {{this.expert.name}}
-      <span class="balance" title="hours balance">{{this.expert.balance}}</span>
+      <img src="{{expert.pic}}" alt="{{expert.name}}">
+      <br />
+      <input type="radio" value="{{expert._id}}" name="expertId">
+      {{expert.name}}
+      <span class="balance" title="hours balance">{{expert.balance}}</span>
     </label>
   {{else}}
     <p>No experts are <code>available</code></p>
   {{/each}}
 
-  <label>
-    <h4>Duration</h4>
-    <div class="input-append">
-      <input class="span2" name="duration" type="text" value="1">
-      <span class="add-on">hours</span>
-    </div>
+  {{#if expertId }}
 
-    <!-- <p>Balance: <span id="expertBalance">n/a</span></p> -->
-  </label>
+    <label>
+      <h4>Type</h4>
+      <div class="input-append">
+        <select name="type">
+          <option>Open-source</option>
+          <option>Private</option>
+        </select>
+        <span class="add-on">hours</span>
+      </div>
+    </label>
 
-  <label><h4>Date &amp; Time &amp; Timezone</h4>
-  <input name="date" type="text" placeholder="e.g. Dec 9th 3pm PST">
-  </label>
+
+    <label>
+      <h4>Duration</h4>
+      <div class="input-append">
+        <input class="span2" name="duration" type="text" value="1">
+        <span class="add-on">hours</span>
+      </div>
+
+      <!-- <p>Balance: <span id="expertBalance">n/a</span></p> -->
+    </label>
+
+    <label><h4>Date &amp; Time &amp; Timezone</h4>
+    <input name="date" type="text" placeholder="e.g. Dec 9th 3pm PST">
+    </label>
+
+  {{/if}}
+
 
   <div class="form-actions">
     <button id="create" class="save button">+ Create Call</button>
