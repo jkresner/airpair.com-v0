@@ -5,7 +5,7 @@ if true
   if !addjs?
     window.addjs = new AddJS providers: { ga: { logging: off }, mp: { logging: off } }
 
-  require("./uservoice")()
+  require("./uservoice")() if window.useUserVoice
   require("./ga")()
   require("./mixpanel")()
   require("./olark")() if window.useOlark
