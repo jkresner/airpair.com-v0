@@ -11,9 +11,9 @@
   {{#each available}}
     <label>
       <img src="{{this.expert.pic}}" alt="{{this.expert.name}}">
-      <input type="radio" value="{{this._id}}" name="experts">
+      <input type="radio" value="{{this.expert._id}}" name="experts">
       {{this.expert.name}}
-      <span class="balance" title="hours balance">{{this.balance}}</span>
+      <span class="balance" title="hours balance">{{this.expert.balance}}</span>
     </label>
   {{else}}
     <p>No experts are <code>available</code></p>
@@ -26,7 +26,7 @@
       <span class="add-on">hours</span>
     </div>
 
-    <p>Balance: <span id="expertBalance">n/a</span></p>
+    <!-- <p>Balance: <span id="expertBalance">n/a</span></p> -->
   </label>
 
   <label><h4>Date &amp; Time &amp; Timezone</h4>

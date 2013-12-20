@@ -2,6 +2,9 @@
 
 Order = new require 'lib/models/order'
 Request = new require 'lib/models/request'
+sum = require '../../app/scripts/shared/mix/sum'
+expertAvailability = require '../../app/scripts/shared/mix/expertAvailability'
+async = require 'async'
 
 module.exports = class RequestCallsService
 
@@ -16,22 +19,11 @@ module.exports = class RequestCallsService
 
   # TODO make this a client-side require-able function
   _canScheduleCall: (orders, call) =>
-    expertTotal = 0
-    expertRedeemed = 0
-
-    orders.map (order) =>
-      order.lineItems.filter (lineItem) =>
-        _.idsEqual lineItem.suggestion.expert._id, call.expertId
-      .map (lineItem) =>
-        expertRedeemed += @sum _.pluck lineItem.redeemedCalls, 'qtyRedeemed'
-        expertTotal += lineItem.qty
-
-    expertBalance = expertTotal - expertRedeemed
-
-    call.duration <= expertBalance
+    availability = expertAvailability orders, call.expertId
+    call.duration <= availability.expertBalance
 
   _qtyRemaining: (lineItem) ->
-    lineItem.qty - @sum _.pluck lineItem.redeemedCalls, 'qtyRedeemed'
+    lineItem.qty - sum _.pluck lineItem.redeemedCalls, 'qtyRedeemed'
 
   # TODO another function to reduce the duration of a call / subtracting hours from orders
   _modifyOrdersWithCallDuration: (orders, call) =>
@@ -45,19 +37,22 @@ module.exports = class RequestCallsService
       .map (lineItem) =>
         if done then return
         redeemedCall = { callId: call._id, qtyRedeemed: 0, qtyCompleted: 0 }
+        lineItem.redeemedCalls = lineItem.redeemedCalls || []
         lineItem.redeemedCalls.push redeemedCall
         allocated = Math.min call.duration, @_qtyRemaining(lineItem)
         allocatedSoFar += allocated
         redeemedCall.qtyRedeemed += allocated
         modified.push order
+        order.markModified 'lineItems'
         done = allocatedSoFar == call.duration
     modified
 
-  _saveOrdersWithCallDuration: (orders, call) =>
-    modified = _modifyOrdersWithCallDuration orders, call
+  _saveOrdersWithCallDuration: (orders, call, callback) =>
+    modified = @_modifyOrdersWithCallDuration orders, call
 
     saveOrder = (order, cb) ->
-      Order.findByIdAndUpdate order._id, order, cb
+      update = $set: { lineItems: order.toJSON().lineItems }
+      Order.findByIdAndUpdate order._id, update, cb
     async.map modified, saveOrder, callback
 
   create: (userId, requestId, call, callback) =>
@@ -72,14 +67,9 @@ module.exports = class RequestCallsService
         return callback new Error message
 
       tasks =
-        request: (cb) -> Request.findByIdAndUpdate requestId, $push: calls: call, cb
-        orders: (cb) -> _saveOrdersWithCallDuration orders, call, cb
+        request: (cb) => Request.findByIdAndUpdate requestId, $push: calls: call, cb
+        orders: (cb) => @_saveOrdersWithCallDuration orders, call, cb
       async.parallel tasks, callback
-
-  sum: (list) ->
-    add = (prev, cur) ->
-      prev + cur
-    list.reduce add, 0
 
   expertReply: (userId, data, callback) =>
     { callId, status } = data # stats (accept / decline)

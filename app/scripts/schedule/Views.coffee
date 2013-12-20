@@ -2,6 +2,7 @@ exports = {}
 BB = require './../../lib/BB'
 M = require './Models'
 SV = require './../shared/Views'
+expertAvailability = require '../shared/mix/expertAvailability'
 
 # schedule form
 class exports.ScheduleFormView extends BB.ModelSaveView
@@ -15,17 +16,20 @@ class exports.ScheduleFormView extends BB.ModelSaveView
     'click #create': 'create'
   initialize: ->
     @listenTo @model, 'change', @render
+    @listenTo @collection, 'sync', @render
     @render()
 
   render: ->
-    available = @model.get('suggested') || []
-    available = available
-      .filter (e) ->
-        e.expertStatus == 'available'
-      .map (e) ->
-        e.balance = 3 # todo get balance from order object
-        e
-    @$el.html @tmpl { available, _id: @model.get('_id') }
+    suggested = @model.get('suggested') || []
+    orders = @collection.toJSON()
+    suggested = suggested
+      .filter (suggestion) ->
+        suggestion.expertStatus == 'available'
+      .map (suggestion) ->
+        availability = expertAvailability orders, suggestion.expert._id
+        suggestion.expert.balance = availability.expertBalance
+        suggestion
+    @$el.html @tmpl { available: suggested, _id: @model.get('_id') }
     @
 
   updateBalance: (e) ->

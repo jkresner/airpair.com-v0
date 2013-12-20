@@ -16,12 +16,15 @@ module.exports = class Router extends S.AirpairSessionRouter
     id = @defaultFragment.substring(@defaultFragment.lastIndexOf('/') + 1)
     d =
       request: new M.Request _id: id
+      orders: new C.Orders requestId: id
     v =
-      scheduleFormView: new V.ScheduleFormView model: d.request
+      scheduleFormView: new V.ScheduleFormView
+        model: d.request, collection: d.orders
       scheduledView: new V.ScheduledView model: d.request
 
 
     @setOrFetch d.request, pageData.request
+    @setOrFetch d.orders, pageData.orders
 
     _.extend d, v
 
