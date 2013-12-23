@@ -13,9 +13,9 @@ This supports two use-cases:
 expertAvailability = (orders, expertId) ->
   lisForExpert = getLineItemsForExpert orders, expertId
   byType = getBalanceByType groupExpertLineItemsByType(lisForExpert)
-
   total = sum _.pluck lisForExpert || [], 'qty'
-  redeemed = sum _.pluck lisForExpert.redeemedCalls || [], 'qtyRedeemed'
+  redeemedCalls = _.flatten _.pluck lisForExpert, 'redeemedCalls'
+  redeemed = sum _.pluck redeemedCalls, 'qtyRedeemed'
   balance = total - redeemed
 
   { total, redeemed, balance, byType }

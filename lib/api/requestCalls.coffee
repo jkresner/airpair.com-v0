@@ -18,6 +18,13 @@ class RequestCallsApi  # Always passing back requests
       res.send r
 
   create: (req, res, next) =>
+
+    req.checkBody('duration', 'Invalid duration').notEmpty().isInt()
+    errors = req.validationErrors()
+    if errors
+      res.send errors, 400
+    req.sanitize('duration').toInt()
+
     @svc.create req.user._id, req.params.requestId, req.body, (e, r) ->
       if e then return next e
       res.send r

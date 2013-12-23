@@ -26,93 +26,83 @@ describe "RequestCallsService", ->
     createOrder = (order, cb) ->
       order = _.omit order, "_id"
       order.requestId = request._id
-      ordersSvc.create order, user, cb
+      ordersSvc.create order, user, (err, newOrder) ->
+        if err then return cb new Error(err.message)
+        return cb null, newOrder
     async.map orders, createOrder, callback
 
-  runCreateCallSuccess = (orders, call, done) ->
+  runCreateCallSuccess = (orders, call, callback) ->
     requestsSvc.create user, request, (err, newRequest) ->
-      if err then done err
-      saveOrdersForRequest orders, newRequest, (err, newOrders) ->
-        if err then done err
-        svc.create user._id, newRequest._id, call, (err, newRequestWithCall) ->
-          if err then done err
+      if err then return callback err
+      saveOrdersForRequest orders, newRequest, (err, __) ->
+        if err then return callback err
+        svc.create user._id, newRequest._id, call, (err, results) ->
+          if err then return callback err
+          newRequestWithCall = results.request
+          expect(newRequestWithCall).to.be.a 'object'
           expect(newRequestWithCall.calls.length).to.equal 1
           expect(newRequestWithCall.calls[0]).to.be.a 'object'
           newCall = newRequestWithCall.calls[0]
           expect(_.idsEqual newCall.expertId, request.suggested[0].expert._id).to.be.true
           expect(newCall.type).to.equal request.pricing
-          done()
+          callback null, results.orders, newRequestWithCall, newCall
 
-  it "cant book a 1hr call without any orders", ->
+  it "cannot book a 1hr call without any orders", ->
     call = data.calls[1]
     orders = []
-    expect(svc._canScheduleCall orders, call).to.be.false
+    expect(svc._canScheduleCall orders, call).to.equal false
 
   it "can book a 1hr call using 1 order and 1 available lineitem for paul", ->
     call = data.calls[1] # expert is paul
-    orders = [_.clone data.orders[5]] # expert is paul, 2 line items
-    expect(svc._canScheduleCall orders, call).to.be.true
+    orders = [_.cloneDeep data.orders[5]] # expert is paul, 2 line items
+    expect(svc._canScheduleCall orders, call).to.equal true
 
+    orders = orders.map (o) ->
+      o.markModified = ->
+      o
     modified = svc._modifyOrdersWithCallDuration orders, call
     expect(modified).to.have.length 1
     expect(modified[0].lineItems[0].redeemedCalls[0].qtyRedeemed).to.equal 1
 
-  it.only "can book a 1hr call using 1 order and 1 available lineitem", (done) ->
+  it "cannot book a 1hr call given 1 order and 1 redeemed lineItems", ->
+    call = data.calls[1] # expert is paul
+    orders = [_.cloneDeep data.orders[5]] # expert is paul, 2 line items
+
+    # mark it completed
+    call._id = new ObjectId()
+    orders[0].lineItems[0].redeemedCalls.push callId: call._id, qtyRedeemed: call.duration
+
+    expect(svc._canScheduleCall orders, call).to.equal false
+
+  it "can book a 1hr call using 1 order and 1 available lineitem", (done) ->
     @timeout 0
     call = data.calls[1] # expert is paul
-    orders = [_.clone data.orders[5]] # expert is paul, 2 line items
-    runCreateCallSuccess orders, call, (err, results) ->
-      order = results.orders[0]
-      expect(order.lineItems[0].redeemedCalls[0].qtyRedeemed).to.equal 1
+    orders = [_.cloneDeep data.orders[5]] # expert is paul, 2 line items
+    runCreateCallSuccess orders, call, (err, newOrders, newRequestWithCall, newCall) ->
+      if err then return done err
+      order = newOrders[0]
+      redeemed = order.lineItems[0].redeemedCalls
+      expect(redeemed).to.be.a 'array'
+      expect(redeemed[0]).to.be.a 'object'
+      expect(redeemed[0].qtyRedeemed).to.equal 1
       done()
 
   it "can book a 2hr call given 2 orders and 2 available lineItems", (done) ->
     @timeout 0
     call = data.calls[2] # duration 2
-    orders = [data.orders[5], data.orders[5]]
+    orders = [_.cloneDeep(data.orders[5]), _.cloneDeep(data.orders[5])]
     runCreateCallSuccess orders, call, done
 
   it "cannot book a 5hr call given 2 orders and 2 lineItems", (done) ->
     @timeout 0
     call = _.clone data.calls[2]
     call.duration = 5
-    orders = [data.orders[5], data.orders[5]]
+    orders = [_.cloneDeep(data.orders[5]), _.cloneDeep(data.orders[5])]
     requestsSvc.create user, request, (err, newRequest) ->
-      if err then done err
+      if err then return done err
       saveOrdersForRequest orders, newRequest, (err, newOrders) ->
-        if err then done err
+        if err then return done err
         svc.create user._id, newRequest._id, call, (err, newRequestWithCall) ->
-          expect(err).to.exist
-          expect(err.message).to.match /Not enough/i
-          done()
-
-  it "cannot book a 1hr call given 1 orders and 1 redeemed lineItems", (done) ->
-    # prepare a synthetic request object for saving
-    requestData = _.clone request
-    request.calls = []
-    # we want 2 calls with given IDs so we can mark them as redeemed in the order
-    request.calls.push _.clone data.calls[1]
-    # request.calls.push _.clone data.calls[1]
-    request.calls[0]._id = new ObjectId
-    # request.calls[1]._id = new ObjectId
-    # save the request to the DB
-    requestsSvc.create user, request, (err, newRequest) ->
-      if err then done err
-      order = _.clone data.orders[5]
-      # we want the order to mark both of these calls as already redeemed
-      expect(newRequest.calls)
-      expect(newRequest.calls.length).equals 1
-      callId = newRequest.calls[0]._id
-      expect(callId).to.be.a 'object' # ObjectId
-
-      order.lineItems[0].redeemedCalls.push { callId, qtyRedeemed: 1 }
-
-      # save the order
-      saveOrdersForRequest [order], newRequest, (err, newOrders) ->
-        if err then done err
-        # data.calls[1] has duration 1, which is what we need here
-        svc.create user._id, newRequest._id, data.calls[1], (err, newRequestWithCall) ->
-          # it should fail because all calls are already redeemed
           expect(err).to.exist
           expect(err.message).to.match /Not enough/i
           done()
