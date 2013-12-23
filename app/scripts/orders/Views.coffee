@@ -2,6 +2,7 @@ exports = {}
 BB = require './../../lib/BB'
 M = require './Models'
 Shared = require './../shared/Views'
+expertAvailability = require '../shared/mix/expertAvailability'
 
 #############################################################################
 ##  To render all experts for admin
@@ -43,7 +44,7 @@ class exports.OrderRowView extends BB.ModelSaveView
       li.linePaidout = @model.isLineItemPaidOut li
       # hide the link so you can't double-click / double-payout:
       li.linePayoutPending = pendingId == li._id
-      li
+      _.extend li, expertAvailability([d], li.suggestion.expert._id)
 
     _.extend d, {
       isPending:          d.paymentStatus is 'pending'

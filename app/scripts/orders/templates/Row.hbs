@@ -66,7 +66,7 @@
 </td>
 <td>
   {{#each lineItems}}
-    {{ qtyRedeemed }}/ {{ qty }}
+    <abbr title="available; hours that remain to be scheduled">A:{{ balance }}</abbr> / <abbr title="scheduled; number of hours scheduled">S:{{ redeemed }}</abbr> / <abbr title="total; number of hours bought by the customer">T:{{ total }}</abbr>
     {{#with suggestion.expert }}
       <img class="expertPic" src="{{ pic }}" />
       {{ name }}<br />

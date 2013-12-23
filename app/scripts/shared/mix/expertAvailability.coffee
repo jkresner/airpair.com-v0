@@ -1,7 +1,15 @@
 idsEqual = require './idsEqual'
 sum = require './sum'
 
+###
+orders is a list of orders associated with a certain request
+expertId is the Id of an expert who the customer has chosen
 
+This supports two use-cases:
+  - how much time can an expert be booked when you sum all their hours across
+    orders
+  - how much time can an expert be booked given this only one order in the array
+###
 expertAvailability = (orders, expertId) ->
   lisForExpert = getLineItemsForExpert orders, expertId
   byType = getBalanceByType groupExpertLineItemsByType(lisForExpert)
