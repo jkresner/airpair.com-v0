@@ -6,6 +6,7 @@ require './lib/util/globals'
 express       = require 'express'
 passport      = require 'passport'
 inspect       = require('util').inspect
+expressValidator = require 'express-validator'
 
 # setup our express app
 app = express()
@@ -18,9 +19,11 @@ app.engine('html', require('hbs').__express)
 app.set('view engine', 'hbs')
 app.set('views', __dirname + '/public')
 
-app.use(express.compress()) # gzip
+app.use express.compress() # gzip
 app.use express.static(__dirname + '/public')
 app.use express.bodyParser()
+app.use expressValidator() # must be immediately after express.bodyParser()!
+
 app.use express.cookieParser()
 app.use express.session
   cookie : { path: '/', httpOnly: true, maxAge: 2419200000 }

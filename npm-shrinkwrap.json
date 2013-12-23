@@ -990,6 +990,18 @@
       "version": "2.1.2",
       "from": "sinon-chai@2.1.2"
     },
+    "express-validator": {
+      "version": "1.0.1",
+      "from": "express-validator@",
+      "resolved": "https://registry.npmjs.org/express-validator/-/express-validator-1.0.1.tgz",
+      "dependencies": {
+        "validator": {
+          "version": "2.0.0",
+          "from": "validator@2.0.0",
+          "resolved": "https://registry.npmjs.org/validator/-/validator-2.0.0.tgz"
+        }
+      }
+    },
     "awssum-amazon": {
       "version": "1.1.1",
       "from": "awssum-amazon@1.1.1",
