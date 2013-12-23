@@ -62,7 +62,8 @@
     "chai": "~1.7.2",
     "sinon": "1.4.2",
     "sinon-chai": "2.1.2",
-    "express-validator": "~1.0.1"
+    "express-validator": "~1.0.1",
+    "lodash": "~2.4.1"
   },
   "devDependencies": {
     "supertest": "0.5.x",

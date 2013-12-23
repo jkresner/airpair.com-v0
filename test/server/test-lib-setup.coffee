@@ -22,7 +22,7 @@ destroy = (mocha, done) ->
 
 module.exports =
   http:       require 'supertest'
-  _:          require 'underscore'
+  _:          require 'lodash'
   sinon:      require 'sinon'
   chai:       require 'chai'
   expect:     chai.expect
