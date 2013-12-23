@@ -17,6 +17,7 @@
     "postinstall": "brunch b -e prod",
     "hooks": "cd .git/hooks && ln -nsf ../../build/git-hooks/* .",
     "start": "PORT=3333 Env=dev runjs app.coffee",
+    "start-test": "PORT=4444 Env=dev runjs app.coffee",
     "coverage": "mocha --require blanket -R html-cov test/server/all.coffee > coverage.html && open coverage.html",
     "blanket": {
       "pattern": "/lib",
