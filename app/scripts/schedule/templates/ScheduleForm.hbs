@@ -12,7 +12,7 @@
   <h4>Experts</h4>
   {{#each available}}
     {{#with expert}}
-    <label{{#if selected}} class="selected"{{/if}}>
+    <label {{#if selected}}class="selected"{{/if}}>
       <img src="{{pic}}" alt="{{name}}" draggable="false">
       <br />
       <input type="radio" value="{{_id}}" name="expertId" {{#if selected}} checked{{/if}}/>
@@ -50,19 +50,23 @@
       </div>
     </div>
 
-    <!-- <p>Balance: <span id="expertBalance">n/a</span></p> -->
-
     <div class="control-group">
-      <label class="control-label" for="duration">Date &amp; Time &amp; Timezone</label>
+      <label class="control-label" for="date">Date &amp; Time &amp; Timezone</label>
       <div class="controls">
-        <input name="date" type="text" placeholder="e.g. Dec 9th 3pm PST">
+        <input name="date" type="text" placeholder="e.g. Dec 9th 3pm">
+        <select name="timezone" class="input-mini">
+          <option value="PST" selected>PST</option>
+          <option value="EDT">EDT</option>
+        </select>
       </div>
+      <div id="calendarLink"></div>
     </div>
 
   {{/selectedExpert}}
 
 
   <div class="form-actions">
+    {{!-- TODO this should take you back to the inbound view page --}}
     <button id="create" class="save button">+ Create Call</button>
   </div>
 </fieldset>

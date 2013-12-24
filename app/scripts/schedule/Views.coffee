@@ -23,7 +23,6 @@ class exports.ScheduleFormView extends BB.ModelSaveView
     @listenTo @model, 'change', @render
 
   render: ->
-    console.log 'render'
     return if @collection.isEmpty() || !@request.get('userId')?
     orders = @collection.toJSON()
     selectedExpert = null
@@ -34,21 +33,18 @@ class exports.ScheduleFormView extends BB.ModelSaveView
       .map (suggestion) =>
         suggestion.expert.balance = expertAvailability orders, suggestion.expert._id
         suggestion.expert.balance.byTypeArray = _.values(suggestion.expert.balance.byType)
-        if @mget('expertId') == suggestion.expert._id
+        if @mget('expertId') == suggestion.expert._id || suggested.length == 1
           suggestion.expert.selected = suggestion.expert
           selectedExpert = suggestion.expert
         suggestion
 
     if selectedExpert
-      console.log 'balbytype',@mget('type'), selectedExpert.balance.byType[@mget('type')]
       balance = (selectedExpert.balance.byType[@mget('type')] || {}).balance || 0
       selectedExpert.selectOptions = _.range(1, balance + 1).map (num) -> { num }
-      console.log JSON.stringify selectedExpert.selectOptions, null, 2
 
     d = @model.extendJSON { available: suggested, selectedExpert, requestId: @model.requestId }
     @$el.html @tmpl d
     @
-
 
 # class exports.ScheduledView extends BB.BadassView
 #   # todo
