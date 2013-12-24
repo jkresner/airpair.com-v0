@@ -13,7 +13,7 @@
   {{#each available}}
     {{#with expert}}
     <label{{#if selected}} class="selected"{{/if}}>
-      <img src="{{pic}}" alt="{{name}}">
+      <img src="{{pic}}" alt="{{name}}" draggable="false">
       <br />
       <input type="radio" value="{{_id}}" name="expertId" {{#if selected}} checked{{/if}}/>
       {{name}}
@@ -41,9 +41,11 @@
       <label class="control-label" for="duration">Duration</label>
       <div class="controls">
         <select name="duration">
-          <option value="1">1 hour</option>
-          <option value="2">2 hours</option>
-          <option value="3">3 hours</option>
+          {{#each selectOptions }}
+            <option value="{{num}}">{{num}} hour(s)</option>
+          {{else}}
+            <option disabled>0 hours available for this expert</option>
+          {{/each}}
         </select>
       </div>
     </div>

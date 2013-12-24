@@ -12,27 +12,28 @@ This supports two use-cases:
 ###
 expertAvailability = (orders, expertId) ->
   lisForExpert = getLineItemsForExpert orders, expertId
-  byType = getBalanceByType groupExpertLineItemsByType(lisForExpert)
-  total = sum _.pluck lisForExpert || [], 'qty'
-  redeemedCalls = _.flatten _.pluck lisForExpert, 'redeemedCalls'
-  redeemed = sum _.pluck redeemedCalls, 'qtyRedeemed'
+  byType = getBalanceByType groupExpertLineItemsByType lisForExpert
+  total = calcTotal lisForExpert
+  redeemed = calcRedeemed lisForExpert
   balance = total - redeemed
 
   { total, redeemed, balance, byType }
 
+calcTotal = (lineItems) ->
+  sum _.pluck lineItems || [], 'qty'
+
+calcRedeemed = (lineItems) ->
+  redeemedCalls = _.flatten _.pluck lineItems, 'redeemedCalls'
+  redeemed = sum _.pluck redeemedCalls, 'qtyRedeemed'
 
 getBalanceByType = (liByType) ->
   balanceByType = {}
   for type, lineItems of liByType
-    total = 0
-    qtyRedeemed = 0
-    for li in lineItems
-      total += li.qty
-      qtyRedeemed += li.qtyRedeemed
+    total = calcTotal lineItems
+    qtyRedeemed = calcRedeemed lineItems
     balance = total - qtyRedeemed
-    balanceByType[type] = {total,qtyRedeemed,balance,type}
+    balanceByType[type] = { total, qtyRedeemed, balance, type }
   balanceByType
-
 
 groupExpertLineItemsByType = (expertLineItems) ->
   liByType = {}
