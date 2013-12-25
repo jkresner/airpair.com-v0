@@ -53,11 +53,12 @@
     <div class="control-group">
       <label class="control-label" for="date">Date &amp; Time &amp; Timezone</label>
       <div class="controls">
-        <input name="date" type="text" placeholder="e.g. Dec 9th 3pm">
+        <input name="date" type="date" class="input-medium">
+        <input name="time" type="time" class="input-medium">
         <select name="timezone" class="input-mini">
           <option value="PST" selected>PST</option>
-          <option value="EDT">EDT</option>
         </select>
+
       </div>
       <div id="calendarLink"></div>
     </div>
