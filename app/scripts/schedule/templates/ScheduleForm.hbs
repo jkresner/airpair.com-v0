@@ -42,7 +42,7 @@
       <div class="controls">
         <select name="duration">
           {{#each selectOptions }}
-            <option value="{{num}}">{{num}} hour(s)</option>
+            <option value="{{num}}">{{num}} {{inflect num "hour" "hours"}}</option>
           {{else}}
             <option disabled>0 hours available for this expert</option>
           {{/each}}
