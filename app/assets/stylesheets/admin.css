@@ -130,6 +130,9 @@ nav a.zocial { padding:0; }
 #adminboundpage .suggested .rate em { display:block;color:gray;font-size:11px;font-style:normal; }
 #adminboundpage .suggested p { clear:both;font-size:11px; }
 
+/*#adminboundpage .calls p { }*/
+#adminboundpage .call img { height: 40px; width: 40px;}
+
 #schedulepage #schedule { width: 33em; margin: 0 auto; }
 
 nav div { padding-top:6px;height:54px;width:1240px;margin:auto;border-bottom:solid 1px white; }

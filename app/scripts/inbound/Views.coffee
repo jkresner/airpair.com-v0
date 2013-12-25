@@ -303,7 +303,16 @@ class exports.RequestSuggestedView extends BB.BadassView
 class exports.RequestCallsView extends BB.BadassView
   tmpl: require './templates/RequestCalls'
   initialize: -> @listenTo @model, 'change', @render
-  render: -> @$el.html @tmpl @model.toJSON()
+  render: ->
+    d = @model.toJSON()
+    d.calls = d.calls.map (call) ->
+      suggestion = (d.suggested.filter (s) -> s.expert._id == call.expertId)[0]
+      call.expert = suggestion.expert
+      call.date = '$DATE'
+      call.time = '$TIME'
+      call
+    console.log(d)
+    @$el.html @tmpl d
 
 class exports.RequestEventsView extends BB.BadassView
   tmpl: require './templates/RequestEvents'
