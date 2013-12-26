@@ -33,7 +33,13 @@ class exports.ScheduleFormView extends BB.ModelSaveView
       .map (suggestion) =>
         suggestion.expert.balance = expertAvailability orders, suggestion.expert._id
         suggestion.expert.balance.byTypeArray = _.values(suggestion.expert.balance.byType)
-        if @mget('expertId') == suggestion.expert._id || suggested.length == 1
+
+        # selects the first expert by default when there's only one
+        if suggested.length == 1
+          @model.set 'expertId', suggestion.expert._id
+          @model.set 'type', @request.get 'pricing'
+
+        if @mget('expertId') == suggestion.expert._id
           suggestion.expert.selected = suggestion.expert
           selectedExpert = suggestion.expert
         suggestion
