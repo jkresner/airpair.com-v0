@@ -1008,6 +1008,225 @@
       "from": "lodash@",
       "resolved": "https://registry.npmjs.org/lodash/-/lodash-2.4.1.tgz"
     },
+    "googleapis": {
+      "version": "0.4.7",
+      "from": "googleapis@",
+      "resolved": "https://registry.npmjs.org/googleapis/-/googleapis-0.4.7.tgz",
+      "dependencies": {
+        "request": {
+          "version": "2.25.0",
+          "from": "request@~2.25.0",
+          "dependencies": {
+            "qs": {
+              "version": "0.6.6",
+              "from": "qs@~0.6.0"
+            },
+            "json-stringify-safe": {
+              "version": "5.0.0",
+              "from": "json-stringify-safe@~5.0.0"
+            },
+            "forever-agent": {
+              "version": "0.5.0",
+              "from": "forever-agent@~0.5.0"
+            },
+            "tunnel-agent": {
+              "version": "0.3.0",
+              "from": "tunnel-agent@~0.3.0"
+            },
+            "http-signature": {
+              "version": "0.10.0",
+              "from": "http-signature@~0.10.0",
+              "dependencies": {
+                "assert-plus": {
+                  "version": "0.1.2",
+                  "from": "assert-plus@0.1.2",
+                  "resolved": "https://registry.npmjs.org/assert-plus/-/assert-plus-0.1.2.tgz"
+                },
+                "asn1": {
+                  "version": "0.1.11",
+                  "from": "asn1@0.1.11",
+                  "resolved": "https://registry.npmjs.org/asn1/-/asn1-0.1.11.tgz"
+                },
+                "ctype": {
+                  "version": "0.5.2",
+                  "from": "ctype@0.5.2",
+                  "resolved": "https://registry.npmjs.org/ctype/-/ctype-0.5.2.tgz"
+                }
+              }
+            },
+            "hawk": {
+              "version": "1.0.0",
+              "from": "hawk@~1.0.0",
+              "dependencies": {
+                "hoek": {
+                  "version": "0.9.1",
+                  "from": "hoek@0.9.x"
+                },
+                "boom": {
+                  "version": "0.4.2",
+                  "from": "boom@0.4.x"
+                },
+                "cryptiles": {
+                  "version": "0.2.2",
+                  "from": "cryptiles@0.2.x"
+                },
+                "sntp": {
+                  "version": "0.2.4",
+                  "from": "sntp@0.2.x"
+                }
+              }
+            },
+            "aws-sign": {
+              "version": "0.3.0",
+              "from": "aws-sign@~0.3.0"
+            },
+            "oauth-sign": {
+              "version": "0.3.0",
+              "from": "oauth-sign@~0.3.0"
+            },
+            "cookie-jar": {
+              "version": "0.3.0",
+              "from": "cookie-jar@~0.3.0"
+            },
+            "node-uuid": {
+              "version": "1.4.1",
+              "from": "node-uuid@~1.4.0"
+            },
+            "mime": {
+              "version": "1.2.11",
+              "from": "mime@~1.2.9"
+            },
+            "form-data": {
+              "version": "0.1.2",
+              "from": "form-data@~0.1.0",
+              "dependencies": {
+                "combined-stream": {
+                  "version": "0.0.4",
+                  "from": "combined-stream@~0.0.4",
+                  "dependencies": {
+                    "delayed-stream": {
+                      "version": "0.0.5",
+                      "from": "delayed-stream@0.0.5",
+                      "resolved": "https://registry.npmjs.org/delayed-stream/-/delayed-stream-0.0.5.tgz"
+                    }
+                  }
+                },
+                "async": {
+                  "version": "0.2.9",
+                  "from": "async@~0.2.9"
+                }
+              }
+            }
+          }
+        },
+        "async": {
+          "version": "0.2.6",
+          "from": "async@0.2.6",
+          "resolved": "https://registry.npmjs.org/async/-/async-0.2.6.tgz"
+        },
+        "gapitoken": {
+          "version": "0.1.0",
+          "from": "gapitoken@0.1.0",
+          "resolved": "https://registry.npmjs.org/gapitoken/-/gapitoken-0.1.0.tgz",
+          "dependencies": {
+            "jws": {
+              "version": "0.0.2",
+              "from": "jws@0.0.2",
+              "resolved": "https://registry.npmjs.org/jws/-/jws-0.0.2.tgz",
+              "dependencies": {
+                "tap": {
+                  "version": "0.3.3",
+                  "from": "tap@~0.3.3",
+                  "dependencies": {
+                    "inherits": {
+                      "version": "1.0.0"
+                    },
+                    "yamlish": {
+                      "version": "0.0.5"
+                    },
+                    "slide": {
+                      "version": "1.1.5",
+                      "from": "slide@*"
+                    },
+                    "runforcover": {
+                      "version": "0.0.2",
+                      "from": "runforcover@~0.0.2",
+                      "dependencies": {
+                        "bunker": {
+                          "version": "0.1.2",
+                          "from": "bunker@0.1.X",
+                          "dependencies": {
+                            "burrito": {
+                              "version": "0.2.12",
+                              "from": "burrito@>=0.2.5 <0.3",
+                              "dependencies": {
+                                "traverse": {
+                                  "version": "0.5.2",
+                                  "from": "traverse@~0.5.1"
+                                },
+                                "uglify-js": {
+                                  "version": "1.1.1",
+                                  "from": "uglify-js@~1.1.1"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "nopt": {
+                      "version": "2.1.2",
+                      "from": "nopt@~2",
+                      "dependencies": {
+                        "abbrev": {
+                          "version": "1.0.4",
+                          "from": "abbrev@1"
+                        }
+                      }
+                    },
+                    "mkdirp": {
+                      "version": "0.3.5",
+                      "from": "mkdirp@~0.3"
+                    },
+                    "difflet": {
+                      "version": "0.2.6",
+                      "from": "difflet@~0.2.0",
+                      "dependencies": {
+                        "traverse": {
+                          "version": "0.6.6",
+                          "from": "traverse@0.6.x"
+                        },
+                        "charm": {
+                          "version": "0.1.2",
+                          "from": "charm@0.1.x"
+                        },
+                        "deep-is": {
+                          "version": "0.1.2",
+                          "from": "deep-is@0.1.x"
+                        }
+                      }
+                    },
+                    "deep-equal": {
+                      "version": "0.0.0",
+                      "from": "deep-equal@~0.0.0"
+                    },
+                    "buffer-equal": {
+                      "version": "0.0.0",
+                      "from": "buffer-equal@~0.0.0"
+                    }
+                  }
+                },
+                "base64url": {
+                  "version": "0.0.3",
+                  "from": "base64url@0.0.3",
+                  "resolved": "https://registry.npmjs.org/base64url/-/base64url-0.0.3.tgz"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "awssum-amazon": {
       "version": "1.1.1",
       "from": "awssum-amazon@1.1.1",
