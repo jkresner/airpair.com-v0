@@ -10,12 +10,14 @@ class exports.ScheduleFormView extends BB.ModelSaveView
   logging: on
   el: '#scheduleForm'
   tmpl: require './templates/ScheduleForm'
-  viewData: ['duration', 'date', 'expertId']
+  viewData: ['duration', 'date', 'time', 'expertId', 'type']
   events:
     'click input:radio': (e) ->
       @model.set 'expertId', @$(e.target).val()
       @model.set 'type', @elm('type').val()
     'change [name=type]': -> @model.set 'type', @elm('type').val()
+    'blur [name=date]': -> @model.set 'date', @elm('date').val()
+    'blur [name=time]': -> @model.set 'time', @elm('time').val()
     'click #create': 'save'
   initialize: ->
     @listenTo @request, 'change', @render
@@ -47,6 +49,10 @@ class exports.ScheduleFormView extends BB.ModelSaveView
     if selectedExpert
       balance = (selectedExpert.balance.byType[@mget('type')] || {}).balance || 0
       selectedExpert.selectOptions = _.range(1, balance + 1).map (num) -> { num }
+
+    if !@mget 'date' # default to today
+      today = new Date().toJSON().slice(0, 10)
+      @model.set 'date', today
 
     d = @model.extendJSON { available: suggested, selectedExpert, requestId: @model.requestId }
     @$el.html @tmpl d
