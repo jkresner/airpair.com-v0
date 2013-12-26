@@ -39,17 +39,17 @@ Suggestion = new Schema
 
 
 Call = new Schema
-  expertId:           { required: true, type: ObjectId, ref: 'Expert', index: true }
+  expertId:         { required: true, type: ObjectId, ref: 'Expert', index: true }
+  type:             {
+                      type: String,
+                      enum: VALID_CALL_TYPES,
+                      required: true
+                    }
+  duration:         { required: true, type: Number }
+  status:           { required: true, type: String }  # pending, confirmed, declined
+  datetime:         { required: true, type: Date, index: true }
   # expert:           { required: true, type: {} }
-  # hours:              { required: true, type: Number }
-  type:               {
-                        type: String,
-                        enum: VALID_CALL_TYPES,
-                        required: true
-                      }
-  duration:           { required: true, type: Number }
-  # status:           { required: true, type: String }  # pending, confirmed, declined
-  # time:             { required: true, type: Date, index: true }
+  # hours:            { required: true, type: Number }
   # gCal:             { required: true, type: {} }
   # recordings:       { required: true, type: [{}] }
   # expertEndorsed:   String   # If the expert wants the session featured (or hidden)

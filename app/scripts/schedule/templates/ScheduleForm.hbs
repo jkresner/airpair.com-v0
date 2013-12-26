@@ -4,11 +4,6 @@
 </div>
 <h2>Schedule a Call</h2>
 <fieldset>
-  <div class="alert alert-error">
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
-    <h4>Error</h4>
-  </div>
-
   <h4>Experts</h4>
   {{#each available}}
     {{#with expert}}
@@ -25,7 +20,6 @@
   {{/each}}
 
   {{#selectedExpert}}
-
     <div class="control-group">
       <label class="control-label" for="type">Type</label>
       <div class="controls">
@@ -36,7 +30,6 @@
         </select>
       </div>
     </div>
-
     <div class="control-group">
       <label class="control-label" for="duration">Duration</label>
       <div class="controls">
@@ -49,7 +42,6 @@
         </select>
       </div>
     </div>
-
     <div class="control-group">
       <label class="control-label" for="date">Date &amp; Time &amp; Timezone</label>
       <div class="controls">
@@ -58,13 +50,20 @@
         <select name="timezone" class="input-mini">
           <option value="PST" selected>PST</option>
         </select>
-
       </div>
       <div id="calendarLink"></div>
     </div>
-
   {{/selectedExpert}}
 
+  {{#if errors}}
+  <div class="alert-error">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <h4>Error</h4>
+    {{#each errors}}
+      Invalid {{param}}<br>
+    {{/each}}
+  </div>
+  {{/if}}
 
   <div class="form-actions">
     {{!-- TODO this should take you back to the inbound view page --}}

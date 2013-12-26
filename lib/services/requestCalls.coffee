@@ -56,6 +56,7 @@ module.exports = class RequestCallsService
     async.map orders, saveOrder, callback
 
   create: (userId, requestId, call, callback) =>
+    call.status = 'pending'
 
     # change oldest orders first
     Order.find({ requestId }).sort('utc').exec (err, orders) =>

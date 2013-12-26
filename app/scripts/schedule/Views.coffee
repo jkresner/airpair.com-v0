@@ -57,6 +57,13 @@ class exports.ScheduleFormView extends BB.ModelSaveView
     d = @model.extendJSON { available: suggested, selectedExpert, requestId: @model.requestId }
     @$el.html @tmpl d
     @
+  renderSuccess: (model, response, options) =>
+    window.location = "/adm/inbound/request/#{@request.get('_id')}"
+
+  # TODO before merge use errorFormatter in requestCalls.coffee so we don't
+  # need to do our own templating of error messages
+  renderError: (model, response, options) =>
+    @model.set 'errors', JSON.parse response.responseText
 
 # class exports.ScheduledView extends BB.BadassView
 #   # todo
