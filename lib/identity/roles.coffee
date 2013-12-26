@@ -13,7 +13,6 @@ adminInitials['117634739628779860480'] = 'dt'
 adminInitials['105314633561185226973'] = 'il'
 adminInitials['112847565041912185081'] = 'pl'
 
-
 module.exports =
 
   isAdmin: (user) ->
@@ -40,3 +39,10 @@ module.exports =
 
   getAdminInitials: (googleId) ->
     adminInitials[googleId]
+
+  owner2name:
+    mi: 'Maksim'
+    il: 'Igor'
+    dt: 'David'
+    jk: 'Jonathon'
+    pl: 'Peter'
