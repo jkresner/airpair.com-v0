@@ -21,10 +21,10 @@ setupAPI = (cb) ->
   if cal then return cb(null, cal, oauth2Client)
 
   googleapis
-    .discover 'calendar', 'v3'
+    .discover('calendar', 'v3')
     .execute (err, client) ->
       if err then return cb err
       cal = client.calendar
-      cb null, client, oauth2Client
+      cb null, cal, oauth2Client
 
 module.exports = setupAPI

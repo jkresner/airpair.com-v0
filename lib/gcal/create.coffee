@@ -7,15 +7,14 @@ params =
   sendNotifications: false
 
 create = (body, cb) ->
-  onCal = (err, cal, oauth2Client, cb) ->
-    if err then return cb err
-
+  onCal = (err, cal, oauth2Client) ->
+    if err then return  err
     cal.events.insert(params, body).withAuthClient(oauth2Client)
     .execute (err, data) ->
       # sometimes it calls back with an object instead of a `Error`.
       if err then cb new Error err.message || JSON.stringify(err, null, 2)
       cb null, data
 
-  gcal onCal, cb
+  gcal onCal
 
 module.exports = create

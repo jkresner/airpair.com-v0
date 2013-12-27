@@ -66,25 +66,28 @@ module.exports = class RequestCallsService
     # change oldest orders first
     Order.find({ requestId }).sort('utc').exec (err, orders) =>
       if err then return callback err
+      Request.findOne({ _id: requestId }).exec (err, request) =>
+        if err then return callback err
 
-      if !@_canScheduleCall orders, call
-        message = 'Not enough hours: buy more or cancel unfulfilled calls.'
-        return callback new Error message
+        if !@_canScheduleCall orders, call
+          message = 'Not enough hours: buy more or cancel unfulfilled calls.'
+          return callback new Error message
 
-      # this lets us to update request & orders in parallel
-      call._id = new ObjectId()
+        # this lets us to update request & orders in parallel
+        call._id = new ObjectId()
 
-      # TODO sorry, but here I'm going to make the gcal event first, because we
-      # need to put the event info into the call object, and it is fiddly to get
-      # out the correct call after it's been inserted into the calls array.
-      @_createCalendarEvent call, (err, eventData) =>
-        call.gCal = eventData
+        # TODO sorry, but here I'm going to make the gcal event first, because we
+        # need to put the event info into the call object, and it is fiddly to get
+        # out the correct call after it's been inserted into the calls array.
+        @_createCalendarEvent request, call, (err, eventData) =>
+          if err then return callback err
+          call.gcal = eventData
 
-        modifiedOrders = @_modifyOrdersWithCallDuration orders, call
-        tasks =
-          request: (cb) => Request.findByIdAndUpdate requestId, $push: calls: call, cb
-          orders: (cb) => @_saveOrdersWithCallDuration modifiedOrders, cb
-        async.parallel tasks, callback
+          modifiedOrders = @_modifyOrdersWithCallDuration orders, call
+          tasks =
+            request: (cb) => Request.findByIdAndUpdate requestId, $push: calls: call, cb
+            orders: (cb) => @_saveOrdersWithCallDuration modifiedOrders, cb
+          async.parallel tasks, callback
 
   expertReply: (userId, data, callback) =>
     { callId, status } = data # stats (accept / decline)
@@ -117,9 +120,13 @@ module.exports = class RequestCallsService
     dt: 10 # bold green
     pl: 11 # bold red = pl
 
-  _createCalendarEvent: (request, call, cb) ->
+  _createCalendarEvent: (request, call, cb) =>
     start = call.datetime
     owner = request.owner
+    sug = (_.find request.suggested, (s) -> s.expert._id == call.expertId)
+    expert = sug.expert
+    ename = expert.name.replace /\w.*/g, ''
+    cname = request.company.contacts[0].fullName.replace /\w.*/g, ''
     body =
       start:
         dateTime: start.toISOString()
@@ -128,14 +135,14 @@ module.exports = class RequestCallsService
       attendees: [
         email: "#{owner}@airpair.com"
         email: request.company.contacts[0].email
-        email: call.expert.email
+        email: sug.expert.email
       ]
-      summary: "testing"
+      summary: "TEST Airpair (#{request.tags[0].name})"
       colorId: @owner2color[owner]
-      description: "Your account manager, #{@owner2name[owner]} will set up a" +
+      description: "Your account manager, #{owner2name[owner]} will set up a" +
         "google hangout for this session and invite you to it."
 
-    gcalCreate body cb
+    gcalCreate body, cb
 
   _addTime: (original, milliseconds) ->
     new Date original.getTime() + milliseconds
