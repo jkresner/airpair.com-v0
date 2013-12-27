@@ -1,10 +1,15 @@
-# DomainService  = require './_svc'
+async = require 'async'
 
-Order = new require 'lib/models/order'
-Request = new require 'lib/models/request'
+Order = new require '../models/order'
+Request = new require '../models/request'
+
 sum = require '../../app/scripts/shared/mix/sum'
 expertAvailability = require '../../app/scripts/shared/mix/expertAvailability'
-async = require 'async'
+
+{owner2name} = require '../identity/roles'
+gcalCreate = require '../gcal/create'
+ONE_HOUR = 3600000 # milliseconds
+
 {ObjectId} = require('mongoose').Types
 
 module.exports = class RequestCallsService
@@ -69,11 +74,17 @@ module.exports = class RequestCallsService
       # this lets us to update request & orders in parallel
       call._id = new ObjectId()
 
-      modifiedOrders = @_modifyOrdersWithCallDuration orders, call
-      tasks =
-        request: (cb) => Request.findByIdAndUpdate requestId, $push: calls: call, cb
-        orders: (cb) => @_saveOrdersWithCallDuration modifiedOrders, cb
-      async.parallel tasks, callback
+      # TODO sorry, but here I'm going to make the gcal event first, because we
+      # need to put the event info into the call object, and it is fiddly to get
+      # out the correct call after it's been inserted into the calls array.
+      @_createCalendarEvent call, (err, eventData) =>
+        call.gCal = eventData
+
+        modifiedOrders = @_modifyOrdersWithCallDuration orders, call
+        tasks =
+          request: (cb) => Request.findByIdAndUpdate requestId, $push: calls: call, cb
+          orders: (cb) => @_saveOrdersWithCallDuration modifiedOrders, cb
+        async.parallel tasks, callback
 
   expertReply: (userId, data, callback) =>
     { callId, status } = data # stats (accept / decline)
@@ -88,7 +99,43 @@ module.exports = class RequestCallsService
 
   updateCms: (userId, data, callback) =>
 
-
   update: (userId, data, callback) => throw new Error 'not imp'
 
   # newEvent: DomainService.newEvent.bind(this)
+
+  owner2color:
+    mi: undefined # default color for the calendar, #9A9CFF
+    '': 1  # blue
+    il: 2  # green
+    '': 3  # purple
+    '': 4  # red
+    '': 5  # yellow
+    jk: 6  # orange = jk
+    '': 7  # turqoise
+    '': 8  # gray
+    '': 9  # bold blue
+    dt: 10 # bold green
+    pl: 11 # bold red = pl
+
+  _createCalendarEvent: (request, call, cb) ->
+    start = call.datetime
+    owner = request.owner
+    body =
+      start:
+        dateTime: start.toISOString()
+      end:
+        dateTime: @_addTime(start, call.duration * ONE_HOUR).toISOString()
+      attendees: [
+        email: "#{owner}@airpair.com"
+        email: request.company.contacts[0].email
+        email: call.expert.email
+      ]
+      summary: "testing"
+      colorId: @owner2color[owner]
+      description: "Your account manager, #{@owner2name[owner]} will set up a" +
+        "google hangout for this session and invite you to it."
+
+    gcalCreate body cb
+
+  _addTime: (original, milliseconds) ->
+    new Date original.getTime() + milliseconds

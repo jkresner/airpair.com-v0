@@ -48,9 +48,9 @@ Call = new Schema
   duration:         { required: true, type: Number }
   status:           { required: true, type: String }  # pending, confirmed, declined
   datetime:         { required: true, type: Date, index: true }
+  gCal:             { required: true, type: Mixed }
   # expert:           { required: true, type: {} }
   # hours:            { required: true, type: Number }
-  # gCal:             { required: true, type: {} }
   # recordings:       { required: true, type: [{}] }
   # expertEndorsed:   String   # If the expert wants the session featured (or hidden)
   # expertReview:     {}   # Experts feedback on how the session went
