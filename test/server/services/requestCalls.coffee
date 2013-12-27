@@ -45,7 +45,7 @@ describe "RequestCallsService", ->
           newCall = newRequestWithCall.calls[0]
           expect(_.idsEqual newCall.expertId, request.suggested[0].expert._id).to.be.true
           expect(newCall.type).to.equal request.pricing
-          callback null, results.orders, newRequestWithCall, newCall
+          return callback null, results.orders, newRequestWithCall, newCall
 
   it "cannot book a 1hr call without any orders", ->
     call = data.calls[1]
