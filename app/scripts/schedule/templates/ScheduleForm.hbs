@@ -12,7 +12,7 @@
       <br />
       <input type="radio" value="{{_id}}" name="expertId" {{#if selected}} checked{{/if}}/>
       {{name}}
-      <span class="balance" title="hours balance">{{balance.total}}</span>
+      <span class="balance" title="hours balance">{{availability.balance}}</span>
     </label>
     {{/with}}
   {{else}}
@@ -24,7 +24,7 @@
       <label class="control-label" for="type">Type</label>
       <div class="controls">
         <select name="type">
-          {{#each balance.byTypeArray}}
+          {{#each availability.byTypeArray}}
           <option>{{type}}</option>
           {{/each}}
         </select>
@@ -66,7 +66,6 @@
   {{/if}}
 
   <div class="form-actions">
-    {{!-- TODO this should take you back to the inbound view page --}}
     <button id="create" class="save button">+ Create Call</button>
   </div>
 </fieldset>

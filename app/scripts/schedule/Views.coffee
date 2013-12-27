@@ -33,8 +33,9 @@ class exports.ScheduleFormView extends BB.ModelSaveView
       .filter (suggestion) =>
         suggestion.expertStatus == 'available'
       .map (suggestion) =>
-        suggestion.expert.balance = expertAvailability orders, suggestion.expert._id
-        suggestion.expert.balance.byTypeArray = _.values(suggestion.expert.balance.byType)
+        expert = suggestion.expert
+        expert.availability = expertAvailability orders, expert._id
+        expert.availability.byTypeArray = _.values(expert.availability.byType)
 
         # selects the first expert by default when there's only one
         if suggested.length == 1
@@ -47,7 +48,8 @@ class exports.ScheduleFormView extends BB.ModelSaveView
         suggestion
 
     if selectedExpert
-      balance = (selectedExpert.balance.byType[@mget('type')] || {}).balance || 0
+      byType = selectedExpert.availability.byType[@mget('type')] || {}
+      balance = byType.balance || 0
       selectedExpert.selectOptions = _.range(1, balance + 1).map (num) -> { num }
 
     if !@mget 'date' # default to today
@@ -59,7 +61,6 @@ class exports.ScheduleFormView extends BB.ModelSaveView
     @
   renderSuccess: (model, response, options) =>
     window.location = "/adm/inbound/request/#{@request.get('_id')}"
-
   # TODO before merge use errorFormatter in requestCalls.coffee so we don't
   # need to do our own templating of error messages
   renderError: (model, response, options) =>
