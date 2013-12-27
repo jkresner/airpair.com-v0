@@ -24,7 +24,7 @@ class RequestCallsApi  # Always passing back requests
     req.checkBody('time', 'Invalid time').notEmpty().is(/^\d\d:\d\d$/)
     errors = req.validationErrors()
     if errors
-      res.send errors, 400
+      return res.send errors, 400
     req.sanitize('duration').toInt()
 
     {date, time} = req.body
