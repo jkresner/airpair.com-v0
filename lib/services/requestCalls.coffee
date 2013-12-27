@@ -125,8 +125,8 @@ module.exports = class RequestCallsService
     owner = request.owner
     sug = (_.find request.suggested, (s) -> s.expert._id == call.expertId)
     expert = sug.expert
-    ename = expert.name.replace /\w.*/g, ''
-    cname = request.company.contacts[0].fullName.replace /\w.*/g, ''
+    ename = expert.name.replace /\s.*/g, ''
+    cname = request.company.contacts[0].fullName.replace /\s.*/g, ''
     body =
       start:
         dateTime: start.toISOString()
