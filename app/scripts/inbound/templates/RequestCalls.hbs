@@ -10,13 +10,13 @@
       <a href="/adm/schedule/{{_id}}" title="edit call information">edit</a>
       <img src="{{expert.pic}}" alt="{{expert.name}}" style="height: 40px">
       {{expert.name}}
-      on <a href="{{gcalUrl}}" title="view on google calendar" target="_blank">
+      on <a href="{{gcal.htmlLink}}" title="view on google calendar" target="_blank">
         {{dateTime datetime}} (PST)
       </a>
       for {{{duration}}} {{inflect duration "hour" "hours"}}.
       {{status}}. {{type}}
     </p>
   {{else}}
-  <p><br />No calls scheduled</p>
+  <p>No calls scheduled</p>
   {{/each}}
 </div>
