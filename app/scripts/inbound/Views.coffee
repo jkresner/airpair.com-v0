@@ -93,7 +93,6 @@ class exports.RequestFarmEmailView extends BB.ModelSaveView
     $input = $(e.target)
     @model.set $input.attr('name'), $input.val()
   renderEmail: (e) ->
-    console.log 're'
     fd = @request.getFarmData()
     fd.url = "http://www.airpair.com/review/#{@request.id}?utm_medium=farm-link&utm_campaign=farm-#{fd.month}&utm_term=#{fd.term}"
 
@@ -309,7 +308,6 @@ class exports.RequestCallsView extends BB.BadassView
       suggestion = (d.suggested.filter (s) -> s.expert._id == call.expertId)[0]
       call.expert = suggestion.expert
       call
-    console.log(d)
     @$el.html @tmpl d
 
 class exports.RequestEventsView extends BB.BadassView

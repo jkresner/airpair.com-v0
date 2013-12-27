@@ -125,22 +125,24 @@ module.exports = class RequestCallsService
     owner = request.owner
     sug = (_.find request.suggested, (s) -> s.expert._id == call.expertId)
     expert = sug.expert
-    ename = expert.name.replace /\s.*/g, ''
-    cname = request.company.contacts[0].fullName.replace /\s.*/g, ''
+    ename = expert.name.slice(0, expert.name.indexOf(' '))
+    fullName = request.company.contacts[0].fullName
+    cname = fullName.slice(0, fullName.indexOf(' '))
     body =
       start:
         dateTime: start.toISOString()
       end:
         dateTime: @_addTime(start, call.duration * ONE_HOUR).toISOString()
       attendees: [
-        email: "#{owner}@airpair.com"
-        email: request.company.contacts[0].email
-        email: sug.expert.email
+        { email: "#{owner}@airpair.com" }
+        { email: request.company.contacts[0].email }
+        { email: sug.expert.email }
       ]
-      summary: "TEST Airpair (#{request.tags[0].name})"
+      # TODO: remove this TEST from here.
+      summary: "TEST Airpair #{cname}+#{ename} (#{request.tags[0].name})"
       colorId: @owner2color[owner]
       description: "Your account manager, #{owner2name[owner]} will set up a" +
-        "google hangout for this session and invite you to it."
+        " google hangout for this session and invite you to it."
 
     gcalCreate body, cb
 
