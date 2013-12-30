@@ -51,7 +51,7 @@ Call = new Schema
   gcal:             { required: true, type: Mixed }
   # expert:           { required: true, type: {} }
   # hours:            { required: true, type: Number }
-  # recordings:       { required: true, type: [{}] }
+  recordings:       { required: true, type: [{}] }
   # expertEndorsed:   String   # If the expert wants the session featured (or hidden)
   # expertReview:     {}   # Experts feedback on how the session went
   # expertShare:      {}   # Tacking Expert sharing activity

@@ -64,10 +64,42 @@ class exports.ScheduleFormView extends BB.ModelSaveView
   renderError: (model, response, options) =>
     @model.set 'errors', JSON.parse response.responseText
 
+parseYoutubeId = (str) ->
+  str = str.trim()
+  variable = '([a-zA-Z0-9_]*)'
+  # e.g. http://www.youtube.com/watch?v=aANmpDSTcXI&otherjunkparams
+  id = str.match("v=#{variable}")?[1]
+  if id then return id
+
+  # e.g. youtu.be/aANmpDSTcXI
+  id = str.match("youtu\.be/#{variable}")?[1]
+  if id then return id
+
+  # e.g. aANmpDSTcXI
+  str.match("^#{variable}$")?[1]
+
 class exports.ScheduledView extends BB.BadassView
   logging: on
   el: '#edit'
   tmpl: require './templates/Scheduled'
+  viewData: ['duration', 'date', 'time', 'type', 'notes']
+  events:
+    'change .youtube': (e) ->
+      inputs = $.makeArray(@$('.youtube'))
+      recordings = inputs
+        .map (el) ->
+          $(el).val()
+        .map(parseYoutubeId)
+        .filter (x) -> x
+      console.log('recordings', recordings)
+      @model.set 'recordings', recordings
+      if recordings.length == inputs.length
+        template = $(_.last(inputs)).parent()
+        container = template.parent()
+        another = template.clone()
+        another.find('input').val('')
+        template.after(another)
+
   initialize: ->
     @listenTo @request, 'change', @render
     @listenTo @collection, 'sync', @render
@@ -83,6 +115,8 @@ class exports.ScheduledView extends BB.BadassView
       @render()
   render = ->
   render_: ->
+    # prevent errors when people are not on this page (still creating call)
+    if !@model.get('_id') then return
     console.log('render')
     call = @model.toJSON()
     suggested = @request.get('suggested') || {}
@@ -104,10 +138,15 @@ class exports.ScheduledView extends BB.BadassView
     expert.selectOptions[call.duration - 1].selected = true
 
     # status
-    # TODO bad match, cancelled
+    # TODO bad match, cancelled.
+    # TODO use server-side VALID_CALL_TYPES enum
     expert.statuses = [ 'pending', 'scheduled', 'completed' ].map (status) ->
       selected = call.status == status
       { status, selected }
+
+    call.recordings = [ 'http://www.youtube.com/watch?v=aANmpDSTcXI&otherjunkparams', 'youtu.be/aANmpDSTcXI' , 'aANmpDSTcXI']
+    call.recordingList = call.recordings.map (link) -> { link }
+    call.recordingList.push { link: '' }
 
     d = _.extend call, { expert }
     console.log d

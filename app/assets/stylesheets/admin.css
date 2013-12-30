@@ -134,6 +134,8 @@ nav a.zocial { padding:0; }
 #adminboundpage .call img { height: 40px; width: 40px;}
 
 #schedulepage #schedule { margin: 0 2em; }
+#schedulepage .expertPic { height: 60px; width: 60px;}
+#schedulepage .controls > .input-prepend { display: block; }
 
 nav div { padding-top:6px;height:54px;width:1240px;margin:auto;border-bottom:solid 1px white; }
 nav div > a { float:left; }

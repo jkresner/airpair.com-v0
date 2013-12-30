@@ -3,7 +3,7 @@
 </div>
 <h2>Edit Call</h2>
 {{#expert}}
-  <img src="{{pic}}" alt="{{name}}" draggable="false">
+  <img src="{{pic}}" alt="{{name}}" draggable="false" class="expertPic">
   <br />
   {{name}}
 
@@ -13,21 +13,27 @@
     <div class="controls">
       <select name="type">
         {{#each availability.byTypeArray}}
-        <option {{#selected}}selected{{/selected}} value="{{type}}">{{type}}</option>
+          <option {{#selected}}selected{{/selected}} value="{{type}}">{{type}}</option>
         {{/each}}
       </select>
     </div>
   </div>
-
-  <div class="youtube">
-    <h5>Youtube ID's</h5>
-    <div class="input-prepend">
-      <span class="add-on">http://youtu.be/</span>
-      <input type="text" value="IDHERE">
+  <div class="control-group">
+    <label class="control-label" for="type">Youtube ID's</label>
+    <div class="controls">
+      {{#each ../recordingList}}
+        <div class="input-prepend">
+          <span class="add-on">http://youtu.be/</span>
+          <input class='youtube' type="text" value="{{link}}">
+        </div>
+      {{else}}
+        <div class="input-prepend">
+          <span class="add-on">http://youtu.be/</span>
+          <input class='youtube input-medium' type="text" placeholder="id or URL here">
+        </div>
+      {{/each}}
     </div>
-    <a class="btn btn-success">+</a>
   </div>
-
   <div class="control-group">
     <label class="control-label" for="date">Date &amp; Time &amp; Timezone</label>
     <div class="controls">
@@ -39,7 +45,6 @@
     </div>
     <a href="{{../gcal.htmlLink}}" target="_blank">Google Calendar Event</a>
   </div>
-
   <div class="control-group">
     <label class="control-label" for="duration">Duration (previously: {{../duration}}
       {{inflect ../duration "hour" "hours"}})</label>
