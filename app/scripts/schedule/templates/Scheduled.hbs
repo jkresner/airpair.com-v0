@@ -1,1 +1,91 @@
-expert: <span>{{expertId}}</span>
+<div class="form-actions admin-nav">
+  <a class="btn" href="/adm/inbound/request/{{requestId}}">Back</a>
+</div>
+<h2>Edit Call</h2>
+{{#expert}}
+  <img src="{{pic}}" alt="{{name}}" draggable="false">
+  <br />
+  {{name}}
+
+<fieldset>
+  <div class="control-group">
+    <label class="control-label" for="type">Type (previously: {{../type}})</label>
+    <div class="controls">
+      <select name="type">
+        {{#each availability.byTypeArray}}
+        <option {{#selected}}selected{{/selected}} value="{{type}}">{{type}}</option>
+        {{/each}}
+      </select>
+    </div>
+  </div>
+
+  <div class="youtube">
+    <h5>Youtube ID's</h5>
+    <div class="input-prepend">
+      <span class="add-on">http://youtu.be/</span>
+      <input type="text" value="IDHERE">
+    </div>
+    <a class="btn btn-success">+</a>
+  </div>
+
+  <div class="control-group">
+    <label class="control-label" for="date">Date &amp; Time &amp; Timezone</label>
+    <div class="controls">
+      <input name="date" type="date" class="input-medium" value="{{../date}}">
+      <input name="time" type="time" class="input-medium" value="{{../time}}">
+      <select name="timezone" class="input-mini">
+        <option value="PST" selected>PST</option>
+      </select>
+    </div>
+    <a href="{{../gcal.htmlLink}}" target="_blank">Google Calendar Event</a>
+  </div>
+
+  <div class="control-group">
+    <label class="control-label" for="duration">Duration (previously: {{../duration}}
+      {{inflect ../duration "hour" "hours"}})</label>
+    <div class="controls">
+      <select name="duration">
+        {{#each selectOptions }}
+          <option value="{{num}}" {{#selected}}selected{{/selected}}>
+          {{num}} {{inflect num "hour" "hours"}}
+          </option>
+        {{else}}
+          <option disabled>0 hours available for this expert</option>
+        {{/each}}
+      </select>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label" for="duration">Status (previously: {{../status}})</label>
+    <div class="controls">
+      <select name="status">
+        {{#each statuses}}
+        <option value="{{status}}" {{#selected}}selected{{/selected}}>{{status}}</option>
+        {{/each}}
+      </select>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label" for="duration">Notes</label>
+    <div class="controls">
+      <textarea name="notes"></textarea>
+    </div>
+  </div>
+{{/expert}}
+
+  {{#if errors}}
+  <div class="alert-error">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <h4>Error</h4>
+    {{#each errors}}
+      Invalid {{param}}<br>
+    {{/each}}
+  </div>
+  {{/if}}
+
+  <div class="form-actions">
+    {{!-- TODO grey this out while ajax request in progress  --}}
+    <button id="create" class="save button">Update Call</button>
+  </div>
+
+</fieldset>

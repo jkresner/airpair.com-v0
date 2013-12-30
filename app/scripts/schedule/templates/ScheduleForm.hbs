@@ -25,7 +25,7 @@
       <div class="controls">
         <select name="type">
           {{#each availability.byTypeArray}}
-          <option>{{type}}</option>
+          <option value="{{type}}">{{type}}</option>
           {{/each}}
         </select>
       </div>
@@ -51,7 +51,6 @@
           <option value="PST" selected>PST</option>
         </select>
       </div>
-      <div id="calendarLink"></div>
     </div>
   {{/selectedExpert}}
 

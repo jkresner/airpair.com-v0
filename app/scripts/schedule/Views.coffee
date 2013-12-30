@@ -69,14 +69,47 @@ class exports.ScheduledView extends BB.BadassView
   el: '#edit'
   tmpl: require './templates/Scheduled'
   initialize: ->
+    @listenTo @request, 'change', @render
+    @listenTo @collection, 'sync', @render
     @listenTo @model, 'change', @render
-  render: ->
-    callId = @mget('callId') # set by router
-    json = @model.toJSON() || {}
-    call = _.find json.calls, (c) -> c._id == callId
-    expert = _.find json.suggested, (s) -> s.expert._id == call.expertId
 
-    d = _.extend call, {expert}
+    # the @model is the requestCall, and we use it only for saving / updating.
+    @request.once 'change', =>
+      callId = @request.get('callId') # set by router
+      json = @request.toJSON() || {}
+      @model.set _.find json.calls, (c) -> c._id == callId
+    @collection.once 'sync', =>
+      @render = @render_
+      @render()
+  render = ->
+  render_: ->
+    console.log('render')
+    call = @model.toJSON()
+    suggested = @request.get('suggested') || {}
+    suggestion = _.find suggested, (s) -> s.expert._id == call.expertId
+    expert = suggestion.expert
+
+    # open source / private / nda dropdown
+    orders = @collection.toJSON()
+    expert.availability = expertAvailability orders, call.expertId
+    expert.availability.byType[call.type].selected = true
+    expert.availability.byTypeArray = _.values(expert.availability.byType)
+
+
+    # hours dropdown
+    # tricky: take into account the call's current duration!
+    byType = expert.availability.byType[@model.get('type')] || {}
+    balance = byType.balance || 0
+    expert.selectOptions = _.range(1, balance + 1).map (num) -> { num }
+    expert.selectOptions[call.duration - 1].selected = true
+
+    # status
+    # TODO bad match, cancelled
+    expert.statuses = [ 'pending', 'scheduled', 'completed' ].map (status) ->
+      selected = call.status == status
+      { status, selected }
+
+    d = _.extend call, { expert }
     console.log d
     @$el.html @tmpl d
 
