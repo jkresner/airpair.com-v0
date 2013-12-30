@@ -6,8 +6,6 @@ expertAvailability = require '../shared/mix/expertAvailability'
 
 # schedule form
 class exports.ScheduleFormView extends BB.ModelSaveView
-  # todo delete
-  logging: on
   el: '#scheduleForm'
   tmpl: require './templates/ScheduleForm'
   viewData: ['duration', 'date', 'time', 'expertId', 'type']
@@ -66,14 +64,20 @@ class exports.ScheduleFormView extends BB.ModelSaveView
   renderError: (model, response, options) =>
     @model.set 'errors', JSON.parse response.responseText
 
-# class exports.ScheduledView extends BB.BadassView
-#   # todo
-#   logging: on
-#   el: '#scheduled'
-#   tmpl: require './templates/Scheduled'
-#   initialize: ->
-#     @listenTo @model, 'change', @render
-#     @render()
-#   render: ->
+class exports.ScheduledView extends BB.BadassView
+  logging: on
+  el: '#edit'
+  tmpl: require './templates/Scheduled'
+  initialize: ->
+    @listenTo @model, 'change', @render
+  render: ->
+    callId = @mget('callId') # set by router
+    json = @model.toJSON() || {}
+    call = _.find json.calls, (c) -> c._id == callId
+    expert = _.find json.suggested, (s) -> s.expert._id == call.expertId
+
+    d = _.extend call, {expert}
+    console.log d
+    @$el.html @tmpl d
 
 module.exports = exports

@@ -138,7 +138,7 @@ module.exports = class RequestCallsService
         { email: request.company.contacts[0].email }
         { email: sug.expert.email }
       ]
-      # TODO: remove this TEST from here.
+      # TODO: remove the "TEST" from here.
       summary: "TEST Airpair #{cname}+#{ename} (#{request.tags[0].name})"
       colorId: @owner2color[owner]
       description: "Your account manager, #{owner2name[owner]} will set up a" +
