@@ -13,14 +13,14 @@ module.exports = class Router extends S.AirpairSessionRouter
 
   appConstructor: (pageData, callback) ->
     # TODO: better way?
+    # This almost feels like it should be two different SPA's. grr
     re = new RegExp('^/schedule\/(?:([^\/]+))', 'i')
     matches = @defaultFragment.match re
     requestId = matches[1]
 
     re = new RegExp('call\/(?:([^\/]+?))$', 'i')
     matches = @defaultFragment.match re
-    if matches
-      callId = matches[1]
+    callId = matches?[1]
 
     console.log('rid', requestId, 'cid', callId)
 
