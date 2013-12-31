@@ -25,6 +25,7 @@
       <div class="controls">
         <select name="type">
           {{#each availability.byTypeArray}}
+          {{!-- TODO remember choice across re-renders --}}
           <option value="{{type}}">{{type}}</option>
           {{/each}}
         </select>
