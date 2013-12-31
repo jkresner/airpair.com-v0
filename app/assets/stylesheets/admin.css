@@ -133,7 +133,8 @@ nav a.zocial { padding:0; }
 /*#adminboundpage .calls p { }*/
 #adminboundpage .call img { height: 40px; width: 40px;}
 
-#schedulepage #schedule { margin: 0 2em; }
+#schedulepage #schedule,
+#schedulepage #edit { margin: 0 2em; }
 #schedulepage .expertPic { height: 60px; width: 60px;}
 #schedulepage .controls > .input-prepend { display: block; }
 
