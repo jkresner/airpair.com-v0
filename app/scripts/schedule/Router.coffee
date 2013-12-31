@@ -26,7 +26,7 @@ module.exports = class Router extends S.AirpairSessionRouter
 
     d =
       request: new M.Request _id: requestId
-      requestCall: new M.RequestCall requestId: requestId
+      requestCall: new M.RequestCall _id: callId, requestId: requestId
       orders: new C.Orders
     d.orders.requestId = requestId # used by model get orders for the request
     d.request.set 'callId', callId

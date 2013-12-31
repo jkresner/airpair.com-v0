@@ -60,7 +60,7 @@ class exports.ScheduleFormView extends BB.ModelSaveView
       today = new Date().toJSON().slice(0, 10)
       @model.set 'date', today
 
-    d = @model.extendJSON { available: suggested, selectedExpert, requestId: @model.requestId }
+    d = @model.extendJSON { available: suggested, selectedExpert, requestId: @request._id }
     @$el.html @tmpl d
     @
   renderSuccess: (model, response, options) =>
@@ -84,7 +84,7 @@ parseYoutubeId = (str) ->
   # e.g. aANmpDSTcXI
   str.match("^#{variable}$")?[1]
 
-class exports.ScheduledView extends BB.BadassView
+class exports.ScheduledView extends BB.ModelSaveView
   logging: on
   el: '#edit'
   tmpl: require './templates/Scheduled'
@@ -92,20 +92,12 @@ class exports.ScheduledView extends BB.BadassView
   events:
     'click #update': 'save'
     'change .youtube': (e) ->
-      inputs = $.makeArray(@$('.youtube'))
+      inputs = $.makeArray(@$('.youtube')) # TODO consider adding this to BB
       recordings = inputs
-        .map (el) ->
-          $(el).val()
+        .map((el) -> $(el).val())
         .map(parseYoutubeId)
-        .filter (x) -> x
-      console.log('recordings', recordings)
+        .filter((x) -> x)
       @model.set 'recordings', recordings
-      if recordings.length == inputs.length
-        template = $(_.last(inputs)).parent()
-        container = template.parent()
-        another = template.clone()
-        another.find('input').val('')
-        template.after(another)
 
   initialize: ->
     if !@request.get('callId') then return # we are on the create page
@@ -154,7 +146,8 @@ class exports.ScheduledView extends BB.BadassView
       selected = call.status == status
       { status, selected }
 
-    call.recordings = [ 'http://www.youtube.com/watch?v=aANmpDSTcXI&otherjunkparams', 'youtu.be/aANmpDSTcXI' , 'aANmpDSTcXI']
+    # TODO remove
+    call.recordings = call.recordings.length || [ 'http://www.youtube.com/watch?v=aANmpDSTcXI&otherjunkparams', 'youtu.be/aANmpDSTcXI' , 'aANmpDSTcXI']
     call.recordingList = call.recordings.map (link) -> { link }
     call.recordingList.push { link: '' }
 
