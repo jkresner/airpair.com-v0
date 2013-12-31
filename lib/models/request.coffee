@@ -52,6 +52,7 @@ Call = new Schema
   # expert:           { required: true, type: {} }
   # hours:            { required: true, type: Number }
   recordings:       { required: true, type: [{}] }
+  notes:            { required: true, type: String }
   # expertEndorsed:   String   # If the expert wants the session featured (or hidden)
   # expertReview:     {}   # Experts feedback on how the session went
   # expertShare:      {}   # Tacking Expert sharing activity

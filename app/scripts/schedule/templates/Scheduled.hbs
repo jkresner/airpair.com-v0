@@ -24,7 +24,7 @@
       {{#each ../recordingList}}
         <div class="input-prepend">
           <span class="add-on">http://youtu.be/</span>
-          <input class='youtube' type="text" value="{{link}}">
+          <input name="youtube" class='youtube' type="text" value="{{link}}">
         </div>
       {{else}}
         <div class="input-prepend">
@@ -73,7 +73,7 @@
   <div class="control-group">
     <label class="control-label" for="duration">Notes</label>
     <div class="controls">
-      <textarea name="notes"></textarea>
+      <textarea name="notes">{{../notes}}</textarea>
     </div>
   </div>
 {{/expert}}
@@ -89,8 +89,7 @@
   {{/if}}
 
   <div class="form-actions">
-    {{!-- TODO grey this out while ajax request in progress  --}}
-    <button id="create" class="save button">Update Call</button>
+    <button id="update" class="save button">Update Call</button>
   </div>
 
 </fieldset>
