@@ -102,8 +102,113 @@ module.exports = class RequestCallsService
 
   updateCms: (userId, data, callback) =>
 
-  update: (userId, data, callback) =>
-    callback new Error 'not imp'
+  ###
+  Takes a list of orders and a call, removes all redeemedCalls from the orders
+  that match the call's ID
+
+  Once you've unscheduled, you can _canScheduleCall and
+  _modifyOrdersWithCallDuration as though it were a totally new call.
+
+  NOTE: by using this you will lose the qtyCompleted count on the redeemedCalls.
+  TODO: I think this is a problem, but I don't want to think about it right now.
+  ###
+  _unschedule: (orders, call) ->
+    orders.map (o) ->
+      o.lineItems = o.lineItems.map (li) ->
+        li.redeemedCalls = li.redeemedCalls.filter (rc) ->
+          rc.callId == call._id
+        li
+      o
+
+  ###
+  TODO: what does it mean to change the type? we unschedule and then reschedule,
+  checking that there are hours available for that type.
+  what does it mean to change the status?
+    pending to completed
+      update qtyCompleted on all redeemedCalls matching call._id
+
+    pending to declined # not this version
+
+    completed to pending
+      NOT ALLOWED SORRY?
+      If we did allow it, it would be important to first change the status
+      using all the details of the old call (because we need to roll-back
+      qtyCompleted changes). only then update other properties like duration.
+
+  ChangedPropertyName: resource affected
+
+  type:       change request,                    change orders
+  duration:   change request, change gcal event, change orders
+  status:     change request,                    change orders
+  datetime:   change request, change gcal event,
+  recordings: change request,                    change orders w/ qtyCompleted?
+  notes:      change request,
+
+  Updates are done this way to minimize async nesting & for efficiency
+    - determine changed fields
+    - for each changed field
+      - fetch affected resource(s) if not already fetched
+    - with each resource
+      - make changes for each field
+    - save all resources
+  ###
+  update: (userId, requestId, call, callback) =>
+
+    Request.findOne({ _id: requestId }).exec (err, request) =>
+      if err then return callback err
+      oldCall = _.find request.calls, _id: call._id
+
+      ###
+      affectsOrders = [ 'type', 'duration', 'status', 'recordings' ]
+
+      changedProperties = diff(oldCall, call)
+      if !_.keys(changedProperties).length then return new Error 'no changes!'
+      tasks = {}
+      gcal = undefined
+      for prop in changedProperties
+        if prop in affectsOrders
+          tasks.orders = fetchOrders
+        if prop in affectsGcal
+          gcal = call.gcal
+      if _.keys tasks
+        return async.parallel(tasks, onResources)
+      return makeUpdates()
+
+      onResources = (err, results) ->
+        if err then return callback err
+        makeUpdates(results.orders)
+
+      makeUpdates = (oldOrders) ->
+        for prop in changedProperties
+          update[prop]()
+
+        update = {
+          type:       -> oldCall.type = call.type; updateOrders() # unschedule, reschedule
+          duration:   -> oldCall.duration = call.duration; updateOrders() # unschedule, reschedule
+          status:     -> oldCall.status = call.status; updateOrders() # update qtyCompleted or qtyRedeemed depending on status change. ugh.
+          datetime:   -> oldCall.datetime = call.datetime; updateGcal()
+          recordings: -> oldCall.recordings = call.recordings; updateOrders() # update qtyCompleted? not in this version.
+          notes:      -> oldCall.notes = call.notes
+        }
+
+        if gcal # make the gcal event changes before saving the request
+          return updateGcal(gcal, saveToMongo)
+        return saveToMongo()
+
+      saveToMongo (err, gcal) ->
+        if gcal # it will be saved by saveRequest
+          oldCall.gcal = gcal
+
+        tasks = []
+        if oldOrders then tasks.orders = saveOrders
+        tasks.push(saveRequest)
+        async.parallel tasks, (err, results) ->
+          if err then return callback err
+
+      saveRequest = (cb) -> Request.save(request, cb)
+      saveOrders = (cb) -> async.forEach(saveOrder, cb)
+      saveOrder = (order, i, list, cb) -> Order.save(order, cb)
+      ###
 
   # newEvent: DomainService.newEvent.bind(this)
 
