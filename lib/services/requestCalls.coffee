@@ -102,7 +102,8 @@ module.exports = class RequestCallsService
 
   updateCms: (userId, data, callback) =>
 
-  update: (userId, data, callback) => throw new Error 'not imp'
+  update: (userId, data, callback) =>
+    callback new Error 'not imp'
 
   # newEvent: DomainService.newEvent.bind(this)
 
