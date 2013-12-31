@@ -7,10 +7,10 @@
   <h4>Experts</h4>
   {{#each available}}
     {{#with expert}}
-    <label {{#if selected}}class="selected"{{/if}}>
-      <img src="{{pic}}" alt="{{name}}" draggable="false">
+    <label {{#selected}}class="selected"{{/selected}}>
+      <img src="{{pic}}" alt="{{name}}" draggable="false" class="expertPic">
       <br />
-      <input type="radio" value="{{_id}}" name="expertId" {{#if selected}} checked{{/if}}/>
+      <input type="radio" value="{{_id}}" name="expertId" {{#selected}}checked{{/selected}}/>
       {{name}}
       <span class="balance" title="hours balance">{{availability.balance}}</span>
     </label>
@@ -35,7 +35,9 @@
       <div class="controls">
         <select name="duration">
           {{#each selectOptions }}
-            <option value="{{num}}">{{num}} {{inflect num "hour" "hours"}}</option>
+            <option value="{{num}}" {{#selected}}selected{{/selected}}>
+              {{num}} {{inflect num "hour" "hours"}}
+            </option>
           {{else}}
             <option disabled>0 hours available for this expert</option>
           {{/each}}
