@@ -65,13 +65,20 @@ module.exports = class PayMethodsService extends DomainService
 
 
   delete: (id, callback) =>
-    throw new Error "Delete payMethod not yet implemented"
-    # @getSharedCards (r) =>
-    #   card = _.find r.paymentMethods, (c) -> c._id == id
-    #   if !card? throw new Error 'No card with id #{id} to remove'
-    #   paymentMethods = _.without r.paymentMethods, card
-    #   @model.findOneAndUpdate({_id:r._id}, {paymentMethods}).lean().exec (e, rr) =>
-    #     callback e, rr
+    @getById id, (e, payMethod) =>
+      if e? then return callback e
+      if payMethod.sharers.length == 0
+        @model.findByIdAndRemove id, callback
+      else
+        i = 0
+        sharesLength = payMethod.sharers.length
+        for s in payMethod.sharers
+          $log 'unsharing payMethod', s.email
+          @unshare id, s.email, =>
+            i++
+            if i == sharesLength
+              $log 'deleting shared payMethod'
+              @model.findByIdAndRemove id, callback
 
 
   share: (id, email, callback) =>
@@ -90,13 +97,12 @@ module.exports = class PayMethodsService extends DomainService
       sharer = _.find payMethod.sharers, (s) -> _.idsEqual s.userId, usr._id
       if !sharer? then throw new Error "#{email} not a payMethod sharer"
 
-      pm = _.findWhere settings.paymentMethods, { 'info._id': id }
+      pm = _.find settings.paymentMethods, (p) -> p.info.id == payMethod.info.id
       settings.paymentMethods = _.without settings.paymentMethods, pm
 
       @settingsSvc.update settings, (e) =>
         if e? then return callback e
         payMethod.sharers = _.without payMethod.sharers, sharer
-        $log 'payMethod.sharers', payMethod.sharers
         @update payMethod._id, { sharers: payMethod.sharers }, callback
 
 

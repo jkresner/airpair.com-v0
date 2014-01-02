@@ -9,7 +9,7 @@ class PayMethodsApi
   #DT what do you think cSend ("Check Send")... less code :)
   cSend: (res, next) ->
     (e, r) ->
-      $log 'e', e, 'r', r
+      # $log 'cSend', 'e', e, 'r', r
       if e then return next e
       res.send r
 

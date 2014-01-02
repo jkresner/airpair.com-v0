@@ -12,7 +12,7 @@ class exports.StripeRegisterView extends Settings.StripeRegisterView
 
 
 class exports.CardEditView extends BB.ModelSaveView
-  logging: on
+  # logging: on
   async: off
   el: '#editcard'
   tmpl: require './templates/CardEdit'
@@ -20,7 +20,7 @@ class exports.CardEditView extends BB.ModelSaveView
   events:
     'click .share': 'share'
     'click .unshare': 'unshare'
-    'click .remove': 'remove'
+    'click .remove': 'deletePayMethod'
   initialize: (args) ->
     @listenTo @model, 'change:sharers', @render
   render: ->
@@ -35,19 +35,21 @@ class exports.CardEditView extends BB.ModelSaveView
     email = $(e.target).data 'email'
     @model.set 'unshare', { email }
     @save e
-  remove: ->
-    $log 'gahhhh, remove not implemented'
   renderSuccess: (model, response, options) =>
     attrs = _.omit model.attributes, ['share','unshare']
     @collection.findWhere({ '_id': model.id }).set attrs
     router.editcard model.id
+  deletePayMethod: ->
+    @model.destroy wait: true, success: =>
+      @collection.fetch success: => router.navTo 'list'
+    false
 
 
 class exports.CardsView extends BB.BadassView
   el: '#cards'
   tmpl: require './templates/CardRow'
   initialize: (args) ->
-    @listenTo @collection, 'reset filter search', @render
+    @listenTo @collection, 'reset filter search sync', @render
   render: ->
     $list = @$('tbody').html ''
     for m in @collection.models
