@@ -33,9 +33,9 @@ class RequestCallsApi  # Always passing back requests
     req.body.time = undefined
 
     console.log 'create', JSON.stringify req.body, null, 2
-    @svc.create req.user._id, req.params.requestId, req.body, (e, r) ->
+    @svc.create req.user._id, req.params.requestId, req.body, (e, results) ->
       if e then return next e
-      res.send r
+      res.send results.request
 
   # TODO return validation errors in same json format as backbone understands
   update: (req, res, next) =>

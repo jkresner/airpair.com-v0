@@ -116,7 +116,6 @@ class exports.ScheduledView extends BB.ModelSaveView
   render: ->
     if @collection.isEmpty() then return
     call = @model.toJSON()
-    console.log('render')
     suggested = @request.get('suggested') || {}
     suggestion = _.find suggested, (s) -> s.expert._id == call.expertId
     expert = suggestion.expert
@@ -152,7 +151,6 @@ class exports.ScheduledView extends BB.ModelSaveView
     call.recordingList.push { link: '' }
 
     d = _.extend call, { expert }
-    console.log d
     @$el.html @tmpl d
     @
 

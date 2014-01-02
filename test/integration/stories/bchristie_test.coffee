@@ -6,6 +6,7 @@ storySteps = [
   { app:'request', usr:'bchristie', frag: '#', fixture: f.request, pageData: {} }
   { app:'inbound', usr:'admin', frag: '#', fixture: f.inbound, pageData: { experts: data.experts, tags: data.tags } }
   { app:'review', usr:'bchristie', frag: '#rId', fixture: f.review, pageData: {} }
+  { app:'schedule', usr: 'admin', frag: '#/schedule/rId', fixture: f.schedule, pageData: {} }
   { app:'orders', usr: 'admin', frag: '#', fixture: f.orders, pageData: {} }
 ]
 
@@ -128,9 +129,53 @@ describe "Stories: Bruce Christie", ->
 
       bv.$('.payStripe').click()
 
+  it 'can schedule a call as admin', (done) ->
+    this.timeout 20000
+    {request, orders, scheduleFormView} = @app
+    v = scheduleFormView
+    orders.once 'sync', ->
+      radios = v.$('input:radio')
+      expect(radios.length).to.equal 2
+
+      radios.first().click() # Click Paul
+
+      type = v.elm('type')
+      expect(type.length).to.equal 1
+      expect(type.val()).to.equal 'opensource'
+
+      # book two hours
+      duration = v.elm('duration')
+      expect(duration.length).to.equal 1
+      expect(duration.val()).to.equal '1'
+      duration.val('2')
+
+      date = v.elm('date')
+      expect(new Date().toISOString().indexOf(date.val())).to.equal 0
+
+      time = v.elm('time')
+      time.val(12 + 4 + ':20')
+      expect(time.val()).to.equal('16:20')
+
+      v.renderSuccess = -> # disable the redirect after save
+      v.model.on 'sync', (model, resp) ->
+        expect(v.model.get('errors')).to.equal undefined
+
+        # the model is now a full request
+        newCall = model.toJSON().calls[0]
+        # mocha-phantom's Date string parsing seems different than node's.
+        # expectedDatetime = new Date(date.val() + ' 16:20 PST').toISOString()
+        # expect(newCall.datetime).to.equal expectedDatetime
+        expect(newCall.duration).to.equal 2
+        expect(newCall.type).to.equal 'opensource'
+        expect(newCall.expertId).to.equal '52372c73a9b270020000001c' # Paul
+        done()
+
+      $('#create').click()
+
   it 'can pay out customer\'s experts individually as admin', (done) ->
     this.timeout 20000
     {orders, ordersView} = @app
+
     ###
     wait for orders to sync, get bruce's order
     click payout for each expert

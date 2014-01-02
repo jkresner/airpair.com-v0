@@ -230,6 +230,7 @@ module.exports = class RequestCallsService
     start = call.datetime
     owner = request.owner
     sug = (_.find request.suggested, (s) -> s.expert._id == call.expertId)
+    # TODO capitalize first letter
     expert = sug.expert
     ename = expert.name.slice(0, expert.name.indexOf(' '))
     fullName = request.company.contacts[0].fullName

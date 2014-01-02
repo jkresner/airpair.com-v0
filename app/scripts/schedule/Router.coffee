@@ -22,8 +22,6 @@ module.exports = class Router extends S.AirpairSessionRouter
     matches = @defaultFragment.match re
     callId = matches?[1]
 
-    console.log('rid', requestId, 'cid', callId)
-
     d =
       request: new M.Request _id: requestId
       requestCall: new M.RequestCall _id: callId, requestId: requestId
