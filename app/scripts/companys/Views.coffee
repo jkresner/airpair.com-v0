@@ -18,39 +18,40 @@ class exports.CardEditView extends BB.ModelSaveView
   tmpl: require './templates/CardEdit'
   viewData: []
   events:
-    'click .share': 'shareCard'
-    'click .unshare': 'unshareCard'
-    'click .remove': 'removeCard'
+    'click .share': 'share'
+    'click .unshare': 'unshare'
+    'click .remove': 'remove'
   initialize: (args) ->
-    @listenTo @updates, 'change', @render
-    @listenTo @model, 'change', @render
+    @listenTo @model, 'change:sharers', @render
   render: ->
     if !@model.id? then return
-    card = @updates.attributes.card
-    cardJSON = JSON.stringify card
-    @$el.html @tmpl @model.extendJSON { cardJSON, card }
-  shareCard: (e) ->
+    cardJSON = JSON.stringify @model.toJSON(), null, 2
+    @$el.html @tmpl @model.extendJSON { cardJSON }
+  share: (e) ->
     email = @elm('shareEmail').val()
-    card = @updates.get 'card'
-    @model.set 'share', { email, card }
+    @model.set 'share', { email }
     @save e
-  unshareCard: (e) ->
+  unshare: (e) ->
     email = $(e.target).data 'email'
-    card = @updates.get 'card'
-    @model.set 'unshare', { email, card }
+    @model.set 'unshare', { email }
     @save e
-  removeCard: ->
+  remove: ->
+    $log 'gahhhh, remove not implemented'
+  renderSuccess: (model, response, options) =>
+    attrs = _.omit model.attributes, ['share','unshare']
+    @collection.findWhere({ '_id': model.id }).set attrs
+    router.editcard model.id
 
 
 class exports.CardsView extends BB.BadassView
   el: '#cards'
   tmpl: require './templates/CardRow'
   initialize: (args) ->
-    @listenTo @model, 'change', @render
+    @listenTo @collection, 'reset filter search', @render
   render: ->
     $list = @$('tbody').html ''
-    for m in @model.get 'paymentMethods'
-      $list.append @tmpl m
+    for m in @collection.models
+      $list.append @tmpl m.toJSON()
     @
 
 

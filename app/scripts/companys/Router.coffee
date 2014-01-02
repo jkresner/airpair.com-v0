@@ -19,16 +19,16 @@ module.exports = class Router extends S.AirpairSessionRouter
 
   appConstructor: (pageData, callback) ->
     d =
-      selected: new M.User()
+      selectedUser: new M.User()
       users: new C.Users()
       companys: new C.Companys()
-      sharedCards: new M.SharedCards()
-      cardUpdates: new BB.BadassModel()
+      sharedCards: new C.PayMethods()
+      selectedCard: new M.PayMethod()
     v =
       companysView: new V.CompanysView collection: d.companys, model: d.selected
-      stripeRegisterView: new V.StripeRegisterView model: d.sharedCards, session: @app.session
-      cardsView: new V.CardsView model: d.sharedCards
-      cardEditView: new V.CardEditView model: d.sharedCards, updates: d.cardUpdates
+      cardsView: new V.CardsView collection: d.sharedCards
+      cardEditView: new V.CardEditView model: d.selectedCard, collection: d.sharedCards
+      # stripeRegisterView: new V.StripeRegisterView model: d.sharedCards, session: @app.session
 
       # usersView: new V.UsersView collection: d.users, model: d.selected
       # userView: new V.UserView model: d.selected
@@ -37,7 +37,7 @@ module.exports = class Router extends S.AirpairSessionRouter
     # @resetOrFetch d.companys, pageData.companys
     @resetOrFetch d.sharedCards, null
 
-    Stripe.setPublishableKey pageData.stripePK
+    Stripe.setPublishableKey pageData.stripePK if Stripe?
 
     _.extend d, v
 
@@ -51,9 +51,8 @@ module.exports = class Router extends S.AirpairSessionRouter
     @app.selected.set user.attributes
 
   editcard: (id) ->
-    card = _.find @app.sharedCards.get('paymentMethods'), (m) => m._id == id
+    card = @app.sharedCards.findWhere { '_id': id }
     if !card? then @navTo 'list'
-    @app.cardUpdates.clear()
-    @app.cardUpdates.set card: card
-    @app.cardUpdates.trigger 'change'
-    $log 'editing Card', card
+
+    @app.selectedCard.clear silent:true
+    @app.selectedCard.set card.attributes

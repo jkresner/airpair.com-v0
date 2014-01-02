@@ -1,6 +1,7 @@
 api_key = cfg.payment.stripe.secretKey
 stripe = require('stripe')(api_key)
 
+
 module.exports = class StripeService
 
 
@@ -13,6 +14,7 @@ module.exports = class StripeService
       if err then return callback err
       $log 'err', err, 'customer', customer
       callback null, customer
+
 
   createCharge: (order, callback) ->
     order.paymentType = 'stripe'
