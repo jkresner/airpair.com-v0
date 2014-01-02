@@ -60,7 +60,7 @@ class exports.ScheduleFormView extends BB.ModelSaveView
       today = new Date().toJSON().slice(0, 10)
       @model.set 'date', today
 
-    d = @model.extendJSON { available: suggested, selectedExpert, requestId: @request._id }
+    d = @model.extendJSON { available: suggested, selectedExpert, requestId: @request.get('_id') }
     @$el.html @tmpl d
     @
   renderSuccess: (model, response, options) =>
