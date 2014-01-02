@@ -6,26 +6,30 @@ class exports.Orders extends BB.FilteringCollection
   model: Models.Order
   url: '/api/admin/orders'
   comparator: (m) ->
-    -1 * new moment(m.get('utc')).unix()
+    -1 * moment(m.get('utc')).unix()
   _filter: (f) ->
-    # $log 'f', f
-    fltr = f.filter
-    now = new moment()
-    n = { yr: now.year(), mth: now.month(), day: now.day() }
-    if f.mth? then n.mth = parseInt f.mth
+    timeString = f.filter
+    orders = @models
 
-    r = @models
-    # $log 'now', now, now.year(), now.month()
-    if fltr is 'all' then return r
-    else if fltr is 'tod'
-      r = _.filter r, (m) =>
-        0 == now.diff(new moment(m.get('utc')), 'days');
-    else
-      # $log 'n.mth', n.mth
-      r = _.filter r, (m) =>
-        mom = new moment m.get('utc')
-        mom.year() == n.yr && mom.month() == n.mth
+    if 'all' == timeString then return orders
 
-    return r
+    now = moment()
+
+    if 'tod' == timeString
+      return _.filter orders, (m) ->
+        0 == now.diff(moment(m.get('utc')), 'days');
+
+    day = now.day()
+    month = parseInt(f.month, 10) || now.month() # support current month button
+    year = now.year()
+
+    # if the month has not yet happened in this calendar year, use the previous
+    # calendar year.
+    if now.diff(moment().month(month))
+      year -= 1
+
+    return _.filter orders, (m) =>
+      order = moment m.get('utc')
+      order.year() == year && order.month() == month
 
 module.exports = exports
