@@ -27,11 +27,24 @@
   </nav>
 
   <div id="addcard" class="route">
+    <div class="form-actions nav-top">
+      <div class="controls">
+        <a href="#list" class="btn">Back</a>
+      </div>
+    </div>
+
     <style type="text/css">
         #stripeRegister p { display:none; }
     </style>
 
     <h2>Add shared card</h2>
+
+    <div class="control-group">
+      <label class="control-label">Email</label>
+      <div class="controls">
+        <input id="stripeEmail" type="text" data-stripe="email" placeholder="Email" size="20">
+      </div>
+    </div>
     <div id="stripeRegister"></div>
   </div>
 
@@ -45,8 +58,10 @@
       <thead>
         <tr>
           <th>Card Holder</th>
+          <th>Type</th>
           <th>Id</th>
           <th>Users</th>
+          <th><a href="#addcard">Add stripe</a></th>
         </tr>
       </thead>
       <tbody></tbody>

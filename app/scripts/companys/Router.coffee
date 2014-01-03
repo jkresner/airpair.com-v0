@@ -26,18 +26,18 @@ module.exports = class Router extends S.AirpairSessionRouter
       selectedCard: new M.PayMethod()
     v =
       companysView: new V.CompanysView collection: d.companys, model: d.selected
-      cardsView: new V.CardsView collection: d.sharedCards
-      cardEditView: new V.CardEditView model: d.selectedCard, collection: d.sharedCards
-      # stripeRegisterView: new V.StripeRegisterView model: d.sharedCards, session: @app.session
+      cardsView: new V.PayMethodsView collection: d.sharedCards
+      cardEditView: new V.PayMethodEditView model: d.selectedCard, collection: d.sharedCards
+      stripeRegisterView: new V.StripeRegisterView model: d.selectedCard, collection: d.sharedCards
 
       # usersView: new V.UsersView collection: d.users, model: d.selected
       # userView: new V.UserView model: d.selected
 
     # @resetOrFetch d.users, pageData.users
-    # @resetOrFetch d.companys, pageData.companys
+    @resetOrFetch d.companys, pageData.companys
     @resetOrFetch d.sharedCards, null
 
-    Stripe.setPublishableKey pageData.stripePK if Stripe?
+    Stripe.setPublishableKey pageData.stripePK
 
     _.extend d, v
 
@@ -49,6 +49,10 @@ module.exports = class Router extends S.AirpairSessionRouter
     # $log 'editing user', user.toJSON()
     # $('#editheading').html user.get('google').displayName
     @app.selected.set user.attributes
+
+  addcard: ->
+    $('#stripeEmail').val ''
+    @app.selectedCard.clear().trigger 'sync' # cause view to render
 
   editcard: (id) ->
     card = @app.sharedCards.findWhere { '_id': id }

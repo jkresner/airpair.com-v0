@@ -8,14 +8,23 @@ Settings = require './../settings/Views'
 ##  To collect the card
 #############################################################################
 
+
 class exports.StripeRegisterView extends Settings.StripeRegisterView
+  email: -> $('#stripeEmail').val()
+  stripeCustomerSuccess: (model, resp, opts) =>
+    @model.unset 'stripeCreate'
+    @collection.add new M.PayMethod model.attributes
+    # name = @session.get('google').displayName
+    # addjs.providers.mp.setPeopleProps paymentInfoSet: 'stripe'
+    @successAction()
+  successAction: =>
+    router.navTo "editcard/#{@model.id}"
 
 
-class exports.CardEditView extends BB.ModelSaveView
-  # logging: on
+class exports.PayMethodEditView extends BB.ModelSaveView
   async: off
   el: '#editcard'
-  tmpl: require './templates/CardEdit'
+  tmpl: require './templates/PayMethodEdit'
   viewData: []
   events:
     'click .share': 'share'
@@ -27,6 +36,7 @@ class exports.CardEditView extends BB.ModelSaveView
     if !@model.id? then return
     cardJSON = JSON.stringify @model.toJSON(), null, 2
     @$el.html @tmpl @model.extendJSON { cardJSON }
+    @
   share: (e) ->
     email = @elm('shareEmail').val()
     @model.set 'share', { email }
@@ -45,9 +55,9 @@ class exports.CardEditView extends BB.ModelSaveView
     false
 
 
-class exports.CardsView extends BB.BadassView
+class exports.PayMethodsView extends BB.BadassView
   el: '#cards'
-  tmpl: require './templates/CardRow'
+  tmpl: require './templates/PayMethodRow'
   initialize: (args) ->
     @listenTo @collection, 'reset filter search sync', @render
   render: ->
