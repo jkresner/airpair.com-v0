@@ -229,7 +229,7 @@ module.exports = class RequestCallsService
   _createCalendarEvent: (request, call, cb) =>
     start = call.datetime
     owner = request.owner
-    sug = (_.find request.suggested, (s) -> s.expert._id == call.expertId)
+    sug = _.find request.suggested, (s) -> s.expert._id == call.expertId
     # TODO capitalize first letter
     expert = sug.expert
     ename = expert.name.slice(0, expert.name.indexOf(' '))

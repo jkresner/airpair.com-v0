@@ -4,39 +4,31 @@ C = require './Collections'
 V = require './Views'
 
 module.exports = class Router extends S.AirpairSessionRouter
-  # logging: on
-  pushStateRoot: '/adm'
+  pushStateRoot: '/adm/schedule'
 
   routes:
-    'schedule/:requestId': 'schedule'
-    'schedule/:requestId/call/:callId': 'edit'
+    'edit/:requestId/call/:callId': 'edit'
+    ':requestId': 'schedule'
 
   appConstructor: (pageData, callback) ->
-    # TODO: better way?
-    # This almost feels like it should be two different SPA's. grr
-    re = new RegExp('^/schedule\/(?:([^\/]+))', 'i')
-    matches = @defaultFragment.match re
-    requestId = matches[1]
-
-    re = new RegExp('call\/(?:([^\/]+?))$', 'i')
-    matches = @defaultFragment.match re
-    callId = matches?[1]
-
+    requestId = pageData.request._id
     d =
       request: new M.Request _id: requestId
-      requestCall: new M.RequestCall _id: callId, requestId: requestId
+      requestCall: new M.RequestCall
       orders: new C.Orders
-    d.orders.requestId = requestId # used by model get orders for the request
-    d.request.set 'callId', callId
+    d.requestCall.requestId = requestId
+    d.orders.requestId = requestId
+
     v =
       scheduleFormView: new V.ScheduleFormView
         model: d.requestCall, request: d.request, collection: d.orders
-      scheduledView: new V.ScheduledView
-        model: d.requestCall, request: d.request, collection: d.orders
+      # scheduledView: new V.ScheduledView
+        # model: d.requestCall, request: d.request, collection: d.orders
 
     @setOrFetch d.request, pageData.request
-    @setOrFetch d.orders, pageData.orders
+    @resetOrFetch d.orders, pageData.orders
 
     _.extend d, v
   edit: (requestId, callId) ->
-    $('#edit').show() # TODO I shouldnt need to write this
+    @app.requestCall.set({ requestId: requestId, _id: callId })
+    # $('#edit').show() # TODO I shouldnt need to write this.

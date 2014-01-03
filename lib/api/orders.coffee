@@ -24,7 +24,7 @@ class OrdersApi
 
   requestList: (req, res, next) =>
     # TODO protect so only request owner can view orders
-    @svc.search { requestId: req.params.id }, (e, r) ->
+    @svc.requestList req.params.id, (e, r) ->
       if e then return next e
       res.send r
 

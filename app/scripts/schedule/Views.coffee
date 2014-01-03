@@ -3,13 +3,14 @@ BB = require './../../lib/BB'
 M = require './Models'
 SV = require './../shared/Views'
 expertAvailability = require '../shared/mix/expertAvailability'
+parseYoutubeId = require '../shared/mix/parseYoutubeId'
 
 # schedule form
 class exports.ScheduleFormView extends BB.ModelSaveView
-  logging: on
+  # logging: on
   el: '#scheduleForm'
   tmpl: require './templates/ScheduleForm'
-  viewData: ['duration', 'date', 'time', 'expertId', 'type']
+  viewData: ['duration', 'date', 'time', 'type']
   events:
     'click input:radio': (e) ->
       @model.set 'expertId', @$(e.target).val()
@@ -18,35 +19,40 @@ class exports.ScheduleFormView extends BB.ModelSaveView
     'change [name=duration]': -> @model.set 'duration', parseInt(@elm('duration').val(), 10)
     'blur [name=date]': -> @model.set 'date', @elm('date').val()
     'blur [name=time]': -> @model.set 'time', @elm('time').val()
-    'click #create': 'save'
+    'click .save': 'save'
   initialize: ->
     if @request.get('callId') then return # we are on the editing page
     @listenTo @request, 'change', @render
-    @listenTo @collection, 'sync', @render
+    @listenTo @collection, 'reset', @render
     @listenTo @model, 'change', @render
 
   render: ->
-    if @collection.isEmpty() || !@request.get('userId') then return
+    if !@request.get('userId') then return
 
     orders = @collection.toJSON()
     selectedExpert = null
     suggested = @request.get('suggested') || []
     suggested = suggested
-      .filter (suggestion) =>
-        suggestion.expertStatus == 'available'
       .map (suggestion) =>
         expert = suggestion.expert
         expert.availability = expertAvailability orders, expert._id
         expert.availability.byTypeArray = _.values(expert.availability.byType)
+        suggestion
 
+      .filter (suggestion) =>
+        balance = suggestion.expert.availability.balance
+        suggestion.expertStatus == 'available' && balance > 0
+
+      .map (suggestion) =>
         # selects the first expert by default when there's only one
         if suggested.length == 1
           @model.set 'expertId', suggestion.expert._id
-          @model.set 'type', @request.get 'pricing'
+          @model.set 'type', expert.availability.byTypeArray[0]
 
         if @mget('expertId') == suggestion.expert._id
           suggestion.expert.selected = suggestion.expert
           selectedExpert = suggestion.expert
+        else suggestion.expert.selected = undefined
         suggestion
 
     if selectedExpert
@@ -70,40 +76,27 @@ class exports.ScheduleFormView extends BB.ModelSaveView
   renderError: (model, response, options) =>
     @model.set 'errors', JSON.parse response.responseText
 
-parseYoutubeId = (str) ->
-  str = str.trim()
-  variable = '([a-zA-Z0-9_]*)'
-  # e.g. http://www.youtube.com/watch?v=aANmpDSTcXI&otherjunkparams
-  id = str.match("v=#{variable}")?[1]
-  if id then return id
-
-  # e.g. youtu.be/aANmpDSTcXI
-  id = str.match("youtu\.be/#{variable}")?[1]
-  if id then return id
-
-  # e.g. aANmpDSTcXI
-  str.match("^#{variable}$")?[1]
-
 class exports.ScheduledView extends BB.ModelSaveView
   logging: on
   el: '#edit'
   tmpl: require './templates/Scheduled'
   viewData: ['duration', 'date', 'time', 'type', 'notes']
   events:
-    'click #update': 'save'
+    'click .save': 'save'
     'change .youtube': (e) ->
       inputs = $.makeArray(@$('.youtube')) # TODO consider adding this to BB
       recordings = inputs
         .map((el) -> $(el).val())
         .map(parseYoutubeId)
         .filter((x) -> x)
+        .map((slug) -> { link: "https://youtu.be/#{slug}" })
       @model.set 'recordings', recordings
 
   initialize: ->
     if !@request.get('callId') then return # we are on the create page
 
     @listenTo @request, 'change', @render
-    @listenTo @collection, 'sync', @render
+    @listenTo @collection, 'reset', @render
     @listenTo @model, 'change', @render
 
     # the @model is the requestCall, and we use it only for saving / updating,
@@ -116,9 +109,7 @@ class exports.ScheduledView extends BB.ModelSaveView
   render: ->
     if @collection.isEmpty() then return
     call = @model.toJSON()
-    suggested = @request.get('suggested') || {}
-    suggestion = _.find suggested, (s) -> s.expert._id == call.expertId
-    expert = suggestion.expert
+    expert = @request.suggestion(call.expertId).expert
 
     # open source / private / nda dropdown
     orders = @collection.toJSON()
@@ -145,9 +136,9 @@ class exports.ScheduledView extends BB.ModelSaveView
       selected = call.status == status
       { status, selected }
 
-    # TODO remove
-    call.recordings = call.recordings.length || [ 'http://www.youtube.com/watch?v=aANmpDSTcXI&otherjunkparams', 'youtu.be/aANmpDSTcXI' , 'aANmpDSTcXI']
-    call.recordingList = call.recordings.map (link) -> { link }
+    # TODO remove default value
+    call.recordings = call.recordings.length || [ 'http://www.youtube.com/watch?v=aANmpDSTcXI&otherjunkparams', 'youtu.be/aANmpDSTcXI' , 'aANmpDSTcXI'].map((link) -> {link: link})
+    call.recordingList = _.clone(call.recordings)
     call.recordingList.push { link: '' }
 
     d = _.extend call, { expert }

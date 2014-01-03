@@ -5,12 +5,12 @@ exports = {}
 
 exports.Request = class Request extends Shared.Request
   urlRoot: '/api/requests'
+  initialize: (args) ->
+    @callId = args.callId
 
 exports.RequestCall = class RequestCall extends BB.BadassModel
   urlRoot: ->
     "/api/requests/#{@requestId}/calls"
-  initialize: (args) ->
-    @requestId = args.requestId
 
 exports.Order = Shared.Order
 

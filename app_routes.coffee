@@ -59,7 +59,14 @@ module.exports = (app) ->
   app.get '/adm/csvs*', loggedIn, admin, (req, r) -> file r, 'adm/csvs'
   app.get '/adm/orders*', loggedIn, admin, (req, r) -> file r, 'adm/orders'
   app.get '/adm/users*', loggedIn, admin, (req, r) -> file r, 'adm/users'
-  app.get '/adm/schedule*', loggedIn, (req, r) -> file r, 'adm/schedule'
+
+  schedule = (req, r, next) ->
+    viewData.schedule req.params.requestId, (e, d) =>
+      if e then return next e
+      r.render 'adm/schedule.html', d
+  app.get '/adm/schedule/edit/:requestId/call/:callId', loggedIn, schedule
+  app.get '/adm/schedule/:requestId', loggedIn, schedule
+
   app.get '/adm/inbound*', loggedIn, admin, (req, r, next) ->
     viewData.inbound req.user, (e, d) =>
       if e then return next e

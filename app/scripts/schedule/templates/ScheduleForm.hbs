@@ -5,19 +5,23 @@
 <h2>Schedule a Call</h2>
 <fieldset>
   <h4>Experts</h4>
+  <div class="experts">
   {{#each available}}
     {{#with expert}}
     <label {{#selected}}class="selected"{{/selected}}>
-      <img src="{{pic}}" alt="{{name}}" draggable="false" class="expertPic">
-      <br />
       <input type="radio" value="{{_id}}" name="expertId" {{#selected}}checked{{/selected}}/>
-      {{name}}
-      <span class="balance" title="hours balance">{{availability.balance}}</span>
+      <img src="{{pic}}" alt="{{name}}" draggable="false" class="expertPic"><br>
+      {{name}}<br>
+      <span class="balance" title="hours balance">
+        {{availability.balance}} {{inflect availability.balance "hour" "hours"}}
+      </span>
     </label>
     {{/with}}
   {{else}}
     <p>No experts are <code>available</code></p>
   {{/each}}
+  </div>
+
 
   {{#selectedExpert}}
     <div class="control-group">
@@ -69,6 +73,6 @@
 
   <div class="form-actions">
     {{!-- TODO grey this out while ajax request in progress  --}}
-    <button id="create" class="save button">+ Create Call</button>
+    <button class="save button">+ Create Call</button>
   </div>
 </fieldset>

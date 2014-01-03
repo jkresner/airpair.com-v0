@@ -304,9 +304,9 @@ class exports.RequestCallsView extends BB.BadassView
   initialize: -> @listenTo @model, 'change', @render
   render: ->
     d = @model.toJSON()
-    d.calls = d.calls.map (call) ->
-      suggestion = (d.suggested.filter (s) -> s.expert._id == call.expertId)[0]
-      call.expert = suggestion.expert
+    d.calls = d.calls.map (call) =>
+      call.expert = @model.suggestion(call.expertId).expert
+      call.recordings = [{link:'https://youtu.be/blah'}]
       call
     @$el.html @tmpl d
 

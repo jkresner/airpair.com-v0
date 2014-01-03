@@ -51,7 +51,7 @@ Call = new Schema
   gcal:             { required: true, type: Mixed }
   # expert:           { required: true, type: {} }
   # hours:            { required: true, type: Number }
-  recordings:       { required: true, type: [{}] }
+  recordings:       { required: true, type: [{}] } # e.g. { link: https://youtu.be/YT_ID_HERE
   notes:            { required: true, type: String }
   # expertEndorsed:   String   # If the expert wants the session featured (or hidden)
   # expertReview:     {}   # Experts feedback on how the session went
@@ -74,7 +74,7 @@ RequestSchema = new Schema
   hours:            { required: true, type: String   }
   pricing:          { required: true, type: String, enum: VALID_CALL_TYPES   }
   events:           { required: true, type: [{}]     }
-  status:           { required: true, type: String   }
+  status:           { required: true, type: String   } # TODO add cancelled, use enum
   incompleteDetail: String
   canceledDetail:   String
   timezone:         String

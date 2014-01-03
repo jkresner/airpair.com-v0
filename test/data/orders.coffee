@@ -8,7 +8,115 @@ module.exports = [
   {"total":180,"requestId":"52a4ba0991935b000000002d","lineItems":[{"type":"opensource","total":180,"unitPrice":90,"qty":2,"suggestion":{"_id":"52445f41d81957020000000a","suggestedRate":{"opensource":{"expert":70,"total":90},"private":{"expert":70,"total":110},"nda":{"expert":90,"total":160}},"expert":{"_id":"52372c73a9b270020000001c","userId":"52372c3366a6f999a465f804","name":"Paul Canavese","username":"canavese","rate":70,"email":"paul@canavese.org","pic":"https://secure.gravatar.com/avatar/af2766a3f9d6f81447da51e0d9af9e67","paymentMethod":{"type":"paypal","info":{"email":"consulting@canaveses.org"}}}}}],"company":{"_id":"52a4ba0991935b000000002b","name":"Bruce Christie","contacts":[{"fullName":"bruce christie","email":"bqchristie@gmail.com","gmail":"bqchristie@gmail.com","title":"","phone":"","userId":"5244496866a6f999a465f877","pic":"https://lh6.googleusercontent.com/-Vwjei17buyc/AAAAAAAAAAI/AAAAAAAAAAA/VzQekIoMebs/photo.jpg","twitter":"","timezone":"GMT-0800 (PST)","_id":"52a4ba0991935b000000002c","firstName":"bruce"}]},"paymentMethod":{"type":"stripe","info":{"default_card":"card_35N0JRtcbhMuNs","cards":{"data":[{"address_zip_check":null,"address_line1_check":null,"cvc_check":"pass","address_country":null,"address_zip":null,"address_state":null,"address_city":null,"address_line2":null,"address_line1":null,"name":null,"country":"US","customer":"cus_35N03uIhfJPhzU","fingerprint":"DMfzzf5aobPBRDZg","exp_year":2014,"exp_month":10,"type":"Visa","last4":"4242","object":"card","id":"card_35N0JRtcbhMuNs"}],"url":"/v1/customers/cus_35N03uIhfJPhzU/cards","count":1,"object":"list"},"account_balance":0,"discount":null,"subscription":null,"delinquent":false,"email":"bqchristie@gmail.com","description":null,"livemode":false,"id":"cus_35N03uIhfJPhzU","created":1386527228,"object":"customer"},"isPrimary":true}}
 
   # 2) bchristie from the stripe story once it is in the DB
-  {"total":180,"requestId":"52a7a19f04d3d0b22300003f","lineItems":[{"type":"opensource","total":180,"unitPrice":90,"qty":2,"suggestion":{"_id":"52445f41d81957020000000a","suggestedRate":{"opensource":{"expert":70,"total":90},"private":{"expert":70,"total":110},"nda":{"expert":90,"total":160}},"expert":{"_id":"52372c73a9b270020000001c","userId":"52372c3366a6f999a465f804","name":"Paul Canavese","username":"canavese","rate":70,"email":"paul@canavese.org","pic":"https://secure.gravatar.com/avatar/af2766a3f9d6f81447da51e0d9af9e67","paymentMethod":{"type":"paypal","info":{"email":"consulting@canaveses.org"}}}},"expertsTotal":140}],"company":{"_id":"52a7a19f04d3d0b22300003d","name":"Bruce Christie","contacts":[{"fullName":"bruce christie","email":"bqchristie@gmail.com","gmail":"bqchristie@gmail.com","title":"","phone":"","userId":"5244496866a6f999a465f877","pic":"https://lh6.googleusercontent.com/-Vwjei17buyc/AAAAAAAAAAI/AAAAAAAAAAA/VzQekIoMebs/photo.jpg","twitter":"","timezone":"GMT-0800 (PST)","_id":"52a7a19f04d3d0b22300003e","firstName":"bruce"}]},"paymentMethod":{"type":"stripe","info":{"default_card":"card_36CBsi5Clcjpid","cards":{"data":[{"address_zip_check":null,"address_line1_check":null,"cvc_check":"pass","address_country":null,"address_zip":null,"address_state":null,"address_city":null,"address_line2":null,"address_line1":null,"name":null,"country":"US","customer":"cus_36CB1AKlt0E8RC","fingerprint":"DMfzzf5aobPBRDZg","exp_year":2014,"exp_month":10,"type":"Visa","last4":"4242","object":"card","id":"card_36CBsi5Clcjpid"}],"url":"/v1/customers/cus_36CB1AKlt0E8RC/cards","count":1,"object":"list"},"account_balance":0,"discount":null,"subscription":null,"delinquent":false,"email":"bqchristie@gmail.com","description":null,"livemode":false,"id":"cus_36CB1AKlt0E8RC","created":1386717599,"object":"customer"},"isPrimary":true,"_id":"52a7a19f04d3d0b22300003c"},"_id":"52a7a19f04d3d0b223000040","userId":"5244496866a6f999a465f877","invoice":{},"profit":40}
+  {
+    "total": 180,
+    "requestId": "52a7a19f04d3d0b22300003f",
+    "lineItems": [{
+      "type": "opensource",
+      "total": 180,
+      "unitPrice": 90,
+      "qty": 2,
+      "redeemedCalls": []
+      "suggestion": {
+        "_id": "52445f41d81957020000000a",
+        "suggestedRate": {
+          "opensource": {
+            "expert": 70,
+            "total": 90
+          },
+          "private": {
+            "expert": 70,
+            "total": 110
+          },
+          "nda": {
+            "expert": 90,
+            "total": 160
+          }
+        },
+        "expert": {
+          "_id": "52372c73a9b270020000001c",
+          "userId": "52372c3366a6f999a465f804",
+          "name": "Paul Canavese",
+          "username": "canavese",
+          "rate": 70,
+          "email": "paul@canavese.org",
+          "pic": "https://secure.gravatar.com/avatar/af2766a3f9d6f81447da51e0d9af9e67",
+          "paymentMethod": {
+            "type": "paypal",
+            "info": {
+              "email": "consulting@canaveses.org"
+            }
+          }
+        }
+      },
+      "expertsTotal": 140
+    }],
+    "company": {
+      "_id": "52a7a19f04d3d0b22300003d",
+      "name": "Bruce Christie",
+      "contacts": [{
+        "fullName": "bruce christie",
+        "email": "bqchristie@gmail.com",
+        "gmail": "bqchristie@gmail.com",
+        "title": "",
+        "phone": "",
+        "userId": "5244496866a6f999a465f877",
+        "pic": "https://lh6.googleusercontent.com/-Vwjei17buyc/AAAAAAAAAAI/AAAAAAAAAAA/VzQekIoMebs/photo.jpg",
+        "twitter": "",
+        "timezone": "GMT-0800 (PST)",
+        "_id": "52a7a19f04d3d0b22300003e",
+        "firstName": "bruce"
+      }]
+    },
+    "paymentMethod": {
+      "type": "stripe",
+      "info": {
+        "default_card": "card_36CBsi5Clcjpid",
+        "cards": {
+          "data": [{
+            "address_zip_check": null,
+            "address_line1_check": null,
+            "cvc_check": "pass",
+            "address_country": null,
+            "address_zip": null,
+            "address_state": null,
+            "address_city": null,
+            "address_line2": null,
+            "address_line1": null,
+            "name": null,
+            "country": "US",
+            "customer": "cus_36CB1AKlt0E8RC",
+            "fingerprint": "DMfzzf5aobPBRDZg",
+            "exp_year": 2014,
+            "exp_month": 10,
+            "type": "Visa",
+            "last4": "4242",
+            "object": "card",
+            "id": "card_36CBsi5Clcjpid"
+          }],
+          "url": "/v1/customers/cus_36CB1AKlt0E8RC/cards",
+          "count": 1,
+          "object": "list"
+        },
+        "account_balance": 0,
+        "discount": null,
+        "subscription": null,
+        "delinquent": false,
+        "email": "bqchristie@gmail.com",
+        "description": null,
+        "livemode": false,
+        "id": "cus_36CB1AKlt0E8RC",
+        "created": 1386717599,
+        "object": "customer"
+      },
+      "isPrimary": true,
+      "_id": "52a7a19f04d3d0b22300003c"
+    },
+    "_id": "52a7a19f04d3d0b223000040",
+    "userId": "5244496866a6f999a465f877",
+    "invoice": {},
+    "profit": 40
+  }
 
   # 3) from book_test.coffee, paying out all experts in an adaptive payment
   # (here we only have one expert, but that does not matter, it's still an

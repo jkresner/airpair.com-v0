@@ -1,17 +1,18 @@
 Tags = require('/scripts/request/Collections').Tags
 f = data.fixtures
 
+request = _.clone(data.requests[10])  #Bruce Christie
+
 storySteps = [
   { app:'settings', usr:'bchristie', frag: '#', fixture: f.settings, pageData: { stripePK: 'pk_test_aj305u5jk2uN1hrDQWdH0eyl' } }
   { app:'request', usr:'bchristie', frag: '#', fixture: f.request, pageData: {} }
   { app:'inbound', usr:'admin', frag: '#', fixture: f.inbound, pageData: { experts: data.experts, tags: data.tags } }
   { app:'review', usr:'bchristie', frag: '#rId', fixture: f.review, pageData: {} }
-  { app:'schedule', usr: 'admin', frag: '#/schedule/rId', fixture: f.schedule, pageData: {} }
+  { app:'schedule', usr: 'admin', frag: '#/schedule/rId', fixture: f.schedule, pageData: { request: request, orders: data.orders[2] } }
   { app:'orders', usr: 'admin', frag: '#', fixture: f.orders, pageData: {} }
 ]
 
 testNum = -1
-request = data.requests[10]  #Bruce Christie
 
 describe "Stories: Bruce Christie", ->
 
@@ -76,6 +77,10 @@ describe "Stories: Bruce Christie", ->
 
         @app.request.once 'sync', =>
           @rId = @app.request.id
+          request._id = @rId
+
+          # we need the ID for the call scheduling story
+          storySteps[4].pageData.request._id = @rId
           done()
 
         requestFormView.$('.save').click()
@@ -120,7 +125,7 @@ describe "Stories: Bruce Christie", ->
       expect( bv.$('#pay').is(':visible') ).to.equal true
       $steveM.find('[name=qty]').val('1').trigger 'change'
 
-      $log 'payStripe', bv.$('.payStripe'), bv.$('.payStripe').is(':visible')
+      # $log 'payStripe', bv.$('.payStripe'), bv.$('.payStripe').is(':visible')
       expect( bv.$('.payStripe').is(':visible') ).to.equal true
 
       bv.model.once 'sync', (model) =>
@@ -133,44 +138,46 @@ describe "Stories: Bruce Christie", ->
     this.timeout 20000
     {request, orders, scheduleFormView} = @app
     v = scheduleFormView
-    orders.once 'sync', ->
-      radios = v.$('input:radio')
-      expect(radios.length).to.equal 2
 
-      radios.first().click() # Click Paul
+    radios = v.$('input:radio')
+    expect(radios.length).to.equal 1 # shouldnt show other expert b/c no hours
 
-      type = v.elm('type')
-      expect(type.length).to.equal 1
-      expect(type.val()).to.equal 'opensource'
+    # paul should be selected by default, b/c he's the only expert.
+    radios.first().click()
 
-      # book two hours
-      duration = v.elm('duration')
-      expect(duration.length).to.equal 1
-      expect(duration.val()).to.equal '1'
-      duration.val('2')
+    type = v.elm('type')
+    expect(type.length).to.equal 1
+    expect(type.val()).to.equal 'opensource'
 
-      date = v.elm('date')
-      expect(new Date().toISOString().indexOf(date.val())).to.equal 0
+    # book two hours
+    duration = v.elm('duration')
+    expect(duration.length).to.equal 1
+    expect(duration.val()).to.equal '1'
+    duration.val(2)
+    expect(duration.val()).to.equal '2'
 
-      time = v.elm('time')
-      time.val(12 + 4 + ':20')
-      expect(time.val()).to.equal('16:20')
+    date = v.elm('date')
+    expect(new Date().toISOString().indexOf(date.val())).to.equal 0
 
-      v.renderSuccess = -> # disable the redirect after save
-      v.model.on 'sync', (model, resp) ->
-        expect(v.model.get('errors')).to.equal undefined
+    time = v.elm('time')
+    time.val(12 + 4 + ':20')
+    expect(time.val()).to.equal('16:20')
 
-        # the model is now a full request
-        newCall = model.toJSON().calls[0]
-        # mocha-phantom's Date string parsing seems different than node's.
-        # expectedDatetime = new Date(date.val() + ' 16:20 PST').toISOString()
-        # expect(newCall.datetime).to.equal expectedDatetime
-        expect(newCall.duration).to.equal 2
-        expect(newCall.type).to.equal 'opensource'
-        expect(newCall.expertId).to.equal '52372c73a9b270020000001c' # Paul
-        done()
+    v.renderSuccess = -> # disable the redirect after save
+    v.model.on 'sync', (model, resp) ->
+      expect(v.model.get('errors')).to.equal undefined
 
-      $('#create').click()
+      # the model is now a full request
+      newCall = model.toJSON().calls[0]
+      # mocha-phantom's Date string parsing seems different than node's.
+      # expectedDatetime = new Date(date.val() + ' 16:20 PST').toISOString()
+      # expect(newCall.datetime).to.equal expectedDatetime
+      expect(newCall.duration).to.equal 2
+      expect(newCall.type).to.equal 'opensource'
+      expect(newCall.expertId).to.equal '52372c73a9b270020000001c' # Paul
+      done()
+
+    v.$('.save').click()
 
   it 'can pay out customer\'s experts individually as admin', (done) ->
     this.timeout 20000

@@ -3,7 +3,7 @@
 
 # TEAM
 
-    David Trejo -- COTO -- <twitter>
+    <name> -- <role> -- <twitter>
 
 # THANKS
 

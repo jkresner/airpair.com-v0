@@ -1,8 +1,4 @@
 <legend>Scheduled</legend>
-<a class="btn btn-success scheduleCall" href="/adm/schedule/{{_id}}">
-  <span class="icon-white icon-calendar"></span>&nbsp;
-  Schedule Call
-</a>
 <div id="scheduled">
   <br>
   {{#each calls}}
@@ -14,7 +10,10 @@
         {{dateTime datetime}} (PST)
       </a>
       for {{{duration}}} {{inflect duration "hour" "hours"}}.
-      {{status}}. {{type}}
+      {{status}}. {{type}}.
+      {{#each recordings}}
+      <a href="{{link}}" class="zocial youtube icon" target="_blank"></a>
+      {{/each}}
     </p>
   {{else}}
   <p>No calls scheduled</p>
