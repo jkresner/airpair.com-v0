@@ -25,7 +25,23 @@ module.exports = class SettingsService extends DomainService
 
 
   update: (d, cb) =>
+    $log 'settings,updating', d?, cb
     if d.stripeCreate? then @createStripeSettings(d,cb) else @_save(d, cb)
+
+
+  addPayPalSettings: (userId, email, cb) =>
+    @getByUserId userId, (e, settings) =>
+      paypal = type: 'paypal', isPrimary: true, info: { email }
+      if !settings? || !settings._id?
+        @create userId, { paymentMethods: [paypal] }, cb
+      else
+        existing = _.findWhere settings.paymentMethods, { type: 'paypal' }
+        if !existing?
+          settings.paymentMethods.push paypal
+        else if existing.info.email != email
+          existing.info.email = email
+
+        @update settings, cb
 
 
   createStripeSettings: (d,cb) =>

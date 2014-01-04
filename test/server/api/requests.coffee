@@ -231,7 +231,7 @@ describe "REST api requests", ->
 
     createReq req, (e, up) =>
       if e then return done e
-      ups = expertStatus: 'abstained', expertFeedback: 'not for me', expertRating: 1, expertComment: 'good luck', expertAvailability: 'I can do tonight'
+      ups = expertStatus: 'abstained', expertFeedback: 'not for me', expertRating: 1, expertComment: 'good luck', expertAvailability: 'I can do tonight', payPalEmail: 'test@testpp.com'
       passportMock.setSession 'jk'
       http(app).put("/api/requests/#{up._id}/suggestion")
         .send(ups)
