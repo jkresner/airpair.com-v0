@@ -14,6 +14,18 @@ module.exports = class OrdersService extends DomainService
   stripSvc: new StripeSvc()
   requestSvc: new RequestService()
 
+  _calculateProfitAndPayouts: (order) ->
+    airpairMargin = order.total
+
+    for item in order.lineItems
+      expertsHrRate = item.suggestion.suggestedRate[item.type].expert
+      # item.expertsTotal is not persisted to the orderItem
+      item.expertsTotal = item.qty * expertsHrRate
+      airpairMargin -= item.expertsTotal
+
+    order.profit = airpairMargin
+    order
+
   create: (order, usr, callback) ->
     order._id = new mongoose.Types.ObjectId;
     order.userId = usr._id
@@ -26,15 +38,7 @@ module.exports = class OrdersService extends DomainService
 
     # 3rd party invoice integration ?
     order.invoice = {}
-    airpairMargin = order.total
-
-    for item in order.lineItems
-      expertsHrRate = item.suggestion.suggestedRate[item.type].expert
-      # item.expertsTotal is not persisted to the orderItem
-      item.expertsTotal = item.qty * expertsHrRate
-      airpairMargin -= item.expertsTotal
-
-    order.profit = airpairMargin
+    @_calculateProfitAndPayouts order
 
     savePaymentResponse = (e, paymentResponse) =>
       if e then return callback e
@@ -103,8 +107,53 @@ module.exports = class OrdersService extends DomainService
       else
         callback null, { e: 'update failed, does not belong to user' }
 
+  payOut: (id, payoutOptions, order, callback) ->
+    if payoutOptions.type is 'paypalAdaptive'
+      return @payOutPayPalAdaptive id, callback
+    if payoutOptions.type is 'paypalSingle'
+      return @payOutPayPalSingle id, payoutOptions.lineItemId, callback
+    return callback new Error "Payout[#{payoutOptions.type}] not implemented"
 
-  payOutToExperts: (id, callback) ->
+  _successfulPayoutIds: (payouts) ->
+    payouts.filter (p) ->
+      p.status == 'success'
+    .map (p) ->
+      p.lineItemId
+
+  # allows flexibility to pay each expert individually via paypal
+  payOutPayPalSingle: (id, lineItemId, callback) ->
+    @model.findOne { _id: id }, (e, order) =>
+      if e then return callback e
+      if !order? || order.paymentStatus != "received"
+        message = "not appropriate to execute payment #{id}"
+        return callback status: 'failed', message: message
+
+      lineItem = (order.lineItems.filter (l) -> l.id == lineItemId)[0]
+      if !lineItem then return callback new Error 'No such lineItem id'
+
+      successfulPayoutIds = @_successfulPayoutIds(order.payouts)
+      if _.contains successfulPayoutIds, lineItemId
+        message = "cannot pay out the same lineItem twice #{id}"
+        return callback status: 'failed', message: message
+
+      order = @_calculateProfitAndPayouts order
+      @paypalSvc.PaySingle order, lineItem, (e, req, res) =>
+        if e then return callback e
+        $log 'payOutPayPalSingle res', JSON.stringify(res)
+        if res.responseEnvelope.ack != 'Success'
+          message = "failed executing single payment #{id}"
+          return callback status: 'failed', message: message, data: res
+
+        order.payouts.push { type: 'paypal', status: 'success', lineItemId, req, res }
+        ups = { payouts: order.payouts }
+
+        if @_successfulPayoutIds(order.payouts).length == order.lineItems.length
+          ups.paymentStatus = 'paidout'
+
+        @update id, ups, callback
+
+  # when you pay out an adaptive payment, it pays all experts at the same time
+  payOutPayPalAdaptive: (id, callback) ->
     @model.findOne { _id: id }, (e, r) =>
       if e then return callback e
       if !r? || r.paymentStatus != "received"
@@ -119,7 +168,6 @@ module.exports = class OrdersService extends DomainService
         ups = paymentStatus: 'paidout', payment: r.payment
         ups.payment.payout = resp
         @update id, ups, callback
-
 
   delete: (id, callback) =>
     @model.findOne { _id: id }, (e, r) =>

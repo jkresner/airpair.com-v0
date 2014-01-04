@@ -18,6 +18,7 @@ app.engine('html', require('hbs').__express)
 app.set('view engine', 'hbs')
 app.set('views', __dirname + '/public')
 
+app.use(express.compress()) # gzip
 app.use express.static(__dirname + '/public')
 app.use express.bodyParser()
 app.use express.cookieParser()
@@ -63,5 +64,5 @@ exports.startServer = (port, path, callback) ->
   $log "started on port: #{p}, path #{path}"
   app.listen p
 
-if cfg.isProd
+if cfg.isProd || !module.parent
   exports.startServer()

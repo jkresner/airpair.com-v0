@@ -1,22 +1,21 @@
 <td class="total">${{ total }}</td>
 <td>
-  <span>{{ createdDate }}</span>
-  {{#if payment.error }}
+  <span>
+    <a href="#edit/{{ _id }}" class="selectOrder">
+      <img src="/images/{{ paymentType }}-favicon.ico" class="favicon"> {{ createdDate }}
+    </a>
+  </span>
+  <br />
+  {{#if error }}
     <a href="javascript:alert('{{error.message }}')" style="color:red">ERROR</a>
+    | <a class="delete deleteOrder" href="#" data-id="{{ _id }}" title="Delete this order">x</a>
   {{else}}
     <b class="{{ paymentStatus }}">{{ paymentStatus }}</b>
     {{#if isPending }}
       <a class="refresh refreshOrder" href="/paypal/success/{{ _id }}" data-id="{{ _id }}" style="color:green" target="_blank">r</a>
-      | <a class="delete deleteOrder" href="#" data-id="{{ _id }}">x</a>
-    {{/if }}
-    {{#if isReceived }}
-      <a class="payOut" href="#">Pay experts</a>
-      | <a class="delete deleteOrder" href="#" data-id="{{ _id }}"><i class="icon-remove-sign"> </i></a>
+      | <a class="delete deleteOrder" href="#" data-id="{{ _id }}" title="Delete this order">x</a>
     {{/if }}
   {{/if }}
-  <a href="#" class="selectOrder" data-id="{{ _id }}">
-    <img src="/images/{{ paymentType }}-favicon.ico" class="favicon"> {{_id}}
-  </a>
 </td>
 <td>
   {{#if contactPic }}
@@ -30,15 +29,48 @@
     </div>
 </td>
 <td class="info">
-  <a href="/adm/inbound/request/{{ requestId }}" target="_blank" data-id="{{ _requestId }}">{{ requestId }}</a>
+   <a href="/adm/inbound/request/{{ requestId }}" target="_blank" data-id="{{ _requestId }}" class="selectOrder">{{ requestId }}</a>
+</td>
+<td>
+  {{#if isPaidout}}
+    {{#each lineItems}}
+      <b class="paidout" data-id="{{ _id }}">paid</b>
+    {{/each}}
+
+  {{!-- not paidout --}}
+  {{else}}
+
+    {{#if isPaypal }}{{#if isReceived }}
+      {{#if payoutOptions}}
+      <b>payout</b> {{!-- feedback for the user that it's in progress --}}
+      {{else}}
+      <a class="payOutPayPalAdaptive" href="#">payout</a>
+      {{/if}}
+    {{/if}}{{/if }}
+
+    {{#if isStripe}}
+      {{#each lineItems}}
+        {{#if linePaidout}}
+          <b class="paidout" data-id="{{ _id }}">paid</b>
+        {{else}}
+          {{#if linePayoutPending}}
+          <b>payout</b> {{!-- feedback for the user that it's in progress --}}
+          {{else}}
+          <a class="payOutPaypalSingle" href="#" data-id="{{ _id }}">payout</a>
+          {{/if}}
+        {{/if}}
+      {{/each}}
+    {{/if}}
+
+  {{/if}} {{!-- end if isPaidout --}}
 </td>
 <td>
   {{#each lineItems}}
     {{ qtyRedeemed }}/ {{ qty }}
-      {{#with suggestion.expert }}
-        <img class="expertPic" src="{{ pic }}" />
-        {{ name }}<br />
-      {{/with}}
+    {{#with suggestion.expert }}
+      <img class="expertPic" src="{{ pic }}" />
+      {{ name }}<br />
+    {{/with}}
   {{/each}}
 </td>
 <td>${{ profit }}</td>

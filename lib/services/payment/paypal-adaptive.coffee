@@ -72,6 +72,19 @@ module.exports = class PaypalAdaptive
 
     @postPayload "Pay", payload, callback
 
+  PaySingle: (order, lineItem, callback) ->
+    payload = payloadDefault(@cfg)
+    payload.memo = "https://airpair.com/review/#{order.requestId}"
+    payload.actionType = 'PAY'
+    payload.senderEmail = @cfg.PrimaryReceiver
+
+    payeePaypalEmail = getExpertPaypalEmail(lineItem)
+    payload.receiverList.receiver.push
+      email:    payeePaypalEmail
+      amount:   @formatCurrency(lineItem.expertsTotal)
+
+    @postPayload "Pay", payload, (e, res) ->
+      return callback e, payload, res
 
   PaymentDetails: (order, callback) ->
     payload =
@@ -150,3 +163,37 @@ module.exports = class PaypalAdaptive
 #     build:          "nnnnnnn"
 #   payKey: "Your-payKey"
 #   paymentExecStatus: "CREATED"
+
+###
+PaySingle examples:
+Request for an implicitly approved payment:
+
+"actionType=PAY
+&senderEmail=sender@domain
+&cancelUrl=http://your_cancel_url
+&currencyCode=USD
+&receiverList.receiver(0).email=receiver@domain
+&receiverList.receiver(0).amount=100.00
+&requestEnvelope.errorLanguage=en_US
+&returnUrl=http://your_return_url"
+
+
+Response for an implicitly approved payment:
+
+responseEnvelope.timestamp=2013-04-24T14%3A39%3A26.000-07%3A00
+&responseEnvelope.ack=Success
+&responseEnvelope.correlationId=34e44c0bdbed6
+&responseEnvelope.build=5710123
+&payKey=AP-54224401WG0931234
+&paymentExecStatus=COMPLETED
+&paymentInfoList.paymentInfo(0).transactionId=1F809595PU5211234
+&paymentInfoList.paymentInfo(0).transactionStatus=COMPLETED
+&paymentInfoList.paymentInfo(0).receiver.amount=100.00
+&paymentInfoList.paymentInfo(0).receiver.email=receiver@domain
+&paymentInfoList.paymentInfo(0).receiver.primary=false
+&paymentInfoList.paymentInfo(0).receiver.accountId=7X2XKABC5Z1234
+&paymentInfoList.paymentInfo(0).pendingRefund=false
+&paymentInfoList.paymentInfo(0).senderTransactionId=5VA331617X3361234
+&paymentInfoList.paymentInfo(0).senderTransactionStatus=COMPLETED
+&sender.accountId=6VJKLRUABCDEF
+###

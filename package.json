@@ -15,6 +15,8 @@
   "scripts": {
     "test": "./build/git-hooks/pre-push",
     "postinstall": "brunch b -e prod",
+    "hooks": "cd .git/hooks && ln -nsf ../../build/git-hooks/* .",
+    "start": "PORT=3333 Env=dev runjs app.coffee",
     "coverage": "mocha --require blanket -R html-cov test/server/all.coffee > coverage.html && open coverage.html",
     "blanket": {
       "pattern": "/lib",
@@ -62,6 +64,8 @@
   },
   "devDependencies": {
     "supertest": "0.5.x",
-    "blanket": "~1.1.5"
+    "blanket": "~1.1.5",
+    "mocha-phantomjs": "~3.2.0",
+    "run": "~1.2.0"
   }
 }

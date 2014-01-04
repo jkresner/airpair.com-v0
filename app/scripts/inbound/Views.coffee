@@ -13,11 +13,12 @@ class exports.FiltersView extends BB.BadassView
   events:
     'click .btn': 'filterRequests'
   initialize: ->
-    owner = storage('inbound.owner')
-    @collection.once 'reset', =>
-      if owner
-        @highlightBtn $(".btn:contains(#{owner})")
-        @filterByOwner owner
+    # both initial page load and hitting #inactive trigger this
+    @listenTo @collection, 'sync', =>
+      owner = storage('inbound.owner')
+      if !owner then return
+      @highlightBtn $(".btn:contains(#{owner})")
+      @filterByOwner owner
 
   filterRequests: (e) ->
     $btn = $(e.currentTarget)
