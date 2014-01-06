@@ -21,12 +21,11 @@ module.exports = class SettingsService extends DomainService
   create: (userId, d, cb) =>
     if !d? then d = paymentMethods: []
     d.userId = userId.toString()
-    if d.stripeCreate? then @createStripeSettings(d,cb) else @_save(d, cb)
+    if d.stripeCreate? then @createStripeSettings(d, cb) else @_save(d, cb)
 
 
   update: (d, cb) =>
-    $log 'settings,updating', d?, cb
-    if d.stripeCreate? then @createStripeSettings(d,cb) else @_save(d, cb)
+    if d.stripeCreate? then @createStripeSettings(d, cb) else @_save(d, cb)
 
 
   addPayPalSettings: (userId, email, cb) =>

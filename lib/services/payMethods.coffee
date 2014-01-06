@@ -43,8 +43,8 @@ module.exports = class PayMethodsService extends DomainService
   #TODO setPeopleProps paymentInfoSet: 'stripe'
   share: (id, email, callback) =>
     @_getObjs id, email, (usr, settings, payMethod) =>
-      for s in payMethod.sharers
-        if s.userId is usr._id then return callback "Already shared w #{email}"
+      sharer = _.find payMethod.sharers, (s) -> _.idsEqual s.userId, usr._id
+      if sharer? then return callback new Error "Already shared w #{email}"
 
       @settingsSvc.addStripeSettings payMethod.info, settings, (e,r) =>
         if e? then return callback e
@@ -55,7 +55,7 @@ module.exports = class PayMethodsService extends DomainService
   unshare: (id, email, callback) =>
     @_getObjs id, email, (usr, settings, payMethod) =>
       sharer = _.find payMethod.sharers, (s) -> _.idsEqual s.userId, usr._id
-      if !sharer? then throw new Error "#{email} not a payMethod sharer"
+      if !sharer then return callback new Error "#{email} not a payMethod sharer"
 
       pm = _.find settings.paymentMethods, (p) -> p.info.id == payMethod.info.id
       settings.paymentMethods = _.without settings.paymentMethods, pm

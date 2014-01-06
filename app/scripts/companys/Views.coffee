@@ -14,6 +14,9 @@ class exports.StripeRegisterView extends Settings.StripeRegisterView
   stripeCustomerSuccess: (model, resp, opts) =>
     @model.unset 'stripeCreate'
     @collection.add new M.PayMethod model.attributes
+    # TODO: implement (prob best on the server)
+    # To update that a user has card details associated with their
+    # account when a card is shared / un-shared
     # name = @session.get('google').displayName
     # addjs.providers.mp.setPeopleProps paymentInfoSet: 'stripe'
     @successAction()
