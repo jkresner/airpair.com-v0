@@ -13,6 +13,14 @@ module.exports = class HasErrorStateView extends BadassView
 
     BadassView::constructor.apply @, arguments
 
+  ###
+  expects errors from the server to look like
+    {
+      data: {
+        fieldName: message
+      }
+    }
+  ###
   renderError: (model, resp, opts) =>
 
     if @logging then $log 'renderError', model, resp, opts

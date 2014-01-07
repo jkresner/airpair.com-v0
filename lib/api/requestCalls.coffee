@@ -2,6 +2,7 @@ authz     = require './../identity/authz'
 admin = authz.Admin()
 loggedIn  = authz.LoggedIn isApi:true
 CallsSvc   = require './../services/requestCalls'
+formatValidationErrors = require '../util/formatValidationErrors'
 
 class RequestCallsApi  # Always passes back a full request object
 
@@ -17,14 +18,13 @@ class RequestCallsApi  # Always passes back a full request object
       if e then return next e
       res.send r
 
-  # TODO return validation errors in same json format as backbone understands
   create: (req, res, next) =>
     req.checkBody('duration', 'Invalid duration').notEmpty().isInt()
     req.checkBody('date', 'Invalid date').notEmpty().isDate()
     req.checkBody('time', 'Invalid time').notEmpty().is(/^\d\d:\d\d$/)
     errors = req.validationErrors()
     if errors
-      return res.send errors, 400
+      return res.send formatValidationErrors(errors), 400
     req.sanitize('duration').toInt()
 
     {date, time} = req.body
