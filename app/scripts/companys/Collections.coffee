@@ -16,4 +16,10 @@ class exports.Companys extends BB.FilteringCollection
 
 
 
+class exports.PayMethods extends BB.FilteringCollection
+  model: Models.PayMethod
+  url: '/api/paymethods'
+
+
+
 module.exports = exports

@@ -1,57 +1,68 @@
-DomainService  = require './_svc'
-StripeService  = require './payment/stripe'
+DomainService = require './_svc'
+StripeService = require './payment/stripe'
 stripeSvc = new StripeService()
 
 module.exports = class SettingsService extends DomainService
 
   model: require './../models/settings'
 
+
   getByUserId: (userId, callback) =>
-    @model.findOne({ userId: userId }).lean().exec (e, r) =>
-      # $log 'settings getByUserId', userId
-      if e then return callback e
-      if ! r? then r = {}
-      callback null, r
+    @searchOne { userId }, callback
 
 
-  create: (userId, data, callback) =>
-    data.userId = userId.toString()
-    save = (e) =>
-      if e then return next e
-      new @model( data ).save (e, r) =>
-        # $log '@model.save', e, r
-        callback e, r
-    if data.stripeCreate? then @addStripeCustomerSettings(data, save) else save()
+  _save: (data, callback) =>
+    ups = _.omit data, '_id'
+    {userId} = ups
+    @model.findOneAndUpdate({userId}, ups, { upsert: true }).lean().exec (e, r) =>
+      callback e, r
 
 
-  update: (userId, data, callback) =>
-    ups = _.clone data
-    # ups.paymentMethods = settings.paymentMethods
-    ups.userId = userId
-    delete ups._id
-    # (JK 2013.10.15) very sorry I know this is bad code ...
-    save = (e) =>
-      if e then return callback e
-      @model.findOneAndUpdate({userId:userId}, ups, { upsert: true }).lean().exec (e, r) =>
-        # $log 'save.settings', e, r
-        callback e, r
-
-    if data.stripeCreate? then @addStripeCustomerSettings(ups, save) else save()
+  create: (userId, d, cb) =>
+    if !d? then d = paymentMethods: []
+    d.userId = userId.toString()
+    if d.stripeCreate? then @createStripeSettings(d, cb) else @_save(d, cb)
 
 
-  addStripeCustomerSettings: (d, callback) =>
+  update: (d, cb) =>
+    if d.stripeCreate? then @createStripeSettings(d, cb) else @_save(d, cb)
+
+
+  addPayPalSettings: (userId, email, cb) =>
+    @getByUserId userId, (e, settings) =>
+      paypal = type: 'paypal', isPrimary: true, info: { email }
+      if !settings? || !settings._id?
+        @create userId, { paymentMethods: [paypal] }, cb
+      else
+        existing = _.findWhere settings.paymentMethods, { type: 'paypal' }
+        if !existing?
+          settings.paymentMethods.push paypal
+        else if existing.info.email != email
+          existing.info.email = email
+
+        @update settings, cb
+
+
+  createStripeSettings: (d,cb) =>
     {email,token} = d.stripeCreate
     delete d.stripeCreate
 
-    # make sure we only have one stripe customer settings
-    d.paymentMethods = _.without d.paymentMethods, _.findWhere(d.paymentMethods, {type: 'stripe'})
-
     stripeSvc.createCustomer email, token, (e, customer) =>
       if e then return callback e
-      if customer?
-        isPrimary = d.paymentMethods.length == 0
-        d.paymentMethods.push { type: 'stripe', info: customer, isPrimary: isPrimary }
-      callback null
+      @addStripeSettings customer, d, cb
+
+
+  addStripeSettings: (customer, settings, callback) =>
+    d = settings
+    isPrimary = d.paymentMethods.length == 0
+
+    # make sure we only have one stripe customer settings
+    existingStripe = _.findWhere d.paymentMethods, { type: 'stripe' }
+    d.paymentMethods = _.without d.paymentMethods, existingStripe
+
+    d.paymentMethods.push type: 'stripe', info: customer, isPrimary: isPrimary
+
+    @_save d, callback
 
 
   getStripeCustomerId: (settings) =>

@@ -4,14 +4,18 @@ Shared = require './../shared/Models'
 exports = {}
 
 
-exports.User = class User extends Shared.User
+class User extends Shared.User
   urlRoot: '/api/users'
   validation:
     email:           { required: true }
 
 
-exports.Company = class Company extends BB.BadassModel
+class Company extends BB.BadassModel
   urlRoot: '/api/companys'
 
 
-module.exports = exports
+class PayMethod extends BB.BadassModel
+  urlRoot: '/api/paymethods'
+
+
+module.exports = {PayMethod,User,Company}
