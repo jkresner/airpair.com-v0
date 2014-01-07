@@ -23,7 +23,6 @@ module.exports = class RequestCallsService
 
   getByExpertId: (expertId, callback) => throw new Error 'not imp'
 
-  # TODO make this a client-side require-able function
   _canScheduleCall: (orders, call) =>
     availability = expertAvailability orders, call.expertId
     call.duration <= availability.balance
@@ -31,7 +30,6 @@ module.exports = class RequestCallsService
   _qtyRemaining: (lineItem) ->
     lineItem.qty - sum _.pluck lineItem.redeemedCalls, 'qtyRedeemed'
 
-  # TODO another function to reduce the duration of a call / subtracting hours from orders
   _modifyOrdersWithCallDuration: (orders, call) =>
     allocatedSoFar = 0
     done = false
@@ -76,9 +74,9 @@ module.exports = class RequestCallsService
         # this lets us to update request & orders in parallel
         call._id = new ObjectId()
 
-        # TODO sorry, but here I'm going to make the gcal event first, because we
-        # need to put the event info into the call object, and it is fiddly to get
-        # out the correct call after it's been inserted into the calls array.
+        # we make the gcal event first, because we need to put the event info
+        # into the call object, and it is fiddly to get out the correct call
+        # after it's been inserted into the calls array.
         @_createCalendarEvent request, call, (err, eventData) =>
           if err then return callback err
           call.gcal = eventData
@@ -109,16 +107,15 @@ module.exports = class RequestCallsService
   Once you've unscheduled, you can _canScheduleCall and
   _modifyOrdersWithCallDuration as though it were a totally new call.
 
-  NOTE: by using this you will lose the qtyCompleted count on the redeemedCalls.
-  TODO: I think this is a problem, but I don't want to think about it right now.
+  TODO: _unschedule will lose the qtyCompleted count on the redeemedCalls, bad.
   ###
-  _unschedule: (orders, call) ->
-    orders.map (o) ->
-      o.lineItems = o.lineItems.map (li) ->
-        li.redeemedCalls = li.redeemedCalls.filter (rc) ->
-          rc.callId == call._id
-        li
-      o
+  # _unschedule: (orders, call) ->
+  #   orders.map (o) ->
+  #     o.lineItems = o.lineItems.map (li) ->
+  #       li.redeemedCalls = li.redeemedCalls.filter (rc) ->
+  #         rc.callId == call._id
+  #       li
+  #     o
 
   ###
   TODO: what does it mean to change the type? we unschedule and then reschedule,
@@ -152,13 +149,13 @@ module.exports = class RequestCallsService
       - make changes for each field
     - save all resources
   ###
-  update: (userId, requestId, call, callback) =>
+  # update: (userId, requestId, call, callback) =>
 
-    Request.findOne({ _id: requestId }).exec (err, request) =>
-      if err then return callback err
-      oldCall = _.find request.calls, _id: call._id
+  #   Request.findOne({ _id: requestId }).exec (err, request) =>
+  #     if err then return callback err
+  #     oldCall = _.find request.calls, _id: call._id
 
-      ###
+  ###
       affectsOrders = [ 'type', 'duration', 'status', 'recordings' ]
 
       changedProperties = diff(oldCall, call)

@@ -7,7 +7,7 @@ module.exports = class Router extends S.AirpairSessionRouter
   pushStateRoot: '/adm/schedule'
 
   routes:
-    'edit/:requestId/call/:callId': 'edit'
+    # 'edit/:requestId/call/:callId': 'edit'
     ':requestId': 'schedule'
 
   appConstructor: (pageData, callback) ->
@@ -29,6 +29,6 @@ module.exports = class Router extends S.AirpairSessionRouter
     @resetOrFetch d.orders, pageData.orders
 
     _.extend d, v
-  edit: (requestId, callId) ->
-    @app.requestCall.set({ requestId: requestId, _id: callId })
-    # $('#edit').show() # TODO I shouldnt need to write this.
+
+  # edit: (requestId, callId) ->
+  #   @app.requestCall.set({ requestId: requestId, _id: callId })

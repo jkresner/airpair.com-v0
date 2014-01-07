@@ -94,7 +94,7 @@ class exports.OrdersView extends Backbone.View
       for li in m.get 'lineItems'
         hourCount += li.qty
         expertIds.push li.suggestion.expert._id
-        # TODO use calcTotal, calcRedeemed, to calculate hour stats
+        # TODO reuse calcTotal, calcRedeemed, to calculate hour stats
     filteredModelsJson = _.pluck @collection.filteredModels, 'attributes'
     requestCount = _.uniq(_.pluck filteredModelsJson, 'requestId').length
     customerCount = _.uniq(_.pluck filteredModelsJson, 'userId').length
