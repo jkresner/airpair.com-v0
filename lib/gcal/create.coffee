@@ -3,7 +3,7 @@ gcal = require './gcal'
 params =
   # Air Pairings calendar ID
   calendarId: 'airpair.co_19t01n0gd6g7548k38pd3m5bm0@group.calendar.google.com',
-  # TODO true if prod, false if dev
+  # true if prod, false otherwise
   sendNotifications: false
 
 if cfg? && cfg.isProd
@@ -13,7 +13,7 @@ create = (body, cb) ->
   onCal = (err, cal, oauth2Client) ->
     if err then return  err
 
-    # TODO set up a proper testing env.
+    # WONTFIX set up a proper testing env.
     if !process.env.GCAL_ENV && (!cfg || !cfg.isProd)
       console.log 'gcal.create', params, body
       return cb null, htmlLink: 'http://example.com/google-calendar-link'

@@ -20,7 +20,6 @@ class Mailman
       Text: async.apply renderHandlebars, d, txtPath
     }, (error, results) -> callback(error, results)
 
-  # TODO change call signature to `options, callback`. And test everything.
   sendEmail: (options, callback) =>
     @renderEmail(options, options.templateName, (e, rendered) ->
       rendered.Subject = options.subject

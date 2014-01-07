@@ -71,7 +71,6 @@ function getAccessToken(oauth2Client, callback) {
     console.log('code', code)
     oauth2Client.getToken(code, function(err, tokens) {
       // set tokens to the client
-      // TODO: tokens should be set by OAuth2 client.
       console.log('tokens', tokens)
       oauth2Client.setCredentials(tokens);
       callback();
