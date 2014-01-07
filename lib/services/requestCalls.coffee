@@ -77,7 +77,7 @@ module.exports = class RequestCallsService
         # we make the gcal event first, because we need to put the event info
         # into the call object, and it is fiddly to get out the correct call
         # after it's been inserted into the calls array.
-        @_createCalendarEvent request, call, (err, eventData) =>
+        @_createCalendarEvent request.toJSON(), call, (err, eventData) =>
           if err then return callback err
           call.gcal = eventData
 
