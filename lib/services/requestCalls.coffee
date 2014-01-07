@@ -209,29 +209,30 @@ module.exports = class RequestCallsService
 
   # newEvent: DomainService.newEvent.bind(this)
 
-  owner2color:
+  owner2colorIndex:
     mi: undefined # default color for the calendar, #9A9CFF
     '': 1  # blue
     il: 2  # green
     '': 3  # purple
-    '': 4  # red
+    ds: 4  # red
     '': 5  # yellow
-    jk: 6  # orange = jk
+    jk: 6  # orange
     '': 7  # turqoise
     '': 8  # gray
     '': 9  # bold blue
     dt: 10 # bold green
-    pl: 11 # bold red = pl
+    '': 11 # bold red
 
   _createCalendarEvent: (request, call, cb) =>
     start = call.datetime
     owner = request.owner
     sug = _.find request.suggested, (s) -> s.expert._id == call.expertId
-    # TODO capitalize first letter
     expert = sug.expert
-    ename = expert.name.slice(0, expert.name.indexOf(' '))
-    fullName = request.company.contacts[0].fullName
-    cname = fullName.slice(0, fullName.indexOf(' '))
+    expertName = @_capitalizeFirstLetter(expert.name.trim())
+    expertFirst = expertName.slice(0, expertName.indexOf(' '))
+    customerName = @_capitalizeFirstLetter(request.company.contacts[0].fullName.trim())
+    customerFirst = customerName.slice(0, customerName.indexOf(' '))
+    tag = request.tags[0]?.name || 'n/a'
     body =
       start:
         dateTime: start.toISOString()
@@ -240,15 +241,16 @@ module.exports = class RequestCallsService
       attendees: [
         { email: "#{owner}@airpair.com" }
         { email: request.company.contacts[0].email }
-        { email: sug.expert.email }
+        { email: expert.email }
       ]
-      # TODO: remove the "TEST" from here.
-      summary: "TEST Airpair #{cname}+#{ename} (#{request.tags[0].name})"
-      colorId: @owner2color[owner]
+      summary: "Airpair #{customerFirst}+#{expertFirst} (#{tag})"
+      colorId: @owner2colorIndex[owner]
       description: "Your account manager, #{owner2name[owner]} will set up a" +
         " google hangout for this session and invite you to it."
 
     gcalCreate body, cb
 
+  _capitalizeFirstLetter: (str) ->
+    str[0].toUpperCase() + str.slice(1)
   _addTime: (original, milliseconds) ->
     new Date original.getTime() + milliseconds

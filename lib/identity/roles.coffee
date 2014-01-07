@@ -45,4 +45,4 @@ module.exports =
     il: 'Igor'
     dt: 'David'
     jk: 'Jonathon'
-    pl: 'Peter'
+    ds: 'Dilys'
