@@ -92,8 +92,10 @@ describe "Stories: Bruce Christie", ->
     @app.requests.once 'sync', =>
       router.navTo "##{@rId}"
 
-      @app.selected.save { suggested: request.suggested }, success: (model) =>
+      changes = { suggested: request.suggested, owner: request.owner }
+      @app.selected.save changes, success: (model) =>
         expect( @app.selected.get('suggested').length ).to.equal 2
+        expect( @app.selected.get('owner') ).to.equal 'jk'
         done()
 
   it 'can review experts and book hours as customer with stripe', (done) ->
