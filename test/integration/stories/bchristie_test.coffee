@@ -35,6 +35,7 @@ describe "Stories: Bruce Christie", ->
     hlpr.cleanTearDown @
 
   it 'can create stripe settings', (done) ->
+    @timeout 10000
     psv = @app.paymentSettingsView
     rv = @app.stripeRegisterView
 
