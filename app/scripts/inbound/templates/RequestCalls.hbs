@@ -3,7 +3,7 @@
   <br>
   {{#each calls}}
     <p class="call">
-      <a href="/adm/schedule/{{../_id}}/call/{{_id}}" title="edit call information">edit</a>
+      {{!-- <a href="/adm/schedule/{{../_id}}/call/{{_id}}" title="edit call information">edit</a> --}}
       <img src="{{expert.pic}}" alt="{{expert.name}}" style="height: 40px">
       {{expert.name}}
       on <a href="{{gcal.htmlLink}}" title="view on google calendar" target="_blank">
