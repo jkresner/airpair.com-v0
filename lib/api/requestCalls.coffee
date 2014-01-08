@@ -32,7 +32,6 @@ class RequestCallsApi  # Always passes back a full request object
     req.body.date = undefined
     req.body.time = undefined
 
-    console.log 'create', JSON.stringify req.body, null, 2
     @svc.create req.user._id, req.params.requestId, req.body, (e, results) ->
       if e then return next e
       res.send results.request

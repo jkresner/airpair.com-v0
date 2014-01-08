@@ -1,3 +1,6 @@
+###
+# requestCalls is tested in bchristie's story.
+
 {http,_,sinon,chai,expect,dbConnect,dbDestroy} = require './../test-lib-setup'
 {app,data,passportMock} = require './../test-app-setup'
 
@@ -88,3 +91,4 @@ describe "REST api request calls", ->
   it "can get request by call permalink (only when cmsApproved)", (done) ->
     # check call completed
     # cmsApproved is 'complete'
+###
