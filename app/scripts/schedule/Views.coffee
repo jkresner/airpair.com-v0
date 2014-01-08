@@ -19,7 +19,7 @@ class exports.ScheduleFormView extends BB.ModelSaveView
     'change [name=duration]': -> @model.set 'duration', parseInt(@elm('duration').val(), 10)
     'blur [name=date]': -> @model.set 'date', @elm('date').val()
     'blur [name=time]': -> @model.set 'time', @elm('time').val()
-    'click .save': 'save'
+    'click .save': '_save'
   initialize: ->
     if @request.get('callId') then return # we are on the editing page
     @listenTo @request, 'change', @render
@@ -74,6 +74,10 @@ class exports.ScheduleFormView extends BB.ModelSaveView
     @$('.datepicker').pickadate()
     @$('.timepicker').pickatime({ format: 'HH:i', formatLabel: 'HH:i' })
     @
+  # prevents double-saves, provides feedback that request is in progress.
+  _save: (e) ->
+    $(e.target).attr('disabled', true)
+    @save e
   renderSuccess: (model, response, options) =>
     window.location = "/adm/inbound/request/#{@request.get('_id')}"
 
