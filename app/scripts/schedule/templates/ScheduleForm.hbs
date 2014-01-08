@@ -2,6 +2,7 @@
   <a class="btn" href="/adm/inbound/request/{{requestId}}">Back</a>
 </div>
 <h2>Schedule a Call</h2>
+
 <fieldset>
   <h4>Experts</h4>
   <div class="experts">
@@ -52,8 +53,11 @@
     <div class="control-group">
       <label class="control-label" for="date">Date &amp; Time &amp; Timezone</label>
       <div class="controls">
-        <input name="date" type="date" class="input-medium" value="{{../date}}">
-        <input name="time" type="time" class="input-medium" value="{{../time}}">
+        <input name="date" type="text" class="datepicker input-medium"
+          value="{{../date}}" placeholder="pick a date">
+        <input name="time" type="text" class="timepicker input-medium"
+          value="{{../time}}" placeholder="pick a time">
+
         <select name="timezone" class="input-mini">
           <option value="PST" selected>PST</option>
         </select>

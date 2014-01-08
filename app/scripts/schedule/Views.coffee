@@ -67,7 +67,12 @@ class exports.ScheduleFormView extends BB.ModelSaveView
       @model.set 'date', today
 
     d = @model.extendJSON { available: suggested, selectedExpert, requestId: @request.get('_id') }
+
+    @$('.datepicker').stop()
+    @$('.timepicker').stop()
     @$el.html @tmpl d
+    @$('.datepicker').pickadate()
+    @$('.timepicker').pickatime({ format: 'HH:i', formatLabel: 'HH:i' })
     @
   renderSuccess: (model, response, options) =>
     window.location = "/adm/inbound/request/#{@request.get('_id')}"
