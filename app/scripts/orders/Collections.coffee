@@ -7,10 +7,21 @@ class exports.Orders extends BB.FilteringCollection
   url: '/api/admin/orders'
   comparator: (m) ->
     -1 * moment(m.get('utc')).unix()
-  _filter: (f) ->
-    timeString = f.filter
+  _filter: (options) ->
+    {timeString, sourceString} = options
     orders = @models
 
+    if sourceString
+      console.log 'sourceString', sourceString
+
+      # TODO don't filter on utm; filter on marketing tags
+      orders = _.filter orders, (o) ->
+        utm = o.get('utm')
+        if !utm || !utm.utm_source then return false
+        # console.log sourceString, 'vs', utm.utm_source
+        utm.utm_source.indexOf(sourceString) > -1
+
+    if !timeString then return orders
     if 'all' == timeString then return orders
 
     now = moment()
@@ -20,7 +31,7 @@ class exports.Orders extends BB.FilteringCollection
         0 == now.diff(moment(m.get('utc')), 'days');
 
     day = now.day()
-    month = parseInt(f.month, 10) || now.month() # support current month button
+    month = parseInt(options.month, 10) || now.month() # support current month button
     year = now.year()
 
     # if the month has not yet happened in this calendar year, use the previous

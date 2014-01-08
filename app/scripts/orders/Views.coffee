@@ -10,15 +10,29 @@ Shared = require './../shared/Views'
 class exports.FiltersView extends BB.BadassView
   el: '#filters'
   events:
-    'click .btn': 'filterOrders'
+    'click .btn': 'timeFilter'
+    'keyup input': 'sourceFilter'
   initialize: ->
-  filterOrders: (e) ->
+    @sourceFilter = _.debounce @_sourceFilter, 500
+  timeFilter: (e) ->
     $btn = $(e.currentTarget)
     @$('button').removeClass('btn-warning')
     $btn.addClass('btn-warning')
+
+    @timeString = $btn.text().toLowerCase()
+    @month = $btn.data('month')
+    @filter(@timeString, @month, @sourceString)
+
+  _sourceFilter: (e) ->
+    @sourceString = $(e.target).val().trim()
+    @filter(@timeString, @month, @sourceString)
+
+  filter: (timeString, month, sourceString) ->
     @collection.filterFilteredModels
-      filter: $btn.text().toLowerCase()
-      month: $btn.data('month')
+      timeString: timeString
+      month: month
+      sourceString: sourceString
+
 
 class exports.OrderRowView extends BB.ModelSaveView
   tagName: 'tr'
