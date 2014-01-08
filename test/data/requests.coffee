@@ -17,7 +17,7 @@ module.exports = [
   {
     _id: "515a60284bfa2f0200000052",
     brief: 'At various times I need help with Objective-C for iOS.',
-    canceledReason: '',
+    canceledDetail: '',
     company:
       contacts: [
         {

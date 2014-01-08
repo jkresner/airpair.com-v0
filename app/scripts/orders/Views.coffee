@@ -19,7 +19,7 @@ class exports.FiltersView extends BB.BadassView
     $btn.addClass('btn-warning')
     @collection.filterFilteredModels
       filter: $btn.text().toLowerCase()
-      mth: $btn.data('mth')
+      month: $btn.data('month')
 
 class exports.OrderRowView extends BB.ModelSaveView
   tagName: 'tr'

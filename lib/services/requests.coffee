@@ -97,9 +97,7 @@ module.exports = class RequestsService extends DomainService
     # TODO, add some validation!!
     # if expertReview.agree
 
-    # $log 'updateSuggestionByExpert', usr._id, expertReview.payPalEmail
-    pymt = paymentMethods: [{type: 'paypal', isPrimary: true, info: { email: expertReview.payPalEmail }}]
-    @settingsSvc.update usr._id, pymt, (e, r) =>
+    @settingsSvc.addPayPalSettings usr._id, expertReview.payPalEmail, (e, r) =>
       if e then $log 'save.settings error:', e, r
 
     ups = expertReview

@@ -183,7 +183,7 @@ class exports.RequestInfoView extends BB.ModelSaveView
     @tagsInput = new SV.TagsInputView model: @model, collection: @tags
     @listenTo @model, 'change', @render
   render: ->
-    @setValsFromModel ['brief','availability','status','owner','canceledReason','incompleteDetail','budget','pricing']
+    @setValsFromModel ['brief','availability','status','owner','canceledDetail','incompleteDetail','budget','pricing']
     mailTemplates = new CustomerMailTemplates @model, @session
     tmplCompanyData = _.extend { mailTemplates: mailTemplates, tagsString: @model.tagsString() }, @mget('company')
     @$('#company-controls').html @tmplCompany(tmplCompanyData)

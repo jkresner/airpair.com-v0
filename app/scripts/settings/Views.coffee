@@ -27,8 +27,9 @@ class exports.StripeRegisterView extends BB.BadassView
       @$('button').prop 'disabled', false
     else
       token = response.id  # token contains id, last4, and card type
-      email = @session.get('google')._json.email
-      @model.save stripeCreate: { token: token, email: email }, { success: @stripeCustomerSuccess }
+      @model.save stripeCreate: { token: token, email: @email() }, { success: @stripeCustomerSuccess }
+  email: ->
+    @session.get('google')._json.email
   stripeCustomerSuccess: (model, resp, opts) =>
     @model.unset 'stripeCreate'
     name = @session.get('google').displayName
