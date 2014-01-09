@@ -39,9 +39,9 @@ class exports.ScheduleFormView extends BB.ModelSaveView
         expert.availability.byTypeArray = _.values(expert.availability.byType)
         suggestion
 
+      # expert is available, you can only purchase hours for someone available
       .filter (suggestion) =>
-        balance = suggestion.expert.availability.balance
-        suggestion.expertStatus == 'available' && balance > 0
+        suggestion.expert.availability.balance > 0
 
       .map (suggestion, __, filtered) =>
         # selects the first expert by default when there's only one
