@@ -39,7 +39,6 @@ exports.config =
           'vendor/scripts/backbone.js'
           'vendor/scripts/backbone.validation.js'
           'vendor/scripts/backbone.validation_bootstrap.js'
-          'vendor/scripts/picker.js'
         ]
     stylesheets:
       joinTo:
