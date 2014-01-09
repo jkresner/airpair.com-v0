@@ -156,55 +156,55 @@ module.exports = class RequestCallsService
   #     oldCall = _.find request.calls, _id: call._id
 
   ###
-      affectsOrders = [ 'type', 'duration', 'status', 'recordings' ]
+      # affectsOrders = [ 'type', 'duration', 'status', 'recordings' ]
 
-      changedProperties = diff(oldCall, call)
-      if !_.keys(changedProperties).length then return new Error 'no changes!'
-      tasks = {}
-      gcal = undefined
-      for prop in changedProperties
-        if prop in affectsOrders
-          tasks.orders = fetchOrders
-        if prop in affectsGcal
-          gcal = call.gcal
-      if _.keys tasks
-        return async.parallel(tasks, onResources)
-      return makeUpdates()
+      # changedProperties = diff(oldCall, call)
+      # if !_.keys(changedProperties).length then return new Error 'no changes!'
+      # tasks = {}
+      # gcal = undefined
+      # for prop in changedProperties
+      #   if prop in affectsOrders
+      #     tasks.orders = fetchOrders
+      #   if prop in affectsGcal
+      #     gcal = call.gcal
+      # if _.keys tasks
+      #   return async.parallel(tasks, onResources)
+      # return makeUpdates()
 
-      onResources = (err, results) ->
-        if err then return callback err
-        makeUpdates(results.orders)
+      # onResources = (err, results) ->
+      #   if err then return callback err
+      #   makeUpdates(results.orders)
 
-      makeUpdates = (oldOrders) ->
-        for prop in changedProperties
-          update[prop]()
+      # makeUpdates = (oldOrders) ->
+      #   for prop in changedProperties
+      #     update[prop]()
 
-        update = {
-          type:       -> oldCall.type = call.type; updateOrders() # unschedule, reschedule
-          duration:   -> oldCall.duration = call.duration; updateOrders() # unschedule, reschedule
-          status:     -> oldCall.status = call.status; updateOrders() # update qtyCompleted or qtyRedeemed depending on status change. ugh.
-          datetime:   -> oldCall.datetime = call.datetime; updateGcal()
-          recordings: -> oldCall.recordings = call.recordings; updateOrders() # update qtyCompleted? not in this version.
-          notes:      -> oldCall.notes = call.notes
-        }
+      #   update = {
+      #     type:       -> oldCall.type = call.type; updateOrders() # unschedule, reschedule
+      #     duration:   -> oldCall.duration = call.duration; updateOrders() # unschedule, reschedule
+      #     status:     -> oldCall.status = call.status; updateOrders() # update qtyCompleted or qtyRedeemed depending on status change. ugh.
+      #     datetime:   -> oldCall.datetime = call.datetime; updateGcal()
+      #     recordings: -> oldCall.recordings = call.recordings; updateOrders() # update qtyCompleted? not in this version.
+      #     notes:      -> oldCall.notes = call.notes
+      #   }
 
-        if gcal # make the gcal event changes before saving the request
-          return updateGcal(gcal, saveToMongo)
-        return saveToMongo()
+      #   if gcal # make the gcal event changes before saving the request
+      #     return updateGcal(gcal, saveToMongo)
+      #   return saveToMongo()
 
-      saveToMongo (err, gcal) ->
-        if gcal # it will be saved by saveRequest
-          oldCall.gcal = gcal
+      # saveToMongo (err, gcal) ->
+      #   if gcal # it will be saved by saveRequest
+      #     oldCall.gcal = gcal
 
-        tasks = []
-        if oldOrders then tasks.orders = saveOrders
-        tasks.push(saveRequest)
-        async.parallel tasks, (err, results) ->
-          if err then return callback err
+      #   tasks = []
+      #   if oldOrders then tasks.orders = saveOrders
+      #   tasks.push(saveRequest)
+      #   async.parallel tasks, (err, results) ->
+      #     if err then return callback err
 
-      saveRequest = (cb) -> Request.save(request, cb)
-      saveOrders = (cb) -> async.forEach(saveOrder, cb)
-      saveOrder = (order, i, list, cb) -> Order.save(order, cb)
+      # saveRequest = (cb) -> Request.save(request, cb)
+      # saveOrders = (cb) -> async.forEach(saveOrder, cb)
+      # saveOrder = (order, i, list, cb) -> Order.save(order, cb)
       ###
 
   # newEvent: DomainService.newEvent.bind(this)
