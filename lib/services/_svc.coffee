@@ -23,7 +23,7 @@ module.exports = class DomainService
     @model.find search, callback
 
   searchOne: (search, callback) =>
-    @model.findOne search, (e, r) ->
+    @model.findOne(search).lean().exec (e, r) =>
       if e then return callback e
       r = {} if r is null
       callback null, r
@@ -35,12 +35,13 @@ module.exports = class DomainService
     @model.findByIdAndRemove id, callback
 
   update: (id, data, callback) =>
-    ups = _.clone data
-    delete ups._id # so mongo doesn't complain
+    ups = _.omit data, '_id' # so mongo doesn't complain
     @model.findByIdAndUpdate(id, ups).lean().exec (e, r) =>
-      if e? then $log 'error', e
-      if e then return callback e
+      if e?
+        $log 'update.error', e
+        return callback e
       callback null, r
+
 
   # TODO: next time someone wants to change newEvent code, first refactor
   newEvent: (usr, evtName, evtData) ->

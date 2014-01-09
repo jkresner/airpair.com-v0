@@ -44,12 +44,12 @@ class exports.RequestRowView extends BB.BadassView
     @
   tmplData: ->
     d = @model.toJSON()
+    # $log 'RequestRowView.tmplData', d
     _.extend d, {
       contactName:        d.company.contacts[0].fullName
       contactPic:         d.company.contacts[0].pic
       contactEmail:       d.company.contacts[0].email
       createdDate:        @model.createdDateString()
-      created:            @model.createdDate()
       suggestedCount:     d.suggested.length
       suggestedFitCount:  _.filter(d.suggested, (s) -> s.status is 'chosen').length
       callCount:          d.calls.length
@@ -184,7 +184,7 @@ class exports.RequestInfoView extends BB.ModelSaveView
     @tagsInput = new SV.TagsInputView model: @model, collection: @tags
     @listenTo @model, 'change', @render
   render: ->
-    @setValsFromModel ['brief','availability','status','owner','canceledReason','incompleteDetail','budget','pricing']
+    @setValsFromModel ['brief','availability','status','owner','canceledDetail','incompleteDetail','budget','pricing']
     mailTemplates = new CustomerMailTemplates @model, @session
     tmplCompanyData = _.extend { mailTemplates: mailTemplates, tagsString: @model.tagsString() }, @mget('company')
     @$('#company-controls').html @tmplCompany(tmplCompanyData)

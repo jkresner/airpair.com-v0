@@ -64,8 +64,8 @@ class exports.OrderView extends BB.ModelSaveView
       e.preventDefault()
       alert('please select at least one hour')
     else
-      if mixpanel? && mixpanel.get_property('utm_source')?
-        utm_values = 
+      if mixpanel? && mixpanel.get_property? && mixpanel.get_property('utm_source')?
+        utm_values =
           utm_source: mixpanel.get_property('utm_source')
           utm_medium: mixpanel.get_property('utm_medium')
           utm_term: mixpanel.get_property('utm_term')
@@ -75,9 +75,13 @@ class exports.OrderView extends BB.ModelSaveView
         @model.set('utm', utm_values)
 
       eventName = 'customerTryPayPaypal'
-      eventName = 'customerTryPayStripe' if @isStripeMode
+      if @isStripeMode
+        eventName = 'customerTryPayStripe'
+        @$('#pay').prop 'disabled', true  # Disable submitBtn to prevent repeat clicks
+        @$('.payStripe').html 'Payment processing ...'
+
       addjs.trackEvent "request", eventName, "/review/book/#{@model.get('requestId')}"
-      
+
       @save(e)
     false
   getViewData: ->
@@ -85,10 +89,10 @@ class exports.OrderView extends BB.ModelSaveView
   renderSuccess: (model, resp, opts) =>
     if @isStripeMode
       router.navTo "#thankyou/#{router.app.request.id}"
-    else    
+    else
       @$('#paykey').val model.attributes.payment.payKey
       @$('#submitBtn').click()
-    
+
 
 
 class exports.BookExpertView extends BB.BadassView

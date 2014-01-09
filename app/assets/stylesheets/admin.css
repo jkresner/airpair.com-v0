@@ -42,8 +42,7 @@ nav a.zocial { padding:0; }
 #adminboundpage #requests .label-mi { background-color: #9A9CFF; }
 #adminboundpage #requests .label-il { background-color: #7AE7BF; }
 #adminboundpage #requests .label-dt { background-color: #51B749; }
-#adminboundpage #requests .label-pl { background-color: #DC2127; }
-
+#adminboundpage #requests .label-ds { background-color: #FF887C; }
 
 #adminboundpage #request textarea { width:90%;height:100px;font-size:11px; }
 #adminboundpage #request legend { margin-bottom:2px;line-height:24px;background:black;padding:4px;color:white; }
@@ -147,3 +146,9 @@ nav ul li { float:right;display:block;margin-left:5px }
 #admorderspage #orders .pending { color:#b94a48; }
 #admorderspage #orders .received { color:#333333 }
 #admorderspage #orders .paidout { color:#468847; }
+
+#admcompanyspage .unshare { color:red; }
+#admcompanyspage #stripeRegister p { display:none; }
+#admcompanyspage .cardSharers { float:left;width:30% }
+#admcompanyspage .cardDetail { float:right;width:65% }
+
