@@ -1,7 +1,7 @@
 global.cfg      = cfg  # cfg is already declared in util/appConfig
 global.$log     = console.log
 
-global._        = require 'lodash'
+global._        = require 'underscore'
 global._.idsEqual = require '../../app/scripts/shared/mix/idsEqual'
 
 global.winston  = require 'winston'   # logging

@@ -1,5 +1,5 @@
 http = require 'supertest'
-_ = require 'lodash'
+_ = require 'underscore'
 
 # Creates a request and let's you run a test on it
 
