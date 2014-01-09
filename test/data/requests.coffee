@@ -284,6 +284,7 @@ module.exports = [
       expertFeedback: 'asdfasdfasdasdfasdfasdasdfasdfasdasdfasdfasdasdfasdfasdasdfasdfasd'
       expertComment: 'asdfasdfasdf'
       expertAvailability: 'unavailable'
+      "payPalEmail": "test@testpp.com"
   }
 
   # 7) Review request
