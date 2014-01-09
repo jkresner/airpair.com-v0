@@ -15,8 +15,7 @@ module.exports = class ViewDataService
 
   session: (user) ->
     if user? && user.google?
-      # the tests pass in a plain object
-      u = (user.toObject && user.toObject()) || user
+      u = _.clone user
       if u.google then delete u.google.token
       if u.twitter then delete u.twitter.token
       if u.bitbucket then delete u.bitbucket.token
