@@ -29,8 +29,8 @@ class RequestCallsApi  # Always passes back a full request object
 
     {date, time} = req.body
     req.body.datetime = new Date "#{date} #{time} PST"
-    req.body.date = undefined
-    req.body.time = undefined
+    delete req.body.date
+    delete req.body.time
 
     @svc.create req.user._id, req.params.requestId, req.body, (e, results) ->
       if e then return next e

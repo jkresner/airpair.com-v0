@@ -178,5 +178,5 @@ module.exports = class OrdersService extends DomainService
         if ee then return callback ee
         callback null, status: 'deleted'
 
-  requestList: (requestId, callback) =>
+  getByRequestId: (requestId, callback) =>
     @search { requestId: requestId }, callback
