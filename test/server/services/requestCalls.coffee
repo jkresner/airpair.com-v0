@@ -6,7 +6,9 @@ requestsSvc = new RequestsService()
 
 OrdersService = require 'lib/services/orders'
 ordersSvc = new OrdersService()
+
 async = require 'async'
+cloneDeep = require 'lodash.clonedeep'
 ObjectId = require('mongoose').Types.ObjectId
 
 RequestCallsService = require 'lib/services/requestCalls'
@@ -54,7 +56,7 @@ describe "RequestCallsService", ->
 
   it "can book a 1hr call using 1 order and 1 available lineitem for paul", ->
     call = data.calls[1] # expert is paul
-    orders = [_.cloneDeep data.orders[5]] # expert is paul, 2 line items
+    orders = [cloneDeep data.orders[5]] # expert is paul, 2 line items
     expect(svc._canScheduleCall orders, call).to.equal true
 
     orders = orders.map (o) ->
@@ -66,7 +68,7 @@ describe "RequestCallsService", ->
 
   it "cannot book a 1hr call given 1 order and 1 redeemed lineItems", ->
     call = data.calls[1] # expert is paul
-    orders = [_.cloneDeep data.orders[5]] # expert is paul, 2 line items
+    orders = [cloneDeep data.orders[5]] # expert is paul, 2 line items
 
     # mark it completed
     call._id = new ObjectId()
@@ -77,7 +79,7 @@ describe "RequestCallsService", ->
   it "can book a 1hr call using 1 order and 1 available lineitem", (done) ->
     @timeout 0
     call = data.calls[1] # expert is paul
-    orders = [_.cloneDeep data.orders[5]] # expert is paul, 2 line items
+    orders = [cloneDeep data.orders[5]] # expert is paul, 2 line items
     runCreateCallSuccess orders, call, (err, newOrders, newRequestWithCall, newCall) ->
       if err then return done err
       order = newOrders[0]
@@ -90,14 +92,14 @@ describe "RequestCallsService", ->
   it "can book a 2hr call given 2 orders and 2 available lineItems", (done) ->
     @timeout 0
     call = data.calls[2] # duration 2
-    orders = [_.cloneDeep(data.orders[5]), _.cloneDeep(data.orders[5])]
+    orders = [cloneDeep(data.orders[5]), cloneDeep(data.orders[5])]
     runCreateCallSuccess orders, call, done
 
   it "cannot book a 5hr call given 2 orders and 2 lineItems", (done) ->
     @timeout 0
     call = _.clone data.calls[2]
     call.duration = 5
-    orders = [_.cloneDeep(data.orders[5]), _.cloneDeep(data.orders[5])]
+    orders = [cloneDeep(data.orders[5]), cloneDeep(data.orders[5])]
     requestsSvc.create user, request, (err, newRequest) ->
       if err then return done err
       saveOrdersForRequest orders, newRequest, (err, newOrders) ->
