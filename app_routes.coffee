@@ -65,6 +65,8 @@ module.exports = (app) ->
       if e then return next e
       r.render 'adm/inbound.html', d
 
+  app.get '/adm/sources', loggedIn, admin, (req, r) -> file r, 'sources'
+
   # api
   require('./lib/api/users')(app)
   require('./lib/api/companys')(app)
@@ -75,6 +77,7 @@ module.exports = (app) ->
   require('./lib/api/orders')(app)
   require('./lib/api/settings')(app)
   require('./lib/api/paymethods')(app)
+  require('./lib/api/sources')(app)
 
   require('./app_landing')(app)
 

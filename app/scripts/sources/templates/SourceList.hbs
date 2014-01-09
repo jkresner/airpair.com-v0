@@ -1,0 +1,20 @@
+<h3>Existing marketing sources</h3>
+<table>
+  <thead>
+    <tr>
+      <th>name</th>
+      {{!-- TODO --}}
+      {{!-- <th>type</th> --}}
+      {{!-- <th>group</th> --}}
+    </tr>
+  </thead>
+  <tbody>
+    {{#each sources}}
+    <tr>
+      <td>{{name}}</td>
+    </tr>
+    {{else}}
+    <tr><th>Save your first marketing source with the form below.</th></tr>
+    {{/each}}
+  </tbody>
+</table>

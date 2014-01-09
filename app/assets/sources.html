@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Sources</title>
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="/stylesheets/app.css">
+    <link rel="stylesheet" href="/stylesheets/admin.css">
+</head>
+
+<body id="adminboundpage">
+
+  <nav>
+    <div>
+      <a href="/" class="logo"></a>
+      <ul>
+        <li><a href="/adm/inbound" class="zocial">Inbound</a></li>
+        <li><a href="#inactive" class="zocial inactive">Inactive</a></li>
+        <li><a href="/adm/orders" class="zocial">Orders</a></li>
+        <li><a href="/adm/tags" class="zocial">Tags</a></li>
+        <li><a href="/adm/experts" class="zocial">Experts</a></li>
+        <li><a href="/adm/companys" class="zocial">Companys</a></li>
+        <li><a href="/adm/csvs" class="zocial">CSVs</a></li>
+        <li><a href="http://www.youtube.com/my_videos?o=U" class="zocial youtube icon" target="_blank"></a></li>
+        <li><a href="https://plus.google.com/hangouts/_?hso=0&gid=140030887085" class="zocial googleplus" target="_blank">Hangout &nbsp;</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div id="sourceForm" class="route" style="display:block;">
+    <div class="form-actions admin-nav">
+      <div class="controls">
+        <a href="/adm/orders" class="btn">Back</a>
+      </div>
+    </div>
+
+    <div id="sourceList"></div>
+
+    <h2>Create a new marketing source</h2>
+    <fieldset>
+      <!-- TODO type, group -->
+      <div class="control-group">
+        <label class="control-label" for="name">name</label>
+        <div class="controls">
+          <input name="name" type="text" class="input-medium"
+            value="testest" placeholder="name">
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <a href="#" class="save button">Save</a>
+      </div>
+      <div class="alert alert-success">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <h4>Saved</h4>
+      </div>
+      <div class="alert alert-error">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <h4>Error</h4>
+      </div>
+    </fieldset>
+  </div>
+</body>
+
+  <script type="text/javascript">
+    function initApp() {
+      M = require('/scripts/sources/Models');
+      C = require('/scripts/sources/Collections');
+      V = require('/scripts/sources/Views');
+
+      var model = new M.Source();
+      var collection = new C.Sources();
+      window.sf = new V.SourceForm({ model: model, collection: collection });
+      collection.fetch()
+
+      // TODO get adding a source to a request to work
+      // var requestId = "529e65961a4bf00200000010" // lew dwyer
+      // requestId
+      // var sourceView = new TagsView etc
+    }
+  </script>
+  <script src="/javascripts/vendor.js" defer></script>
+  <script src="/javascripts/app.js" defer onload="initApp()"></script>
+
+</html>
