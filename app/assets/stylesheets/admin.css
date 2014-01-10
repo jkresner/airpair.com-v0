@@ -2,6 +2,9 @@ nav a.zocial { padding:0; }
 
 .admin-nav { margin-top:0;padding:15px 10px; }
 
+/* keep the delete button away from the other buttons */
+.controls a.btn-danger:last-child { float: right; }
+
 #admexpertspage {}
 #admexpertspage .main { display:none }
 #admexpertspage #experts { float:left;width:900px }
@@ -168,4 +171,3 @@ nav ul li { float:right;display:block;margin-left:5px }
 #admcompanyspage #stripeRegister p { display:none; }
 #admcompanyspage .cardSharers { float:left;width:30% }
 #admcompanyspage .cardDetail { float:right;width:65% }
-
