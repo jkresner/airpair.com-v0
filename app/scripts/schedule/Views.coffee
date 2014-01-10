@@ -7,7 +7,7 @@ parseYoutubeId = require '../shared/mix/parseYoutubeId'
 
 # schedule form
 class exports.ScheduleFormView extends BB.ModelSaveView
-  # logging: on
+  async: off
   el: '#scheduleForm'
   tmpl: require './templates/ScheduleForm'
   viewData: ['duration', 'date', 'time', 'type']

@@ -33,6 +33,10 @@ class RequestCallsApi  # Always passes back a full request object
     delete req.body.time
 
     @svc.create req.user._id, req.params.requestId, req.body, (e, results) ->
+      if e && e.message.indexOf('Not enough hours') == 0
+        errors =
+          duration: 'Please order more hours in order to schedule more'
+        return res.send data: errors, 400
       if e then return next e
       res.send results.request
 
