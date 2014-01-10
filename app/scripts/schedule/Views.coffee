@@ -15,7 +15,7 @@ class exports.ScheduleFormView extends BB.ModelSaveView
     'click input:radio': (e) ->
       @model.set 'expertId', @$(e.target).val()
       @model.set 'type', @elm('type').val()
-    'change [name=type]': -> @model.set 'type', @elm('type').val()
+    'blur [name=type]': -> @model.set 'type', @elm('type').val()
     'change [name=duration]': -> @model.set 'duration', parseInt(@elm('duration').val(), 10)
     'blur [name=date]': -> @model.set 'date', @elm('date').val()
     'blur [name=time]': -> @model.set 'time', @elm('time').val()
@@ -47,7 +47,8 @@ class exports.ScheduleFormView extends BB.ModelSaveView
         # selects the first expert by default when there's only one
         if filtered.length == 1
           @model.set 'expertId', suggestion.expert._id
-          @model.set 'type', suggestion.expert.availability.byTypeArray[0].type
+          if !@model.get 'type'
+            @model.set 'type', suggestion.expert.availability.byTypeArray[0].type
 
         if @mget('expertId') == suggestion.expert._id
           suggestion.expert.selected = suggestion.expert
@@ -67,7 +68,6 @@ class exports.ScheduleFormView extends BB.ModelSaveView
       @model.set 'date', today
 
     d = @model.extendJSON { available: suggested, selectedExpert, requestId: @request.get('_id') }
-
     @$('.datepicker').stop()
     @$el.html @tmpl d
     @$('.datepicker').pickadate()

@@ -31,7 +31,9 @@
       <div class="controls">
         <select name="type">
           {{#each availability.byTypeArray}}
-          <option value="{{type}}">{{type}}</option>
+          <option value="{{type}}" {{#is ../../type type}}selected{{/is}}>
+            {{type}}
+          </option>
           {{/each}}
         </select>
       </div>
