@@ -142,20 +142,13 @@ nav a.zocial { padding:0; }
 #schedulepage input[name="date"] {
   width: 110px;
 }
-#schedulepage input[name="time"] {
+#schedulepage select[name="time"] {
   width: 80px;
 }
 #schedulepage .experts,
 #schedulepage .datetimeduration {
   overflow: auto;
   width: 100%
-}
-#schedulepage .picker--opened .picker__frame {
-  top: 0;
-}
-#schedulepage .picker__list-item {
-  font-size: .9em;
-  padding: 0em 1.25em;
 }
 #schedulepage .datetimeduration .control-group { float: left; margin-right: 2em;}
 #schedulepage .experts > label { float: left; padding: 1em; }

@@ -162,9 +162,8 @@ describe "Stories: Bruce Christie", ->
     date = v.elm('date')
     expect(new Date().toISOString().indexOf(date.val())).to.equal 0
 
-    time = v.elm('time')
-    time.val(12 + 4 + ':20')
-    expect(time.val()).to.equal('16:20')
+    expectedTime = '16:30'
+    v.elm('time').val('16:30')
 
     v.renderSuccess = -> # disable the redirect after save
     v.model.on 'sync', (model, resp) ->
@@ -173,8 +172,9 @@ describe "Stories: Bruce Christie", ->
       # the model is now a full request
       newCall = model.toJSON().calls[0]
       # mocha-phantom's Date string parsing seems different than node's.
-      # expectedDatetime = new Date(date.val() + ' 16:20 PST').toISOString()
+      # expectedDatetime = new Date(date.val() + ' 16:30 PST').toISOString()
       # expect(newCall.datetime).to.equal expectedDatetime
+      expect(v.model.get('time')).to.equal expectedTime
       expect(newCall.duration).to.equal 2
       expect(newCall.type).to.equal 'opensource'
       expect(newCall.expertId).to.equal '52372c73a9b270020000001c' # Paul
