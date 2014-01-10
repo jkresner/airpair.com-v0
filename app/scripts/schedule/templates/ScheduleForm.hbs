@@ -36,33 +36,35 @@
         </select>
       </div>
     </div>
-    <div class="control-group">
-      <label class="control-label" for="duration">Duration</label>
-      <div class="controls">
-        <select name="duration">
-          {{#each selectOptions }}
-            <option value="{{num}}" {{#selected}}selected{{/selected}}>
-              {{num}} {{inflect num "hour" "hours"}}
-            </option>
-          {{else}}
-            <option disabled>0 hours available for this expert</option>
-          {{/each}}
-        </select>
-      </div>
-    </div>
-    <div class="control-group">
-      <label class="control-label" for="date">Date &amp; Time &amp; Timezone</label>
-      <div class="controls">
-        <input name="date" type="text" class="datepicker input-medium"
-          value="{{../date}}" placeholder="pick a date">
-        <input name="time" type="text" class="timepicker input-medium"
-          value="{{../time}}" placeholder="pick a time">
+    <div class="datetimeduration">
+      <div class="control-group">
+        <label class="control-label" for="date">Date &amp; Time &amp; Timezone</label>
+        <div class="controls">
+          <input name="date" type="text" class="datepicker input-medium"
+            value="{{../date}}" placeholder="pick a date">
+          <input name="time" type="text" class="timepicker input-medium"
+            value="{{../time}}" placeholder="pick a time">
 
-        <select name="timezone" class="input-mini">
-          <option value="PST" selected>PST</option>
-        </select>
+          <select name="timezone" class="input-mini">
+            <option value="PST" selected>PST</option>
+          </select>
+        </div>
       </div>
-    </div>
+      <div class="control-group">
+        <label class="control-label" for="duration">Duration</label>
+        <div class="controls">
+          <select name="duration">
+            {{#each selectOptions }}
+              <option value="{{num}}" {{#selected}}selected{{/selected}}>
+                {{num}} {{inflect num "hour" "hours"}}
+              </option>
+            {{else}}
+              <option disabled>0 hours available for this expert</option>
+            {{/each}}
+          </select>
+        </div>
+      </div>
+    </div> <!-- end .datetimeduration -->
   {{/selectedExpert}}
 
   <div class="alert alert-error">
