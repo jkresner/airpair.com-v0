@@ -72,6 +72,17 @@
       <div class="form-actions">
         <a href="#" class="save button">Save</a>
       </div>
+
+      <hr>
+
+      <div class="control-group">
+        <div class="controls">
+          <input id="marketingTagPicker" type="text" class="autocomplete"
+            placeholder="marketing tags" autocomplete="off">
+        </div>
+      </div>
+      <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
     </fieldset>
   </div>
 </body>
@@ -84,7 +95,10 @@
 
       var model = new M.MarketingTag();
       var collection = new C.MarketingTags();
-      window.sf = new V.MarketingTagForm({ model: model, collection: collection });
+      window.tf = new V.MarketingTagForm({ model: model, collection: collection });
+
+      window.tp = new V.MarketingTagPicker({ collection: collection });
+
       collection.fetch()
 
       // TODO get adding a source to a request to work

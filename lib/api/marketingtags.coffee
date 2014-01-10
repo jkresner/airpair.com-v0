@@ -9,6 +9,8 @@ class MarketingTagsApi
   constructor: (app, route) ->
     app.get     "/api/#{route}", admin, @list
     app.post    "/api/#{route}", admin, @create
+    # TODO
+    # app.post    "/api/#{route}/request/:requestId", admin, @addToRequest
 
   create: (req, res, next) =>
     ### todo validate:
