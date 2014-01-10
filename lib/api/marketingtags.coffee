@@ -12,7 +12,7 @@ class MarketingTagsApi
 
   create: (req, res, next) =>
     ### todo validate:
-      not duplicate
+      no duplicates
       {name,type,group} are non-empty strings
     ###
     @svc.create req.body, (e, r) ->

@@ -4,20 +4,15 @@
 <p>Save your first marketing source with the form below.</p>
 {{/empty}}
 
-<table>
-  <thead>
-    <tr>
-      <th>name</th>
-      {{!-- TODO --}}
-      {{!-- <th>type</th> --}}
-      {{!-- <th>group</th> --}}
-    </tr>
-  </thead>
-  <tbody>
-    {{#each marketingtags}}
-    <tr>
-      <td>{{name}}</td>
-    </tr>
-    {{/each}}
-  </tbody>
+<table class="table table-condensed" style="display: inline">
+  <tr>
+    <th>Group</th>
+    <th>Type</th>
+    <th>Name</th>
+  </tr>
+  {{#each marketingtags}}
+  <tr>
+    <td>{{group}}</td><td>{{type}}</td><td>{{name}}</td>
+  </tr>
+  {{/each}}
 </table>
