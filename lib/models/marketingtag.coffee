@@ -7,4 +7,4 @@ schema = new Schema
   # type:      { required: true, type: String }
   # group:     { required: true, type: String }
 
-module.exports = mongoose.model 'Source', schema
+module.exports = mongoose.model 'MarketingTag', schema

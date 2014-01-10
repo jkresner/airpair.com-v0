@@ -1,8 +1,8 @@
 BB = require './../../lib/BB'
 exports = {}
 
-class exports.Source extends BB.BadassModel
-  urlRoot: '/api/sources'
+class exports.MarketingTag extends BB.BadassModel
+  urlRoot: '/api/marketingtags'
   # validation:
     # name: { required: true }
 

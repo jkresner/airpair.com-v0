@@ -1,16 +1,16 @@
 BB = require './../../lib/BB'
 
-class exports.SourceForm extends BB.ModelSaveView
+class exports.MarketingTagForm extends BB.ModelSaveView
   logging: on
-  el: '#sourceForm'
+  el: '#marketingTagForm'
   viewData: [ 'name' ] # TODO type, group
-  tmpl: require './templates/SourceList'
+  tmpl: require './templates/MarketingTagList'
   events:
     'click .save': 'save'
   initialize: ->
     @listenTo @collection, 'sync', @render
   render: ->
-    @$('#sourceList').html @tmpl { sources: @collection.toJSON() }
+    @$('#marketingTagList').html @tmpl { marketingtags: @collection.toJSON() }
   renderSuccess: ->
     @$('.alert-success').fadeIn(800).fadeOut(5000)
     @collection.fetch()

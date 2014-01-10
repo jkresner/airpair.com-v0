@@ -28,16 +28,16 @@
     </div>
   </nav>
 
-  <div id="sourceForm" class="route" style="display:block;">
+  <div id="marketingTagForm" class="route" style="display:block;">
     <div class="form-actions admin-nav">
       <div class="controls">
         <a href="/adm/orders" class="btn">Back</a>
       </div>
     </div>
 
-    <div id="sourceList"></div>
+    <div id="marketingTagList"></div>
 
-    <h2>Create a new marketing source</h2>
+    <h2>Create a new marketing tag</h2>
     <fieldset>
       <!-- TODO type, group -->
       <div class="control-group">
@@ -48,9 +48,6 @@
         </div>
       </div>
 
-      <div class="form-actions">
-        <a href="#" class="save button">Save</a>
-      </div>
       <div class="alert alert-success">
         <button type="button" class="close" data-dismiss="alert">&times;</button>
         <h4>Saved</h4>
@@ -59,19 +56,22 @@
         <button type="button" class="close" data-dismiss="alert">&times;</button>
         <h4>Error</h4>
       </div>
+      <div class="form-actions">
+        <a href="#" class="save button">Save</a>
+      </div>
     </fieldset>
   </div>
 </body>
 
   <script type="text/javascript">
     function initApp() {
-      M = require('/scripts/sources/Models');
-      C = require('/scripts/sources/Collections');
-      V = require('/scripts/sources/Views');
+      M = require('/scripts/marketingtags/Models');
+      C = require('/scripts/marketingtags/Collections');
+      V = require('/scripts/marketingtags/Views');
 
-      var model = new M.Source();
-      var collection = new C.Sources();
-      window.sf = new V.SourceForm({ model: model, collection: collection });
+      var model = new M.MarketingTag();
+      var collection = new C.MarketingTags();
+      window.sf = new V.MarketingTagForm({ model: model, collection: collection });
       collection.fetch()
 
       // TODO get adding a source to a request to work

@@ -1,10 +1,10 @@
-admin = authz.Admin isApi: true
 authz = require './../identity/authz'
-SourcesSvc = require './../services/sources'
+admin = authz.Admin isApi: true
+MarketingTagsSvc = require './../services/marketingtags'
 
-class SourcesApi
+class MarketingTagsApi
 
-  svc: new SourcesSvc()
+  svc: new MarketingTagsSvc()
 
   constructor: (app, route) ->
     app.get     "/api/#{route}", admin, @list
@@ -24,4 +24,4 @@ class SourcesApi
       if e then return next e
       res.send r
 
-module.exports = (app) -> new SourcesApi app, 'sources'
+module.exports = (app) -> new MarketingTagsApi app, 'marketingtags'

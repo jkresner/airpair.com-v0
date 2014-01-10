@@ -1,4 +1,9 @@
-<h3>Existing marketing sources</h3>
+<h3>Existing marketing tags</h3>
+
+{{#empty marketingtags}}
+<p>Save your first marketing source with the form below.</p>
+{{/empty}}
+
 <table>
   <thead>
     <tr>
@@ -9,12 +14,10 @@
     </tr>
   </thead>
   <tbody>
-    {{#each sources}}
+    {{#each marketingtags}}
     <tr>
       <td>{{name}}</td>
     </tr>
-    {{else}}
-    <tr><th>Save your first marketing source with the form below.</th></tr>
     {{/each}}
   </tbody>
 </table>
