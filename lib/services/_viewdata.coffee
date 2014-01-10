@@ -48,7 +48,7 @@ module.exports = class ViewDataService
   schedule: (requestId, callback) ->
     tasks =
       request: (cb) -> rSvc.getById requestId, cb
-      orders: (cb) -> oSvc.requestList requestId, cb
+      orders: (cb) -> oSvc.getByRequestId requestId, cb
 
     async.parallel tasks, (e, results) =>
       if e then return callback e
