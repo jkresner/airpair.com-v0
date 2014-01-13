@@ -4,7 +4,10 @@ mongoose = require 'mongoose'
 
 describe "Server-side suite", ->
 
-  before dbConnect
+  before (done) ->
+    @timeout 10000
+    dbConnect ->
+      mongoose.connection.db.executeDbCommand { dropDatabase: 1 }, done
 
   describe 'ui/models/request', (done) -> require './ui/models/request'
   describe 'api/companys', (done) -> require './api/companys'
