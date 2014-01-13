@@ -70,13 +70,13 @@ module.exports = class PayMethodsService extends DomainService
     @user.findOne { 'google._json.email': email }, (e, usr) =>
       if !usr? || !usr.google? then return callback new Error "User #{email} not found"
       @settingsSvc.getByUserId usr._id, (ee, settings) =>
-        getPayMethod = => @getById id, (eee, pm) =>
-          callback usr, settings, pm
+        getPayMethod = (err, stgs) => @getById id, (eee, pm) =>
+          callback usr, stgs, pm
 
         if settings._id?
-          getPayMethod()
+          getPayMethod null, settings
         else
-          @settingsSvc.create user._id, null, getPayMethod
+          @settingsSvc.create usr._id, null, getPayMethod
 
 
 testStripeCustomer =
