@@ -77,8 +77,8 @@ class exports.OrderView extends BB.ModelSaveView
       eventName = 'customerTryPayPaypal'
       if @isStripeMode
         eventName = 'customerTryPayStripe'
-        @$('#pay').prop 'disabled', true  # Disable submitBtn to prevent repeat clicks
-        @$('.payStripe').html 'Payment processing ...'
+        # Disable submitBtn to prevent repeat clicks
+        @$('.payStripe').html('Payment processing ...').prop 'disabled', true
 
       addjs.trackEvent "request", eventName, "/review/book/#{@model.get('requestId')}"
 
