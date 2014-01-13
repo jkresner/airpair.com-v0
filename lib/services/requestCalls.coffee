@@ -1,5 +1,7 @@
 async = require 'async'
 
+OrdersSvc = new (require('./orders'))()
+
 Order = new require '../models/order'
 Request = new require '../models/request'
 
@@ -23,7 +25,9 @@ module.exports = class RequestCallsService
 
   _canScheduleCall: (orders, call) =>
     availability = expertAvailability orders, call.expertId
-    call.duration <= availability.balance
+    byType = availability.byType[call.type]
+    if !byType then return false
+    call.duration <= byType.balance
 
   _qtyRemaining: (lineItem) ->
     lineItem.qty - sum _.pluck lineItem.redeemedCalls, 'qtyRedeemed'
@@ -35,7 +39,9 @@ module.exports = class RequestCallsService
     for order in orders
       if done then break
       order.lineItems.filter (lineItem) =>
-        _.idsEqual lineItem.suggestion.expert._id, call.expertId
+        sameType = lineItem.type == call.type
+        sameExpert = _.idsEqual lineItem.suggestion.expert._id, call.expertId
+        sameType && sameExpert
       .map (lineItem) =>
         if done then return
         redeemedCall = { callId: call._id, qtyRedeemed: 0, qtyCompleted: 0 }
@@ -56,11 +62,16 @@ module.exports = class RequestCallsService
       Order.findByIdAndUpdate order._id, update, cb
     async.map orders, saveOrder, callback
 
+  _byUtc: (order1, order2) ->
+    order1.utc - order2.utc
+
   create: (userId, requestId, call, callback) =>
     call.status = 'pending'
 
     # change oldest orders first
-    Order.find({ requestId }).sort('utc').exec (err, orders) =>
+    OrdersSvc.getByRequestId requestId, (err, orders) =>
+      orders = orders.sort(@_byUtc)
+
       if err then return callback err
       Request.findOne({ _id: requestId }).exec (err, request) =>
         if err then return callback err

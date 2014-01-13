@@ -108,3 +108,39 @@ describe "RequestCallsService", ->
           expect(err).to.exist
           expect(err.message).to.match /Not enough/i
           done()
+
+  it "can book a 2 hour open source session and then a 5 hour private session", (done) ->
+    @timeout 0
+    callos2 = cloneDeep data.calls[3]
+    callp5 = cloneDeep data.calls[4]
+    request = cloneDeep data.requests[12]
+
+    orders = [ cloneDeep(data.orders[6]), cloneDeep(data.orders[7]) ]
+    requestsSvc.create user, request, (err, newRequest) ->
+      if err then return done err
+
+      saveOrdersForRequest orders, newRequest, (err, newOrders) ->
+        if err then return done err
+        svc.create user._id, newRequest._id, callos2, (err, results) ->
+          if err then return done err
+          modifiedRequest = results.request
+          modifiedOrders = results.orders
+          # it only changes one, but we expect it to change the OSS order
+          expect(modifiedOrders.length).to.equal(1)
+          expect(modifiedOrders[0].lineItems[0].type).to.equal 'opensource'
+          expect(modifiedRequest.calls.length).to.equal 1
+          expect(modifiedRequest.calls[0].duration).to.equal 2
+
+          svc.create user._id, newRequest._id, callp5, (err, results) ->
+            if err then return done err
+            modifiedRequest = results.request
+            modifiedOrders = results.orders
+            # the previously saved call is still there
+            expect(modifiedRequest.calls.length).to.equal 2
+            expect(modifiedRequest.calls[0].duration).to.equal 2
+
+            # the new call matches the 5 hour private one we just tried to save
+            expect(modifiedOrders.length).to.equal 1
+            expect(modifiedOrders[0].lineItems[0].type).to.equal 'private'
+            expect(modifiedRequest.calls[1].duration).to.equal 5
+            done()
