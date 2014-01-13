@@ -12,9 +12,14 @@
       <input type="radio" value="{{_id}}" name="expertId" {{#selected}}checked{{/selected}}/>
       <img src="{{pic}}" alt="{{name}}" draggable="false" class="expertPic"><br>
       {{name}}<br>
-      <span class="balance" title="hours balance">
-        {{availability.balance}} {{inflect availability.balance "hour" "hours"}}
-      </span>
+      <table>
+      {{#each availability.byTypeArray}}
+        <tr>
+          <td>{{type}}:</td>
+          <td>{{balance}} {{inflect balance "hour" "hours"}}</td>
+        </tr>
+      {{/each}}
+      </table>
     </label>
     {{/with}}
   {{else}}
