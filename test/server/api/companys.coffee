@@ -24,6 +24,7 @@ describe "REST api companys", ->
       .end done
 
   it "creates company if authenticated", (done) ->
+    @timeout 10000
     passportMock.setSession 'jk'
     @company = data.companys[1]
     http(app).post('/api/companys/')
