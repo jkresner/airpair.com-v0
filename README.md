@@ -3,6 +3,7 @@ About
 
 site @ http://www.airpair.com/
 
+site walk through => http://youtu.be/e0N_2T7Tdf8
 
 Branching strategy + pull requests
 ===============================================================================
