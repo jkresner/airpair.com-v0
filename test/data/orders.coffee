@@ -1,4 +1,7 @@
 users = require './users'
+ObjectId = (s) -> s
+ISODate = (s) -> s
+
 module.exports = [
 
   # 0) not used
@@ -199,4 +202,365 @@ module.exports = [
     "requestId": "52a4ba0991935b000000002d",
     "total": 180
   }
+
+  # 6) kirk doing a 2 hour open source order
+  {
+    "__v" : 0,
+    "_id" : ObjectId("52cd8aa33237b10200000011"),
+    "company" : {
+        "contacts" : [
+            {
+                "firstName" : "Kirk",
+                "_id" : "52c85c7573abd70200000010",
+                "timezone" : "GMT-0800 (PST)",
+                "twitter" : "kirkstrobeck",
+                "pic" : "https://lh6.googleusercontent.com/-ioZdPJuvBhM/AAAAAAAAAAI/AAAAAAAAADo/TXUziR9zSWM/photo.jpg",
+                "userId" : "529e804e66a6f999a465fd15",
+                "phone" : "",
+                "title" : "",
+                "gmail" : "kirk@strobeck.com",
+                "email" : "kirk@strobeck.com",
+                "fullName" : "Kirk Strobeck"
+            }
+        ],
+        "name" : "n/a",
+        "_id" : "529e96071a4bf00200000028"
+    },
+    "lineItems" : [
+        {
+            "type" : "opensource",
+            "total" : 180,
+            "unitPrice" : 90,
+            "qty" : 2,
+            "suggestion" : {
+                "expert" : {
+                    "paymentMethod" : {
+                        "info" : {
+                            "email" : "qualls.james.aws@gmail.com"
+                        },
+                        "type" : "paypal"
+                    },
+                    "pic" : "https://secure.gravatar.com/avatar/17270c1c7ec7a9b8f9e474dedbcaa5d9",
+                    "email" : "qualls.james@gmail.com",
+                    "rate" : 70,
+                    "username" : "sourcec0de",
+                    "name" : "James Qualls",
+                    "userId" : "52726d0a66a6f999a465fa9d",
+                    "_id" : "52726d7ef7f1d40200000015"
+                },
+                "suggestedRate" : {
+                    "nda" : {
+                        "total" : 160,
+                        "expert" : 90
+                    },
+                    "private" : {
+                        "total" : 110,
+                        "expert" : 70
+                    },
+                    "opensource" : {
+                        "total" : 90,
+                        "expert" : 70
+                    }
+                },
+                "_id" : "52cc40c71eff160200000021"
+            },
+            "_id" : ObjectId("52cd8aa43237b10200000012"),
+            "qtyRedeemed" : 0
+        }
+    ],
+    "payment" : {
+        "dispute" : null,
+        "description" : null,
+        "invoice" : null,
+        "customer" : "cus_3FW69dor6xqvRe",
+        "amount_refunded" : 0,
+        "failure_code" : null,
+        "failure_message" : null,
+        "balance_transaction" : "txn_3Gy3xbNjHB9MIM",
+        "refunds" : [],
+        "captured" : true,
+        "card" : {
+            "address_zip_check" : null,
+            "address_line1_check" : null,
+            "cvc_check" : null,
+            "address_country" : null,
+            "address_zip" : null,
+            "address_state" : null,
+            "address_city" : null,
+            "address_line2" : null,
+            "address_line1" : null,
+            "name" : null,
+            "country" : "US",
+            "customer" : "cus_3FW69dor6xqvRe",
+            "fingerprint" : "gmWlmcNgTSD2T6pF",
+            "exp_year" : 2017,
+            "exp_month" : 3,
+            "type" : "American Express",
+            "last4" : "4008",
+            "object" : "card",
+            "id" : "card_3FW69v3waX6DRE"
+        },
+        "refunded" : false,
+        "currency" : "usd",
+        "amount" : 18000,
+        "paid" : true,
+        "livemode" : true,
+        "created" : 1389202084,
+        "object" : "charge",
+        "id" : "ch_3Gy3L9OIQqVzcJ"
+    },
+    "paymentStatus" : "paidout",
+    "paymentType" : "stripe",
+    "payouts" : [
+        {
+            "type" : "paypal",
+            "status" : "success",
+            "lineItemId" : ObjectId("52cd8aa43237b10200000012"),
+            "req" : {
+                "senderEmail" : "jk@airpair.com",
+                "memo" : "https://airpair.com/review/52c86e4d73abd70200000011",
+                "receiverList" : {
+                    "receiver" : [
+                        {
+                            "amount" : "140.00",
+                            "email" : "qualls.james.aws@gmail.com"
+                        }
+                    ]
+                },
+                "requestEnvelope" : {
+                    "detailLevel" : "ReturnAll",
+                    "errorLanguage" : "en_US"
+                },
+                "cancelUrl" : "https://www.airpair.com/paypal/cancel/",
+                "returnUrl" : "https://www.airpair.com/paypal/success/",
+                "feesPayer" : "EACHRECEIVER",
+                "currencyCode" : "USD",
+                "actionType" : "PAY"
+            },
+            "res" : {
+                "sender" : {
+                    "accountId" : "E496EJS2V7E6C"
+                },
+                "paymentInfoList" : {
+                    "paymentInfo" : [
+                        {
+                            "senderTransactionStatus" : "COMPLETED",
+                            "senderTransactionId" : "3GW71494EP766800H",
+                            "pendingRefund" : "false",
+                            "receiver" : {
+                                "accountId" : "FQYJCJS589WQN",
+                                "primary" : "false",
+                                "email" : "qualls.james.aws@gmail.com",
+                                "amount" : "140.00"
+                            },
+                            "transactionStatus" : "COMPLETED",
+                            "transactionId" : "9W312459HE517835B"
+                        }
+                    ]
+                },
+                "paymentExecStatus" : "COMPLETED",
+                "payKey" : "AP-3RA29924L91098603",
+                "responseEnvelope" : {
+                    "build" : "7935900",
+                    "correlationId" : "b591bd757939c",
+                    "ack" : "Success",
+                    "timestamp" : "2014-01-09T09:34:15.927-08:00"
+                }
+            },
+            "_id" : ObjectId("52cedd97da510a0200000020")
+        }
+    ],
+    "profit" : 40,
+    "requestId" : ObjectId("52c86e4d73abd70200000011"),
+    "total" : 180,
+    "userId" : ObjectId("529e804e66a6f999a465fd15"),
+    "utc" : ISODate("2014-01-08T17:28:04.000Z"),
+    "utm" : {
+        "utm_campaign" : "so3",
+        "utm_content" : "better",
+        "utm_term" : "angularjs",
+        "utm_medium" : "banner",
+        "utm_source" : "stackoverflow"
+    }
+  }
+
+  # 7 kirk doing a 5 hour private session
+  {
+    "company" : {
+        "contacts" : [
+            {
+                "firstName" : "Kirk",
+                "_id" : "52c85c7573abd70200000010",
+                "timezone" : "GMT-0800 (PST)",
+                "twitter" : "kirkstrobeck",
+                "pic" : "https://lh6.googleusercontent.com/-ioZdPJuvBhM/AAAAAAAAAAI/AAAAAAAAADo/TXUziR9zSWM/photo.jpg",
+                "userId" : "529e804e66a6f999a465fd15",
+                "phone" : "",
+                "title" : "",
+                "gmail" : "kirk@strobeck.com",
+                "email" : "kirk@strobeck.com",
+                "fullName" : "Kirk Strobeck"
+            }
+        ],
+        "name" : "n/a",
+        "_id" : "529e96071a4bf00200000028"
+    },
+    "lineItems" : [
+        {
+            "type" : "private",
+            "total" : 550,
+            "unitPrice" : 110,
+            "qty" : 5,
+            "suggestion" : {
+                "expert" : {
+                    "paymentMethod" : {
+                        "type" : "paypal",
+                        "info" : {
+                            "email" : "qualls.james.aws@gmail.com"
+                        }
+                    },
+                    "pic" : "https://secure.gravatar.com/avatar/17270c1c7ec7a9b8f9e474dedbcaa5d9",
+                    "email" : "qualls.james@gmail.com",
+                    "rate" : 70,
+                    "username" : "sourcec0de",
+                    "name" : "James Qualls",
+                    "userId" : "52726d0a66a6f999a465fa9d",
+                    "_id" : "52726d7ef7f1d40200000015"
+                },
+                "suggestedRate" : {
+                    "nda" : {
+                        "total" : 160,
+                        "expert" : 90
+                    },
+                    "private" : {
+                        "total" : 110,
+                        "expert" : 70
+                    },
+                    "opensource" : {
+                        "total" : 90,
+                        "expert" : 70
+                    }
+                },
+                "_id" : "52cc40c71eff160200000021"
+            },
+            "_id" : ObjectId("52cc45bd1eff160200000023"),
+            "redeemedCalls" : []
+        }
+    ],
+    "payment" : {
+        "dispute" : null,
+        "description" : null,
+        "invoice" : null,
+        "customer" : "cus_3FW69dor6xqvRe",
+        "amount_refunded" : 0,
+        "failure_code" : null,
+        "failure_message" : null,
+        "balance_transaction" : "txn_3GbhJ0mVoUWZGM",
+        "refunds" : [],
+        "captured" : true,
+        "card" : {
+            "address_zip_check" : null,
+            "address_line1_check" : null,
+            "cvc_check" : null,
+            "address_country" : null,
+            "address_zip" : null,
+            "address_state" : null,
+            "address_city" : null,
+            "address_line2" : null,
+            "address_line1" : null,
+            "name" : null,
+            "country" : "US",
+            "customer" : "cus_3FW69dor6xqvRe",
+            "fingerprint" : "gmWlmcNgTSD2T6pF",
+            "exp_year" : 2017,
+            "exp_month" : 3,
+            "type" : "American Express",
+            "last4" : "4008",
+            "object" : "card",
+            "id" : "card_3FW69v3waX6DRE"
+        },
+        "refunded" : false,
+        "currency" : "usd",
+        "amount" : 55000,
+        "paid" : true,
+        "livemode" : true,
+        "created" : 1389118908,
+        "object" : "charge",
+        "id" : "ch_3GbhttRUFtmKbx"
+    },
+    "paymentStatus" : "paidout",
+    "paymentType" : "stripe",
+    "payouts" : [
+        {
+            "type" : "paypal",
+            "status" : "success",
+            "lineItemId" : ObjectId("52cc45bd1eff160200000023"),
+            "req" : {
+                "senderEmail" : "jk@airpair.com",
+                "memo" : "https://airpair.com/review/52c86e4d73abd70200000011",
+                "receiverList" : {
+                    "receiver" : [
+                        {
+                            "amount" : "350.00",
+                            "email" : "qualls.james.aws@gmail.com"
+                        }
+                    ]
+                },
+                "requestEnvelope" : {
+                    "detailLevel" : "ReturnAll",
+                    "errorLanguage" : "en_US"
+                },
+                "cancelUrl" : "https://www.airpair.com/paypal/cancel/",
+                "returnUrl" : "https://www.airpair.com/paypal/success/",
+                "feesPayer" : "EACHRECEIVER",
+                "currencyCode" : "USD",
+                "actionType" : "PAY"
+            },
+            "res" : {
+                "sender" : {
+                    "accountId" : "E496EJS2V7E6C"
+                },
+                "paymentInfoList" : {
+                    "paymentInfo" : [
+                        {
+                            "senderTransactionStatus" : "COMPLETED",
+                            "senderTransactionId" : "71721992CU9941147",
+                            "pendingRefund" : "false",
+                            "receiver" : {
+                                "accountId" : "FQYJCJS589WQN",
+                                "primary" : "false",
+                                "email" : "qualls.james.aws@gmail.com",
+                                "amount" : "350.00"
+                            },
+                            "transactionStatus" : "COMPLETED",
+                            "transactionId" : "9TP817278P372054E"
+                        }
+                    ]
+                },
+                "paymentExecStatus" : "COMPLETED",
+                "payKey" : "AP-3FN06579B1348360R",
+                "responseEnvelope" : {
+                    "build" : "7935900",
+                    "correlationId" : "7fa9222676198",
+                    "ack" : "Success",
+                    "timestamp" : "2014-01-09T09:34:10.417-08:00"
+                }
+            },
+            "_id" : ObjectId("52cedd92751ae70200000016")
+        }
+    ],
+    "profit" : 200,
+    "requestId" : ObjectId("52c86e4d73abd70200000011"),
+    "total" : 550,
+    "userId" : ObjectId("529e804e66a6f999a465fd15"),
+    "utc" : ISODate("2014-01-07T18:21:49.000Z"),
+    "utm" : {
+        "utm_campaign" : "so3",
+        "utm_content" : "better",
+        "utm_term" : "angularjs",
+        "utm_medium" : "banner",
+        "utm_source" : "stackoverflow"
+    }
+  }
+
 ]
