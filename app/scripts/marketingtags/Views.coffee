@@ -3,7 +3,7 @@ BB = require './../../lib/BB'
 class exports.MarketingTagForm extends BB.ModelSaveView
   logging: on
   el: '#marketingTagForm'
-  viewData: [ 'name', 'type', 'group' ]
+  viewData: [ 'name', 'type', 'group', 'usage']
   tmpl: require './templates/MarketingTagList'
   events:
     'click .save': 'save'
