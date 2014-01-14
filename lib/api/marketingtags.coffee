@@ -9,8 +9,7 @@ class MarketingTagsApi
   constructor: (app, route) ->
     app.get     "/api/#{route}", admin, @list
     app.post    "/api/#{route}", admin, @create
-    # TODO
-    # app.post    "/api/#{route}/request/:requestId", admin, @addToRequest
+    app.delete  "/api/#{route}/:id", admin, @delete
 
   create: (req, res, next) =>
     ### todo validate:
@@ -23,6 +22,11 @@ class MarketingTagsApi
 
   list: (req, res, next) =>
     @svc.getAll (e, r) ->
+      if e then return next e
+      res.send r
+
+  delete: (req, res, next) =>
+    @svc.delete req.params.id, (e, r) ->
       if e then return next e
       res.send r
 

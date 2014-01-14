@@ -7,14 +7,25 @@ class exports.MarketingTagForm extends BB.ModelSaveView
   viewData: VIEW_DATA
   tmpl: require './templates/MarketingTagList'
   events:
-    'click .save': 'save'
+    'click .save': 'addTag'
+    'click .delete': 'deleteTag'
   initialize: ->
     @listenTo @collection, 'sync', @render
+    # by putting the popover only over the text, it disappears when you hover
+    # the delete button. We do this b/c .popover('destroy') is broken
+    @$el.popover(selector: '[data-toggle="popover"]')
   render: ->
-    @$('#marketingTagList .label-tag').popover('destroy')
     @$('#marketingTagList').html @tmpl { marketingtags: @collection.toJSON() }
-    @$('#marketingTagList .label-tag').popover({})
     @
+  addTag: (e) ->
+    @model.unset('_id')
+    @save e
+  deleteTag: (e) ->
+    e.preventDefault()
+    id = $(e.target).data('id')
+    model = _.find @collection.models, (m) -> m.get('_id') == id
+    model.destroy()
+    @collection.fetch()
   renderSuccess: ->
     @$('.alert-success').fadeIn(800).fadeOut(5000)
     @collection.fetch()
