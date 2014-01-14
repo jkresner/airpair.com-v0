@@ -47,6 +47,12 @@
       </div>
     </div>
 
+    <div class="control-group">
+      <div class="controls">
+        <div id="marketingTagsInput"></div>
+      </div>
+    </div>
+
     <div id="marketingTagList"></div>
 
     <h2>Create a new marketing tag</h2>
@@ -59,7 +65,7 @@
         </div>
       </div>
       <div class="control-group">
-        <label class="control-label" for="type"><b>type</b> e.g. channel, campaign</label>
+        <label class="control-label" for="type"><b>type</b> e.g. channel, campaign, usage</label>
         <div class="controls">
           <input name="type" type="text" class="input-medium"
             value="type1" placeholder="type1">
@@ -70,13 +76,6 @@
         <div class="controls">
           <input name="group" type="text" class="input-medium"
             value="group1" placeholder="group">
-        </div>
-      </div>
-      <div class="control-group">
-        <label class="control-label" for="group"><b>usage</b> e.g. code review, training</label>
-        <div class="controls">
-          <input name="usage" type="text" class="input-medium"
-            value="usage1" placeholder="usage">
         </div>
       </div>
 
@@ -116,9 +115,11 @@
       var collection = new C.MarketingTags();
       window.tf = new V.MarketingTagForm({ model: model, collection: collection });
 
-      window.tp = new V.MarketingTagPicker({ collection: collection });
-
-      collection.fetch()
+      // window.tp = new V.MarketingTagPicker({ collection: collection });
+      var request = new M.Request({ _id: '529e65961a4bf00200000010' });
+      window.ti = new V.MarketingTagInputView({ model: request, collection: collection });
+      collection.fetch();
+      request.fetch();
 
       // TODO get adding a source to a request to work
       // var requestId = "529e65961a4bf00200000010" // lew dwyer

@@ -1,4 +1,5 @@
 BB = require './../../lib/BB'
+Shared = require './../shared/Models'
 exports = {}
 
 class exports.MarketingTag extends BB.BadassModel
@@ -11,5 +12,6 @@ class exports.MarketingTag extends BB.BadassModel
 #     tags: []
 #   toggleTag: (value) ->
 #     @toggleAttrSublistElement 'tags', value, (m) -> m._id is value._id
+exports.Request = Shared.Request
 
 module.exports = exports
