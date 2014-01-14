@@ -46,11 +46,13 @@ class exports.MarketingTagsInputView extends BB.HasBootstrapErrorStateView
     @$el.append @tmpl @model.toJSON()
     @listenTo @collection, 'sync', @initTypehead
     @listenTo @model, 'change:marketingTags', @render
+    # we need this because many requests have .marketingTags == undefined, and
+    # so the change:marketingTags event does not trigger.
+    @listenTo @model, 'change', @render
     @$auto = @$('.autocomplete').on 'input', =>
       @renderInputValid @$('.autocomplete')
     @$el.popover(selector: '[data-toggle="popover"]')
   render: ->
-    @$('.error-message').remove() # in case we had an error fire first
     @$('.selected').html ''
     if @model.get('marketingTags')?
       @$('.selected').append(@tagHtml(t)) for t in @model.get('marketingTags')
