@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="/stylesheets/admin.css">
 </head>
 
-<body id="adminboundpage">
+<body id="admmarketingtagspage">
 
   <nav>
     <div>
@@ -28,18 +28,34 @@
     </div>
   </nav>
 
-    <!--
-    TODO two panels
+  <!--
+  adm/marketingtags:
     left panel:
-      - input to filter the tags that show in the list below
-      - list of marketing tags, just like the ones on airpair.com/adm/tags/
-        allow (add and delete)
+      - √list of marketing tags, just like the ones on airpair.com/adm/tags/
+      - allow delete
+      - √alpha sorted
+      - √same css style as on the inbound request page
       - color of the tag changes depending on the type
         - TYPE: channel, campaign, usage
 
     right panel:
       - the form to add another marketing tag
-   -->
+
+    - show only name in the; put type and group in the description of the tag
+    put all the information in the tag's title attribute
+    - make different css for the different types / colors
+    - move these tags into their own section; above the log under info.
+
+    adm/orders:
+    show the tags list next to the input box.
+
+    adm/marketingtags:
+    still do the form on the right, and the tag list on the left
+
+    server-side:
+    - what is going on with the _id field of every tag?
+
+  -->
   <div id="marketingTagForm" class="route" style="display:block;">
     <div class="form-actions admin-nav">
       <div class="controls">
@@ -47,46 +63,51 @@
       </div>
     </div>
 
-    <div id="marketingTagList"></div>
+    <div class="twocol">
+      <div id="marketingTagList"></div>
 
-    <h2>Create a new marketing tag</h2>
-    <fieldset>
-      <div class="control-group">
-        <label class="control-label" for="name"><b>name</b> e.g. twitter</label>
-        <div class="controls">
-          <input name="name" type="text" class="input-medium"
-            value="name1" placeholder="name">
+      <fieldset>
+        <h3>Create a new marketing tag</h3>
+        <div class="control-group">
+          <label class="control-label" for="name"><b>name</b> e.g. twitter</label>
+          <div class="controls">
+            <input name="name" type="text" class="input-medium"
+              value="name1" placeholder="name">
+          </div>
         </div>
-      </div>
-      <div class="control-group">
-        <label class="control-label" for="type"><b>type</b> e.g. channel, campaign, usage</label>
-        <div class="controls">
-          <input name="type" type="text" class="input-medium"
-            value="type1" placeholder="type1">
+        <div class="control-group">
+          <label class="control-label" for="type"><b>type</b> e.g. channel, campaign, usage</label>
+          <div class="controls">
+            <select name="type" class="input-medium">
+              <option value="channel">channel</option>
+              <option value="campaign">campaign</option>
+              <option value="usage">usage</option>
+            </select>
+          </div>
         </div>
-      </div>
-      <div class="control-group">
-        <label class="control-label" for="group"><b>group</b> e.g. Direct, Affiliate, Ad, Social, SEO, Press</label>
-        <div class="controls">
-          <input name="group" type="text" class="input-medium"
-            value="group1" placeholder="group">
+        <div class="control-group">
+          <label class="control-label" for="group"><b>group</b> e.g. Direct, Affiliate, Ad, Social, SEO, Press</label>
+          <div class="controls">
+            <input name="group" type="text" class="input-medium"
+              value="group1" placeholder="group">
+          </div>
         </div>
-      </div>
 
-      <div class="alert alert-success">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        <h4>Saved</h4>
-      </div>
-      <div class="alert alert-error">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        <h4>Error</h4>
-      </div>
-      <div class="form-actions">
-        <a href="#" class="save button">Save</a>
-      </div>
+        <div class="alert alert-success">
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+          <h4>Saved</h4>
+        </div>
+        <div class="alert alert-error">
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+          <h4>Error</h4>
+        </div>
+        <div class="form-actions">
+          <a href="#" class="save button">Save</a>
+        </div>
 
-    </fieldset>
-  </div>
+      </fieldset>
+    </div> <!-- end .twocol -->
+  </div> <!-- end #marketingTagForm -->
 </body>
 
   <script type="text/javascript">

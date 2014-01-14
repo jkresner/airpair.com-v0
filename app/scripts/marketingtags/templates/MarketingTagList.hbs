@@ -1,18 +1,14 @@
 <h3>Existing marketing tags</h3>
-
 {{#empty marketingtags}}
 <p>Save your first marketing tag with the form below.</p>
 {{/empty}}
 
-<table class="table table-condensed" style="display: inline">
-  <tr>
-    <th>Group</th>
-    <th>Type</th>
-    <th>Name</th>
-  </tr>
-  {{#each marketingtags}}
-  <tr>
-    <td>{{group}}</td><td>{{type}}</td><td>{{name}}</td>
-  </tr>
-  {{/each}}
-</table>
+{{#each marketingtags}}
+  <span class="label label-tag marketingtag {{type}}"
+    data-toggle="popover"
+    data-placement="bottom"
+    data-content="group: {{group}}<br> type: {{type}}<br> _id: {{_id}}"
+    title="<strong>{{ name }}<strong>">
+    {{name}}
+  </span>
+{{/each}}

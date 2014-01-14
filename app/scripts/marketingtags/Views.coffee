@@ -11,7 +11,10 @@ class exports.MarketingTagForm extends BB.ModelSaveView
   initialize: ->
     @listenTo @collection, 'sync', @render
   render: ->
+    @$('#marketingTagList .label-tag').popover('destroy')
     @$('#marketingTagList').html @tmpl { marketingtags: @collection.toJSON() }
+    @$('#marketingTagList .label-tag').popover({})
+    @
   renderSuccess: ->
     @$('.alert-success').fadeIn(800).fadeOut(5000)
     @collection.fetch()
