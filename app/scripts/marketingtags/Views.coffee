@@ -20,8 +20,8 @@ class exports.MarketingTagForm extends BB.ModelSaveView
 class exports.MarketingTagsInputView extends BB.HasBootstrapErrorStateView
   logging: on
   el: '#marketingTagsInput'
-  tmpl: require './templates/Input'
-  tmplResult:  require './templates/TypeAheadResult'
+  tmpl: require './templates/Input' # TODO fully qualified file path?
+  tmplResult: require './templates/TypeAheadResult'
   events:
     'click .rmTag': 'deselect'
   initialize: (args) ->
@@ -30,7 +30,6 @@ class exports.MarketingTagsInputView extends BB.HasBootstrapErrorStateView
     @listenTo @model, 'change:marketingTags', @render
     @$auto = @$('.autocomplete').on 'input', =>
       @renderInputValid @$('.autocomplete')
-      @renderInputValid @elm('newStackoverflow')
   render: ->
     @$('.error-message').remove() # in case we had an error fire first
     @$('.selected').html ''
@@ -42,8 +41,7 @@ class exports.MarketingTagsInputView extends BB.HasBootstrapErrorStateView
   _joined: (t) ->
     values = _.values _.pick(t, VIEW_DATA)
     values.join(' ')
-  initTypehead: ->
-    $log 'initTypehead'#, @collection.toJSON()
+  initTypehead: =>
     @cleanTypehead().val('').show()
     @$auto.typeahead(
       header: "<header><center><b>#{VIEW_DATA.join(' - ')}<b></center></header>"
@@ -55,7 +53,6 @@ class exports.MarketingTagsInputView extends BB.HasBootstrapErrorStateView
         t.joined = @_joined t
         t
     ).on('typeahead:selected', @select)
-    #@$auto.on 'blur', => @$auto.val ''   # makes it so no value off focus
     @
   select: (e, data) =>
     if e then e.preventDefault()
@@ -64,7 +61,6 @@ class exports.MarketingTagsInputView extends BB.HasBootstrapErrorStateView
   deselect: (e) =>
     e.preventDefault()
     _id = $(e.currentTarget).attr 'href'
-    #$log 'deselect', _id
     match = _.find @collection.models, (m) -> m.get('_id') == _id
     @_toggleMarketingTag match.toJSON()
   _toggleMarketingTag: (value) ->
