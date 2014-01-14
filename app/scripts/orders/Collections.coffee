@@ -12,18 +12,19 @@ class exports.Orders extends BB.FilteringCollection
     orders = @models
 
     if marketingTags && marketingTags.length
-      console.log '===marketingTags', marketingTags, '==='
-      desiredIds = marketingTags.map (t) -> t._id
-
       orders = _.filter orders, (o) ->
         orderTags = o.get('marketingTags') || []
         if !orderTags.length then return false
 
-        ids = orderTags.map (t) -> t._id
-        for desired in desiredIds
-          contained = ids.indexOf desired > -1
-          if !contained then return false
-        true
+        # console.log marketingTags, 'vs', orderTags
+
+        # every marketing tag should be contained in the order's tag list
+        _.every marketingTags, (desired) ->
+          _.some orderTags, (ot) ->
+            sameName = desired.name == ot.name
+            sameType = desired.type == ot.type
+            sameGroup = desired.group == ot.group
+            sameName && sameType && sameGroup
 
     if !timeString then return orders
     if 'all' == timeString then return orders

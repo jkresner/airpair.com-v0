@@ -85,17 +85,6 @@
         <a href="#" class="save button">Save</a>
       </div>
 
-      <hr>
-
-      <div class="control-group">
-        <div class="controls">
-          <input id="marketingTagPicker" type="text" class="autocomplete"
-            placeholder="marketing tags" autocomplete="off">
-        </div>
-      </div>
-
-      <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-
     </fieldset>
   </div>
 </body>
@@ -109,17 +98,7 @@
       var model = new M.MarketingTag();
       var collection = new C.MarketingTags();
       window.tf = new V.MarketingTagForm({ model: model, collection: collection });
-
-      // window.tp = new V.MarketingTagPicker({ collection: collection });
-      var request = new M.Request({ _id: '529e65961a4bf00200000010' });
-      window.ti = new V.MarketingTagsInputView({ model: request, collection: collection });
-      collection.fetch();
-      request.fetch();
-
-      // TODO get adding a source to a request to work
-      // var requestId = "529e65961a4bf00200000010" // lew dwyer
-      // requestId
-      // var sourceView = new TagsView etc
+      collection.fetch()
     }
   </script>
   <script src="/javascripts/vendor.js" defer></script>
