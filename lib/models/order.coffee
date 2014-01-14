@@ -34,6 +34,9 @@ schema = new Schema
   payouts:        { type: [ExpertPayout] }
   paymentStatus:  { required: true, type: String, default: 'pending' }
   utm:            { required: false, type: {} }
+  # every time a request is saved, this gets copied over from
+  # request.marketingTags
+  marketingTags:  [{}]
 
 
 module.exports = mongoose.model 'Order', schema

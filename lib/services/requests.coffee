@@ -1,12 +1,15 @@
+async           = require 'async'
 DomainService   = require './_svc'
-Roles           = require './../identity/roles'
+Roles           = require '../identity/roles'
 RatesSvc        = require './rates'
 SettingsSvc     = require './settings'
+Order           = require '../models/order'
+
 
 module.exports = class RequestsService extends DomainService
 
   mailman: require '../mail/mailman'
-  model: require './../models/request'
+  model: require '../models/request'
   rates: new RatesSvc()
   settingsSvc: new SettingsSvc()
 
@@ -62,12 +65,20 @@ module.exports = class RequestsService extends DomainService
       callback null, request
 
   update: (id, data, callback) ->
-    @model.findByIdAndUpdate(id, data).lean().exec (e, r) =>
-      if e then return callback e
-      for s in r.suggested
-        s.suggestedRate = @rates.calcSuggestedRates r, s.expert
+    tasks = {}
+    tasks.request = (cb) =>
+      @model.findByIdAndUpdate(id, data).lean().exec (e, r) =>
+        if e then return callback e
+        for s in r.suggested
+          s.suggestedRate = @rates.calcSuggestedRates r, s.expert
+        cb(null, r)
 
-      callback null, r
+    tasks.orders = (cb) =>
+      @_copyOverMarketingTags id, data.marketingTags, cb
+
+    async.parallel tasks, (err, results) ->
+      if err then return callback err
+      callback null, results.request
 
   # Used for dashboard
   getActive: (callback) ->
@@ -128,3 +139,8 @@ module.exports = class RequestsService extends DomainService
       (e) ->
         if e then $log 'notifyAdmins error', e
 
+  _copyOverMarketingTags: (requestId, marketingTags, callback) ->
+    query = { requestId: requestId }
+    updates = { $set: { marketingTags: marketingTags } }
+    options = multi: true
+    Order.update query, updates, options, callback
