@@ -22,8 +22,7 @@ nav a.zocial { padding:0; }
 #admorderspage pre { font-size: 11px; line-height: 1.2;}
 
 #admorderspage #timefilter { float:right;padding:10px 0px; }
-#admorderspage #sourcefilter { float:left;padding:10px 0px; }
-#admorderspage #sourcefilter input { margin-bottom: 0; }
+#admorderspage .marketingTagsInput { float:left;padding:10px 0px; }
 #admorderspage #orders { margin-top:25px;clear:both; }
 #admorderspage #orders img { height: 32px;width: 32px }
 #admorderspage #orders img.favicon { height: 8px;width: 8px; }

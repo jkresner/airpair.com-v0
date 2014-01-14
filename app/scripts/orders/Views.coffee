@@ -1,7 +1,10 @@
 exports = {}
-BB = require './../../lib/BB'
+BB = require '../../lib/BB'
 M = require './Models'
-Shared = require './../shared/Views'
+Shared = require '../shared/Views'
+SM = require '../shared/Models'
+SC = require '../shared/Collections'
+MarketingTagsInputView = Shared.MarketingTagsInputView
 
 #############################################################################
 ##  To render all experts for admin
@@ -11,9 +14,13 @@ class exports.FiltersView extends BB.BadassView
   el: '#filters'
   events:
     'click .btn': 'timeFilter'
-    'keyup input': 'sourceFilter'
   initialize: ->
-    @sourceFilter = _.debounce @_sourceFilter, 500
+    marketingTags = new SC.MarketingTags()
+    marketingTags.fetch()
+    @fakeRequest = new SM.Request(marketingTags: [])
+    @marketingTagView = new MarketingTagsInputView(collection: marketingTags, model: @fakeRequest)
+    @listenTo @fakeRequest, 'change:marketingTags', @filterByTag
+
   timeFilter: (e) ->
     $btn = $(e.currentTarget)
     @$('button').removeClass('btn-warning')
@@ -21,17 +28,17 @@ class exports.FiltersView extends BB.BadassView
 
     @timeString = $btn.text().toLowerCase()
     @month = $btn.data('month')
-    @filter(@timeString, @month, @sourceString)
+    @filter(@timeString, @month, @marketingTags)
 
-  _sourceFilter: (e) ->
-    @sourceString = $(e.target).val().trim()
-    @filter(@timeString, @month, @sourceString)
+  filterByTag: ->
+    @marketingTags = @fakeRequest.get('marketingTags')
+    @filter(@timeString, @month, @marketingTags)
 
-  filter: (timeString, month, sourceString) ->
+  filter: (timeString, month, marketingTags) ->
     @collection.filterFilteredModels
       timeString: timeString
       month: month
-      sourceString: sourceString
+      marketingTags: marketingTags
 
 
 class exports.OrderRowView extends BB.ModelSaveView

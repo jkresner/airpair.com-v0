@@ -8,18 +8,22 @@ class exports.Orders extends BB.FilteringCollection
   comparator: (m) ->
     -1 * moment(m.get('utc')).unix()
   _filter: (options) ->
-    {timeString, sourceString} = options
+    {timeString, marketingTags} = options
     orders = @models
 
-    if sourceString
-      console.log 'sourceString', sourceString
+    if marketingTags && marketingTags.length
+      console.log '===marketingTags', marketingTags, '==='
+      desiredIds = marketingTags.map (t) -> t._id
 
-      # TODO don't filter on utm; filter on marketing tags
       orders = _.filter orders, (o) ->
-        utm = o.get('utm')
-        if !utm || !utm.utm_source then return false
-        # console.log sourceString, 'vs', utm.utm_source
-        utm.utm_source.indexOf(sourceString) > -1
+        orderTags = o.get('marketingTags') || []
+        if !orderTags.length then return false
+
+        ids = orderTags.map (t) -> t._id
+        for desired in desiredIds
+          contained = ids.indexOf desired > -1
+          if !contained then return false
+        true
 
     if !timeString then return orders
     if 'all' == timeString then return orders
