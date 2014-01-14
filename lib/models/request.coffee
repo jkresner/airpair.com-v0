@@ -53,6 +53,7 @@ RequestSchema = new Schema
   userId:           { required: true, type: ObjectId }
   company:          { required: true, type: Mixed    }
   tags:             [{}]
+  marketingTags:    [{}]
   owner:            String
   brief:            { required: true, type: String   }
   budget:           { required: true, type: Number   }

@@ -41,6 +41,7 @@
       - the form to add another marketing tag
    -->
   <div id="marketingTagForm" class="route" style="display:block;">
+    <!-- TODO remove -->
     <div class="form-actions admin-nav">
       <div class="controls">
         <a href="/adm/orders" class="btn">Back</a>
@@ -48,9 +49,8 @@
     </div>
 
     <div class="control-group">
-      <div class="controls">
-        <div id="marketingTagsInput"></div>
-      </div>
+      <label class="control-label">Marketing Tags</label>
+      <div id="marketingTagsInput" class="controls controls-tags"></div>
     </div>
 
     <div id="marketingTagList"></div>
@@ -99,6 +99,7 @@
             placeholder="marketing tags" autocomplete="off">
         </div>
       </div>
+
       <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
     </fieldset>
@@ -117,7 +118,7 @@
 
       // window.tp = new V.MarketingTagPicker({ collection: collection });
       var request = new M.Request({ _id: '529e65961a4bf00200000010' });
-      window.ti = new V.MarketingTagInputView({ model: request, collection: collection });
+      window.ti = new V.MarketingTagsInputView({ model: request, collection: collection });
       collection.fetch();
       request.fetch();
 

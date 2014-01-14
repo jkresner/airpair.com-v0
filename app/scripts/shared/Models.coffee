@@ -2,7 +2,7 @@ BB = require './../../lib/BB'
 exports = {}
 
 _.extend exports, require './../tags/Models'
-
+_.extend exports, require './../marketingtags/Models'
 
 class exports.User extends BB.BadassModel
   urlRoot: '/api/users/me'

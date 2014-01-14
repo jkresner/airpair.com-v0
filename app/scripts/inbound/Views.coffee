@@ -182,6 +182,7 @@ class exports.RequestInfoView extends BB.ModelSaveView
     @$el.html @tmpl @model.toJSON()
     @$('#status').on 'change', @toggleCanceledIncompleteFields
     @tagsInput = new SV.TagsInputView model: @model, collection: @tags
+    @marketingTagsInput = new SV.MarketingTagsInputView model: @model, collection: @marketingTags
     @listenTo @model, 'change', @render
   render: ->
     @setValsFromModel ['brief','availability','status','owner','canceledDetail','incompleteDetail','budget','pricing']
@@ -333,7 +334,7 @@ class exports.RequestView extends BB.ModelSaveView
     @$el.html @tmpl()
     @navView = new exports.RequestNavView el: '#requestNav', model: @model
     @eventsView = new exports.RequestEventsView el: '#events', model: @model
-    @infoView = new exports.RequestInfoView model: @model, tags: @tags, session: @session, parentView: @
+    @infoView = new exports.RequestInfoView model: @model, tags: @tags, marketingTags: @marketingTags, session: @session, parentView: @
     @suggestionsView = new exports.RequestSuggestionsView model: @model, collection: @experts, parentView: @
     @suggestedView = new exports.RequestSuggestedView model: @model, collection: @experts, session: @session, parentView: @
     @callsView = new exports.RequestCallsView el: '#calls', model: @model, parentView: @
@@ -345,6 +346,7 @@ class exports.RequestView extends BB.ModelSaveView
   getViewData: ->
     d = @getValsFromInputs @viewData
     d.tags = @infoView.tagsInput.getViewData()
+    d.marketingTags = @infoView.marketingTagsInput.getViewData()
     delete @mget('company').mailTemplates # temp fix for old leak code
     d
   deleteRequest: ->

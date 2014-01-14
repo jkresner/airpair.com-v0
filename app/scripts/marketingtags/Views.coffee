@@ -63,6 +63,7 @@ class exports.MarketingTagsInputView extends BB.HasBootstrapErrorStateView
     _id = $(e.currentTarget).attr 'href'
     match = _.find @collection.models, (m) -> m.get('_id') == _id
     @_toggleMarketingTag match.toJSON()
+  # TODO this should go in the model, except that it's nice to reuse VIEW_DATA
   _toggleMarketingTag: (value) ->
     tag = _.pick value, VIEW_DATA.concat '_id'
     equalById = (m) -> m._id == value._id
