@@ -1,16 +1,8 @@
 <h3>Existing marketing tags</h3>
-{{#empty marketingtags}}
+{{#empty marketingTags}}
 <p>Save your first marketing tag with the form below.</p>
 {{/empty}}
 
-{{#each marketingtags}}
-  <span class="label label-tag marketingtag {{type}}">
-    <span data-toggle="popover"
-      data-placement="bottom"
-      data-content="group: {{group}}<br> type: {{type}}<br> _id: {{_id}}"
-      title="<strong>{{name}}<strong>">
-      {{name}}
-    </span>
-    <a href="#" class="delete" data-id="{{_id}}">x</a>
-  </span>
+{{#each marketingTags}}
+  {{> MarketingTag}}
 {{/each}}

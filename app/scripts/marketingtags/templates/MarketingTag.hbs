@@ -1,0 +1,14 @@
+<span class="label label-tag marketingtag {{type}}">
+  <span
+  {{#if popover}}
+    data-toggle="popover"
+    data-placement="bottom"
+    data-content="group: {{group}}<br> type: {{type}}<br> _id: {{_id}}"
+    title="<strong>{{name}}<strong>"
+  {{/if}}>
+    {{name}}
+  </span>
+  {{#if removable}}
+  <a href="#" data-id="{{_id}}" class="delete">x</a>
+  {{/if}}
+</span>

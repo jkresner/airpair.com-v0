@@ -1,6 +1,7 @@
 BB = require './../../lib/BB'
 
 VIEW_DATA = [ 'group', 'type', 'name']
+Handlebars.registerPartial 'MarketingTag', require './templates/MarketingTag'
 
 class exports.MarketingTagForm extends BB.ModelSaveView
   el: '#marketingTagForm'
@@ -15,7 +16,11 @@ class exports.MarketingTagForm extends BB.ModelSaveView
     # the delete button. We do this b/c .popover('destroy') is broken
     @$el.popover(selector: '[data-toggle="popover"]')
   render: ->
-    @$('#marketingTagList').html @tmpl { marketingtags: @collection.toJSON() }
+    marketingTags = @collection.toJSON().map (t) ->
+      t.popover = true
+      t.removable = true
+      t
+    @$('#marketingTagList').html @tmpl { marketingTags }
     @
   addTag: (e) ->
     @model.unset('_id')
@@ -30,19 +35,20 @@ class exports.MarketingTagForm extends BB.ModelSaveView
     @$('.alert-success').fadeIn(800).fadeOut(5000)
     @collection.fetch()
 
-# TODO between the views of a different requests, clear thyself
 class exports.MarketingTagsInputView extends BB.HasBootstrapErrorStateView
   el: '#marketingTagsInput'
   tmpl: require './templates/Input'
   tmplResult: require './templates/TypeAheadResult'
+  tmplTag: require './templates/MarketingTag'
   events:
-    'click .rmTag': 'deselect'
+    'click .delete': 'deselect'
   initialize: (args) ->
     @$el.append @tmpl @model.toJSON()
     @listenTo @collection, 'sync', @initTypehead
     @listenTo @model, 'change:marketingTags', @render
     @$auto = @$('.autocomplete').on 'input', =>
       @renderInputValid @$('.autocomplete')
+    @$el.popover(selector: '[data-toggle="popover"]')
   render: ->
     @$('.error-message').remove() # in case we had an error fire first
     @$('.selected').html ''
@@ -50,20 +56,22 @@ class exports.MarketingTagsInputView extends BB.HasBootstrapErrorStateView
       @$('.selected').append(@tagHtml(t)) for t in @model.get('marketingTags')
     @
   tagHtml: (t) ->
-    "<span class='label label-tag'>#{@_joined(t)} <a href='#{t._id}' title='#{t.name}' class='rmTag'>x</a></span>"
+    t.removable = true
+    t.popover = true
+    @tmplTag(t)
   _joined: (t) ->
     values = _.values _.pick(t, VIEW_DATA)
     values.join(' ')
   initTypehead: =>
     @cleanTypehead().val('').show()
     @$auto.typeahead(
-      header: "<header><center><b>#{VIEW_DATA.join(' - ')}<b></center></header>"
+      header: '<header><strong>Marketing Tags</strong></header>'
       noresultsHtml: 'No results'
       name: 'collection' + new Date().getTime()
       valueKey: 'joined'
       template: @tmplResult
       local: @collection.toJSON().map (t) =>
-        t.joined = @_joined t
+        t.joined = 'all ' + t.name.toLowerCase()
         t
     ).on('typeahead:selected', @select)
     @
@@ -73,10 +81,9 @@ class exports.MarketingTagsInputView extends BB.HasBootstrapErrorStateView
     @$auto.val ''
   deselect: (e) =>
     e.preventDefault()
-    _id = $(e.currentTarget).attr 'href'
+    _id = $(e.target).data 'id'
     match = _.find @collection.models, (m) -> m.get('_id') == _id
     @_toggleMarketingTag match.toJSON()
-  # TODO this should go in the model, except that it's nice to reuse VIEW_DATA
   _toggleMarketingTag: (value) ->
     tag = _.pick value, VIEW_DATA.concat '_id'
     equalById = (m) -> m._id == value._id

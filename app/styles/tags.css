@@ -5,7 +5,7 @@
 #tagsInput h3, .controls-tags h3 { }
 #tagsInput .selected, .controls-tags .selected { border-radius:5px;margin:10px auto; }
 #tagsInput .label, .controls-tags .label { padding:6px 10px;margin:3px 3px 0px 0px;border:solid 1px #7F761C;font-weight:bold;font-size:14px; }
-#tagsInput .label a, .controls-tags .label a { color:pink;margin-left:5px }
+#tagsInput .label a { color:pink;margin-left:5px }
 #tagsInput .tt-dropdown-menu, .controls-tags .tt-dropdown-menu { width:260px }
 #tagsInput .tt-suggestions, .controls-tags .tt-suggestions { padding:5px;text-align:center; }
 #tagsInput .tt-suggestions .label, .controls-tags .tt-suggestions .label { margin:0;padding:3px 8px; }

@@ -16,15 +16,10 @@ class exports.Orders extends BB.FilteringCollection
         orderTags = o.get('marketingTags') || []
         if !orderTags.length then return false
 
-        # console.log marketingTags, 'vs', orderTags
-
         # every marketing tag should be contained in the order's tag list
         _.every marketingTags, (desired) ->
           _.some orderTags, (ot) ->
-            sameName = desired.name == ot.name
-            sameType = desired.type == ot.type
-            sameGroup = desired.group == ot.group
-            sameName && sameType && sameGroup
+            desired._id == ot._id
 
     if !timeString then return orders
     if 'all' == timeString then return orders

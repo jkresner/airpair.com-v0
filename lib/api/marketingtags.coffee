@@ -12,7 +12,7 @@ class MarketingTagsApi
     app.delete  "/api/#{route}/:id", admin, @delete
 
   create: (req, res, next) =>
-    ### todo validate:
+    ### TODO validate:
       no duplicates
       {name,type,group} are non-empty strings
     ###
