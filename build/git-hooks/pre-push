@@ -12,7 +12,6 @@ success=$?
 if [[ ${success} == "0" ]]; then
   mocha-phantomjs "http://localhost:${test_port}/test/index.html"
   success=$?
-  mocha test/integration/cleanup.coffee
 fi
 kill "${test_pid}"
 exit "${success}"
