@@ -16,11 +16,7 @@ class exports.MarketingTagForm extends BB.ModelSaveView
     # the delete button. We do this b/c .popover('destroy') is broken
     @$el.popover(selector: '[data-toggle="popover"]')
   render: ->
-    marketingTags = @collection.toJSON().map (t) ->
-      t.popover = true
-      t.removable = true
-      t
-    @$('#marketingTagList').html @tmpl { marketingTags }
+    @$('#marketingTagList').html @tmpl { marketingTags: @collection.toJSON() }
     @
   addTag: (e) ->
     @model.unset('_id')
@@ -52,12 +48,8 @@ class exports.MarketingTagsInputView extends BB.HasBootstrapErrorStateView
   render: ->
     @$('.selected').html ''
     if @model.get('marketingTags')?
-      @$('.selected').append(@tagHtml(t)) for t in @model.get('marketingTags')
+      @$('.selected').append(@tmplTag(t)) for t in @model.get('marketingTags')
     @
-  tagHtml: (t) ->
-    t.removable = true
-    t.popover = true
-    @tmplTag(t)
   initTypehead: =>
     @cleanTypehead().val('').show()
     @$auto.typeahead(

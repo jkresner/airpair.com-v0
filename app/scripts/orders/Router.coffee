@@ -1,4 +1,6 @@
-S = require('./../shared/Routers')
+S = require '../shared/Routers'
+SC = require '../shared/Collections'
+SM = require '../shared/Models'
 M = require './Models'
 C = require './Collections'
 V = require './Views'
@@ -18,12 +20,18 @@ module.exports = class Router extends S.AirpairSessionRouter
     d =
       selected: new M.Order()
       orders: new C.Orders()
+      marketingTags: new SC.MarketingTags()
+      dummyRequest: new SM.Request marketingTags: []
     v =
       ordersView: new V.OrdersView collection: d.orders, model: d.selected
       orderView: new V.OrderView model: d.selected
-      filtersView: new V.FiltersView collection: d.orders
+      filtersView: new V.FiltersView
+        collection: d.orders,
+        marketingTags: d.marketingTags,
+        dummyRequest: d.dummyRequest
 
     @resetOrFetch d.orders, pageData.experts
+    @resetOrFetch d.marketingTags, pageData.marketingTags
     _.extend d, v
 
   initialize: (args) ->

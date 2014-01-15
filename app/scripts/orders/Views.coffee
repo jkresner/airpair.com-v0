@@ -15,30 +15,20 @@ class exports.FiltersView extends BB.BadassView
   events:
     'click .btn': 'timeFilter'
   initialize: ->
-    marketingTags = new SC.MarketingTags()
-    marketingTags.fetch()
-    @dummyRequest = new SM.Request marketingTags: []
-    @marketingTagView = new MarketingTagsInputView collection: marketingTags, model: @dummyRequest
-    @listenTo @dummyRequest, 'change:marketingTags', @tagFilter
+    @marketingTagView = new MarketingTagsInputView
+      collection: @marketingTags, model: @dummyRequest
+    @listenTo @dummyRequest, 'change:marketingTags', @filter
+  filter: (e) ->
+    if e && e.target
+      $btn = $(e.target)
+      @$('button').removeClass('btn-warning')
+      $btn.addClass('btn-warning')
 
-  timeFilter: (e) ->
-    $btn = $(e.currentTarget)
-    @$('button').removeClass('btn-warning')
-    $btn.addClass('btn-warning')
+      @timeString = $btn.text().toLowerCase()
+      @month = $btn.data('month')
 
-    @timeString = $btn.text().toLowerCase()
-    @month = $btn.data('month')
-    @filter(@timeString, @month, @marketingTags)
-
-  tagFilter: ->
     @marketingTags = @dummyRequest.get('marketingTags')
-    @filter(@timeString, @month, @marketingTags)
-
-  filter: (timeString, month, marketingTags) ->
-    @collection.filterFilteredModels
-      timeString: timeString
-      month: month
-      marketingTags: marketingTags
+    @collection.filterFilteredModels { @timeString, @month, @marketingTags }
 
 
 class exports.OrderRowView extends BB.ModelSaveView

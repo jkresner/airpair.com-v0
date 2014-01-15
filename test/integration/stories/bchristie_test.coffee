@@ -82,6 +82,7 @@ describe "Stories: Bruce Christie", ->
       infoFormView.$('.save').click()
 
   it 'can suggest experts as admin', (done) ->
+    @timeout 10000
     rv = @app.requestView
 
     @app.requests.once 'sync', =>
