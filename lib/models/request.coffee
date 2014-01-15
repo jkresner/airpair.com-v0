@@ -51,9 +51,9 @@ Call = new Schema
 
 RequestSchema = new Schema
   userId:           { required: true, type: ObjectId }
-  company:          { required: true, type: Mixed    }
+  company:          { required: true, type: Mixed }
   tags:             [{}]
-  marketingTags:    [{}]
+  marketingTags:    { type: [{}], default: [] }
   owner:            String
   brief:            { required: true, type: String   }
   budget:           { required: true, type: Number   }

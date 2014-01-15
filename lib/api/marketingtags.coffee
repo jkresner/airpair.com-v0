@@ -12,10 +12,6 @@ class MarketingTagsApi
     app.delete  "/api/#{route}/:id", admin, @delete
 
   create: (req, res, next) =>
-    ### TODO validate:
-      no duplicates
-      {name,type,group} are non-empty strings
-    ###
     @svc.create req.body, (e, r) ->
       if e then return next e
       res.send r

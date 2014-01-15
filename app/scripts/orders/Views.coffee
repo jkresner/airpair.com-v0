@@ -17,9 +17,9 @@ class exports.FiltersView extends BB.BadassView
   initialize: ->
     marketingTags = new SC.MarketingTags()
     marketingTags.fetch()
-    @fakeRequest = new SM.Request(marketingTags: [])
-    @marketingTagView = new MarketingTagsInputView(collection: marketingTags, model: @fakeRequest)
-    @listenTo @fakeRequest, 'change:marketingTags', @tagFilter
+    @dummyRequest = new SM.Request marketingTags: []
+    @marketingTagView = new MarketingTagsInputView collection: marketingTags, model: @dummyRequest
+    @listenTo @dummyRequest, 'change:marketingTags', @tagFilter
 
   timeFilter: (e) ->
     $btn = $(e.currentTarget)
@@ -31,7 +31,7 @@ class exports.FiltersView extends BB.BadassView
     @filter(@timeString, @month, @marketingTags)
 
   tagFilter: ->
-    @marketingTags = @fakeRequest.get('marketingTags')
+    @marketingTags = @dummyRequest.get('marketingTags')
     @filter(@timeString, @month, @marketingTags)
 
   filter: (timeString, month, marketingTags) ->

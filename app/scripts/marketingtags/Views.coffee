@@ -46,9 +46,6 @@ class exports.MarketingTagsInputView extends BB.HasBootstrapErrorStateView
     @$el.append @tmpl @model.toJSON()
     @listenTo @collection, 'sync', @initTypehead
     @listenTo @model, 'change:marketingTags', @render
-    # we need this because many requests have .marketingTags == undefined, and
-    # so the change:marketingTags event does not trigger.
-    @listenTo @model, 'change', @render
     @$auto = @$('.autocomplete').on 'input', =>
       @renderInputValid @$('.autocomplete')
     @$el.popover(selector: '[data-toggle="popover"]')
@@ -61,9 +58,6 @@ class exports.MarketingTagsInputView extends BB.HasBootstrapErrorStateView
     t.removable = true
     t.popover = true
     @tmplTag(t)
-  _joined: (t) ->
-    values = _.values _.pick(t, VIEW_DATA)
-    values.join(' ')
   initTypehead: =>
     @cleanTypehead().val('').show()
     @$auto.typeahead(
@@ -84,7 +78,7 @@ class exports.MarketingTagsInputView extends BB.HasBootstrapErrorStateView
   deselect: (e) =>
     e.preventDefault()
     _id = $(e.target).data 'id'
-    match = _.find @collection.models, (m) -> m.get('_id') == _id
+    match = _.find @collection.models, (m) -> m.id == _id
     @_toggleMarketingTag match.toJSON()
   _toggleMarketingTag: (value) ->
     tag = _.pick value, VIEW_DATA.concat '_id'

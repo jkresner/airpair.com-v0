@@ -16,9 +16,9 @@
       <a href="/" class="logo"></a>
       <ul>
         <li><a href="/adm/inbound" class="zocial">Inbound</a></li>
-        <li><a href="#inactive" class="zocial inactive">Inactive</a></li>
         <li><a href="/adm/orders" class="zocial">Orders</a></li>
         <li><a href="/adm/tags" class="zocial">Tags</a></li>
+        <li><a href="/adm/marketingtags" class="zocial">Marketing</a></li>
         <li><a href="/adm/experts" class="zocial">Experts</a></li>
         <li><a href="/adm/companys" class="zocial">Companys</a></li>
         <li><a href="/adm/csvs" class="zocial">CSVs</a></li>
@@ -28,27 +28,22 @@
     </div>
   </nav>
 
-  <div id="marketingTagForm" class="route" style="display:block;">
-    <div class="form-actions admin-nav">
-      <div class="controls">
-        <a href="/adm/orders" class="btn">Back</a>
-      </div>
-    </div>
-
-    <div class="twocol">
+  <div class="route" style="display: block;">
+    <div id="marketingTagForm" class="twocol">
       <div id="marketingTagList"></div>
 
       <fieldset>
         <h3>Create a new marketing tag</h3>
         <div class="control-group">
-          <label class="control-label" for="name"><b>name</b> e.g. twitter</label>
+          <label class="control-label" for="name"><strong>name</strong>
+            e.g. twitter. (Warning: must be unique!)</label>
           <div class="controls">
             <input name="name" type="text" class="input-medium"
               value="name1" placeholder="name">
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="type"><b>type</b> e.g. channel, campaign, usage</label>
+          <label class="control-label" for="type"><strong>type</strong></label>
           <div class="controls">
             <select name="type" class="input-medium">
               <option value="channel">channel</option>
@@ -58,10 +53,17 @@
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="group"><b>group</b> e.g. Direct, Affiliate, Ad, Social, SEO, Press</label>
+          <label class="control-label" for="group"><strong>group</strong></label>
           <div class="controls">
-            <input name="group" type="text" class="input-medium"
-              value="group1" placeholder="group">
+            <select name="group" class="input-medium">
+              <option value="" selected></option>
+              <option value="ad">Ad</option>
+              <option value="affiliate">Affiliate</option>
+              <option value="direct">Direct</option>
+              <option value="press">Press</option>
+              <option value="seo">SEO</option>
+              <option value="social">Social</option>
+            </select>
           </div>
         </div>
 
@@ -78,20 +80,15 @@
         </div>
 
       </fieldset>
-    </div> <!-- end .twocol -->
-  </div> <!-- end #marketingTagForm -->
+    </div> <!-- end #marketingTagForm -->
+  </div> <!-- end .route -->
 </body>
 
   <script type="text/javascript">
     function initApp() {
-      M = require('/scripts/marketingtags/Models');
-      C = require('/scripts/marketingtags/Collections');
-      V = require('/scripts/marketingtags/Views');
-
-      var model = new M.MarketingTag();
-      var collection = new C.MarketingTags();
-      window.tf = new V.MarketingTagForm({ model: model, collection: collection });
-      collection.fetch()
+      var pageData = {}
+      var Router = require('/scripts/marketingtags/Router');
+      window.router = new Router(pageData);
     }
   </script>
   <script src="/javascripts/vendor.js" defer></script>

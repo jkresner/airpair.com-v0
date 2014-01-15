@@ -36,7 +36,7 @@ schema = new Schema
   utm:            { required: false, type: {} }
   # every time a request is saved, this gets copied over from
   # request.marketingTags
-  marketingTags:  [{}]
+  marketingTags:  { type: [{}], default: [] }
 
 
 module.exports = mongoose.model 'Order', schema
