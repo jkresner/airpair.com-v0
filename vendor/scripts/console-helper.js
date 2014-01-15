@@ -62,4 +62,4 @@ if (!window.log) {
 }
 
 //-- shorthand syntax to use console.log
-$log = function () { console.log.apply(console, arguments); };
+$log = function () { console.log(arguments); };
