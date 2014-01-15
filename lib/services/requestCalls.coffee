@@ -6,7 +6,7 @@ Order = new require '../models/order'
 Request = new require '../models/request'
 
 sum = require '../../app/scripts/shared/mix/sum'
-expertAvailability = require '../../app/scripts/shared/mix/expertAvailability'
+expertCredit = require '../../app/scripts/shared/mix/expertCredit'
 
 calendar = require './calendar'
 
@@ -24,8 +24,8 @@ module.exports = class RequestCallsService
   getByExpertId: (expertId, callback) => throw new Error 'not imp'
 
   _canScheduleCall: (orders, call) =>
-    availability = expertAvailability orders, call.expertId
-    byType = availability.byType[call.type]
+    credit = expertCredit orders, call.expertId
+    byType = credit.byType[call.type]
     if !byType then return false
     call.duration <= byType.balance
 

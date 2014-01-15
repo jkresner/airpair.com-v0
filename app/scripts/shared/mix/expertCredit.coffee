@@ -10,7 +10,7 @@ This supports two use-cases:
     orders
   - how much time can an expert be booked given this only one order in the array
 ###
-expertAvailability = (orders, expertId) ->
+expertCredit = (orders, expertId) ->
   lisForExpert = getLineItemsForExpert orders, expertId
   byType = getBalanceByType groupExpertLineItemsByType lisForExpert
   total = calcTotal lisForExpert
@@ -53,7 +53,7 @@ getLineItemsForExpert = (orders, expertId) ->
   lineItems
 
 
-module.exports = expertAvailability
+module.exports = expertCredit
 _.extend module.exports, {
   getBalanceByType, groupExpertLineItemsByType, getLineItemsForExpert
 }

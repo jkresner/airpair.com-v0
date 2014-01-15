@@ -13,7 +13,7 @@
       <img src="{{pic}}" alt="{{name}}" draggable="false" class="expertPic"><br>
       {{name}}<br>
       <table>
-      {{#each availability.byTypeArray}}
+      {{#each credit.byTypeArray}}
         <tr>
           <td>{{type}}:</td>
           <td>{{balance}} {{inflect balance "hour" "hours"}}</td>
@@ -35,7 +35,7 @@
       <label class="control-label" for="type">Type</label>
       <div class="controls">
         <select name="type">
-          {{#each availability.byTypeArray}}
+          {{#each credit.byTypeArray}}
           <option value="{{type}}" {{#is ../../type type}}selected{{/is}}>
             {{type}}
           </option>

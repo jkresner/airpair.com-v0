@@ -2,7 +2,7 @@ exports = {}
 BB = require './../../lib/BB'
 M = require './Models'
 SV = require './../shared/Views'
-expertAvailability = require '../shared/mix/expertAvailability'
+expertCredit = require '../shared/mix/expertCredit'
 parseYoutubeId = require '../shared/mix/parseYoutubeId'
 
 # schedule form
@@ -35,20 +35,20 @@ class exports.ScheduleFormView extends BB.ModelSaveView
     suggested = suggested
       .map (suggestion) =>
         expert = suggestion.expert
-        expert.availability = expertAvailability orders, expert._id
-        expert.availability.byTypeArray = _.values(expert.availability.byType)
+        expert.credit = expertCredit orders, expert._id
+        expert.credit.byTypeArray = _.values(expert.credit.byType)
         suggestion
 
       # expert is available, you can only purchase hours for someone available
       .filter (suggestion) =>
-        suggestion.expert.availability.balance > 0
+        suggestion.expert.credit.balance > 0
 
       .map (suggestion, __, filtered) =>
         # selects the first expert by default when there's only one
         if filtered.length == 1
           @model.set 'expertId', suggestion.expert._id
           if !@model.get 'type'
-            @model.set 'type', suggestion.expert.availability.byTypeArray[0].type
+            @model.set 'type', suggestion.expert.credit.byTypeArray[0].type
 
         if @mget('expertId') == suggestion.expert._id
           suggestion.expert.selected = suggestion.expert
@@ -57,7 +57,7 @@ class exports.ScheduleFormView extends BB.ModelSaveView
         suggestion
 
     if selectedExpert
-      byType = selectedExpert.availability.byType[@mget('type')] || {}
+      byType = selectedExpert.credit.byType[@mget('type')] || {}
       balance = byType.balance || 0
       selectedExpert.selectOptions = _.range(1, balance + 1).map (num) -> { num }
       # don't forget their choice upon rerender
@@ -116,9 +116,9 @@ class exports.ScheduleFormView extends BB.ModelSaveView
 
 #     # open source / private / nda dropdown
 #     orders = @collection.toJSON()
-#     expert.availability = expertAvailability orders, call.expertId
-#     expert.availability.byType[call.type].selected = true
-#     expert.availability.byTypeArray = _.values(expert.availability.byType)
+#     expert.credit = expertCredit orders, call.expertId
+#     expert.credit.byType[call.type].selected = true
+#     expert.credit.byTypeArray = _.values(expert.credit.byType)
 
 #     # a partial time according to the RFC 3389.
 #     # TODO include the .zone() function so it will be PST everywhere
@@ -127,7 +127,7 @@ class exports.ScheduleFormView extends BB.ModelSaveView
 
 #     # hours dropdown
 #     # tricky: take into account the call's current duration!
-#     byType = expert.availability.byType[@model.get('type')] || {}
+#     byType = expert.credit.byType[@model.get('type')] || {}
 #     balance = byType.balance || 0
 #     expert.selectOptions = _.range(1, balance + 1).map (num) -> { num }
 #     (expert.selectOptions[call.duration - 1] || {}).selected = true
