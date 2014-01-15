@@ -45,8 +45,14 @@ class CalendarService
       ]
       summary: "Airpair #{customerFirst}+#{expertFirst} (#{tag})"
       colorId: owner2colorIndex[owner]
-      description: "Your account manager, #{owner2name[owner]} will set up a" +
-        " google hangout for this session and invite you to it."
+      description:
+        """Your account manager, #{owner2name[owner]}, will set up a Google
+        hangout for this session and share the link in the HipChat room a few
+        minutes prior to the session.
+
+        You are encouraged to make sure beforehand your mic/webcam are working
+        on your system. Please let #{owner2name[owner]} know if you'd like to do
+        a dry run."""
 
     gcalCreate body, cb
   # edit:
