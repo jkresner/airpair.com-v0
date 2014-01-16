@@ -39,6 +39,8 @@
 
     <a href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to={{expert.name}}%20%3c{{expert.email}}%3e&su={{tagsString}} AirPair?&body={{mailTemplates.suggested}}" class="email btn btn-small btn-warning" target="_blank"><i class="icon-envelope icon-white"></i> suggested</a>
 
+    <a href="https://mail.google.com/mail/u/0/?shva=1#search/%22{{expert.name}}%22+OR+{{expert.email}}" class="email btn btn-small btn-inverse" target="_blank"><i class="icon-envelope icon-white"></i> history</a>
+
     <span class="status label label-{{expertStatus}}">{{ expertStatus }}</span>
 
   {{#if expertComment}}
