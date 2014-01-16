@@ -1,7 +1,10 @@
 exports = {}
-BB = require './../../lib/BB'
+BB = require '../../lib/BB'
 M = require './Models'
-Shared = require './../shared/Views'
+Shared = require '../shared/Views'
+SM = require '../shared/Models'
+SC = require '../shared/Collections'
+MarketingTagsInputView = Shared.MarketingTagsInputView
 
 #############################################################################
 ##  To render all experts for admin
@@ -10,15 +13,23 @@ Shared = require './../shared/Views'
 class exports.FiltersView extends BB.BadassView
   el: '#filters'
   events:
-    'click .btn': 'filterOrders'
+    'click .btn': 'timeFilter'
   initialize: ->
-  filterOrders: (e) ->
-    $btn = $(e.currentTarget)
-    @$('button').removeClass('btn-warning')
-    $btn.addClass('btn-warning')
-    @collection.filterFilteredModels
-      filter: $btn.text().toLowerCase()
-      month: $btn.data('month')
+    @marketingTagView = new MarketingTagsInputView
+      collection: @marketingTags, model: @dummyRequest
+    @listenTo @dummyRequest, 'change:marketingTags', @filter
+  filter: (e) ->
+    if e && e.target
+      $btn = $(e.target)
+      @$('button').removeClass('btn-warning')
+      $btn.addClass('btn-warning')
+
+      @timeString = $btn.text().toLowerCase()
+      @month = $btn.data('month')
+
+    @marketingTags = @dummyRequest.get('marketingTags')
+    @collection.filterFilteredModels { @timeString, @month, @marketingTags }
+
 
 class exports.OrderRowView extends BB.ModelSaveView
   tagName: 'tr'

@@ -1,12 +1,15 @@
+async           = require 'async'
 DomainService   = require './_svc'
-Roles           = require './../identity/roles'
+Roles           = require '../identity/roles'
 RatesSvc        = require './rates'
 SettingsSvc     = require './settings'
+Order           = require '../models/order'
+
 
 module.exports = class RequestsService extends DomainService
 
   mailman: require '../mail/mailman'
-  model: require './../models/request'
+  model: require '../models/request'
   rates: new RatesSvc()
   settingsSvc: new SettingsSvc()
 
@@ -67,7 +70,11 @@ module.exports = class RequestsService extends DomainService
       for s in r.suggested
         s.suggestedRate = @rates.calcSuggestedRates r, s.expert
 
-      callback null, r
+      # copy owner and marketingTags to every associated order.
+      updates = { marketingTags: r.marketingTags, owner: r.owner || '' }
+      Order.update { requestId: id }, updates, multi: true, (err, numChanged) =>
+        if err then return callback err
+        callback(null, r)
 
   # Used for dashboard
   getActive: (callback) ->

@@ -18,6 +18,7 @@
         <li><a href="/adm/inbound" class="zocial">Inbound</a></li>
         <li><a href="/adm/orders" class="zocial">Orders</a></li>
         <li><a href="/adm/tags" class="zocial">Tags</a></li>
+        <li><a href="/adm/marketingtags" class="zocial">Marketing</a></li>
         <li><a href="/adm/experts" class="zocial">Experts</a></li>
         <li><a href="/adm/companys" class="zocial">Companys</a></li>
         <li><a href="/adm/csvs" class="zocial">CSVs</a></li>
@@ -29,22 +30,28 @@
 
   <div id="list" class="route">
 
-    <div id="filters" class="btn-group btn-group-xs">
-      <button type="button" class="btn btn-default btn-warning">All</button>
-      <button type="button" class="btn btn-default">Tod</button>
-      <!-- <button type="button" class="btn btn-default">Wk</button> -->
-      <button type="button" class="btn btn-default">Mth</button>
-      <button type="button" class="btn btn-default" data-month="7">Aug</button>
-      <button type="button" class="btn btn-default" data-month="8">Sep</button>
-      <button type="button" class="btn btn-default" data-month="9">Oct</button>
-      <button type="button" class="btn btn-default" data-month="10">Nov</button>
-      <button type="button" class="btn btn-default" data-month="11">Dec</button>
-      <button type="button" class="btn btn-default" data-month="0">Jan</button>
-      <button type="button" class="btn btn-default" data-month="1">Feb</button>
-      <button type="button" class="btn btn-default" data-month="2">Mar</button><!--
-      <button type="button" class="btn btn-default" data-month="3"> Apr '14</button>
-      <button type="button" class="btn btn-default" data-month="4"> May '14</button>
-      <button type="button" class="btn btn-default" data-month="5"> Jun '14</button>       -->
+    <div id="filters">
+      <span id="marketingTagsInput"></span>
+
+      <div id="timefilter" class="btn-group btn-group-xs">
+        <button type="button" class="btn btn-default btn-warning">All</button>
+        <button type="button" class="btn btn-default">Tod</button>
+        <!-- <button type="button" class="btn btn-default">Wk</button> -->
+        <button type="button" class="btn btn-default">Mth</button>
+        <button type="button" class="btn btn-default" data-month="7">Aug</button>
+        <button type="button" class="btn btn-default" data-month="8">Sep</button>
+        <button type="button" class="btn btn-default" data-month="9">Oct</button>
+        <button type="button" class="btn btn-default" data-month="10">Nov</button>
+        <button type="button" class="btn btn-default" data-month="11">Dec</button>
+        <button type="button" class="btn btn-default" data-month="0">Jan</button>
+        <button type="button" class="btn btn-default" data-month="1">Feb</button>
+        <button type="button" class="btn btn-default" data-month="2">Mar</button>
+        <!--
+        <button type="button" class="btn btn-default" data-month="3">Apr</button>
+        <button type="button" class="btn btn-default" data-month="4">May</button>
+        <button type="button" class="btn btn-default" data-month="5">Jun</button>
+        -->
+      </div>
     </div>
 
     <table id="orders" class="table table-striped">

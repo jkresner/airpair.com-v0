@@ -33,6 +33,7 @@ describe "Stories: Bruce Christie", ->
     hlpr.cleanTearDown @
 
   it 'can create stripe settings', (done) ->
+    @timeout 10000
     psv = @app.paymentSettingsView
     rv = @app.stripeRegisterView
 
@@ -81,6 +82,7 @@ describe "Stories: Bruce Christie", ->
       infoFormView.$('.save').click()
 
   it 'can suggest experts as admin', (done) ->
+    @timeout 10000
     rv = @app.requestView
 
     @app.requests.once 'sync', =>
@@ -128,7 +130,7 @@ describe "Stories: Bruce Christie", ->
 
       bv.$('.payStripe').click()
 
-  it 'can pay out customer\'s experts individually as admin', (done) ->
+  it "can pay out customer's experts individually as admin", (done) ->
     this.timeout 20000
     {orders, ordersView} = @app
     ###

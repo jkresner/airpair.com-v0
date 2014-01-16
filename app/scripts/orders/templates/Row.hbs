@@ -29,7 +29,13 @@
     </div>
 </td>
 <td class="info">
-   <a href="/adm/inbound/request/{{ requestId }}" target="_blank" data-id="{{ _requestId }}" class="selectOrder">{{ requestId }}</a>
+  <span class="label label-owner label-{{owner}}">{{owner}}</span>
+  <a href="/adm/inbound/request/{{ requestId }}" target="_blank"
+    data-id="{{ _requestId }}">{{ requestId }}</a>
+  <br>
+  {{#each marketingTags}}
+    <span class="marketingtag {{type}}">{{name}}</span>
+  {{/each}}
 </td>
 <td>
   {{#if isPaidout}}
