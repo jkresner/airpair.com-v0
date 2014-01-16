@@ -80,7 +80,8 @@ module.exports = class RequestsService extends DomainService
 
   # Used for dashboard
   getActive: (callback) ->
-    @model.find({})
+    select = { events: { $slice: [ 0, 1 ] }, brief: 0, 'company.about': 0 }
+    @model.find({}, select)
       .where('status').in(['received','incomplete','review','scheduled','holding'])
       .lean()
       .exec (e, requests) =>
