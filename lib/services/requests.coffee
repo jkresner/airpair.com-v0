@@ -14,11 +14,14 @@ module.exports = class RequestsService extends DomainService
   settingsSvc: new SettingsSvc()
 
   publicView: (request) ->
-    _.pick request, ['_id','tags','company','brief','availability','owner']
+    r = _.pick request, ['_id','tags','company','brief','availability','owner']
+    r.company = _.pick r.company, ['about']
+    r.company.contacts = request.company.contacts.map (c) ->
+      _.pick c, ['pic']
+    r
 
   associatedView: (request) ->
     _.pick request, ['_id','tags','company','brief','availability','budget','pricing','suggested','owner']
-
 
   # log event when the request is viewed
   addViewEvent: (request, usr, evtName) =>
