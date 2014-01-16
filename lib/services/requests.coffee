@@ -67,8 +67,7 @@ module.exports = class RequestsService extends DomainService
   update: (id, data, callback) ->
     @model.findByIdAndUpdate(id, data).lean().exec (e, r) =>
       if e then return callback e
-      for s in r.suggested
-        s.suggestedRate = @rates.calcSuggestedRates r, s.expert
+      @_setRatesForRequest r
 
       # copy owner and marketingTags to every associated order.
       updates = { marketingTags: r.marketingTags, owner: r.owner || '' }
@@ -81,14 +80,18 @@ module.exports = class RequestsService extends DomainService
     @model.find({})
       .where('status').in(['received','incomplete','review','scheduled','holding'])
       .lean()
-      .exec (e, rs) =>
+      .exec (e, requests) =>
         if e then return callback e
-        rs = {} if rs is null
-        for r in rs
-          for s in r.suggested
-            s.suggestedRate = @rates.calcSuggestedRates r, s.expert
-          r.base = @rates.base
-        callback null, rs
+        if !requests then requests = {}
+        for r in requests
+          @_setRatesForRequest r
+        callback null, requests
+
+  _setRatesForRequest: (request) ->
+    for suggested in request.suggested
+      suggested.suggestedRate =
+        @rates.calcSuggestedRates request, suggested.expert
+    request.base = @rates.base
 
   # Used for history
   getInactive: (callback) ->
