@@ -18,9 +18,9 @@ passport.serializeUser (user, done) ->
 
 passport.deserializeUser (id, done) ->
   User.findById id, (err, user) ->
-    console.log '=================================================='
+    # console.log '=================================================='
     email = if user? then user.google._json.email else "anonymous"
-    console.log 'deserializeUser.id', id, email
+    console.log 'user', id, email
     done err, user
 
 ######## Shared
