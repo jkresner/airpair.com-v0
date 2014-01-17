@@ -41,6 +41,7 @@ class exports.MarketingTagsInputView extends BB.HasBootstrapErrorStateView
   initialize: (args) ->
     @$el.append @tmpl @model.toJSON()
     @listenTo @collection, 'sync', @initTypehead
+    @listenTo @model, 'change:_id', -> @$auto.val '' # clears it across requests
     @listenTo @model, 'change:marketingTags', @render
     @$auto = @$('.autocomplete').on 'input', =>
       @renderInputValid @$('.autocomplete')
@@ -56,10 +57,10 @@ class exports.MarketingTagsInputView extends BB.HasBootstrapErrorStateView
       header: '<header><strong>Marketing Tags</strong></header>'
       noresultsHtml: 'No results'
       name: 'collection' + new Date().getTime()
-      valueKey: 'joined'
+      valueKey: 'name'
       template: @tmplResult
       local: @collection.toJSON().map (t) =>
-        t.joined = 'all ' + t.name.toLowerCase()
+        t.name = t.name.toLowerCase()
         t
     ).on('typeahead:selected', @select)
     @
@@ -67,15 +68,15 @@ class exports.MarketingTagsInputView extends BB.HasBootstrapErrorStateView
     if e then e.preventDefault()
     @_toggleMarketingTag data
     @$auto.val ''
-  deselect: (e) =>
-    e.preventDefault()
-    _id = $(e.target).data 'id'
-    match = _.find @collection.models, (m) -> m.id == _id
-    @_toggleMarketingTag match.toJSON()
   _toggleMarketingTag: (value) ->
     tag = _.pick value, VIEW_DATA.concat '_id'
     equalById = (m) -> m._id == value._id
     @model.toggleAttrSublistElement 'marketingTags', tag, equalById
+  deselect: (e) =>
+    e.preventDefault()
+    _id = $(e.target).data 'id'
+    without = _.filter @model.get('marketingTags'), (t) -> t._id != _id
+    @model.set('marketingTags', without)
   cleanTypehead: ->
     @$auto.typeahead('destroy').off 'typeahead:selected'
   getViewData: ->
