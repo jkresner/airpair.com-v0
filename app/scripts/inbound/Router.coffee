@@ -46,12 +46,13 @@ module.exports = class Router extends S.AirpairSessionRouter
 
   request: (id) ->
     if @app.requests.length == 0 then return
-
     if !id?
       @app.selected.clearAndSetDefaults()
-    else
-      d = _.find @app.requests.models, (m) -> m.get('_id').toString() == id
-      if !d? then return @navigate '#', true
-      else
-        @app.selected.clear { silent: true }
-        @app.selected.set d.attributes
+      return
+    d = @app.requests.get id
+    if !d
+      @app.selected.set('_id', id, { silent: true })
+      @app.selected.fetch({ reset: true })
+      return
+    @app.selected.clear { silent: true }
+    @app.selected.set d.attributes
