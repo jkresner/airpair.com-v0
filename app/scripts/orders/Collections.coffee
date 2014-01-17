@@ -24,14 +24,20 @@ class exports.Orders extends BB.FilteringCollection
     if !timeString then return orders
     if 'all' == timeString then return orders
 
-    now = moment()
+    now = moment().local()
 
     if 'tod' == timeString
       return _.filter orders, (m) ->
-        0 == now.diff(moment(m.get('utc')), 'days');
+        moment(m.get('utc')).local().isSame(now, 'day')
+
+    if 'wk' == timeString
+      lastSaturday = now.day(-1)
+      return _.filter orders, (m) ->
+        moment(m.get('utc')).local().isAfter(lastSaturday)
 
     day = now.day()
-    month = parseInt(options.month, 10) || now.month() # support current month button
+    # support current month button
+    month = parseInt(options.month, 10) || now.month()
     year = now.year()
 
     # if the month has not yet happened in this calendar year, use the previous
