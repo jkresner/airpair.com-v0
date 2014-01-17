@@ -63,6 +63,7 @@ describe "Stories: Ramon Porter", ->
         done()
 
   it 'can review experts and book hours as customer with PayPal', (done) ->
+    @timeout 10000
     {request,requestView} = @app
     request.once 'sync', =>
       v = requestView

@@ -3,11 +3,13 @@ async = require 'async'
 RequestsSvc = require './../services/requests'
 ExpertsSvc = require './../services/experts'
 TagsSvc = require './../services/tags'
+MarketingTagsSvc = require './../services/marketingtags'
 OrdersSvc = require './../services/orders'
 SettingsSvc = require './../services/settings'
 rSvc = new RequestsSvc()
 eSvc = new ExpertsSvc()
 tSvc = new TagsSvc()
+mtSvc = new MarketingTagsSvc()
 oSvc = new OrdersSvc()
 sSvc = new SettingsSvc()
 
@@ -72,6 +74,8 @@ module.exports = class ViewDataService
         eSvc.getAll cb
       requests: (cb) ->
         rSvc.getActive cb
+      marketingTags: (cb) ->
+        mtSvc.getAll cb
 
     async.parallel fns, (e, results) =>
       if e then return callback e
@@ -80,6 +84,7 @@ module.exports = class ViewDataService
         requests: JSON.stringify results.requests
         experts:  JSON.stringify results.experts
         tags:     JSON.stringify results.tags
+        marketingTags: JSON.stringify results.marketingTags
 
   landingTag: (tagSearchTerm, usr, callback) ->
     tSvc.search tagSearchTerm, (e, o) =>

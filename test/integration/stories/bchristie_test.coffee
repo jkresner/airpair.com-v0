@@ -88,6 +88,7 @@ describe "Stories: Bruce Christie", ->
       infoFormView.$('.save').click()
 
   it 'can suggest experts as admin', (done) ->
+    @timeout 10000
     rv = @app.requestView
 
     @app.requests.once 'sync', =>
@@ -182,7 +183,7 @@ describe "Stories: Bruce Christie", ->
 
     v.$('.save').click()
 
-  it 'can pay out customer\'s experts individually as admin', (done) ->
+  it "can pay out customer's experts individually as admin", (done) ->
     this.timeout 20000
     {orders, ordersView} = @app
 

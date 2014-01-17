@@ -1,0 +1,8 @@
+<h3>Existing marketing tags</h3>
+{{#empty marketingTags}}
+<p>Save your first marketing tag with the form below.</p>
+{{/empty}}
+
+{{#each marketingTags}}
+  {{> MarketingTag}}
+{{/each}}

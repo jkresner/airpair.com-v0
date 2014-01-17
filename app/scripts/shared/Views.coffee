@@ -1,7 +1,9 @@
 exports = {}
 BB = require './../../lib/BB'
 M = require './Models'
-TagViews = require './../tags/Views'
+exports.TagsInputView = require('./../tags/Views').TagsInputView
+exports.MarketingTagsInputView =
+  require('../marketingtags/Views').MarketingTagsInputView
 
 Handlebars.registerPartial "DevLinks", require('./templates/DevLinks')
 
@@ -21,9 +23,6 @@ Handlebars.registerHelper "localDateTimeSeconds", (utcDateString) ->
 Handlebars.registerHelper 'markdown', (text) ->
   result = marked(text);
   new Handlebars.SafeString result
-
-
-exports.TagsInputView = TagViews.TagsInputView
 
 
 class exports.AvailabiltyInputView extends BB.BadassView

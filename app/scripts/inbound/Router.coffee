@@ -18,21 +18,28 @@ module.exports = class Router extends S.AirpairSessionRouter
     ':id'          : 'request'
 
   appConstructor: (pageData, callback) ->
-
     d =
       selected: new M.Request()
       requests: new C.Requests()
       tags: new C.Tags()
+      marketingTags: new C.MarketingTags()
       experts: new C.Experts()
     v =
       requestsView: new V.RequestsView collection: d.requests, model: d.selected
-      requestView: new V.RequestView model: d.selected, collection: d.requests, tags: d.tags, experts: d.experts, session: @app.session
+      requestView: new V.RequestView
+        model: d.selected
+        collection: d.requests
+        tags: d.tags
+        marketingTags: d.marketingTags
+        experts: d.experts
+        session: @app.session
       filtersView: new V.FiltersView collection: d.requests
       farmingView: new V.RequestFarmView model: d.selected
 
     @resetOrFetch d.requests, pageData.requests
     @resetOrFetch d.experts, pageData.experts
     @resetOrFetch d.tags, pageData.tags
+    @resetOrFetch d.marketingTags, pageData.marketingTags
 
     _.extend d, v
 

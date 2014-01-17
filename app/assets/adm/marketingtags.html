@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Marketing</title>
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="/stylesheets/app.css">
+    <link rel="stylesheet" href="/stylesheets/admin.css">
+</head>
+
+<body id="admmarketingtagspage">
+
+  <nav>
+    <div>
+      <a href="/" class="logo"></a>
+      <ul>
+        <li><a href="/adm/inbound" class="zocial">Inbound</a></li>
+        <li><a href="/adm/orders" class="zocial">Orders</a></li>
+        <li><a href="/adm/tags" class="zocial">Tags</a></li>
+        <li><a href="/adm/marketingtags" class="zocial">Marketing</a></li>
+        <li><a href="/adm/experts" class="zocial">Experts</a></li>
+        <li><a href="/adm/companys" class="zocial">Companys</a></li>
+        <li><a href="/adm/csvs" class="zocial">CSVs</a></li>
+        <li><a href="http://www.youtube.com/my_videos?o=U" class="zocial youtube icon" target="_blank"></a></li>
+        <li><a href="https://plus.google.com/hangouts/_?hso=0&gid=140030887085" class="zocial googleplus" target="_blank">Hangout &nbsp;</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="route" style="display: block;">
+    <div id="marketingTagForm" class="twocol">
+      <div id="marketingTagList"></div>
+
+      <fieldset>
+        <h3>Create a new marketing tag</h3>
+        <div class="control-group">
+          <label class="control-label" for="name"><strong>name</strong>
+            e.g. twitter. (Warning: must be unique!)</label>
+          <div class="controls">
+            <input name="name" type="text" class="input-medium"
+              placeholder="name">
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="type"><strong>type</strong></label>
+          <div class="controls">
+            <select name="type" class="input-medium">
+              <option value="channel">channel</option>
+              <option value="campaign">campaign</option>
+              <option value="usage">usage</option>
+            </select>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="group"><strong>group</strong></label>
+          <div class="controls">
+            <select name="group" class="input-medium">
+              <option value="" selected></option>
+              <option value="ad">Ad</option>
+              <option value="affiliate">Affiliate</option>
+              <option value="direct">Direct</option>
+              <option value="press">Press</option>
+              <option value="seo">SEO</option>
+              <option value="social">Social</option>
+              <option value="wordofmouth">Word of Mouth</option>
+              <option value="untracked">Untracked</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="alert alert-success">
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+          <h4>Saved</h4>
+        </div>
+        <div class="alert alert-error">
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+          <h4>Error</h4>
+        </div>
+        <div class="form-actions">
+          <a href="#" class="save button">Save</a>
+        </div>
+
+      </fieldset>
+    </div> <!-- end #marketingTagForm -->
+  </div> <!-- end .route -->
+</body>
+
+  <script type="text/javascript">
+    function initApp() {
+      var pageData = {}
+      var Router = require('/scripts/marketingtags/Router');
+      window.router = new Router(pageData);
+    }
+  </script>
+  <script src="/javascripts/vendor.js" defer></script>
+  <script src="/javascripts/app.js" defer onload="initApp()"></script>
+
+</html>

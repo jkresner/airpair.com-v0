@@ -1,3 +1,37 @@
+.marketingTagsInput { float:left;padding:10px 0px; }
+.marketingTagsInput .selected {
+  display: inline;
+}
+.marketingTagsInput .tt-hint,
+.marketingTagsInput .tt-query {
+  width: 150px;
+}
+.marketingTagsInput .marketingtag {
+  vertical-align: top;
+  margin: 0;
+  margin-top: 1px;
+}
+.marketingtag {
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  font-size: 14px;
+  font-weight: bold;
+  margin: 3px 3px 0px 0px;
+  padding: 6px 10px;
+  text-shadow: none;
+}
+.marketingtag.channel {
+  color: #b94a48;
+  background-color: #f2dede;
+}
+.marketingtag.campaign {
+  color: #c09853;
+  background-color: #fcf8e3;
+}
+.marketingtag.usage {
+  color: #3a87ad;
+  background-color: #d9edf7;
+}
+
 nav a.zocial { padding:0; }
 
 .admin-nav { margin-top:0;padding:15px 10px; }
@@ -15,15 +49,27 @@ nav a.zocial { padding:0; }
 
 #admorderspage {}
 #admorderspage .selectOrder { display:block;font-size:9px; }
+#admorderspage .info { font-size:9px; }
+#admorderspage .info .marketingtag { border: none; background-color: inherit; font-size:9px; margin: 0; padding: 0; font-weight: normal;}
+#admorderspage .info .label-owner { font-size:9px; margin: 0;}
 #admorderspage .total { font-weight:bold;text-align:right;padding-right:10px; }
 #admorderspage th { font-size:12px; }
 #admorderspage #rowsSummary th { font-size:10px;padding:2px 8px; }
 
 #admorderspage td { padding:2px 0px 2px 8px;font-size:12px; }
-#admorderspage td span { display:inline-block;width:40px; }
+#admorderspage td span { display:inline-block; }
 #admorderspage .expertPic { width:16px!important;height:16px!important }
 #admorderspage pre { font-size: 11px; line-height: 1.2;}
 
+#admorderspage #timefilter { float:right;padding:10px 0px; }
+#admorderspage #orders { margin-top:25px;clear:both; }
+#admorderspage #orders img { height: 32px;width: 32px }
+#admorderspage #orders img.favicon { height: 8px;width: 8px; }
+#admorderspage #orders th { padding:2px 6px; }
+#admorderspage #rowsSummary th { color:black;background:#FAA732 }
+#admorderspage #orders .pending { color:#b94a48; }
+#admorderspage #orders .received { color:#333333 }
+#admorderspage #orders .paidout { color:#468847; }
 #adminboundpage .form-actions { margin-top:0;padding:15px 10px; }
 #adminboundpage #filters { float:right;display:block;padding:10px 0px; }
 
@@ -40,15 +86,15 @@ nav a.zocial { padding:0; }
 #adminboundpage #requests .s { width:220px; }
 
 #adminboundpage #requests .label-tags { font-weight:normal;margin:2px 0; }
-#adminboundpage #requests .label-owner { margin:10px 10px 10px 0;width:20px;text-align:center;font-weight: normal;}
-#adminboundpage #requests .label-jk { background-color: #FFB878; }
-#adminboundpage #requests .label-mi { background-color: #9A9CFF; }
-#adminboundpage #requests .label-il { background-color: #7AE7BF; }
-#adminboundpage #requests .label-dt { background-color: #51B749; }
-#adminboundpage #requests .label-ds { background-color: #FF887C; }
+.label-owner { margin:10px 10px 10px 0;width:20px;text-align:center;font-weight: normal;}
+.label-jk { background-color: #FFB878; }
+.label-mi { background-color: #9A9CFF; }
+.label-il { background-color: #7AE7BF; }
+.label-dt { background-color: #51B749; }
+.label-ds { background-color: #FF887C; }
 
 #adminboundpage #request textarea { width:90%;height:100px;font-size:11px; }
-#adminboundpage #request legend { margin-bottom:2px;line-height:24px;background:black;padding:4px;color:white; }
+#adminboundpage #request legend {margin-bottom:2px;line-height:16px;background:black;padding:4px;color:white;font-size:15px;}
 #adminboundpage #request .colA { width:49%;float:left }
 #adminboundpage #request .colB { width:49%;float:right }
 #adminboundpage #request #reqBudget { width:50px; }
@@ -167,18 +213,11 @@ nav h3 { display:inline-block;color:#999999;padding:16px 6px }
 nav ul { float:right;margin:10px 0px 8px 8px;display:inline; }
 nav ul li { float:right;display:block;margin-left:5px }
 
-
-#admorderspage #filters { float:right;display:block;padding:10px 0px; }
-#admorderspage #orders { margin-top:25px;clear:both; }
-#admorderspage #orders img { height: 32px;width: 32px }
-#admorderspage #orders img.favicon { height: 8px;width: 8px; }
-#admorderspage #orders th { padding:2px 6px; }
-#admorderspage #rowsSummary th { color:black;background:#FAA732 }
-#admorderspage #orders .pending { color:#b94a48; }
-#admorderspage #orders .received { color:#333333 }
-#admorderspage #orders .paidout { color:#468847; }
-
 #admcompanyspage .unshare { color:red; }
 #admcompanyspage #stripeRegister p { display:none; }
 #admcompanyspage .cardSharers { float:left;width:30% }
 #admcompanyspage .cardDetail { float:right;width:65% }
+
+#admmarketingtagspage .twocol { width: 100%; overflow: hidden; }
+#admmarketingtagspage .twocol > :first-child { float: left; width: 72%; }
+#admmarketingtagspage .twocol > :last-child  { float: left; }

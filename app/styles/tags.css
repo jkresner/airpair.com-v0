@@ -1,11 +1,11 @@
-#tagsInput header { font-size:11px;font-style:italic;border-bottom:dashed 1px #d3d3d3;padding:0 0 5px 5px;color:gray; }
-#tagsInput .autocomplete { width:240px; }
-#tagsInput span { clear:both; }
-#tagsInput p { height:20px;overflow:hidden;margin:0;font-size:11px; }
-#tagsInput h3 { }
-#tagsInput .selected { border-radius:5px;margin:10px auto; }
+#tagsInput header, .controls-tags header { font-size:11px;font-style:italic;border-bottom:dashed 1px #d3d3d3;padding:0 0 5px 5px;color:gray; }
+#tagsInput .autocomplete, .controls-tags .autocomplete { width:240px; }
+#tagsInput span, .controls-tags span { clear:both; }
+#tagsInput p, .controls-tags p { height:20px;overflow:hidden;margin:0;font-size:11px; }
+#tagsInput h3, .controls-tags h3 { }
+#tagsInput .selected, .controls-tags .selected { border-radius:5px;margin:10px auto; }
 #tagsInput .label { padding:6px 10px;margin:3px 3px 0px 0px;border:solid 1px #7F761C;font-weight:bold;font-size:14px; }
 #tagsInput .label a { color:pink;margin-left:5px }
-#tagsInput .tt-dropdown-menu { width:260px }
-#tagsInput .tt-suggestions { padding:5px;text-align:center; }
-#tagsInput .tt-suggestions .label { margin:0;padding:3px 8px; }
+#tagsInput .tt-dropdown-menu, .controls-tags .tt-dropdown-menu { width:260px }
+#tagsInput .tt-suggestions, .controls-tags .tt-suggestions { padding:5px;text-align:center; }
+#tagsInput .tt-suggestions .label, .controls-tags .tt-suggestions .label { margin:0;padding:3px 8px; }

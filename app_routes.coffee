@@ -55,6 +55,7 @@ module.exports = (app) ->
 
   # admin pages
   app.get '/adm/tags*', loggedIn, admin, (req, r) -> file r, 'adm/tags'
+  app.get '/adm/marketingtags', loggedIn, admin, (req, r) -> file r, 'adm/marketingtags'
   app.get '/adm/experts*', loggedIn, admin, (req, r) -> file r, 'adm/experts'
   app.get '/adm/csvs*', loggedIn, admin, (req, r) -> file r, 'adm/csvs'
   app.get '/adm/orders*', loggedIn, admin, (req, r) -> file r, 'adm/orders'
@@ -83,6 +84,7 @@ module.exports = (app) ->
   require('./lib/api/orders')(app)
   require('./lib/api/settings')(app)
   require('./lib/api/paymethods')(app)
+  require('./lib/api/marketingtags')(app)
 
   require('./app_landing')(app)
 
