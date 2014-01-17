@@ -1,3 +1,4 @@
+
 exports = {}
 BB = require '../../lib/BB'
 M = require './Models'
@@ -13,12 +14,13 @@ MarketingTagsInputView = Shared.MarketingTagsInputView
 class exports.FiltersView extends BB.BadassView
   el: '#filters'
   events:
-    'click .btn': 'timeFilter'
+    'click .btn': 'filter'
   initialize: ->
     @marketingTagView = new MarketingTagsInputView
       collection: @marketingTags, model: @dummyRequest
     @listenTo @dummyRequest, 'change:marketingTags', @filter
   filter: (e) ->
+    console.log 'filter', e, e.target
     if e && e.target
       $btn = $(e.target)
       @$('button').removeClass('btn-warning')
