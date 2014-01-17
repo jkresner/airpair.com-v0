@@ -8,7 +8,7 @@ M = require './Models'
 
 class exports.TagEditView extends BB.ModelSaveView
   tmpl: require './templates/TagEdit'
-  viewData: ['name','short','desc','tokens']  
+  viewData: ['name','short','desc','tokens']
   events:
     'click .save': 'save'
     'click .cancel': -> @remove()
@@ -18,13 +18,13 @@ class exports.TagEditView extends BB.ModelSaveView
     @
   renderSuccess: (model,resp,options) =>
     @remove()
-    
+
 
 class exports.TagRowView extends BB.BadassView
   className: 'tag label'
   tmpl: require './templates/Row'
   events:
-    'click a.edit': 'showTagDetail'  
+    'click a.edit': 'showTagDetail'
   initialize: ->
     @listenTo @model, 'change', @render
   render: ->
@@ -89,6 +89,7 @@ class exports.TagsInputView extends BB.HasBootstrapErrorStateView
     @$el.append @tmpl @model.toJSON()
     @newForm = new exports.TagNewForm selected: @model, collection: @collection
     @listenTo @collection, 'sync', @initTypehead
+    @listenTo @model, 'change:_id', -> @$auto.val '' # clears it across requests
     @listenTo @model, 'change:tags', @render
     @$auto = @$('.autocomplete').on 'input', =>
       @renderInputValid @$('.autocomplete')
@@ -122,7 +123,6 @@ class exports.TagsInputView extends BB.HasBootstrapErrorStateView
   deselect: (e) =>
     e.preventDefault()
     _id = $(e.currentTarget).attr 'href'
-    #$log 'deselect', _id
     match = _.find @collection.models, (m) -> m.get('_id') == _id
     @model.toggleTag match.toJSON()
   newTag: (e) =>

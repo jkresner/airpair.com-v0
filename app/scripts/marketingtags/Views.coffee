@@ -41,6 +41,7 @@ class exports.MarketingTagsInputView extends BB.HasBootstrapErrorStateView
   initialize: (args) ->
     @$el.append @tmpl @model.toJSON()
     @listenTo @collection, 'sync', @initTypehead
+    @listenTo @model, 'change:_id', -> @$auto.val '' # clears it across requests
     @listenTo @model, 'change:marketingTags', @render
     @$auto = @$('.autocomplete').on 'input', =>
       @renderInputValid @$('.autocomplete')
@@ -56,10 +57,10 @@ class exports.MarketingTagsInputView extends BB.HasBootstrapErrorStateView
       header: '<header><strong>Marketing Tags</strong></header>'
       noresultsHtml: 'No results'
       name: 'collection' + new Date().getTime()
-      valueKey: 'joined'
+      valueKey: 'name'
       template: @tmplResult
       local: @collection.toJSON().map (t) =>
-        t.joined = 'all ' + t.name.toLowerCase()
+        t.name = t.name.toLowerCase()
         t
     ).on('typeahead:selected', @select)
     @
