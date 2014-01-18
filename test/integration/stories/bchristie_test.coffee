@@ -1,16 +1,18 @@
 Tags = require('/scripts/request/Collections').Tags
 f = data.fixtures
 
+request = _.clone(data.requests[10])  #Bruce Christie
+
 storySteps = [
   { app:'settings', usr:'bchristie', frag: '#', fixture: f.settings, pageData: { stripePK: 'pk_test_aj305u5jk2uN1hrDQWdH0eyl' } }
   { app:'request', usr:'bchristie', frag: '#', fixture: f.request, pageData: {} }
   { app:'inbound', usr:'admin', frag: '#', fixture: f.inbound, pageData: { experts: data.experts, tags: data.tags } }
   { app:'review', usr:'bchristie', frag: '#rId', fixture: f.review, pageData: {} }
+  { app:'schedule', usr: 'admin', frag: '#/schedule/rId', fixture: f.schedule, pageData: { request: request, orders: data.orders[2] } }
   { app:'orders', usr: 'admin', frag: '#', fixture: f.orders, pageData: {} }
 ]
 
 testNum = -1
-request = data.requests[10]  #Bruce Christie
 
 describe "Stories: Bruce Christie", ->
 
@@ -76,6 +78,10 @@ describe "Stories: Bruce Christie", ->
 
         @app.request.once 'sync', =>
           @rId = @app.request.id
+          request._id = @rId
+
+          # we need the ID for the call scheduling story
+          storySteps[4].pageData.request._id = @rId
           done()
 
         requestFormView.$('.save').click()
@@ -88,8 +94,10 @@ describe "Stories: Bruce Christie", ->
     @app.requests.once 'sync', =>
       router.navTo "##{@rId}"
 
-      @app.selected.save { suggested: request.suggested }, success: (model) =>
+      changes = { suggested: request.suggested, owner: request.owner }
+      @app.selected.save changes, success: (model) =>
         expect( @app.selected.get('suggested').length ).to.equal 2
+        expect( @app.selected.get('owner') ).to.equal 'jk'
         done()
 
   it 'can review experts and book hours as customer with stripe', (done) ->
@@ -121,7 +129,7 @@ describe "Stories: Bruce Christie", ->
       expect( bv.$('#pay').is(':visible') ).to.equal true
       $steveM.find('[name=qty]').val('1').trigger 'change'
 
-      $log 'payStripe', bv.$('.payStripe'), bv.$('.payStripe').is(':visible')
+      # $log 'payStripe', bv.$('.payStripe'), bv.$('.payStripe').is(':visible')
       expect( bv.$('.payStripe').is(':visible') ).to.equal true
 
       bv.model.once 'sync', (model) =>
@@ -130,9 +138,55 @@ describe "Stories: Bruce Christie", ->
 
       bv.$('.payStripe').click()
 
+  it 'can schedule a call as admin', (done) ->
+    this.timeout 20000
+    {request, orders, scheduleFormView} = @app
+    v = scheduleFormView
+
+    radios = v.$('input:radio')
+    expect(radios.length).to.equal 1 # shouldnt show other expert b/c no hours
+
+    # paul should be selected by default, b/c he's the only expert.
+    radios.first().click()
+
+    type = v.elm('type')
+    expect(type.length).to.equal 1
+    expect(type.val()).to.equal 'opensource'
+
+    # book two hours
+    duration = v.elm('duration')
+    expect(duration.length).to.equal 1
+    expect(duration.val()).to.equal '1'
+    duration.val(2)
+    expect(duration.val()).to.equal '2'
+
+    date = v.elm('date')
+    expect(new Date().toISOString().indexOf(date.val())).to.equal 0
+
+    expectedTime = '16:30'
+    v.elm('time').val('16:30')
+
+    v.renderSuccess = -> # disable the redirect after save
+    v.model.on 'sync', (model, resp) ->
+      expect(v.model.get('errors')).to.equal undefined
+
+      # the model is now a full request
+      newCall = model.toJSON().calls[0]
+      # mocha-phantom's Date string parsing seems different than node's.
+      # expectedDatetime = new Date(date.val() + ' 16:30 PST').toISOString()
+      # expect(newCall.datetime).to.equal expectedDatetime
+      expect(v.model.get('time')).to.equal expectedTime
+      expect(newCall.duration).to.equal 2
+      expect(newCall.type).to.equal 'opensource'
+      expect(newCall.expertId).to.equal '52372c73a9b270020000001c' # Paul
+      done()
+
+    v.$('.save').click()
+
   it "can pay out customer's experts individually as admin", (done) ->
     this.timeout 20000
     {orders, ordersView} = @app
+
     ###
     wait for orders to sync, get bruce's order
     click payout for each expert
@@ -140,7 +194,6 @@ describe "Stories: Bruce Christie", ->
     check that everyone is successfully paid out
     ###
     orders.once 'sync', =>
-      window.orders = orders
       order = (orders.models.filter (o) => o.get('requestId') == @rId)[0]
 
       lineIds = order.get('lineItems').map (l) -> l._id

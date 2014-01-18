@@ -17,6 +17,7 @@
     "postinstall": "brunch b -e prod",
     "hooks": "cd .git/hooks && ln -nsf ../../build/git-hooks/* .",
     "start": "PORT=3333 Env=dev runjs app.coffee",
+    "start-test": "PORT=4444 Env=test runjs app.coffee",
     "coverage": "mocha --require blanket -R html-cov test/server/all.coffee > coverage.html && open coverage.html",
     "blanket": {
       "pattern": "/lib",
@@ -60,12 +61,16 @@
     "mocha": "~1.12.0",
     "chai": "~1.7.2",
     "sinon": "1.4.2",
-    "sinon-chai": "2.1.2"
+    "sinon-chai": "2.1.2",
+    "express-validator": "~1.0.1",
+    "googleapis": "~0.4.7",
+    "lodash.clonedeep": "~2.4.1"
   },
   "devDependencies": {
     "supertest": "0.5.x",
     "blanket": "~1.1.5",
     "mocha-phantomjs": "~3.2.0",
-    "run": "~1.2.0"
+    "run": "~1.2.0",
+    "coffee-errors": "https://registry.npmjs.org/coffee-errors/-/coffee-errors-0.8.5.tgz"
   }
 }

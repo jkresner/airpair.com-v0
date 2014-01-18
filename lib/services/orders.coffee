@@ -177,3 +177,6 @@ module.exports = class OrdersService extends DomainService
       @model.find( _id: id ).remove (ee, rr) =>
         if ee then return callback ee
         callback null, status: 'deleted'
+
+  getByRequestId: (requestId, callback) =>
+    @search { requestId: requestId }, callback

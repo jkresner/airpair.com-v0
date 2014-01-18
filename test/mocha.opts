@@ -2,3 +2,4 @@
 --colors
 --compilers coffee:coffee-script
 --recursive
+--require coffee-errors

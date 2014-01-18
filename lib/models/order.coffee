@@ -10,15 +10,23 @@ ExpertPayout = new Schema
   res:            { required: true, type: Mixed }
   status:         { required: true, type: String } # success, error
 
+# NOT a sub-document
+RedeemedCall =
+  callId:            { required: true, type: ObjectId, ref: 'Call' }
+  # scheduled/pending calls
+  qtyRedeemed:       { required: true, type: Number }
+  # number of hours that have recordings for them
+  qtyCompleted:      { required: true, type: Number, default: 0 }
 
 LineItem = new Schema
-  total:          { required: true, type: Number }
-  unitPrice:      { required: true, type: Number }
-  qty:            { required: true, type: Number }
-  qtyRedeemed:    { required: true, type: Number, default: 0 }
-  type:           { required: true, type: String } # open-source, private, nda
-  suggestion:     { required: true, type: {} }
+  total:              { required: true, type: Number }
+  unitPrice:          { required: true, type: Number }
+  # total number of hours the customer bought
+  qty:                { required: true, type: Number }
 
+  redeemedCalls:      [RedeemedCall]
+  type:               { required: true, type: String } # open-source, private, nda
+  suggestion:         { required: true, type: {} }
 
 schema = new Schema
   requestId:      { required: true, type: ObjectId, ref: 'Request' }

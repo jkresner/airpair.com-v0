@@ -6,6 +6,7 @@ require './lib/util/globals'
 express       = require 'express'
 passport      = require 'passport'
 inspect       = require('util').inspect
+expressValidator = require 'express-validator'
 
 # setup our express app
 app = express()
@@ -18,9 +19,10 @@ app.engine('html', require('hbs').__express)
 app.set('view engine', 'hbs')
 app.set('views', __dirname + '/public')
 
-app.use(express.compress()) # gzip
+app.use express.compress() # gzip
 app.use express.static(__dirname + '/public')
 app.use express.bodyParser()
+app.use expressValidator() # must be immediately after express.bodyParser()!
 app.use express.cookieParser()
 app.use express.session
   cookie : { path: '/', httpOnly: true, maxAge: 2419200000 }
@@ -47,8 +49,7 @@ if cfg.env is 'test'
   require('./app_test_routes')(app)
 
 app.use (err, req, res, next) ->
-  obj = (err and err.stack) or err
-  str = inspect obj, { depth: null }
+  str = (err and err.stack) or inspect err, {depth: 20}
   console.log "handleError #{req.url} #{str}"
   winston.error "handleError #{req.url} #{str}" if cfg.isProd
   res.status(500).sendfile "./public/500.html"

@@ -13,7 +13,7 @@ setHtmlfixture = (html) ->
   $('body').append('<div id="fixture">'+html+'</div>')
 
 clearHtmlfixture = ->
-  $('.datetimepicker').datetimepicker('remove')  # harmless not using plugin
+  $('.datepicker, .timepicker').stop()
   $('#fixture').remove()
 
 

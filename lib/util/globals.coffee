@@ -1,10 +1,8 @@
-global.cfg      = cfg  # cfg is already declared in util/appConfig 
+global.cfg      = cfg  # cfg is already declared in util/appConfig
 global.$log     = console.log
 
 global._        = require 'underscore'
-global._.idsEqual = (uid1, uid2) ->
-  return false if !uid1? || !uid2?
-  uid1.toString() == uid2.toString()
+global._.idsEqual = require '../../app/scripts/shared/mix/idsEqual'
 
 global.winston  = require 'winston'   # logging
 require './winstonConfig'             # setup logging configuration / plugins

@@ -13,6 +13,7 @@ class OrdersApi
   constructor: (app, route) ->
     app.post    "/api/#{route}", loggedIn, @create
     app.get     "/api/admin/#{route}", admin, @adminList
+    app.get     "/api/#{route}/request/:id", admin, @getByRequestId
     app.put     "/api/#{route}/:id", admin, @update
     app.delete  "/api/#{route}/:id", admin, @delete
 
@@ -21,6 +22,10 @@ class OrdersApi
       if e then return next e
       res.send r
 
+  getByRequestId: (req, res, next) =>
+    @svc.getByRequestId req.params.id, (e, r) ->
+      if e then return next e
+      res.send r
 
   create: (req, res, next) =>
     order = _.pick req.body, ['total','requestId']

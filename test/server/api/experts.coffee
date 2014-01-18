@@ -14,6 +14,7 @@ describe "REST api experts", ->
 
 
   it "can get created expert", (done) ->
+    @timeout 10000
     @expert = data.experts[1]
     http(app).post('/api/experts')
       .send( @expert )

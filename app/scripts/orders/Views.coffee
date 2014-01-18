@@ -1,10 +1,10 @@
-
 exports = {}
 BB = require '../../lib/BB'
 M = require './Models'
 Shared = require '../shared/Views'
 SM = require '../shared/Models'
 SC = require '../shared/Collections'
+expertCredit = require '../shared/mix/expertCredit'
 MarketingTagsInputView = Shared.MarketingTagsInputView
 
 #############################################################################
@@ -56,7 +56,7 @@ class exports.OrderRowView extends BB.ModelSaveView
       li.linePaidout = @model.isLineItemPaidOut li
       # hide the link so you can't double-click / double-payout:
       li.linePayoutPending = pendingId == li._id
-      li
+      _.extend li, expertCredit([d], li.suggestion.expert._id)
 
     _.extend d, {
       isPending:          d.paymentStatus is 'pending'
@@ -106,6 +106,7 @@ class exports.OrdersView extends Backbone.View
       for li in m.get 'lineItems'
         hourCount += li.qty
         expertIds.push li.suggestion.expert._id
+        # TODO reuse calcTotal, calcRedeemed, to calculate hour stats
     filteredModelsJson = _.pluck @collection.filteredModels, 'attributes'
     requestCount = _.uniq(_.pluck filteredModelsJson, 'requestId').length
     customerCount = _.uniq(_.pluck filteredModelsJson, 'userId').length

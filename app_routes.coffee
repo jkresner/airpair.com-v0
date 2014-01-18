@@ -37,12 +37,12 @@ module.exports = (app) ->
   app.get '/dashboard*', loggedIn, (req, r) -> file r, 'dashboard'
 
   renderReview = (req, r, next) ->
-    $log '*6** renderReview'
     viewData.review req.params.id, req.user, (e, d) =>
       if e then return next e
       r.render 'review.html', d
   app.get '/review/:id', renderReview
   app.get '/review/book/:id', renderReview
+
 
   app.get '/settings*', loggedIn, (req, r) ->  r.render 'settings.html',
     { stripePK: cfg.payment.stripe.publishedKey }
@@ -55,6 +55,7 @@ module.exports = (app) ->
 
   # admin pages
   app.get '/adm/tags*', loggedIn, admin, (req, r) -> file r, 'adm/tags'
+  app.get '/adm/marketingtags', loggedIn, admin, (req, r) -> file r, 'adm/marketingtags'
   app.get '/adm/experts*', loggedIn, admin, (req, r) -> file r, 'adm/experts'
   app.get '/adm/csvs*', loggedIn, admin, (req, r) -> file r, 'adm/csvs'
   app.get '/adm/orders*', loggedIn, admin, (req, r) -> file r, 'adm/orders'
@@ -65,7 +66,12 @@ module.exports = (app) ->
       if e then return next e
       r.render 'adm/inbound.html', d
 
-  app.get '/adm/marketingtags', loggedIn, admin, (req, r) -> file r, 'adm/marketingtags'
+  schedule = (req, r, next) ->
+    viewData.schedule req.params.requestId, (e, d) =>
+      if e then return next e
+      r.render 'adm/schedule.html', d
+  app.get '/adm/schedule/edit/:requestId/call/:callId', loggedIn, schedule
+  app.get '/adm/schedule/:requestId', loggedIn, schedule
 
   # api
   require('./lib/api/users')(app)
@@ -73,6 +79,7 @@ module.exports = (app) ->
   require('./lib/api/tags')(app)
   require('./lib/api/experts')(app)
   require('./lib/api/requests')(app)
+  require('./lib/api/requestCalls')(app)
   require('./lib/api/mail')(app)
   require('./lib/api/orders')(app)
   require('./lib/api/settings')(app)
