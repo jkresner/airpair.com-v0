@@ -31,7 +31,7 @@ class exports.Orders extends BB.FilteringCollection
         moment(m.get('utc')).local().isSame(now, 'day')
 
     if 'wk' == timeString
-      lastSaturday = now.day(-1)
+      lastSaturday = now.day(-1).hour(0).minute(0).second(0).millisecond(0)
       return _.filter orders, (m) ->
         moment(m.get('utc')).local().isAfter(lastSaturday)
 
