@@ -1,26 +1,36 @@
 <div class="form-actions admin-nav">
   <a class="btn" href="/adm/inbound/request/{{requestId}}">Back</a>
 </div>
-<h2>Schedule a Call</h2>
 
 <fieldset>
-  <h4>Experts</h4>
+  <h4>Call expert</h4>
   <div class="experts">
   {{#each available}}
     {{#with expert}}
-    <label {{#selected}}class="selected"{{/selected}}>
-      <input type="radio" value="{{_id}}" name="expertId" {{#selected}}checked{{/selected}}/>
-      <img src="{{pic}}" alt="{{name}}" draggable="false" class="expertPic"><br>
-      {{name}}<br>
-      <table>
-      {{#each credit.byTypeArray}}
-        <tr>
-          <td>{{type}}:</td>
-          <td>{{balance}} {{inflect balance "hour" "hours"}}</td>
-        </tr>
-      {{/each}}
-      </table>
-    </label>
+
+    <div class="expertMini suggestion {{#selected}}selected{{/selected}}" >
+      <div class="deets">
+        <div class="fullName">
+          {{name}}
+        </div>
+        <hr>
+        <img src="{{pic}}" alt="{{name}}" draggable="false" class="expertPic">
+      </div>
+
+      <div class="hours">
+          {{#each credit.byTypeArray}}
+            <tr>
+              <td>{{type}}:</td>
+              <td>{{balance}} {{inflect balance "hour" "hours"}}</td>
+            </tr>
+          {{/each}}
+      </div>
+
+      <div class="select">
+        <input type="radio" value="{{_id}}" name="expertId" {{#selected}}checked{{/selected}}/>
+      </div>
+    </div>
+
     {{/with}}
   {{else}}
     <p><code>Can't schedule any more calls:</code> all hours have been scheduled
@@ -29,6 +39,7 @@
   {{/each}}
   </div>
 
+  <hr />
 
   {{#selectedExpert}}
     <div class="control-group">
@@ -127,6 +138,6 @@
   </div>
 
   <div class="form-actions">
-    <button class="save button">+ Create Call</button>
+    <button class="save button" style="width:160px">Create</button>
   </div>
 </fieldset>

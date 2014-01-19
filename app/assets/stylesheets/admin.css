@@ -199,7 +199,10 @@ nav a.zocial { padding:0; }
 #schedulepage .datetimeduration .control-group { float: left; margin-right: 2em;}
 #schedulepage .experts > label { float: left; padding: 1em; }
 #schedulepage .experts > label { border: 1px solid gray; margin: .5em;}
-#schedulepage .experts > label.selected { background-color: lightyellow; }
+#schedulepage .experts .hours { background-color:black;font-size:11px;color:white; }
+#schedulepage .experts img { margin:4px auto; }
+#schedulepage .experts .selected .select { background-color: lightyellow }
+#schedulepage .experts .select { height:25px; }
 /* feedback that the request is in progress */
 #schedulepage button:disabled {
   background: darkgray;
