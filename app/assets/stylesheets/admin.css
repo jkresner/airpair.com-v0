@@ -178,7 +178,10 @@ nav a.zocial { padding:0; }
 #adminboundpage .suggested .rate em { display:block;color:gray;font-size:11px;font-style:normal; }
 #adminboundpage .suggested p { clear:both;font-size:11px; }
 
-#adminboundpage .call img { height: 40px; width: 40px;}
+#adminboundpage .call { float:left;width:80px;margin:10px 5px 12px 5px;text-align:center; }
+#adminboundpage .call img { height: 60px; width: 60px;}
+#adminboundpage .call .dateTime { font-size:10px;clear:both;display:block }
+#adminboundpage .call label { font-size:10px;clear:both;display:block;margin-bottom:0;line-height:14px; }
 
 #schedulepage .expertPic { height: 60px; width: 60px;}
 #schedulepage .controls > .input-prepend { display: block; }
