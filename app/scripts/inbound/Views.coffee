@@ -309,6 +309,7 @@ class exports.RequestCallsView extends BB.BadassView
   initialize: -> @listenTo @model, 'change', @render
   render: ->
     d = @model.toJSON()
+    d.calls = d.calls.sort (a, b) -> a.datetime.localeCompare(b.datetime)
     d.calls = d.calls.map (call) =>
       call.expert = @model.suggestion(call.expertId).expert
       call
