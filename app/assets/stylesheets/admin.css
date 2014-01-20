@@ -1,4 +1,4 @@
-.marketingTagsInput { float:left;padding:10px 0px; }
+.marketingTagsInput { float:left;padding:8px 0px 12px 0px; }
 .marketingTagsInput .selected {
   display: inline;
 }
@@ -71,7 +71,7 @@ nav a.zocial { padding:0; }
 #admorderspage #orders .received { color:#333333 }
 #admorderspage #orders .paidout { color:#468847; }
 #adminboundpage .form-actions { margin-top:0;padding:15px 10px; }
-#adminboundpage #filters { float:right;display:block;padding:10px 0px; }
+#adminboundpage #filters { float:right;display:block;padding:0px; }
 
 #adminboundpage #requests a { display:block; }
 #adminboundpage #requests a.edit { width:50px; }
@@ -80,10 +80,10 @@ nav a.zocial { padding:0; }
 #adminboundpage #requests img { width:32px;height:32px; }
 
 #adminboundpage #requests .r { width:110px; }
-#adminboundpage #requests .o { width:70px; }
+#adminboundpage #requests .o { width:90px; }
 #adminboundpage #requests .c { width:220px; }
 #adminboundpage #requests .t { width:380px; }
-#adminboundpage #requests .s { width:220px; }
+#adminboundpage #requests .s { width:280px; }
 
 #adminboundpage #requests .label-tags { font-weight:normal;margin:2px 0; }
 .label-owner { margin:10px 10px 10px 0;width:20px;text-align:center;font-weight: normal;}
@@ -93,7 +93,7 @@ nav a.zocial { padding:0; }
 .label-dt { background-color: #51B749; }
 .label-ds { background-color: #FF887C; }
 
-#adminboundpage #request textarea { width:90%;height:100px;font-size:11px; }
+#adminboundpage #request textarea { width:98%;height:100px;font-size:11px; }
 #adminboundpage #request legend {margin-bottom:2px;line-height:16px;background:black;padding:4px;color:white;font-size:15px;}
 #adminboundpage #request .colA { width:49%;float:left }
 #adminboundpage #request .colB { width:49%;float:right }
@@ -153,7 +153,7 @@ nav a.zocial { padding:0; }
 #adminboundpage .suggestion { float:left;margin-bottom:6px }
 #adminboundpage .suggestion .pic { width:40px;margin:2px;float:left; }
 #adminboundpage .suggestion .deets { overflow:hidden;height:76px }
-#adminboundpage .suggestion .fullName { font-size:9px;line-height:12px }
+#adminboundpage .suggestion .fullName { font-size:9px;line-height:12px;max-height:24px;overflow:hidden; }
 #adminboundpage .suggestion .links { width:50%;margin:0 4px 0px 0px;float:right; }
 #adminboundpage .suggestion .tags { padding:1px 2px!important;clear:both;height:100px;overflow:hidden }
 #adminboundpage .suggestion .label-tag { padding:0px 2px 1px 2px;font-size:9px;margin-bottom:1px }
@@ -167,18 +167,23 @@ nav a.zocial { padding:0; }
 #adminboundpage .suggested .links { margin:0 4px 0px 0px;height:20px; }
 #adminboundpage .suggested .links .icon { width:1.2em;height:1.2em;margin-right:-2px;margin-top:1px }
 #adminboundpage .suggested .links .zocial:before { font: 60%/1.5 zocial; }
-#adminboundpage .suggested .tags { margin-top:-1px;padding:0px 2px;float:right;max-width:250px;text-align:right }
+#adminboundpage .suggested .tags { margin-top:-1px;padding:0px 2px;float:right;max-width:275px;max-height:40px;text-align:right;overflow:hidden; }
 #adminboundpage .suggested .tags .label-tag { margin:-2px 1px 0 1px; }
 #adminboundpage .suggested .label-tag { padding:0px 2px 1px 2px;font-size:9px;float-right }
 #adminboundpage .suggested .email { float:right }
 #adminboundpage .suggested .delete { float:right }
-#adminboundpage .suggested .status { float:left;margin:7px 0px; }
+#adminboundpage .suggested .status { float:left;margin:2px 0px 6px 0px;width:90px; }
 #adminboundpage .suggested .btn { margin:3px 0px 0 3px;padding:0px 7px;line-height:15px }
 #adminboundpage .suggested .rate { height:30px;width:55px;float:left;margin:0;padding:4px 0;font-size:14px; }
 #adminboundpage .suggested .rate em { display:block;color:gray;font-size:11px;font-style:normal; }
 #adminboundpage .suggested p { clear:both;font-size:11px; }
+#adminboundpage .suggested .btn-schedule { float:left;background-color:rgb(70, 136, 71) }
 
-#adminboundpage .call img { height: 40px; width: 40px;}
+#adminboundpage p {  margin:10px 5px 12px 5px }
+#adminboundpage .call { float:left;width:70px;margin:10px 5px 12px 5px;text-align:center; }
+#adminboundpage .call img { height:70px; width:70px; }
+#adminboundpage .call .dateTime { width:70px;font-size:10px;clear:both;display:block;background:#d3d3d3 }
+#adminboundpage .call label { width:70px;font-size:10px;clear:both;display:block;margin-bottom:0;line-height:14px;background:#d3d3d3 }
 
 #schedulepage .expertPic { height: 60px; width: 60px;}
 #schedulepage .controls > .input-prepend { display: block; }
@@ -197,9 +202,12 @@ nav a.zocial { padding:0; }
   width: 100%
 }
 #schedulepage .datetimeduration .control-group { float: left; margin-right: 2em;}
-#schedulepage .experts > label { float: left; padding: 1em; }
-#schedulepage .experts > label { border: 1px solid gray; margin: .5em;}
-#schedulepage .experts > label.selected { background-color: lightyellow; }
+#schedulepage .experts label { margin:0; }
+#schedulepage .experts .expertMini { float:left;margin:10px 20px 0 0px  }
+#schedulepage .experts .hours { background-color:black;font-size:11px;color:white;height:40px; }
+#schedulepage .experts img { margin:6px auto; }
+#schedulepage .experts .selected .select { background-color: lightyellow }
+#schedulepage .experts .select { height:25px; }
 /* feedback that the request is in progress */
 #schedulepage button:disabled {
   background: darkgray;

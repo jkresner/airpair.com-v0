@@ -272,7 +272,6 @@ class exports.RequestSuggestionsView extends BB.BadassView
 
 
 class exports.RequestSuggestedView extends BB.BadassView
-  # logging: on
   el: '#suggested'
   tmpl: require './templates/RequestSuggested'
   events:
@@ -288,10 +287,8 @@ class exports.RequestSuggestedView extends BB.BadassView
       @$el.append '<p>No suggestion made...</p>'
     else
       for s in @model.get 'suggested'
-
         s.tags =  @mget 'tags'
         s.expert.hasLinks = new M.Expert(s.expert).hasLinks()
-
         mailTemplates = new ExpertMailTemplates @model, @session, s.expert._id
         try
           rates = s.suggestedRate[@model.get('pricing')]
@@ -307,6 +304,7 @@ class exports.RequestSuggestedView extends BB.BadassView
 
 
 class exports.RequestCallsView extends BB.BadassView
+  logging: on
   tmpl: require './templates/RequestCalls'
   initialize: -> @listenTo @model, 'change', @render
   render: ->
@@ -315,6 +313,7 @@ class exports.RequestCallsView extends BB.BadassView
       call.expert = @model.suggestion(call.expertId).expert
       call
     @$el.html @tmpl d
+
 
 class exports.RequestEventsView extends BB.BadassView
   tmpl: require './templates/RequestEvents'
@@ -325,6 +324,7 @@ class exports.RequestEventsView extends BB.BadassView
         new Date(a.utc).getTime() - new Date(b.utc).getTime()
       .reverse()
     @$el.html @tmpl { events: events }
+
 
 class exports.RequestNavView extends BB.BadassView
   tmpl: require './templates/RequestNav'
@@ -367,5 +367,9 @@ class exports.RequestView extends BB.ModelSaveView
 
 Handlebars.registerPartial "RequestSet", require('./templates/RequestsSet')
 Handlebars.registerPartial "MailSignature", require('./../../mail/signature')
+
+Handlebars.registerHelper "callDateTime", (utcDateString) ->
+  day = moment utcDateString
+  day.format("DD MMM <b>HH:mm</b>")
 
 module.exports = exports

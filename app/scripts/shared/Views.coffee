@@ -7,10 +7,6 @@ exports.MarketingTagsInputView =
 
 Handlebars.registerPartial "DevLinks", require('./templates/DevLinks')
 
-Handlebars.registerHelper "dateTime", (utcDateString) ->
-  day = moment utcDateString
-  day.format("DD MMM 'YY HH:mm")
-
 Handlebars.registerHelper "localDateTime", (utcDateString) ->
   # $log 'moment', moment
   day = moment utcDateString
