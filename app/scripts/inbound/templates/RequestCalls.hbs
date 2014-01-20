@@ -16,12 +16,14 @@
       <label>{{type}}</label>
       <label class="duration"> {{{duration}}} {{inflect duration "hour" "hours"}}
       </label>
-      <span class="label label-{{status}}">{{status}}</span>
 
+      {{!--
+      <span class="label label-{{status">{{status</span>}}
 
       {{#each recordings}}
       <a href="{{link}}" class="zocial youtube icon" target="_blank"></a>
       {{/each}}
+
     </div>
   {{else}}
     <p>No calls scheduled</p>

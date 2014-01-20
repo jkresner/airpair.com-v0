@@ -272,7 +272,6 @@ class exports.RequestSuggestionsView extends BB.BadassView
 
 
 class exports.RequestSuggestedView extends BB.BadassView
-  # logging: on
   el: '#suggested'
   tmpl: require './templates/RequestSuggested'
   events:
@@ -291,6 +290,7 @@ class exports.RequestSuggestedView extends BB.BadassView
 
         s.tags =  @mget 'tags'
         s.expert.hasLinks = new M.Expert(s.expert).hasLinks()
+        s.isAvailable = s.expertStatus == 'available'
 
         mailTemplates = new ExpertMailTemplates @model, @session, s.expert._id
         try
@@ -312,7 +312,6 @@ class exports.RequestCallsView extends BB.BadassView
   initialize: -> @listenTo @model, 'change', @render
   render: ->
     d = @model.toJSON()
-    $log 'RequestCallsView', d
     d.calls = d.calls.map (call) =>
       call.expert = @model.suggestion(call.expertId).expert
       call
@@ -373,7 +372,6 @@ Handlebars.registerPartial "RequestSet", require('./templates/RequestsSet')
 Handlebars.registerPartial "MailSignature", require('./../../mail/signature')
 
 Handlebars.registerHelper "callDateTime", (utcDateString) ->
-  $log 'scallDateTime', utcDateString
   day = moment utcDateString
   day.format("DD MMM <b>HH:mm</b>")
 
