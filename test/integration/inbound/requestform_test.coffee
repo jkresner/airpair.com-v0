@@ -61,9 +61,12 @@ describe "Inbound: RequestView", ->
       expect( rv.$('#suggested .suggested').length ).to.equal 1
       done()
 
-    amosSuggestion = rv.$('[data-id=519c2d3cb9ea8f0200000007]')
-    amosSuggestion.click()
-
+    # select the first tag and show its experts
+    rv.$('#suggestions a').first().click()
+    rest = ->
+      amosSuggestion = rv.$('[data-id=519c2d3cb9ea8f0200000007]')
+      amosSuggestion.click()
+    setTimeout rest, 0
 
   it 'Can suggest 2 expert(s) with matching & lower rates than budget ...', (done) ->
     @router.navTo "request/#{@rID}"
@@ -87,6 +90,10 @@ describe "Inbound: RequestView", ->
       requnixSuggestion = rv.$('[data-id=51a466707021eb0200000004]')
       requnixSuggestion.click()
 
-    richkuoSuggestion = rv.$('[data-id=51a4d2b47021eb0200000009]')
-    richkuoSuggestion.click()
+    # select the first tag and show its experts
+    rv.$('#suggestions a').first().click()
+    rest = ->
+      richkuoSuggestion = rv.$('[data-id=51a4d2b47021eb0200000009]')
+      richkuoSuggestion.click()
+    setTimeout rest, 0
 

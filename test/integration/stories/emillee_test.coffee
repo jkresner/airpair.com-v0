@@ -126,6 +126,11 @@ describe "Stories: Emil Lee", ->
 
       expect( rv.$el.is(':visible') ).to.equal true
 
+      # select the first tag and show its experts
+      rv.$('#suggestions a').first().click()
+      setTimeout rest, 0
+
+    rest = ->
       richkuo = rv.$('[data-id=51a4d2b47021eb0200000009]') # Richard Kuo
       reQunix = rv.$('[data-id=51a466707021eb0200000004]') # Michael Prins
       mattvanhorn = rv.$('[data-id=51b0c417900c860200000018]') # Matthew Van Horn

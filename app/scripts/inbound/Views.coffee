@@ -222,8 +222,6 @@ class exports.RequestSuggestionsView extends BB.BadassView
     @listenTo @model, 'change:suggested', @renderTagSuggestions
   render: ->
     @rTag = null
-    if @model.get('tags')? && @model.get('tags').length
-      @rTag = @model.get('tags')[0]
     @$el.html @tmpl @model.toJSON()
     @renderTagSuggestions()
     @
