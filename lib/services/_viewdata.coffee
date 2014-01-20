@@ -67,24 +67,7 @@ module.exports = class ViewDataService
         expertName: r.name
 
   inbound: (usr, callback) ->
-    fns =
-      tags: (cb) ->
-        tSvc.getAll cb
-      experts: (cb) ->
-        eSvc.getAll cb
-      requests: (cb) ->
-        rSvc.getActive cb
-      marketingTags: (cb) ->
-        mtSvc.getAll cb
-
-    async.parallel fns, (e, results) =>
-      if e then return callback e
-      callback null,
-        session:  @session usr
-        requests: JSON.stringify results.requests
-        experts:  JSON.stringify results.experts
-        tags:     JSON.stringify results.tags
-        marketingTags: JSON.stringify results.marketingTags
+    callback null, session: @session usr
 
   landingTag: (tagSearchTerm, usr, callback) ->
     tSvc.search tagSearchTerm, (e, o) =>

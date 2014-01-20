@@ -58,6 +58,7 @@ module.exports = class RequestsService extends DomainService
           request = r
         else if Roles.isAdmin usr
           request = r
+          r.base = @rates.base
         else
           @addViewEvent r, usr, "anon view"
           request = @publicView r
@@ -78,28 +79,49 @@ module.exports = class RequestsService extends DomainService
         if err then return callback err
         callback(null, r)
 
-  # Used for dashboard
-  getActive: (callback) ->
-    select = { events: { $slice: [ 0, 1 ] }, brief: 0, 'company.about': 0 }
-    @model.find({}, select)
-      .where('status').in(['received','incomplete','review','scheduled','holding'])
-      .lean()
-      .exec (e, requests) =>
-        if e then return callback e
-        if !requests then requests = {}
-        for r in requests
-          @_setRatesForRequest r
-        callback null, requests
-
   _setRatesForRequest: (request) ->
     for suggested in request.suggested
       suggested.suggestedRate =
         @rates.calcSuggestedRates request, suggested.expert
     request.base = @rates.base
 
+  inboundSelect:
+    'events': { $elemMatch: { name:'created' } }
+    '_id': 1
+    'company.name': 1
+    'company.contacts': { $slice: [0, 1] }
+    'status': 1
+    'userId': 1
+    'owner': 1
+    'calls.status': 1
+    'suggested.expertStatus': 1
+    'suggested.expert._id': 1
+    'suggested.expert.name': 1
+    'suggested.expert.username': 1
+    'suggested.expert.email': 1
+    'suggested.expert.gmail': 1
+    'suggested.expert.pic': 1
+    'suggested.expert.homepage': 1
+    'suggested.expert.other': 1
+    'suggested.expert.so.link': 1
+    'suggested.expert.gh.username': 1
+    'suggested.expert.karma': 1
+    'suggested._id': 1
+    'tags.short': 1
+
+  # Used for adm/inbound dashboard list
+  getActive: (callback) ->
+    @model.find({}, @inboundSelect)
+      .where('status').in(['received','incomplete','review','scheduled','holding'])
+      .lean()
+      .exec (e, requests) =>
+        if e then return callback e
+        if !requests then requests = {}
+        callback null, requests
+
   # Used for history
   getInactive: (callback) ->
-    @model.find({})
+    @model.find({}, @inboundSelect)
       .where('status').in(['canceled', 'completed'])
       .exec (e, r) ->
         if e then return callback e

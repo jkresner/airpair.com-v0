@@ -45,27 +45,31 @@ module.exports = class Router extends S.AirpairSessionRouter
 
     _.extend d, v
 
-  initialize: (args) ->
-    @navTo 'list'
-
   inactive: ->
     $('#list').show()
     @app.requests.url = '/api/admin/requests/inactive'
     @app.requests.fetch()
 
   request: (id) ->
-    if @app.requests.length == 0 then return
     if !id?
       @app.selected.clearAndSetDefaults()
       return
-    d = @app.requests.get id
-    if !d
-      @app.selected.set('_id', id, { silent: true })
-      @app.selected.fetch({ reset: true })
-      return
-    @app.selected.clear { silent: true }
-    @app.selected.set d.attributes
 
+    # load orders for the request
     if @app.orders.requestId != id
       @app.orders.requestId = id
       @app.orders.fetch()
+
+    # navigating from /farm to this page shouldn't refresh data
+    if @app.selected.id == id then return
+
+    # so people don't see old data
+    @app.selected.clear(silent: true)
+
+    @app.selected.set('_id', id, { silent: true })
+    # always fetch it b/c we want freshest data
+    route = $('#request')
+    route.css('visibility', 'hidden')
+    @app.selected.fetch(reset: true, success: ->
+      route.css('visibility', 'visible')
+    )
