@@ -287,11 +287,8 @@ class exports.RequestSuggestedView extends BB.BadassView
       @$el.append '<p>No suggestion made...</p>'
     else
       for s in @model.get 'suggested'
-
         s.tags =  @mget 'tags'
         s.expert.hasLinks = new M.Expert(s.expert).hasLinks()
-        s.isAvailable = s.expertStatus == 'available'
-
         mailTemplates = new ExpertMailTemplates @model, @session, s.expert._id
         try
           rates = s.suggestedRate[@model.get('pricing')]
