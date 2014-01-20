@@ -8,28 +8,29 @@
   {{#each available}}
     {{#with expert}}
 
-    <div class="expertMini suggestion {{#selected}}selected{{/selected}}" >
-      <div class="deets">
-        <div class="fullName">
-          {{name}}
+    <label for="expertId{{_id}}">
+      <div class="expertMini suggestion {{#selected}}selected{{/selected}}" >
+        <div class="deets">
+          <div class="fullName">
+            {{name}}
+          </div>
+          <hr>
+          <img src="{{pic}}" alt="{{name}}" draggable="false" class="expertPic">
         </div>
-        <hr>
-        <img src="{{pic}}" alt="{{name}}" draggable="false" class="expertPic">
-      </div>
 
-      <div class="hours">
-          {{#each credit.byTypeArray}}
-            <tr>
-              <td>{{type}}:</td>
-              <td>{{balance}} {{inflect balance "hour" "hours"}}</td>
-            </tr>
-          {{/each}}
-      </div>
+        <div class="hours">
+            {{#each credit.byTypeArray}}
+              {{balance}} {{inflect balance "hr" "hrs"}}
+              {{type}}
+              </tr>
+            {{/each}}
+        </div>
 
-      <div class="select">
-        <input type="radio" value="{{_id}}" name="expertId" {{#selected}}checked{{/selected}}/>
+        <div class="select">
+          <input id="expertId{{_id}}" type="radio" value="{{_id}}" name="expertId" {{#selected}}checked{{/selected}} />
+        </div>
       </div>
-    </div>
+    </label>
 
     {{/with}}
   {{else}}
@@ -70,7 +71,7 @@
         </div>
       </div>
       <div class="control-group">
-        <label class="control-label" for="date">Date &amp; Time &amp; Timezone</label>
+        <label class="control-label" for="date">Timezone / Date / Time </label>
         <div class="controls">
           <select name="timezone" class="input-mini">
             <option value="PST" selected>PST</option>
