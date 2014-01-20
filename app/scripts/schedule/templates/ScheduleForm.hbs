@@ -103,7 +103,7 @@
             <option value="10:30" {{#is ../time '10:30'}}selected{{/is}}>10:30</option>
             <option value="11:00" {{#is ../time '11:00'}}selected{{/is}}>11:00</option>
             <option value="11:30" {{#is ../time '11:30'}}selected{{/is}}>11:30</option>
-            <option value="12:00" {{#is ../time '12:00'}}selected{{/is}}>12:00</option>
+            <option value="12:00" {{#unless time}}selected{{/unless}} {{#is ../time '12:00'}}selected{{/is}}>12:00</option>
             <option value="12:30" {{#is ../time '12:30'}}selected{{/is}}>12:30</option>
             <option value="13:00" {{#is ../time '13:00'}}selected{{/is}}>13:00</option>
             <option value="13:30" {{#is ../time '13:30'}}selected{{/is}}>13:30</option>
