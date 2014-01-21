@@ -1,5 +1,6 @@
 authz     = require './../identity/authz'
 admin     = authz.Admin isApi: true
+cSend     = require '../util/csend'
 
 class UserApi
 
@@ -28,9 +29,7 @@ class UserApi
 
   adminlist: (req, res, next) =>
     $log 'users.adminlist'
-    @model.find {}, (e, r) ->
-      if e then return next e
-      res.send r
+    @model.find {}, cSend(res, next)
 
 
 module.exports = (app) -> new UserApi(app)

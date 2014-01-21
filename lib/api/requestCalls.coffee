@@ -3,6 +3,7 @@ admin = authz.Admin()
 loggedIn  = authz.LoggedIn isApi:true
 CallsSvc   = require './../services/requestCalls'
 formatValidationErrors = require '../util/formatValidationErrors'
+cSend = require '../util/csend'
 
 class RequestCallsApi  # Always passes back a full request object
 
@@ -14,9 +15,7 @@ class RequestCallsApi  # Always passes back a full request object
     app.put     "/api/#{route}/:requestId/calls/:callId", admin, @validate, @update
 
   detail: (req, res, next) =>
-    @svc.getByCallPermalink req.params.permalink, (e, r) ->
-      if e then return next e
-      res.send r
+    @svc.getByCallPermalink req.params.permalink, cSend(res, next)
 
   validate: (req, res, next) ->
     req.checkBody('duration', 'Invalid duration').notEmpty().isInt()
