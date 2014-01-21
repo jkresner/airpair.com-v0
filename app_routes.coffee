@@ -6,18 +6,6 @@ viewData = new ViewDataService()
 
 file = (r, file) -> r.sendfile "./public/#{file}.html"
 
-# loggedInHttpsRedirect = (req, res, next) ->
-  # $log '*1** loggedInHttpsRedirect', req.url
-  # $log '*2** req.host', req.host, 'req.secure', req.secure
-  # $log '*3** req.protocol', req.protocol
-  # $log '*4** req.headers["x-forwarded-proto"]', req.headers['x-forwarded-proto']
-  # $log '*5** req.isAuthenticated()', req.isAuthenticated()
-  # isHttpsOrigin = req.headers['x-forwarded-proto'] is 'https'
-
-  # if req.isAuthenticated() && !isHttpsOrigin && cfg.isProd
-  #   return res.redirect "https://www.airpair.com#{req.url}"
-  # next()
-
 module.exports = (app) ->
 
   # login / auth routes
@@ -26,7 +14,7 @@ module.exports = (app) ->
   # pages
   app.get '/login', (req, r)-> file r, 'login'
   app.get '/be-an-expert*', (req, r)-> file r, 'beexpert'
-  app.get '/find-an-expert*', (req, r)-> file r, 'request'
+  app.get '/find-an-expert*', (req, r)-> r.render 'request.html'
 
   app.get '/', (req, r) ->
     if !req.isAuthenticated()

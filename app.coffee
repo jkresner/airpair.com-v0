@@ -7,6 +7,7 @@ express       = require 'express'
 passport      = require 'passport'
 inspect       = require('util').inspect
 expressValidator = require 'express-validator'
+partials      = require './partials'
 
 # setup our express app
 app = express()
@@ -18,6 +19,8 @@ mongoSessionStore = new MongoSessionStore url: "#{cfg.mongoUri}/sessions"
 app.engine('html', require('hbs').__express)
 app.set('view engine', 'hbs')
 app.set('views', __dirname + '/public')
+
+partials.register()
 
 app.use express.compress() # gzip
 app.use express.static(__dirname + '/public')
