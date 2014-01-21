@@ -67,7 +67,11 @@ module.exports = class ViewDataService
         expertName: r.name
 
   inbound: (usr, callback) ->
-    callback null, session: @session usr
+    rSvc.getActive (err, requests) =>
+      if err then return callback err
+      callback null,
+        session: @session(usr),
+        requests: JSON.stringify(requests)
 
   landingTag: (tagSearchTerm, usr, callback) ->
     tSvc.search tagSearchTerm, (e, o) =>
