@@ -77,7 +77,7 @@ describe "RequestCallsService", ->
     expect(svc._canScheduleCall orders, call).to.equal false
 
   it "can book a 1hr call using 1 order and 1 available lineitem", (done) ->
-    @timeout 0
+    @timeout 10000
     call = data.calls[1] # expert is paul
     orders = [cloneDeep data.orders[5]] # expert is paul, 2 line items
     runCreateCallSuccess orders, call, (err, newOrders, newRequestWithCall, newCall) ->
@@ -90,13 +90,13 @@ describe "RequestCallsService", ->
       done()
 
   it "can book a 2hr call given 2 orders and 2 available lineItems", (done) ->
-    @timeout 0
+    @timeout 10000
     call = data.calls[2] # duration 2
     orders = [cloneDeep(data.orders[5]), cloneDeep(data.orders[5])]
     runCreateCallSuccess orders, call, done
 
   it "cannot book a 5hr call given 2 orders and 2 lineItems", (done) ->
-    @timeout 0
+    @timeout 10000
     call = _.clone data.calls[2]
     call.duration = 5
     orders = [cloneDeep(data.orders[5]), cloneDeep(data.orders[5])]
@@ -110,7 +110,7 @@ describe "RequestCallsService", ->
           done()
 
   it "can book a 2 hour open source session and then a 5 hour private session", (done) ->
-    @timeout 0
+    @timeout 10000
     callos2 = cloneDeep data.calls[3]
     callp5 = cloneDeep data.calls[4]
     request = cloneDeep data.requests[12]

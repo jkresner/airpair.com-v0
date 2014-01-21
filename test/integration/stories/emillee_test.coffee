@@ -33,7 +33,7 @@ describe "Stories: Emil Lee", ->
     window.location = storySteps[testNum].frag.replace 'rId', @rId
     hlpr.setInitApp @, "/scripts/#{storySteps[testNum].app}/Router"
     hlpr.setSession storySteps[testNum].usr, =>
-      # $log 'app', storySteps[testNum].app, storySteps[testNum].pageData
+      $log 'app', storySteps[testNum].app, storySteps[testNum].pageData
       initApp(storySteps[testNum].pageData, done)
 
   afterEach ->
@@ -121,14 +121,16 @@ describe "Stories: Emil Lee", ->
   it 'can suggest experts as admin', (done) ->
     rv = @app.requestView
 
+    # makes sure that requests do load.
     @app.requests.once 'sync', =>
-      router.navTo "##{@rId}"
+      router.navTo "#request/#{@rId}"
 
+    # now we're on the request page, and have the data.
+    @app.selected.once 'sync', =>
       expect( rv.$el.is(':visible') ).to.equal true
-
       # select the first tag and show its experts
       rv.$('#suggestions a').first().click()
-      setTimeout rest, 0
+      setTimeout rest, 100
 
     rest = ->
       richkuo = rv.$('[data-id=51a4d2b47021eb0200000009]') # Richard Kuo
@@ -144,11 +146,9 @@ describe "Stories: Emil Lee", ->
           expect( rv.mget('suggested')[1].expert._id ).to.equal '51a466707021eb0200000004'
           expect( rv.mget('suggested')[2].expert._id ).to.equal '51b0c417900c860200000018'
           done()
-
       richkuo.click()
       reQunix.click()
       mattvanhorn.click()
-
 
   it 'can review request and accept request as expert richkuo', (done) ->
     v = @app.requestView
