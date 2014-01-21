@@ -15,7 +15,7 @@ create = (body, cb) ->
 
     # WONTFIX set up a proper testing env.
     if !process.env.GCAL_ENV && (!cfg || !cfg.isProd)
-      console.log 'gcal.create', params, body
+      # console.log 'gcal.create', params, body
       return cb null, htmlLink: 'http://example.com/google-calendar-link'
 
     cal.events.insert(params, body).withAuthClient(oauth2Client)

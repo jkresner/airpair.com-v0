@@ -24,6 +24,7 @@ module.exports = class Router extends S.AirpairSessionRouter
       tags: new C.Tags()
       marketingTags: new C.MarketingTags()
       experts: new C.Experts()
+      orders: new C.Orders()
     v =
       requestsView: new V.RequestsView collection: d.requests, model: d.selected
       requestView: new V.RequestView
@@ -32,6 +33,7 @@ module.exports = class Router extends S.AirpairSessionRouter
         tags: d.tags
         marketingTags: d.marketingTags
         experts: d.experts
+        orders: d.orders
         session: @app.session
       filtersView: new V.FiltersView collection: d.requests
       farmingView: new V.RequestFarmView model: d.selected
@@ -63,3 +65,8 @@ module.exports = class Router extends S.AirpairSessionRouter
       return
     @app.selected.clear { silent: true }
     @app.selected.set d.attributes
+
+    if @app.orders.requestId != id
+      @app.orders.requestId = id
+      console.log "set id to #{@app.orders.requestId} and fetch"
+      @app.orders.fetch()

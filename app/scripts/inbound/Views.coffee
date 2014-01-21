@@ -3,6 +3,7 @@ BB = require './../../lib/BB'
 M = require './Models'
 SV = require './../shared/Views'
 storage = require('../util').storage
+expertCredit = require '../shared/mix/expertCredit'
 
 #############################################################################
 ##  To render requests rows for admin
@@ -222,8 +223,6 @@ class exports.RequestSuggestionsView extends BB.BadassView
     @listenTo @model, 'change:suggested', @renderTagSuggestions
   render: ->
     @rTag = null
-    if @model.get('tags')? && @model.get('tags').length
-      @rTag = @model.get('tags')[0]
     @$el.html @tmpl @model.toJSON()
     @renderTagSuggestions()
     @
@@ -279,6 +278,7 @@ class exports.RequestSuggestedView extends BB.BadassView
     'click .deleteSuggested': 'remove'
   initialize: ->
     @listenTo @model, 'change', @render
+    @listenTo @orders, 'sync', @render
   render: ->
     @$el.html '<legend>Suggested</legend>'
     suggested = @model.get 'suggested'
@@ -292,8 +292,13 @@ class exports.RequestSuggestedView extends BB.BadassView
         mailTemplates = new ExpertMailTemplates @model, @session, s.expert._id
         try
           rates = s.suggestedRate[@model.get('pricing')]
-        tmplData = _.extend { requestId: @model.id, mailTemplates: mailTemplates, tagsString: @model.tagsString(), rates: rates }, s
-        @$el.append @tmpl tmplData
+        s.credit = expertCredit(@orders.toJSON(), s.expert._id)
+        tmplData =
+          requestId: @model.id,
+          mailTemplates: mailTemplates
+          tagsString: @model.tagsString(),
+          rates: rates
+        @$el.append @tmpl _.extend tmplData, s
     @
   remove: (e) ->
     suggestionId = $(e.currentTarget).data 'id'
@@ -309,6 +314,7 @@ class exports.RequestCallsView extends BB.BadassView
   initialize: -> @listenTo @model, 'change', @render
   render: ->
     d = @model.toJSON()
+    d.calls = d.calls.sort (a, b) -> a.datetime.localeCompare(b.datetime)
     d.calls = d.calls.map (call) =>
       call.expert = @model.suggestion(call.expertId).expert
       call
@@ -347,7 +353,7 @@ class exports.RequestView extends BB.ModelSaveView
     @infoView = new exports.RequestInfoView model: @model, tags: @tags, marketingTags: @marketingTags, session: @session, parentView: @
     @marketingInfoView = new exports.RequestMarketingTagsInfoView model: @model, marketingTags: @marketingTags, parentView: @
     @suggestionsView = new exports.RequestSuggestionsView model: @model, collection: @experts, parentView: @
-    @suggestedView = new exports.RequestSuggestedView model: @model, collection: @experts, session: @session, parentView: @
+    @suggestedView = new exports.RequestSuggestedView model: @model, collection: @experts, session: @session, orders: @orders, parentView: @
     @callsView = new exports.RequestCallsView el: '#calls', model: @model, parentView: @
   renderSuccess: (model, response, options) =>
     @$('.alert-success').fadeIn(800).fadeOut(5000)
