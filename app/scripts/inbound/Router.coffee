@@ -67,13 +67,9 @@ module.exports = class Router extends S.AirpairSessionRouter
     # navigating from /farm to this page shouldn't refresh data
     if @app.selected.id == id then return
 
-    # so people don't see old data
-    @app.selected.clear(silent: true)
-
-    @app.selected.set('_id', id, { silent: true })
-    # always fetch it b/c we want freshest data
     route = $('#request')
-    route.css('visibility', 'hidden')
-    @app.selected.fetch(reset: true, success: ->
-      route.css('visibility', 'visible')
-    )
+    route.hide()
+
+    # always fetch it b/c we want freshest data
+    @app.selected.set('_id', id, { silent: true })
+    @app.selected.fetch reset: true, success: => route.show()
