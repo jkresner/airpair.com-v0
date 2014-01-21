@@ -1,7 +1,7 @@
-authz     = require './../identity/authz'
+authz = require './../identity/authz'
 admin = authz.Admin()
-loggedIn  = authz.LoggedIn isApi:true
-CallsSvc   = require './../services/requestCalls'
+loggedIn = authz.LoggedIn isApi:true
+CallsSvc = require './../services/requestCalls'
 formatValidationErrors = require '../util/formatValidationErrors'
 cSend = require '../util/csend'
 

@@ -1,8 +1,8 @@
 CompanysSvc = require './../services/companys'
-authz       = require './../identity/authz'
-loggedIn    = authz.LoggedIn isApi:true
-admin       = authz.Admin isApi: true
-cSend       = require '../util/csend'
+authz = require './../identity/authz'
+loggedIn = authz.LoggedIn isApi:true
+admin = authz.Admin isApi: true
+cSend = require '../util/csend'
 
 class CompanyApi
 

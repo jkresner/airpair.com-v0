@@ -1,6 +1,6 @@
-authz     = require './../identity/authz'
-admin     = authz.Admin isApi: true
-cSend     = require '../util/csend'
+authz = require './../identity/authz'
+admin = authz.Admin isApi: true
+cSend = require '../util/csend'
 
 class UserApi
 

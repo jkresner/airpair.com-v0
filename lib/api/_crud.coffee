@@ -1,6 +1,6 @@
-authz       = require './../identity/authz'
-admin       = authz.Admin isApi: true
-loggedIn    = authz.LoggedIn isApi: true
+authz = require './../identity/authz'
+admin = authz.Admin isApi: true
+loggedIn = authz.LoggedIn isApi: true
 moment = require 'moment'
 errors = require './errors'
 cSend = require '../util/csend'
