@@ -12,5 +12,6 @@ exports.Request = class Request extends Shared.Request
     term: encodeURIComponent @tagsString()
     tagsString: @tagsString()
 
+exports.Order = Shared.Order
 
 module.exports = exports

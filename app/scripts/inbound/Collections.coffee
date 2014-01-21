@@ -38,4 +38,8 @@ class exports.Requests extends BB.FilteringCollection
       m.get('owner') == owner || !m.get('owner')
     r
 
+class exports.Orders extends BB.FilteringCollection
+  model: Models.Order
+  url: -> "/api/orders/request/#{@requestId}"
+
 module.exports = exports
