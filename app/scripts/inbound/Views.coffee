@@ -293,7 +293,6 @@ class exports.RequestSuggestedView extends BB.BadassView
         try
           rates = s.suggestedRate[@model.get('pricing')]
         s.credit = expertCredit(@orders.toJSON(), s.expert._id)
-        console.log s.credit.balance, @orders.toJSON(), s.expert._id
         tmplData =
           requestId: @model.id,
           mailTemplates: mailTemplates

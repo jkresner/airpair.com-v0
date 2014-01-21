@@ -20,7 +20,6 @@ class exports.FiltersView extends BB.BadassView
       collection: @marketingTags, model: @dummyRequest
     @listenTo @dummyRequest, 'change:marketingTags', @filter
   filter: (e) ->
-    console.log 'filter', e, e.target
     if e && e.target
       $btn = $(e.target)
       @$('button').removeClass('btn-warning')
