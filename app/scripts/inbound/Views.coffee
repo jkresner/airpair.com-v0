@@ -189,7 +189,8 @@ class exports.RequestInfoView extends BB.ModelSaveView
     tmplCompanyData = _.extend { mailTemplates: mailTemplates, tagsString: @model.tagsString() }, @mget('company')
     @$('#company-controls').html @tmplCompany(tmplCompanyData)
     @$('[data-toggle="popover"]').popover()
-    @$('.status').addClass "label-#{@model.get('status')}"
+    # TODO: kinda hacky:
+    @$('.status').attr('class', "label status label-#{@model.get('status')}")
     @$('.status').html @model.get('status')
     @toggleCanceledIncompleteFields()
     @
