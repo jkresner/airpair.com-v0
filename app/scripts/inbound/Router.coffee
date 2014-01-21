@@ -68,5 +68,4 @@ module.exports = class Router extends S.AirpairSessionRouter
 
     if @app.orders.requestId != id
       @app.orders.requestId = id
-      console.log "set id to #{@app.orders.requestId} and fetch"
       @app.orders.fetch()
