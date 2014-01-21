@@ -44,7 +44,9 @@
     <span class="status label label-{{expertStatus}}">{{ expertStatus }}</span>
 
     {{#is expertStatus 'available'}}
+      {{#gt credit.total 0 }}
     <a href="/adm/schedule/{{requestId}}?expertId={{expert._id}}" class="btn btn-small btn-success btn-schedule"><i class="icon-calendar icon-white"></i> {{credit.balance}} {{inflect credit.balance "hr" "hrs"}}</a>
+      {{/gt}}
     {{/is}}
 
   {{#if expertComment}}
