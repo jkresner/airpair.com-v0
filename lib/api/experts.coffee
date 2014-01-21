@@ -15,9 +15,7 @@ class ExpertApi extends CRUDApi
     super app, route
 
   list: (req, res, next) =>
-    @svc.getAll (e, r) ->
-      if e then return next e
-      res.send r
+    @svc.getAll cSend(res, next)
 
   detail: (req, res, next) =>
 

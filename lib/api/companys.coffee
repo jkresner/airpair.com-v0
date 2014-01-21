@@ -2,7 +2,7 @@ CompanysSvc = require './../services/companys'
 authz       = require './../identity/authz'
 loggedIn    = authz.LoggedIn isApi:true
 admin       = authz.Admin isApi: true
-
+cSend       = require '../util/csend'
 
 class CompanyApi
 
@@ -22,29 +22,19 @@ class CompanyApi
     if req.params.id is 'me'
       search = 'contacts.userId': req.user._id
 
-    @svc.searchOne search, (e, r) ->
-      if e then return next e
-      res.send r
+    @svc.searchOne search, cSend(res, next)
 
   adminlist: (req, res, next) =>
-    @svc.getAll (e, r) ->
-      if e then return next e
-      res.send r
+    @svc.getAll cSend(res, next)
 
   create: (req, res, next) =>
-    @svc.create req.body, (e, r) ->
-      if e then return next e
-      res.send r
+    @svc.create req.body, cSend(res, next)
 
   update: (req, res, next) =>
-    @svc.update req.params.id, req.body, (e, r) ->
-      if e then return next e
-      res.send r
+    @svc.update req.params.id, req.body, cSend(res, next)
 
   delete: (req, res, next) =>
-    @svc.delete req.params.id, (e, r) ->
-      if e then return next e
-      res.send r
+    @svc.delete req.params.id, cSend(res, next)
 
 
 module.exports = (app) -> new CompanyApi app, 'companys'

@@ -4,6 +4,7 @@ authz       = require './../identity/authz'
 loggedIn    = authz.LoggedIn isApi: true
 admin       = authz.Admin isApi: true
 Roles       = authz.Roles
+cSend = require '../util/csend'
 
 
 class OrdersApi
@@ -18,14 +19,10 @@ class OrdersApi
     app.delete  "/api/#{route}/:id", admin, @delete
 
   adminList: (req, res, next) =>
-    @svc.getAll (e, r) ->
-      if e then return next e
-      res.send r
+    @svc.getAll cSend(res, next)
 
   getByRequestId: (req, res, next) =>
-    @svc.getByRequestId req.params.id, (e, r) ->
-      if e then return next e
-      res.send r
+    @svc.getByRequestId req.params.id, cSend(res, next)
 
   create: (req, res, next) =>
     order = _.pick req.body, ['total','requestId']
@@ -69,9 +66,7 @@ class OrdersApi
 
 
   delete: (req, res, next) =>
-    @svc.delete req.params.id, (e, r) ->
-      if e then return next e
-      res.send r
+    @svc.delete req.params.id, cSend(res, next)
 
 
 module.exports = (app) -> new OrdersApi app, 'orders'
