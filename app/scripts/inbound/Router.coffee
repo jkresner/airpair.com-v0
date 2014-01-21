@@ -11,6 +11,7 @@ module.exports = class Router extends S.AirpairSessionRouter
   enableExternalProviders: off  # don't want uservoice + ga on admin
 
   routes:
+    ''             : 'list'
     'list'         : 'list'
     'inactive'     : 'inactive'
     'request/:id'  : 'request'
@@ -45,8 +46,11 @@ module.exports = class Router extends S.AirpairSessionRouter
 
     _.extend d, v
 
-  inactive: ->
+  list: ->
     $('#list').show()
+
+  inactive: ->
+    @list()
     @app.requests.url = '/api/admin/requests/inactive'
     @app.requests.fetch()
 
