@@ -309,7 +309,6 @@ class exports.RequestSuggestedView extends BB.BadassView
 
 
 class exports.RequestCallsView extends BB.BadassView
-  logging: on
   tmpl: require './templates/RequestCalls'
   initialize: -> @listenTo @model, 'change', @render
   render: ->
