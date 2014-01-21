@@ -29,7 +29,8 @@ class exports.Experts extends BB.FilteringCollection
 class exports.Requests extends BB.FilteringCollection
   model: Models.Request
   url: '/api/admin/requests/active'
-  comparator: (m) -> m.get('events')[0].utc
+  comparator: (m) ->
+    m.id # mongo id's sort by the date of their creation!
   _filter: (f) ->
     owner = f.filter.toLowerCase()
     r = @models

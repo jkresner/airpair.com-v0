@@ -86,27 +86,17 @@ module.exports = class RequestsService extends DomainService
     request.base = @rates.base
 
   inboundSelect:
-    'events': { $elemMatch: { name:'created' } }
     '_id': 1
     'company.name': 1
     'company.contacts': { $slice: [0, 1] }
+    'company.contacts.email': 1
+    'company.contacts.fullName': 1
+    'company.contacts.pic': 1
     'status': 1
-    'userId': 1
     'owner': 1
     'calls.status': 1
     'suggested.expertStatus': 1
-    'suggested.expert._id': 1
-    'suggested.expert.name': 1
-    'suggested.expert.username': 1
-    'suggested.expert.email': 1
-    'suggested.expert.gmail': 1
     'suggested.expert.pic': 1
-    'suggested.expert.homepage': 1
-    'suggested.expert.other': 1
-    'suggested.expert.so.link': 1
-    'suggested.expert.gh.username': 1
-    'suggested.expert.karma': 1
-    'suggested._id': 1
     'tags.short': 1
 
   # Used for adm/inbound dashboard list

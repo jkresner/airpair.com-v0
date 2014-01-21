@@ -1,6 +1,7 @@
 BB = require './../../lib/BB'
-exports = {}
+objectId2Date = require './mix/objectId2Date'
 
+exports = {}
 _.extend exports, require './../tags/Models'
 _.extend exports, require './../marketingtags/Models'
 
@@ -38,8 +39,7 @@ class exports.Request extends BB.SublistModel
     availability:   { required: true, msg: 'Please detail your timezone, urgency & availability' }
     tags:           { fn: 'validateNonEmptyArray', msg: 'At least one technology tag required' }
   createdDate: ->
-    if !@get('events')? || @get('events').length < 1 then return new Date()
-    new Date(@get('events')[0].utc)
+    objectId2Date(@get('_id'))
   createdDateString: ->
     moment(@createdDate()).format 'MMM DD'
   toggleTag: (value) ->
