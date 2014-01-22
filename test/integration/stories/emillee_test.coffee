@@ -33,7 +33,7 @@ describe "Stories: Emil Lee", ->
     window.location = storySteps[testNum].frag.replace 'rId', @rId
     hlpr.setInitApp @, "/scripts/#{storySteps[testNum].app}/Router"
     hlpr.setSession storySteps[testNum].usr, =>
-      $log 'app', storySteps[testNum].app, storySteps[testNum].pageData
+      # $log 'app', storySteps[testNum].app, storySteps[testNum].pageData
       initApp(storySteps[testNum].pageData, done)
 
   afterEach ->
