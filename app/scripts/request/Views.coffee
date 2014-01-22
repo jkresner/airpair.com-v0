@@ -64,6 +64,7 @@ class exports.InfoFormView extends BB.EnhancedFormView
     @$(".btn-cancel").toggle @request.id?
     @$(".stepNum").toggle !@request.id?
     @enableCharCount 'about'
+    if @elm('name').val() is 'Individual' then @setToggleIndividual()
     @
   getViewData: ->
     data = @getValsFromInputs ['name','url','about']
