@@ -269,6 +269,7 @@ class exports.RequestSuggestionsView extends BB.BadassView
         expert: expert.toJSON()
         availability: []
       @parentView.save e
+    false
 
 
 class exports.RequestSuggestedView extends BB.BadassView
