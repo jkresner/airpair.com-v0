@@ -11,13 +11,148 @@
     <!--<link rel="stylesheet" href="/stylesheets/app.css">-->
 </head>
 
+<style>
+  .entry-author { font-weight:bold;color:#000000 }
+  .entry-content { padding:20px 10px 10px 10px  }
+  .entry-content p { margin-bottom:10px; }
+  .pricing th { font-size:13px;border:solid 0.5px white }
+  .pricing th { font-size:13px;border:solid 0.5px white }
+  .pricing td { width:20%;font-size:10px;background:#d3d3d3;text-align:center;line-height:15px;border:solid 0.5px white;padding:5px 3px; }
+  .pricing td div { font-size:14px;font-weight:bold }
+  .pricing td em { display:block }
+</style>
+
 <body id="requestpage">
 
 <div class="site-container">
 
 {{> topNav }}
 
+<div class="site-inner">
+  <div class="wrap">
+    <div class="content-sidebar-wrap">
+      <main class="content" style="float:left">
+        <article class="post-20405 post type-post status-publish format-standard category-experts category-node-js entry" itemscope="itemscope" itemtype="http://schema.org/BlogPosting" itemprop="blogPost">
+          <header class="entry-header">
+            <h1 class="entry-title" itemprop="headline">Find Your Expert</h1>
+            <p class="entry-meta"><time>Step 1 of 3: </time>
+              <b>Sign in with your google account</b>
+            </p>
+          </header>
+          <div class="entry-content" style="padding:20px">
 
+            <h2>Welcome to the AirPair :-)</h2>
+
+            <a href="/auth/google?return_to=/find-an-expert" class="signinBtn-google track"><img src="/images/signin/google.png"/></a>
+
+         <!--    <div id="attachment_1161" style="width: 110px" class="wp-caption alignleft"><img title="Domenic Denicola Node.js Expert" alt="Node expert code mentor Domenic Denicola" src="https://0.gravatar.com/avatar/c6d819207a3010b39d13e1f59f2c0029?s=240" width="100px"><p class="wp-caption-text"><img src="http://airpair-blog.s3.amazonaws.com/wp-content/uploads/2013/09/node.js.png" alt="Node.js Apps" width="100" class="size-full wp-image-1161">Node.js Expert Domenic Denicola</p>
+            </div> -->
+ <!--            <div class="bio">
+              <div class="links"><a class="twitter icon" target="_blank" href="//twitter.com/domenic"></a><a class="github icon" target="_blank" href="//github.com/domenic"></a></div>
+              <h2><a title="Node.js Expert Code Mentoring, Training, Help &amp; Pair Programming" href="http://www.airpair.com/node.js">Node.js</a> &gt; Domenic Denicola Bio</h2>
+              <p>Node.js expert Domenic Denicola is highly active in the JavaScript community. He is famous for publishing over <em><a href="https://npmjs.org/~domenic" target="_blank"> 30 npm modules</a></em>, maintaining many <em><a target="_blank" href="//github.com/domenic">open-source libraries</a></em>. Domenic <em>contributes to Node</em> itself, and is a <em>core contributor on the npm team</em>. He is passionate about software craftsmanship and the future of the web. One of his side passions is contributing to the web, JavaScript and ECMA standards process. He often blogs at <a href="http://domenic.me/">domenic.me</a>.<br>
+              <span id="more-20405"></span></p>
+              <p class="bio-action">
+              Need Node.js help? <a href="/find-an-expert">Book Domenic</a> or browse other <a href="/node.js">Node.js experts</a> for 1 on 1 rails training, javascript code reviews and problem solving support for your Node app.</p>
+              <div class="session">
+              <h2>What help from Node.js Expert <em>Domenic Denicola</em> over AirPair video chat looks like…</h2>
+              <p>In this AirPair, Domenic helps customer David Trejo with node.js error handling best practices using `domains`.</p></div>
+              <p><a href="/find-an-expert" class="session-action button large">Book your own AirPair Expert, Now.</a></p> -->
+
+            <br /><br />
+            <div style="width: 310px" class="wp-caption alignright"><img src="//airpair-blog.s3.amazonaws.com/wp-content/uploads/2014/01/Node.js-Pair-Programming-Help-On-AirPair-300x176.png" alt="Node Pair Programming Online" width="300" height="176" class="size-medium wp-image-20806"><p class="wp-caption-text">AirPair Mentoring through video chat.</p>
+            </div>
+            <h2>Why google?</h2>
+            <p>We've used google hangouts to <a href="http://www.google.com/+AirPair" target="_blank">connect hundreds of customers with experts</a>. We use your google account to invite you into video chat for your AirPair session.</p>
+          </div>
+
+          <footer class="entry-footer"><p class="entry-meta"><span class="entry-categories">Filed Under: <a href="http://www.airpair.com/experts" title="View all posts in Experts" rel="category tag">Experts</a>, <a href="http://www.airpair.com/node.js" title="View all posts in Node.js" rel="category tag">Node.js</a></span> </p></footer>
+        </div>
+      </article>
+    </main>
+
+    <aside class="sidebar sidebar-primary widget-area" style="float:right">
+<!--       <section id="text-3" class="widget widget_text">
+        <div class="widget-wrap"><h4 class="widget-title widgettitle">Follow AirPair for Updates</h4>
+          <div class="textwidget">
+            <center><a class="button large" style="width:100%;" href="http://airpair.us7.list-manage.com/subscribe?u=707a79398ffed7972e1e87db6&amp;id=903d16f497">Newsletter</a></center>
+            <center><small>$45/hr promotions and more</small></center><br>
+            <center>
+              <ul id="secondary" class="social" style="margin-top:10px;display: inline;">
+                <li style="display: inline;margin-right:6px;"><a href="http://twitter.com/airpair" target="_blank"><img src="/img/tw.png"></a></li>
+                <li style="display: inline;margin-right:6px;"><a href="http://facebook.com/airpair" target="_blank"><img src="/img/fb.png"></a></li>
+                <li style="display: inline;margin-right:6px;"><a href="https://plus.google.com/105075583437166504731" target="_blank"><img src="/img/gp.png"></a></li>
+                <li style="display: inline;margin-right:6px;"><a href="http://www.linkedin.com/company/airpair" target="_blank"><img src="/img/in.png"></a></li>
+                <li style="display: inline;margin-right:6px;"><a href="http://angel.co/airpair" target="_blank"><img src="/img/al.png"></a></li>
+              </ul>
+            </center>
+          </div>
+        </div>
+      </section> -->
+      <section id="featured-post-2" class="widget featured-content featuredpost">
+        <div class="widget-wrap">
+          <h4 class="widget-title widgettitle">FAQ</h4>
+          <article class="entry">
+            <span class="alignleft">
+              <img src="http://m.c.lnkd.licdn.com/media/p/1/000/1cf/26b/3c5c271.jpg" class="avatar avatar-65 photo" style="width:65px">
+            </span>
+            <header class="entry-header">
+              <h2 class="entry-title">How much does an AirPair session cost?</h2>
+              <p class="entry-meta">
+                <span class="entry-author">Dilys Sun</span>, AirPair Account Manger
+              </p>
+            </header>
+
+            <div class="entry-content">
+              <p>Airpair is a marketplace. Experts set their own rate and we match you on your budget.</p>
+
+              <table class="pricing">
+               <tr>
+                <th style="background:#FFB485">$60<i>/hr</i></th>
+                <th style="background:#EBB2E7">$90<i>/hr</i></th>
+                <th style="background:#A1E3A6">$130<i>/hr</i></th>
+                <th style="background:#98D0ED">$200<i>/hr</i></th>
+                <th style="background:#E8A0A0">$300<i>/hr</i></th>
+              </tr>
+              <tr>
+                <td>Access <div>15%</div> of experts</td>
+                <td>Access <div>40%</div> of experts</td>
+                <td>Access <div>60%</div> of experts</td>
+                <td>Access <div>90%</div> of experts</td>
+                <td>Access <div>100%</div> of experts</td>
+              </tr>
+              <tr>
+                <td style="background:#FADBC8">Solve any beginner challenge</td>
+                <td style="background:#F5D3F2">Write software like an expert</td>
+                <td style="background:#D4FCD7">Solve deep technical problems</td>
+                <td style="background:#D2ECFA">Get solutions from world class talent</td>
+                <td style="background:#F5D5D5">Leverage industry leaders</td>
+              </tr>
+            </table>
+
+            <p style="color:#84D189;font-weight:bold;margin-top:10px;font-style:italic;float:right">Most customers choose $130</p>
+            </div>
+          </article>
+
+          <article class="post-21061 post type-post status-publish format-standard category-hadoop category-python category-python-experts entry" itemscope="itemscope" itemtype="http://schema.org/BlogPosting">
+            <span class="alignleft"><img alt="" src="http://1.gravatar.com/avatar/34cf13e391e35fe59fdc095759263eb3?s=65&amp;d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D65&amp;r=G" class="avatar avatar-65 photo" height="65" width="65"></span><header class="entry-header"><h2 class="entry-title"><a href="http://www.airpair.com/python/machine-learning-expert-alexandre-gravier" title="Python Data Analysis and Machine Learning Expert – Alexandre Gravier">Python Data Analysis and Machine Learning Expert – Alexandre Gravier</a></h2><p class="entry-meta"><time class="entry-time" itemprop="datePublished" datetime="2014-01-18T01:46:10+00:00">January 18, 2014</time> By <span class="entry-author" itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person"><a href="http://www.airpair.com/author/alexandregravier" class="entry-author-link" itemprop="url" rel="author"><span class="entry-author-name" itemprop="name">Alexandre Gravier</span></a></span></p></header><div class="entry-content"><p>Python Expert &gt; Alexandre Gravier Bio Alexandre has worked at Google, Nanyang Technological University, and LAAS-CNRS, going back and forth between professional software development and scientific research. He has a MSc in artificial intelligence and recently submitted his PhD thesis in computational neuroscience. He has been using Python in many contexts, including neural simulation, high-level […]</p>
+            </div>
+          </article>
+
+        </div>
+      </section>
+    </aside>
+  </div>
+</div>
+</div>
+
+<footer class="site-footer">
+  <div class="wrap">
+  <p>© airpair, Inc. · <a href="mailto:team@airpair.com">Email Us</a> · (800) 487-0668 · <a href="http://www.airpair.com/tutorials">Tutorials</a></p>
+  </div>
+</footer>
+
+</div>
 
 
 </body>
