@@ -40,13 +40,11 @@ class exports.RequestRowView extends BB.BadassView
   tagName: 'tr'
   className: 'requestRow'
   tmpl: require './templates/Row'
+  events:
+    'click .edit': 'edit'
   render: ->
-    @$el.html @tmpl @tmplData()
-    @
-  tmplData: ->
     d = @model.toJSON()
-    # $log 'RequestRowView.tmplData', d
-    _.extend d, {
+    tmplData = _.extend d, {
       contactName:        d.company.contacts[0].fullName
       contactPic:         d.company.contacts[0].pic
       contactEmail:       d.company.contacts[0].email
@@ -56,7 +54,19 @@ class exports.RequestRowView extends BB.BadassView
       callCount:          d.calls.length
       callCompleteCount:  _.filter(d.calls, (s) -> s.status is 'complete').length
     }
-
+    @$el.html @tmpl tmplData
+    @
+  edit: (e) ->
+    e.preventDefault()
+    link = $(e.target)
+    route = link.attr('href').substring(1)
+    router.app.selected.set('_id', link.data('id'), { silent: true })
+    # console.log 'view fetching'
+    router.app.selected.fetch
+      reset: true,
+      success: =>
+        router.navTo route
+    false
 
 class exports.RequestsView extends BB.BadassView
   el: '#requests'
@@ -376,7 +386,7 @@ class exports.RequestView extends BB.ModelSaveView
     d
   deleteRequest: ->
     @model.destroy wait: true, success: =>
-      @collection.fetch success: => router.navTo 'list'
+      @collection.fetch success: => router.navTo ''
     false
 
 Handlebars.registerPartial "RequestSet", require('./templates/RequestsSet')
