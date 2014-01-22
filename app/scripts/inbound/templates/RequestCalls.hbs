@@ -2,10 +2,9 @@
 <div id="scheduled">
   {{#each calls}}
     <div class="call">
-      <!--
-      <a href="/adm/schedule/{{../_id}}/call/{{_id}}" title="edit call information">edit</a>
-      -->
-      <img src="{{expert.pic}}" alt="{{expert.name}}">
+      <a href="/adm/schedule/{{../_id}}/call/{{_id}}" title="edit call information">  <span>edit</span>
+        <img src="{{expert.pic}}" alt="{{expert.name}}">
+      </a>
 
       <a href="{{gcal.htmlLink}}" class="dateTime" title="view on google calendar" target="_blank">
         {{{callDateTime datetime}}}

@@ -184,6 +184,16 @@ nav a.zocial { padding:0; }
 #adminboundpage .call img { height:70px; width:70px; }
 #adminboundpage .call .dateTime { width:70px;font-size:10px;clear:both;display:block;background:#d3d3d3 }
 #adminboundpage .call label { width:70px;font-size:10px;clear:both;display:block;margin-bottom:0;line-height:14px;background:#d3d3d3 }
+#adminboundpage .call a:first-child span {
+  display: none;
+}
+#adminboundpage .call a:first-child:hover span {
+  background-color: white;
+  display: initial;
+  opacity: 0.8;
+  position: absolute;
+  width: 70px;
+}
 
 #schedulepage .expertPic { height: 60px; width: 60px;}
 #schedulepage .controls > .input-prepend { display: block; }
