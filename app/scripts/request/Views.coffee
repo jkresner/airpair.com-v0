@@ -15,7 +15,7 @@ class exports.WelcomeView extends BB.BadassView
     @e = addjs.events.customerLogin
     @e2 = addjs.events.customerWelcome
   render: ->
-    if !@timer? then @timer = new addjs.Timer(@e.category).start()    
+    if !@timer? then @timer = new addjs.Timer(@e.category).start()
     @$el.html @tmpl()
     trackWelcome = => addjs.trackEvent @e2.category, @e2.name, @e2.uri, 0
     setTimeout trackWelcome, 400
@@ -44,16 +44,19 @@ class exports.CompanyContactView extends BB.ModelSaveView
 
 
 class exports.InfoFormView extends BB.EnhancedFormView
-  # logging: on
   el: '#info'
+  tmplWrap: require './templates/CompanyForm'
   tmpl: require './../shared/templates/CompanyForm'
-  events: { 'click .save': 'validatePrimaryContactAndSave' }
+  events:
+    'click .save': 'validatePrimaryContactAndSave'
+    'click .individual': 'setToggleIndividual'
   initialize: ->
     @e = addjs.events.customerInfoNew
-    @$el.html @tmpl @model.toJSON()
+    @$el.html @tmplWrap
+    @$('#infoForm').html @tmpl @model.toJSON()
     @contactView = new exports.CompanyContactView(el: '#primaryContact', model: new M.CompanyContact(num:1)).render()
     @model.on 'change', @render, @
-    @model.once 'change', => @isReturnCustomer = @model.id?  
+    @model.once 'change', => @isReturnCustomer = @model.id?
   render: ->
     if !@timer? then @timer = new addjs.Timer(@e.category).start()
     @setValsFromModel ['name','url','about']
@@ -83,7 +86,20 @@ class exports.InfoFormView extends BB.EnhancedFormView
     addjs.trackEvent @e.category, @e.name, @elm('fullName').val(), @timer.timeSpent()
     addjs.providers.mp.setPeopleProps isCustomer : 'Y'
     router.navTo 'request'
-
+  setToggleIndividual: =>
+    $lnk = @$('.individual')
+    if $lnk.text() is "I'm an individual"
+      $lnk.text "I work for a company"
+      @elm('name').val 'Individual'
+      @elm('about').val 'Individual with no company about information to store.'
+      @$('.companyUrl-group').hide()
+      @$('.companyAbout-group').hide()
+    else
+      $lnk.text "I'm an individual"
+      @elm('name').val @model.get('name')
+      @elm('about').val  @model.get('about')
+      @$('.companyUrl-group').show()
+      @$('.companyAbout-group').show()
 
 #############################################################################
 ##  Request form
@@ -103,7 +119,7 @@ class exports.RequestFormView extends BB.ModelSaveView
     @$('.pricing input:radio').on 'click', @showPricingExplanation
     @$('.budget input:radio').on 'click', @showBudgetExplanation
     @listenTo @model, 'change', @render
-    @model.once 'change', => @isRequestUpdate = @model.id?  
+    @model.once 'change', => @isRequestUpdate = @model.id?
     @elm('brief').on 'input', =>
       @$('#breifCount').html(@elm('brief').val().length+ ' chars')
   render: ->
@@ -175,7 +191,7 @@ class exports.ConfirmEmailView extends BB.EnhancedFormView
     currentEmail = @model.get('contacts')[0].email
     if confirmedEmail == currentEmail
       @renderSuccess()
-    else 
+    else
       addjs.trackEvent @e.category, 'customerEmailChange', currentEmail+' | '+confirmedEmail
       @save e
   getViewData: ->
