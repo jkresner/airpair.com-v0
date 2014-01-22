@@ -178,22 +178,29 @@ class exports.RequestInfoView extends BB.ModelSaveView
   tmplCompany: require './templates/RequestInfoCompany'
   events:
     'click #receivedBtn': 'updateStatusToHolding'
+  modelProps: ['brief', 'availability', 'status', 'owner', 'canceledDetail',
+    'incompleteDetail', 'budget', 'pricing']
   initialize: ->
     @$el.html @tmpl @model.toJSON()
     @$('#status').on 'change', @toggleCanceledIncompleteFields
     @tagsInput = new SV.TagsInputView model: @model, collection: @tags
-    @listenTo @model, 'change', @render
+    for prop in @modelProps
+      @listenTo @model, "change:#{prop}", @render
+    @listenTo @model, 'change:tags', @renderMailTemplates
+    @listenTo @model, 'change:company', @renderMailTemplates
   render: ->
-    @setValsFromModel ['brief','availability','status','owner','canceledDetail','incompleteDetail','budget','pricing']
-    mailTemplates = new CustomerMailTemplates @model, @session
-    tmplCompanyData = _.extend { mailTemplates: mailTemplates, tagsString: @model.tagsString() }, @mget('company')
-    @$('#company-controls').html @tmplCompany(tmplCompanyData)
+    @setValsFromModel @modelProps
     @$('[data-toggle="popover"]').popover()
     # TODO: kinda hacky:
     @$('.status').attr('class', "label status label-#{@model.get('status')}")
     @$('.status').html @model.get('status')
     @toggleCanceledIncompleteFields()
     @
+  renderMailTemplates: ->
+    mailTemplates = new CustomerMailTemplates @model, @session
+    data = { mailTemplates: mailTemplates, tagsString: @model.tagsString() }
+    tmplCompanyData = _.extend data, @mget('company')
+    @$('#company-controls').html @tmplCompany(tmplCompanyData)
   toggleCanceledIncompleteFields: =>
     @$('#canceled-control-group').toggle @$('#status').val() == 'canceled'
     @$('#incomplete-control-group').toggle @$('#status').val() == 'incomplete'
