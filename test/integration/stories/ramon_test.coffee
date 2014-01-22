@@ -56,8 +56,10 @@ describe "Stories: Ramon Porter", ->
     rv = @app.requestView
 
     @app.requests.once 'sync', =>
-      router.navTo "##{@rId}"
+      router.navTo "#request/#{@rId}"
+      @app.selected.once 'sync', saveSuggestions
 
+    saveSuggestions = =>
       @app.selected.save { suggested: request.suggested }, success: (model) =>
         expect( @app.selected.get('suggested').length ).to.equal 8
         done()

@@ -93,7 +93,9 @@ describe "Stories: Bruce Christie", ->
 
     @app.requests.once 'sync', =>
       router.navTo "##{@rId}"
+      @app.selected.once 'sync', saveSuggestions
 
+    saveSuggestions = =>
       changes = { suggested: request.suggested, owner: request.owner }
       @app.selected.save changes, success: (model) =>
         expect( @app.selected.get('suggested').length ).to.equal 2
