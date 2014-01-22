@@ -40,13 +40,11 @@ class exports.RequestRowView extends BB.BadassView
   tagName: 'tr'
   className: 'requestRow'
   tmpl: require './templates/Row'
+  events:
+    'click .edit': 'edit'
   render: ->
-    @$el.html @tmpl @tmplData()
-    @
-  tmplData: ->
     d = @model.toJSON()
-    # $log 'RequestRowView.tmplData', d
-    _.extend d, {
+    tmplData = _.extend d, {
       contactName:        d.company.contacts[0].fullName
       contactPic:         d.company.contacts[0].pic
       contactEmail:       d.company.contacts[0].email
@@ -56,7 +54,19 @@ class exports.RequestRowView extends BB.BadassView
       callCount:          d.calls.length
       callCompleteCount:  _.filter(d.calls, (s) -> s.status is 'complete').length
     }
-
+    @$el.html @tmpl tmplData
+    @
+  edit: (e) ->
+    e.preventDefault()
+    link = $(e.target)
+    route = link.attr('href').substring(1)
+    router.app.selected.set('_id', link.data('id'), { silent: true })
+    # console.log 'view fetching'
+    router.app.selected.fetch
+      reset: true,
+      success: =>
+        router.navTo route
+    false
 
 class exports.RequestsView extends BB.BadassView
   el: '#requests'
@@ -178,22 +188,29 @@ class exports.RequestInfoView extends BB.ModelSaveView
   tmplCompany: require './templates/RequestInfoCompany'
   events:
     'click #receivedBtn': 'updateStatusToHolding'
+  modelProps: ['brief', 'availability', 'status', 'owner', 'canceledDetail',
+    'incompleteDetail', 'budget', 'pricing']
   initialize: ->
     @$el.html @tmpl @model.toJSON()
     @$('#status').on 'change', @toggleCanceledIncompleteFields
     @tagsInput = new SV.TagsInputView model: @model, collection: @tags
-    @listenTo @model, 'change', @render
+    for prop in @modelProps
+      @listenTo @model, "change:#{prop}", @render
+    @listenTo @model, 'change:tags', @renderMailTemplates
+    @listenTo @model, 'change:company', @renderMailTemplates
   render: ->
-    @setValsFromModel ['brief','availability','status','owner','canceledDetail','incompleteDetail','budget','pricing']
-    mailTemplates = new CustomerMailTemplates @model, @session
-    tmplCompanyData = _.extend { mailTemplates: mailTemplates, tagsString: @model.tagsString() }, @mget('company')
-    @$('#company-controls').html @tmplCompany(tmplCompanyData)
+    @setValsFromModel @modelProps
     @$('[data-toggle="popover"]').popover()
     # TODO: kinda hacky:
     @$('.status').attr('class', "label status label-#{@model.get('status')}")
     @$('.status').html @model.get('status')
     @toggleCanceledIncompleteFields()
     @
+  renderMailTemplates: ->
+    mailTemplates = new CustomerMailTemplates @model, @session
+    data = { mailTemplates: mailTemplates, tagsString: @model.tagsString() }
+    tmplCompanyData = _.extend data, @mget('company')
+    @$('#company-controls').html @tmplCompany(tmplCompanyData)
   toggleCanceledIncompleteFields: =>
     @$('#canceled-control-group').toggle @$('#status').val() == 'canceled'
     @$('#incomplete-control-group').toggle @$('#status').val() == 'incomplete'
@@ -369,7 +386,7 @@ class exports.RequestView extends BB.ModelSaveView
     d
   deleteRequest: ->
     @model.destroy wait: true, success: =>
-      @collection.fetch success: => router.navTo 'list'
+      @collection.fetch success: => router.navTo ''
     false
 
 Handlebars.registerPartial "RequestSet", require('./templates/RequestsSet')

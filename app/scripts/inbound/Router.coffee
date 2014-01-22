@@ -3,7 +3,6 @@ M = require './Models'
 C = require './Collections'
 V = require './Views'
 
-
 module.exports = class Router extends S.AirpairSessionRouter
 
   pushStateRoot: '/adm/inbound'
@@ -12,7 +11,6 @@ module.exports = class Router extends S.AirpairSessionRouter
 
   routes:
     ''             : 'list'
-    'list'         : 'list'
     'inactive'     : 'inactive'
     'request/:id'  : 'request'
     'farm/:id'     : 'farm'
@@ -47,7 +45,9 @@ module.exports = class Router extends S.AirpairSessionRouter
     _.extend d, v
 
   list: ->
-    $('#list').show()
+    $list = $('#list')
+    $list.siblings('.route').hide()
+    $list.show()
 
   inactive: ->
     @list()
@@ -64,12 +64,14 @@ module.exports = class Router extends S.AirpairSessionRouter
       @app.orders.requestId = id
       @app.orders.fetch()
 
-    # navigating from /farm to this page shouldn't refresh data
-    if @app.selected.id == id then return
+    # model is already populated if you click the link from the inbound page
 
-    route = $('#request')
-    route.hide()
-
-    # always fetch it b/c we want freshest data
-    @app.selected.set('_id', id, { silent: true })
-    @app.selected.fetch reset: true, success: => route.show()
+    # populate it if id changes or model is skeleton
+    if @app.selected.id != id || !@app.selected.get('events')
+      # hide it while it changes
+      route = $('#request')
+      route.hide()
+      # get fresh data
+      @app.selected.set('_id', id, { silent: true })
+      @app.selected.fetch reset: true, success: => route.show()
+      return
