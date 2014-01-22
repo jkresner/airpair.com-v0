@@ -11,6 +11,8 @@ MarketingTagsInputView = Shared.MarketingTagsInputView
 ##  To render all experts for admin
 #############################################################################
 
+# TODO on paypal payout, Uncaught TypeError: Cannot read property 'qtyRedeemed' of undefined
+
 class exports.FiltersView extends BB.BadassView
   el: '#filters'
   events:
