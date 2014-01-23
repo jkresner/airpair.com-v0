@@ -26,7 +26,7 @@ class exports.ScheduleFormView extends BB.ModelSaveView
     @listenTo @model, 'change', @render
 
   render: ->
-    if @model.id then return # we are on the editing page
+    if router.editpage then return # we are on the editing page
 
     orders = @collection.toJSON()
     selectedExpert = null
@@ -80,7 +80,7 @@ class exports.ScheduleFormView extends BB.ModelSaveView
     super model, response, options
 
 class exports.ScheduledView extends BB.ModelSaveView
-  logging: on
+  # logging: on
   async: off
   el: '#edit'
   tmpl: require './templates/Scheduled'
@@ -102,8 +102,7 @@ class exports.ScheduledView extends BB.ModelSaveView
     @listenTo @model, 'change', @render
 
   render: ->
-    # we are on the scheduling page
-    if !@model.get('_id') then return console.log 'nomodelid'
+    if !router.editpage then return # we are on the scheduling page
 
     call = @model.toJSON()
     expert = @request.suggestion(call.expertId).expert

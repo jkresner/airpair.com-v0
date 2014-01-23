@@ -8,7 +8,7 @@ module.exports = class Router extends S.AirpairSessionRouter
   pushStateRoot: '/adm/schedule'
   routes:
     ':requestId/call/:callId': 'edit'
-    ':requestId': 'schedule'
+    ':requestId': 'schedule' # this doesnt match.
 
   appConstructor: (pageData, callback) ->
     requestId = pageData.request._id
@@ -30,11 +30,12 @@ module.exports = class Router extends S.AirpairSessionRouter
 
     _.extend d, v
 
-  schedule: ->
-    $('#schedule').show()
-
   edit: (requestId, callId) ->
-    $('#edit').show()
+    @editpage = true
+    route = $('#edit')
+    route.siblings('.route').hide()
+    route.show()
+
     # populate requestCall with existing data from the request
     selectedCall = _.find @app.request.get('calls'), (c) -> c._id == callId
     @app.requestCall.set selectedCall
