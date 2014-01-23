@@ -61,6 +61,7 @@ label.control-label { color:darkgray; }
 #requestpage #requestForm .stackoverflow { height:30px; }
 #requestpage #requestForm .budgetExplanation { float:right;margin-right:14px;display:none;padding-top:2px;font-size:14px; }
 #requestpage #requestForm .budgetExplanation b { font-style:italic;color:#CC523E; }
+#requestpage .ap-team p { padding:0 3px; }
 
 #tagsInput header, .controls-tags header { font-size:11px;font-style:italic;border-bottom:dashed 1px #d3d3d3;padding:0 0 5px 5px;color:gray; }
 #tagsInput .autocomplete, .controls-tags .autocomplete { width:200px; }
