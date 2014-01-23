@@ -1,6 +1,6 @@
 parseYoutubeId = (str) ->
   str = str.trim()
-  variable = '([a-zA-Z0-9_]*)'
+  variable = '([a-zA-Z0-9_-]*)'
   # e.g. http://www.youtube.com/watch?v=aANmpDSTcXI&otherjunkparams
   id = str.match("v=#{variable}")?[1]
   if id then return id

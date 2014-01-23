@@ -196,7 +196,7 @@ nav a.zocial { padding:0; }
 }
 
 #schedulepage .expertPic { height: 60px; width: 60px;}
-#schedulepage .controls > .input-prepend { display: block; }
+#schedulepage .controls > a { vertical-align: text-bottom; }
 #schedulepage select[name="duration"] {
   width: 90px;
 }
