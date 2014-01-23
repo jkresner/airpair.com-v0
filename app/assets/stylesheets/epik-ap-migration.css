@@ -13,6 +13,7 @@ label.control-label { color:darkgray; }
 .controls input, .controls textarea { color:#1F1F1F; }
 .charCount { font-size:11px;color:gray;float:right;margin-top:-15px; }
 
+#requestpage .site-inner { min-height:900px }
 #requestpage nav.nav-header { display:none }
 #requestpage article.entry { padding-bottom:0; }
 #requestpage .entry-meta { text-transform:none; }
@@ -39,27 +40,27 @@ label.control-label { color:darkgray; }
 #requestpage .pic-group img { height:144px }
 #requestpage .pic-group .controls { margin-bottom:0; }
 #requestpage .personal-info-group { float:left;width:440px; }
-#requestpage #infoForm { padding:10px 25px 10px 25px }
+#requestpage #infoForm { padding:0px 25px 10px 25px }
 #requestpage #companyInfo { width:640px;clear:both;border-top:solid 1px #d3d3d3;padding-top:20px;margin-top:80px; }
 #requestpage #companyInfo input {  }
 #requestpage #companyInfo textarea { width:100%;height:140px; }
 #requestpage #requestForm { }
-#requestpage #requestForm textarea { width:90%;height:120px; }
+#requestpage #requestForm textarea { width:98%;height:140px; }
 #requestpage #requestForm .error-message { margin:-10px 0 0 5px;font-size:12px  }
-#requestpage .rb-group { margin:8px;display:block;height:40px; }
-#requestpage .rb-group label { float:left;margin-right:8px;color:gray; }
-#requestpage .rb-group input { float:left;margin-right:22px;width:30px; }
+#requestpage #requestForm .pricing-group { height:86px;margin:22px 0 0px 0 }
+#requestpage #requestForm .pricing-group em { font-style:normal; }
+#requestpage #requestForm .pricing-group em.selected { font-weight:bold;color:#CC523E; }
+#requestpage .rb-group { margin:18px 8px 0 0;display:block;height:20px; }
+#requestpage .rb-group label { float:left;margin-right:38px;color:gray; }
+#requestpage .rb-group input { float:left;margin-top:7px;margin-right:4px;width:20px; }
 #requestpage .rb-group .error-message { display:block; }
 #requestpage #requestForm .availabilty { float:right;width:34%; }
 #requestpage #requestForm .availabilty input { width:120px; }
 #requestpage #requestForm #tagNewForm { display:none; }
 #requestpage #requestForm #tagNewForm a { margin-left:5px; }
 #requestpage #requestForm .stackoverflow { height:30px; }
-#requestpage #request .rightCol p { font-size:16px;margin:20px; }
-#requestpage #requestForm .budgetExplanation { clear:left;color:#7F761C;display:none;padding-top:5px;font-size:12px; }
+#requestpage #requestForm .budgetExplanation { float:right;margin-right:14px;display:none;padding-top:2px;font-size:14px; }
 #requestpage #requestForm .budgetExplanation b { font-style:italic;color:#CC523E; }
-#requestpage #requestForm .pricingExplanation { clear:left;color:#7F761C;display:none;padding-top:5px;font-size:12px; }
-#requestpage #requestForm .pricingExplanation b { font-style:italic;color:#CC523E; }
 
 #tagsInput header, .controls-tags header { font-size:11px;font-style:italic;border-bottom:dashed 1px #d3d3d3;padding:0 0 5px 5px;color:gray; }
 #tagsInput .autocomplete, .controls-tags .autocomplete { width:200px; }

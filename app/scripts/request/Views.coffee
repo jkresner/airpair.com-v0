@@ -146,8 +146,9 @@ class exports.RequestFormView extends BB.ModelSaveView
     @$(".#{val}").show()
     @showPricingExplanation()
   showPricingExplanation: =>
-    @$('.pricingExplanation').hide()
+    @$('.pricing-group em').removeClass 'selected'
     val = @$("[name='pricing']:checked").val()
+    @$("em.#{val}").addClass 'selected'
     i = 1
     for r in @model.rates val
       #$log 'r',r
