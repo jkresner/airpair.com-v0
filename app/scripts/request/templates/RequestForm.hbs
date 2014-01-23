@@ -1,85 +1,137 @@
-<fieldset>
+ <div class="content-sidebar-wrap">
+  <main class="content">
+    <article class="post type-post format-standard entry">
+      <header class="entry-header">
+        <h1 class="entry-title" itemprop="headline">Find Your Expert</h1>
+        <p class="entry-meta"><time>Step 3 of 3: </time>
+          <b>What do you need help with?</b>
+        </p>
+      </header>
+      <div class="entry-content" style="padding:0px 20px">
 
-  <legend>Request details</b>
-      <span class="stepNum">Step 3 of 3</span>
-  </legend>
+        <div class="alert alert-error">
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+          <h4>Error</h4>
+        </div>
 
-  <div class="alert alert-error">
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
-    <h4>Error</h4>
-  </div>
+        <div class="control-group" style="height:100px">
+          <label class="control-label" for="tagsInput">What technologies do you want help with?</label>
+          <div id="tagsInput" class="controls controls-tags">
+              <div id="tagNewForm"></div>
+          </div>
+        </div>
 
-    <div class="control-group" style="height:100px">
-      <label class="control-label" for="tagsInput">What technologies do you want help with?</label>
-      <div id="tagsInput" class="controls controls-tags">
-          <div id="tagNewForm"></div>
+        <div class="control-group" style="clear:both">
+          <label class="control-label" for="reqBrief">What challenges do you want to solve? <span id="breifCount" class="muted" style="float:right;margin:5px 16px 0 0px">0 chars</span></label>
+          <div class="controls controls-brief">
+            <textarea id="reqBrief" name="brief" placeholder="We pass your brief onto experts. The more detail you provide, the better help you get.">{{ brief }}</textarea>
+          </div>
+        </div>
+
+        <div class="control-group" style="display:none">
+          <label class="control-label" for="reqHrs"> Around how many hours of help do you need?</label>
+          <select name="hours" class="span2">
+            <option value="1">1</option>
+            <option value="2" selected="selected">2</option>
+            <option value="3-5">3-5</option>
+            <option value="5-10">5-10</option>
+            <option value="10-20">10-20</option>
+          </select>
+        </div>
+
+       <div class="control-group pricing-group">
+          <label class="control-label">Want to Open source your session recording? </label>
+          <div class="pricing rb-group controls">
+            <input type="radio" id="pricingOpensource" name="pricing" value="opensource" />
+            <label for="pricingOpensource" class="pricingOpensource">Open source <em class="opensource">$<span></span>/hr discount</em> </label>
+
+            <input type="radio" id="pricingPrivate" name="pricing" value="private" checked="checked" />
+            <label for="pricingPrivate" class="checked">Keep Private</label>
+
+            <input type="radio" id="pricingNDA" name="pricing" value="nda" />
+            <label for="pricingNDA" class="pricingNDA">Organize NDA <em class="nda">+$<span></span>/hr</label></em>
+          </div>
+
+        </div>
+
+
+        <div class="control-group" style="height:86px;margin:12px 0">
+          <label class="control-label" for="reqBudget">What's your hourly budget?</label>
+          <div class="budget rb-group controls">
+
+            <input type="radio" id="budget1" name="budget" value="80" />
+            <label for="budget1">$80</label>
+
+            <input type="radio" id="budget2" name="budget" value="110" checked="checked" />
+            <label for="budget2" class="checked">$110</label>
+
+            <input type="radio" id="budget3" name="budget" value="150" />
+            <label for="budget3">$150</label>
+
+            <input type="radio" id="budget4" name="budget" value="180" />
+            <label for="budget4">$200</label>
+
+            <input type="radio" id="budget5" name="budget" value="270" />
+            <label for="budget5">$270</label>
+
+            <p class="budgetExplanation budget1">Access <b>20%</b> of our experts</p>
+            <p class="budgetExplanation budget2">Access <b>50%</b> of our experts</p>
+            <p class="budgetExplanation budget3">Access <b>75%</b> of our experts</p>
+            <p class="budgetExplanation budget4">Access <b>95%</b> of our experts</p>
+            <p class="budgetExplanation budget5">Access <b>All</b> of our experts</p>
+          </div>
+        </div>
+
+
+        <div class="control-group">
+          <label class="control-label" for="availabilityInput">What is your location / timezone, urgency & availability?</label>
+          <div class="controls controls-availability">
+            <textarea id="availability" name="availability" placeholder="How soon do you need help? What city & timezone are you in?" style="height:70px">{{ availability }}</textarea>
+          </div>
+        </div>
+        <br />
       </div>
+
+      <footer class="entry-footer">
+        <div class="form-actions">
+          <a href="save" class="save button large">Submit</a>
+          <a href="#info" class="back button button-gray large">Back</a>
+        </div>
+      </footer>
+    </article>
+  </main>
+</div>
+
+
+<aside class="sidebar sidebar-primary widget-area">
+  <section class="widget featured-content featuredpost">
+
+ <div class="widget-wrap">
+      <h4 class="widget-title widgettitle">Open source, Private or NDA?</h4>
+
+      <article class="entry">
+        <span class="alignleft">
+          <img src="https://s3.amazonaws.com/uploads.hipchat.com/50798/515890/4YwKBywGSOg6Btf/david-trejo-red-shirt-2011-small.jpeg" class="avatar avatar-65 photo">
+        </span>
+        <header class="entry-header">
+          <h2 class="entry-title">Why Open source your AirPair Session?</h2>
+          <p class="entry-meta">
+            <span class="entry-author">David Trejo</span>, AirPair Customer Account Manger
+          </p>
+        </header>
+
+        <div class="entry-content">
+          <p>If your code is confidential, leave your session recording as <b>private</b>. We still
+          record the session, but only you get access to it, so that you have it as a reference.</p>
+
+          <p>If there is nothing sensitive in your code, we recommend that you choose <b>Open source</b>. On top of getting a $20 per hour discount, we share the knowledge you learn with the community. The recordings are also used to promote our experts.</p>
+
+          <p>If necessary, for an extra fee we can also facilitate your experts to electronically sign an <b>NDA</b> (Non Disclosure Agreement).</p>
+        </div>
+
+      </article>
+
     </div>
-
-    <div class="control-group">
-      <label class="control-label" for="reqBrief">What challenges do you want to solve? <span id="breifCount" class="muted">0 chars</span></label>
-      <div class="controls controls-brief">
-        <textarea id="reqBrief" name="brief" placeholder="Give as MUCH detail  as possible on your problems + what you'd like to learn.">{{ brief }}</textarea>
-      </div>
-    </div>
-
-    <div class="control-group" style="display:none">
-      <label class="control-label" for="reqHrs"> Around how many hours of help do you need?</label>
-      <select name="hours" class="span2">
-        <option value="1">1</option>
-        <option value="2" selected="selected">2</option>
-        <option value="3-5">3-5</option>
-        <option value="5-10">5-10</option>
-        <option value="10-20">10-20</option>
-      </select>
-    </div>
-
-   <div class="control-group" style="height:86px;margin:22px 0">
-      <label class="control-label">What are your privacy requirements with the session recording? </label>
-      <div class="pricing rb-group controls">
-        <label for="pricingOpensource" class="pricingOpensource">Open source ( -$<span></span> p.h. )</label> <input type="radio" id="pricingOpensource" name="pricing" value="opensource" />
-        <label for="pricingPrivate" class="checked">Private</label>  <input type="radio" id="pricingPrivate" name="pricing" value="private" checked="checked" />
-        <label for="pricingNDA" class="pricingNDA">NDA ( +$<span></span> p.h. )</label>  <input type="radio" id="pricingNDA" name="pricing" value="nda" />
-
-        <p class="pricingExplanation opensource">Get <b>$20 per hour discount</b> for sharing your session publicly for educational purposes.</p>
-        <p class="pricingExplanation private">We record the session for your reference and only you have access to it.</p>
-        <p class="pricingExplanation nda">Experts sign your non-disclosure agreement. You choose if you want your session recorded.</p>
-      </div>
-
-    </div>
-
-
-    <div class="control-group" style="height:86px;margin:22px 0">
-      <label class="control-label" for="reqBudget">What's your hourly budget?</label>
-      <div class="budget rb-group controls">
-        <label for="budget1">$80</label>  <input type="radio" id="budget1" name="budget" value="80" />
-        <label for="budget2" class="checked">$110</label>  <input type="radio" id="budget2" name="budget" value="110" checked="checked" />
-        <label for="budget3">$150</label>  <input type="radio" id="budget3" name="budget" value="150" />
-        <label for="budget4">$200</label>  <input type="radio" id="budget4" name="budget" value="180" />
-        <label for="budget5">$270</label>  <input type="radio" id="budget5" name="budget" value="270" />
-
-        <p class="budgetExplanation budget1"><b>20%</b> of our experts do airpairs in this budget</p>
-        <p class="budgetExplanation budget2"><b>50%</b> of our experts do airpairs in this budget</p>
-        <p class="budgetExplanation budget3"><b>75%</b> of our experts do airpairs in this budget</p>
-        <p class="budgetExplanation budget4"><b>95%</b> of our experts do airpairs in this budget</p>
-        <p class="budgetExplanation budget5"><b>All</b> our experts do airpairs in this budget</p>
-      </div>
-    </div>
-
-
-  <div class="control-group">
-    <label class="control-label" for="availabilityInput">What is your location / timezone, urgency & availability?</label>
-    <div class="controls controls-availability">
-      <textarea id="availability" name="availability" placeholder="How soon do you need this solved, what location + timezone are you in & when are you available?" style="height:60px">{{ availability }}</textarea>
-    </div>
-  </div>
-
-  <div style="clear:both"></div>
-
-  <div class="form-actions">
-    <a href="save" class="save button">Submit</a>
-    <a href="#info" class="back button button-gray">Back</a>
-  </div>
-
-</fieldset>
+  </section>
+</aside>
 

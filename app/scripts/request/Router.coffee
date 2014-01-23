@@ -52,6 +52,10 @@ module.exports = class Router extends S.AirpairSessionRouter
     @app.request.set
       company: @app.company.attributes
 
+  thanks: ->
+    if $('#thanks').html() is ''
+      $('#thanks').html require('./templates/ThankYou')()
+
   edit: (id) ->
     if !@app.request.id?
       @app.request.set '_id': id
