@@ -63,8 +63,7 @@ module.exports = (app) ->
     viewData.schedule req.params.requestId, (e, d) =>
       if e then return next e
       r.render 'adm/schedule.html', d
-  app.get '/adm/schedule/edit/:requestId/call/:callId', loggedIn, schedule
-  app.get '/adm/schedule/:requestId', loggedIn, schedule
+  app.get '/adm/schedule/:requestId*', loggedIn, schedule
 
   # api
   require('./lib/api/users')(app)
