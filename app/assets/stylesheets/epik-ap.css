@@ -1,0 +1,150 @@
+body {
+  font-size:1rem
+}
+
+.site-header .wrap {
+  padding:0;
+}
+
+.head-wrap {
+  background:white!important;
+}
+
+.site-title {
+  margin:0;
+}
+
+.site-title a {
+  background:url('/img/airpair.png') no-repeat;
+  width:225px;
+  height:60px;
+  display:block;
+  margin-top:7px;
+}
+
+
+#menu-technologies {
+  width:1100px!;
+  margin:auto;
+}
+
+#menu-services {
+  margin:10px 10px;
+}
+
+
+#menu-services .menu-item > a {
+  color:black;
+  font-size:17px;
+  font-weight:500;
+  letter-spacing:0.07em;
+}
+
+
+#menu-services .menu-item > a:hover {
+  color:#CE5323;
+}
+
+article h2 {
+  font-size:1.4rem!important;
+}
+
+
+.entry-title {
+  font-size:1.6rem;
+  margin-bottom:5px!important;
+}
+
+p.entry-meta {
+  padding:0 20px 10px 20px!important;
+  font-size: 0.7rem!important;
+}
+
+.bio {
+  font-size:1.02rem
+}
+
+.bio h2 {
+  font-size:1.3rem!important;
+}
+
+.bio p {
+  margin-bottom:1rem;
+}
+
+.bio em {
+  font-weight:500;
+  font-style:none;
+}
+
+.bio .links { float:right;display:inline }
+.bio .icon { width:32px;height:32px;display:inline-block;margin-left:6px;float:right; }
+
+.github { background:url('/img/gh.png') }
+.twitter { background:url('/img/tw.png') }
+.bitbucker { background:url('/img/bb.png') }
+.stackoverflow { background:url('/img/so.png') }
+.linkedin { background:url('/img/in.png') }
+
+.bio-action {
+  color:gray;
+  font-style:italic;
+  font-size:0.9em;
+  margin-top:0;
+}
+
+.session {
+  display:block;
+  clear:both;
+  background:#F2F2F2;
+  padding:20px 30px 1px 30px;
+  margin-bottom:0px;
+  font-size:0.9em;
+}
+
+.session h2 {
+  font-size: 0.9rem!important;
+  font-weight:500;
+  font-style: italic;
+}
+
+.session p {
+  margin-bottom: 1rem!important;
+}
+
+.session-action {
+  width:100%;
+  text-align:center;
+}
+
+.session-action a {
+  font-color:white!important;
+  margin-bottom:15px;
+}
+
+
+.signature {
+  background:#F2F2F2;
+  height:90px;
+  margin:10px 0;
+  padding:10px;
+}
+.signature img { float:left;width:70px;margin-right:20px }
+.signature div { float:left;line-height:1.38em }
+
+
+a.signature-action {
+  text-align:center;
+  float:right;
+  background:#CE5323!important;
+  font-color:white!important;
+  margin:5px 0 15px 0;
+  width:60%;
+}
+
+
+
+.quoter { margin:10px auto;width:200px;text-align:center }
+.quoter img { width:100px;margin:auto }
+.quoter label { margin:10px auto;width:160px;font-style:italic;text-align:center;font-size:14px }
+.quoter b { display:block }
