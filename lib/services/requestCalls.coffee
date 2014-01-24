@@ -120,6 +120,7 @@ module.exports = class RequestCallsService extends DomainService
 
         oldCall.recordings = call.recordings
         oldCall.notes = call.notes
+        oldCall.datetime = call.datetime
 
         ups = { calls: request.calls }
         console.log 'update.ups = ', require('util').inspect(ups, depth: null)

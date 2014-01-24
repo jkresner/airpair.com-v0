@@ -45,26 +45,22 @@
       <label class="control-label" for="duration">Duration</label>
       <div class="controls">
         <select name="duration">
-          {{#each selectOptions }}
-            <option value="{{num}}" {{#selected}}selected{{/selected}}
-              disabled="true">
-                {{num}} {{inflect num "hour" "hours"}}
-            </option>
-          {{else}}
-            <option disabled>0 hours available for this expert</option>
-          {{/each}}
+          <option disabled value="{{../duration}}">
+            {{../duration}} {{inflect ../duration "hour" "hours"}}
+          </option>
         </select>
       </div>
     </div>
     <div class="control-group">
-      <label class="control-label" for="date">Timezone / Date / Time </label>
+      <label class="control-label" for="date">Timezone / Date / Time
+        (previously {{{callDateTime ../datetime}}})</label>
       <div class="controls">
-        <select name="timezone" class="input-mini" disabled="true">
+        <select name="timezone" class="input-mini">
           <option value="PST" selected>PST</option>
         </select>
         <input name="date" type="text" class="datepicker input-medium"
-          value="{{../date}}" placeholder="pick a date" disabled="true">
-        <select name="time" disabled="true">
+          value="{{../date}}" placeholder="pick a date">
+        <select name="time">
           <option value="00:00" {{#is ../time '00:00'}}selected{{/is}}>00:00</option>
           <option value="00:30" {{#is ../time '00:30'}}selected{{/is}}>00:30</option>
           <option value="01:00" {{#is ../time '01:00'}}selected{{/is}}>01:00</option>

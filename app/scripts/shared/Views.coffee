@@ -16,6 +16,10 @@ Handlebars.registerHelper "localDateTimeSeconds", (utcDateString) ->
   day = moment utcDateString
   day.local().format("MMM DD HH:mm:ss")
 
+Handlebars.registerHelper "callDateTime", (utcDateString) ->
+  day = moment utcDateString
+  day.format("DD MMM <b>HH:mm</b>")
+
 Handlebars.registerHelper 'markdown', (text) ->
   result = marked(text);
   new Handlebars.SafeString result
