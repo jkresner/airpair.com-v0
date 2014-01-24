@@ -86,7 +86,7 @@ class exports.ScheduledView extends BB.ModelSaveView
   tmpl: require './templates/Scheduled'
   viewData: ['duration', 'date', 'time', 'type', 'notes']
   events:
-    'click .save': 'save'
+    'click .save': '_save'
     'change .youtube': (e) ->
       inputs = $.makeArray(@$('.youtube')) # TODO consider adding this to BB
       recordings = inputs
@@ -137,5 +137,14 @@ class exports.ScheduledView extends BB.ModelSaveView
     @$el.html @tmpl d
     @$('.datepicker').pickadate()
     @
+  # prevents double-saves, provides feedback that request is in progress.
+  _save: (e) ->
+    $(e.target).attr('disabled', true)
+    @save e
+  renderSuccess: (model, response, options) =>
+    window.location = "/adm/inbound/request/#{@request.get('_id')}"
+  renderError: (model, response, options) ->
+    @$('.save').attr('disabled', false)
+    super model, response, options
 
 module.exports = exports

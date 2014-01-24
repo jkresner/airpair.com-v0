@@ -3,6 +3,7 @@ google = require('./wrappers/google')()
 inspect = require('util').inspect
 
 class VideosService
+  # TODO might want to rename this function
   list: (recordings, cb) ->
     # TODO if the same youtube ID is in the list twice, only one of the
     # recordings objects will get the youtube resource data.
@@ -23,6 +24,8 @@ class VideosService
         recordingMap[item.id].resource = item
 
       cb null, recordings
-  # edit:
+
+  # TODO write for use by the upcoming expert videos API
+  # getByExpertId:
 
 module.exports = new VideosService()
