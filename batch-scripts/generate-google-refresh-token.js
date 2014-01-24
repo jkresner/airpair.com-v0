@@ -24,21 +24,21 @@ CODE. If you do not do this, the one the app uses will expire, and then the app
 will not be able to make events via the API!
 */
 
-var readline = require('readline');
+var readline = require('readline')
 
-var googleapis = require('googleapis');
-var OAuth2Client = googleapis.OAuth2Client;
+var googleapis = require('googleapis')
+var OAuth2Client = googleapis.OAuth2Client
 
 // Client ID and client secret are available at
 // https://code.google.com/apis/console
-var CLIENT_ID = "980673476043-qo125e4cghau62thkrb4igkm50a1rp0l.apps.googleusercontent.com";
-var CLIENT_SECRET = "T3OP1W-LjcdiS_cg8Ib8bBsc";
-var REDIRECT_URL = "https://www.airpair.com/oauth2callback";
+var CLIENT_ID = "980673476043-qo125e4cghau62thkrb4igkm50a1rp0l.apps.googleusercontent.com"
+var CLIENT_SECRET = "T3OP1W-LjcdiS_cg8Ib8bBsc"
+var REDIRECT_URL = "https://www.airpair.com/oauth2callback"
 
 var rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout
-});
+})
 
 // load gcal API resources and methods
 googleapis
@@ -52,29 +52,41 @@ googleapis
   getAccessToken(oauth2Client, function() {
     cal.calendarList.list().withAuthClient(oauth2Client)
     .execute(function(err, data) {
-      if (err) return console.log(err)
-      console.log('list', data)
+      if (err) return console.log('cal', err.stack || err)
+      console.log('callist', data)
     })
-  });
-});
+
+    var params = {
+      part: 'id,snippet,contentDetails,fileDetails,liveStreamingDetails,player,processingDetails,recordingDetails,statistics,status,suggestions,topicDetails',
+      id: 'z1Z6xEYMYNY',
+      maxResults: 50
+    }
+    client.youtube.videos.list(params)
+    .execute(function(err, data) {
+      if (err) return console.log('yt', err.stack || err)
+      console.log('ytlist', data)
+    })
+  })
+})
 
 function getAccessToken(oauth2Client, callback) {
   // generate consent page url
   var url = oauth2Client.generateAuthUrl({
     access_type: 'offline', // will return a refresh token
-    scope: 'https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/youtube',
+    // ',//
+    scope: 'https://www.googleapis.com/auth/calendar', // https://www.googleapis.com/auth/youtube
     approval_prompt: 'force'
-  });
+  })
 
-  console.log('Visit the url: ', url);
+  console.log('Visit the url: ', url)
   rl.question('Enter the code here:', function(code) {
     // request access token
     console.log('code', code)
     oauth2Client.getToken(code, function(err, tokens) {
       // set tokens to the client
       console.log('tokens', tokens)
-      oauth2Client.setCredentials(tokens);
-      callback();
-    });
-  });
+      oauth2Client.setCredentials(tokens)
+      callback()
+    })
+  })
 }
