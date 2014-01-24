@@ -51,7 +51,8 @@ Call = new Schema
   gcal:             { required: true, type: Mixed }
   # expert:           { required: true, type: {} }
   # hours:            { required: true, type: Number }
-  recordings:       { required: true, type: [{}] } # e.g. { link: "https://youtu.be/YT_ID_HERE" }
+  # e.g. { youtubeId: 'YT_ID_HERE', link: "https://youtu.be/YT_ID_HERE" }
+  recordings:       { required: true, type: [{}] }
   notes:            { required: true, type: String }
   # expertEndorsed:   String   # If the expert wants the session featured (or hidden)
   # expertReview:     {}   # Experts feedback on how the session went

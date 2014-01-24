@@ -93,7 +93,7 @@ class exports.ScheduledView extends BB.ModelSaveView
         .map((el) -> $(el).val())
         .map(parseYoutubeId)
         .filter((x) -> x)
-        .map((slug) -> { link: "https://youtu.be/#{slug}" })
+        .map((slug) -> { youtubeId: slug, link: "https://youtu.be/#{slug}" })
       @model.set 'recordings', recordings
 
   initialize: ->
@@ -127,10 +127,9 @@ class exports.ScheduledView extends BB.ModelSaveView
 
     # TODO call.status
 
-    call.recordingList = _.clone(call.recordings).map (r) ->
-      id: parseYoutubeId(r.link)
+    call.recordingList = _.clone(call.recordings)
     # for now, only allow one recording to be saved
-    # call.recordingList.push { link: '' }
+    # call.recordingList.push { link: '', youtubeId: '' }
 
     d = _.extend call, { expert, requestId: @request.id }
     # console.log d
