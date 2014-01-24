@@ -225,7 +225,3 @@ nav ul li { float:right;display:block;margin-left:5px }
 #admcompanyspage #stripeRegister p { display:none; }
 #admcompanyspage .cardSharers { float:left;width:30% }
 #admcompanyspage .cardDetail { float:right;width:65% }
-
-#admmarketingtagspage .twocol { width: 100%; overflow: hidden; }
-#admmarketingtagspage .twocol > :first-child { float: left; width: 72%; }
-#admmarketingtagspage .twocol > :last-child  { float: left; }

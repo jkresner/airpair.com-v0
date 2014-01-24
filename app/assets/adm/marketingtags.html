@@ -30,9 +30,9 @@
 
   <div class="route" style="display: block;">
     <div id="marketingTagForm" class="twocol">
-      <div id="marketingTagList"></div>
+      <div id="marketingTagList" style="float:left;width:840px"></div>
 
-      <fieldset>
+      <fieldset style="float:right;width:340px">
         <h3>Create a new marketing tag</h3>
         <div class="control-group">
           <label class="control-label" for="name"><strong>name</strong>
@@ -58,15 +58,16 @@
             <select name="group" class="input-medium">
               <option value="" selected></option>
               <optgroup label="Channels">
-                <option value="ad">ad</option>
-                <option value="affiliate">affiliate</option>
-                <option value="direct">direct</option>
-                <option value="press">newsletter</option>
-                <option value="press">press</option>
-                <option value="seo">seo</option>
-                <option value="social">social</option>
-                <option value="wordofmouth">wordofmouth</option>
-                <option value="untracked">untracked</option>
+                <option>ad</option>
+                <option>affiliate</option>
+                <option>direct</option>
+                <option>newsletter</option>
+                <option>incubator</option>
+                <option>press</option>
+                <option>seo</option>
+                <option>social</option>
+                <option>wordofmouth</option>
+                <option>untracked</option>
               </optgroup>
               <optgroup label="Campaign">
                 <option>newsletter-airpair</option>
@@ -94,12 +95,13 @@
 
 
     <hr style="clear:both" />
-    <h3>Usage definitions<h3>
-    <p><label>advice</label> is getting opinions on architecture / frameworks</p>
-    <p><label>code-review</label> is going through existing code for optimizations</p>
-    <p><label>mentoring</label> is help learning (same as training)</p>
-    <p><label>pair-programming</label> is working on a feature in tandem with someone</p>
-    <p><label>problem-solving</label> is getting un-stuck and past a barrier</p>
+    <h3>Usage definitions</h3>
+    <p><span class="label label-tag marketingtag usage">advice</span> is getting opinions on architecture / frameworks</p>
+    <p><span class="label label-tag marketingtag usage">code-review</span> is going through existing code for optimizations</p>
+    <p><span class="label label-tag marketingtag usage">mentoring</span> is help learning (same as training)</p>
+    <p><span class="label label-tag marketingtag usage">pair-programming</span> is working on a feature in tandem with someone</p>
+    <p><span class="label label-tag marketingtag usage">problem-solving</span> is getting un-stuck and past a barrier</p>
+    <p><span class="label label-tag marketingtag usage">setup</span> is environment setup, e.g. rails or continuous build</p>
 
 
   </div> <!-- end .route -->
