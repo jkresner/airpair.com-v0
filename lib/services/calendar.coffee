@@ -1,5 +1,5 @@
 {owner2name} = require '../identity/roles'
-google = require './wrappers/google'
+google = require('./wrappers/google')()
 ONE_HOUR = 3600000 # milliseconds
 
 owner2colorIndex =
@@ -57,9 +57,12 @@ class CalendarService
     # dont want test data showing up in ppls calendars
     if !cfg || !cfg.isProd
       body.attendees = body.attendees.map (o) ->
-        o.email = o.email.replace('@', 'AT') + 'example.com'
+        o.email = o.email.replace('@', 'AT') + '@example.com'
         o
-      console.log 'google.createEvent', body
+
+    # only development and prod will make events, in their respective calendars
+    if cfg.env is 'test'
+      return cb null, { htmlLink: 'http://example.com/google-calendar-link' }
 
     google.createEvent body, cb
 
