@@ -28,10 +28,11 @@ c.google =
   tokens:
     # This is for development: it contains auth to both youtube and gcal for the
     # experts@airpair.com account
-    refresh_token: '1/ZZwM4XiMdQKfWn6F5HsvpoKvc45dsGyXELYjMy5nzB4'
+    refresh_token: '1/B4_68GjYrOeuVt0reeVSPs11V85P_mfRlNPjmMfGiuc' # only gcal
   calendar:
     params:
       calendarId: 'experts@airpair.com' # experts@ primary calendar ID
+      # calendarId: 'primary'
       sendNotifications: false
 
 
@@ -47,18 +48,19 @@ if c.env is 'prod'
     publishedKey: 'pk_live_FEGruKDm6OZyagTHqhXWvV8G'
     secretKey:    'sk_live_qSxo06x8iwaYuIIw1Bkx7hsz'
   c.oauthHost = 'https://www.airpair.com' # note https
-  c.google.calendar =
+  c.google.calendar.params =
     sendNotifications: true
     # team@ Air Pairings Calendar
     calendarId: 'airpair.co_19t01n0gd6g7548k38pd3m5bm0@group.calendar.google.com'
 
-  # TODO generate one for team@airpair.com once the PR is totally done
-  # c.google.tokens.refresh_token = 'TODO'
+  # TODO generate a new one for team@airpair.com once the PR is totally done
+  # refresh token for team@ with only gcal scope
+  c.google.tokens.refresh_token = '1/LYtNYz8ULvadUtjdWLEVy3vJeTB57blL75fGz87j5Uw'
 
 # option to overwrite in staging etc.
 c.oauthHost = process.env.oauthHost if process.env.oauthHost?
 
 global.cfg = c
 
-console.log 'config: ', cfg
+console.log 'config: ', require('util').inspect(cfg, depth: null)
 console.log "--------------------------------------------------------"
