@@ -28,7 +28,7 @@ c.google =
   tokens:
     # This is for development: it contains auth to both youtube and gcal for the
     # experts@airpair.com account
-    refresh_token: '1/B4_68GjYrOeuVt0reeVSPs11V85P_mfRlNPjmMfGiuc' # only gcal
+    refresh_token: '1/NDqeY5kn4DdpWtuHQU-hMPzvlmVMiB8tWgb8LOc8uNY'
   calendar:
     params:
       calendarId: 'experts@airpair.com' # experts@ primary calendar ID

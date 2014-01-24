@@ -73,8 +73,7 @@ function getAccessToken(oauth2Client, callback) {
   // generate consent page url
   var url = oauth2Client.generateAuthUrl({
     access_type: 'offline', // will return a refresh token
-    // ',//
-    scope: 'https://www.googleapis.com/auth/calendar', // https://www.googleapis.com/auth/youtube
+    scope: 'https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/youtube',
     approval_prompt: 'force'
   })
 
