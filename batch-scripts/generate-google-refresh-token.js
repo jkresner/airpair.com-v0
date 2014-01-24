@@ -26,7 +26,7 @@ will not be able to make events via the API!
 
 var readline = require('readline');
 
-var googleapis = require('../lib/googleapis.js');
+var googleapis = require('googleapis');
 var OAuth2Client = googleapis.OAuth2Client;
 
 // Client ID and client secret are available at
@@ -43,6 +43,7 @@ var rl = readline.createInterface({
 // load gcal API resources and methods
 googleapis
 .discover('calendar', 'v3')
+.discover('youtube', 'v3')
 .execute(function(err, client) {
   cal = client.calendar
   var oauth2Client = new OAuth2Client(CLIENT_ID, CLIENT_SECRET, REDIRECT_URL)
@@ -61,7 +62,7 @@ function getAccessToken(oauth2Client, callback) {
   // generate consent page url
   var url = oauth2Client.generateAuthUrl({
     access_type: 'offline', // will return a refresh token
-    scope: 'https://www.googleapis.com/auth/calendar',
+    scope: 'https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/youtube',
     approval_prompt: 'force'
   });
 

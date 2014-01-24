@@ -20,6 +20,20 @@ c.payment =
     secretKey:    'sk_test_8WOe71OlRWPyB3rDRcnthSCc'
 
 c.oauthHost = 'http://localhost:3333'
+c.google =
+  oauth:
+    CLIENT_ID: "980673476043-qo125e4cghau62thkrb4igkm50a1rp0l.apps.googleusercontent.com"
+    CLIENT_SECRET: "T3OP1W-LjcdiS_cg8Ib8bBsc"
+    REDIRECT_URL: "https://www.airpair.com/oauth2callback"
+  tokens:
+    # This is for development: it contains auth to both youtube and gcal for the
+    # experts@airpair.com account
+    refresh_token: '1/ZZwM4XiMdQKfWn6F5HsvpoKvc45dsGyXELYjMy5nzB4'
+  calendar:
+    params:
+      calendarId: 'experts@airpair.com' # experts@ primary calendar ID
+      sendNotifications: false
+
 
 if c.env is 'test'
   process.env.Payment_Env = 'test'
@@ -32,10 +46,17 @@ if c.env is 'prod'
   c.payment.stripe =
     publishedKey: 'pk_live_FEGruKDm6OZyagTHqhXWvV8G'
     secretKey:    'sk_live_qSxo06x8iwaYuIIw1Bkx7hsz'
-  c.oauthHost = 'https://www.airpair.com' #note https
+  c.oauthHost = 'https://www.airpair.com' # note https
+  c.google.calendar =
+    sendNotifications: true
+    # team@ Air Pairings Calendar
+    calendarId: 'airpair.co_19t01n0gd6g7548k38pd3m5bm0@group.calendar.google.com'
+
+  # TODO generate one for team@airpair.com once the PR is totally done
+  # c.google.tokens.refresh_token = 'TODO'
 
 # option to overwrite in staging etc.
-c.oauthHost = process.env.oauthHost if process.env.oauthHost? 
+c.oauthHost = process.env.oauthHost if process.env.oauthHost?
 
 global.cfg = c
 

@@ -1,5 +1,5 @@
 {owner2name} = require '../identity/roles'
-gcalCreate = require '../gcal/create'
+google = require './wrappers/google'
 ONE_HOUR = 3600000 # milliseconds
 
 owner2colorIndex =
@@ -54,7 +54,15 @@ class CalendarService
         on your system. Please let #{owner2name[owner]} know if you'd like to do
         a dry run."""
 
-    gcalCreate body, cb
+    # dont want test data showing up in ppls calendars
+    if !cfg || !cfg.isProd
+      body.attendees = body.attendees.map (o) ->
+        o.email = o.email.replace('@', 'AT') + 'example.com'
+        o
+      console.log 'google.createEvent', body
+
+    google.createEvent body, cb
+
   # edit:
 
 module.exports = new CalendarService()
