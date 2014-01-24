@@ -46,7 +46,7 @@ label.control-label { color:darkgray; }
 #requestpage #companyInfo textarea { width:100%;height:140px; }
 #requestpage #requestForm { }
 #requestpage #requestForm textarea { width:98%;height:140px; }
-#requestpage #requestForm .error-message { margin:-10px 0 0 5px;font-size:12px  }
+#requestpage #requestForm .error-message { clear:both;font-size:12px  }
 #requestpage #requestForm .pricing-group { height:86px;margin:22px 0 0px 0 }
 #requestpage #requestForm .pricing-group em { font-style:normal; }
 #requestpage #requestForm .pricing-group em.selected { font-weight:bold;color:#CC523E; }

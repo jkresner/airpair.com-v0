@@ -151,8 +151,8 @@ class exports.RequestFormView extends BB.ModelSaveView
     @$("em.#{val}").addClass 'selected'
     i = 1
     for r in @model.rates val
-      #$log 'r',r
-      @$("#budget#{i}").prev().html "$#{r}"
+      # $log 'r',r
+      @$("#budget#{i}").next().html "$#{r}"
       @$("#budget#{i}").val r
       i++
     # add = 0
