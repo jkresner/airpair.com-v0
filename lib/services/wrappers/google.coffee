@@ -1,9 +1,9 @@
 ###
-manual
-- choose scopes
-- choose get code
+we manually
+- choose scopes, run generate-google-refresh-token.js
+- get code
 - enter code
-- generate-google-refresh-token.js gives you your REFRESH_TOKEN, put it project
+- generate-google-refresh-token.js gives you your REFRESH_TOKEN, put in project
 
 our project then does...
 - discover APIs
@@ -19,14 +19,17 @@ googleapis = require 'googleapis'
 OAuth2Client = googleapis.OAuth2Client
 AccessToken = require '../../models/accessToken'
 
+if !cfg? then require '../../util/appConfig'
+
 module.exports = createClient = (cb) ->
   apis =
     calendar: 'v3'
     youtube: 'v3'
-  # console.log 'cfg.google',cfg.google
   new Google(apis, cfg.google.oauth, cfg.google.tokens, cb)
 
 class Google
+  # for function calls that arrive before the discover call has returned
+  queue: []
   constructor: (apis, oauth, tokens, cb) ->
     # set up auth details
     googleapis.withAuthClient(
@@ -40,14 +43,19 @@ class Google
 
     googleapis.execute (err, client) =>
       @client = client
-      cb(err, @, client)
-
+      @clearQueue()
+      cb && cb(err, @, client)
+  clearQueue: ->
+    console.log 'clearQueue', @queue
+    @queue.forEach (item) ->
+      @[item[0]].apply(@, item[1])
+    @queue = []
   # getter/setter style function
-  _token: (access_token) ->
+  _token: (access_token, _) ->
     if !access_token
-      console.log 'get', googleapis.authClient.credentials.access_token
+      console.log 'get', googleapis.authClient.credentials.access_token, _
       return googleapis.authClient.credentials.access_token
-    console.log 'set', access_token
+    console.log 'set', access_token, _
     googleapis.authClient.credentials.access_token = access_token
     access_token
 
@@ -59,22 +67,26 @@ class Google
       if err then return cb err
       doc = doc || {}
       @lastSeen = doc.access_token
-      @_token doc.access_token # when no token in DB, this does nothing
+      @_token doc.access_token, 'SET' # when no token in DB, this does nothing
       cb()
 
   # call this after every client call
   # goes to mongo, saves the current access token as the latest one.
-  setToken: (cb) ->
+  setToken: ->
+    printErr = (err) ->
+      if err then return console.log err.stack
     access_token = @_token() # googleapis lib might have changed this
 
     # it has never once been set in mongo, so no need to check&set
     if @lastSeen == undefined
       doc = access_token: access_token
-      return new AccessToken(doc).save(cb)
+      console.log 'new access_token', access_token
+      return new AccessToken(doc).save printErr
 
     # it's the same, no need to save it back to mongo.
     if access_token == @lastSeen
-      return cb()
+      console.log 'unchanged', @lastSeen
+      return
 
     # update mongo, but only if someone else didn't get to it first.
     # this is a check and set.
@@ -82,39 +94,83 @@ class Google
     ups = access_token: access_token
 
     console.log 'update', query, ups
-    AccessToken.update query, ups, cb
+    AccessToken.update query, ups, printErr
 
   #
   # calls to specific API endpoints
   #
-  # sometimes googleapis calls back with an object instead of a `Error`.
-  _formatError: (err) -> err.message || JSON.stringify(err, null, 2)
   createEvent: (body, cb) ->
-    params = cfg.google.params
+    if !@client then return @queue.push [ 'createEvent', arguments ]
 
+    params = _.clone cfg.google.calendar.params
     @getToken (err) =>
       if err then return cb err
 
       @client.calendar.events.insert(params, body)
       .execute (err, data) =>
-        if err then return cb new Error @_formatError(err)
-
-        @setToken (err) =>
-          if err then return cb err
-          cb null, data
+        @setToken() # always want to set the token
+        if err then return cb new Error err.message
+        cb null, data
 
   videosList: (params, cb) ->
-    part = 'id,snippet,contentDetails,fileDetails,liveStreamingDetails,player,processingDetails,recordingDetails,statistics,status,suggestions,topicDetails'
-    params.maxResults = params.maxResults || 50
-    params.part = params.part || part
+    if !@client then return @queue.push [ 'videosList', arguments ]
 
+    part = 'id,snippet,contentDetails,fileDetails,liveStreamingDetails,player,processingDetails,recordingDetails,statistics,status,suggestions,topicDetails'
+    params.part = params.part || part
     @getToken (err) =>
       if err then return cb err
 
       @client.youtube.videos.list(params)
       .execute (err, data) =>
-        if err then return cb new Error @_formatError(err)
+        @setToken() # always want to set the token
+        if err then return cb new Error err.message
+        cb null, data
 
-        @setToken (err) =>
-          if err then return cb err
-          cb(null, data)
+# if !module.parent
+#   inspect = require('util').inspect
+#   createClient = module.exports
+
+#   mongoose = require 'mongoose'
+#   mongoose.connect cfg.mongoUri
+#   db = mongoose.connection
+#   db.on 'error', ->
+#     console.error.bind console, 'connection error:'
+#   db.once 'open', ->
+
+#     if process.argv[2] == 'yt'
+#       createClient (err, goog, _) ->
+#         if err then return console.log 'ready err', err.stack || err
+#         params = id: 'z1Z6xEYMYNY,d4QJDkdwLpc'
+#         goog.videosList params, (err, data) ->
+#           if err then return console.log 'dfgsgs', err.stack || err
+#           console.log 'vd', inspect(data, depth: null)
+
+#     if process.argv[2] == 'gc'
+#       createClient (err, goog, _) ->
+#         if err then return console.log 'ready err', err
+#         body =
+#           start: { dateTime: '2014-01-24T03:04:06.543Z' },
+#           end: { dateTime: '2014-01-24T05:04:06.543Z' },
+#           # attendees:
+#           #   [ { email: 'jkATairpair.com@example.com' },
+#           #   { email: 'kirkATstrobeck.com@example.com' },
+#           #   { email: 'qualls.jamesATgmail.com@example.com' } ]
+#           summary: 'Airpair Kirk+James (AngularJS)',
+#           # colorId: 6,
+#           description: 'hihi'
+
+#         goog.client.calendar.calendarList.list()
+#         .execute (err, data) ->
+#           if err then return console.log('cal', err.stack || err)
+#           console.log('callist', data)
+
+#           goog.client.calendar.events.insert(cfg.google.calendar.params, body)
+#           .execute (err, data) =>
+#             if err
+#               # again = ->
+#               #   goog.createEvent body, (err, data) ->
+#               #     if err then return console.log 'againerr', err.stack
+#               #     console.log 'againdata', data
+#               # setTimeout again, 1000
+#               return console.log 'dfgsgs', err.stack
+#             console.log 'vd', data
