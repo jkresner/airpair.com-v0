@@ -42,6 +42,8 @@ class Google
       googleapis.discover(name, version)
 
     googleapis.execute (err, client) =>
+      if err then return console.log new Error('discovery: ' + err.message).stack
+      console.log 'discovered', client
       @client = client
       @clearQueue()
       cb && cb(err, @, client)
