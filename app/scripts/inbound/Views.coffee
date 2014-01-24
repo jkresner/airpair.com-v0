@@ -200,7 +200,6 @@ class exports.RequestInfoView extends BB.ModelSaveView
     @listenTo @model, 'change:company', @renderMailTemplates
   render: ->
     @setValsFromModel @modelProps
-    @$('[data-toggle="popover"]').popover()
     # TODO: kinda hacky:
     @$('.status').attr('class', "label status label-#{@model.get('status')}")
     @$('.status').html @model.get('status')
@@ -211,6 +210,7 @@ class exports.RequestInfoView extends BB.ModelSaveView
     data = { mailTemplates: mailTemplates, tagsString: @model.tagsString() }
     tmplCompanyData = _.extend data, @mget('company')
     @$('#company-controls').html @tmplCompany(tmplCompanyData)
+    @$('[data-toggle="popover"]').popover()
   toggleCanceledIncompleteFields: =>
     @$('#canceled-control-group').toggle @$('#status').val() == 'canceled'
     @$('#incomplete-control-group').toggle @$('#status').val() == 'incomplete'
