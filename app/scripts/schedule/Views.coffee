@@ -84,7 +84,7 @@ class exports.ScheduledView extends BB.ModelSaveView
   async: off
   el: '#edit'
   tmpl: require './templates/Scheduled'
-  viewData: ['duration', 'date', 'time', 'type', 'notes']
+  viewData: ['date', 'time', 'type', 'notes']
   events:
     'click .save': '_save'
     'change .youtube': (e) ->
@@ -132,7 +132,7 @@ class exports.ScheduledView extends BB.ModelSaveView
     # call.recordingList.push { link: '', youtubeId: '' }
 
     d = _.extend call, { expert, requestId: @request.id }
-    # console.log d
+    console.log d
     @$('.datepicker').stop()
     @$el.html @tmpl d
     @$('.datepicker').pickadate()
