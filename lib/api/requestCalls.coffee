@@ -32,6 +32,7 @@ class RequestCallsApi  # Always passes back a full request object
     delete req.body.date
     delete req.body.time
 
+    # TODO also send 400 errors when google API has problems.
     @svc.create req.user._id, req.params.requestId, req.body, (e, results) ->
       if e && e.message.indexOf('Not enough hours') == 0
         errors =
@@ -55,7 +56,7 @@ class RequestCallsApi  # Always passes back a full request object
     # req.body.date = undefined
     # req.body.time = undefined
 
-    console.log "update, #{req.params.callId}", JSON.stringify req.body, null, 2
+    # TODO also send 400 errors when google API has problems.
     @svc.update req.user._id, req.params.requestId, req.body, (e, r) ->
       if e then return next e
       res.send r
