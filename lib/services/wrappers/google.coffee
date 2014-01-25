@@ -41,6 +41,10 @@ class Google
     _.each apis, (version, name) ->
       googleapis.discover(name, version)
 
+    if cfg.env is 'test'
+      console.log 'google wrapper in test mode.'
+      return cb && cb()
+
     googleapis.execute (err, client) =>
       if err then return console.log new Error('discovery: ' + err.message).stack
       console.log 'discovered', client
