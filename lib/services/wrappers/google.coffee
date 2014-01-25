@@ -31,6 +31,7 @@ class Google
     _.each apis, (version, name) ->
       googleapis.discover(name, version)
 
+<<<<<<< Updated upstream
     if cfg.env is 'test'
       console.log 'google wrapper in test mode.'
       return cb && cb()
@@ -44,6 +45,15 @@ class Google
       @client = client
       @clearQueue()
       cb && cb(err, @, client)
+=======
+    cb && cb new Error 'not now'
+    # googleapis.execute (err, client) =>
+    #   if err then return console.log new Error('discovery: ' + err.message).stack
+    #   console.log 'discovered', client
+    #   @client = client
+    #   @clearQueue()
+    #   cb && cb(err, @, client)
+>>>>>>> Stashed changes
   clearQueue: ->
     console.log 'clearQueue', @queue
     @queue.forEach (item) ->
@@ -103,17 +113,18 @@ class Google
   # TODO stop the silly repetition of getToken somecode setToken
   #
   createEvent: (body, cb) ->
-    if !@client then return @queue.push [ 'createEvent', arguments ]
+    cb null, { htmlLink: 'http://example.com/google-calendar-link' }
+    # if !@client then return @queue.push [ 'createEvent', arguments ]
 
-    params = _.clone cfg.google.calendar.params
-    @getToken (err) =>
-      if err then return cb err
+    # params = _.clone cfg.google.calendar.params
+    # @getToken (err) =>
+    #   if err then return cb err
 
-      @client.calendar.events.insert(params, body)
-      .execute (err, data) =>
-        @setToken() # always want to set the token
-        if err then return cb new Error err.message
-        cb null, data
+    #   @client.calendar.events.insert(params, body)
+    #   .execute (err, data) =>
+    #     @setToken() # always want to set the token
+    #     if err then return cb new Error err.message
+    #     cb null, data
 
   patchEvent: (eventId, body, cb) ->
     if !@client then return @queue.push [ 'patchEvent', arguments ]
@@ -131,18 +142,24 @@ class Google
         cb null, data
 
   videosList: (params, cb) ->
-    if !@client then return @queue.push [ 'videosList', arguments ]
+    console.log 'params',params
+    cb null,
+      items: params.id.split(',').map (id) ->
+        id: id,
+        status: { privacyStatus: 'public' }
 
-    part = 'id,snippet,contentDetails,fileDetails,liveStreamingDetails,player,processingDetails,recordingDetails,statistics,status,suggestions,topicDetails'
-    params.part = params.part || part
-    @getToken (err) =>
-      if err then return cb err
+    # if !@client then return @queue.push [ 'videosList', arguments ]
 
-      @client.youtube.videos.list(params)
-      .execute (err, data) =>
-        @setToken() # always want to set the token
-        if err then return cb new Error err.message
-        cb null, data
+    # part = 'id,snippet,contentDetails,fileDetails,liveStreamingDetails,player,processingDetails,recordingDetails,statistics,status,suggestions,topicDetails'
+    # params.part = params.part || part
+    # @getToken (err) =>
+    #   if err then return cb err
+
+    #   @client.youtube.videos.list(params)
+    #   .execute (err, data) =>
+    #     @setToken() # always want to set the token
+    #     if err then return cb new Error err.message
+    #     cb null, data
 
 # if !cfg? then require '../../util/appConfig'
 
