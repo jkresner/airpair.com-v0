@@ -109,6 +109,7 @@ module.exports = class RequestCallsService extends DomainService
   updateCms: (userId, data, callback) =>
 
   update: (userId, requestId, call, callback) =>
+    # TODO use async.waterfall to simplify this
     @getById requestId, (err, request) =>
       oldCall = _.find request.calls, (c) -> _.idsEqual c._id, call._id
       if !oldCall then return callback new Error('no such call ' + call._id)
@@ -118,16 +119,20 @@ module.exports = class RequestCallsService extends DomainService
         # TODO: show error in UI when this happens
         if err then return callback err # might not have permissions, etc
 
-        oldCall.recordings = call.recordings
-        oldCall.notes = call.notes
-        oldCall.datetime = call.datetime
+        # TODO when we use waterfall, only push this function onto the list
+        # if the dates are different.
+        calendar.patch oldCall, call, (err, eventData) =>
+          oldCall.gcal = eventData
+          oldCall.recordings = recordings
+          oldCall.notes = call.notes
+          oldCall.datetime = call.datetime
 
-        ups = { calls: request.calls }
-        console.log 'update.ups = ', require('util').inspect(ups, depth: null)
-        super requestId, ups, (err, newRequest) =>
-          if err then return callback err
-          newCall = _.find newRequest.calls, (c) -> _.idsEqual c._id, call._id
-          callback null, newCall
+          ups = { calls: request.calls }
+          console.log 'update.ups = ', require('util').inspect(ups, depth: null)
+          super requestId, ups, (err, newRequest) =>
+            if err then return callback err
+            newCall = _.find newRequest.calls, (c) -> _.idsEqual c._id, call._id
+            callback null, newCall
 
   ###
   Takes a list of orders and a call, removes all redeemedCalls from the orders

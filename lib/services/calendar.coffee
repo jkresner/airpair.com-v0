@@ -66,6 +66,20 @@ class CalendarService
 
     google.createEvent body, cb
 
-  # edit:
+  patch: (oldCall, newCall, cb) ->
+    # TODO remove this stuff when requestCalls is simplified
+    if oldCall.datetime == newCall.datetime
+      console.log 'datetime unchanged'
+      return process.nextTick ->
+        cb null, oldCall.gcal
+
+    eventId = oldCall.gcal.id
+    start = newCall.datetime
+    body =
+      start:
+        dateTime: start.toISOString()
+      end:
+        dateTime: addTime(start, oldCall.duration * ONE_HOUR).toISOString()
+    google.patchEvent eventId, body, cb
 
 module.exports = new CalendarService()
