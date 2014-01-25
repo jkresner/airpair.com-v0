@@ -1,7 +1,37 @@
-<h2><em>{ </em>Suggested experts<em> }</em></h2>
-<hr />
-<div class="suggested">
-{{#unless suggested}}
-  <p id="noExpertsYet">Experts not yet suggested ... </p>
-{{/unless}}
-</div>
+<aside id="experts" class="sidebar sidebar-primary widget-area">
+  <section class="widget featured-content featuredpost">
+
+    <div class="widget-wrap">
+
+      <h4 class="widget-title widgettitle">Suggested experts</h4>
+      <div class="suggested">
+
+      {{#unless suggested}}
+
+        <article class="entry">
+          <span class="alignleft">
+            <img src="/images/team/{{owner}}.png" class="avatar avatar-65 photo owner">
+          </span>
+          <header class="entry-header">
+            <h2 class="entry-title">We haven't heard back from any experts yet.</h2>
+            <span class="entry-author">{ {{owner}} }</span>, <i>Your Account Manager</i>
+            <p class="entry-meta"></p>
+          </header>
+
+          <div class="entry-content" style="padding-bottom:0">
+            <p id="noExpertsYet">I'm in the process of finding available experts that can help. So far no one has come back, but I'm on it :).</p>
+            <p>Hold tight!</p>
+          </div>
+
+        </article>
+
+      {{/unless}}
+
+      </div>
+
+    </div>
+  </section>
+
+  <br /><br />
+</aside>
+

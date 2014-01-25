@@ -63,6 +63,16 @@ label.control-label { color:darkgray; }
 #requestpage #requestForm .budgetExplanation b { font-style:italic;color:#CC523E; }
 #requestpage .ap-team p { padding:0 3px; }
 
+#reviewpage h5 { margin:5px 0 0 0 }
+#reviewpage main.content { width:640px; }
+#reviewpage aside.sidebar { width:440px; }
+#reviewpage p { margin-bottom:10px }
+#reviewpage .brief { border-bottom:solid 1px #d3d3d3;margin-bottom:10px }
+#reviewpage .about { border-bottom:solid 1px #d3d3d3;margin-bottom:10px;font-style:italic }
+#reviewpage .contact img { float:right;width:120px;margin-top:10px; }
+#reviewpage #experts img { width:104px }
+#reviewpage #experts p { padding:0 3px; }
+
 #tagsInput header, .controls-tags header { font-size:11px;font-style:italic;border-bottom:dashed 1px #d3d3d3;padding:0 0 5px 5px;color:gray; }
 #tagsInput .autocomplete, .controls-tags .autocomplete { width:200px; }
 #tagsInput span, .controls-tags span { clear:both; }
