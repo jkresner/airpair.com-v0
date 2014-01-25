@@ -2,9 +2,16 @@ _ = require 'underscore'
 google = require('./wrappers/google')()
 inspect = require('util').inspect
 
+# TODO stop using mutation to assign back to the original array.
+# it's confusing.
 class VideosService
   # TODO might want to rename this function
   list: (recordings, cb) ->
+    # TODO remove this stuff when requestCalls is simplified
+    if !recordings.length
+      return process.nextTick ->
+        cb null, recordings
+
     # TODO if the same youtube ID is in the list twice, only one of the
     # recordings objects will get the youtube resource data.
     recordingMap = {}

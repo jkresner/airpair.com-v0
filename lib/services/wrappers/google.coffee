@@ -57,6 +57,11 @@ class Google
       @[item[0]].apply(@, item[1])
     @queue = []
   # getter/setter style function
+  # TODO there is a bug here where getting the token doesnt return what was
+  # refreshed.
+  # TODO: make a PR to the google library that allows you to subscribe to
+  # access_token changes. Also publish our own version to npm, so we dont have
+  # to wait for them to merge. This will make our code WAY simpler.
   _token: (access_token, _) ->
     if !access_token
       console.log 'get', googleapis.authClient.credentials.access_token, _
@@ -73,7 +78,7 @@ class Google
       if err then return cb err
       doc = doc || {}
       @lastSeen = doc.access_token
-      @_token doc.access_token, 'SET' # when no token in DB, this does nothing
+      @_token doc.access_token, 'SET from mongo' # when no token in DB, this does nothing
       cb()
 
   # call this after every client call
@@ -81,7 +86,7 @@ class Google
   setToken: ->
     printErr = (err) ->
       if err then return console.log err.stack
-    access_token = @_token() # googleapis lib might have changed this
+    access_token = @_token(null, 'get in setToken') # googleapis lib might have changed this
 
     # it has never once been set in mongo, so no need to check&set
     if @lastSeen == undefined
@@ -104,6 +109,7 @@ class Google
 
   #
   # calls to specific API endpoints
+  # TODO stop the silly repetition of getToken somecode setToken
   #
   createEvent: (body, cb) ->
     if !@client then return @queue.push [ 'createEvent', arguments ]
@@ -113,6 +119,21 @@ class Google
       if err then return cb err
 
       @client.calendar.events.insert(params, body)
+      .execute (err, data) =>
+        @setToken() # always want to set the token
+        if err then return cb new Error err.message
+        cb null, data
+
+  patchEvent: (eventId, body, cb) ->
+    if !@client then return @queue.push [ 'patchEvent', arguments ]
+
+    params = _.clone cfg.google.calendar.params
+    params.eventId = eventId
+
+    @getToken (err) =>
+      if err then return cb err
+
+      @client.calendar.events.patch(params, body)
       .execute (err, data) =>
         @setToken() # always want to set the token
         if err then return cb new Error err.message
