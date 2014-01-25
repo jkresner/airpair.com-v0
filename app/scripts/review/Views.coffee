@@ -296,7 +296,12 @@ class exports.RequestInfoView extends BB.BadassView
     if @request.get('suggested')?
       for s in @request.get('suggested')
         if s.expertStatus is 'available' then hasAvailableExperts = true
+
+    isIndividual = @request.get('company').name == 'Individual' ||
+      @request.get('company').about.indexOf('Individual') == 0
+
     d =
+      isByIndividual: isIndividual
       isCustomer: @request.isCustomer @session
       meExpert: @request.suggestion @session.id
       total: @hrTotal()

@@ -19,6 +19,8 @@
         <div class="brief">{{markdown brief}}</div>
 
       {{#with company}}
+
+        {{#unless ../isByIndividual }}
         <h5>Company</h5>
 
         {{#if ../associatedWithRequest}}
@@ -33,6 +35,8 @@
           {{/if}}
         {{/if}}
         <div class="about">{{markdown about}}</div>
+
+        {{/unless}}
 
         <div class="contact">
         {{#each contacts}}
