@@ -51,7 +51,6 @@ module.exports = class Router extends S.AirpairSessionRouter
 
   detail: (id) ->
     if !id? then return @empty()
-    $('aside.header-widget-area').toggle @isAuthenticated()
 
   # stripeBook: ->
     # @app.order.set 'paymentMethod', @app.settings.paymentMethod 'stripe'

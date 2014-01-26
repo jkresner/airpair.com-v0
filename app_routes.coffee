@@ -27,7 +27,7 @@ module.exports = (app) ->
   renderReview = (req, r, next) ->
     viewData.review req.params.id, req.user, (e, d) =>
       if e then return next e
-      r.render 'review.html', d
+      r.render 'review.html', _.extend d, { reqUrl: req.url, authenticated: req.isAuthenticated() }
   app.get '/review/:id', renderReview
   app.get '/review/book/:id', renderReview
 
