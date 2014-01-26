@@ -2,25 +2,44 @@
   <header class="site-header">
     <div class="wrap">
       <div class="title-area">
-        <p class="site-title"><a href="//www.airpair.com/" title="AirPair"></a> <em>+1 (800) 487-0668</em></p>
+        <p class="site-title"><a href="/" title="AirPair"></a> <em>+1 (800) 487-0668</em></p>
       </div>
+
+      {{#if authenticated}}
 
       <aside class="widget-area header-widget-area">
         <section class="widget widget_nav_menu">
           <div class="widget-wrap">
             <nav class="nav-header">
               <ul id="menu-services" class="menu genesis-nav-menu">
-                <li class="menu-item"><a href="/">Dashboard</a></li>
-                <li class="menu-item"><a href="/blog">Blog</a></li>
-                <li class="menu-item"><a href="/find-an-expert">New request</a></li>
-                <li class="menu-item"><a href="/be-an-expert">Expert profile</a></li>
-                <li class="menu-item"><a href="/settings">Settings</a></li>
-                <li class="menu-item"><a href="/logout">Logout</a></li>
+                <li class="menu-item dashboard"><a href="/">Dashboard</a></li>
+                <li class="menu-item blog"><a href="/blog">Blog</a></li>
+                <li class="menu-item request"><a href="/find-an-expert">New request</a></li>
+                <li class="menu-item expert"><a href="/be-an-expert">Expert profile</a></li>
+                <li class="menu-item settings"><a href="/settings">Settings</a></li>
+                <li class="menu-item logout"><a href="/logout">Logout</a></li>
               </ul>
             </nav>
           </div>
         </section>
       </aside>
+
+    {{else}}
+
+      <aside class="widget-area header-widget-area">
+        <section class="widget widget_nav_menu">
+          <div class="widget-wrap">
+            <nav class="nav-header">
+              <ul id="menu-services" class="menu genesis-nav-menu">
+                <li class="menu-item login"><a href="/auth/google?return_to={{{reqUrl}}}" class="button secondary">Login</a></li>
+              </ul>
+            </nav>
+          </div>
+        </section>
+      </aside>
+
+    {{/if}}
+
     </div>
   </header>
 </div>

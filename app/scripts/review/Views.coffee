@@ -165,7 +165,7 @@ class exports.ExpertReviewFormView extends BB.EnhancedFormView
     expertRate = @model.get('suggestedRate')[@request.get('pricing')].expert
     pp = @settings.paymentMethod('paypal')
     payPalEmail = if pp? then pp.info.email
-    @$el.html @tmpl @model.extend({expertRate,payPalEmail})
+    @$el.html @tmpl @model.extend({owner:@request.get('owner'),expertRate,payPalEmail})
     @elm('expertStatus').on 'change', @toggleFormElements
     @enableCharCount 'expertFeedback'
     @setValsFromModel ['expertRating', 'expertStatus']
@@ -296,7 +296,12 @@ class exports.RequestInfoView extends BB.BadassView
     if @request.get('suggested')?
       for s in @request.get('suggested')
         if s.expertStatus is 'available' then hasAvailableExperts = true
+
+    isIndividual = @request.get('company').name == 'Individual' ||
+      @request.get('company').about.indexOf('Individual') == 0
+
     d =
+      isByIndividual: isIndividual
       isCustomer: @request.isCustomer @session
       meExpert: @request.suggestion @session.id
       total: @hrTotal()

@@ -1,47 +1,34 @@
-<div class="suggestionInfo">
 
-  <div class="feedback">
-    <img src="{{expert.pic}}" class="user" />
+<article class="entry">
+  <span class="alignright social-icons">
+    {{#with expert}}
+      {{#if gh}}<a href="//github.com/{{ gh.username }}" target="_blank" class="github"></a>{{/if}}
+      {{#if so}}<a href="//stackoverflow.com/users/{{ so.link }}" target="_blank" class="stackoverflow"></a>{{/if }}
+      {{#if bb}}<a href="//bitbucket.org/{{ bb.id }}" target="_blank" class="bitbucket"></a>{{/if}}
+      {{#if in}}<a href="//linkedin.com/x/profile/sy5n2q8o2i49/{{ in.id }}" target="_blank" class="linkedin"></a>{{/if}}
+      {{#if tw}}<a href="//twitter.com/{{ tw.username }}" target="_blank" class="twitter"></a>{{/if}}
+    {{/with}}
+  </span>
+  <span class="alignleft">
+    <img src="{{expert.pic}}" class="avatar user" />
+  </span>
+  <header class="entry-header">
+    <h2 class="entry-title"><span class="label label-status label-{{ expertStatus }}">{{ expertStatus }}</span></h2>
+    <span class="entry-author">
+      {{#if expert.homepage}}<a href="http://{{ homepage }}" target="_blank" class="guest">{{expert.name}}</a>
+      {{else}}{{expert.name}}{{/if}}
+    </span>
+    {{#if isCustomer}}
+    <label>${{ rates.total }} p.h.</label>
+    {{/if}}
+  </header>
 
-    <div>
-      <span class="label label-{{ expertStatus }}">{{ expertStatus }}</span>
-
-      {{#if isCustomer}}
-      <p style="margin-top:4px;font-weight:bold">${{ rates.total }} p.h.</p>
-      {{/if}}
-
-      {{#if expertComment }}
-        <div><b>{{expert.name}} said</b></div>
-        {{markdown expertComment }}
-        <b>Availability</b>
-        {{markdown expertAvailability }}
-      {{/if}}
-
-    </div>
+  <div class="entry-content">
+    {{#if expertComment }}
+      {{markdown expertComment }}
+      <b>Availability</b>
+      {{markdown expertAvailability }}
+    {{/if}}
   </div>
 
- {{!  {{#if isCustomer
-  <div class="customerReviewForm"></div>
-  {{#if customerFeedback
-
-  <div class="feedback">
-      <hr />
-      <h5>Your thoughts on @{{expert.username</h5>
-      <img src="{{custPic" class="user" />
-      <div style="margin-top:-5px">
-        <b>{{custName</b>
-        <div class="rating"><span class="label label-{{ customerRating">{{ customerRating </span> / 5 </div>
-        <p>{{ customerFeedback</p>
-      </div>
-  </div>
-
-  {{/if
-  {{/if
- }}
-</div>
-
-{{#with expert}}
-  {{> Expert }}
-{{/with}}
-
-<hr style='clear:both' />
+</article>

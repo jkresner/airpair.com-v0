@@ -1,53 +1,74 @@
-<table>
-  <tr>
-    <td class="leftCol">
 
-  <h2><b>{ </b>Book expert hours<b> }</b></h2>
+ <div id="expertHours" class="content-sidebar-wrap">
 
-  <ul id="bookableExperts">
+  <main class="content">
+    <article class="post type-post format-standard entry">
+      <header class="entry-header">
+        <h1 class="entry-title" itemprop="headline">Book hours</h1>
+      </header>
+      <div class="entry-content" style="padding:0px 20px">
 
-  </ul>
+        <ul id="bookableExperts">
+        </ul>
 
-  <div>
-    <div class="satisfactionText">
-      Remember, you are covered by AirPair's satisfaction guarantee: if you 
-      aren't satisfied with your session, we will either make it right or give you a full refund.
     </div>
-    <div class="satisfactionImage">
-      <img src="/images/satisfaction-guarantee.png"/>
+
+      <footer class="entry-footer" style="height:160px;clear:both;margin-top:30px;padding-top:20px">
+
+        <div class="satisfactionText" style="float:left;width:70%">
+          Remember, you are covered by AirPair's satisfaction guarantee: if you
+          aren't satisfied with your session, we will either make it right or give you a full refund.
+        </div>
+        <div class="satisfactionImage">
+          <img src="/images/satisfaction-guarantee.png" style="width:30%;float:right;margin-top:-20px" />
+        </div>
+
+      </footer>
+
+    </article>
+  </main>
+
+</div>
+
+
+
+<aside id="order" class="sidebar sidebar-primary widget-area">
+  <section class="widget featured-content featuredpost">
+
+    <div class="widget-wrap">
+
+      <article class="entry">
+        <header class="entry-header">
+          <h2 class="entry-title">Order summary</span></h2>
+        </header>
+
+        <div class="entry-content">
+
+          <p id="selecthours"><b style="color:red">Select at least 1 hour to checkout.</b></p>
+
+          <div id="summary"></div>
+
+          <div id="pay" style="padding:5px 0 0 0">
+
+            <form action="https://www.{{#if useSandbox}}sandbox.{{/if}}paypal.com/webapps/adaptivepayment/flow/pay" target="PPDGFrame" class="standard button button-pay">
+              <a href="#" class="pay payPalpal"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_paynowCC_LG.gif" /></a>
+              <input type="image" id="submitBtn" src="" value="" style="display:none">
+              <input id="paykey" type="hidden" name="paykey" value="insert_pay_key">
+            </form>
+
+          </div>
+
+          <div class="alert alert-error">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <h4>Error</h4>
+          </div>
+
+        </div>
+      </article>
+
     </div>
-  </div>
+  </section>
 
-  <div style="clear:both"></div>
-  <div class="form-actions">
+  <br /><br />
+</aside>
 
-      <p id="selecthours">Please select at least 1 hour to checkout.</p>
-
-  </div>
-
-</td>
-<td class="rightCol">
-  <div id="order">
-      <h2><em>{ </em>Order summary<em> }</em></h2>
-
-      <div id="summary"></div>
-
-      <div id="pay" style="padding:5px 0 0 0">
-
-        <form action="https://www.{{#if useSandbox}}sandbox.{{/if}}paypal.com/webapps/adaptivepayment/flow/pay" target="PPDGFrame" class="standard button button-pay">
-          <a href="#" class="pay payPalpal"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_paynowCC_LG.gif" /></a>
-          <input type="image" id="submitBtn" src="" value="" style="display:none">
-          <input id="paykey" type="hidden" name="paykey" value="insert_pay_key">
-        </form>
-
-      </div>
-
-      <div class="alert alert-error">
-        <button type="button" class="close" data-dismiss="alert">×</button>
-        <h4>Error</h4>
-      </div>
-
-  </div>
-</td>
-</tr>
-</table>

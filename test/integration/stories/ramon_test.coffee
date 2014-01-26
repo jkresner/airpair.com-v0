@@ -72,8 +72,8 @@ describe "Stories: Ramon Porter", ->
       expect( v.$('.suggested .suggestion').length ).to.equal 5
       expect( v.$('.book-actions').is(':visible') ).to.equal true
 
-      v.$('.book-actions .btn').click()
-      router.navTo v.$('.book-actions .btn').attr('href')
+      v.$('.book-actions .button').click()
+      router.navTo v.$('.book-actions .button').attr('href')
 
       bv = @app.bookView
       expect( bv.$el.is(':visible') ).to.equal true

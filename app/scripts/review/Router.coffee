@@ -11,7 +11,7 @@ module.exports = class Router extends S.AirpairSessionRouter
   pushStateRoot: '/review'
 
   routes:
-    'stripe/book' : 'stripeBook'    
+    'stripe/book' : 'stripeBook'
     'detail/:id'  : 'detail'
     'book/:id'    : 'book'
     'thankyou/:id': 'thankyou'
@@ -51,11 +51,6 @@ module.exports = class Router extends S.AirpairSessionRouter
 
   detail: (id) ->
     if !id? then return @empty()
-
-    $('nav ul').show() if @isAuthenticated()
-
-    if @app.session.id is '5175efbfa3802cc4d5a5e6ed'
-      $('nav ul').append("<li><a href='/adm/inbound/#{@app.request.id}'' class='zocial'>request admin</a><li>")
 
   # stripeBook: ->
     # @app.order.set 'paymentMethod', @app.settings.paymentMethod 'stripe'

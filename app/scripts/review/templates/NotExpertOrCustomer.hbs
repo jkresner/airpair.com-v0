@@ -1,32 +1,59 @@
-<h2><em>{ </em>Think you can handle it?<em> }</em></h2>
+<aside id="about" class="sidebar sidebar-primary widget-area">
+  <section class="widget featured-content featuredpost">
+
+    <div class="widget-wrap">
+
+      <h4 class="widget-title widgettitle">Want to help out?</h4>
+      <div>
+
+        <article class="entry">
+          <span class="alignleft"><img src="/images/team/jk.png"></span>
+          <header class="entry-header">
+            <h2 class="entry-title">New to airpair? <span>Jonathon Kresner, AirPair Expert Evangelist</span></h2>
+          </header>
+
+          <div id="claim" class="entry-content">
+
+            <p>If you think your {{tagsString}} skills are fine tuned & the brief on the left, or similar challenges sound like the type of thing you'd like to get paid <span style="font-size:13px">$40-$260/hr</span> to help with ...</p>
+
+            {{#if authenticated}}
+
+              <a target="_blank" href="mailto:team@airpair.com?Subject=[{{owner}}] Want to help with request {{tagsString}}&Body=Hi {{owner}},%0ACan you suggest me for https://www.airpair.com/review/{{_id}} ?" class="button large claimRequest">Claim request</a>
+
+            {{else}}
+
+              <a href="/be-an-expert" class="button createProfile">Create an expert profile</a>
+              <p class="muted">Takes approx 3-5 minutes</p>
+
+            {{/if}}
+          </div>
+        </article>
+
+        <article class="entry">
+          <span class="alignleft"><img src="/images/team/il.png"></span>
+          <header class="entry-header">
+            <h2 class="entry-title">What is AirPair?<span>Igor Levobic, AirPair Customer Account Manager</span></h2>
+          </header>
+
+          <div id="claim" class="entry-content">
+
+            <p>AirPair connects companies to software experts for instant help over video chat and screen sharing.</p>
+
+            <h6>What does AirPair look like?</h6>
 
 
-<p style="padding:4px;margin-bottom:20px;width:90%">New to airpair? If you think your {{tagsString}} skills are fine tuned & the brief on the left is something you want to get paid to help with:</p>
+            <iframe width="560" height="315" src="//www.youtube.com/embed/YWU6NcMdO-Y" frameborder="0" allowfullscreen></iframe>
 
-{{#if authenticated}}
-  <div style="height:40px">
-    <a target="_blank" href="mailto:team@airpair.com?Subject=[{{owner}}] Want to help with request {{tagsString}}&Body=Hi {{owner}},%0ACan you suggest me for https://www.airpair.com/review/{{_id}} ?" class="button claimRequest">{ claim request }</a>
-  </div>
+            <p style="font-style:italic;font-size:12px">"My first experience with airpair was amazing. I'm working on a RubyMotion app at work and airpair found me an expert within a day. We were able to work through the major hurdle that caused me to seek help within the first hour. You can see us get a UPC scanner running & the source code is at <a href="//github.com/markrickert/RubymotionUPC-example" target="_blank">https://github.com/markrickert/RubymotionUPC-example</a>. A+++++ Would pair again." <b>Ross Furhman</b></p>
+
+        </article>
 
 
-{{else}}
+      </div>
 
- <a href="/be-an-expert" class="button createProfile">{ create your expert profile }</a>
-<br /><br />
- <hr style="clear:both" />
+    </div>
+  </section>
 
-  <p>Already an airpair expert, or is this your request?<p>
+  <br /><br />
+</aside>
 
- <a id="signin" href="/auth/google?return_to=/review/{{_id}}" class="zocial googleplus" style="width:260px;height:32px">Sign in to reply</a>
-
-{{/if}}
-
-<hr style="clear:both" />
-
-<h2>What an AirPair looks like</h2>
-
-<p style="font-style:italic;font-size:12px">"My first experience with airpair was amazing. I'm working on a RubyMotion app at work and airpair found me an expert within a day. We were able to work through the major hurdle that caused me to seek help within the first hour. You can see us get a UPC scanner running & the source code is at <a href="//github.com/markrickert/RubymotionUPC-example" target="_blank">https://github.com/markrickert/RubymotionUPC-example</a>. A+++++ Would pair again." <b>Ross Furhman</b></p>
-
-<iframe width="560" height="315" src="//www.youtube.com/embed/YWU6NcMdO-Y" frameborder="0" allowfullscreen></iframe>
-
-<br /><br />

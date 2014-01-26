@@ -114,8 +114,8 @@ describe "Stories: Bruce Christie", ->
       expect( v.$('.suggested .suggestion').length ).to.equal 2
       expect( v.$('.book-actions').is(':visible') ).to.equal true
 
-      v.$('.book-actions .btn').click()
-      router.navTo v.$('.book-actions .btn').attr('href')
+      v.$('.book-actions .button').click()
+      router.navTo v.$('.book-actions .button').attr('href')
 
       bv = @app.bookView
 

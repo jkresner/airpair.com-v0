@@ -1,77 +1,90 @@
-<h2><b>{ </b>Request info<b> }</b></h2>
+ <div class="content-sidebar-wrap">
+  <main class="content">
+    <article class="post type-post format-standard entry">
+      <header class="entry-header">
 
-<div><label><b>Brief</b></label>
-  {{#each tags}}
-    <span class="label label-tag">{{short}}</span>
-  {{/each}}
-  <div class="brief">{{markdown brief}}</div></div>
-<br />
-
-
-{{#if isCustomer}}<div><label><b>Budget</b></label> <span class="budget"> ${{budget}}<i>/hr</i> ({{pricing}})</spa></div>{{/if}}
-
- {{#with company}}
- <dl>
-  <dt>Company</dt>
-  <dd>
-    {{#if ../associatedWithRequest}}
-      {{name}}
-    {{else}}
-      <a href="javascript:alert('You must be assigned to this request to see the company name')">Hidden</a>
-    {{/if}}
-  </dd>
-  {{#if ../associatedWithRequest}}
-    {{#if url}}
-    <dt style="display:none">Url</dt>
-    <dd style="font-weight:normal"><a href="http://{{ url }}" target="_blank">http://{{ url }}</a></dd>
-    {{/if}}
-  {{/if}}
-  <dt style="display:none">About</dt>
-  <dd>{{markdown about}}</dd>
-  <dt>Contact</dt>
-  <dd class="contact">
-    {{#each contacts}}
-
-    <div>
-      {{#if pic }}
-        <img src="{{ pic }}" />
-      {{else}}
-        <img src="/images/default-avatar.jpg" />
-      {{/if}}
-    </div>
-
-    <dl>
-      <dt>Name</dt>
-      <dd>
-
-        {{#if ../../associatedWithRequest}}
-          {{fullName}}
-        {{else}}
-          <a href="javascript:alert('You must be assigned to this request to see the contact name')">Hidden</a>
+        {{#if isCustomer}}
+          {{#if hasAvailableExpert }}
+          <div class="alignright book">
+            <a href="#book/{{_id}}" class="button">Book hours</a>
+          </div>
+          {{/if}}
         {{/if}}
 
-      </dd>
+        <h1 class="entry-title" itemprop="headline">Request</h1>
+        <p class="entry-meta"><time></time><b></b>
+          {{#each tags}}
+            <span class="label label-tag">{{short}}</span>
+          {{/each}}
+        </p>
+
+      </header>
+      <div class="entry-content" style="padding:0px 20px">
+
       {{#if isCustomer}}
-        <dt>Email</dt>
-        <dd>{{email}}</dd>
-        <dt>Gmail</dt>
-        <dd>{{gmail}}</dd>
-        <dt>Twitter</dt>
-        <dd>{{twitter}}</dd>
+        <h5>Budget</h5> <span class="budget"> ${{budget}}/hr ({{pricing}})</span>
       {{/if}}
-    </dl>
-    {{/each}}
-  </dd>
-</dl>
-{{/with}}
 
-<div style="clear:both"><label><b>Availability</b></label>
-  {{markdown availability}}</div>
+        <h5>Brief</h5>
+        <div class="brief">{{markdown brief}}</div>
 
-{{#if isCustomer}}
-  {{#if hasAvailableExpert }}
-  <div class="form-actions book-actions">
-    <a href="#book/{{_id}}" class="btn btn-warning btn-large">Book expert(s)</a>
-  </div>
-  {{/if }}
-{{/if}}
+      {{#with company}}
+
+        {{#unless ../isByIndividual }}
+        <h5>Company</h5>
+
+        {{#if ../associatedWithRequest}}
+          {{name}}
+        {{else}}
+          <a href="javascript:alert('You must be assigned to this request to see full details')">Hidden</a>
+        {{/if}}
+
+        {{#if ../associatedWithRequest}}
+          {{#if url}}
+            <br /><a href="http://{{ url }}" target="_blank">http://{{ url }}</a>
+          {{/if}}
+        {{/if}}
+        <div class="about">{{markdown about}}</div>
+
+        {{/unless}}
+
+        <div class="contact">
+        {{#each contacts}}
+
+          {{#if pic }}
+            <img src="{{ pic }}" />
+          {{else}}
+            <img src="/images/default-avatar.jpg" />
+          {{/if}}
+
+          <h5>Contact</h5>
+
+          {{#if ../../associatedWithRequest}}
+            {{fullName}}
+          {{else}}
+            <a href="javascript:alert('You must be assigned to this request to see the contact name')">Hidden</a>
+          {{/if}}
+        {{/each}}
+      </div>
+    {{/with}}
+
+      <h5>Availability</h5>
+      {{markdown availability}}
+
+      <br />
+    </div>
+
+      <footer class="entry-footer">
+        {{#if isCustomer}}
+          {{#if hasAvailableExpert }}
+          <div class="form-actions book-actions">
+            <a href="#book/{{_id}}" class="button">Book hours</a>
+          </div>
+          {{/if }}
+        {{/if}}
+
+      </footer>
+
+    </article>
+  </main>
+</div>

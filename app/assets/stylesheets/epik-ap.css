@@ -15,7 +15,7 @@ body {
 }
 
 .site-title a {
-  background:url('/img/airpair.png') no-repeat;
+  background:url('/images/logos/airpair.png') no-repeat;
   width:225px;
   height:60px;
   display:block;
@@ -78,13 +78,14 @@ p.entry-meta {
 }
 
 .bio .links { float:right;display:inline }
-.bio .icon { width:32px;height:32px;display:inline-block;margin-left:6px;float:right; }
 
-.github { background:url('/img/gh.png') }
-.twitter { background:url('/img/tw.png') }
-.bitbucker { background:url('/img/bb.png') }
-.stackoverflow { background:url('/img/so.png') }
-.linkedin { background:url('/img/in.png') }
+.icon { width:32px;height:32px;display:inline-block;margin-left:6px;float:right; }
+.social-icons a { width:32px;height:32px;display:inline-block;margin-left:6px;float:right; }
+.github { background:url('/images/icons/gh.png') }
+.twitter { background:url('/images/icons/tw.png') }
+.bitbucker { background:url('/images/icons/bb.png') }
+.stackoverflow { background:url('/images/icons/so.png') }
+.linkedin { background:url('/images/icons/in.png') }
 
 .bio-action {
   color:gray;
