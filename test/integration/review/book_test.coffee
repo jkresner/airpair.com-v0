@@ -36,7 +36,7 @@ describe "Review: book", ->
     expect( rv.$('.suggested .suggestion').length ).to.equal 2
     expect( rv.$('.book-actions').is(':visible') ).to.equal true
 
-    expect( rv.$('.book-actions .btn').attr('href') ).to.equal "#book/#{@r._id}"
+    expect( rv.$('.book-actions .button').attr('href') ).to.equal "#book/#{@r._id}"
 
     router.navTo "#book/#{@r._id}"
     expect( rv.$el.is(':visible') ).to.equal false
