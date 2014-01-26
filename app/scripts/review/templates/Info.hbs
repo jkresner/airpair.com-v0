@@ -3,6 +3,10 @@
     <article class="post type-post format-standard entry">
       <header class="entry-header">
 
+        <div class="alignright book">
+          <a href="#book/{{_id}}" class="button">Book hours</a>
+        </div>
+
         <h1 class="entry-title" itemprop="headline">Request</h1>
         <p class="entry-meta"><time></time><b></b>
           {{#each tags}}
@@ -68,13 +72,9 @@
 
       <footer class="entry-footer">
         {{#if isCustomer}}
-          {{!-- <div class="textwidget"><center><a class="button large" style="width:100%;background-color:#CE5323;margin:3px" href="http://www.airpair.com/find-an-expert">Book</a></center>
-          </div>
- --}}
-
           {{#if hasAvailableExpert }}
           <div class="form-actions book-actions">
-            <a href="#book/{{_id}}" class="btn btn-warning btn-large">Book expert(s)</a>
+            <a href="#book/{{_id}}" class="button">Book hours</a>
           </div>
           {{/if }}
         {{/if}}

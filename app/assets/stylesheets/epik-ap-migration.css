@@ -71,18 +71,24 @@ a.secondary { background-color:#000000!important;color:white!important; }
 #reviewpage aside.sidebar { width:460px; }
 #reviewpage p { margin-bottom:10px }
 #reviewpage p.muted { margin-bottom:0; }
+#reviewpage .book a { line-height:8px }
 #reviewpage .brief { border-bottom:solid 1px #d3d3d3;margin-bottom:10px }
 #reviewpage .about { border-bottom:solid 1px #d3d3d3;margin-bottom:10px;font-style:italic }
 #reviewpage .contact img { float:right;width:120px;margin-top:10px; }
-#reviewpage #experts img { width:104px }
+#reviewpage #experts img { width:100px }
 #reviewpage #experts p { padding:0 3px; }
 #reviewpage #claim { padding-bottom:0; }
 #reviewpage #claim p { padding:20px 4px 10px 4px }
 #reviewpage #claim .button { width:100%;text-align:center;background-color:#CE5323 }
-#reviewpage #about .alignleft img { width:55px;margin-right:20px; }
+#reviewpage #about .alignleft img { width:50px;margin-right:20px; }
 #reviewpage #about .entry-title { margin:4px 20px }
 #reviewpage #about .entry-title span { color:gray;display:block;font-size:12px }
 #reviewpage #about .muted { font-size:13px;text-align:center;margin-top:-15px;width:100% }
+#reviewpage .suggestion h2 { margin-top:0px; }
+#reviewpage .suggestion header { border-bottom:solid 1px #d3d3d3;height:107px;margin-bottom:10px;line-height:1.9 }
+#reviewpage .suggestion label { display:block }
+#reviewpage .suggestion .entry-author { font-weight:bold }
+#reviewpage .suggestion .entry-content { font-size:13px;padding-bottom:0;clear:both; }
 
 #tagsInput header, .controls-tags header { font-size:11px;font-style:italic;border-bottom:dashed 1px #d3d3d3;padding:0 0 5px 5px;color:gray; }
 #tagsInput .autocomplete, .controls-tags .autocomplete { width:200px; }
@@ -97,26 +103,6 @@ a.secondary { background-color:#000000!important;color:white!important; }
 #tagsInput .tt-dropdown-menu, .controls-tags .tt-dropdown-menu { width:260px }
 #tagsInput .tt-suggestions, .controls-tags .tt-suggestions { padding:5px;text-align:center; }
 #tagsInput .tt-suggestions .label, .controls-tags .tt-suggestions .label { margin:0;padding:3px 8px; }
-
-.label-tag { padding:12px 6px!important;background-color:#99923F!important;font-weight:normal;margin-bottom:4px }
-.label-status { padding:4px; }
-.label-received { background-color:#3A87AD }
-.label-incomplete { background-color:#b94a48 }
-.label-review { background-color:#468847 }
-.label-scheduled { background-color:#333333 }
-.label-complete { background-color:#999999 }
-.label-canceled { background-color:#999999 }
-
-.label-waiting { background-color:#3A87AD }
-.label-abstained { background-color:#b94a48 }
-.label-unwanted { background-color:#b94a48 }
-.label-available { background-color:#468847 }
-
-.border-waiting { border: 1px solid #3A87AD }
-.border-abstained { border: 1px solid #b94a48 }
-.border-unwanted { border: 1px solid #b94a48 }
-.border-available { border: 1px solid #468847 }
-
 
 .alert {
   padding: 8px 35px 8px 14px;
@@ -664,3 +650,17 @@ a.badge:focus {
   margin: 0;
 }
 
+
+.label-tag { padding:12px 6px!important;background-color:#99923F!important;font-weight:normal;margin-bottom:4px }
+.label-status { padding:6px 10px; }
+.label-received { background-color:#3A87AD }
+.label-incomplete { background-color:#b94a48 }
+.label-review { background-color:#468847 }
+.label-scheduled { background-color:#333333 }
+.label-complete { background-color:#999999 }
+.label-canceled { background-color:#999999 }
+
+.label-waiting { background-color:#3A87AD }
+.label-abstained { background-color:#b94a48 }
+.label-unwanted { background-color:#b94a48 }
+.label-available { background-color:#468847 }
