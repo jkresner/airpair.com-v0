@@ -165,7 +165,7 @@ class exports.ExpertReviewFormView extends BB.EnhancedFormView
     expertRate = @model.get('suggestedRate')[@request.get('pricing')].expert
     pp = @settings.paymentMethod('paypal')
     payPalEmail = if pp? then pp.info.email
-    @$el.html @tmpl @model.extend({expertRate,payPalEmail})
+    @$el.html @tmpl @model.extend({owner:@request.get('owner'),expertRate,payPalEmail})
     @elm('expertStatus').on 'change', @toggleFormElements
     @enableCharCount 'expertFeedback'
     @setValsFromModel ['expertRating', 'expertStatus']

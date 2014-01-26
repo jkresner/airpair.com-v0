@@ -3,9 +3,13 @@
     <article class="post type-post format-standard entry">
       <header class="entry-header">
 
-        <div class="alignright book">
-          <a href="#book/{{_id}}" class="button">Book hours</a>
-        </div>
+        {{#if isCustomer}}
+          {{#if hasAvailableExpert }}
+          <div class="alignright book">
+            <a href="#book/{{_id}}" class="button">Book hours</a>
+          </div>
+          {{/if}}
+        {{/if}}
 
         <h1 class="entry-title" itemprop="headline">Request</h1>
         <p class="entry-meta"><time></time><b></b>
