@@ -109,18 +109,16 @@ module.exports = class RequestCallsService extends DomainService
   updateCms: (userId, data, callback) =>
 
   update: (userId, requestId, call, callback) =>
-    # TODO use async.waterfall to simplify this
     @getById requestId, (err, request) =>
       oldCall = _.find request.calls, (c) -> _.idsEqual c._id, call._id
       if !oldCall then return callback new Error('no such call ' + call._id)
 
-      # TODO only get data for ones that have changed
-      videos.list call.recordings, (err, recordings) =>
+      # we pass in both old and new to these services, so they can decide
+      # whether updates are truly needed.
+      videos.list oldCall.recordings, call.recordings, (err, recordings) =>
         # TODO: show error in UI when this happens
         if err then return callback err # might not have permissions, etc
 
-        # TODO when we use waterfall, only push this function onto the list
-        # if the dates are different.
         calendar.patch oldCall, call, (err, eventData) =>
           oldCall.gcal = eventData
           oldCall.recordings = recordings
