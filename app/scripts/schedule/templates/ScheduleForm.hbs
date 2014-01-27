@@ -61,7 +61,7 @@
         <div class="controls">
           <select name="duration">
             {{#each selectOptions }}
-              <option value="{{num}}" {{#selected}}selected{{/selected}}>
+              <option value="{{num}}" {{#is ../../duration num}}selected{{/is}}>
                 {{num}} {{inflect num "hour" "hours"}}
               </option>
             {{else}}
@@ -71,7 +71,7 @@
         </div>
       </div>
       <div class="control-group">
-        <label class="control-label" for="date">Timezone / Date / Time </label>
+        <label class="control-label" for="date">Timezone / Date / Time</label>
         <div class="controls">
           <select name="timezone" class="input-mini">
             <option value="PST" selected>PST</option>
@@ -103,7 +103,7 @@
             <option value="10:30" {{#is ../time '10:30'}}selected{{/is}}>10:30</option>
             <option value="11:00" {{#is ../time '11:00'}}selected{{/is}}>11:00</option>
             <option value="11:30" {{#is ../time '11:30'}}selected{{/is}}>11:30</option>
-            <option value="12:00" {{#unless time}}selected{{/unless}} {{#is ../time '12:00'}}selected{{/is}}>12:00</option>
+            <option value="12:00" {{#unless ../time}}selected{{/unless}} {{#is ../time '12:00'}}selected{{/is}}>12:00</option>
             <option value="12:30" {{#is ../time '12:30'}}selected{{/is}}>12:30</option>
             <option value="13:00" {{#is ../time '13:00'}}selected{{/is}}>13:00</option>
             <option value="13:30" {{#is ../time '13:30'}}selected{{/is}}>13:30</option>

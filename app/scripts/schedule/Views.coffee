@@ -16,9 +16,9 @@ class exports.ScheduleFormView extends BB.ModelSaveView
       @model.set 'expertId', @$(e.target).val()
       @model.set 'type', @elm('type').val()
     'blur [name=type]': -> @model.set 'type', @elm('type').val()
-    'change [name=duration]': -> @model.set 'duration', parseInt(@elm('duration').val(), 10)
-    'blur [name=date]': -> @model.set 'date', @elm('date').val()
-    'blur [name=time]': -> @model.set 'time', @elm('time').val()
+    'change [name=duration]': -> @model.set 'duration', parseInt(@elm('duration').val(), 10), silent: true
+    'blur [name=date]': -> @model.set 'date', @elm('date').val(), silent: true
+    'blur [name=time]': -> @model.set 'time', @elm('time').val(), silent: true
     'click .save': '_save'
   initialize: ->
     if @request.get('callId') then return # we are on the editing page
@@ -60,8 +60,6 @@ class exports.ScheduleFormView extends BB.ModelSaveView
       byType = selectedExpert.credit.byType[@mget('type')] || {}
       balance = byType.balance || 0
       selectedExpert.selectOptions = _.range(1, balance + 1).map (num) -> { num }
-      # don't forget their choice upon rerender
-      (selectedExpert.selectOptions[@model.get('duration') - 1] || {}).selected = true
 
     if !@mget 'date' # default to today
       today = new Date().toJSON().slice(0, 10)
