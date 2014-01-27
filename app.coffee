@@ -53,8 +53,13 @@ if cfg.env is 'test'
 
 app.use (err, req, res, next) ->
   str = (err and err.stack) or inspect err, {depth: 20}
-  console.log "handleError #{req.url} #{str}"
-  winston.error "handleError #{req.url} #{str}" if cfg.isProd
+  userInfo = "anonymous"
+  if req.user
+    goog = req.user.google
+    userInfo = req.user._id + ' ' + goog._json.email + ' ' + goog.displayName
+
+  console.log "handleError #{userInfo} #{req.url} #{str}"
+  winston.error "handleError #{userInfo} #{req.url} #{str}" if cfg.isProd
   res.status(500).sendfile "./public/500.html"
 
 process.on 'uncaughtException', (err) ->
