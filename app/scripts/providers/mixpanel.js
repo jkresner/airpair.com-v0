@@ -2,6 +2,17 @@ mpInitCallback = function() {
   if (addjs && addjs.providers.mp)
   {
     addjs.providers.mp.trackSession()
+    jQuery('.trackLogin').click(function (e) {
+      e.preventDefault(); 
+      
+      l = addjs.events.customerLogin;
+      
+      addjs.trackEvent(l.category, l.name, l.uri, 0);
+
+      setTimeout(function () {
+        window.location = '//airpair.com/auth/google?return_to=/find-an-expert&mixpanelId=' + mixpanel.get_distinct_id();
+      }, 300);
+    })
   }
 }
 
