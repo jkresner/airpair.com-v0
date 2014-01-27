@@ -92,20 +92,20 @@ class exports.VideosView extends BB.HasBootstrapErrorStateView
     @render()
   render: ->
     @$('.list').html @tmpl { @recordings }
-  # prevents double-saves, provides feedback that request is in progress.
   fetch: (e) ->
     e.preventDefault()
     el = $(e.target)
     el.attr('disabled', true)
-    youtubeId = parseYoutubeId(@elm('youtube').val())
+    input = @elm('youtube')
+    youtubeId = parseYoutubeId(input.val())
     if !youtubeId then return
 
     $.ajax("/api/videos/youtube/#{youtubeId}")
       .done (videoData, b, c) =>
-        if !videoData.data
+        if !videoData.id
           return @tryRenderInputInvalid 'youtube',
             "video is private, or http://youtu.be/#{youtubeId} doesn't exist"
-        console.log 'vd', videoData
+        input.val('')
         @_upsertRecording(videoData)
         @render()
       .always =>
@@ -116,16 +116,14 @@ class exports.VideosView extends BB.HasBootstrapErrorStateView
     found = false
     for r, i in @recordings
       if r.data.id == youtubeId
-        recordings[i].data = videoData
+        @recordings[i].data = videoData
         found = true
-
     if !found then @recordings.push { data: videoData, type: 'youtube' }
   delete: (e) ->
     youtubeId = $(e.target).data('id')
     # keep only those that dont match the id
     @recordings = _.filter @recordings, (r) -> r.data.id != youtubeId
     @render()
-
 
 class exports.ScheduledView extends BB.ModelSaveView
   # logging: on
@@ -172,7 +170,8 @@ class exports.ScheduledView extends BB.ModelSaveView
     @$el.html @tmpl d
     @$('.datepicker').pickadate()
 
-    # its in here b/c template re-renders all the time
+    # this view re-renders all the time, so we construct it here, when we know
+    # that the DOM elements exist.
     @videosView = new exports.VideosView { requestCall: @model }
     @
 

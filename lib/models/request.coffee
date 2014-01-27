@@ -55,7 +55,7 @@ Call = new Schema
   # expert:           { required: true, type: {} }
   # hours:            { required: true, type: Number }
   # e.g. { youtubeId: 'YT_ID_HERE', link: "https://youtu.be/YT_ID_HERE" }
-  recordings:       { required: true, type: [{}] } # TODO type: [Recording]
+  recordings:       { required: true, type: [Recording] }
   notes:            { required: true, type: String }
   # expertEndorsed:   String   # If the expert wants the session featured (or hidden)
   # expertReview:     {}   # Experts feedback on how the session went
