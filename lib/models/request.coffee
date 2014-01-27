@@ -37,6 +37,10 @@ Suggestion = new Schema
   customerRating:     Number
   customerFeedback:   String
 
+# TODO
+# Recording = new Schema
+#   type: { required: 'true', type: String }
+#   data: { required: true, type: Mixed }
 
 Call = new Schema
   expertId:         { required: true, type: ObjectId, ref: 'Expert', index: true }
@@ -52,7 +56,7 @@ Call = new Schema
   # expert:           { required: true, type: {} }
   # hours:            { required: true, type: Number }
   # e.g. { youtubeId: 'YT_ID_HERE', link: "https://youtu.be/YT_ID_HERE" }
-  recordings:       { required: true, type: [{}] }
+  recordings:       { required: true, type: [{}] } # TODO type: [Recording]
   notes:            { required: true, type: String }
   # expertEndorsed:   String   # If the expert wants the session featured (or hidden)
   # expertReview:     {}   # Experts feedback on how the session went

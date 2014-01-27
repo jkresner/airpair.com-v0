@@ -2,12 +2,10 @@ _ = require 'underscore'
 google = require('./wrappers/google')()
 inspect = require('util').inspect
 
-# TODO stop using mutation to assign back to the original array.
-# it's confusing.
 class VideosService
   # TODO might want to rename this function
-  list: (recordings, cb) ->
-    # TODO remove this stuff when requestCalls is simplified
+  list: (oldRecordings, recordings, cb) ->
+    # TODO only get data for ones that have changed
     if !recordings.length
       return process.nextTick ->
         cb null, recordings
@@ -22,12 +20,13 @@ class VideosService
 
     params = id: youtubeIds.join(',')
     # TODO will only fetch data for the first 50 videoIds
+    # TODO store less data in the DB
     google.videosList params, (err, data) ->
       if err then return cb err
       console.log 'vl', inspect(data, { depth: null })
 
       data.items.forEach (item) ->
-        # TODO store less data in the DB
+        # Tricky: this is actually mutating the original recordings array.
         recordingMap[item.id].resource = item
 
       cb null, recordings

@@ -67,7 +67,6 @@ class CalendarService
     google.createEvent body, cb
 
   patch: (oldCall, newCall, cb) ->
-    # TODO remove this stuff when requestCalls is simplified
     if oldCall.datetime == newCall.datetime
       console.log 'datetime unchanged'
       return process.nextTick ->
