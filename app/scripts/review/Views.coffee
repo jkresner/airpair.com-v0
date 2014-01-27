@@ -226,7 +226,7 @@ class exports.ExpertReviewView extends BB.BadassView
       @reviewFormView.$el.toggle @editing
       @detailView.render() if !@editing
       @detailView.$el.toggle !@editing
-    @$el.show() if @$el?
+      @$el.show() if @$el?
     @
 
 
