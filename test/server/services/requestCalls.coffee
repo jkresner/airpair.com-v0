@@ -1,17 +1,17 @@
-{http,_,sinon,chai,expect,dbConnect,dbDestroy} = require './../test-lib-setup'
-{app, data} = require './../test-app-setup'
+{http,_,sinon,chai,expect,dbConnect,dbDestroy} = require '../test-lib-setup'
+{app, data} = require '../test-app-setup'
 
-RequestsService = require 'lib/services/requests'
+RequestsService = require '../../../lib/services/requests'
 requestsSvc = new RequestsService()
 
-OrdersService = require 'lib/services/orders'
+OrdersService = require '../../../lib/services/orders'
 ordersSvc = new OrdersService()
 
 async = require 'async'
 cloneDeep = require 'lodash.clonedeep'
 ObjectId = require('mongoose').Types.ObjectId
 
-RequestCallsService = require 'lib/services/requestCalls'
+RequestCallsService = require '../../../lib/services/requestCalls'
 svc = new RequestCallsService()
 
 describe "RequestCallsService", ->
