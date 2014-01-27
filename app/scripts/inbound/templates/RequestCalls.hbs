@@ -20,9 +20,8 @@
       {{#each recordings}}
       <a href="{{link}}" class="zocial youtube icon" target="_blank"></a>
       <a href="{{link}}" target="_blank">
-        {{#resource}}
-          <img src="{{snippet.thumbnails.default.url}}" alt="youtube thumbnail">
-        {{/resource}}
+        <img src="{{data.snippet.thumbnails.default.url}}"
+          alt="youtube thumbnail">
       </a>
       {{/each}}
 
