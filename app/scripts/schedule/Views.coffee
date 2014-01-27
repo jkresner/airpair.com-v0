@@ -79,6 +79,54 @@ class exports.ScheduleFormView extends BB.ModelSaveView
     @$('.save').attr('disabled', false)
     super model, response, options
 
+class exports.VideosView extends BB.HasBootstrapErrorStateView
+  el: '#videos'
+  form: require './templates/videoForm'
+  tmpl: require './templates/videoList'
+  events:
+    'click .fetch': 'fetch'
+    'click .delete': 'delete'
+  initialize: ->
+    @recordings = @requestCall.get('recordings')
+    @$el.html @form()
+    @render()
+  render: ->
+    @$('.list').html @tmpl { @recordings }
+  # prevents double-saves, provides feedback that request is in progress.
+  fetch: (e) ->
+    e.preventDefault()
+    el = $(e.target)
+    el.attr('disabled', true)
+    youtubeId = parseYoutubeId(@elm('youtube').val())
+    if !youtubeId then return
+
+    $.ajax("/api/videos/youtube/#{youtubeId}")
+      .done (videoData, b, c) =>
+        if !videoData.data
+          return @tryRenderInputInvalid 'youtube',
+            "video is private, or http://youtu.be/#{youtubeId} doesn't exist"
+        console.log 'vd', videoData
+        @_upsertRecording(videoData)
+        @render()
+      .always =>
+        el.attr('disabled', false)
+  # takes some videoData, upserts it into the recording list
+  _upsertRecording: (videoData) ->
+    youtubeId = videoData.id
+    found = false
+    for r, i in @recordings
+      if r.data.id == youtubeId
+        recordings[i].data = videoData
+        found = true
+
+    if !found then @recordings.push { data: videoData, type: 'youtube' }
+  delete: (e) ->
+    youtubeId = $(e.target).data('id')
+    # keep only those that dont match the id
+    @recordings = _.filter @recordings, (r) -> r.data.id != youtubeId
+    @render()
+
+
 class exports.ScheduledView extends BB.ModelSaveView
   # logging: on
   async: off
@@ -87,15 +135,6 @@ class exports.ScheduledView extends BB.ModelSaveView
   viewData: ['date', 'time', 'type', 'notes']
   events:
     'click .save': '_save'
-    'change .youtube': (e) ->
-      inputs = $.makeArray(@$('.youtube')) # TODO consider adding this to BB
-      recordings = inputs
-        .map((el) -> $(el).val())
-        .map(parseYoutubeId)
-        .filter((x) -> x)
-        .map((slug) -> { youtubeId: slug, link: "https://youtu.be/#{slug}" })
-      @model.set 'recordings', recordings
-
   initialize: ->
     @listenTo @request, 'change', @render
     @listenTo @collection, 'reset', @render
@@ -127,16 +166,20 @@ class exports.ScheduledView extends BB.ModelSaveView
 
     # TODO call.status
 
-    call.recordingList = _.clone(call.recordings)
-    # for now, only allow one recording to be saved
-    # call.recordingList.push { link: '', youtubeId: '' }
-
     d = _.extend call, { expert, requestId: @request.id }
     console.log d
     @$('.datepicker').stop()
     @$el.html @tmpl d
     @$('.datepicker').pickadate()
+
+    # its in here b/c template re-renders all the time
+    @videosView = new exports.VideosView { requestCall: @model }
     @
+
+  getViewData: ->
+    d = @getValsFromInputs @viewData
+    d.recordings = @videosView.recordings
+    d
   # prevents double-saves, provides feedback that request is in progress.
   _save: (e) ->
     $(e.target).attr('disabled', true)

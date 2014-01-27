@@ -37,10 +37,9 @@ Suggestion = new Schema
   customerRating:     Number
   customerFeedback:   String
 
-# TODO
-# Recording = new Schema
-#   type: { required: 'true', type: String }
-#   data: { required: true, type: Mixed }
+Recording = new Schema
+  type: { required: true, type: String }
+  data: { required: true, type: Mixed }
 
 Call = new Schema
   expertId:         { required: true, type: ObjectId, ref: 'Expert', index: true }

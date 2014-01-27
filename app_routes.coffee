@@ -72,6 +72,7 @@ module.exports = (app) ->
   require('./lib/api/settings')(app)
   require('./lib/api/paymethods')(app)
   require('./lib/api/marketingtags')(app)
+  require('./lib/api/videos')(app)
 
   require('./app_landing')(app)
 

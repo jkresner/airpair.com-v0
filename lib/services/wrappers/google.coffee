@@ -19,14 +19,6 @@ googleapis = require 'googleapis'
 OAuth2Client = googleapis.OAuth2Client
 AccessToken = require '../../models/accessToken'
 
-if !cfg? then require '../../util/appConfig'
-
-module.exports = createClient = (cb) ->
-  apis =
-    calendar: 'v3'
-    youtube: 'v3'
-  new Google(apis, cfg.google.oauth, cfg.google.tokens, cb)
-
 class Google
   # for function calls that arrive before the discover call has returned
   queue: []
@@ -152,6 +144,14 @@ class Google
         @setToken() # always want to set the token
         if err then return cb new Error err.message
         cb null, data
+
+# if !cfg? then require '../../util/appConfig'
+
+# making it a singleton prevents duplicate discovery calls
+apis =
+  calendar: 'v3'
+  youtube: 'v3'
+module.exports = new Google(apis, cfg.google.oauth, cfg.google.tokens)
 
 # if !module.parent
 #   inspect = require('util').inspect

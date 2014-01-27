@@ -20,25 +20,8 @@
     </div>
   </div>
   -->
-  <div class="control-group">
-    <label class="control-label" for="type">Youtube ID's</label>
-    <div class="controls">
-      {{#each ../recordingList}}
-        <div class="input-prepend">
-          <span class="add-on">youtu.be/</span>
-          <input name="youtube" class="youtube input-medium" type="text"
-            value="{{youtubeId}}">
-        </div>
-        <a href="{{link}}" target="_blank">youtu.be/{{youtubeId}}</a><br>
-      {{else}}
-        <div class="input-prepend">
-          <span class="add-on">youtu.be/</span>
-          <input class='youtube input-medium' type="text"
-            placeholder="id or URL here">
-        </div>
-      {{/each}}
-    </div>
-  </div>
+  <br>
+  <div id="videos"></div>
 
   <div class="datetimeduration">
     <div class="control-group">
