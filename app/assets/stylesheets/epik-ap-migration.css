@@ -74,7 +74,7 @@ a.secondary { background-color:#000000!important;color:white!important; }
 #reviewpage .book a { line-height:8px }
 #reviewpage .brief { border-bottom:solid 1px #d3d3d3;margin-bottom:10px }
 #reviewpage .about { border-bottom:solid 1px #d3d3d3;margin-bottom:10px;font-style:italic }
-#reviewpage .contact img { float:right;width:120px;margin-top:10px; }
+#reviewpage .contact img { float:right;width:100px;margin-top:10px; }
 #reviewpage #experts img { width:100px }
 #reviewpage #experts p { padding:0 3px; }
 #reviewpage #claim { padding-bottom:0; }
