@@ -11,6 +11,7 @@ module.exports = class Router extends S.AirpairSessionRouter
 
   routes:
     ''             : 'list'
+    'list'         : 'navToRoot'
     'inactive'     : 'inactive'
     'request/:id'  : 'request'
     'farm/:id'     : 'farm'
@@ -48,6 +49,9 @@ module.exports = class Router extends S.AirpairSessionRouter
     $list = $('#list')
     $list.siblings('.route').hide()
     $list.show()
+
+  navToRoot: ->
+    @navTo ''
 
   inactive: ->
     @list()
