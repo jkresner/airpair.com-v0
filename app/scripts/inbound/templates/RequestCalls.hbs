@@ -18,10 +18,9 @@
       <!-- <span class="label label-{{status}}">{{status}}</span> -->
 
       {{#each recordings}}
-      <a href="{{link}}" class="zocial youtube icon" target="_blank"></a>
-      <a href="{{link}}" target="_blank">
+      <a href="http://youtu.be/{{data.id}}" target="_blank">
         <img src="{{data.snippet.thumbnails.default.url}}"
-          alt="youtube thumbnail">
+          class="youtubeThumbnail" alt="youtube thumbnail">
       </a>
       {{/each}}
 
