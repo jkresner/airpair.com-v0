@@ -109,6 +109,8 @@ a.secondary { background-color:#000000!important;color:white!important; }
 #reviewpage #summary table { margin-top:22px }
 #reviewpage #summary h1 { text-align:right; }
 #reviewpage #order .stripe p { color:gray;text-align:center }
+
+#reviewpage #expertReview { display:none }
 #reviewpage #expertReply { padding:0 }
 #reviewpage #expertReply header { border-bottom:solid 1px #d3d3d3;height:64px;line-height:1.9 }
 #reviewpage #expertReply .alignleft img { width:50px;margin-right:20px; }
