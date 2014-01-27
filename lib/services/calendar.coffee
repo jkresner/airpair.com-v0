@@ -1,5 +1,5 @@
 {owner2name} = require '../identity/roles'
-google = require('./wrappers/google')()
+google = require('./wrappers/google')
 ONE_HOUR = 3600000 # milliseconds
 
 owner2colorIndex =

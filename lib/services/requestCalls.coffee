@@ -113,24 +113,19 @@ module.exports = class RequestCallsService extends DomainService
       oldCall = _.find request.calls, (c) -> _.idsEqual c._id, call._id
       if !oldCall then return callback new Error('no such call ' + call._id)
 
-      # we pass in both old and new to these services, so they can decide
-      # whether updates are truly needed.
-      videos.list oldCall.recordings, call.recordings, (err, recordings) =>
-        # TODO: show error in UI when this happens
-        if err then return callback err # might not have permissions, etc
+      # pass in both old & new: it decides whether updates are truly needed
+      calendar.patch oldCall, call, (err, eventData) =>
+        oldCall.gcal = eventData
+        oldCall.recordings = call.recordings
+        oldCall.notes = call.notes
+        oldCall.datetime = call.datetime
 
-        calendar.patch oldCall, call, (err, eventData) =>
-          oldCall.gcal = eventData
-          oldCall.recordings = recordings
-          oldCall.notes = call.notes
-          oldCall.datetime = call.datetime
-
-          ups = { calls: request.calls }
-          console.log 'update.ups = ', require('util').inspect(ups, depth: null)
-          super requestId, ups, (err, newRequest) =>
-            if err then return callback err
-            newCall = _.find newRequest.calls, (c) -> _.idsEqual c._id, call._id
-            callback null, newCall
+        ups = { calls: request.calls }
+        console.log 'update.ups = ', require('util').inspect(ups, depth: null)
+        super requestId, ups, (err, newRequest) =>
+          if err then return callback err
+          newCall = _.find newRequest.calls, (c) -> _.idsEqual c._id, call._id
+          callback null, newCall
 
   ###
   Takes a list of orders and a call, removes all redeemedCalls from the orders

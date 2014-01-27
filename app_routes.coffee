@@ -77,6 +77,7 @@ module.exports = (app) ->
   require('./lib/api/settings')(app)
   require('./lib/api/paymethods')(app)
   require('./lib/api/marketingtags')(app)
+  require('./lib/api/videos')(app)
 
   app.get '/paypal/success/:id', loggedIn, (req, r, next) ->
     viewData.paypalSuccess req.params.id, req.user, (e, d) =>
