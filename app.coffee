@@ -3,11 +3,11 @@ console.log "In app file: ", process.cwd()
 
 require './lib/util/appConfig'
 require './lib/util/globals'
-express       = require 'express'
-passport      = require 'passport'
-inspect       = require('util').inspect
+express          = require 'express'
 expressValidator = require 'express-validator'
-partials      = require './partials'
+passport         = require 'passport'
+inspect          = require('util').inspect
+partials         = require './lib/util/hbsPartials'
 
 # setup our express app
 app = express()
@@ -20,7 +20,8 @@ app.engine('html', require('hbs').__express)
 app.set('view engine', 'hbs')
 app.set('views', __dirname + '/public')
 
-partials.register()
+# Eventually all global partials should be in '/app/partials'
+partials.register __dirname, ['/app/partials','/app/scripts/shared/templates']
 
 app.use express.compress() # gzip
 app.use express.static(__dirname + '/public')
