@@ -10,34 +10,30 @@ class RequestCallsApi  # Always passes back a full request object
 
   constructor: (app, route) ->
     app.get     "/api/#{route}/calls/:permalink", loggedIn, @detail
-    app.post    "/api/#{route}/:requestId/calls", admin, @create
-    app.put     "/api/#{route}/:requestId/calls/:callId", admin, @update
+    app.post    "/api/#{route}/:requestId/calls", admin, @validate, @create
+    app.put     "/api/#{route}/:requestId/calls/:callId", admin, @validate, @update
 
   detail: (req, res, next) =>
     @svc.getByCallPermalink req.params.permalink, (e, r) ->
       if e then return next e
       res.send r
 
-  validate: (req, res) ->
+  validate: (req, res, next) ->
     req.checkBody('duration', 'Invalid duration').notEmpty().isInt()
     req.checkBody('date', 'Invalid date').notEmpty().isDate()
     req.checkBody('time', 'Invalid time').notEmpty().is(/^\d\d:\d\d$/)
     errors = req.validationErrors()
     if errors
-      res.send formatValidationErrors(errors), 400
-      return false
+      return res.send formatValidationErrors(errors), 400
     req.sanitize('duration').toInt()
 
     {date, time} = req.body
     req.body.datetime = new Date "#{date} #{time} PST"
     delete req.body.date
     delete req.body.time
-    true
+    next()
 
   create: (req, res, next) =>
-    valid = @validate(req, res)
-    if !valid then return
-
     # TODO also send 400 errors when google API has problems.
     @svc.create req.user._id, req.params.requestId, req.body, (e, results) ->
       if e && e.message.indexOf('Not enough hours') == 0
@@ -49,9 +45,6 @@ class RequestCallsApi  # Always passes back a full request object
 
   # this sends back down only the changed call
   update: (req, res, next) =>
-    valid = @validate(req, res)
-    if !valid then return
-
     # TODO also send 400 errors when google API has problems.
     @svc.update req.user._id, req.params.requestId, req.body, (e, call) ->
       if e then return next e
