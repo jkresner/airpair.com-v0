@@ -11,7 +11,6 @@ class VideosApi
 
   fetchFromYoutube: (req, res, next) =>
     @svc.fetch req.params.youtubeId, (err, videoData) =>
-      # TODO: use a normal model.save on the client side so these errors show.
       if err && err.message.indexOf('Forbidden') == 0
         return res.send data: youtube: err.message, 400
       if err then return next err

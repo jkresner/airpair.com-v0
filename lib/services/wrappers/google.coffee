@@ -36,8 +36,11 @@ class Google
       return cb && cb()
 
     googleapis.execute (err, client) =>
-      if err then return console.log new Error('discovery: ' + err.message).stack
-      console.log 'discovered', client
+      if err
+        stack = new Error('discovery: ' + err.message).stack
+        console.log stack
+        if cfg.isProd then winston.error stack
+        return cb && cb(err)
       @client = client
       @clearQueue()
       cb && cb(err, @, client)
