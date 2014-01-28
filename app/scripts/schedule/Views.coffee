@@ -96,7 +96,7 @@ class exports.VideosView extends BB.HasBootstrapErrorStateView
       start = moment(details.actualStartTime)
       end = moment(details.actualEndTime)
       len = moment.duration(end.diff(start))
-      details.actualLength = len.hours() + ':' + len.minutes()
+      details.actualLength = len.hours() + 'h ' + len.minutes() + 'm'
       r
     @$('.list').html @tmpl { recordings: data }
   fetch: (e) ->
