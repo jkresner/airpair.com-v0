@@ -1,4 +1,3 @@
-_ = require 'underscore'
 google = require('./wrappers/google')
 inspect = require('util').inspect
 

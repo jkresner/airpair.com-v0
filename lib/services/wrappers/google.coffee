@@ -13,8 +13,6 @@ our project then does...
   have more than one computer accessing the API, otherwise they invalidate
   eachother
 ###
-
-_ = require 'underscore'
 googleapis = require 'googleapis'
 OAuth2Client = googleapis.OAuth2Client
 AccessToken = require '../../models/accessToken'
@@ -49,8 +47,6 @@ class Google
       @[item[0]].apply(@, item[1])
     @queue = []
   # getter/setter style function
-  # TODO there is a bug here where getting the token doesnt return what was
-  # refreshed.
   # TODO: make a PR to the google library that allows you to subscribe to
   # access_token changes. Also publish our own version to npm, so we dont have
   # to wait for them to merge. This will make our code WAY simpler.
