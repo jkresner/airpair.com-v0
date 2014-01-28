@@ -79,7 +79,9 @@ class exports.ScheduleFormView extends BB.ModelSaveView
     @$('.save').attr('disabled', false)
     super model, response, options
 
-class exports.VideosView extends BB.HasBootstrapErrorStateView
+# this view is very similar to TagsInputView & MarketingTagsInputView
+# it is it's own component, and doesn't care much about the parent view.
+class exports.VideosView extends BB.ModelSaveView
   el: '#videos'
   form: require './templates/videoForm'
   tmpl: require './templates/videoList'
@@ -87,8 +89,9 @@ class exports.VideosView extends BB.HasBootstrapErrorStateView
     'click .fetch': 'fetch'
     'click .delete': 'delete'
   initialize: ->
-    @recordings = @requestCall.get('recordings')
+    @model = new M.Video()
     @$el.html @form()
+    @recordings = @requestCall.get('recordings')
     @render()
   render: ->
     data = @recordings.map (r) ->
@@ -101,24 +104,24 @@ class exports.VideosView extends BB.HasBootstrapErrorStateView
     @$('.list').html @tmpl { recordings: data }
   fetch: (e) ->
     e.preventDefault()
-    el = $(e.target)
-    el.attr('disabled', true)
+    $(e.target).attr('disabled', true)
     input = @elm('youtube')
     youtubeId = parseYoutubeId(input.val())
     if !youtubeId then return
-
-    $.ajax("/api/videos/youtube/#{youtubeId}")
-      .done (videoData, b, c) =>
-        if !videoData.id
-          return @tryRenderInputInvalid 'youtube',
-            "video is private, or http://youtu.be/#{youtubeId} doesn't exist"
-        input.val('')
-        @_upsertRecording(videoData)
-        @render()
-      .always =>
-        el.attr('disabled', false)
-  # takes some videoData, upserts it into the recording list
-  _upsertRecording: (videoData) ->
+    input.val(youtubeId)
+    @model.youtubeId = youtubeId
+    console.log 'fetching', @model, @model.toJSON()
+    @model.fetch { success: @renderSuccess, error: @renderError }
+  renderSuccess: (model, response, options) =>
+    @$('.fetch').attr('disabled', false)
+    @elm('youtube').val('')
+    console.log 'video', @model.toJSON()
+    @_upsertRecording(@model.toJSON())
+    @render()
+  renderError: (model, response, options) =>
+    @$('.fetch').attr('disabled', false)
+    super model, response, options
+  _upsertRecording: (videoData) =>
     youtubeId = videoData.id
     found = false
     for r, i in @recordings
@@ -144,40 +147,31 @@ class exports.ScheduledView extends BB.ModelSaveView
     @listenTo @request, 'change', @render
     @listenTo @collection, 'reset', @render
     @listenTo @model, 'change', @render
-
   render: ->
     if !router.editpage then return # we are on the scheduling page
-
     call = @model.toJSON()
     expert = @request.suggestion(call.expertId).expert
 
-    # open source / private / nda dropdown
-    # orders = @collection.toJSON()
-    # expert.credit = expertCredit orders, call.expertId
-    # expert.credit.byType[call.type].selected = true
-    # expert.credit.byTypeArray = _.values(expert.credit.byType)
-
-    # a partial time according to the RFC 3389.
     # TODO include the .zone() function so it will be PST everywhere
     call.time = moment(call.datetime).format('HH:mm')
     call.date = moment(call.datetime).format('YYYY-MM-DD')
 
-    # hours dropdown
+    # TODO open source / private / nda dropdown
+    # orders = @collection.toJSON()
+    # expert.credit = expertCredit orders, call.expertId
+    # expert.credit.byType[call.type].selected = true
+    # expert.credit.byTypeArray = _.values(expert.credit.byType)
+    # TODO hours dropdown
     # tricky: take into account the call's current duration!
     # byType = expert.credit.byType[@model.get('type')] || {}
     # balance = byType.balance || 0
     # expert.selectOptions = _.range(1, balance + 1).map (num) -> { num }
-    # (expert.selectOptions[call.duration - 1] || {}).selected = true
-
     # TODO call.status
-
     d = _.extend call, { expert, requestId: @request.id }
     @$('.datepicker').stop()
     @$el.html @tmpl d
     @$('.datepicker').pickadate()
-
-    # ScheduledView re-renders all the time, so we construct VideosView here,
-    # when we know that the DOM elements exist.
+    # VideosView depends on html templated by ScheduledView
     @videosView = new exports.VideosView { requestCall: @model }
     @
   getViewData: ->
