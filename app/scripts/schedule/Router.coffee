@@ -5,10 +5,10 @@ V = require './Views'
 
 module.exports = class Router extends S.AirpairSessionRouter
   # logging: on
-  pushStateRoot: '/adm/schedule'
+  pushStateRoot: '/adm'
   routes:
-    ':requestId/call/:callId': 'edit'
-    ':requestId': 'schedule' # this doesnt match.
+    'schedule/:requestId/call/:callId': 'edit'
+    'schedule/:requestId': 'schedule'
 
   appConstructor: (pageData, callback) ->
     requestId = pageData.request._id
@@ -32,9 +32,8 @@ module.exports = class Router extends S.AirpairSessionRouter
 
   edit: (requestId, callId) ->
     @editpage = true
-    route = $('#edit')
-    route.siblings('.route').hide()
-    route.show()
+    $('.route').hide()
+    $('#edit').show()
 
     # populate requestCall with existing data from the request
     selectedCall = _.find @app.request.get('calls'), (c) -> c._id == callId
