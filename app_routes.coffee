@@ -74,8 +74,6 @@ module.exports = (app) ->
   require('./lib/api/paymethods')(app)
   require('./lib/api/marketingtags')(app)
 
-  require('./app_landing')(app)
-
   app.get '/paypal/success/:id', loggedIn, (req, r, next) ->
     viewData.paypalSuccess req.params.id, req.user, (e, d) =>
       if e then return next e
