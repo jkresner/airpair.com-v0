@@ -15,7 +15,7 @@ our project then does...
 ###
 googleapis = require 'googleapis'
 OAuth2Client = googleapis.OAuth2Client
-AccessToken = require '../../models/accessToken'
+AccessToken = require '../../models/googleAccessToken'
 
 class Google
   # for function calls that arrive before the discover call has returned

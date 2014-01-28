@@ -4,4 +4,4 @@ Schema = mongoose.Schema
 schema = new Schema
   access_token: String
 
-module.exports = mongoose.model 'AccessToken', schema
+module.exports = mongoose.model 'GoogleAccessToken', schema
