@@ -91,7 +91,14 @@ class exports.VideosView extends BB.HasBootstrapErrorStateView
     @$el.html @form()
     @render()
   render: ->
-    @$('.list').html @tmpl { @recordings }
+    data = @recordings.map (r) ->
+      details = r.data.liveStreamingDetails
+      start = moment(details.actualStartTime)
+      end = moment(details.actualEndTime)
+      len = moment.duration(end.diff(start))
+      details.actualLength = len.hours() + ':' + len.minutes()
+      r
+    @$('.list').html @tmpl { recordings: data }
   fetch: (e) ->
     e.preventDefault()
     el = $(e.target)
@@ -165,16 +172,14 @@ class exports.ScheduledView extends BB.ModelSaveView
     # TODO call.status
 
     d = _.extend call, { expert, requestId: @request.id }
-    console.log d
     @$('.datepicker').stop()
     @$el.html @tmpl d
     @$('.datepicker').pickadate()
 
-    # this view re-renders all the time, so we construct it here, when we know
-    # that the DOM elements exist.
+    # ScheduledView re-renders all the time, so we construct VideosView here,
+    # when we know that the DOM elements exist.
     @videosView = new exports.VideosView { requestCall: @model }
     @
-
   getViewData: ->
     d = @getValsFromInputs @viewData
     d.recordings = @videosView.recordings
