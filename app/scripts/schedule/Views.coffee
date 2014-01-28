@@ -111,12 +111,10 @@ class exports.VideosView extends BB.ModelSaveView
     if !youtubeId then return
     input.val(youtubeId)
     @model.youtubeId = youtubeId
-    console.log 'fetching', @model, @model.toJSON()
     @model.fetch { success: @renderSuccess, error: @renderError }
   renderSuccess: (model, response, options) =>
     @$('.fetch').attr('disabled', false)
     @elm('youtube').val('')
-    console.log 'video', @model.toJSON()
     @_upsertRecording(@model.toJSON())
     @render()
   renderError: (model, response, options) =>
@@ -136,8 +134,7 @@ class exports.VideosView extends BB.ModelSaveView
     @recordings = _.filter @recordings, (r) -> r.data.id != youtubeId
     @render()
 
-class exports.ScheduledView extends BB.ModelSaveView
-  # logging: on
+class exports.CallEditView extends BB.ModelSaveView
   async: off
   el: '#edit'
   tmpl: require './templates/Scheduled'
@@ -172,7 +169,7 @@ class exports.ScheduledView extends BB.ModelSaveView
     @$('.datepicker').stop()
     @$el.html @tmpl d
     @$('.datepicker').pickadate()
-    # VideosView depends on html templated by ScheduledView
+    # VideosView depends on html templated by CallEditView
     @videosView = new exports.VideosView { requestCall: @model }
     @
   getViewData: ->

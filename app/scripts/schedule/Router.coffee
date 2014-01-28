@@ -22,7 +22,7 @@ module.exports = class Router extends S.AirpairSessionRouter
     v =
       scheduleFormView: new V.ScheduleFormView
         model: d.requestCall, request: d.request, collection: d.orders
-      scheduledView: new V.ScheduledView
+      callEditView: new V.CallEditView
         model: d.requestCall, request: d.request, collection: d.orders
 
     @setOrFetch d.request, pageData.request
