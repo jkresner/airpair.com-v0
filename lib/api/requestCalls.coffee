@@ -53,8 +53,8 @@ class RequestCallsApi  # Always passes back a full request object
     if !valid then return
 
     # TODO also send 400 errors when google API has problems.
-    @svc.update req.user._id, req.params.requestId, req.body, (e, r) ->
+    @svc.update req.user._id, req.params.requestId, req.body, (e, call) ->
       if e then return next e
-      res.send r
+      res.send call
 
 module.exports = (app) -> new RequestCallsApi app, 'requests'

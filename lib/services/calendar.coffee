@@ -54,7 +54,7 @@ class CalendarService
         on your system. Please let #{owner2name[owner]} know if you'd like to do
         a dry run."""
 
-    # dont want test data showing up in ppls calendars
+    # don't show test data up in people's calendars
     if !cfg || !cfg.isProd
       body.attendees = body.attendees.map (o) ->
         o.email = o.email.replace('@', 'AT') + '@example.com'
