@@ -5,8 +5,8 @@ expertCredit = require '../../app/scripts/shared/mix/expertCredit'
 sum = require '../../app/scripts/shared/mix/sum'
 {ObjectId} = require('mongoose').Types
 
-DomainService = require './_svc'
 OrdersSvc = new (require('./orders'))()
+RequestSvc = new (require './requests')()
 
 Order = new require '../models/order'
 Request = new require '../models/request'
@@ -109,7 +109,7 @@ module.exports = class RequestCallsService
   updateCms: (userId, data, callback) =>
 
   update: (userId, requestId, call, callback) =>
-    @getById requestId, (err, request) =>
+    RequestSvc.getById requestId, (err, request) =>
       oldCall = _.find request.calls, (c) -> _.idsEqual c._id, call._id
       if !oldCall then return callback new Error('no such call ' + call._id)
 
@@ -120,10 +120,9 @@ module.exports = class RequestCallsService
         oldCall.notes = call.notes
         oldCall.datetime = call.datetime
 
-        query = { _id: requestId }
         ups = { calls: request.calls }
         console.log 'update.ups = ', require('util').inspect(ups, depth: null)
-        Request.update query, ups, (err, newRequest) =>
+        RequestSvc.update requestId, ups, (err, newRequest) =>
           if err then return callback err
           newCall = _.find newRequest.calls, (c) -> _.idsEqual c._id, call._id
           callback null, newCall
