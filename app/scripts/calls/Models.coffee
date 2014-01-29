@@ -14,7 +14,6 @@ exports.Video = class VideoData extends BB.BadassModel
   urlRoot: ->
     "/api/videos/youtube/#{@youtubeId}"
 
-
 exports.Order = Shared.Order
 
 module.exports = exports

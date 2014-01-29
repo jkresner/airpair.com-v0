@@ -11,7 +11,7 @@ OrdersSvc = new (require('./orders'))()
 Order = new require '../models/order'
 Request = new require '../models/request'
 
-module.exports = class RequestCallsService extends DomainService
+module.exports = class RequestCallsService
 
   model: require './../models/request'
 
@@ -120,9 +120,10 @@ module.exports = class RequestCallsService extends DomainService
         oldCall.notes = call.notes
         oldCall.datetime = call.datetime
 
+        query = { _id: requestId }
         ups = { calls: request.calls }
         console.log 'update.ups = ', require('util').inspect(ups, depth: null)
-        super requestId, ups, (err, newRequest) =>
+        Request.update query, ups, (err, newRequest) =>
           if err then return callback err
           newCall = _.find newRequest.calls, (c) -> _.idsEqual c._id, call._id
           callback null, newCall

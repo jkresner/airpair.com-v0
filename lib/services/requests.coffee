@@ -118,6 +118,13 @@ module.exports = class RequestsService extends DomainService
         r = {} if r is null
         callback null, r
 
+  getByCallId: (callId, callback) ->
+    query = { 'calls._id': callId }
+    @model.findOne(query)
+      .exec (e, request) ->
+        if e then return callback e
+        if !request then request = {}
+        callback null, request
 
   updateSuggestionByExpert: (request, usr, expertReview, callback) =>
     # TODO, add some validation!!
@@ -153,4 +160,3 @@ module.exports = class RequestsService extends DomainService
       tags: tags
       (e) ->
         if e then $log 'notifyAdmins error', e
-

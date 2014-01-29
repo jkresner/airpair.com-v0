@@ -5,9 +5,8 @@ V = require './Views'
 
 module.exports = class Router extends S.AirpairSessionRouter
   # logging: on
-  pushStateRoot: '/adm'
+  pushStateRoot: '/adm/call'
   routes:
-    'schedule/:requestId/call/:callId': 'edit'
     'schedule/:requestId': 'schedule'
 
   appConstructor: (pageData, callback) ->
@@ -22,19 +21,8 @@ module.exports = class Router extends S.AirpairSessionRouter
     v =
       scheduleFormView: new V.ScheduleFormView
         model: d.requestCall, request: d.request, collection: d.orders
-      callEditView: new V.CallEditView
-        model: d.requestCall, request: d.request, collection: d.orders
 
     @setOrFetch d.request, pageData.request
     @resetOrFetch d.orders, pageData.orders
 
     _.extend d, v
-
-  edit: (requestId, callId) ->
-    @editpage = true
-    $('.route').hide()
-    $('#edit').show()
-
-    # populate requestCall with existing data from the request
-    selectedCall = _.find @app.request.get('calls'), (c) -> c._id == callId
-    @app.requestCall.set selectedCall

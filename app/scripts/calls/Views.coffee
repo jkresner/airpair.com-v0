@@ -5,11 +5,10 @@ SV = require './../shared/Views'
 expertCredit = require '../shared/mix/expertCredit'
 parseYoutubeId = require '../shared/mix/parseYoutubeId'
 
-# schedule form
-class exports.ScheduleFormView extends BB.ModelSaveView
+class exports.CallScheduleView extends BB.ModelSaveView
   async: off
   el: '#scheduleForm'
-  tmpl: require './templates/ScheduleForm'
+  tmpl: require './templates/CallSchedule'
   viewData: ['duration', 'date', 'time', 'type']
   events:
     'click input:radio': (e) ->
@@ -26,8 +25,6 @@ class exports.ScheduleFormView extends BB.ModelSaveView
     @listenTo @model, 'change', @render
 
   render: ->
-    if router.editpage then return # we are on the editing page
-
     orders = @collection.toJSON()
     selectedExpert = null
     suggested = @request.get('suggested') || []
@@ -83,8 +80,8 @@ class exports.ScheduleFormView extends BB.ModelSaveView
 # it is it's own component, and doesn't care much about the parent view.
 class exports.VideosView extends BB.ModelSaveView
   el: '#videos'
-  form: require './templates/videoForm'
-  tmpl: require './templates/videoList'
+  tmplForm: require './templates/VideoForm'
+  tmpl: require './templates/VideoList'
   events:
     'click .fetch': 'fetch'
     'click .delete': 'delete'
@@ -92,7 +89,7 @@ class exports.VideosView extends BB.ModelSaveView
     # NOTE: model doesn't have server state; it hits video API & shows errors
     @model = new M.Video()
     @$el.html @form()
-    @recordings = @requestCall.get('recordings')
+    @recordings = @requestCall.get('recordings') || []
     @render()
   render: ->
     data = @recordings.map (r) ->
@@ -137,16 +134,14 @@ class exports.VideosView extends BB.ModelSaveView
 class exports.CallEditView extends BB.ModelSaveView
   async: off
   el: '#edit'
-  tmpl: require './templates/Scheduled'
+  tmpl: require './templates/CallEdit'
   viewData: ['date', 'time', 'type', 'notes']
   events:
     'click .save': '_save'
   initialize: ->
-    @listenTo @request, 'change', @render
-    @listenTo @collection, 'reset', @render
+    # orders and request are already set by the time the router sets the model
     @listenTo @model, 'change', @render
   render: ->
-    if !router.editpage then return # we are on the scheduling page
     call = @model.toJSON()
     expert = @request.suggestion(call.expertId).expert
 

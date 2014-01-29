@@ -42,6 +42,7 @@ Recording = new Schema
   data: { required: true, type: Mixed } # YouTube's API response
 
 Call = new Schema
+  # TODO index on subdocument id
   expertId:         { required: true, type: ObjectId, ref: 'Expert', index: true }
   type:             {
                       type: String,
