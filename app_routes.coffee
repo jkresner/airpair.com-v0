@@ -59,12 +59,14 @@ module.exports = (app) ->
       if e then return next e
       r.render 'adm/inbound.html', d
 
-  schedule = (req, r, next) ->
-    viewData.schedule req.params.requestId, (e, d) =>
+  app.get '/adm/call/schedule/:requestId*', loggedIn, admin, (req, r, next) ->
+    viewData.callSchedule req.params.requestId, (e, d) =>
       if e then return next e
-      r.render 'adm/schedule.html', d
-  app.get '/adm/schedule/edit/:requestId/call/:callId', loggedIn, schedule
-  app.get '/adm/schedule/:requestId', loggedIn, schedule
+      r.render 'adm/callSchedule.html', d
+  app.get '/adm/call/edit/:callId*', loggedIn, admin, (req, r, next) ->
+    viewData.callEdit req.params.callId, (e, d) =>
+      if e then return next e
+      r.render 'adm/callEdit.html', d
 
   # api
   require('./lib/api/users')(app)
@@ -78,6 +80,7 @@ module.exports = (app) ->
   require('./lib/api/settings')(app)
   require('./lib/api/paymethods')(app)
   require('./lib/api/marketingtags')(app)
+  require('./lib/api/videos')(app)
 
   app.get '/paypal/success/:id', loggedIn, (req, r, next) ->
     viewData.paypalSuccess req.params.id, req.user, (e, d) =>

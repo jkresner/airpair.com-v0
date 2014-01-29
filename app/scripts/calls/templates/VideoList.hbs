@@ -1,0 +1,14 @@
+{{#each recordings}}
+  <div>
+    <a href="http://youtu.be/{{data.id}}" target="_blank">
+      <img src="{{data.snippet.thumbnails.default.url}}" style="height:90px;"
+        alt="youtube thumbnail">
+      <br>
+      {{data.snippet.title}}
+    </a>
+    <br>{{data.status.privacyStatus}}
+    <br>{{data.snippet.channelTitle}} channel.
+    <br>{{data.liveStreamingDetails.actualLength}} long.
+    <br><button class="delete btn btn-danger" data-id="{{data.id}}">delete</button>
+  </div>
+{{/each}}

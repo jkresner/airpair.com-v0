@@ -2,10 +2,10 @@
 <div id="scheduled">
   {{#each calls}}
     <div class="call">
-      <!--
-      <a href="/adm/schedule/{{../_id}}/call/{{_id}}" title="edit call information">edit</a>
-      -->
-      <img src="{{expert.pic}}" alt="{{expert.name}}">
+      <a href="/adm/call/edit/{{_id}}" title="edit call information">
+        <span>edit</span>
+        <img src="{{expert.pic}}" alt="{{expert.name}}">
+      </a>
 
       <a href="{{gcal.htmlLink}}" class="dateTime" title="view on google calendar" target="_blank">
         {{{callDateTime datetime}}}
@@ -19,7 +19,10 @@
       <!-- <span class="label label-{{status}}">{{status}}</span> -->
 
       {{#each recordings}}
-      <a href="{{link}}" class="zocial youtube icon" target="_blank"></a>
+      <a href="http://youtu.be/{{data.id}}" target="_blank">
+        <img src="{{data.snippet.thumbnails.default.url}}"
+          class="youtubeThumbnail" alt="youtube thumbnail">
+      </a>
       {{/each}}
 
     </div>

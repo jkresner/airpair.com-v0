@@ -1,16 +1,15 @@
 async = require 'async'
+calendar = require './calendar'
+videos = require './videos'
+expertCredit = require '../../app/scripts/shared/mix/expertCredit'
+sum = require '../../app/scripts/shared/mix/sum'
+{ObjectId} = require('mongoose').Types
 
 OrdersSvc = new (require('./orders'))()
+RequestSvc = new (require './requests')()
 
 Order = new require '../models/order'
 Request = new require '../models/request'
-
-sum = require '../../app/scripts/shared/mix/sum'
-expertCredit = require '../../app/scripts/shared/mix/expertCredit'
-
-calendar = require './calendar'
-
-{ObjectId} = require('mongoose').Types
 
 module.exports = class RequestCallsService
 
@@ -108,6 +107,25 @@ module.exports = class RequestCallsService
     # adjust the order qtyRedeemedCallIds
 
   updateCms: (userId, data, callback) =>
+
+  update: (userId, requestId, call, callback) =>
+    RequestSvc.getById requestId, (err, request) =>
+      oldCall = _.find request.calls, (c) -> _.idsEqual c._id, call._id
+      if !oldCall then return callback new Error('no such call ' + call._id)
+
+      # pass in both old & new: it decides whether updates are truly needed
+      calendar.patch oldCall, call, (err, eventData) =>
+        oldCall.gcal = eventData
+        oldCall.recordings = call.recordings
+        oldCall.notes = call.notes
+        oldCall.datetime = call.datetime
+
+        ups = { calls: request.calls }
+        console.log 'update.ups = ', require('util').inspect(ups, depth: null)
+        RequestSvc.update requestId, ups, (err, newRequest) =>
+          if err then return callback err
+          newCall = _.find newRequest.calls, (c) -> _.idsEqual c._id, call._id
+          callback null, newCall
 
   ###
   Takes a list of orders and a call, removes all redeemedCalls from the orders

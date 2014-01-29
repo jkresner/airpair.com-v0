@@ -184,9 +184,22 @@ nav a.zocial { padding:0; }
 #adminboundpage .call img { height:70px; width:70px; }
 #adminboundpage .call .dateTime { width:70px;font-size:10px;clear:both;display:block;background:#d3d3d3 }
 #adminboundpage .call label { width:70px;font-size:10px;clear:both;display:block;margin-bottom:0;line-height:14px;background:#d3d3d3 }
+#adminboundpage .call a:first-child span {
+  display: none;
+}
+#adminboundpage .call a:first-child:hover span {
+  background-color: white;
+  display: initial;
+  opacity: 0.8;
+  position: absolute;
+  width: 70px;
+}
+#adminboundpage .call .youtubeThumbnail {
+  border-top: 1px solid yellow;
+}
 
 #schedulepage .expertPic { height: 60px; width: 60px;}
-#schedulepage .controls > .input-prepend { display: block; }
+#schedulepage .controls > a { vertical-align: text-bottom; }
 #schedulepage select[name="duration"] {
   width: 90px;
 }
@@ -212,6 +225,22 @@ nav a.zocial { padding:0; }
 #schedulepage button:disabled {
   background: darkgray;
   border: solid 3px gray;
+}
+#schedulepage #videos .list > div {
+  display: inline-block;
+
+  background-color: lightyellow;
+  padding: 10px;
+  border-radius: 4px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  border: 1px solid grey;
+}
+#schedulepage #videos .list > div .delete {
+  visibility: hidden;
+}
+#schedulepage #videos .list > div:hover .delete {
+  visibility: visible;
 }
 
 nav div { padding-top:6px;height:54px;width:1240px;margin:auto;border-bottom:solid 1px white; }

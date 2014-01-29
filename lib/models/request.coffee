@@ -37,8 +37,12 @@ Suggestion = new Schema
   customerRating:     Number
   customerFeedback:   String
 
+Recording = new Schema
+  type: { required: true, type: String }
+  data: { required: true, type: Mixed } # YouTube's API response
 
 Call = new Schema
+  # TODO index on subdocument id
   expertId:         { required: true, type: ObjectId, ref: 'Expert', index: true }
   type:             {
                       type: String,
@@ -51,7 +55,7 @@ Call = new Schema
   gcal:             { required: true, type: Mixed }
   # expert:           { required: true, type: {} }
   # hours:            { required: true, type: Number }
-  recordings:       { required: true, type: [{}] } # e.g. { link: "https://youtu.be/YT_ID_HERE" }
+  recordings:       { required: true, type: [Recording] }
   notes:            { required: true, type: String }
   # expertEndorsed:   String   # If the expert wants the session featured (or hidden)
   # expertReview:     {}   # Experts feedback on how the session went

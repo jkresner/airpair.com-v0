@@ -4,11 +4,10 @@ C = require './Collections'
 V = require './Views'
 
 module.exports = class Router extends S.AirpairSessionRouter
-  pushStateRoot: '/adm/schedule'
-
+  # logging: on
+  pushStateRoot: '/adm/call'
   routes:
-    # 'edit/:requestId/call/:callId': 'edit'
-    ':requestId': 'schedule'
+    'schedule/:requestId': 'schedule'
 
   appConstructor: (pageData, callback) ->
     requestId = pageData.request._id
@@ -22,13 +21,8 @@ module.exports = class Router extends S.AirpairSessionRouter
     v =
       scheduleFormView: new V.ScheduleFormView
         model: d.requestCall, request: d.request, collection: d.orders
-      # scheduledView: new V.ScheduledView
-        # model: d.requestCall, request: d.request, collection: d.orders
 
     @setOrFetch d.request, pageData.request
     @resetOrFetch d.orders, pageData.orders
 
     _.extend d, v
-
-  # edit: (requestId, callId) ->
-  #   @app.requestCall.set({ requestId: requestId, _id: callId })

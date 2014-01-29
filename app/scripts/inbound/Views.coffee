@@ -392,8 +392,4 @@ class exports.RequestView extends BB.ModelSaveView
 Handlebars.registerPartial "RequestSet", require('./templates/RequestsSet')
 Handlebars.registerPartial "MailSignature", require('./../../mail/signature')
 
-Handlebars.registerHelper "callDateTime", (utcDateString) ->
-  day = moment utcDateString
-  day.format("DD MMM <b>HH:mm</b>")
-
 module.exports = exports

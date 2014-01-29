@@ -1,5 +1,5 @@
 {owner2name} = require '../identity/roles'
-gcalCreate = require '../gcal/create'
+google = require('./wrappers/google')
 ONE_HOUR = 3600000 # milliseconds
 
 owner2colorIndex =
@@ -54,7 +54,31 @@ class CalendarService
         on your system. Please let #{owner2name[owner]} know if you'd like to do
         a dry run."""
 
-    gcalCreate body, cb
-  # edit:
+    # don't show test data up in people's calendars
+    if !cfg || !cfg.isProd
+      body.attendees = body.attendees.map (o) ->
+        o.email = o.email.replace('@', 'AT') + '@example.com'
+        o
+
+    # only development and prod will make events, in their respective calendars
+    if cfg.env is 'test'
+      return cb null, { htmlLink: 'http://example.com/google-calendar-link' }
+
+    google.createEvent body, cb
+
+  patch: (oldCall, newCall, cb) ->
+    if oldCall.datetime.getTime() == newCall.datetime.getTime()
+      console.log 'datetime unchanged'
+      return process.nextTick ->
+        cb null, oldCall.gcal
+
+    eventId = oldCall.gcal.id
+    start = newCall.datetime
+    body =
+      start:
+        dateTime: start.toISOString()
+      end:
+        dateTime: addTime(start, oldCall.duration * ONE_HOUR).toISOString()
+    google.patchEvent eventId, body, cb
 
 module.exports = new CalendarService()

@@ -47,7 +47,7 @@ module.exports = class ViewDataService
         request:    JSON.stringify r
         tagsString: if r? then util.tagsString(r.tags) else 'Not found'
 
-  schedule: (requestId, callback) ->
+  callSchedule: (requestId, callback) ->
     tasks =
       request: (cb) -> rSvc.getById requestId, cb
       orders: (cb) -> oSvc.getByRequestId requestId, cb
@@ -57,6 +57,13 @@ module.exports = class ViewDataService
       callback null,
         request: JSON.stringify results.request
         orders: JSON.stringify results.orders
+
+  callEdit: (callId, callback) ->
+    rSvc.getByCallId callId, (err, request) ->
+      oSvc.getByRequestId request._id, (e, orders) ->
+        callback null,
+          request: JSON.stringify request
+          orders: JSON.stringify orders
 
   book: (id, usr, callback) ->
     eSvc.getById id, (e, r) =>

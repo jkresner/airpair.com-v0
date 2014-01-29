@@ -1,0 +1,129 @@
+<div class="form-actions admin-nav">
+  <a class="btn" href="/adm/inbound/request/{{requestId}}">Back</a>
+</div>
+<h2>Edit Call</h2>
+{{#expert}}
+  <img src="{{pic}}" alt="{{name}}" draggable="false" class="expertPic">
+  <br />
+  {{name}}
+
+<fieldset>
+  <!--
+  <div class="control-group">
+    <label class="control-label" for="type">Type (previously: {{../type}})</label>
+    <div class="controls">
+      <select name="type">
+        {{#each credit.byTypeArray}}
+          <option {{#selected}}selected{{/selected}} value="{{type}}">{{type}}</option>
+        {{/each}}
+      </select>
+    </div>
+  </div>
+  -->
+
+  <div class="datetimeduration">
+    <div class="control-group">
+      <label class="control-label" for="duration">Duration</label>
+      <div class="controls">
+        <select name="duration">
+          <option disabled value="{{../duration}}">
+            {{../duration}} {{inflect ../duration "hour" "hours"}}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="date">Timezone / Date / Time
+        (previously {{{callDateTime ../datetime}}})</label>
+      <div class="controls">
+        <select name="timezone" class="input-mini">
+          <option value="PST" selected>PST</option>
+        </select>
+        <input name="date" type="text" class="datepicker input-medium"
+          value="{{../date}}" placeholder="pick a date">
+        <select name="time">
+          <option value="00:00" {{#is ../time '00:00'}}selected{{/is}}>00:00</option>
+          <option value="00:30" {{#is ../time '00:30'}}selected{{/is}}>00:30</option>
+          <option value="01:00" {{#is ../time '01:00'}}selected{{/is}}>01:00</option>
+          <option value="01:30" {{#is ../time '01:30'}}selected{{/is}}>01:30</option>
+          <option value="02:00" {{#is ../time '02:00'}}selected{{/is}}>02:00</option>
+          <option value="02:30" {{#is ../time '02:30'}}selected{{/is}}>02:30</option>
+          <option value="03:00" {{#is ../time '03:00'}}selected{{/is}}>03:00</option>
+          <option value="03:30" {{#is ../time '03:30'}}selected{{/is}}>03:30</option>
+          <option value="04:00" {{#is ../time '04:00'}}selected{{/is}}>04:00</option>
+          <option value="04:30" {{#is ../time '04:30'}}selected{{/is}}>04:30</option>
+          <option value="05:00" {{#is ../time '05:00'}}selected{{/is}}>05:00</option>
+          <option value="05:30" {{#is ../time '05:30'}}selected{{/is}}>05:30</option>
+          <option value="06:00" {{#is ../time '06:00'}}selected{{/is}}>06:00</option>
+          <option value="06:30" {{#is ../time '06:30'}}selected{{/is}}>06:30</option>
+          <option value="07:00" {{#is ../time '07:00'}}selected{{/is}}>07:00</option>
+          <option value="07:30" {{#is ../time '07:30'}}selected{{/is}}>07:30</option>
+          <option value="08:00" {{#is ../time '08:00'}}selected{{/is}}>08:00</option>
+          <option value="08:30" {{#is ../time '08:30'}}selected{{/is}}>08:30</option>
+          <option value="09:00" {{#is ../time '09:00'}}selected{{/is}}>09:00</option>
+          <option value="09:30" {{#is ../time '09:30'}}selected{{/is}}>09:30</option>
+          <option value="10:00" {{#is ../time '10:00'}}selected{{/is}}>10:00</option>
+          <option value="10:30" {{#is ../time '10:30'}}selected{{/is}}>10:30</option>
+          <option value="11:00" {{#is ../time '11:00'}}selected{{/is}}>11:00</option>
+          <option value="11:30" {{#is ../time '11:30'}}selected{{/is}}>11:30</option>
+          <option value="12:00" {{#is ../time '12:00'}}selected{{/is}}>12:00</option>
+          <option value="12:30" {{#is ../time '12:30'}}selected{{/is}}>12:30</option>
+          <option value="13:00" {{#is ../time '13:00'}}selected{{/is}}>13:00</option>
+          <option value="13:30" {{#is ../time '13:30'}}selected{{/is}}>13:30</option>
+          <option value="14:00" {{#is ../time '14:00'}}selected{{/is}}>14:00</option>
+          <option value="14:30" {{#is ../time '14:30'}}selected{{/is}}>14:30</option>
+          <option value="15:00" {{#is ../time '15:00'}}selected{{/is}}>15:00</option>
+          <option value="15:30" {{#is ../time '15:30'}}selected{{/is}}>15:30</option>
+          <option value="16:00" {{#is ../time '16:00'}}selected{{/is}}>16:00</option>
+          <option value="16:30" {{#is ../time '16:30'}}selected{{/is}}>16:30</option>
+          <option value="17:00" {{#is ../time '17:00'}}selected{{/is}}>17:00</option>
+          <option value="17:30" {{#is ../time '17:30'}}selected{{/is}}>17:30</option>
+          <option value="18:00" {{#is ../time '18:00'}}selected{{/is}}>18:00</option>
+          <option value="18:30" {{#is ../time '18:30'}}selected{{/is}}>18:30</option>
+          <option value="19:00" {{#is ../time '19:00'}}selected{{/is}}>19:00</option>
+          <option value="19:30" {{#is ../time '19:30'}}selected{{/is}}>19:30</option>
+          <option value="20:00" {{#is ../time '20:00'}}selected{{/is}}>20:00</option>
+          <option value="20:30" {{#is ../time '20:30'}}selected{{/is}}>20:30</option>
+          <option value="21:00" {{#is ../time '21:00'}}selected{{/is}}>21:00</option>
+          <option value="21:30" {{#is ../time '21:30'}}selected{{/is}}>21:30</option>
+          <option value="22:00" {{#is ../time '22:00'}}selected{{/is}}>22:00</option>
+          <option value="22:30" {{#is ../time '22:30'}}selected{{/is}}>22:30</option>
+          <option value="23:00" {{#is ../time '23:00'}}selected{{/is}}>23:00</option>
+          <option value="23:30" {{#is ../time '23:30'}}selected{{/is}}>23:30</option>
+        </select>
+        <a href="{{../gcal.htmlLink}}" target="_blank">
+          <i class="icon-calendar icon"></i> Event
+        </a>
+      </div>
+    </div>
+  </div> <!-- end .datetimeduration -->
+
+  <!-- TODO someday sync this with the gcal RSVPs.
+  <div class="control-group">
+    <label class="control-label" for="duration">Status (previously: {{../status}})</label>
+    <div class="controls">
+      <select name="status">
+        {{#each statuses}}
+        <option value="{{status}}" {{#selected}}selected{{/selected}}>{{status}}</option>
+        {{/each}}
+      </select>
+    </div>
+  </div> -->
+  <div class="control-group">
+    <label class="control-label" for="duration">Notes</label>
+    <div class="controls">
+      <textarea name="notes" class="input-xxlarge">{{../notes}}</textarea>
+    </div>
+  </div>
+{{/expert}}
+
+  {{#if errors}}
+  <div class="alert-error">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <h4>Error</h4>
+    {{#each errors}}
+      Invalid {{param}}<br>
+    {{/each}}
+  </div>
+  {{/if}}
+</fieldset>
