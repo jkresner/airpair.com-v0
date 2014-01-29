@@ -4,12 +4,12 @@ f = data.fixtures
 request = _.clone(data.requests[10])  #Bruce Christie
 
 storySteps = [
-  { app:'settings', usr:'bchristie', frag: '#', fixture: f.settings, pageData: { stripePK: 'pk_test_aj305u5jk2uN1hrDQWdH0eyl' } }
-  { app:'request', usr:'bchristie', frag: '#', fixture: f.request, pageData: {} }
-  { app:'inbound', usr:'admin', frag: '#', fixture: f.inbound, pageData: { experts: data.experts, tags: data.tags } }
-  { app:'review', usr:'bchristie', frag: '#rId', fixture: f.review, pageData: {} }
-  { app:'schedule', usr: 'admin', frag: '#/schedule/rId', fixture: f.schedule, pageData: { request: request, orders: data.orders[2] } }
-  { app:'orders', usr: 'admin', frag: '#', fixture: f.orders, pageData: {} }
+  { app:'settings/Router', usr:'bchristie', frag: '#', fixture: f.settings, pageData: { stripePK: 'pk_test_aj305u5jk2uN1hrDQWdH0eyl' } }
+  { app:'request/Router', usr:'bchristie', frag: '#', fixture: f.request, pageData: {} }
+  { app:'inbound/Router', usr:'admin', frag: '#', fixture: f.inbound, pageData: { experts: data.experts, tags: data.tags } }
+  { app:'review/Router', usr:'bchristie', frag: '#rId', fixture: f.review, pageData: {} }
+  { app:'calls/RouterSchedule', usr: 'admin', frag: '#/schedule/rId', fixture: f.schedule, pageData: { request: request, orders: data.orders[2] } }
+  { app:'orders/Router', usr: 'admin', frag: '#', fixture: f.orders, pageData: {} }
 ]
 
 testNum = -1
@@ -26,7 +26,7 @@ describe "Stories: Bruce Christie", ->
     testNum++
     hlpr.cleanSetup @, storySteps[testNum].fixture
     window.location = storySteps[testNum].frag.replace 'rId', @rId
-    hlpr.setInitApp @, "/scripts/#{storySteps[testNum].app}/Router"
+    hlpr.setInitApp @, "/scripts/#{storySteps[testNum].app}"
     hlpr.setSession storySteps[testNum].usr, =>
       # $log 'app', storySteps[testNum].app, storySteps[testNum].pageData
       initApp(storySteps[testNum].pageData, done)
@@ -142,8 +142,8 @@ describe "Stories: Bruce Christie", ->
 
   it 'can schedule a call as admin', (done) ->
     this.timeout 20000
-    {request, orders, scheduleFormView} = @app
-    v = scheduleFormView
+    {request, orders, callScheduleView} = @app
+    v = callScheduleView
 
     radios = v.$('input:radio')
     expect(radios.length).to.equal 1 # shouldnt show other expert b/c no hours
