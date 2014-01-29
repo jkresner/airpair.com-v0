@@ -1,5 +1,5 @@
-
 <article class="entry">
+
   <span class="alignright social-icons">
     {{#with expert}}
       {{#if gh}}<a href="//github.com/{{ gh.username }}" target="_blank" class="github"></a>{{/if}}
@@ -15,8 +15,13 @@
   <header class="entry-header">
     <h2 class="entry-title"><span class="label label-status label-{{ expertStatus }}">{{ expertStatus }}</span></h2>
     <span class="entry-author">
-      {{#if expert.homepage}}<a href="http://{{ homepage }}" target="_blank" class="guest">{{expert.name}}</a>
-      {{else}}{{expert.name}}{{/if}}
+      {{#if expert.homepage}}
+        <a href="http://{{expert.homepage}}" target="_blank" class="guest">
+          {{expert.name}}
+        </a>
+      {{else}}
+        {{expert.name}}
+      {{/if}}
     </span>
     {{#if isCustomer}}
     <label>${{ rates.total }} p.h.</label>
