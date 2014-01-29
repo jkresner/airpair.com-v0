@@ -15,7 +15,7 @@ class TagsApi
 
   create: (req, res, next) =>
     @svc.create req.body.addMode, req.body, (e, r) ->
-      if e?
+      if e
         res.send 400, { errors: { message: e.message } }
       else
         res.send r
