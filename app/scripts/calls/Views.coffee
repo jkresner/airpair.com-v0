@@ -1,6 +1,7 @@
 exports = {}
 BB = require './../../lib/BB'
 M = require './Models'
+C = require './Collections'
 SV = require './../shared/Views'
 expertCredit = require '../shared/mix/expertCredit'
 parseYoutubeId = require '../shared/mix/parseYoutubeId'
@@ -86,22 +87,26 @@ class exports.VideosView extends BB.ModelSaveView
     'click .fetch': 'fetch'
     'click .delete': 'delete'
   initialize: ->
-    # NOTE: model doesn't have server state; it hits video API & shows errors
+    # model doesn't have server state; it hits video API & shows errors
     @model = new M.Video()
-    @$el.html @form()
-    @recordings = @requestCall.get('recordings') || []
-    @render()
+    @collection = new C.Videos() # collection only used to display videolist
+    @listenTo @collection, 'reset add remove', @render
+
+    @$el.html @tmplForm()
+    @collection.set @requestCall.get('recordings') || []
   render: ->
-    data = @recordings.map (r) ->
+    recordings = @collection.toJSON().map (r) ->
       details = r.data.liveStreamingDetails
       start = moment(details.actualStartTime)
       end = moment(details.actualEndTime)
       len = moment.duration(end.diff(start))
       details.actualLength = len.hours() + 'h ' + len.minutes() + 'm'
       r
-    @$('.list').html @tmpl { recordings: data }
+    @$('.list').html @tmpl { recordings }
+    @
   fetch: (e) ->
     e.preventDefault()
+    @renderInputsValid()
     $(e.target).attr('disabled', true)
     input = @elm('youtube')
     youtubeId = parseYoutubeId(input.val())
@@ -112,24 +117,17 @@ class exports.VideosView extends BB.ModelSaveView
   renderSuccess: (model, response, options) =>
     @$('.fetch').attr('disabled', false)
     @elm('youtube').val('')
-    @_upsertRecording(@model.toJSON())
-    @render()
+    recording = { data: @model.toJSON(), type: 'youtube' }
+    existing = @collection.getByYoutubeId(recording.data.id)
+    if existing then return existing.set recording
+    @collection.add recording
   renderError: (model, response, options) =>
     @$('.fetch').attr('disabled', false)
     super model, response, options
-  _upsertRecording: (videoData) =>
-    youtubeId = videoData.id
-    found = false
-    for r, i in @recordings
-      if r.data.id == youtubeId
-        @recordings[i].data = videoData
-        found = true
-    if !found then @recordings.push { data: videoData, type: 'youtube' }
   delete: (e) ->
     youtubeId = $(e.target).data('id')
-    # keep only those that dont match the id
-    @recordings = _.filter @recordings, (r) -> r.data.id != youtubeId
-    @render()
+    recording = @collection.getByYoutubeId(youtubeId)
+    @collection.remove recording
 
 class exports.CallEditView extends BB.ModelSaveView
   async: off
@@ -169,7 +167,7 @@ class exports.CallEditView extends BB.ModelSaveView
     @
   getViewData: ->
     d = @getValsFromInputs @viewData
-    d.recordings = @videosView.recordings
+    d.recordings = @videosView.collection.toJSON()
     d
   # prevents double-saves, provides feedback that request is in progress.
   _save: (e) ->
