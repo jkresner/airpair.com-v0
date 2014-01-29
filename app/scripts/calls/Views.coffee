@@ -87,7 +87,7 @@ class exports.VideosView extends BB.ModelSaveView
     'click .fetch': 'fetch'
     'click .delete': 'delete'
   initialize: ->
-    @listenTo @requestCall, 'change:recordings', =>
+    @requestCall.once 'change:recordings', =>
       @collection.set @requestCall.get('recordings')
     @listenTo @collection, 'reset add remove', @render
     @$el.html @tmplForm()

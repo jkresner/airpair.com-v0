@@ -15,7 +15,6 @@ module.exports = class Router extends S.AirpairSessionRouter
       request: new M.Request _id: requestId
       requestCall: new M.RequestCall
       orders: new C.Orders
-
       video: new M.Video() # model only used to hits video API & shows errors
       videos: new C.Videos() # collection only used to display videolist
     d.requestCall.requestId = requestId
