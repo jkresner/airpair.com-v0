@@ -15,12 +15,17 @@ module.exports = class Router extends S.AirpairSessionRouter
       request: new M.Request _id: requestId
       requestCall: new M.RequestCall
       orders: new C.Orders
+
+      video: new M.Video() # model only used to hits video API & shows errors
+      videos: new C.Videos() # collection only used to display videolist
     d.requestCall.requestId = requestId
     d.orders.requestId = requestId
 
     v =
+      videosView: new V.VideosView
+        model: d.video, collection: d.videos, requestCall: d.requestCall,
       callEditView: new V.CallEditView
-        model: d.requestCall, request: d.request, collection: d.orders
+        model: d.requestCall, request: d.request, collection: d.orders, videos: d.videos
 
     @setOrFetch d.request, pageData.request
     @resetOrFetch d.orders, pageData.orders

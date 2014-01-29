@@ -87,13 +87,10 @@ class exports.VideosView extends BB.ModelSaveView
     'click .fetch': 'fetch'
     'click .delete': 'delete'
   initialize: ->
-    # model doesn't have server state; it hits video API & shows errors
-    @model = new M.Video()
-    @collection = new C.Videos() # collection only used to display videolist
+    @listenTo @requestCall, 'change:recordings', =>
+      @collection.set @requestCall.get('recordings')
     @listenTo @collection, 'reset add remove', @render
-
     @$el.html @tmplForm()
-    @collection.set @requestCall.get('recordings') || []
   render: ->
     recordings = @collection.toJSON().map (r) ->
       details = r.data.liveStreamingDetails
@@ -107,10 +104,10 @@ class exports.VideosView extends BB.ModelSaveView
   fetch: (e) ->
     e.preventDefault()
     @renderInputsValid()
-    $(e.target).attr('disabled', true)
     input = @elm('youtube')
     youtubeId = parseYoutubeId(input.val())
     if !youtubeId then return
+    $(e.target).attr('disabled', true)
     input.val(youtubeId)
     @model.youtubeId = youtubeId
     @model.fetch { success: @renderSuccess, error: @renderError }
@@ -160,14 +157,12 @@ class exports.CallEditView extends BB.ModelSaveView
     # TODO call.status
     d = _.extend call, { expert, requestId: @request.id }
     @$('.datepicker').stop()
-    @$el.html @tmpl d
+    @$('#callEdit').html @tmpl d
     @$('.datepicker').pickadate()
-    # VideosView depends on html templated by CallEditView
-    @videosView = new exports.VideosView { requestCall: @model }
     @
   getViewData: ->
     d = @getValsFromInputs @viewData
-    d.recordings = @videosView.collection.toJSON()
+    d.recordings = @videos.toJSON()
     d
   # prevents double-saves, provides feedback that request is in progress.
   _save: (e) ->
