@@ -67,7 +67,7 @@ class CalendarService
     google.createEvent body, cb
 
   patch: (oldCall, newCall, cb) ->
-    if oldCall.datetime == newCall.datetime
+    if oldCall.datetime.getTime() == newCall.datetime.getTime()
       console.log 'datetime unchanged'
       return process.nextTick ->
         cb null, oldCall.gcal
