@@ -53,9 +53,8 @@ if c.env is 'prod'
     # team@ Air Pairings Calendar
     calendarId: 'airpair.co_19t01n0gd6g7548k38pd3m5bm0@group.calendar.google.com'
 
-  # TODO generate a new one for team@airpair.com once the PR is totally done
-  # refresh token for team@ with only gcal scope
-  c.google.tokens.refresh_token = '1/LYtNYz8ULvadUtjdWLEVy3vJeTB57blL75fGz87j5Uw'
+  # refresh token for team@ with gcal & youtube scope
+  c.google.tokens.refresh_token = '1/g6UgiRz90-E2T_rS1gxivGnO3drqb11sri_1WOqHwr8'
 
 # option to overwrite in staging etc.
 c.oauthHost = process.env.oauthHost if process.env.oauthHost?
