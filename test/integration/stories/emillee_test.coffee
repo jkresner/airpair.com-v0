@@ -67,7 +67,7 @@ describe "Stories: Emil Lee", ->
     @app.requests.once 'sync', =>
       $row = requestsView.$("##{@rId}")
       expect($row.find('.label-received').html()).to.equal 'received'
-      expect($row.find('.btn-info').attr('href')).to.equal "/review/#{@rId}"
+      expect($row.find('.view').attr('href')).to.equal "/review/#{@rId}"
       expect($row.find('.edit').attr('href')).to.equal "/find-an-expert/edit/#{@rId}"
       done()
 

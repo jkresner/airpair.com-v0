@@ -13,10 +13,15 @@ class OrdersApi
 
   constructor: (app, route) ->
     app.post    "/api/#{route}", loggedIn, @create
+    app.get     "/api/#{route}", loggedIn, @list
     app.get     "/api/admin/#{route}", admin, @adminList
     app.get     "/api/#{route}/request/:id", admin, @getByRequestId
     app.put     "/api/#{route}/:id", admin, @update
     app.delete  "/api/#{route}/:id", admin, @delete
+
+  list: (req, res, next) =>
+    # TODO take out sensitive data
+    @svc.getAll cSend(res, next)
 
   adminList: (req, res, next) =>
     @svc.getAll cSend(res, next)

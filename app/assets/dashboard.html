@@ -1,60 +1,81 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>airpair, dashboard</title>
-    <meta name="viewport" content="width=device-width">
-    <link rel="stylesheet" href="/stylesheets/app.css">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Dashboard | AirPair</title>
+  <meta name="viewport" content="width=device-width">
+  {{> siteStyles }}
 </head>
 
 <body id="dashboardpage">
 
-  <nav>
-    <div>
-      <a class="logo" href="/" title="Pair programming, code review, architecture advice & more..."></a>
+  <div class="site-container">
 
-      <div class="navbar">
+    {{> siteNav }}
 
-        <div class="contactus">
-          | (800) 487-0668
-        </div>
+    <div class="site-inner">
+      <div class="wrap">
 
-        <div class="navbar-inner">
-          <ul class="nav">
-            <li class="active"><a href="/dashboard">Dashboard</a></li>
-            <li class="divider-vertical"></li>
-            <li><a href="/find-an-expert">New request</a></li>
-            <li class="divider-vertical"></li>
-            <li><a href="/be-an-expert">Expert profile</a></li>
-            <li class="divider-vertical"></li>
-            <li><a href="/settings">Settings</a></li>
-            <li class="divider-vertical"></li>
-            <li><a href="/logout">Logout</a></li>
-          </ul>
-        </div>
+          <div id="requests" class="route">
+            <div class="content-sidebar-wrap">
+              <main class="content">
+                <article class="post type-post format-standard entry">
+
+                  <div id="requestslist"></div>
+
+                </article>
+              </main>
+            </div>
+
+            <aside class="sidebar sidebar-primary widget-area">
+              <section class="widget featured-content featuredpost">
+                <div class="widget-wrap">
+                  <!-- <h4 class="widget-title widgettitle">FAQ</h4> -->
+
+                  <article class="entry">
+                    <header class="entry-header">
+                      <h2 class="entry-title">Calls</h2>
+                      <p class="entry-meta">
+                        Upcoming and past AirPair Sessions
+                      </p>
+                    </header>
+                    <div class="entry-content">
+                      <div id="callslist"></div>
+                    </div>
+                  </article>
+
+                  <article class="entry">
+                    <header class="entry-header">
+                      <h2 class="entry-title">Orders</h2>
+                      <p class="entry-meta">
+                        Thanks for investing your money in our service!
+                      </p>
+                    </header>
+
+                    <div class="entry-content">
+                      <div id="orderslist"></div>
+                    </div>
+
+                  </article>
+
+                </div>
+              </section>
+            </aside>
+
+          </div>
+
       </div>
-
     </div>
-  </nav>
-
-  <div id="requests" class="route">
-    <div id="requestslist"></div>
-    <div class="rightCol">
-
-      <h2 style="margin-top:40px">Follow us</h2>
-      <br />
-      <div class="social">
-
-        <a class="zocial twitter icon" href="http://twitter.com/airpair" target="_blank"></a> <a class="zocial facebook icon" href="http://facebook.com/airpair" target="_blank"></a>
-        <a class="zocial angellist icon" href="http://angel.co/airpair" target="_blank"></a>
-        <a class="zocial googleplus icon" href="https://plus.google.com/105075583437166504731" target="_blank"></a>
-
-      </div>
-
-    </div>
-
   </div>
+
+  <!--
+  <p>
+    <a class="zocial twitter icon" href="http://twitter.com/airpair" target="_blank"></a> <a class="zocial facebook icon" href="http://facebook.com/airpair" target="_blank"></a> <a class="zocial angellist icon" href="http://angel.co/airpair" target="_blank"></a> <a class="zocial googleplus icon" href="https://plus.google.com/105075583437166504731" target="_blank"></a>
+  </p>
+  -->
+
+  {{> siteFooter }}
 
 </body>
 
@@ -62,13 +83,14 @@
     window.useOlark = true;
     window.useUserVoice = true;
     function initApp() {
-      if (window.location.host == "www.airpair.com" && window.location.protocol != 'https:')
-      {
+      var http = window.location.host == "www.airpair.com"
+        && window.location.protocol != 'https:'
+      if (http) {
         window.location = "https://www.airpair.com/dashboard";
-      }
-      else
-      {
-        var pageData = {};
+      } else {
+        var pageData = {
+          orders: {{{ orders }}}
+        };
         Router = require('/scripts/dashboard/Router');
         window.router = new Router(pageData);
       }

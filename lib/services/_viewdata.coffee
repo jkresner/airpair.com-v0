@@ -54,6 +54,14 @@ module.exports = class ViewDataService
         request:    JSON.stringify r
         tagsString: if r? then util.tagsString(r.tags) else 'Not found'
 
+  dashboard: (usr, callback) ->
+    # TODO filter out the sensitive info, like our margins.
+    oSvc.getByUserId usr._id, (e, orders) =>
+      if e then return callback e
+      callback null,
+        session: @session usr
+        orders: JSON.stringify orders
+
   callSchedule: (usr, requestId, callback) ->
     tasks =
       request: (cb) -> rSvc.getById requestId, cb

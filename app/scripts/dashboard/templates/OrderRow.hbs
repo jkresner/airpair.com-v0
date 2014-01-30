@@ -1,0 +1,12 @@
+<td>
+  {{#each lineItems}}
+    <img src="{{suggestion.expert.pic}}" style="height: 40px; float:left; margin-right: 10px">
+    {{suggestion.expert.name}}<br>
+    {{type}} {{qty}}x{{unitPrice}}
+    <br>
+    <br>
+  {{/each}}
+</td>
+<td>{{created}}</td>
+<td>{{paymentStatus}}</td>
+<td>${{total}}</td>

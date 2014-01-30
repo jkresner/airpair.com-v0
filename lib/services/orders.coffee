@@ -183,6 +183,11 @@ module.exports = class OrdersService extends DomainService
         if ee then return callback ee
         callback null, status: 'deleted'
 
+  getByUserId: (userId, callback) =>
+    query = userId: userId
+    sort = utc: 'asc'
+    @search(query).sort(sort).exec callback
+
   # oldest orders first (smallest timestamp -> biggest timestamp)
   getByRequestId: (requestId, callback) =>
     query = requestId: requestId

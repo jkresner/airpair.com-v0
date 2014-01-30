@@ -16,6 +16,10 @@ a.button { background-color:#CE5323;text-align:center;width:100%;color:#FFFFFF;f
 a.secondary { background-color:#000000!important;color:white!important; }
 .login a { background-color:#000000!important;color:white!important;line-height:14px }
 
+#dashboardpage main.content { width: 640px; }
+#dashboardpage aside.sidebar { width: 460px; }
+#dashboardpage .button.tiny { width: auto; padding-left: 8px; padding-right: 8px;}
+
 #requestpage .site-inner { min-height:900px }
 #requestpage nav.nav-header { display:none }
 #requestpage article.entry { padding-bottom:0; }
