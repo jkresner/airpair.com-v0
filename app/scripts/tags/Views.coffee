@@ -69,6 +69,7 @@ class exports.TagNewForm extends BB.ModelSaveView
     @model.clear()
     @model.set addMode: mode
     @save e
+    false
   renderSuccess: (model, response, options) =>
     @$('input').val ''
     @selected.toggleTag model.toJSON()
