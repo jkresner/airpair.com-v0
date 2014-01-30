@@ -63,7 +63,7 @@ a.secondary { background-color:#000000!important;color:white!important; }
 #requestpage #requestForm #tagNewForm a { margin-left:5px; }
 #requestpage #requestForm .stackoverflow { background: none; }
 #requestpage #requestForm .stackoverflow input { width: 175px; }
-#requestpage #requestForm .stackoverflow img { position: relative; top: 6px; }
+#requestpage #requestForm .stackoverflow img { position: relative; top: -6px; border-radius: 4px; }
 #requestpage #requestForm .budgetExplanation { float:right;margin-right:14px;display:none;padding-top:2px;font-size:14px; }
 #requestpage #requestForm .budgetExplanation b { font-style:italic;color:#CC523E; }
 #requestpage .ap-team p { padding:0 3px; }
