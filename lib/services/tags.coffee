@@ -16,24 +16,23 @@ module.exports = class TagsService extends DomainService
 
 
   create: (addMode, tag, callback) ->
-    #console.log 'create', 'addMode', addMode
+    # console.log 'create', 'addMode', addMode
     if addMode is 'stackoverflow' then @getStackoverflowTag(tag, callback)
     else if addMode is 'github' then @getGithubRepo(tag, callback)
     else @model( tag ).save callback
 
   getStackoverflowTag: (tag, callback) =>
     encoded = encodeURIComponent tag.nameStackoverflow
-
     request
       .get("http://api.stackexchange.com/tags/#{encoded}/wikis?site=stackoverflow")
-      .end (sres) =>
+      .end (res) =>
+        error = new Error "tag #{tag.nameStackoverflow} not found"
 
-        error = { e: { message: "tag #{tag.nameStackoverflow} not found" } }
-        if not sres.ok then return callback error
+        if !res.ok then return callback error
 
-        d = sres.body.items[0]
+        d = res.body.items[0]
 
-        if not d? then return callback error
+        if !d then return callback error
 
         update =
           name: d.tag_name
