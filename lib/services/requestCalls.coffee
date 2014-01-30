@@ -51,13 +51,12 @@ module.exports = class RequestCallsService
 
         lineItem.redeemedCalls.push redeemedCall
         modified.push order
-        order.markModified 'lineItems'
         done = allocatedSoFar == call.duration
     modified
 
   _saveOrdersWithCallDuration: (orders, callback) =>
     saveOrder = (order, cb) ->
-      update = $set: { lineItems: order.toJSON().lineItems }
+      update = $set: { lineItems: order.lineItems }
       Order.findByIdAndUpdate order._id, update, cb
     async.map orders, saveOrder, callback
 
@@ -66,13 +65,12 @@ module.exports = class RequestCallsService
 
   create: (userId, requestId, call, callback) =>
     call.status = 'pending'
-
-    # change oldest orders first
     OrdersSvc.getByRequestId requestId, (err, orders) =>
+      if err then return callback err
+      # change oldest orders first
       orders = orders.sort(@_byUtc)
 
-      if err then return callback err
-      Request.findOne({ _id: requestId }).exec (err, request) =>
+      Request.findOne({ _id: requestId }).lean().exec (err, request) =>
         if err then return callback err
 
         if !@_canScheduleCall orders, call
@@ -85,7 +83,7 @@ module.exports = class RequestCallsService
         # we make the gcal event first, because we need to put the event info
         # into the call object, and it is fiddly to get out the correct call
         # after it's been inserted into the calls array.
-        calendar.create request.toJSON(), call, (err, eventData) =>
+        calendar.create request, call, (err, eventData) =>
           if err then return callback err
           call.gcal = eventData
 
@@ -108,24 +106,56 @@ module.exports = class RequestCallsService
 
   updateCms: (userId, data, callback) =>
 
+  getOrdersByRequestIdWithoutCall: (requestId, callId, callback) =>
+    OrdersSvc.getByRequestId requestId, (e, orders) =>
+      if e then return callback e
+      callback null, @_unschedule orders, callId
+
+  # TODO this is going to look way different once we start completing calls
+  # when they have a youtube video. We'll be passing old & new orders around.
   update: (userId, requestId, call, callback) =>
-    RequestSvc.getById requestId, (err, request) =>
+    RequestSvc.getById(requestId).lean().exec (err, request) =>
       oldCall = _.find request.calls, (c) -> _.idsEqual c._id, call._id
       if !oldCall then return callback new Error('no such call ' + call._id)
 
-      # pass in both old & new: it decides whether updates are truly needed
-      calendar.patch oldCall, call, (err, eventData) =>
-        oldCall.gcal = eventData
-        oldCall.recordings = call.recordings
-        oldCall.notes = call.notes
-        oldCall.datetime = call.datetime
+      @_updateDuration requestId, oldCall, call.duration, (err) =>
+        if err then return callback err
 
-        ups = { calls: request.calls }
-        console.log 'update.ups = ', require('util').inspect(ups, depth: null)
-        RequestSvc.update requestId, ups, (err, newRequest) =>
-          if err then return callback err
-          newCall = _.find newRequest.calls, (c) -> _.idsEqual c._id, call._id
-          callback null, newCall
+        # pass in both old & new: it decides whether updates are truly needed
+        calendar.patch oldCall, call, (err, eventData) =>
+          oldCall.gcal = eventData
+          oldCall.recordings = call.recordings
+          oldCall.notes = call.notes
+          oldCall.datetime = call.datetime
+          oldCall.duration = call.duration
+
+          ups = { calls: request.calls }
+          console.log 'update.ups = ', require('util').inspect(ups, depth: null)
+          RequestSvc.update requestId, ups, (err, newRequest) =>
+            if err then return callback err
+            newCall = _.find newRequest.calls, (c) -> _.idsEqual c._id, call._id
+            callback null, newCall
+
+  _updateDuration: (requestId, oldCall, newDuration, callback) =>
+    if oldCall.duration == newDuration
+      console.log 'duration unchanged'
+      return process.nextTick callback
+
+    OrdersSvc.getByRequestId requestId, (err, orders) =>
+      if err then return callback err
+      # change oldest orders first
+      orders = orders.sort(@_byUtc)
+
+      ordersWithoutCall = @_unschedule orders, oldCall._id
+
+      callWithNewDuration = _.clone oldCall
+      callWithNewDuration.duration = newDuration
+      if !@_canScheduleCall ordersWithoutCall, callWithNewDuration
+        message = 'Not enough hours: cannot change call duration'
+        return callback new Error message
+
+      modifiedOrders = @_modifyOrdersWithCallDuration ordersWithoutCall, callWithNewDuration
+      @_saveOrdersWithCallDuration modifiedOrders, callback
 
   ###
   Takes a list of orders and a call, removes all redeemedCalls from the orders
@@ -135,14 +165,18 @@ module.exports = class RequestCallsService
   _modifyOrdersWithCallDuration as though it were a totally new call.
 
   TODO: _unschedule will lose the qtyCompleted count on the redeemedCalls, bad.
+  But this is actually OK because for this first implementation, a call is
+  complete if it has even one video, no matter the length of the video.
+  Meaning... that when we add a video, we also redeem ALL the hours on the
+  redeemedCall, no matter the length of the video.
   ###
-  # _unschedule: (orders, call) ->
-  #   orders.map (o) ->
-  #     o.lineItems = o.lineItems.map (li) ->
-  #       li.redeemedCalls = li.redeemedCalls.filter (rc) ->
-  #         rc.callId == call._id
-  #       li
-  #     o
+  _unschedule: (orders, callId) ->
+    orders.map (o) ->
+      o.lineItems = o.lineItems.map (li) ->
+        li.redeemedCalls = _.reject li.redeemedCalls, (rc) ->
+          _.idsEqual rc.callId, callId
+        li
+      o
 
   ###
   TODO: what does it mean to change the type? we unschedule and then reschedule,

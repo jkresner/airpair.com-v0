@@ -67,8 +67,10 @@ class CalendarService
     google.createEvent body, cb
 
   patch: (oldCall, newCall, cb) ->
-    if oldCall.datetime.getTime() == newCall.datetime.getTime()
-      console.log 'datetime unchanged'
+    sameStart = oldCall.datetime.getTime() == newCall.datetime.getTime()
+    sameDuration = oldCall.duration == newCall.duration
+    if sameStart && sameDuration
+      console.log 'datetime && duration unchanged'
       return process.nextTick ->
         cb null, oldCall.gcal
 
@@ -78,7 +80,8 @@ class CalendarService
       start:
         dateTime: start.toISOString()
       end:
-        dateTime: addTime(start, oldCall.duration * ONE_HOUR).toISOString()
+        dateTime: addTime(start, newCall.duration * ONE_HOUR).toISOString()
+    console.log 'google.patchEvent', eventId, body
     google.patchEvent eventId, body, cb
 
 module.exports = new CalendarService()

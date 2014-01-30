@@ -23,12 +23,17 @@
 
   <div class="datetimeduration">
     <div class="control-group">
-      <label class="control-label" for="duration">Duration</label>
+      <label class="control-label" for="duration">Duration
+        (previously {{../duration}} {{inflect ../duration "hour" "hours"}})
+      </label>
       <div class="controls">
         <select name="duration">
-          <option disabled selected value="{{../duration}}">
-            {{../duration}} {{inflect ../duration "hour" "hours"}}
-          </option>
+          {{#each selectOptions}}
+            <option {{#is num ../../duration}}selected{{/is}}
+              value="{{num}}">
+              {{num}} {{inflect num "hour" "hours"}}
+            </option>
+          {{/each}}
         </select>
       </div>
     </div>

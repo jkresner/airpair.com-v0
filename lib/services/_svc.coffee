@@ -20,7 +20,7 @@ module.exports = class DomainService
     @model.find userId: id, callback
 
   search: (search, callback) =>
-    @model.find search, callback
+    @model.find(search).lean().exec callback
 
   searchOne: (search, callback) =>
     @model.findOne(search).lean().exec (e, r) =>

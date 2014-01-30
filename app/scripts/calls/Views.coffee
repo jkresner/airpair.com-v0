@@ -130,7 +130,7 @@ class exports.CallEditView extends BB.ModelSaveView
   async: off
   el: '#edit'
   tmpl: require './templates/CallEdit'
-  viewData: ['date', 'time', 'type', 'notes']
+  viewData: ['duration', 'date', 'time', 'type', 'notes']
   events:
     'click .save': '_save'
   initialize: ->
@@ -139,21 +139,20 @@ class exports.CallEditView extends BB.ModelSaveView
   render: ->
     call = @model.toJSON()
     expert = @request.suggestion(call.expertId).expert
+    orders = @collection.toJSON()
 
     # TODO include the .zone() function so it will be PST everywhere
     call.time = moment(call.datetime).format('HH:mm')
     call.date = moment(call.datetime).format('YYYY-MM-DD')
 
     # TODO open source / private / nda dropdown
-    # orders = @collection.toJSON()
-    # expert.credit = expertCredit orders, call.expertId
-    # expert.credit.byType[call.type].selected = true
+    expert.credit = expertCredit orders, call.expertId
     # expert.credit.byTypeArray = _.values(expert.credit.byType)
-    # TODO hours dropdown
-    # tricky: take into account the call's current duration!
-    # byType = expert.credit.byType[@model.get('type')] || {}
-    # balance = byType.balance || 0
-    # expert.selectOptions = _.range(1, balance + 1).map (num) -> { num }
+
+    # hours dropdown
+    balance = expert.credit.byType[call.type].balance
+    expert.selectOptions = _.range(1, balance + 1).map (num) -> { num }
+
     # TODO call.status
     d = _.extend call, { expert, requestId: @request.id }
     @$('.datepicker').stop()
