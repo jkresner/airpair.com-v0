@@ -57,7 +57,7 @@ module.exports = class RequestCallsService
 
   _saveOrdersWithCallDuration: (orders, callback) =>
     saveOrder = (order, cb) ->
-      update = $set: { lineItems: order.lineItems }
+      update = $set: { lineItems: order.toJSON().lineItems }
       Order.findByIdAndUpdate order._id, update, cb
     async.map orders, saveOrder, callback
 

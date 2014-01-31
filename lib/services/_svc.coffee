@@ -20,7 +20,7 @@ module.exports = class DomainService
     @model.find userId: id, callback
 
   search: (search, callback) =>
-    @model.find(search).lean().exec callback
+    @model.find search, callback
 
   searchOne: (search, callback) =>
     @model.findOne(search).lean().exec (e, r) =>
@@ -34,6 +34,8 @@ module.exports = class DomainService
   delete: (id, callback) =>
     @model.findByIdAndRemove id, callback
 
+  # TODO this breaks the paypal payout button b/c the redeemedCalls schema isn't
+  # put in by mongoose
   update: (id, data, callback) =>
     ups = _.omit data, '_id' # so mongo doesn't complain
     @model.findByIdAndUpdate(id, ups).lean().exec (e, r) =>
