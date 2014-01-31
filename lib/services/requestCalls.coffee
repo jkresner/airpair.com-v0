@@ -14,6 +14,7 @@ Request = new require '../models/request'
 module.exports = class RequestCallsService
 
   model: require './../models/request'
+  calendar: calendar
 
   getByCallPermalink: (permalink, callback) =>
     # find by permalink
@@ -83,7 +84,7 @@ module.exports = class RequestCallsService
         # we make the gcal event first, because we need to put the event info
         # into the call object, and it is fiddly to get out the correct call
         # after it's been inserted into the calls array.
-        calendar.create request, call, (err, eventData) =>
+        @calendar.create request, call, (err, eventData) =>
           if err then return callback err
           call.gcal = eventData
 
@@ -122,7 +123,8 @@ module.exports = class RequestCallsService
         if err then return callback err
 
         # pass in both old & new: it decides whether updates are truly needed
-        calendar.patch oldCall, call, (err, eventData) =>
+        @calendar.patch oldCall, call, (err, eventData) =>
+          if err then return callback err
           oldCall.gcal = eventData
           oldCall.recordings = call.recordings
           oldCall.notes = call.notes
@@ -130,7 +132,6 @@ module.exports = class RequestCallsService
           oldCall.duration = call.duration
 
           ups = { calls: request.calls }
-          console.log 'update.ups = ', require('util').inspect(ups, depth: null)
           RequestSvc.update requestId, ups, (err, newRequest) =>
             if err then return callback err
             newCall = _.find newRequest.calls, (c) -> _.idsEqual c._id, call._id

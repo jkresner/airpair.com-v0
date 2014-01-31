@@ -23,6 +23,7 @@ addTime = (original, milliseconds) ->
   new Date original.getTime() + milliseconds
 
 class CalendarService
+  google: google
   create: (request, call, cb) ->
     start = call.datetime
     owner = request.owner
@@ -64,7 +65,7 @@ class CalendarService
     if cfg.env is 'test'
       return cb null, { htmlLink: 'http://example.com/google-calendar-link' }
 
-    google.createEvent body, cb
+    @google.createEvent body, cb
 
   patch: (oldCall, newCall, cb) ->
     sameStart = oldCall.datetime.getTime() == newCall.datetime.getTime()
@@ -81,7 +82,6 @@ class CalendarService
         dateTime: start.toISOString()
       end:
         dateTime: addTime(start, newCall.duration * ONE_HOUR).toISOString()
-    console.log 'google.patchEvent', eventId, body
-    google.patchEvent eventId, body, cb
+    @google.patchEvent eventId, body, cb
 
 module.exports = new CalendarService()
