@@ -40,5 +40,6 @@ addEvent 'beexpert', 'expertConnect', '/be-an-expert/', 90, 'week', 'expert save
 
 addEvent 'beexpert', 'expertInfo', '/be-an-expert/in', 50, 'week', 'customer saves contact info first time'
 
+addEvent 'bookView', 'bookView', '/@*', 50, 'week', 'customer viewed expert book'
 
 module.exports = addjsevents

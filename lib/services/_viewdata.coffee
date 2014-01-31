@@ -69,9 +69,10 @@ module.exports = class ViewDataService
     eSvc.getById id, (e, r) =>
       if e then return callback e
       callback null,
-        session:    @session usr
-        expert:     JSON.stringify r
-        expertName: r.name
+        isAnonymous:  !usr?
+        session:      @session usr
+        expert:       r
+        expertStr:    JSON.stringify r
 
   inbound: (usr, callback) ->
     rSvc.getActive (err, requests) =>
