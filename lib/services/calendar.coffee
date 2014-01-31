@@ -82,6 +82,12 @@ class CalendarService
         dateTime: start.toISOString()
       end:
         dateTime: addTime(start, newCall.duration * ONE_HOUR).toISOString()
+
+    # allow development to edit prod's calls, but don't update gcal
+    if (!cfg || !cfg.isProd) && oldCall.gcal.creator?.email == 'team@airpair.com'
+      fakeEventData = _.extend oldCall.gcal, body
+      return process.nextTick -> cb null, fakeEventData
+
     @google.patchEvent eventId, body, cb
 
 module.exports = new CalendarService()
