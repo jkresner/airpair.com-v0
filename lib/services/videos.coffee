@@ -1,5 +1,4 @@
 google = require('./wrappers/google')
-inspect = require('util').inspect
 
 class VideosService
   fetch: (youtubeId, cb) ->
