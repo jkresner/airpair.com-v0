@@ -75,7 +75,7 @@ module.exports = class RequestCallsService
         if err then return callback err
 
         if !@_canScheduleCall orders, call
-          message = 'Not enough hours: buy more or cancel unfulfilled calls.'
+          message = 'Not enough hours to schedule this call; please order more'
           return callback new Error message
 
         # this lets us to update request & orders in parallel
@@ -152,7 +152,7 @@ module.exports = class RequestCallsService
       callWithNewDuration = _.clone oldCall
       callWithNewDuration.duration = newDuration
       if !@_canScheduleCall ordersWithoutCall, callWithNewDuration
-        message = 'Not enough hours: cannot change call duration'
+        message = 'Not enough hours to change call duration; please order more'
         return callback new Error message
 
       modifiedOrders = @_modifyOrdersWithCallDuration ordersWithoutCall, callWithNewDuration

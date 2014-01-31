@@ -37,8 +37,7 @@ class RequestCallsApi  # Always passes back a full request object
     # TODO also send 400 errors when google API has problems.
     @svc.create req.user._id, req.params.requestId, req.body, (e, results) ->
       if e && e.message.indexOf('Not enough hours') == 0
-        errors =
-          duration: 'Please order more hours in order to schedule more'
+        errors = duration: e.message
         return res.send data: errors, 400
       if e then return next e
       res.send results.request
@@ -47,6 +46,9 @@ class RequestCallsApi  # Always passes back a full request object
   update: (req, res, next) =>
     # TODO also send 400 errors when google API has problems.
     @svc.update req.user._id, req.params.requestId, req.body, (e, call) ->
+      if e && e.message.indexOf('Not enough hours') == 0
+        errors = duration: e.message
+        return res.send data: errors, 400
       if e then return next e
       res.send call
 
