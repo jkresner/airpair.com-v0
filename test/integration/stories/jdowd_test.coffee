@@ -8,7 +8,13 @@ storySteps = [
   { app:'request/Router', usr:'jdowd', frag: '#', fixture: f.request, pageData: {} }
   { app:'inbound/Router', usr:'admin', frag: '#', fixture: f.inbound, pageData: { experts: data.experts, tags: data.tags } }
   { app:'review/Router', usr:'jdowd', frag: '#rId', fixture: f.review, pageData: {} }
-  { app:'calls/RouterSchedule', usr: 'admin', frag: '#/schedule/rId', fixture: f.schedule, pageData: { request: request } }
+  { app:'calls/RouterSchedule', usr: 'admin', frag: '#/schedule/rId', fixture: f.callSchedule, pageData: { request: request } }
+  { app:'calls/RouterSchedule', usr: 'admin', frag: '#/schedule/rId', fixture: f.callSchedule, pageData: { request: request } }
+  { app:'calls/RouterSchedule', usr: 'admin', frag: '#/schedule/rId', fixture: f.callSchedule, pageData: { request: request } }
+  { app:'calls/RouterSchedule', usr: 'admin', frag: '#/schedule/rId', fixture: f.callSchedule, pageData: { request: request } }
+  # note: these two have a callId set as @rId
+  { app:'calls/RouterEdit', usr: 'admin', frag: '#/edit/rId', fixture: f.callEdit, pageData: { request: request } }
+  { app:'calls/RouterEdit', usr: 'admin', frag: '#/edit/rId', fixture: f.callEdit, pageData: { request: request } }
 ]
 
 testNum = -1
@@ -99,11 +105,11 @@ describe "Stories: John Dowd", ->
         done()
 
   it 'can review experts and book hours as customer with stripe', (done) ->
-    {request,settings,requestView} = @app
-
+    {settings,requestView} = @app
+    requestModel = @app.request
     synced = 0
     settings.once 'sync', => synced++; if synced == 2 then test()
-    request.once 'sync', => synced++; if synced == 2 then test()
+    requestModel.once 'sync', => synced++; if synced == 2 then test()
 
     test = =>
       v = requestView
@@ -132,33 +138,47 @@ describe "Stories: John Dowd", ->
 
       bv.$('.payStripe').click()
 
-  callsToSchedule = _.clone request.calls
-  it 'can schedule a call as admin', (done) ->
-    this.timeout 20000
-    {requestCall, orders, callScheduleView} = @app
+  callId = null
+  scheduleCall = (app, call, duration, done) =>
+    {requestCall, orders, callScheduleView} = app
     orders.once 'sync', =>
-
       v = callScheduleView
-      call = _.first callsToSchedule
       delete call._id
-      call.time = moment(call.datetime).format('HH:mm')
-      call.date = moment(call.datetime).format('YYYY-MM-DD')
+      call.time = moment(call.datetime).local().format('HH:mm')
+      call.date = moment(call.datetime).local().format('YYYY-MM-DD')
       requestCall.set call
-      callsToSchedule = _.rest callsToSchedule
-
       requestCall.save()
-      v.renderSuccess = -> # disable the redirect after save
-      v.model.once 'sync', (model, resp) ->
+      v.renderSuccess = => # disable the redirect after save
+      v.model.once 'sync', (model, resp) =>
         expect(v.model.get('errors')).to.equal undefined
-
-        console.log 'x', v.model.toJSON()
         # the model is now a full request
-        newCall = v.model.toJSON().calls[0]
-        # mocha-phantom's Date string parsing seems different than node's.
-        # expectedDatetime = new Date(date.val() + ' 16:30 PST').toISOString()
-        # expect(newCall.datetime).to.equal expectedDatetime
+        newCall = _.last v.model.toJSON().calls
+        callId = newCall._id
         expect(newCall.datetime).to.equal call.datetime
-        expect(newCall.duration).to.equal 1
+        expect(newCall.duration).to.equal duration
         expect(newCall.type).to.equal call.type
         expect(newCall.expertId).to.equal '52854908dc3dd1020000001c' # Ryan
         done()
+  it 'can schedule first 1 hour call as admin', (done) ->
+    this.timeout 20000
+    call = request.calls[0]
+    scheduleCall(@app, call, 1, done)
+
+  it 'can schedule second 1 hour call as admin', (done) ->
+    this.timeout 20000
+    call = request.calls[1]
+    scheduleCall(@app, call, 1, done)
+
+  it 'can schedule third 1 hour call as admin', (done) ->
+    this.timeout 20000
+    call = request.calls[2]
+    scheduleCall(@app, call, 1, done)
+
+  it 'can schedule fourth and last 2 hour call as admin', (done) ->
+    this.timeout 20000
+    call = request.calls[3]
+    scheduleCall @app, call, 2, done
+
+  # it 'can edit fourth call down to 1 hour as admin', (done) ->
+  #   @rId = callId
+  # it 'can edit fourth call back to 2 hours as admin', (done) ->
