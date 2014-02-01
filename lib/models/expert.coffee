@@ -23,7 +23,7 @@ Bookme =
   urlBitly:       { required: true, type: String     }  # urlBitly == http://airpa.ir/book-domenic
   urlBlog:        String                                # www.airpair.com/node.js/expert-training-domenic-denicola
   rate:           { required: true, type: Number     }  # experts external rate
-  # coupons:        {}                                    # allow the expert to hand out promotions
+  coupons:        [Coupon]                              # allow the expert to hand out promotions
   affiliate:      { required: true, type: Affiliate  }  # allow the expert commission deals
 
 
@@ -50,7 +50,7 @@ schema = new Schema
   karma:          { required: true, type: Number, default: 0 }
   status:         String
   hours:          String
-  bookMe:         Bookme
+  bookMe:         { required: false, type: Bookme }
 
 
 module.exports = mongoose.model 'Expert', schema
