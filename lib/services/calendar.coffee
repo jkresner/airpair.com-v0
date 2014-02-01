@@ -84,7 +84,11 @@ class CalendarService
         dateTime: addTime(start, newCall.duration * ONE_HOUR).toISOString()
 
     # allow development to edit prod's calls, but don't update gcal
-    if (!cfg || !cfg.isProd) && oldCall.gcal.creator?.email == 'team@airpair.com'
+    # TODO wow so ugly.
+    isTest = cfg?.env is 'test'
+    isDevButNotOurs = cfg?.env is 'dev' &&
+      oldCall.gcal.creator?.email == 'team@airpair.com'
+    if !cfg || isTest || isDevButNotOurs
       fakeEventData = _.extend oldCall.gcal, body
       return process.nextTick -> cb null, fakeEventData
 

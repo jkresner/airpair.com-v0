@@ -36,7 +36,13 @@ module.exports =
               </table>3
             </div>"
   callSchedule: "<div id='schedule' class='route'>
-               <div id='scheduleForm'></div>
-             </div>"
-  callEdit: "
-             <div id='edit' class='route'></div>"
+                  <div id='scheduleForm'></div>
+                </div>"
+  callEdit: "<div id='edit' class='route'>
+                <div id='callEdit'></div>
+                <div id='videos'></div>
+
+                <div class='form-actions'>
+                  <button class='save button'>Save</button>
+                </div>
+            </div>"
