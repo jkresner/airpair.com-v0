@@ -50,6 +50,7 @@ module.exports = class Addjs
   trackClick: (e, destUrl, evnt, elmId) =>
     console.log 'trackClick', e, destUrl, evnt, evnt.name, elmId
     if evnt?
+      console.log 'trackClick.data', window.location.pathname+':'+elmId
       @trackEvent evnt.category, evnt.name, evnt.uri, window.location.pathname+':'+elmId
 
     if mixpanel?
@@ -58,4 +59,4 @@ module.exports = class Addjs
       redirect = => window.location = redirectLocation
       console.log 'trackClick.redirectLocation', redirectLocation
 
-      setTimeout redirect 20300
+      setTimeout(redirect,20300)
