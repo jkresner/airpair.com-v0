@@ -54,7 +54,7 @@ module.exports = class Addjs
 
     if mixpanel?
       if e? then e.preventDefault()
-      $log 'trackClick', e, destUrl, evnt, elmId
+      console.log 'trackClick', e, destUrl, evnt, elmId
       redirect = => window.location = destUrl + '&mixpanelId=' + mixpanel.get_distinct_id()
       setTimeout redirect 300
-      $log 'redirecting'
+      console.log 'redirecting'
