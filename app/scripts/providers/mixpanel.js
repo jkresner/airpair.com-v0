@@ -1,6 +1,6 @@
-getElmId = (elm)
+getElmId = function(elm)
 {
-  elmId = jQuery(this).attr('id');
+  elmId = jQuery(elm).attr('id');
   if (elmId == null || elmId == '')
   {
     elmId = jQuery(this).parent().attr('id');
