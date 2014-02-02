@@ -6,7 +6,7 @@ module.exports = function()
 
     $btn.mouseover(function (emover) {
       $btn.html("Sign in with Google for Video Chat");
-      $btn.insertAfter('<figure>We use your google account for G+ Hangouts</figure>')
+      jQuery('<figure>We use your google account for G+ Hangouts</figure>').insertAfter($btn)
     }).mouseout(function (emout) {
       $btn.html(callToActionHtml);
       $btn.next('figure').remove()
