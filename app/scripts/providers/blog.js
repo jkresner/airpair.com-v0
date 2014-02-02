@@ -2,15 +2,16 @@ module.exports = function()
 {
   jQuery('.trackCustomerLogin').each(function (idx) {
     this.$btn = jQuery(this);
-    console.log(idx, this.$btn);
-    callToActionHtml = this.$btn.html()
+    this.$btn.callToActionHtml = this.$btn.html()
 
     this.$btn.mouseover(function (emover) {
-      jQuery(this).html("Sign in with Google for Video Chat");
-      jQuery('<figure>We use your google account for G+ Hangouts</figure>').insertAfter(jQuery(this))
+      btn = jQuery(this)
+      btn.html("Sign in with Google for Video Chat");
+      jQuery('<figure>We use your google account for G+ Hangouts <img src="//airpair-blog.s3.amazonaws.com/wp-content/uploads/2014/01/Node.js-Pair-Programming-Help-On-AirPair-300x176.png"></figure>').insertAfter(btn)
     }).mouseout(function (emout) {
-      jQuery(this).html(callToActionHtml);
-      jQuery(this).next('figure').remove()
+      btn = jQuery(this)
+      btn.html(btn.callToActionHtml);
+      btn.next('figure').remove()
     })
   });
 }
