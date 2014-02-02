@@ -1,15 +1,15 @@
 module.exports = function()
 {
-  jQuery('.trackCustomerLogin').each(function (idx, btn) {
-    $btn = jQuery(btn);
+  jQuery('.trackCustomerLogin').each(function (idx) {
+    this.$btn = jQuery(this);
     callToActionHtml = $btn.html()
 
-    $btn.mouseover(function (emover) {
-      $btn.html("Sign in with Google for Video Chat");
-      jQuery('<figure>We use your google account for G+ Hangouts</figure>').insertAfter($btn)
+    this.$btn.mouseover(function (emover) {
+      $(this).html("Sign in with Google for Video Chat");
+      jQuery('<figure>We use your google account for G+ Hangouts</figure>').insertAfter($(this))
     }).mouseout(function (emout) {
-      $btn.html(callToActionHtml);
-      $btn.next('figure').remove()
+      $(this).html(callToActionHtml);
+      $(this).next('figure').remove()
     })
   });
 }
