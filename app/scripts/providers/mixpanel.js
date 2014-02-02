@@ -3,7 +3,7 @@
 mpInitCallback = function() {
   if (addjs && addjs.providers.mp)
   {
-    addjs.providers.mp.trackSession()
+    addjs.providers.mp.trackSession();
 
     jQuery('.trackLogin,.trackCustomerLogin').click(function (e) {
       elmId = jQuery(this).parent().attr('id')
