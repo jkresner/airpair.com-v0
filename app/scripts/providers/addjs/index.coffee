@@ -45,3 +45,13 @@ module.exports = class Addjs
     for k, p of @providers
       p.trackLanding.call(p, urlWithoutQuery, data)
       # mixpanel.register_once({ 'landing page': window.location.href });
+
+
+  trackClick: (e, destUrl, evnt, elmId) =>
+    if evnt?
+      addjs.trackEvent evnt.category, evnt.name, evnt.uri, elmId
+
+    if mixpanel?
+      e.preventDefault()
+      redirect = => window.location = destUrl + '&mixpanelId=' + mixpanel.get_distinct_id()
+      setTimeout redirect 300
