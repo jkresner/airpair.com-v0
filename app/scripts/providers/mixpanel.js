@@ -1,4 +1,12 @@
-
+getElmId = (elm)
+{
+  elmId = jQuery(this).attr('id');
+  if (elmId == null || elmId == '')
+  {
+    elmId = jQuery(this).parent().attr('id');
+  }
+  return elmId;
+}
 
 mpInitCallback = function() {
   if (addjs && addjs.providers.mp)
@@ -6,12 +14,10 @@ mpInitCallback = function() {
     addjs.providers.mp.trackSession();
 
     jQuery('.trackLogin,.trackCustomerLogin').click(function (e) {
-      elmId = jQuery(this).parent().attr('id')
-      addjs.trackClick(e,'auth/google?return_to=/find-an-expert',addjs.events.customerLogin,elmId);
+      addjs.trackClick(e,'auth/google?return_to=/find-an-expert',addjs.events.customerLogin,getElmId(this));
     });
     jQuery('.trackExpertLogin').click(function (e) {
-      elmId = jQuery(this).parent().attr('id')
-      addjs.trackClick(e,'auth/google?return_to=/be-an-expert',addjs.events.expertLogin,elmId);
+      addjs.trackClick(e,'auth/google?return_to=/be-an-expert',addjs.events.expertLogin,getElmId(this));
     });
   }
 }
