@@ -57,4 +57,5 @@ module.exports = class Addjs
       redirectLocation = "https://www.airpair.com/#{destUrl}&mixpanelId=#{mixpanel.get_distinct_id()}"
       redirect = => window.location = redirectLocation
       console.log 'trackClick.redirectLocation', redirectLocation
+
       setTimeout redirect 20300
