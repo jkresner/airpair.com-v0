@@ -48,11 +48,13 @@ module.exports = class Addjs
 
 
   trackClick: (e, destUrl, evnt, elmId) =>
+    console.log 'trackClick', e, destUrl, evnt, evnt.name, elmId
     if evnt?
-      data = { page: window.location.pathname, section: elmId }
-      @trackEvent evnt.category, evnt.name, evnt.uri, data
+      @trackEvent evnt.category, evnt.name, evnt.uri, window.location.pathname+':'elmId
 
     if mixpanel?
       if e? then e.preventDefault()
-      redirect = => window.location = "https://www.airpair.com/#{destUrl}&mixpanelId=#{mixpanel.get_distinct_id()}"
-      setTimeout redirect 300
+      redirectLocation = "https://www.airpair.com/#{destUrl}&mixpanelId=#{mixpanel.get_distinct_id()}"
+      redirect = => window.location = redirectLocation
+      console.log 'trackClick.redirectLocation', redirectLocation
+      setTimeout redirect 20300
