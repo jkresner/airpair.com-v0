@@ -1,9 +1,9 @@
-(function(){var uv=document.createElement('script');uv.type='text/javascript';uv.async=true;uv.src='//widget.uservoice.com/mR3VvBofcDuVX51PtVfpqw.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(uv,s)})()
-
 module.exports = function()
 {
   if (document.location.hostname != "localhost")
   {
+    (function(){var uv=document.createElement('script');uv.type='text/javascript';uv.async=true;uv.src='//widget.uservoice.com/mR3VvBofcDuVX51PtVfpqw.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(uv,s)})()
+
     UserVoice = window.UserVoice || [];
     UserVoice.push(['showTab', 'classic_widget', {
       mode: 'full',
