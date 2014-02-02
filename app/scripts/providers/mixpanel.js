@@ -7,11 +7,11 @@ mpInitCallback = function() {
 
     jQuery('.trackLogin,.trackCustomerLogin').click(function (e) {
       elmId = jQuery(this).parent().attr('id')
-      addjs.trackClick(e,'/auth/google?return_to=/find-an-expert',addjs.events.customerLogin,elmId);
+      addjs.trackClick(e,'auth/google?return_to=/find-an-expert',addjs.events.customerLogin,elmId);
     });
     jQuery('.trackExpertLogin').click(function (e) {
       elmId = jQuery(this).parent().attr('id')
-      addjs.trackClick(e,'/auth/google?return_to=/be-an-expert',addjs.events.expertLogin,elmId);
+      addjs.trackClick(e,'auth/google?return_to=/be-an-expert',addjs.events.expertLogin,elmId);
     });
   }
 }

@@ -54,7 +54,5 @@ module.exports = class Addjs
 
     if mixpanel?
       if e? then e.preventDefault()
-      console.log 'trackClick', e, destUrl, evnt, elmId
-      redirect = => window.location = destUrl + '&mixpanelId=' + mixpanel.get_distinct_id()
+      redirect = => window.location = "https://www.airpair.com/#{destUrl}&mixpanelId={mixpanel.get_distinct_id()}"
       setTimeout redirect 300
-      console.log 'redirecting'
