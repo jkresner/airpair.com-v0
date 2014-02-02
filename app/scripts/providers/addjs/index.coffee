@@ -50,7 +50,7 @@ module.exports = class Addjs
   trackClick: (e, destUrl, evnt, elmId) =>
     console.log 'trackClick', e, destUrl, evnt, evnt.name, elmId
     if evnt?
-      @trackEvent evnt.category, evnt.name, evnt.uri, window.location.pathname+':'elmId
+      @trackEvent evnt.category, evnt.name, evnt.uri, window.location.pathname+':'+elmId
 
     if mixpanel?
       if e? then e.preventDefault()
