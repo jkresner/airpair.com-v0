@@ -21,7 +21,7 @@ Handlebars.registerHelper "callDateTime", (utcDateString) ->
   day.format("DD MMM <b>HH:mm</b>")
 
 Handlebars.registerHelper 'markdown', (text) ->
-  result = marked(text);
+  result = marked(text, sanitize: true);
   new Handlebars.SafeString result
 
 
