@@ -37,12 +37,17 @@ class exports.Orders extends BB.FilteringCollection
 
     day = now.day()
     # support current month button
-    month = parseInt(options.month, 10) || now.month()
+    options.month = parseInt(options.month, 10)
+    if isFinite(options.month)
+      month = options.month
+    else
+      month = now.month()
     year = now.year()
 
     # if the month has not yet happened in this calendar year, use the previous
     # calendar year.
-    if now.diff(moment().month(month))
+    nowMonth = moment().month(now.month())
+    if nowMonth.diff(moment().month(month)) < 0
       year -= 1
 
     return _.filter orders, (m) =>
