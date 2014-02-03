@@ -3,7 +3,7 @@ getElmId = function(elm)
   elmId = jQuery(elm).attr('id');
   if (elmId == undefined || elmId == null || elmId == '')
   {
-    elmId = jQuery(this).parent().attr('id');
+    elmId = jQuery(elm).parent().attr('id');
   }
   return elmId;
 }
