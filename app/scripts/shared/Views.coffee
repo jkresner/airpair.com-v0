@@ -21,7 +21,10 @@ Handlebars.registerHelper "callDateTime", (utcDateString) ->
   day.format("DD MMM <b>HH:mm</b>")
 
 Handlebars.registerHelper 'markdown', (text) ->
-  result = marked(text, sanitize: true);
+  options =
+    sanitize: true
+    headerPrefix: '-' # so their ID's don't conflict with our ID's
+  result = marked(text, options)
   new Handlebars.SafeString result
 
 
