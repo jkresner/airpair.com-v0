@@ -80,7 +80,7 @@ a.secondary { background-color:#000000!important;color:white!important; }
 #reviewpage #experts img { width:100px }
 #reviewpage #experts p { padding:0 3px; }
 #reviewpage #claim { padding-bottom:0; }
-#reviewpage #claim p { padding:20px 4px 10px 4px }
+#reviewpage #claim p { padding:20px 4px 10px 4px;margin-bottom:20px;width:90% }
 #reviewpage #claim .button { width:100%;text-align:center;background-color:#CE5323 }
 #reviewpage #about .alignleft img { width:50px;margin-right:20px; }
 #reviewpage #about .entry-title { margin:4px 20px }
