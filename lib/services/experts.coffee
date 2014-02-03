@@ -18,6 +18,7 @@ module.exports = class ExpertsService extends DomainService
     'email': 1
     'gmail': 1
     'tags.short': 1
+    'tags.name': 1
     'rate': 1
     'homepage': 1
     'gh.username': 1
