@@ -1,47 +1,44 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>airpair, {{ expertName }} request</title>
+    <title>AirPair | {{ expert.name }}</title>
     <meta charset="utf-8">
     <meta name="robots" content="noindex, nofollow" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width">
-    <meta name="description" content="airpair connects companies with expert developers for remote software consulting and pair programming. Hire the best of the best 1 hour at a time.">
+    <meta name="description" content="AirPair connects companies with expert developers for remote software consulting and pair programming. Hire the best of the best 1 hour at a time.">
     <meta name="keywords" content="{{ tagsString }}">
-    <meta property="og:title" content="airpair, {{ tagsString }} request" />
-    <meta property="og:type" content="airpair:request" />
+    <meta property="og:title" content="AirPair Expert | {{ expert.name }}" />
+    <meta property="og:type" content="airpair:expert" />
     <meta property="og:image" content="http://www.airpair.com/images/icons/icon48.png" />
-    <link rel="stylesheet" href="/stylesheets/app.css">
+    {{> siteStyles }}
 </head>
 
-<body id="reviewpage">
+<body id="book">
 
-  <nav>
-    <div>
-      <a href="/" title="Pair programming, code review, architecture advice & more..." class="logo"></a>
+  <div class="site-container">
 
-      <ul>
-        <li><a href="/dashboard" class="zocial cal">dashboard</a></li>
-        <li><a href="/find-an-expert" class="zocial call">new request</a></li>
-      </ul>
+    {{> siteNav this }}
+
+    <div class="site-inner">
+      <div class="wrap">
+
+        <div id="detail" class="route"></div>
+
+      </div>
     </div>
-  </nav>
-  <h1>Book {{ expertName }}</h1>
-  <div id="detail" class="route">
-    <div id="request">
-    </div>
+
   </div>
 
-  <div id="book" class="route"></div>
+  {{> siteFooter }}
 
 </body>
 
   <script type="text/javascript">
     function initApp() {
-      var pageData = { session: {{{ session }}}, expert: {{{ expert }}}};
-      /*
-      Router = require('/scripts/review/Router');
-      window.router = new Router(pageData);*/
+      var pageData = { session: {{{ session }}}, expert: {{{ expertStr }}}};
+      Router = require('/scripts/book/Router');
+      window.router = new Router(pageData);
     }
   </script>
   <script src="/javascripts/vendor.js" defer></script>
