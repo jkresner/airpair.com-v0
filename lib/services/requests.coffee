@@ -97,7 +97,7 @@ module.exports = class RequestsService extends DomainService
     'calls.status': 1
     'suggested.expertStatus': 1
     'suggested.expert.pic': 1
-    'tags.short': 1        # DT note this does not work, but selects whole subdoc
+    'tags.short': 1
 
   # Used for adm/inbound dashboard list
   getActive: (callback) ->
