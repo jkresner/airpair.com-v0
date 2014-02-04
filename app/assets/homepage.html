@@ -72,7 +72,7 @@
         <h1>The World's Best Software Experts</h1>
         <p>At your finger tips</p>
         <p class="about">On-demand through video chat & screen sharing</p>
-        <a class="trackCustomerLogin button large" href="/">Find an expert & video chat, NOW.</a>
+        <a id="fold-action" class="trackCustomerLogin button large" href="/">Find an expert & video chat, NOW.</a>
 
         <a href="https://twitter.com/airpair" class="twitter-follow-button" data-show-count="false" data-size="large" data-dnt="true">Follow @airpair</a>
 
@@ -84,80 +84,57 @@
       </div>
     </div>
 
-
-  <style>
-    body#home h2 { text-align:center;margin:12px auto 50px auto;font-size:2.0rem;font-weight:300;line-height:46px; }
-    body#home .head-wrap { margin-bottom:0 }
-    body#home #fold img { width:400px;float:right;margin:40px 20px }
-    body#home #fold h1 { font-weight:200;font-size:44px;color:#333333;margin:30px 0 0 0 }
-    body#home #fold p { color:gray;font-weight:100;margin:0 0 0 0;font-size:36px }
-    body#home #fold p.about { color:black;font-weight:100;margin-top:0px;font-size:28px }
-    body#home #fold a.button { background-color:#CE5323;width:500px;margin:30px 50px }
-    body#home #fold .twitter-follow-button { margin:30px 0 0 224px; }
-    body#home #customers { padding-bottom:30px; }
-    body#home #customers span { width:140px;height:120px;margin-right:20px; }
-    body#home #customers img { width:140px;margin-top:8px; }
-    body#home #customers a { margin-top:14px;font-weight:400 }
-    body#home #customers h4 { font-size:28px;margin-bottom:8px; }
-    body#home #experts { padding-bottom:40px; }
-    body#home #experts main.content { width:100% }
-    body#home #experts article { width:200px }
-    body#home #experts article div { padding:0 20px;position:relative;height:170px; }
-    body#home #experts article span { background-position:center;background-color:white;opacity:0;width:200px;height:170px;display:block;position:absolute;background-repeat:no-repeat; }
-    body#home #experts article:hover span { opacity:1;transition:all 0.5s ease 0s; }
-    body#home #experts article p { font-weight:300; }
-    body#home #experts article h3 { color:black;margin:10px 0;font-size:1.125rem;line-height:24px; }
-    body#home #experts article em { display:block;font-style:normal;font-weight:700 }
-    body#home #experts article img { width:200px;height:200px  }
-    body#home #experts article:hover img { opacity:0.25;transition:all 0.5s ease 0s; }
-    body#home #experts article button { margin:0 0 20px 0;padding: 4px 12px;width:100%;font-size:0.875rem }
-    body#home #experts article:hover button { background-color:#CE5323 }
-    body#home #cost { padding:20px; }
-    body#home #cost .plan-col { width:20%; }
-    body#home #cost .plan-col-popular { width:20%; }
-  </style>
-
-    <div class="home-feature-bg-alt">
-      <div id="customers" class="wrap">
-        <h2>AirPair Customers</h2>
+    <div id="customers" class="home-feature-bg-alt">
+      <div class="wrap">
+        <h2>Who AirPairs?</h2>
         <div class="home-feature-1">
 
           <section class="widget widget_text">
-            <div class="widget-wrap">
-              <div class="textwidget">
-                <span class="alignleft"><img src="//upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Intel-logo.svg/200px-Intel-logo.svg.png" /></span>
-                <h4>Enterprise</h4> Intel uses AirPair for On-demand Ember.js Training.
-                <a href="/ember.js/training-on-demand" class="button small">Read case study</a>
+            <a href="/ember.js/training-on-demand">
+              <div class="widget-wrap">
+                <div class="textwidget">
+                  <span class="alignleft">
+                    <img src="//upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Intel-logo.svg/200px-Intel-logo.svg.png" />
+                  </span>
+                  <h4>Enterprise</h4> Intel uses AirPair for On-demand Ember.js Training
+                  <button>Read case study</button>
+                </div>
               </div>
-            </div>
+            </a>
           </section>
           <section class="widget widget_text">
-            <div class="widget-wrap">
-              <div class="textwidget">
-                <span class="alignleft"><img src="//airpair-blog.s3.amazonaws.com/wp-content/uploads/2014/02/serps.png" /></span>
-                <h4>SMBs</h4> SERPs uses AirPair for Android Problem Solving.
-                <a href="/android/android-code-review" class="button small">Read case study</a>
+            <a href="/android/android-code-review">
+              <div class="widget-wrap">
+                <div class="textwidget">
+                  <span class="alignleft"><img src="//airpair-blog.s3.amazonaws.com/wp-content/uploads/2014/02/serps-trans.png" /></span>
+                  <h4>SMBs</h4> SERPs uses AirPair for Android Problem Solving
+                  <button>Read case study</button>
+                </div>
               </div>
-            </div>
+            </a>
           </section>
         </div>
         <div class="home-feature-2">
           <section class="widget widget_text">
-            <div class="widget-wrap">
-              <div class="textwidget">
-                <span class="alignleft"><img src="//airpair-blog.s3.amazonaws.com/wp-content/uploads/2014/02/zidisha1.png" /></span>
-                <h4>Startups</h4>Zidisha uses AirPair for PHP Pair Programming.
-                <a href="/php/setting-up-mamp-local-development-environment" class="button small">Read case study</a>
+            <a href="/php/setting-up-mamp-local-development-environment">
+              <div class="widget-wrap">
+                <div class="textwidget">
+                  <span class="alignleft"><img src="//airpair-blog.s3.amazonaws.com/wp-content/uploads/2014/02/zidisha-trans.png" /></span>
+                  <h4>Startups</h4>Zidisha uses AirPair for PHP Pair Programming
+                  <button>Read case study</button>
+                </div>
               </div>
-            </div>
+            </a>
           </section>
           <section class="widget widget_text">
-            <div class="widget-wrap">
-              <div class="textwidget">
-                <span class="alignleft"><img src="//www.hipcamp.com/assets/hipcamp-logo-small-black-760879df55d11e330069fd67a4b546c2.png" /></span><h4>Entrepreneurs</h4> HipCamp uses AirPair for Node.js Code Review.
-                <a href="/node.js/node-js-code-review" class="button small">Read case study</a>
+            <a href="/node.js/node-js-code-review">
+              <div class="widget-wrap">
+                <div class="textwidget">
+                  <span class="alignleft"><img src="//www.hipcamp.com/assets/hipcamp-logo-small-black-760879df55d11e330069fd67a4b546c2.png" /></span><h4>Entrepreneurs</h4> HipCamp uses AirPair for Node.js Code Review
+                  <button>Read case study</button>
+                </div>
               </div>
-            </div>
+            </a>
           </section>
         </div>
       </div><!-- end .wrap -->
@@ -170,7 +147,7 @@
 
         <div class="content-sidebar-wrap">
 
-          <h2>AirPair Experts</h2>
+          <h2>What do AirPair Experts look like?</h2>
 
           <main class="content">
 
@@ -238,7 +215,56 @@
 
       </div>
 
+      <a id="experts-action" class="trackExpertLogin button large" href="/">Apply to be an Expert</a>
+
     </div>
+
+
+ <style>
+    body#home h2 { text-align:center;margin:12px auto 50px auto;font-size:2.0rem;font-weight:300;line-height:46px; }
+    body#home .head-wrap { margin-bottom:0 }
+    body#home #fold img { width:400px;float:right;margin:40px 20px }
+    body#home #fold h1 { font-weight:200;font-size:44px;color:#333333;margin:30px 0 0 0 }
+    body#home #fold p { color:gray;font-weight:100;margin:0 0 0 0;font-size:36px }
+    body#home #fold p.about { color:black;font-weight:100;margin-top:0px;font-size:28px }
+    body#home #fold a.button { background-color:#CE5323;width:500px;margin:30px 50px }
+    body#home #fold .twitter-follow-button { margin:30px 0 0 224px; }
+    body#home #customers { padding-bottom:30px; }
+    body#home #customers span { width:140px;height:120px;margin-right:30px; }
+    body#home #customers img { width:140px;margin:8px }
+    body#home #customers h4 { font-size:28px;margin:2px 0 18px 0; }
+    body#home #customers a:hover h4 { color:#CE5323 }
+    body#home #customers section { box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);background: none repeat scroll 0 0 #F2F2F2; }
+    body#home #customers a { margin-top:14px;font-weight:400;font-size:15px }
+    body#home #customers a button { margin:0;padding:5px 12px;width:100%;font-size:0.875rem }
+    body#home #customers a:hover { text-decoration:none }
+    body#home #customers a:hover button { background-color:#CE5323 }
+    body#home #customers div.head { float:right;width:40px;height:40px;margin:4px;border-radius:10px }
+    body#home #experts { padding-bottom:40px; }
+    body#home #experts main.content { width:100%; }
+    body#home #experts article { width:200px;margin:0px 14px 40px 14px!important }
+    body#home #experts article div { padding:0 20px;position:relative;height:170px; }
+    body#home #experts article span { background-position:center;background-color:white;opacity:0;width:200px;height:170px;display:block;position:absolute;background-repeat:no-repeat; }
+    body#home #experts article:hover span { opacity:1;transition:all 0.5s ease 0s; }
+    body#home #experts article p { font-weight:300; }
+    body#home #experts article h3 { color:black;margin:10px 0;font-size:1.125rem;line-height:24px; }
+    body#home #experts article:hover h3 { color:#CE5323 }
+    body#home #experts article em { display:block;font-style:normal;font-weight:700 }
+    body#home #experts article img { width:200px;height:200px  }
+    body#home #experts article:hover img { opacity:0.25;transition:all 0.5s ease 0s; }
+    body#home #experts article button { margin:0 0 20px 0;padding: 4px 12px;width:100%;font-size:0.875rem }
+    body#home #experts article:hover button { background-color:#CE5323 }
+    body#home .trackExpertLogin { background-color:#CE5323;margin:20px auto;display:block;width:540px;text-align:center }
+    body#home #cost { padding:20px; }
+    body#home #cost .plan-col { width:20%; }
+    body#home #cost .plan-col-popular { width:20%; }
+    body#home #cost a:hover { color:black; }
+    body#home #cost a:hover .plan-col { background:#D1F5B3; }
+    body#home #cost a:hover .plan-col-popular { background:#D1F5B3; }
+    body#home #cost .plan-button { background:none repeat scroll 0 0 #303236;border-radius:3px;color:#FFFFFF;font-size:18px;font-weight:400;padding:6px 25px 8px; }
+    body#home #cost a:hover .plan-button { background:#CE5323; }
+  </style>
+
 
 <div id="cost" class="home-feature-bg-alt">
   <div class="wrap">
@@ -250,75 +276,85 @@
 
 <div class="plans">
 
-<div class="plan-col">
-  <div class="plan-col-wrap">
-    <div class="plan-head"><h4>Beginner</h4></div>
-    <div class="plan-pricing">
-      <span class="plan-price"><sup>$</sup>60</span><span class="monthly">/hr</span>
+<a href="/find-an-expert">
+  <div class="plan-col">
+    <div class="plan-col-wrap">
+      <div class="plan-head"><h4>Beginner</h4></div>
+      <div class="plan-pricing">
+        <span class="plan-price"><sup>$</sup>60</span><span class="monthly">/hr</span>
+      </div>
+      <ul class="plan-list">
+        <li>Access <strong>15%</strong> of Experts</li>
+        <li>Solve any beginner challenge</li>
+      </ul>
+      <div class="plan-button">Book Hours</div>
     </div>
-    <ul class="plan-list">
-      <li>Access <strong>15%</strong> of Experts</li>
-      <li>Solve any beginner challenge</li>
-    </ul>
-    <div class="plan-button"><a href="/find-an-expert">Book Hours</a></div>
   </div>
-</div>
+</a>
 
-<div class="plan-col-popular">
-  <div class="plan-col-wrap">
-    <div class="plan-head"><h4>Best practices</h4></div>
-    <div class="plan-pricing">
-      <span class="plan-price"><sup>$</sup>90</span><span class="monthly">/hr</span>
+<a href="/find-an-expert">
+  <div class="plan-col-popular">
+    <div class="plan-col-wrap">
+      <div class="plan-head"><h4>Best practices</h4></div>
+      <div class="plan-pricing">
+        <span class="plan-price"><sup>$</sup>90</span><span class="monthly">/hr</span>
+      </div>
+      <ul class="plan-list">
+        <li>Access <strong>40%</strong> of Experts</li>
+        <li>Embrace best practices</li>
+      </ul>
+      <div class="plan-button">Book Hours</div>
     </div>
-    <ul class="plan-list">
-      <li>Access <strong>40%</strong> of Experts</li>
-      <li>Embrace best practices</li>
-    </ul>
-    <div class="plan-button"><a href="/find-an-expert">Book Hours</a></div>
   </div>
-</div>
+</a>
 
-<div class="plan-col">
-  <div class="plan-col-wrap">
-    <div class="plan-head"><h4>Expert</h4></div>
-    <div class="plan-pricing">
-      <span class="plan-price"><sup>$</sup>130</span><span class="monthly">/hr</span>
+<a href="/find-an-expert">
+  <div class="plan-col">
+    <div class="plan-col-wrap">
+      <div class="plan-head"><h4>Expert</h4></div>
+      <div class="plan-pricing">
+        <span class="plan-price"><sup>$</sup>130</span><span class="monthly">/hr</span>
+      </div>
+      <ul class="plan-list">
+        <li>Access <strong>60%</strong> of Experts</li>
+        <li>Write code like an expert</li>
+      </ul>
+      <div class="plan-button">Book Hours</div>
     </div>
-    <ul class="plan-list">
-      <li>Access <strong>60%</strong> of Experts</li>
-      <li>Write code like an expert</li>
-    </ul>
-    <div class="plan-button"><a href="/find-an-expert">Book Hours</a></div>
   </div>
-</div>
+</a>
 
-<div class="plan-col-popular">
-  <div class="plan-col-wrap">
-    <div class="plan-head"><h4>World class</h4></div>
-    <div class="plan-pricing">
-      <span class="plan-price"><sup>$</sup>200</span><span class="monthly">/hr</span>
+<a href="/find-an-expert">
+  <div class="plan-col-popular">
+    <div class="plan-col-wrap">
+      <div class="plan-head"><h4>World class</h4></div>
+      <div class="plan-pricing">
+        <span class="plan-price"><sup>$</sup>200</span><span class="monthly">/hr</span>
+      </div>
+      <ul class="plan-list">
+        <li>Access <strong>90%</strong> of Experts</li>
+        <li>Access world class talent</li>
+      </ul>
+      <div class="plan-button">Book Hours</div>
     </div>
-    <ul class="plan-list">
-      <li>Access <strong>90%</strong> of Experts</li>
-      <li>Access world class talent</li>
-    </ul>
-    <div class="plan-button"><a href="/find-an-expert">Book Hours</a></div>
   </div>
-</div>
+</a>
 
-<div class="plan-col">
-  <div class="plan-col-wrap">
-    <div class="plan-head"><h4>Industry leaders</h4></div>
-    <div class="plan-pricing">
-      <span class="plan-price"><sup>$</sup>300</span><span class="monthly">/hr</span>
+<a href="/find-an-expert">
+  <div class="plan-col">
+    <div class="plan-col-wrap">
+      <div class="plan-head"><h4>Industry leaders</h4></div>
+      <div class="plan-pricing">
+        <span class="plan-price"><sup>$</sup>300</span><span class="monthly">/hr</span>
+      </div>
+      <ul class="plan-list">
+        <li>Access <strong>100%</strong> of Experts</li>
+        <li>Leverage industry leaders</li>
+      </ul>
+      <div class="plan-button">Book Hours</div>
     </div>
-    <ul class="plan-list">
-      <li>Access <strong>100%</strong> of Experts</li>
-      <li>Leverage industry leaders</li>
-    </ul>
-    <div class="plan-button"><a href="/find-an-expert">Book Hours</a></div>
   </div>
-</div>
+</a>
 
 </div></div>
     </div></section><br /><br />
