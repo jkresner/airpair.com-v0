@@ -139,3 +139,9 @@ Ideas to airpair on
 - watch some of <http://www.youtube.com/watch?v=e0N_2T7Tdf8&feature=player_detailpage#t=718>
 - add yourself to the error emails (winstonConfig), new request (mailman)  (TODO: eng alias)
 - add your color to the badges CSS for claiming a request (admin.css, `label-<initials>`)
+
+### Common gotcha's while writing phantomJS integration tests
+- the view redirects on success. solution: `v.renderSuccess = ->`
+- the view hasnt loaded data yet; wait for the models/collections to sync
+- the story's step does not exist
+- the story's step uses the wrong router

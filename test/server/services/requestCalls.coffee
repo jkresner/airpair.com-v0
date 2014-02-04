@@ -165,7 +165,6 @@ describe "RequestCallsService", ->
       call.notes = badassNotes
 
       # dont let it make calls to google
-      # console.log 'ff', typeof svc?.calendar?.google?.patchEvent, svc?.calendar?.google?.patchEvent
       svc.calendar.google.patchEvent = (eventId, body, cb) ->
         cb null, _.extend call.gcal, body
       svc.update request.userId, request._id, call, (err, newCall) =>

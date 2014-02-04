@@ -14,10 +14,12 @@ storySteps = [
   { app:'calls/RouterSchedule', usr: 'admin', frag: '#/schedule/rId', fixture: f.callSchedule, pageData: { request: request } }
   # note: these two have a callId set as @rId
   { app:'calls/RouterEdit', usr: 'admin', frag: '#', fixture: f.callEdit, pageData: { request: request } }
-  # { app:'calls/RouterEdit', usr: 'admin', frag: '#', fixture: f.callEdit, pageData: { request: request } }
+  { app:'calls/RouterEdit', usr: 'admin', frag: '#', fixture: f.callEdit, pageData: { request: request } }
 ]
 
 testNum = -1
+dateFormat = "DD MMM 'YY"
+timeFormat = 'HH:mm'
 
 # This story is meant to test the call editing functionality; for this reason,
 # many of the other "tests" don't test much (they are already tested by
@@ -36,7 +38,6 @@ describe "Stories: John Dowd", ->
     window.location = storySteps[testNum].frag.replace 'rId', @rId
     hlpr.setInitApp @, "/scripts/#{storySteps[testNum].app}"
     hlpr.setSession storySteps[testNum].usr, =>
-      console.log storySteps[testNum].app
       # $log 'app', storySteps[testNum].app, storySteps[testNum].pageData
       initApp(storySteps[testNum].pageData, done)
 
@@ -145,11 +146,11 @@ describe "Stories: John Dowd", ->
     orders.once 'sync', =>
       v = callScheduleView
       delete call._id
-      call.date = moment(call.datetime).format('YYYY-MM-DD')
-      call.time = moment(call.datetime).format('HH:mm')
+      call.date = moment(call.datetime).format(dateFormat)
+      call.time = moment(call.datetime).format(timeFormat)
       requestCall.set call
       requestCall.save()
-      v.renderSuccess = => # disable the redirect after save
+      v.renderSuccess = -> # disable the redirect after save
       v.model.once 'sync', (model, resp) =>
         expect(v.model.get('errors')).to.equal undefined
         # the model is now a full request
@@ -183,6 +184,7 @@ describe "Stories: John Dowd", ->
   it 'can edit fourth call down to 1 hour as admin', (done) ->
     @timeout 20000
     v = @app.callEditView
+    v.renderSuccess = -> # disable the redirect after save
     call = request.calls[3] # original calls
     $.ajax("/_viewdata/callEdit/#{callId}")
     .fail (__, ___, errorThrown) =>
@@ -196,8 +198,8 @@ describe "Stories: John Dowd", ->
       setTimeout onEditPage, 100
     onEditPage = =>
       # assert all the fields match what is currently in the call
-      date = moment(call.datetime).format('YYYY-MM-DD')
-      time = moment(call.datetime).format('HH:mm')
+      date = moment(call.datetime).format(dateFormat)
+      time = moment(call.datetime).format(timeFormat)
       expect(v.elm('duration').val()).to.equal '2'
       expect(v.elm('date').val()).to.equal date
       expect(v.elm('time').val()).to.equal time
@@ -207,8 +209,8 @@ describe "Stories: John Dowd", ->
       v.elm('duration').val('1')
       # change the date to now
       @now = new Date()
-      v.elm('date').val(moment(@now).format('YYYY-MM-DD'))
-      v.elm('time').val(moment(@now).format('HH:mm'))
+      v.elm('date').val(moment(@now).format(dateFormat))
+      v.elm('time').val(moment(@now).format(timeFormat))
 
       v.$('.save').click()
       @app.requestCall.once 'sync', onSync
@@ -219,35 +221,28 @@ describe "Stories: John Dowd", ->
       # expect(saved.datetime).to.equal @now.toJSON()
       done()
 
-  # TODO why won't this test run!
-  # it 'can edit fourth call back to 2 hours as admin', (done) ->
-  #   @timeout 20000
-  #   v = @app.callEditView
-  #   call = request.calls[3] # original calls
-  #   console.log 'a'
-  #   $.ajax("/_viewdata/callEdit/#{callId}")
-  #   .fail (__, ___, errorThrown) =>
-  #     console.log 'b'
-  #     done(errorThrown)
-  #   .done (data) =>
-  #     console.log 'c'
-  #     @app.request.set data.request, reset: true
-  #     @app.orders.set data.orders, reset: true
-  #     test()
-  #   test = =>
-  #     console.log 'd'
-  #     router.navTo "#/edit/#{callId}"
-  #     setTimeout onEditPage, 100
-  #   onEditPage = =>
-  #     console.log 'e'
-  #     expect(v.elm('duration').val()).to.equal '1'
+  it 'can edit fourth call back to 2 hours as admin', (done) ->
+    @timeout 20000
+    v = @app.callEditView
+    v.renderSuccess = -> # disable the redirect after save
+    $.ajax("/_viewdata/callEdit/#{callId}")
+    .fail (__, ___, errorThrown) =>
+      done(errorThrown)
+    .done (data) =>
+      @app.request.set data.request, reset: true
+      @app.orders.set data.orders, reset: true
+      test()
+    test = =>
+      router.navTo "#/edit/#{callId}"
+      setTimeout onEditPage, 100
+    onEditPage = =>
+      expect(v.elm('duration').val()).to.equal '1'
 
-  #     v.elm('duration').val('2')
+      v.elm('duration').val('2')
 
-  #     v.$('.save').click()
-  #     @app.requestCall.once 'sync', onSync
-  #   onSync = =>
-  #     console.log 'f'
-  #     saved = @app.requestCall.toJSON()
-  #     expect(saved.duration).to.equal 2
-  #     done()
+      v.$('.save').click()
+      @app.requestCall.once 'sync', onSync
+    onSync = =>
+      saved = @app.requestCall.toJSON()
+      expect(saved.duration).to.equal 2
+      done()

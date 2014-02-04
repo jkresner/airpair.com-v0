@@ -88,5 +88,6 @@ module.exports = class RequestCallsService
     if oldCall.duration == newDuration
       console.log 'duration unchanged'
       return process.nextTick callback
-    oldCall.duration = newDuration
-    OrdersSvc.updateDuration requestId, oldCall, callback
+    callWithNewDuration = _.clone oldCall
+    callWithNewDuration.duration = newDuration
+    OrdersSvc.updateDuration requestId, callWithNewDuration, callback
