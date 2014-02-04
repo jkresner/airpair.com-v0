@@ -67,7 +67,8 @@
 
     <div id="fold" class="home-feature-bg">
       <div class="wrap" style="margin-bottom:30px">
-        <img src="//i1.ytimg.com/vi/XzOj-cMNP1o/sddefault.jpg" />
+
+      <div style="float:left;width:60%">
 
         <h1>The World's Best Software Experts</h1>
         <p>At your finger tips</p>
@@ -77,6 +78,10 @@
         <a href="https://twitter.com/airpair" class="twitter-follow-button" data-show-count="false" data-size="large" data-dnt="true">Follow @airpair</a>
 
 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+      </div>
+
+        <img src="//i1.ytimg.com/vi/XzOj-cMNP1o/sddefault.jpg" alt="Remote Pair Programming" />
 
       </div>
       <div>
@@ -151,7 +156,7 @@
 
           <main class="content">
 
-            <article class="portfolio">
+            <article class="portfolio ari-lerner">
               <a href="/angularjs/expert-training-author-ari-lerner">
                 <span style="background-size:140%;background-image:url('//airpair-blog.s3.amazonaws.com/wp-content/uploads/2013/09/angularjs.jpeg')"></span>
                 <header>
@@ -162,7 +167,7 @@
                 </div>
               </a>
             </article>
-            <article class="portfolio">
+            <article class="portfolio domenic-denicola">
               <a href="/node.js/expert-training-domenic-denicola">
                 <span style="background-size:90%;background-image:url('//airpair-blog.s3.amazonaws.com/wp-content/uploads/2013/09/node.js.png')"></span>
                 <header>
@@ -174,7 +179,7 @@
               </a>
             </article>
 
-            <article class="portfolio">
+            <article class="portfolio ryan-bigg">
               <a href="/rails/expert-multi-tenancy-author-ryan-bigg">
                  <span style="background-size:40%;background-image:url('//airpair-blog.s3.amazonaws.com/wp-content/uploads/2013/09/ruby-on-rails.jpeg')"></span>
                 <header>
@@ -186,7 +191,7 @@
               </a>
             </article>
 
-            <article class="portfolio">
+            <article class="portfolio daniel-roseman">
               <a href="/python/django-expert-daniel-roseman">
                 <span style="background-size:90%;background-image:url('//airpair-blog.s3.amazonaws.com/wp-content/uploads/2013/09/python.jpeg')"></span>
                 <header>
@@ -198,7 +203,7 @@
               </a>
             </article>
 
-            <article class="portfolio">
+            <article class="portfolio felienne-hermans">
               <a href="/excel/expert-training-professor-felienne-hermans">
                 <span style="background-size:50%;background-image:url('//datanitro.com/assets/img/excel.png')"></span>
                 <header>
@@ -243,9 +248,10 @@
     body#home #customers div.head { float:right;width:40px;height:40px;margin:4px;border-radius:10px }
     body#home #experts { padding-bottom:40px; }
     body#home #experts main.content { width:100%; }
-    body#home #experts article { width:200px;margin:0px 14px 40px 14px!important }
+    body#home #experts article { width:200px;margin:0px 14px 40px 14px!important;overflow:hidden; }
     body#home #experts article div { padding:0 20px;position:relative;height:170px; }
     body#home #experts article span { background-position:center;background-color:white;opacity:0;width:200px;height:170px;display:block;position:absolute;background-repeat:no-repeat; }
+    body#home #experts article:hover a { text-decoration:none!important; }
     body#home #experts article:hover span { opacity:1;transition:all 0.5s ease 0s; }
     body#home #experts article p { font-weight:300; }
     body#home #experts article h3 { color:black;margin:10px 0;font-size:1.125rem;line-height:24px; }
@@ -269,11 +275,21 @@
       body#home #menu-technologies { display:none }
       body#home aside.header-widget-area { width:720px!important; }
       body#home #menu-services .problem-solving { display:none }
+      body#home #fold img { width:320px }
+      body#home #fold h1 { font-size:36px }
+      body#home #fold p { font-size:24px }
+      body#home #fold p.about { font-size:24px }
+      body#home .felienne-hermans { display:none; }
     }
 
     @media (max-width:1024px) {
+      body#home #fold h1 { font-size:32px }
+      body#home #fold img { width:260px }
       body#home aside.header-widget-area { width:580px!important;padding:5px 0 0 0; }
       body#home #menu-services .code-review { display:none }
+      body#home #experts article { width:188px; }
+      body#home #experts article h3 { font-size:1rem }
+      body#home #experts article span { width:180px }
     }
 
     @media (max-width:880px) {
