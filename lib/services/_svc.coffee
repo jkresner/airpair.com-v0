@@ -1,8 +1,8 @@
-
 moment = require 'moment'
 
 module.exports = class DomainService
 
+  # TODO use lean and exec on everything here!
 
   # Used to dump full list of customers
   getAll: (callback) ->
