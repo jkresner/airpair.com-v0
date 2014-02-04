@@ -33,7 +33,7 @@
       <li class="menu-item"><a href="/ruby-on-rails">Rails</a></li>
       <li class="menu-item"><a href="/ruby">Ruby</a></li>
       <li class="menu-item"><a href="/wordpress">WordPress</a></li>
-      <li class="menu-item"><a href="/tags">More</a></li>
+      <li class="menu-item"><a href="/technolgoies">More</a></li>
     </ul>
     </div>
   </nav>
@@ -52,10 +52,10 @@
                 <ul id="menu-services" class="menu genesis-nav-menu">
                   <li class="menu-item"><a href="/experts">Experts</a></li>
                   <li class="menu-item"><a href="/customers">Customers</a></li>
-                  <li class="menu-item"><a href="/pair-programming">Pair Programming</a></li>
-                  <li class="menu-item"><a href="/code-review">Code Review</a></li>
-                  <li class="menu-item"><a href="/code-mentoring">Training</a></li>
-                  <li class="menu-item"><a href="/problem-solving">Problem Solving</a></li>
+                  <li class="menu-item pair-programming"><a href="/pair-programming">Pair Programming</a></li>
+                  <li class="menu-item code-review"><a href="/code-review">Code Review</a></li>
+                  <li class="menu-item training"><a href="/code-mentoring">Training</a></li>
+                  <li class="menu-item problem-solving"><a href="/problem-solving">Problem Solving</a></li>
                 </ul>
               </nav>
             </div>
@@ -221,6 +221,7 @@
 
 
  <style>
+    body#home .title-area { width:190px!important; }
     body#home h2 { text-align:center;margin:12px auto 50px auto;font-size:2.0rem;font-weight:300;line-height:46px; }
     body#home .head-wrap { margin-bottom:0 }
     body#home #fold img { width:400px;float:right;margin:40px 20px }
@@ -263,6 +264,29 @@
     body#home #cost a:hover .plan-col-popular { background:#D1F5B3; }
     body#home #cost .plan-button { background:none repeat scroll 0 0 #303236;border-radius:3px;color:#FFFFFF;font-size:18px;font-weight:400;padding:6px 25px 8px; }
     body#home #cost a:hover .plan-button { background:#CE5323; }
+
+    @media (max-width:1140px) {
+      body#home #menu-technologies { display:none }
+      body#home aside.header-widget-area { width:720px!important; }
+      body#home #menu-services .problem-solving { display:none }
+    }
+
+    @media (max-width:1024px) {
+      body#home aside.header-widget-area { width:580px!important;padding:5px 0 0 0; }
+      body#home #menu-services .code-review { display:none }
+    }
+
+    @media (max-width:880px) {
+      body#home aside.header-widget-area { width:480px!important; }
+      body#home .menu-services li { height:35px; }
+      body#home .menu-services a { font-size:15;font-weight:800 }
+      body#home #menu-services .training{ display:none }
+    }
+
+    @media (max-width:760px) {
+      body#home aside.header-widget-area { display:none!important }
+    }
+
   </style>
 
 
