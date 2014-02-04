@@ -1,30 +1,26 @@
 {http,_,sinon,chai,expect,dbConnect,dbDestroy} = require '../test-lib-setup'
-chai.Assertion.includeStack = true;
+
+# NOTE: this causes mocha-phantom to hang instead of exiting!
+# chai.Assertion.includeStack = true;
+
 {app, data} = require '../test-app-setup'
-
-RequestsService = require '../../../lib/services/requests'
-requestsSvc = new RequestsService()
-
-OrdersService = require '../../../lib/services/orders'
-ordersSvc = new OrdersService()
-
-ViewDataService = require '../../../lib/services/_viewdata'
-viewDataSvc = new ViewDataService()
-
-RequestCallsService = require '../../../lib/services/requestCalls'
-svc = new RequestCallsService()
 
 async = require 'async'
 cloneDeep = require 'lodash.clonedeep'
 moment = require 'moment'
 ObjectId = require('mongoose').Types.ObjectId
+
 expertCredit = require '../../../app/scripts/shared/mix/expertCredit'
+ordersSvc = new (require '../../../lib/services/orders')()
+requestsSvc = new (require '../../../lib/services/requests')()
+viewDataSvc = new (require '../../../lib/services/_viewdata')()
+svc = new (require '../../../lib/services/requestCalls')()
 
 describe "RequestCallsService", ->
   @testNum = 0
   user = data.users[13]  # bchristie
   request = data.requests[10] # experts[0] = paul, experts[1] = matthews
-  request = _.omit request, "_id"
+  request = _.omit request, '_id'
   before dbConnect
   after (done) -> dbDestroy @, done
   beforeEach () ->
@@ -32,7 +28,7 @@ describe "RequestCallsService", ->
 
   saveOrdersForRequest = (orders, request, callback) ->
     createOrder = (order, cb) ->
-      order = _.omit order, "_id"
+      order = _.omit order, '_id'
       order.requestId = request._id
       ordersSvc.create order, user, (err, newOrder) ->
         if err then return cb new Error(err.message)
@@ -54,33 +50,6 @@ describe "RequestCallsService", ->
           expect(_.idsEqual newCall.expertId, request.suggested[0].expert._id).to.be.true
           expect(newCall.type).to.equal request.pricing
           return callback null, results.orders, newRequestWithCall, newCall
-
-  it "cannot book a 1hr call without any orders", ->
-    call = data.calls[1]
-    orders = []
-    expect(svc._canScheduleCall orders, call).to.equal false
-
-  it "can book a 1hr call using 1 order and 1 available lineitem for paul", ->
-    call = data.calls[1] # expert is paul
-    orders = [cloneDeep data.orders[5]] # expert is paul, 2 line items
-    expect(svc._canScheduleCall orders, call).to.equal true
-
-    orders = orders.map (o) ->
-      o.markModified = ->
-      o
-    modified = svc._modifyOrdersWithCallDuration orders, call
-    expect(modified).to.have.length 1
-    expect(modified[0].lineItems[0].redeemedCalls[0].qtyRedeemed).to.equal 1
-
-  it "cannot book a 1hr call given 1 order and 1 redeemed lineItems", ->
-    call = data.calls[1] # expert is paul
-    orders = [cloneDeep data.orders[5]] # expert is paul, 2 line items
-
-    # mark it completed
-    call._id = new ObjectId()
-    orders[0].lineItems[0].redeemedCalls.push callId: call._id, qtyRedeemed: call.duration
-
-    expect(svc._canScheduleCall orders, call).to.equal false
 
   it "can book a 1hr call using 1 order and 1 available lineitem", (done) ->
     @timeout 10000

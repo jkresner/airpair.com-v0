@@ -14,7 +14,7 @@ storySteps = [
   { app:'calls/RouterSchedule', usr: 'admin', frag: '#/schedule/rId', fixture: f.callSchedule, pageData: { request: request } }
   # note: these two have a callId set as @rId
   { app:'calls/RouterEdit', usr: 'admin', frag: '#', fixture: f.callEdit, pageData: { request: request } }
-  { app:'calls/RouterEdit', usr: 'admin', frag: '#', fixture: f.callEdit, pageData: { request: request } }
+  # { app:'calls/RouterEdit', usr: 'admin', frag: '#', fixture: f.callEdit, pageData: { request: request } }
 ]
 
 testNum = -1
@@ -36,6 +36,7 @@ describe "Stories: John Dowd", ->
     window.location = storySteps[testNum].frag.replace 'rId', @rId
     hlpr.setInitApp @, "/scripts/#{storySteps[testNum].app}"
     hlpr.setSession storySteps[testNum].usr, =>
+      console.log storySteps[testNum].app
       # $log 'app', storySteps[testNum].app, storySteps[testNum].pageData
       initApp(storySteps[testNum].pageData, done)
 
@@ -180,8 +181,7 @@ describe "Stories: John Dowd", ->
     scheduleCall(@app, call, 2, done)
 
   it 'can edit fourth call down to 1 hour as admin', (done) ->
-    @timeout 0
-
+    @timeout 20000
     v = @app.callEditView
     call = request.calls[3] # original calls
     $.ajax("/_viewdata/callEdit/#{callId}")
@@ -192,7 +192,6 @@ describe "Stories: John Dowd", ->
       @app.orders.set data.orders, reset: true
       test()
     test = =>
-      console.log 'cid', callId
       router.navTo "#/edit/#{callId}"
       setTimeout onEditPage, 100
     onEditPage = =>
@@ -220,4 +219,35 @@ describe "Stories: John Dowd", ->
       # expect(saved.datetime).to.equal @now.toJSON()
       done()
 
+  # TODO why won't this test run!
   # it 'can edit fourth call back to 2 hours as admin', (done) ->
+  #   @timeout 20000
+  #   v = @app.callEditView
+  #   call = request.calls[3] # original calls
+  #   console.log 'a'
+  #   $.ajax("/_viewdata/callEdit/#{callId}")
+  #   .fail (__, ___, errorThrown) =>
+  #     console.log 'b'
+  #     done(errorThrown)
+  #   .done (data) =>
+  #     console.log 'c'
+  #     @app.request.set data.request, reset: true
+  #     @app.orders.set data.orders, reset: true
+  #     test()
+  #   test = =>
+  #     console.log 'd'
+  #     router.navTo "#/edit/#{callId}"
+  #     setTimeout onEditPage, 100
+  #   onEditPage = =>
+  #     console.log 'e'
+  #     expect(v.elm('duration').val()).to.equal '1'
+
+  #     v.elm('duration').val('2')
+
+  #     v.$('.save').click()
+  #     @app.requestCall.once 'sync', onSync
+  #   onSync = =>
+  #     console.log 'f'
+  #     saved = @app.requestCall.toJSON()
+  #     expect(saved.duration).to.equal 2
+  #     done()

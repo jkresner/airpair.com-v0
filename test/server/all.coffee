@@ -14,6 +14,7 @@ describe "Server-side suite", ->
   describe 'api/experts', (done) -> require './api/experts'
   describe 'api/orders', (done) -> require './api/orders'
   describe 'api/requests', (done) -> require './api/requests'
+  describe 'services/orders', (done) -> require './services/orders'
   describe 'services/rates', (done) -> require './services/rates'
   describe 'services/request', (done) -> require './services/request'
   describe 'services/requestCalls', (done) -> require './services/requestCalls'

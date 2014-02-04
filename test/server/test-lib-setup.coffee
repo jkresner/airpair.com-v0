@@ -6,6 +6,7 @@ chai          = require 'chai'
 chai.use require 'sinon-chai'
 #require "sinon/lib/sinon/util/fake_xml_http_request"
 
+chai.Assertion.includeStack = true
 
 connect = (done) ->
   return done() if mongoose.connections[0]._listening
