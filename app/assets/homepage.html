@@ -66,28 +66,22 @@
   </div>
 
     <div id="fold" class="home-feature-bg">
-      <div class="wrap" style="margin-bottom:30px">
+      <div class="wrap">
 
-      <div style="float:left;width:60%">
+        <div id="about">
 
-        <h1>The World's Best Software Experts</h1>
-        <p>At your finger tips</p>
-        <p class="about">On-demand through video chat & screen sharing</p>
-        <a id="fold-action" class="trackCustomerLogin button large" href="/">Find an expert & video chat, NOW.</a>
+          <h1>The World's Best Software Experts</h1>
+          <p>At your finger tips</p>
+          <p class="about">On-demand through video chat & screen sharing</p>
+          <a id="fold-action" class="trackCustomerLogin button large" href="/">Find an expert & video chat, NOW.</a>
+          <br />
+          <a id="tw-follow" href="https://twitter.com/airpair" class="twitter-follow-button" data-show-count="false" data-size="large" data-dnt="true">Follow @airpair</a>
 
-        <a href="https://twitter.com/airpair" class="twitter-follow-button" data-show-count="false" data-size="large" data-dnt="true">Follow @airpair</a>
-
-<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
-
-      </div>
-
+        </div>
         <img src="//i1.ytimg.com/vi/XzOj-cMNP1o/sddefault.jpg" alt="Remote Pair Programming" />
-
-      </div>
-      <div>
-
       </div>
     </div>
+
 
     <div id="customers" class="home-feature-bg-alt">
       <div class="wrap">
@@ -229,6 +223,8 @@
     body#home .title-area { width:190px!important; }
     body#home h2 { text-align:center;margin:12px auto 50px auto;font-size:2.0rem;font-weight:300;line-height:46px; }
     body#home .head-wrap { margin-bottom:0 }
+    body#home #fold .wrap { margin-bottom:30px }
+    body#home #fold #about { float:left;width:60% }
     body#home #fold img { width:400px;float:right;margin:40px 20px }
     body#home #fold h1 { font-weight:200;font-size:44px;color:#333333;margin:30px 0 0 0 }
     body#home #fold p { color:gray;font-weight:100;margin:0 0 0 0;font-size:36px }
@@ -277,14 +273,15 @@
       body#home #menu-services .problem-solving { display:none }
       body#home #fold img { width:320px }
       body#home #fold h1 { font-size:36px }
-      body#home #fold p { font-size:24px }
+      body#home #fold p { font-size:28px }
       body#home #fold p.about { font-size:24px }
       body#home .felienne-hermans { display:none; }
     }
 
     @media (max-width:1024px) {
       body#home #fold h1 { font-size:32px }
-      body#home #fold img { width:260px }
+      body#home #fold img { width:280px }
+      body#home #fold-action { margin-left:0!important }
       body#home aside.header-widget-area { width:580px!important;padding:5px 0 0 0; }
       body#home #menu-services .code-review { display:none }
       body#home #experts article { width:188px; }
@@ -297,10 +294,31 @@
       body#home .menu-services li { height:35px; }
       body#home .menu-services a { font-size:15;font-weight:800 }
       body#home #menu-services .training{ display:none }
+      body#home #fold img { display:none }
+      body#home #fold #about { float:none;width:100% }
+      body#home #fold h1 { font-size:40px;margin-top:0!important; }
+      body#home #fold p { font-size:32px }
+      body#home #fold p.about { font-size:28px }
+      body#home #fold iframe { display:none }
     }
 
     @media (max-width:760px) {
       body#home aside.header-widget-area { display:none!important }
+    }
+
+    @media (max-width:640px) {
+      body#home .title-area { width:100%!important; }
+      body#home .site-title { width:200px;margin:auto; }
+      body#home #fold { text-align:center }
+      body#home #fold h1 { font-size:34px }
+      body#home #fold p { font-size:28px }
+      body#home #fold p.about { font-size:24px }
+      body#home #fold img { display:block;float:none;width:70%;margin:20px auto 10px auto!important; }
+      body#home #fold-action { width:100%;margin:30px 0 10px 0!important; }
+      body#home #cost { display:none; }
+      body#home #experts article { width:200px;margin:28px!important }
+      body#home #experts article h3 { font-size:1rem }
+      body#home #experts article span { width:200px }
     }
 
   </style>
@@ -417,5 +435,5 @@
     </script>
 
     <script src="/javascripts/providers.js" defer onload="require('scripts/providers/all');"></script>
-
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
 </html>
