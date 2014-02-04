@@ -10,6 +10,10 @@ body {
   background:white!important;
 }
 
+.title-area {
+  width:390px!important;
+}
+
 .site-title {
   margin:0;
 }
@@ -110,9 +114,11 @@ a.trackExpertLogin {
 .bio div.links { float:right;display:inline }
 .bio div.links a { width:32px;height:32px;display:inline-block;margin-left:6px;float:right; }
 
+.icon { width:32px;height:32px;display:inline-block;margin-left:6px;float:right; }
+.social-icons a { width:32px;height:32px;display:inline-block;margin-left:6px;float:right; }
 .github { background:url('/images/icons/gh.png') }
 .twitter { background:url('/images/icons/tw.png') }
-.bitbucker { background:url('/images/icons/bb.png') }
+.bitbucket { background:url('/images/icons/bb.png') }
 .stackoverflow { background:url('/images/icons/so.png') }
 .linkedin { background:url('/images/icons/in.png') }
 
