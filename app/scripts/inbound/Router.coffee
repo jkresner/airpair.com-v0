@@ -15,6 +15,7 @@ module.exports = class Router extends S.AirpairSessionRouter
     'inactive'     : 'inactive'
     'request/:id'  : 'request'
     'farm/:id'     : 'farm'
+    'owners'       : 'owners'
     ':id'          : 'request'
 
   appConstructor: (pageData, callback) ->
