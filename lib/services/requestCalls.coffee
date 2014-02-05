@@ -66,7 +66,7 @@ module.exports = class RequestCallsService
       oldCall = _.find request.calls, (c) -> _.idsEqual c._id, call._id
       if !oldCall then return callback new Error('no such call ' + call._id)
 
-      @_updateDuration requestId, oldCall, call.duration, (err) =>
+      @_updateOrders requestId, oldCall, call.duration, (err) =>
         if err then return callback err
 
         # pass in both old & new: it decides whether updates are truly needed
@@ -84,10 +84,10 @@ module.exports = class RequestCallsService
             newCall = _.find newRequest.calls, (c) -> _.idsEqual c._id, call._id
             callback null, newCall
 
-  _updateDuration: (requestId, oldCall, newDuration, callback) =>
-    if oldCall.duration == newDuration
+  _updateOrders: (requestId, oldCall, newDuration, callback) =>
+    if oldCall.duration == newDuration && _.deep
       console.log 'duration unchanged'
       return process.nextTick callback
     callWithNewDuration = _.clone oldCall
     callWithNewDuration.duration = newDuration
-    OrdersSvc.updateDuration requestId, callWithNewDuration, callback
+    OrdersSvc.update requestId, callWithNewDuration, callback
