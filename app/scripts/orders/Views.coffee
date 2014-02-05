@@ -5,6 +5,7 @@ Shared = require '../shared/Views'
 SM = require '../shared/Models'
 SC = require '../shared/Collections'
 expertCredit = require '../shared/mix/expertCredit'
+sum = require '../shared/mix/sum'
 MarketingTagsInputView = Shared.MarketingTagsInputView
 
 #############################################################################
@@ -57,6 +58,7 @@ class exports.OrderRowView extends BB.ModelSaveView
       li.linePaidout = @model.isLineItemPaidOut li
       # hide the link so you can't double-click / double-payout:
       li.linePayoutPending = pendingId == li._id
+      li.completed = sum _.pluck li.redeemedCalls, 'qtyCompleted'
       _.extend li, expertCredit([d], li.suggestion.expert._id)
 
     _.extend d, {
