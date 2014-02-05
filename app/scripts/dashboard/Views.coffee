@@ -1,6 +1,7 @@
 exports = {}
-BB      = require './../../lib/BB'
+BB      = require '../../lib/BB'
 M       = require './Models'
+sum     = require '../shared/mix/sum'
 
 #############################################################################
 ##  To render requests
@@ -67,6 +68,9 @@ class exports.OrderRowView extends BB.BadassView
   render: ->
     d = @model.toJSON()
     d.created = moment(d.utc).format 'MMM DD'
+    d.lineItems.map (li) ->
+      # TODO make this a function
+      li.completed = _.pluck(li.redeemedCalls)
     @$el.html @tmpl d
     @
 
