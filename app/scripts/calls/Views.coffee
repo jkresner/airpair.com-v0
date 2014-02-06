@@ -168,6 +168,7 @@ class exports.CallEditView extends BB.ModelSaveView
     @
   getViewData: ->
     d = @getValsFromInputs @viewData
+    d.sendNotifications = @elm('sendNotifications').is(':checked')
     d.recordings = @videos.toJSON()
     d
   # prevents double-saves, provides feedback that request is in progress.
