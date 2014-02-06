@@ -6,12 +6,14 @@ TagsSvc = require './../services/tags'
 MarketingTagsSvc = require './../services/marketingtags'
 OrdersSvc = require './../services/orders'
 SettingsSvc = require './../services/settings'
+RequestCallsSvc = require './../services/requestCalls'
 rSvc = new RequestsSvc()
 eSvc = new ExpertsSvc()
 tSvc = new TagsSvc()
 mtSvc = new MarketingTagsSvc()
 oSvc = new OrdersSvc()
 sSvc = new SettingsSvc()
+rcSvc = new RequestCallsSvc()
 
 module.exports = class ViewDataService
 
@@ -59,8 +61,10 @@ module.exports = class ViewDataService
         orders: JSON.stringify results.orders
 
   callEdit: (callId, callback) ->
-    rSvc.getByCallId callId, (err, request) ->
-      oSvc.getByRequestId request._id, (e, orders) ->
+    rSvc.getByCallId callId, (e, request) ->
+      if e then return callback e
+      oSvc.getByRequestIdWithoutCall request._id, callId, (e, orders) ->
+        if e then return callback e
         callback null,
           request: JSON.stringify request
           orders: JSON.stringify orders

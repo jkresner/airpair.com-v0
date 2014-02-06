@@ -23,6 +23,7 @@ addTime = (original, milliseconds) ->
   new Date original.getTime() + milliseconds
 
 class CalendarService
+  google: google
   create: (request, call, cb) ->
     start = call.datetime
     owner = request.owner
@@ -64,11 +65,13 @@ class CalendarService
     if cfg.env is 'test'
       return cb null, { htmlLink: 'http://example.com/google-calendar-link' }
 
-    google.createEvent body, cb
+    @google.createEvent body, cb
 
   patch: (oldCall, newCall, cb) ->
-    if oldCall.datetime.getTime() == newCall.datetime.getTime()
-      console.log 'datetime unchanged'
+    sameStart = oldCall.datetime.getTime() == newCall.datetime.getTime()
+    sameDuration = oldCall.duration == newCall.duration
+    if sameStart && sameDuration
+      console.log 'datetime && duration unchanged'
       return process.nextTick ->
         cb null, oldCall.gcal
 
@@ -78,7 +81,17 @@ class CalendarService
       start:
         dateTime: start.toISOString()
       end:
-        dateTime: addTime(start, oldCall.duration * ONE_HOUR).toISOString()
-    google.patchEvent eventId, body, cb
+        dateTime: addTime(start, newCall.duration * ONE_HOUR).toISOString()
+
+    # allow development to edit prod's calls, but don't update gcal
+    # TODO wow so ugly.
+    isTest = cfg?.env is 'test'
+    isDevButNotOurs = cfg?.env is 'dev' &&
+      oldCall.gcal.creator?.email == 'team@airpair.com'
+    if !cfg || isTest || isDevButNotOurs
+      fakeEventData = _.extend oldCall.gcal, body
+      return process.nextTick -> cb null, fakeEventData
+
+    @google.patchEvent eventId, body, cb
 
 module.exports = new CalendarService()

@@ -562,5 +562,4 @@ module.exports = [
         "utm_source" : "stackoverflow"
     }
   }
-
 ]

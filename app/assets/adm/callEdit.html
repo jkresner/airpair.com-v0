@@ -43,6 +43,7 @@
     function initApp() {
       var pageData = {
         request: {{{ request }}},
+        // The call has been unscheduled from these orders
         orders: {{{ orders }}}
       };
       Router = require('/scripts/calls/RouterEdit');

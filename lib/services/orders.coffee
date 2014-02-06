@@ -1,6 +1,10 @@
+async = require 'async'
 mongoose = require 'mongoose'
+
+expertCredit = require '../../app/scripts/shared/mix/expertCredit'
 mailman = require '../mail/mailman'
 Roles = require '../identity/roles'
+sum = require '../../app/scripts/shared/mix/sum'
 
 DomainService = require './_svc'
 PaypalAdaptiveSvc = require '../services/payment/paypal-adaptive'
@@ -178,5 +182,88 @@ module.exports = class OrdersService extends DomainService
         if ee then return callback ee
         callback null, status: 'deleted'
 
+  # also sorts by age; oldest first!
   getByRequestId: (requestId, callback) =>
-    @search { requestId: requestId }, callback
+    @search { requestId: requestId }, (err, orders) =>
+      if err then return callback err
+      callback null, orders.sort(@_byUtc)
+
+  _byUtc: (order1, order2) ->
+    order1.utc - order2.utc
+
+  #
+  # call related
+  #
+
+  _unschedule: (orders, callId) ->
+    orders.map (o) ->
+      o.lineItems = o.lineItems.map (li) ->
+        li.redeemedCalls = _.reject li.redeemedCalls, (rc) ->
+          _.idsEqual rc.callId, callId
+        li
+      o
+
+  getByRequestIdWithoutCall: (requestId, callId, callback) =>
+    @getByRequestId requestId, (e, orders) =>
+      if e then return callback e
+      callback null, @_unschedule orders, callId
+
+  _canSchedule: (orders, call) =>
+    credit = expertCredit orders, call.expertId
+    byType = credit.byType[call.type]
+    if !byType then return false
+    call.duration <= byType.balance
+
+  _qtyRemaining: (lineItem) ->
+    lineItem.qty - sum _.pluck lineItem.redeemedCalls, 'qtyRedeemed'
+
+  _modifyWithDuration: (orders, call) =>
+    allocatedSoFar = 0
+    done = false
+    modified = []
+    for order in orders
+      if done then break
+      order.lineItems.filter (lineItem) =>
+        sameType = lineItem.type == call.type
+        sameExpert = _.idsEqual lineItem.suggestion.expert._id, call.expertId
+        sameType && sameExpert
+      .map (lineItem) =>
+        if done then return
+        redeemedCall = { callId: call._id, qtyRedeemed: 0, qtyCompleted: 0 }
+        lineItem.redeemedCalls = lineItem.redeemedCalls || []
+        allocated = Math.min call.duration, @_qtyRemaining(lineItem)
+        allocatedSoFar += allocated
+        redeemedCall.qtyRedeemed += allocated
+
+        lineItem.redeemedCalls.push redeemedCall
+        modified.push order
+        done = allocatedSoFar == call.duration
+    modified
+
+  # TODO batch update?
+  _saveLineItems: (orders, callback) =>
+    saveOrder = (order, cb) =>
+      update = $set: { lineItems: order.toJSON().lineItems }
+      @model.findByIdAndUpdate order._id, update, cb
+    async.map orders, saveOrder, callback
+
+  schedule: (requestId, call, cb) =>
+    @getByRequestId requestId, (err, orders) =>
+      if err then return cb err
+      @_checkAndSchedule orders, call, cb
+
+  # removes redeemed calls matching the call's ID from the orders, then tries to
+  # schedule it again with this calls duration (the duration is different)
+  updateDuration: (requestId, call, cb) =>
+    @getByRequestId requestId, (err, orders) =>
+      if err then return cb err
+      ordersWithoutCall = @_unschedule orders, call._id
+      @_checkAndSchedule ordersWithoutCall, call, cb
+
+  _checkAndSchedule: (orders, call, cb) =>
+    if !@_canSchedule orders, call
+      message = 'Not enough hours to set up this call; please order more'
+      return cb new Error message
+
+    modifiedOrders = @_modifyWithDuration orders, call
+    @_saveLineItems modifiedOrders, cb

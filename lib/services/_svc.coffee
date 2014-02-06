@@ -1,8 +1,8 @@
-
 moment = require 'moment'
 
 module.exports = class DomainService
 
+  # TODO use lean and exec on everything here!
 
   # Used to dump full list of customers
   getAll: (callback) ->
@@ -34,6 +34,8 @@ module.exports = class DomainService
   delete: (id, callback) =>
     @model.findByIdAndRemove id, callback
 
+  # TODO this breaks the paypal payout button b/c the redeemedCalls schema isn't
+  # put in by mongoose
   update: (id, data, callback) =>
     ups = _.omit data, '_id' # so mongo doesn't complain
     @model.findByIdAndUpdate(id, ups).lean().exec (e, r) =>

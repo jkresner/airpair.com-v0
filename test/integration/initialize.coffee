@@ -42,12 +42,13 @@ module.exports = (grep) ->
     './review/customer_test'
     './review/expert_test'
     './review/book_test'
-    # './review/bookStripe_test'    
+    # './review/bookStripe_test'
     # './settings/paypal_test'
     './tags/tagsadmin_test'
     './stories/emillee_test'
-    './stories/ramon_test'  
-    './stories/bchristie_test'  
+    './stories/ramon_test'
+    './stories/bchristie_test'
+    './stories/jdowd_test'
   ]
 
   require test for test in tests

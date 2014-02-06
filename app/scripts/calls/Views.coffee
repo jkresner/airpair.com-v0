@@ -6,6 +6,11 @@ SV = require './../shared/Views'
 expertCredit = require '../shared/mix/expertCredit'
 parseYoutubeId = require '../shared/mix/parseYoutubeId'
 
+pickadateOptions =
+  format: "dd mmm 'yy"
+
+dateFormat = "DD MMM 'YY"
+
 class exports.CallScheduleView extends BB.ModelSaveView
   async: off
   el: '#scheduleForm'
@@ -59,13 +64,13 @@ class exports.CallScheduleView extends BB.ModelSaveView
       selectedExpert.selectOptions = _.range(1, balance + 1).map (num) -> { num }
 
     if !@mget 'date' # default to today
-      today = new Date().toJSON().slice(0, 10)
+      today = moment().format(dateFormat)
       @model.set 'date', today
 
     d = @model.extendJSON { available: suggested, selectedExpert, requestId: @request.get('_id') }
     @$('.datepicker').stop()
     @$el.html @tmpl d
-    @$('.datepicker').pickadate()
+    @$('.datepicker').pickadate(pickadateOptions)
     @
   # prevents double-saves, provides feedback that request is in progress.
   _save: (e) ->
@@ -130,7 +135,7 @@ class exports.CallEditView extends BB.ModelSaveView
   async: off
   el: '#edit'
   tmpl: require './templates/CallEdit'
-  viewData: ['date', 'time', 'type', 'notes']
+  viewData: ['duration', 'date', 'time', 'type', 'notes']
   events:
     'click .save': '_save'
   initialize: ->
@@ -139,26 +144,25 @@ class exports.CallEditView extends BB.ModelSaveView
   render: ->
     call = @model.toJSON()
     expert = @request.suggestion(call.expertId).expert
+    orders = @collection.toJSON()
 
     # TODO include the .zone() function so it will be PST everywhere
     call.time = moment(call.datetime).format('HH:mm')
-    call.date = moment(call.datetime).format('YYYY-MM-DD')
+    call.date = moment(call.datetime).format(dateFormat)
 
     # TODO open source / private / nda dropdown
-    # orders = @collection.toJSON()
-    # expert.credit = expertCredit orders, call.expertId
-    # expert.credit.byType[call.type].selected = true
+    expert.credit = expertCredit orders, call.expertId
     # expert.credit.byTypeArray = _.values(expert.credit.byType)
-    # TODO hours dropdown
-    # tricky: take into account the call's current duration!
-    # byType = expert.credit.byType[@model.get('type')] || {}
-    # balance = byType.balance || 0
-    # expert.selectOptions = _.range(1, balance + 1).map (num) -> { num }
+
+    # hours dropdown
+    balance = expert.credit.byType[call.type].balance
+    expert.selectOptions = _.range(1, balance + 1).map (num) -> { num }
+
     # TODO call.status
     d = _.extend call, { expert, requestId: @request.id }
     @$('.datepicker').stop()
     @$('#callEdit').html @tmpl d
-    @$('.datepicker').pickadate()
+    @$('.datepicker').pickadate(pickadateOptions)
     @
   getViewData: ->
     d = @getValsFromInputs @viewData

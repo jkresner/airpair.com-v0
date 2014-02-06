@@ -20,7 +20,7 @@ class RequestCallsApi  # Always passes back a full request object
 
   validate: (req, res, next) ->
     req.checkBody('duration', 'Invalid duration').notEmpty().isInt()
-    req.checkBody('date', 'Invalid date').notEmpty().isDate()
+    req.checkBody('date', 'Invalid date').notEmpty().is(/^\d\d \w\w\w '\d\d$/)
     req.checkBody('time', 'Invalid time').notEmpty().is(/^\d\d:\d\d$/)
     errors = req.validationErrors()
     if errors
@@ -29,6 +29,9 @@ class RequestCallsApi  # Always passes back a full request object
 
     {date, time} = req.body
     req.body.datetime = new Date "#{date} #{time} PST"
+    if isNaN(req.body.datetime.getTime())
+      return res.send data: date: 'Invalid Date', 400
+
     delete req.body.date
     delete req.body.time
     next()
@@ -37,8 +40,7 @@ class RequestCallsApi  # Always passes back a full request object
     # TODO also send 400 errors when google API has problems.
     @svc.create req.user._id, req.params.requestId, req.body, (e, results) ->
       if e && e.message.indexOf('Not enough hours') == 0
-        errors =
-          duration: 'Please order more hours in order to schedule more'
+        errors = duration: e.message
         return res.send data: errors, 400
       if e then return next e
       res.send results.request
@@ -47,6 +49,9 @@ class RequestCallsApi  # Always passes back a full request object
   update: (req, res, next) =>
     # TODO also send 400 errors when google API has problems.
     @svc.update req.user._id, req.params.requestId, req.body, (e, call) ->
+      if e && e.message.indexOf('Not enough hours') == 0
+        errors = duration: e.message
+        return res.send data: errors, 400
       if e then return next e
       res.send call
 

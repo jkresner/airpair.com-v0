@@ -335,4 +335,8 @@ module.exports = [
 
   # 13 - Bruce Christie (bchristie)
   {"_id":"5244496866a6f999a465f877","google":{"_json":{"locale":"en","gender":"male","picture":"https://lh6.googleusercontent.com/-Vwjei17buyc/AAAAAAAAAAI/AAAAAAAAAAA/VzQekIoMebs/photo.jpg","link":"https://plus.google.com/113389652956824228976","family_name":"christie","given_name":"bruce","name":"bruce christie","verified_email":true,"email":"bqchristie@gmail.com","id":"113389652956824228976"},"emails":[{"value":"bqchristie@gmail.com"}],"name":{"givenName":"bruce","familyName":"christie"},"displayName":"bruce christie","id":"113389652956824228976","provider":"google"},"googleId":"113389652956824228976"}
+
+  # 14 - John Dowd (jdowd)
+  {"_id":"529bba4a66a6f999a465fcd7","google":{"provider":"google","id":"114150343114690373311","displayName":"John Dowd","name":{"familyName":"Dowd","givenName":"John"},"emails":[{"value":"john@sofwarellc.com"}],"_json":{"id":"114150343114690373311","email":"john@sofwarellc.com","verified_email":true,"name":"John Dowd","given_name":"John","family_name":"Dowd","link":"https://plus.google.com/114150343114690373311","picture":"https://lh5.googleusercontent.com/-jjQmIuIEVvA/AAAAAAAAAAI/AAAAAAAAAA8/VLiMenMtgIk/photo.jpg","gender":"male","locale":"en","hd":"sofwarellc.com"},"token":{"token":"ya29.1.AADtN_UgF__CZkwkzivPC30miwPmuR8OodXdBo_mhwtHNlku38tnGHgHqP0bl9QBxaEEK9LN","attributes":{"refreshToken":null}}},"googleId":"114150343114690373311","referrer":{}}
+
 ]

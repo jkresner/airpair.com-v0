@@ -8,7 +8,7 @@ storySteps = [
   { app:'request/Router', usr:'bchristie', frag: '#', fixture: f.request, pageData: {} }
   { app:'inbound/Router', usr:'admin', frag: '#', fixture: f.inbound, pageData: { experts: data.experts, tags: data.tags } }
   { app:'review/Router', usr:'bchristie', frag: '#rId', fixture: f.review, pageData: {} }
-  { app:'calls/RouterSchedule', usr: 'admin', frag: '#/schedule/rId', fixture: f.schedule, pageData: { request: request, orders: data.orders[2] } }
+  { app:'calls/RouterSchedule', usr: 'admin', frag: '#/schedule/rId', fixture: f.callSchedule, pageData: { request: request, orders: data.orders[2] } }
   { app:'orders/Router', usr: 'admin', frag: '#', fixture: f.orders, pageData: {} }
 ]
 
@@ -163,7 +163,7 @@ describe "Stories: Bruce Christie", ->
     expect(duration.val()).to.equal '2'
 
     date = v.elm('date')
-    expect(new Date().toISOString().indexOf(date.val())).to.equal 0
+    expect(moment().format("DD MMM 'YY")).to.equal date.val()
 
     expectedTime = '16:30'
     v.elm('time').val('16:30')
