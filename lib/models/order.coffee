@@ -25,7 +25,7 @@ LineItem = new Schema
   qty:                { required: true, type: Number }
 
   redeemedCalls:      [RedeemedCall]
-  type:               { required: true, type: String } # open-source, private, nda
+  type:               { required: true, type: String } # opensource, private, nda
   suggestion:         { required: true, type: {} }
 
 schema = new Schema

@@ -1,10 +1,11 @@
 async = require 'async'
 mongoose = require 'mongoose'
 
-expertCredit = require '../../app/scripts/shared/mix/expertCredit'
 mailman = require '../mail/mailman'
 Roles = require '../identity/roles'
 sum = require '../../app/scripts/shared/mix/sum'
+canSchedule = require '../../app/scripts/shared/mix/canSchedule'
+unschedule = require '../../app/scripts/shared/mix/unschedule'
 
 DomainService = require './_svc'
 PaypalAdaptiveSvc = require '../services/payment/paypal-adaptive'
@@ -182,41 +183,85 @@ module.exports = class OrdersService extends DomainService
         if ee then return callback ee
         callback null, status: 'deleted'
 
-  # also sorts by age; oldest first!
+  # oldest orders first (smallest timestamp -> biggest timestamp)
   getByRequestId: (requestId, callback) =>
-    @search { requestId: requestId }, (err, orders) =>
-      if err then return callback err
-      callback null, orders.sort(@_byUtc)
+    query = requestId: requestId
+    sort = utc: 'asc'
+    @search(query).sort(sort).exec callback
 
-  _byUtc: (order1, order2) ->
-    order1.utc - order2.utc
+  ###
 
-  #
-  # call related
-  #
+  # call related code
 
-  _unschedule: (orders, callId) ->
-    orders.map (o) ->
-      o.lineItems = o.lineItems.map (li) ->
-        li.redeemedCalls = _.reject li.redeemedCalls, (rc) ->
-          _.idsEqual rc.callId, callId
-        li
-      o
+  Scheduling a call means going through the orders, determining if there's
+  enough hour-credit, and then modifying the orders with the length of the new
+  call.
 
-  getByRequestIdWithoutCall: (requestId, callId, callback) =>
-    @getByRequestId requestId, (e, orders) =>
-      if e then return callback e
-      callback null, @_unschedule orders, callId
+  Here is an order's lineItem before scheduling. I've left out
+  irrelevant properties:
 
-  _canSchedule: (orders, call) =>
-    credit = expertCredit orders, call.expertId
-    byType = credit.byType[call.type]
-    if !byType then return false
-    call.duration <= byType.balance
+    lineItem = {
+      # total number of hours the customer bought
+      qty: 3
+      redeemedCalls: []
+      type: 'opensource'
+      suggestion: { expert: { _id: expertId } }
+    }
 
-  _qtyRemaining: (lineItem) ->
-    lineItem.qty - sum _.pluck lineItem.redeemedCalls, 'qtyRedeemed'
+  After scheduling a 1-hour call with `expertId` that is opensource
 
+    lineItem = {
+      # total number of hours the customer bought
+      qty: 3
+      redeemedCalls: [
+        callId: callId
+        qtyRedeemed: 1 # the length of the call
+        qtyCompleted: 0
+      ]
+      type: 'opensource'
+      suggestion: { expert: { _id: expertId } }
+    }
+
+  The callId allows us to remove the call later, if we needed to unschedule
+  and then re-schedule the call with a different duration. Editing a call's
+  duration is accomplished by basically deleting the call from all the
+  lineItems, and then scheduling it again against the same lineItems. LineItems
+  are sorted by age, and because it edits the oldest ones first, the same
+  lineItems are be affected.
+
+  When a call is marked as completed, we locate all the matching redeemedCalls,
+  and change qtyCompleted to match the length of the call (qtyRedeemed).
+  ###
+
+  schedule: (requestId, call, cb) =>
+    @getByRequestId requestId, (err, orders) =>
+      if err then return cb err
+      if !canSchedule orders, call
+        message = 'Not enough hours to schedule this call; please order more'
+        return cb new Error message
+
+      modifiedOrders = @_modifyWithDuration orders, call
+      @_saveLineItems modifiedOrders, cb
+
+  # removes redeemed calls matching the call's ID from the orders, then tries to
+  # schedule it again with this calls duration (the duration is different)
+  update: (requestId, call, cb) =>
+    @getByRequestId requestId, (err, orders) =>
+      if err then return cb err
+      ordersWithoutCall = unschedule orders, call._id
+
+      if !canSchedule ordersWithoutCall, call
+        message = "Not enough hours to edit call's duration; please order more"
+        return cb new Error message
+
+      modifiedOrders = @_modifyWithDuration ordersWithoutCall, call
+      modifiedOrders = @_markComplete modifiedOrders, call
+      @_saveLineItems modifiedOrders, cb
+
+  # adds the appropriate redeemedCall object to orders that match the call's
+  # criteria (same type, same expert).
+  # the math.min stuff allows a 3 hour call to be spread across more than one
+  # lineItem (the customer made more than one order).
   _modifyWithDuration: (orders, call) =>
     allocatedSoFar = 0
     done = false
@@ -234,11 +279,26 @@ module.exports = class OrdersService extends DomainService
         allocated = Math.min call.duration, @_qtyRemaining(lineItem)
         allocatedSoFar += allocated
         redeemedCall.qtyRedeemed += allocated
-
         lineItem.redeemedCalls.push redeemedCall
+        # this doesnt push duplicate orders b/c there is only one lineitem for
+        # each expert in an order
         modified.push order
         done = allocatedSoFar == call.duration
     modified
+
+  # TODO move this into calcExpertCredit
+  _qtyRemaining: (lineItem) ->
+    lineItem.qty - sum _.pluck lineItem.redeemedCalls, 'qtyRedeemed'
+
+  # marks a redeemedCall as complete if the matching call has a recording
+  _markComplete: (orders, call) =>
+    for order in orders
+      for li in order.lineItems
+        for rc in li.redeemedCalls
+          if rc.callId != call._id then continue
+          # the length of the video doesn't matter; any video marks it completed
+          rc.qtyCompleted = rc.qtyRedeemed
+    orders
 
   # TODO batch update?
   _saveLineItems: (orders, callback) =>
@@ -246,24 +306,3 @@ module.exports = class OrdersService extends DomainService
       update = $set: { lineItems: order.toJSON().lineItems }
       @model.findByIdAndUpdate order._id, update, cb
     async.map orders, saveOrder, callback
-
-  schedule: (requestId, call, cb) =>
-    @getByRequestId requestId, (err, orders) =>
-      if err then return cb err
-      @_checkAndSchedule orders, call, cb
-
-  # removes redeemed calls matching the call's ID from the orders, then tries to
-  # schedule it again with this calls duration (the duration is different)
-  updateDuration: (requestId, call, cb) =>
-    @getByRequestId requestId, (err, orders) =>
-      if err then return cb err
-      ordersWithoutCall = @_unschedule orders, call._id
-      @_checkAndSchedule ordersWithoutCall, call, cb
-
-  _checkAndSchedule: (orders, call, cb) =>
-    if !@_canSchedule orders, call
-      message = 'Not enough hours to set up this call; please order more'
-      return cb new Error message
-
-    modifiedOrders = @_modifyWithDuration orders, call
-    @_saveLineItems modifiedOrders, cb

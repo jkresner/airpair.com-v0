@@ -72,8 +72,8 @@
 </td>
 <td>
   {{#each lineItems}}
-    <!-- scheduled     completed      total  -->
-    {{ redeemed }} / 0 / {{ total }}
+    <!-- scheduled   completed            total  -->
+    {{ redeemed }} / {{ completed }} / {{ total }}
     {{#with suggestion.expert }}
       <img class="expertPic" src="{{ pic }}" />
       {{ name }}<br />
