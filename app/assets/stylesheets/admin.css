@@ -161,6 +161,9 @@ nav a.zocial { padding:0; }
 #adminboundpage .contact table th { width:80px; }
 #adminboundpage .contact .email { width:100px;padding:1px 7px;text-align:left }
 #adminboundpage #suggestions { margin-bottom:30px;}
+#adminboundpage #suggestions .sortBy { display: inline-block; margin-left: 10px;}
+#adminboundpage #suggestions .sortBy label { display: inline; margin-right: 10px;}
+#adminboundpage #suggestions .sortBy input { vertical-align: baseline; margin-right: 5px;}
 #adminboundpage #suggestions .nav-pills { padding-top:10px }
 #adminboundpage .suggestion { float:left;margin-bottom:6px }
 #adminboundpage .suggestion .pic { width:40px;margin:2px;float:left; }

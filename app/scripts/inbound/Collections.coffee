@@ -6,10 +6,21 @@ Shared = require './../shared/Collections'
 exports.Tags = Shared.Tags
 exports.MarketingTags = Shared.MarketingTags
 
+byName = (m) -> m.get 'name'
+byRate = (m) -> (m.get 'rate') || 0
+
 class exports.Experts extends BB.FilteringCollection
   model: Models.Expert
   url: '/api/experts'
-  comparator: (m) -> m.get 'name'
+  comparator: byName
+  comparators:
+    name: byName
+    github: (m) -> -1 * (m.get('gh')?.followers || 0)
+    stackoverflow: (m) -> -1 * (m.get('so')?.reputation || 0)
+    low: byRate
+    high: (m) -> -1 * byRate(m)
+  _sort: ->
+    _.sortBy @filteredModels, @comparator
   _filter: (f) ->
     # $log '_filter', f
     r  = @models

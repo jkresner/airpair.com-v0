@@ -22,7 +22,9 @@ module.exports = class ExpertsService extends DomainService
     'rate': 1
     'homepage': 1
     'gh.username': 1
+    'gh.followers': 1
     'so.link': 1
+    'so.reputation': 1
     'bb.id': 1
     'in.id': 1
     'tw.username': 1

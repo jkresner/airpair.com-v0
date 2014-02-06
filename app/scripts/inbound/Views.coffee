@@ -236,6 +236,7 @@ class exports.RequestSuggestionsView extends BB.BadassView
     'input .autocomplete': 'renderSearchSuggestions'
     'click .add-suggestion': 'add'
     'click .js-tag': 'filterTag'
+    'click .sortBy input': 'sort'
   initialize: ->
     @listenTo @model, 'change:tags', @render
     @listenTo @model, 'change:suggested', @renderTagSuggestions
@@ -249,6 +250,10 @@ class exports.RequestSuggestionsView extends BB.BadassView
     #$log 'filterTag', short
     @rTag = _.find @model.get('tags'), (t) -> t.short == short
     @renderTagSuggestions()
+  sort: (e) ->
+    @collection.comparator = @collection.comparators[$(e.target).val()]
+    @renderTagSuggestions()
+    true
   renderTagSuggestions: ->
     #$log 'renderTagSuggestions', @rTag
     @$('.ops').html ''
@@ -259,7 +264,7 @@ class exports.RequestSuggestionsView extends BB.BadassView
     else if @rTag?
       @$("[data-short='#{@rTag.short}']").addClass 'active'
       suggested = _.pluck @model.get('suggested'), 'expert'
-      @collection.filterFilteredModels( tag: @rTag, excludes: suggested )
+      @collection.filterFilteredModels tag: @rTag, excludes: suggested, sort: true
       @renderSuggestions @collection.filteredModels
     false
   renderSearchSuggestions: ->

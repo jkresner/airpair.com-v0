@@ -1,10 +1,18 @@
 <legend>Suggestions</legend>
 <div style="height:60px;height:30px;padding:5px 0">
+  Sort by
+  <div class="sortBy">
+    <label><input type="radio" name="sort" value="name" checked>name</label>
+    <label><input type="radio" name="sort" value="stackoverflow">stackoverflow</label>
+    <label><input type="radio" name="sort" value="github">github</label>
+    <label><input type="radio" name="sort" value="low">low rate</label>
+    <label><input type="radio" name="sort" value="high">high rate</label>
+  </div>
   <ul class="nav nav-pills" style="margin-bottom:5px">
     {{#each tags}}
-    <li data-short='{{short}}'><a href="#" class="js-tag" title="{{name}}">{{short}}</a></li>
+    <li data-short="{{short}}"><a href="#" class="js-tag" title="{{name}}">{{short}}</a></li>
     {{/each}}
-    <li data-short='custom'><a href="#" class="js-tag">custom</a></li>
+    <li data-short="custom"><a href="#" class="js-tag">custom</a></li>
   </ul>
 <div>
 <div class="custom" style="display:none">
