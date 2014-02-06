@@ -14,7 +14,8 @@ app = express()
 
 # load our db
 {MongoSessionStore} = require('./app_mongoose')(app, express)
-mongoSessionStore = new MongoSessionStore url: "#{cfg.mongoUri}/sessions"
+storeOptions = url: "#{cfg.mongoUri}/sessions", auto_reconnect: true
+mongoSessionStore = new MongoSessionStore storeOptions
 
 app.engine('html', require('hbs').__express)
 app.set('view engine', 'hbs')
