@@ -131,6 +131,15 @@
         </div>
       </div>
     </div> <!-- end .datetimeduration -->
+    <div class="control-group">
+      <div class="controls">
+        <label class="control-label">
+          <input name="inviteOwner" type="checkbox"
+            {{#if ../inviteOwner}}checked{{/if}}>
+          Invite {{../owner}}@airpair.com to the gcal event
+        </label>
+      </div>
+    </div>
   {{/selectedExpert}}
 
   <div class="alert alert-error">

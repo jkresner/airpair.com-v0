@@ -55,6 +55,10 @@ class CalendarService
         on your system. Please let #{owner2name[owner]} know if you'd like to do
         a dry run."""
 
+    # maksim & jonathon watch everything, so getting duplicate invites is annoy
+    if call.inviteOwner == false
+      body.attendees.shift()
+
     # don't show test data up in people's calendars
     if !cfg || !cfg.isProd
       body.attendees = body.attendees.map (o) ->

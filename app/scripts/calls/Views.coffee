@@ -6,6 +6,7 @@ SV = require '../shared/Views'
 calcExpertCredit = require '../shared/mix/calcExpertCredit'
 parseYoutubeId = require '../shared/mix/parseYoutubeId'
 unschedule = require '../shared/mix/unschedule'
+storage = require('../util').storage
 
 pickadateOptions =
   format: "dd mmm 'yy"
@@ -25,6 +26,7 @@ class exports.CallScheduleView extends BB.ModelSaveView
     'change [name=duration]': -> @model.set 'duration', parseInt(@elm('duration').val(), 10), silent: true
     'blur [name=date]': -> @model.set 'date', @elm('date').val(), silent: true
     'blur [name=time]': -> @model.set 'time', @elm('time').val(), silent: true
+    'change [name=inviteOwner]': -> storage('inviteOwner', @elm('inviteOwner').is(':checked'))
     'click .save': '_save'
   initialize: ->
     @listenTo @request, 'change', @render
@@ -68,7 +70,12 @@ class exports.CallScheduleView extends BB.ModelSaveView
       today = moment().format(dateFormat)
       @model.set 'date', today
 
-    d = @model.extendJSON { available: suggested, selectedExpert, requestId: @request.get('_id') }
+    requestId = @request.get('_id')
+    available = suggested
+    owner = @request.get('owner')
+    inviteOwner = true
+    if storage('inviteOwner') == 'false' then inviteOwner = false
+    d = @model.extendJSON { available, selectedExpert, requestId, owner, inviteOwner }
     @$('.datepicker').stop()
     @$el.html @tmpl d
     @$('.datepicker').pickadate(pickadateOptions)
@@ -76,6 +83,7 @@ class exports.CallScheduleView extends BB.ModelSaveView
   # prevents double-saves, provides feedback that request is in progress.
   _save: (e) ->
     $(e.target).attr('disabled', true)
+    @model.set('inviteOwner', @elm('inviteOwner').is(':checked'))
     @save e
   renderSuccess: (model, response, options) =>
     window.location = "/adm/inbound/request/#{@request.get('_id')}"
