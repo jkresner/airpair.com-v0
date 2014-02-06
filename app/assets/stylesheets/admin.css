@@ -105,6 +105,12 @@ nav a.zocial { padding:0; }
 #adminboundpage #request .colB { width:49%;float:right }
 #adminboundpage #request #reqBudget { width:50px; }
 #adminboundpage #request #reqPricing { width:140px; }
+#adminboundpage #request .halfButtons .btn:first-child {
+  width: 56px;
+}
+#adminboundpage #request .halfButtons .btn:last-child {
+  width: 24px;
+}
 
 #adminboundpage #farm {}
 #adminboundpage #farm hr { margin:20px 0px;clear:both; }
