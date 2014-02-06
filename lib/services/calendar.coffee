@@ -75,7 +75,10 @@ class CalendarService
       return process.nextTick ->
         cb null, oldCall.gcal
 
-    eventId = oldCall.gcal.id
+    params =
+      eventId: oldCall.gcal.id
+      sendNotifications: newCall.sendNotifications
+
     start = newCall.datetime
     body =
       start:
@@ -92,6 +95,6 @@ class CalendarService
       fakeEventData = _.extend oldCall.gcal, body
       return process.nextTick -> cb null, fakeEventData
 
-    @google.patchEvent eventId, body, cb
+    @google.patchEvent params, body, cb
 
 module.exports = new CalendarService()

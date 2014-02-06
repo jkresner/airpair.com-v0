@@ -115,11 +115,11 @@ class Google
         if err then return cb new Error err.message
         cb null, data
 
-  patchEvent: (eventId, body, cb) ->
+  patchEvent: (params, body, cb) ->
     if !@client then return @queue.push [ 'patchEvent', arguments ]
 
-    params = _.clone cfg.google.calendar.params
-    params.eventId = eventId
+    # the properties in here that matter are eventId and sendNotifications
+    params = _.defaults params, cfg.google.calendar.params
 
     @getToken (err) =>
       if err then return cb err
