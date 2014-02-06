@@ -123,3 +123,10 @@ module.exports = class ViewDataService
       callback null,
         session: @session usr
         order: JSON.stringify o
+
+  hi: (usr, callback) ->
+    jqualls = "522f3616b4b1c60200000041"
+    eSvc.responses jqualls, (e, responses) =>
+      if e then return callback e
+      callback null,
+        responses: JSON.stringify responses

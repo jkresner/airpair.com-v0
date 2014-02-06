@@ -1,5 +1,7 @@
 DomainService   = require './_svc'
 
+Request = require '../models/request'
+
 module.exports = class ExpertsService extends DomainService
 
   model: require './../models/expert'
@@ -39,3 +41,15 @@ module.exports = class ExpertsService extends DomainService
         if e then return callback e
         if !r then r = []
         callback null, r
+
+  responses: (expertId, callback) ->
+    query = 'suggested.expert._id': expertId
+    select = suggested: 1
+    options = lean: true
+    Request.find query, select, options, (e, requests) =>
+      if e then return callback e
+
+      responses = requests.map (r) ->
+        _.find r.suggested, (s) ->
+          s.expert._id == expertId
+      callback e, responses

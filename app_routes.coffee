@@ -53,6 +53,13 @@ module.exports = (app) ->
   app.get '/paypal/success/:id', authd, render 'payment/paypalSuccess', ['params.id']
   app.get '/paypal/cancel/:id', authd, render 'payment/paypalCancel', ['params.id']
 
+
+  app.get '/adm/hi', adm, render 'adm/hi'
+  # (req, r, next) ->
+  #   viewData.hi (e, d) =>
+  #     if e then return next e
+  #     r.render 'adm/hi.html', d
+
   # todo, get agreements
   # app.get '/TOS', (req, r)-> file r, 'legal'
   # app.get '/privacy', (req, r)-> file r, 'legal'

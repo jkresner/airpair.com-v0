@@ -1,0 +1,149 @@
+<style>
+  body {
+    background-color: #18263c;
+    font-size: 100%;
+    margin: 0 auto;
+    padding: 3em;
+    width: 33em;
+  }
+
+  .freq {
+    border-radius: 4px;
+    border: 4px solid #0c131d;
+    box-shadow: 1px 1px 0px rgba(100,100,100,.5);
+    height: 3em;
+    margin: 0;
+    /*padding: .1em;*/
+    background-color: #0e1013;
+  }
+  .freq span {
+    /*text-indent: 90000000px;*/
+    border-left: 0.07em solid #0e1013;
+    border-right: 0.07em solid #0e1013;
+    display: inline-block;
+    float: left;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    width: .2em;
+  }
+  .freq span:first-child {
+    -webkit-border-top-left-radius: 4px;
+    -webkit-border-bottom-left-radius: 4px;
+    -moz-border-radius-topleft: 4px;
+    -moz-border-radius-bottomleft: 4px;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+  }
+  .freq span:last-child {
+    /*-webkit-border-top-right-radius: 4px;
+    -webkit-border-bottom-right-radius: 4px;
+    -moz-border-radius-topright: 4px;
+    -moz-border-radius-bottomright: 4px;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;*/
+  }
+  .freq .abstained {
+    background-color: #e47d1a;
+  }
+  .freq .available {
+    background-color: #77cc79;
+    /*background-color: green;*/
+  }
+  .freq .waiting {
+    background-color: #2e353d;
+  }
+</style>
+
+
+<div class="freq">
+  <!-- <span class="waiting"></span>
+  <span class="waiting"></span>
+  <span class="waiting"></span>
+  <span class="yes"></span>
+  <span class="no"></span>
+  <span class="yes"></span>
+  <span class="yes"></span>
+  <span class="waiting"></span>
+  <span class="yes"></span> -->
+</div>
+
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js"></script>
+<script>
+    /*
+    TODO more time based like quizlets
+    {
+      time: Date.now()
+      value: 'yes/no/waiting'
+    }
+    */
+    function l(){ console.log.apply(console, arguments) }
+    function createFreq(div, data, comparator) {
+      return new Freq(div, data, comparator)
+    }
+    function Freq (div, data, comparator) {
+      var self = this
+      self.div = div
+      self.data = data
+      self.comparator = comparator || self.byTime
+
+      self.render()
+
+      // order it by value when you hover over it
+      // someone the they dont always alternate
+      var hovering = false
+      self.div.hover(over, out)
+      function over () {
+        if (hovering) return
+        self.previous = self.comparator
+        self.comparator = self.byValue
+        self.render()
+        hovering = true
+      }
+      function out () {
+        if (!hovering) return
+        self.comparator = self.previous
+        self.render()
+        hovering = false
+      }
+    }
+    Freq.prototype.byTime = function(o) {
+      return o.time
+    }
+    Freq.prototype.byValue = function(o) {
+      return o.value // TODO convert the string to a number?? Or something?
+    }
+    Freq.prototype.render = function(o) {
+      var self = this
+      self.div.html('')
+      var sorted = _.sortBy(self.data, self.comparator)
+      l('sorted', sorted)
+      var spans = sorted.map(function(o) {
+        return $('<span></span>').addClass(o.value)
+      })
+      l('spans', spans)
+      self.div.append(spans)
+    }
+
+    $(function() {
+      yes = { time: Date.now(), value: 'available' }
+      no = { time: Date.now(), value: 'abstained' }
+      waiting = { time: Date.now(), value: 'waiting' }
+      var data = [ waiting, yes, waiting, no, yes, yes, waiting, no ]
+      var div = $('.freq').first()
+
+      var jqualls = "52726d0a66a6f999a465fa9d"
+      var expertId = jqualls
+      var responses = {{{responses}}}
+
+      data = _.map(responses, function(r, i) {
+        return {
+          time: Date.now() + i,
+          value: r.expertStatus
+        }
+      })
+
+      f = createFreq(div, data)
+    })
+</script>
