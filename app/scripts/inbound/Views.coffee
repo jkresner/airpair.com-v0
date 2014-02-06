@@ -3,7 +3,7 @@ BB = require './../../lib/BB'
 M = require './Models'
 SV = require './../shared/Views'
 storage = require('../util').storage
-expertCredit = require '../shared/mix/expertCredit'
+calcExpertCredit = require '../shared/mix/calcExpertCredit'
 
 #############################################################################
 ##  To render requests rows for admin
@@ -316,7 +316,7 @@ class exports.RequestSuggestedView extends BB.BadassView
         mailTemplates = new ExpertMailTemplates @model, @session, s.expert._id
         try
           rates = s.suggestedRate[@model.get('pricing')]
-        s.credit = expertCredit(@orders.toJSON(), s.expert._id)
+        s.credit = calcExpertCredit(@orders.toJSON(), s.expert._id)
         tmplData =
           requestId: @model.id,
           mailTemplates: mailTemplates

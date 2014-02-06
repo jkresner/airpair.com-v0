@@ -10,7 +10,8 @@ cloneDeep = require 'lodash.clonedeep'
 moment = require 'moment'
 ObjectId = require('mongoose').Types.ObjectId
 
-expertCredit = require '../../../app/scripts/shared/mix/expertCredit'
+unschedule = require '../../../app/scripts/shared/mix/unschedule'
+calcExpertCredit = require '../../../app/scripts/shared/mix/calcExpertCredit'
 ordersSvc = new (require '../../../lib/services/orders')()
 requestsSvc = new (require '../../../lib/services/requests')()
 viewDataSvc = new (require '../../../lib/services/_viewdata')()
@@ -150,10 +151,11 @@ describe "RequestCallsService", ->
       if err then return done err
       request = JSON.parse json.request
       call = getCall request, callId1
-      ordersWithoutCall = JSON.parse json.orders
+      orders = JSON.parse json.orders
+      ordersWithoutCall = unschedule orders, call._id
       # assert that there are no redeemedCalls whose callIds match this call
       expect(callInOrders(callId1, ordersWithoutCall)).to.equal false
-      credit = expertCredit ordersWithoutCall, call.expertId
+      credit = calcExpertCredit ordersWithoutCall, call.expertId
       expect(call.type).to.equal 'opensource'
       expect(credit.byType[call.type].balance).to.equal 2
 
@@ -186,10 +188,11 @@ describe "RequestCallsService", ->
         if err then return done err
         request = JSON.parse json.request
         call = getCall request, callId2
-        ordersWithoutCall = JSON.parse json.orders
+        orders = JSON.parse json.orders
+        ordersWithoutCall = unschedule orders, call._id
         # assert call2 is not in the orders
         expect(callInOrders(callId2, ordersWithoutCall)).to.equal false
-        credit = expertCredit ordersWithoutCall, call.expertId
+        credit = calcExpertCredit ordersWithoutCall, call.expertId
         # assert that the OSS credit is 1hr
         expect(credit.byType['opensource'].balance).to.equal 1
         # assert that the private credit is 5hr
@@ -221,10 +224,11 @@ describe "RequestCallsService", ->
         if err then return done err
         request = JSON.parse json.request
         call = getCall request, callId2
-        ordersWithoutCall = JSON.parse json.orders
+        orders = JSON.parse json.orders
+        ordersWithoutCall = unschedule orders, call._id
         # assert call2 is not in the orders
         expect(callInOrders(callId2, ordersWithoutCall)).to.equal false
-        credit = expertCredit ordersWithoutCall, call.expertId
+        credit = calcExpertCredit ordersWithoutCall, call.expertId
         # assert that the OSS credit is 1hr
         expect(credit.byType['opensource'].balance).to.equal 1
         # assert that the private credit is 5hr

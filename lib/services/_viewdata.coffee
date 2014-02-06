@@ -63,7 +63,7 @@ module.exports = class ViewDataService
   callEdit: (callId, callback) ->
     rSvc.getByCallId callId, (e, request) ->
       if e then return callback e
-      oSvc.getByRequestIdWithoutCall request._id, callId, (e, orders) ->
+      oSvc.getByRequestId request._id, (e, orders) ->
         if e then return callback e
         callback null,
           request: JSON.stringify request

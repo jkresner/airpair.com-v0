@@ -1,10 +1,11 @@
 exports = {}
-BB = require './../../lib/BB'
+BB = require '../../lib/BB'
 M = require './Models'
 C = require './Collections'
-SV = require './../shared/Views'
-expertCredit = require '../shared/mix/expertCredit'
+SV = require '../shared/Views'
+calcExpertCredit = require '../shared/mix/calcExpertCredit'
 parseYoutubeId = require '../shared/mix/parseYoutubeId'
+unschedule = require '../shared/mix/unschedule'
 
 pickadateOptions =
   format: "dd mmm 'yy"
@@ -37,7 +38,7 @@ class exports.CallScheduleView extends BB.ModelSaveView
     suggested = suggested
       .map (suggestion) =>
         expert = suggestion.expert
-        expert.credit = expertCredit orders, expert._id
+        expert.credit = calcExpertCredit orders, expert._id
         expert.credit.byTypeArray = _.values(expert.credit.byType)
         suggestion
 
@@ -145,13 +146,14 @@ class exports.CallEditView extends BB.ModelSaveView
     call = @model.toJSON()
     expert = @request.suggestion(call.expertId).expert
     orders = @collection.toJSON()
+    orders = unschedule orders, call._id
 
     # TODO include the .zone() function so it will be PST everywhere
     call.time = moment(call.datetime).format('HH:mm')
     call.date = moment(call.datetime).format(dateFormat)
 
     # TODO open source / private / nda dropdown
-    expert.credit = expertCredit orders, call.expertId
+    expert.credit = calcExpertCredit orders, call.expertId
     # expert.credit.byTypeArray = _.values(expert.credit.byType)
 
     # hours dropdown

@@ -10,7 +10,7 @@ This supports two use-cases:
     orders
   - how much time can an expert be booked given this only one order in the array
 ###
-expertCredit = (orders, expertId) ->
+calcExpertCredit = (orders, expertId) ->
   orders = _.filter orders, (o) -> o.paymentStatus != 'pending'
   lisForExpert = getLineItemsForExpert orders, expertId
   byType = getBalanceByType groupExpertLineItemsByType lisForExpert
@@ -54,7 +54,7 @@ getLineItemsForExpert = (orders, expertId) ->
   lineItems
 
 
-module.exports = expertCredit
+module.exports = calcExpertCredit
 _.extend module.exports, {
   getBalanceByType, groupExpertLineItemsByType, getLineItemsForExpert
 }
