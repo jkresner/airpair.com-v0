@@ -15,12 +15,16 @@ our project then does...
 ###
 googleapis = require 'googleapis'
 OAuth2Client = googleapis.OAuth2Client
-AccessToken = require '../../models/googleAccessToken'
+ExpertsAccessToken = require '../../models/expertsGoogleAccessToken'
+TeamAccessToken = require '../../models/teamGoogleAccessToken'
 
+# TODO refactor this whole thing cause it's nasty
 class Google
+  # TODO remove the command queue stuff b/c its not needed.
   # for function calls that arrive before the discover call has returned
   queue: []
-  constructor: (apis, oauth, tokens, cb) ->
+  constructor: (apis, oauth, tokens, model, cb) ->
+    @model = model
     # set up auth details
     googleapis.withAuthClient(
       new OAuth2Client(oauth.CLIENT_ID, oauth.CLIENT_SECRET, oauth.REDIRECT_URL)
@@ -53,37 +57,38 @@ class Google
   # TODO: make a PR to the google library that allows you to subscribe to
   # access_token changes. Also publish our own version to npm, so we dont have
   # to wait for them to merge. This will make our code WAY simpler.
-  _token: (access_token, _) ->
+  _token: (access_token) ->
     if !access_token
-      console.log 'get', googleapis.authClient.credentials.access_token, _
+      console.log 'get', googleapis.authClient.credentials.access_token
       return googleapis.authClient.credentials.access_token
-    console.log 'set', access_token, _
+    console.log 'set', access_token
     googleapis.authClient.credentials.access_token = access_token
     access_token
 
   # call this before every client call
   # goes to mongo, takes the latest access token
-  getToken: (cb) ->
+  getToken: (cb) =>
     # there should only ever be one object in the collection
-    AccessToken.findOne {}, (err, doc) =>
+    @model.findOne {}, (err, doc) =>
       if err then return cb err
       doc = doc || {}
       @lastSeen = doc.access_token
-      @_token doc.access_token, 'SET from mongo' # when no token in DB, this does nothing
+      console.log 'trying to set from mongo:', doc.access_token
+      @_token doc.access_token # when no token in DB, this does nothing
       cb()
 
   # call this after every client call
   # goes to mongo, saves the current access token as the latest one.
-  setToken: ->
-    printErr = (err) ->
+  setToken: =>
+    printErr = (err) =>
       if err then return console.log err.stack
-    access_token = @_token(null, 'get in setToken') # googleapis lib might have changed this
+    access_token = @_token(null) # googleapis lib might have changed it
 
     # it has never once been set in mongo, so no need to check&set
     if @lastSeen == undefined
       doc = access_token: access_token
       console.log 'new access_token', access_token
-      return new AccessToken(doc).save printErr
+      return new @model(doc).save printErr
 
     # it's the same, no need to save it back to mongo.
     if access_token == @lastSeen
@@ -96,7 +101,7 @@ class Google
     ups = access_token: access_token
 
     console.log 'update', query, ups
-    AccessToken.update query, ups, printErr
+    @model.update query, ups, printErr
 
   #
   # calls to specific API endpoints
@@ -150,7 +155,9 @@ class Google
 apis =
   calendar: 'v3'
   youtube: 'v3'
-module.exports = new Google(apis, cfg.google.oauth, cfg.google.tokens)
+module.exports =
+  team: new Google(apis, cfg.google.oauth, cfg.google.tokens, TeamAccessToken)
+  experts: new Google(apis, cfg.google.oauth, cfg.google.expert_tokens, ExpertsAccessToken)
 
 # if !module.parent
 #   inspect = require('util').inspect

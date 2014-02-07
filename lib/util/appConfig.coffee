@@ -19,6 +19,10 @@ c.payment =
     publishedKey: 'pk_test_aj305u5jk2uN1hrDQWdH0eyl'
     secretKey:    'sk_test_8WOe71OlRWPyB3rDRcnthSCc'
 
+# This is for development: it contains auth to both youtube and gcal for the
+# experts@airpair.com account
+EXPERT_REFRESH_TOKEN = '1/NDqeY5kn4DdpWtuHQU-hMPzvlmVMiB8tWgb8LOc8uNY'
+
 c.oauthHost = 'http://localhost:3333'
 c.google =
   oauth:
@@ -26,9 +30,10 @@ c.google =
     CLIENT_SECRET: "T3OP1W-LjcdiS_cg8Ib8bBsc"
     REDIRECT_URL: "https://www.airpair.com/oauth2callback"
   tokens:
-    # This is for development: it contains auth to both youtube and gcal for the
-    # experts@airpair.com account
-    refresh_token: '1/NDqeY5kn4DdpWtuHQU-hMPzvlmVMiB8tWgb8LOc8uNY'
+    refresh_token: EXPERT_REFRESH_TOKEN
+  # we write it twice so that prod still has access to the experts@ account
+  expert_tokens:
+    refresh_token: EXPERT_REFRESH_TOKEN
   calendar:
     params:
       calendarId: 'experts@airpair.com' # experts@ primary calendar ID

@@ -11,7 +11,7 @@ class VideosApi
 
   fetchFromYoutube: (req, res, next) =>
     @svc.fetch req.params.youtubeId, (err, videoData) =>
-      if err && err.message.indexOf('Forbidden') == 0
+      if err?.message.indexOf('Forbidden') == 0 || err?.message.indexOf('Not Found') == 0
         return res.send data: youtube: err.message, 400
       if err then return next err
       res.send videoData
