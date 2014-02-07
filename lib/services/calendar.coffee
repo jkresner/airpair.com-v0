@@ -25,6 +25,9 @@ addTime = (original, milliseconds) ->
 class CalendarService
   google: google
   create: (request, call, cb) ->
+    params =
+      sendNotifications: call.sendNotifications
+
     start = call.datetime
     owner = request.owner
     sug = _.find request.suggested, (s) -> s.expert._id == call.expertId
@@ -55,7 +58,7 @@ class CalendarService
         on your system. Please let #{owner2name[owner]} know if you'd like to do
         a dry run."""
 
-    # maksim & jonathon watch everything, so getting duplicate invites is annoy
+    # maksim & jonathon watch everything, so duplicate invites are annoying
     if call.inviteOwner == false
       body.attendees.shift()
 
@@ -69,7 +72,7 @@ class CalendarService
     if cfg.env is 'test'
       return cb null, { htmlLink: 'http://example.com/google-calendar-link' }
 
-    @google.createEvent body, cb
+    @google.createEvent params, body, cb
 
   patch: (oldCall, newCall, cb) ->
     sameStart = oldCall.datetime.getTime() == newCall.datetime.getTime()

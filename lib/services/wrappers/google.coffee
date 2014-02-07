@@ -102,10 +102,10 @@ class Google
   # calls to specific API endpoints
   # TODO stop the silly repetition of getToken somecode setToken
   #
-  createEvent: (body, cb) ->
+  createEvent: (params, body, cb) ->
     if !@client then return @queue.push [ 'createEvent', arguments ]
 
-    params = _.clone cfg.google.calendar.params
+    params = _.defaults params, cfg.google.calendar.params
     @getToken (err) =>
       if err then return cb err
 

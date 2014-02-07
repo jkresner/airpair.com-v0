@@ -23,16 +23,22 @@ class exports.CallScheduleView extends BB.ModelSaveView
       @model.set 'expertId', @$(e.target).val()
       @model.set 'type', @elm('type').val()
     'blur [name=type]': -> @model.set 'type', @elm('type').val()
-    'change [name=duration]': -> @model.set 'duration', parseInt(@elm('duration').val(), 10), silent: true
+    'change [name=duration]': ->
+      @model.set 'duration', parseInt(@elm('duration').val(), 10), silent: true
     'blur [name=date]': -> @model.set 'date', @elm('date').val(), silent: true
     'blur [name=time]': -> @model.set 'time', @elm('time').val(), silent: true
-    'change [name=inviteOwner]': -> storage('inviteOwner', @elm('inviteOwner').is(':checked'))
+    'change [name=inviteOwner]': ->
+      inviteOwner = @elm('inviteOwner').is(':checked')
+      storage('inviteOwner', inviteOwner)
+    'change [name=sendNotifications]': ->
+      sendNotifications = @elm('sendNotifications').is(':checked')
+      @model.set('sendNotifications', sendNotifications, silent: true)
     'click .save': '_save'
   initialize: ->
     @listenTo @request, 'change', @render
     @listenTo @collection, 'reset', @render
     @listenTo @model, 'change', @render
-
+    @model.set 'sendNotifications', true, silent:true
   render: ->
     orders = @collection.toJSON()
     selectedExpert = null
@@ -64,7 +70,8 @@ class exports.CallScheduleView extends BB.ModelSaveView
     if selectedExpert
       byType = selectedExpert.credit.byType[@mget('type')] || {}
       balance = byType.balance || 0
-      selectedExpert.selectOptions = _.range(1, balance + 1).map (num) -> { num }
+      selectedExpert.selectOptions =
+        _.range(1, balance + 1).map (num) -> { num }
 
     if !@mget 'date' # default to today
       today = moment().format(dateFormat)
@@ -75,7 +82,9 @@ class exports.CallScheduleView extends BB.ModelSaveView
     owner = @request.get('owner')
     inviteOwner = true
     if storage('inviteOwner') == 'false' then inviteOwner = false
-    d = @model.extendJSON { available, selectedExpert, requestId, owner, inviteOwner }
+    d = @model.extendJSON {
+      available, selectedExpert, requestId, owner, inviteOwner
+    }
     @$('.datepicker').stop()
     @$el.html @tmpl d
     @$('.datepicker').pickadate(pickadateOptions)
@@ -84,6 +93,7 @@ class exports.CallScheduleView extends BB.ModelSaveView
   _save: (e) ->
     $(e.target).attr('disabled', true)
     @model.set('inviteOwner', @elm('inviteOwner').is(':checked'))
+    @model.set('sendNotifications', @elm('sendNotifications').is(':checked'))
     @save e
   renderSuccess: (model, response, options) =>
     window.location = "/adm/inbound/request/#{@request.get('_id')}"

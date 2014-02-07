@@ -134,6 +134,15 @@
     <div class="control-group">
       <div class="controls">
         <label class="control-label">
+          <input name="sendNotifications" type="checkbox"
+          {{#if ../sendNotifications}}checked{{/if}}>
+          Send Google Calendar Notification Email
+        </label>
+      </div>
+    </div>
+    <div class="control-group">
+      <div class="controls">
+        <label class="control-label">
           <input name="inviteOwner" type="checkbox"
             {{#if ../inviteOwner}}checked{{/if}}>
           Invite {{../owner}}@airpair.com to the gcal event
