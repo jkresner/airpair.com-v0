@@ -13,7 +13,7 @@ module.exports = (app) ->
       res.send(err? ? 500: 200)
 
   app.get '/_viewdata/callEdit/:callId', (req, res) ->
-    viewData.callEdit req.params.callId, (err, json) ->
+    viewData.callEdit null, req.params.callId, (err, json) ->
       res.send
         request: JSON.parse json.request
         orders: JSON.parse json.orders
