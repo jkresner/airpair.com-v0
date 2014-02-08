@@ -3,15 +3,10 @@ loggedIn = authz.LoggedIn()
 admin = authz.Admin()
 ViewDataService = require('./lib/services/_viewdata')
 viewData = new ViewDataService()
-gSurveyPrxy = require('./lib/util/googleSurveyProxy')
-
 
 file = (r, file) -> r.sendfile "./public/#{file}.html"
 
 module.exports = (app) ->
-
-  app.get '/api/survey-results/q1-tools', (req, r)->
-    gSurveyPrxy 'https://docs.google.com/forms/d/1FLzM0-gJ1_BRJUmhhV9MLKZJLYiQ36Ydmb4iudCxjBE/viewanalytics', (cres) -> r.send cres
 
   # login / auth routes
   require('./lib/auth/base')(app)
