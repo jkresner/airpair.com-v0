@@ -39,13 +39,12 @@ nav a.zocial { padding:0; }
 /* keep the delete button away from the other buttons */
 .controls a.btn-danger:last-child { float: right; }
 
-#admexpertspage {}
-#admexpertspage .main { display:none }
-#admexpertspage #experts { float:left;width:900px }
-#admexpertspage #experts img { max-width:40px }
-#admexpertspage #experts td { font-size:11px; }
-#admexpertspage #expertPreview { float:right;width:300px }
-#admexpertspage .select { font-weight:bold }
+body#admexperts {}
+body#admexperts table { width:100% }
+body#admexperts table#experts img { max-width:40px }
+body#admexperts table#experts td { font-size:11px; }
+body#admexperts table#expertPreview { float:right;width:300px }
+body#admexperts table.select { font-weight:bold }
 
 #admorderspage {}
 #admorderspage .selectOrder { display:block;font-size:9px; }
