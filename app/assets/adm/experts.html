@@ -3,13 +3,13 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>airpair</title>
+    <title>Experts | AirPair</title>
     <meta name="viewport" content="width=device-width">
     <link rel="stylesheet" href="/stylesheets/app.css">
     <link rel="stylesheet" href="/stylesheets/admin.css">
 </head>
 
-<body id="admexpertspage">
+<body id="admexperts">
 
   <nav>
     <div>
@@ -34,8 +34,8 @@
         <tr>
           <th></th>
           <th>Contact</th>
-          <th style="width:320px">Tags</th>
           <th>Links</th>
+          <th style="width:620px">Tags</th>
           <th>Rate</th>
         </tr>
       </thead>
@@ -51,7 +51,10 @@
 
   <script type="text/javascript">
     function initApp() {
-      var pageData = {};
+      var pageData = {
+        session: {{{ session }}},
+        experts: {{{ experts }}},
+      };
       Router = require('/scripts/experts/Router');
       window.router = new Router(pageData);
     }

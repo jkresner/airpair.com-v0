@@ -147,7 +147,7 @@ describe "RequestCallsService", ->
 
     # let's run thru it like we were a real client!
     # hit viewdata for the call and unscheduled orders
-    viewDataSvc.callEdit callId1, (err, json) =>
+    viewDataSvc.callEdit null, callId1, (err, json) =>
       if err then return done err
       request = JSON.parse json.request
       call = getCall request, callId1
@@ -184,7 +184,7 @@ describe "RequestCallsService", ->
 
     nextEdit = ->
       # hit viewdata for call2
-      viewDataSvc.callEdit callId2, (err, json) =>
+      viewDataSvc.callEdit null, callId2, (err, json) =>
         if err then return done err
         request = JSON.parse json.request
         call = getCall request, callId2
@@ -220,7 +220,7 @@ describe "RequestCallsService", ->
 
     lastEdit = ->
       # switch the private call to duration 4
-      viewDataSvc.callEdit callId2, (err, json) =>
+      viewDataSvc.callEdit null, callId2, (err, json) =>
         if err then return done err
         request = JSON.parse json.request
         call = getCall request, callId2

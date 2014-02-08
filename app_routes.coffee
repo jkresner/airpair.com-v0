@@ -1,67 +1,40 @@
-authz = require './lib/identity/authz'
-loggedIn = authz.LoggedIn()
-admin = authz.Admin()
-ViewDataService = require('./lib/services/_viewdata')
-viewData = new ViewDataService()
-
-file = (r, file) -> r.sendfile "./public/#{file}.html"
+authz             = require './lib/identity/authz'
+authd             = authz.LoggedIn()
+adm               = authz.Admin()
+{ file, render } = require './lib/util/viewRender'
 
 module.exports = (app) ->
 
   # login / auth routes
   require('./lib/auth/base')(app)
 
+  # home based on if authenticated
+  renderHome = (req, r, next) ->
+    if req.isAuthenticated() then next()
+    else r.sendfile "./public/home.html"
+
+  app.get '/', renderHome, render 'dashboard'
+
   # pages
-  app.get '/login', (req, r)-> file r, 'login'
-  app.get '/be-an-expert*', (req, r)-> file r, 'beexpert'
-  app.get '/find-an-expert*', (req, r)-> r.render 'request.html'
-
-  app.get '/', (req, r) ->
-    if !req.isAuthenticated()
-      file r, 'homepage'
-    else
-      file r, 'dashboard'
-
-  app.get '/dashboard*', loggedIn, (req, r) -> file r, 'dashboard'
-
-  renderReview = (req, r, next) ->
-    viewData.review req.params.id, req.user, (e, d) =>
-      if e then return next e
-      r.render 'review.html', _.extend d, { reqUrl: req.url, authenticated: req.isAuthenticated() }
-  app.get '/review/:id', renderReview
-  app.get '/review/book/:id', renderReview
-
-
-  app.get '/settings*', loggedIn, (req, r) ->  r.render 'settings.html',
-    { stripePK: cfg.payment.stripe.publishedKey }
-
-  renderBook = (req, r, next) ->
-    viewData.book req.params.id, req.user, (e, d) =>
-      if e then return next e
-      r.render 'book.html', d
-  app.get '/@:id', renderBook
+  app.get '/login', file 'login'
+  app.get '/be-an-expert*', file 'beexpert'
+  app.get '/find-an-expert*', render 'request'
+  app.get '/dashboard*', authd, render 'dashboard'
+  app.get '/settings*', authd, render 'settings'
+  app.get '/@:id', render 'book', ['params.id']
+  app.get '/review/:id', render 'review', ['params.id']
+  app.get '/review/book/:id', authd, render 'review', ['params.id']
 
   # admin pages
-  app.get '/adm/tags*', loggedIn, admin, (req, r) -> file r, 'adm/tags'
-  app.get '/adm/marketingtags', loggedIn, admin, (req, r) -> file r, 'adm/marketingtags'
-  app.get '/adm/experts*', loggedIn, admin, (req, r) -> file r, 'adm/experts'
-  app.get '/adm/csvs*', loggedIn, admin, (req, r) -> file r, 'adm/csvs'
-  app.get '/adm/orders*', loggedIn, admin, (req, r) -> file r, 'adm/orders'
-  app.get '/adm/companys*', loggedIn, admin, (req, r) -> r.render 'adm/companys.html',
-    { stripePK: cfg.payment.stripe.publishedKey }
-  app.get '/adm/inbound*', loggedIn, admin, (req, r, next) ->
-    viewData.inbound req.user, (e, d) =>
-      if e then return next e
-      r.render 'adm/inbound.html', d
-
-  app.get '/adm/call/schedule/:requestId*', loggedIn, admin, (req, r, next) ->
-    viewData.callSchedule req.params.requestId, (e, d) =>
-      if e then return next e
-      r.render 'adm/callSchedule.html', d
-  app.get '/adm/call/edit/:callId*', loggedIn, admin, (req, r, next) ->
-    viewData.callEdit req.params.callId, (e, d) =>
-      if e then return next e
-      r.render 'adm/callEdit.html', d
+  app.get '/adm/tags*', authd, adm, render 'adm/tags'
+  app.get '/adm/marketingtags', authd, adm, render 'adm/marketingtags'
+  app.get '/adm/csvs*', authd, adm, render 'adm/csvs'
+  app.get '/adm/orders*', authd, adm, render 'adm/orders'
+  app.get '/adm/companys*', authd, adm, render 'adm/companys'
+  app.get '/adm/experts*', authd, adm, render 'adm/experts'
+  app.get '/adm/inbound*', authd, adm, render 'adm/inbound'
+  app.get '/adm/call/schedule/:id*', authd, adm, render 'adm/callSchedule', ['params.id']
+  app.get '/adm/call/edit/:id*', authd, adm, render 'adm/callEdit', ['params.id']
 
   # api
   require('./lib/api/users')(app)
@@ -77,34 +50,8 @@ module.exports = (app) ->
   require('./lib/api/marketingtags')(app)
   require('./lib/api/videos')(app)
 
-  app.get '/paypal/success/:id', loggedIn, (req, r, next) ->
-    viewData.paypalSuccess req.params.id, req.user, (e, d) =>
-      if e then return next e
-      r.render 'payment/paypalSuccess.html', d
-
-  app.get '/paypal/cancel/:id', loggedIn, (req, r, next) ->
-    viewData.paypalCancel req.params.id, req.user, (e, d) =>
-      if e then return next e
-      r.render 'payment/paypalCancel.html', d
-
-  app.get '/payment/register-stripe', loggedIn, (req, r, next) ->
-    viewData.stripeCheckout req.user, req.query, (e, d) =>
-      if e then return next e
-      r.render 'payment/stripeRegister.html', d
-
-  app.get '/payment/checkout-stripe', loggedIn, (req, r, next) ->
-    viewData.stripeCheckout req.user, req.query, (e, d) =>
-      if e then return next e
-      r.render 'payment/stripeCheckout.html', d
-
-  app.post '/payment/stripe-charge', (req, r, next) ->
-    viewData.stripeCharge null, req.user, req.body.token, (e, d) =>
-      if e then return next e
-      r.render 'payment/stripeSuccess.html', d
-
-    $log 'req', req.user, req.body
-    r.send 200
-
+  app.get '/paypal/success/:id', authd, render 'payment/paypalSuccess', ['params.id']
+  app.get '/paypal/cancel/:id', authd, render 'payment/paypalCancel', ['params.id']
 
   # todo, get agreements
   # app.get '/TOS', (req, r)-> file r, 'legal'
@@ -113,4 +60,3 @@ module.exports = (app) ->
 
   # dev stuff
   # app.get '/error-test', (req, r)-> throw new Error('my silly error')
-  # app.get '/adm/mail', loggedIn, admin, (req, r) -> file r, 'adm/mail'
