@@ -5,54 +5,77 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title>Stackoverflow API</title>
     <meta name="viewport" content="width=device-width">
-    <link rel="stylesheet" href="/stylesheets/app.css">
-    <link rel="stylesheet" href="/stylesheets/admin.css">
+    <link rel='stylesheet' href='/stylesheets/epik.css' type='text/css' media='all' />
+    <link rel='stylesheet' href='/stylesheets/epik-ap.css' type='text/css' media='all' />
+    <link rel='stylesheet' href='/stylesheets/epik-ap-migration.css' />
+    <style>
+      .fieldset {
+        float:left;
+        width: 410px;
+      }
+      .hidden {
+        display: none;
+      }
+      .video {
+        overflow: hidden;
+        width: 100%;
+      }
+      .video .lcol {
+        float: left;
+        width: 17%;
+      }
+      .video .rcol {
+        float: left;
+        width: 50%;
+      }
+      .video + .video {
+        border-top: 1px dashed grey;
+        padding-top: 1em;
+        margin-top: 1em;
+      }
+      .videos {
+        margin-top: 1em;
+        margin-bottom: 1em;
+      }
+      .so.button.slim {
+        display: inline;
+        padding-left:  8px;
+        padding-right: 8px;
+        text-transform: none;
+      }
+    </style>
 </head>
 
 <body id="admmarketingtagspage">
 
-  <nav>
-    <div>
-      <a href="/" class="logo"></a>
-      <ul>
-        <li><a href="/adm/inbound" class="zocial">Inbound</a></li>
-        <li><a href="/adm/orders" class="zocial">Orders</a></li>
-        <li><a href="/adm/tags" class="zocial">Tags</a></li>
-        <li><a href="/adm/marketingtags" class="zocial">Marketing</a></li>
-        <li><a href="/adm/experts" class="zocial">Experts</a></li>
-        <li><a href="/adm/companys" class="zocial">Companys</a></li>
-        <li><a href="/adm/csvs" class="zocial">CSVs</a></li>
-        <li><a href="http://www.youtube.com/my_videos?o=U" class="zocial youtube icon" target="_blank"></a></li>
-        <li><a href="https://plus.google.com/hangouts/_?hso=0&gid=140030887085" class="zocial googleplus" target="_blank">Hangout &nbsp;</a></li>
-      </ul>
-    </div>
-  </nav>
-
   <div class="route" style="display: block;">
     <div id="marketingTagForm" class="twocol">
 
-      <fieldset style="float:left;width:340px">
+      <fieldset class="fieldset">
         <h3>StackOverflow API</h3>
         <div class="control-group">
           <label class="control-label" for="name"><strong>Stackoverflow ID</strong>
           </label>
           <div class="controls">
             <input name="name" type="text" class="soInput input-medium"
-              placeholder="stackoverflow ID" value="1016978/nick-silva">
+              placeholder="stackoverflow ID" value="1345135/john">
           </div>
-          <span>e.g. <code>1016978</code> (or even <code>1016978/nick-silva</code>)</span>
+          <span>e.g. <code>1345135</code> or <code>87298/nilbus</code></span>
+          <br>
         </div>
 
         <div class="form-actions">
-          <a href="#" class="search btn btn-primary">View</a>
+          <a href="#" class="search button slim btn-primary">View</a>
         </div>
+        <br>
+        <br>
         <div id="elist">
           <!-- template -->
           <div class="hidden">
             <!-- <img src="" height="15px"> -->
             $<span class="rate">70</span>
             <span class="name">David Trejo</span>
-            <a href="#" class="so btn btn-primary btn-small">
+            <a href="#" class="so button slim btn-primary btn-small">
               view <span class="soId">101010/dtrejo</span></a>
           </div>
         </div>
@@ -61,12 +84,19 @@
 
     <div id="marketingTagList" style="float:right;width:840px">
       <div class="videos">
-        <div class="hidden">
-          <a href="#" class="youtube" target="_blank">
-            <img src="" alt="thumbnail" height="50px">
-            <span class="title">video title</span>
-          </a>
-          on <span class="tags"></span>.
+        <div class="hidden video">
+          <div class="lcol">
+            <a href="#" class="youtube" target="_blank">
+              <img src="" alt="thumbnail" height="50px">
+            </a>
+          </div>
+          <div class="rcol">
+            <a href="#" class="youtube" target="_blank">
+              <span class="title">video title</span>
+            </a>
+            <br>
+            <span class="tags"></span>
+          </div>
         </div>
       </div>
       <h4><code><a class="api" target="_blank" href="/api/so/:stackoverflowID">
@@ -76,7 +106,6 @@
         <!-- JSON goes here -->
       </pre>
     </div>
-
 
   </div> <!-- end .route -->
 </body>
@@ -109,7 +138,7 @@
 
         elist.append(row)
       }
-      elist.on('click', '.btn', listClick)
+      elist.on('click', 'a', listClick)
       function listClick (e) {
         var soId = $(this).find('.soId').text()
         soInput.val(soId)
@@ -127,11 +156,13 @@
         .done(renderSo)
         api.text(url)
         api.attr('href', url)
+        videos.html('')
+        pre.html('')
+        return false
       }
       var pre = $('pre')
       function renderSo(data) {
         pre.text(JSON.stringify(data, null, 2))
-        if (!data.recordings.length) videos.html('')
         data.recordings.forEach(renderVideo)
       }
       var videos = $('.videos')

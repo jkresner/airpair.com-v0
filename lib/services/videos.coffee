@@ -43,7 +43,8 @@ class VideosService
     if isNaN(soId) then return cb new Error 'Not a valid ID'
 
     query =
-      'so.id': soId
+      # some entries only have so.link, no reputation or image url.
+      'so.link': $regex: new RegExp("^#{soId}/")
     console.log 'q', query
     Expert.findOne(query).lean().exec (err, expert) =>
       if err then return cb err
@@ -55,6 +56,7 @@ class VideosService
       select =
         'tags.name': 1
         'calls._id': 1
+        'calls.expertId': 1
         'calls.recordings.data.id': 1
         'calls.recordings.data.snippet.publishedAt': 1
         'calls.recordings.data.snippet.channelId': 1
@@ -75,6 +77,8 @@ class VideosService
         # jesus is our lord and savior
         for r in requests
           for c in r.calls
+            console.log c.expertId, expertId
+            if !_.idsEqual(c.expertId, expertId) then continue
             for recording in c.recordings
               if recording?.data?.status?.privacyStatus == 'public'
                 recording.requestId = r._id
@@ -85,6 +89,14 @@ class VideosService
                 console.log _.keys(r), recording
                 # recording.data = undefined
                 recordings.push recording
+              else
+                recordings.push
+                  data:
+                    id: 'none' # trigger an empty thumbnail
+                    snippet: title: 'Private Video'
+
+
+
         response =
           name: expert.name
           rate: expert.rate
