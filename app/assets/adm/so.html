@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Stackoverflow API</title>
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="/stylesheets/app.css">
+    <link rel="stylesheet" href="/stylesheets/admin.css">
+</head>
+
+<body id="admmarketingtagspage">
+
+  <nav>
+    <div>
+      <a href="/" class="logo"></a>
+      <ul>
+        <li><a href="/adm/inbound" class="zocial">Inbound</a></li>
+        <li><a href="/adm/orders" class="zocial">Orders</a></li>
+        <li><a href="/adm/tags" class="zocial">Tags</a></li>
+        <li><a href="/adm/marketingtags" class="zocial">Marketing</a></li>
+        <li><a href="/adm/experts" class="zocial">Experts</a></li>
+        <li><a href="/adm/companys" class="zocial">Companys</a></li>
+        <li><a href="/adm/csvs" class="zocial">CSVs</a></li>
+        <li><a href="http://www.youtube.com/my_videos?o=U" class="zocial youtube icon" target="_blank"></a></li>
+        <li><a href="https://plus.google.com/hangouts/_?hso=0&gid=140030887085" class="zocial googleplus" target="_blank">Hangout &nbsp;</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="route" style="display: block;">
+    <div id="marketingTagForm" class="twocol">
+
+      <fieldset style="float:left;width:340px">
+        <h3>StackOverflow API</h3>
+        <div class="control-group">
+          <label class="control-label" for="name"><strong>Stackoverflow ID</strong>
+          </label>
+          <div class="controls">
+            <input name="name" type="text" class="soInput input-medium"
+              placeholder="stackoverflow ID" value="1016978/nick-silva">
+          </div>
+          <span>e.g. <code>1016978</code> (or even <code>1016978/nick-silva</code>)</span>
+        </div>
+
+        <div class="form-actions">
+          <a href="#" class="search btn btn-primary">View</a>
+        </div>
+        <div id="elist">
+          <!-- template -->
+          <div class="hidden">
+            <!-- <img src="" height="15px"> -->
+            $<span class="rate">70</span>
+            <span class="name">David Trejo</span>
+            <a href="#" class="so btn btn-primary btn-small">
+              view <span class="soId">101010/dtrejo</span></a>
+          </div>
+        </div>
+      </fieldset>
+    </div> <!-- end #marketingTagForm -->
+
+    <div id="marketingTagList" style="float:right;width:840px">
+      <div class="videos">
+        <div class="hidden">
+          <a href="#" class="youtube" target="_blank">
+            <img src="" alt="thumbnail" height="50px">
+            <span class="title">video title</span>
+          </a>
+          on <span class="tags"></span>.
+        </div>
+      </div>
+      <h4><code><a class="api" target="_blank" href="/api/so/:stackoverflowID">
+        /api/so/:stackoverflowID</a></code>
+        API response</h4>
+      <pre>
+        <!-- JSON goes here -->
+      </pre>
+    </div>
+
+
+  </div> <!-- end .route -->
+</body>
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.0/lodash.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+  <script type="text/javascript">
+    $(function() {
+      $.get('/api/experts')
+      .done(onExperts)
+
+      var soInput = $('.soInput')
+
+      var elist = $('#elist')
+      function onExperts(experts) {
+        experts = experts.filter(function(e) {
+          if (!e._id || !e.so || !e.so.link) return false
+          return true
+        })
+        function soRep(e) { return -1 * (e.so.reputation || 0) }
+        _.sortBy(experts, soRep).slice(3).forEach(addToList)
+      }
+      var templ = elist.find('.hidden').clone()
+      templ.removeClass('hidden')
+      function addToList(e) {
+        var row = templ.clone()
+        row.find('.rate').text(e.rate)
+        row.find('.name').text(e.name)
+        row.find('.soId').text(e.so.link)
+
+        elist.append(row)
+      }
+      elist.on('click', '.btn', listClick)
+      function listClick (e) {
+        var soId = $(this).find('.soId').text()
+        soInput.val(soId)
+        lookup()
+      }
+
+      var search = $('.search')
+      search.on('click', lookup)
+      var api = $('.api')
+      function lookup() {
+        console.log ('lookup')
+        var soId = soInput.val()
+        var url = '/api/so/' + soId
+        $.get(url)
+        .done(renderSo)
+        api.text(url)
+        api.attr('href', url)
+      }
+      var pre = $('pre')
+      function renderSo(data) {
+        pre.text(JSON.stringify(data, null, 2))
+        if (!data.recordings.length) videos.html('')
+        data.recordings.forEach(renderVideo)
+      }
+      var videos = $('.videos')
+      var vtempl = videos.find('.hidden').clone()
+      vtempl.removeClass('hidden')
+      function renderVideo(recording) {
+        var row = vtempl.clone()
+        row.find('.title').text(recording.data.snippet.title)
+        row.find('.youtube').attr('href', 'http://youtu.be/' + recording.data.id)
+        row.find('img').attr('src'
+          , 'https://i1.ytimg.com/vi/' + recording.data.id + '/default.jpg')
+        row.find('.tags').text(_.pluck(recording.tags, 'name').join(', '))
+        videos.append(row)
+      };
+
+      lookup()
+
+      // TODO
+
+      //     "embedHtml": "<iframe type='text/html' src='http://www.youtube.com/embed/eAPot6SS13k' width='640' height='360' frameborder='0' allowfullscreen='true'/>"
+      //   "status": {
+      //     "privacyStatus": "public"
+      //   },
+      /*
+       "thumbnails": {
+            "maxres": {
+              "url": "https://i1.ytimg.com/vi/eAPot6SS13k/maxresdefault.jpg"
+            },
+            "standard": {
+              "url": "https://i1.ytimg.com/vi/eAPot6SS13k/sddefault.jpg"
+            },
+            "high": {
+              "url": "https://i1.ytimg.com/vi/eAPot6SS13k/hqdefault.jpg"
+            },
+            "medium": {
+              "url": "https://i1.ytimg.com/vi/eAPot6SS13k/mqdefault.jpg"
+            },
+            "default": {
+              "url": "https://i1.ytimg.com/vi/eAPot6SS13k/default.jpg"
+
+      */
+    })
+  </script>
+</html>

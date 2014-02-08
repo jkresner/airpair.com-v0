@@ -7,7 +7,7 @@ class VideosApi
   svc: videos
 
   constructor: (app, route) ->
-    app.get "/api/#{route}/youtube/:youtubeId", admin, @fetchFromYoutube
+    app.get "/api/#{route}/youtube/:youtubeId", admin, @fetchYouTube
 
     # TODO need a new kind of user, something like "VideoAPIUser"
     # TODO dont do this here lol

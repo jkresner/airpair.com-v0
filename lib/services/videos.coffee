@@ -47,6 +47,7 @@ class VideosService
     console.log 'q', query
     Expert.findOne(query).lean().exec (err, expert) =>
       if err then return cb err
+      if !expert then return cb null, { message: 'Something went wrong' }
       console.log 'e', expert
       expertId = expert._id
       query =
@@ -59,10 +60,8 @@ class VideosService
         'calls.recordings.data.snippet.channelId': 1
         'calls.recordings.data.snippet.title': 1
         'calls.recordings.data.snippet.description': 1
-        'calls.recordings.data.snippet.thumbnails': 1 # TODO remove
         'calls.recordings.data.snippet.channelTitle': 1
         'calls.recordings.data.status.privacyStatus': 1
-        'calls.recordings.data.player': 1 # TODO remove
 
       Request.find(query, select).lean().exec (err, requests) ->
         if err then return cb err
@@ -82,6 +81,7 @@ class VideosService
                 recording.callId = c._id
                 recording.expertId = expertId
                 recording.tags = r.tags
+                recording.data.status = undefined
                 console.log _.keys(r), recording
                 # recording.data = undefined
                 recordings.push recording
