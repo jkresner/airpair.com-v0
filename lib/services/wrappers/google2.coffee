@@ -1,7 +1,19 @@
+#
+# Woe be unto you if anything in here ever breaks!
+#
 _ = require 'underscore'
 ApiConfig = require '../../models/ApiConfig'
 googleapis = require 'googleapis'
 OAuth2Client = googleapis.OAuth2Client
+
+mergeLeftOnce = (left, right) ->
+  _.each right, (version, service) ->
+    if !(service in left)
+      return left[service] = version
+    if left[service] != version
+      m = "Incompatible #{service} versions: #{left[service]} != #{version}"
+      throw new Error m
+  left
 
 # Doesn't support multiple versions of same API.
 # Google will give you an error if you request an API with an account that
@@ -12,6 +24,9 @@ class Google
 
   # map of email:ApiConfig (access_token, refresh_token, etc)
   configs: undefined
+
+  # map of email:access_token (the most recently seen one)
+  lastSeen: {}
 
   # the googleapi client, passed back from discovery call
   client: undefined
@@ -95,11 +110,9 @@ class Google
       if err then return cb err
       doc = doc || {}
       access_token = doc.data.tokens.access_token
-      @lastSeen = access_token
+      @lastSeen[user] = access_token
       console.log 'trying to set from mongo:', access_token
-
       # when no token in DB, this does nothing
-      console.log 'aclients', user, @aclients[user], access_token
       @aclients[user].credentials.access_token = access_token
       cb()
 
@@ -113,7 +126,7 @@ class Google
     access_token = @aclients[user].credentials.access_token
 
     # it has never once been set in mongo, so no need to check&set
-    if @lastSeen == undefined
+    if @lastSeen[user] == undefined
       query =
         'name': 'googleapi'
         'user': user
@@ -123,8 +136,8 @@ class Google
       return ApiConfig.update query, ups, printErr
 
     # it's the same, no need to save it back to mongo.
-    if access_token == @lastSeen
-      console.log 'unchanged', @lastSeen
+    if access_token == @lastSeen[user]
+      console.log 'unchanged', @lastSeen[user]
       return
 
     # update mongo, but only if someone else didn't get to it first.
@@ -132,27 +145,36 @@ class Google
     query =
       'name': 'googleapi'
       'user': user
-      'data.tokens.access_token': @lastSeen
+      'data.tokens.access_token': @lastSeen[user]
     ups = 'data.tokens.access_token': access_token
 
     console.log 'update', query, ups
     ApiConfig.update query, ups, printErr
 
-  videosList: (params, cb) ->
+  #
+  # calls to specific API endpoints
+  #
+  videosList: (user, params, cb) ->
     part = 'id,snippet,contentDetails,fileDetails,liveStreamingDetails,player,processingDetails,recordingDetails,statistics,status,suggestions,topicDetails'
     params.part = params.part || part
-
     fn = (client) -> client.youtube.videos.list(params)
-    @do 'experts@airpair.com', fn, cb
+    @do user, fn, cb
 
-mergeLeftOnce = (left, right) ->
-  _.each right, (version, service) ->
-    if !(service in left)
-      return left[service] = version
-    if left[service] != version
-      m = "Incompatible #{service} versions: #{left[service]} != #{version}"
-      throw new Error m
-  left
+  createEvent: (body, cb) ->
+    params = _.clone cfg.google.calendar.params
+    fn = (client) -> client.calendar.events.insert(params, body)
+    @do 'team@airpair.com', fn, cb
+
+  patchEvent: (params, body, cb) ->
+    # the properties in here that matter are eventId and sendNotifications
+    params = _.defaults params, cfg.google.calendar.params
+    fn = (client) -> client.calendar.events.patch(params, body)
+    @do 'team@airpair.com', fn, cb
+
+  # TODO for testing only: remove me!
+  calendarList: (user, cb) ->
+    fn = (client) -> client.calendar.calendarList.list()
+    @do user, fn, cb
 
 if !cfg? then require '../../util/appConfig'
 
@@ -166,6 +188,13 @@ ready = ->
       if err then return console.log "wah" + err.stack
       console.log 'vl', videoData
 
+  if process.argv[2] == 'gc'
+    users = _.keys goog.aclients
+    console.log 'users', users
+    users.forEach (u) ->
+      goog.calendarList u, (err, data) ->
+        if err then return console.log u, err.message
+        console.log u, _.keys data
 
 module.exports = new Google(cfg.google.oauth, ready)
 

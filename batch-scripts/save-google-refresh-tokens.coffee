@@ -1,6 +1,5 @@
-mongoose = require 'mongoose'
-
 ApiConfig = require('../lib/models/ApiConfig')
+mongoose = require 'mongoose'
 
 configs = [
   {
@@ -45,14 +44,10 @@ configs = [
   }
 ]
 
-# drop the collection
 mongoose.connect process.env.MONGO_URI || "mongodb://localhost/airpair_dev"
-
 mongoose.connection.once 'open', ->
   coll = mongoose.connection.collections[ApiConfig.collection.name]
-
   console.log 'opened'
-
   coll.drop (err) ->
     if err && err.message != 'ns not found'
       return console.log err.stack
@@ -68,4 +63,6 @@ mongoose.connection.once 'open', ->
 
         console.log "##{i+1} of #{configs.length} done"
         numDone++
-        if numDone == configs.length then console.log 'FIN'
+        if numDone == configs.length
+          console.log 'FIN'
+          process.exit()
