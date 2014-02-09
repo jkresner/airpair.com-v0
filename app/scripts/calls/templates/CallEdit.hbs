@@ -29,9 +29,9 @@
       <div class="controls">
         <select name="duration">
           {{#each selectOptions}}
-            <option {{#is num ../../duration}}selected{{/is}}
-              value="{{num}}">
-              {{num}} {{inflect num "hour" "hours"}}
+            <option {{#is this ../../duration}}selected{{/is}}
+              value="{{this}}">
+              {{this}} {{inflect this "hour" "hours"}}
             </option>
           {{/each}}
         </select>
