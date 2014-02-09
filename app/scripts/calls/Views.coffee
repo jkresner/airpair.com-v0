@@ -28,17 +28,18 @@ class exports.CallScheduleView extends BB.ModelSaveView
     'blur [name=date]': -> @model.set 'date', @elm('date').val(), silent: true
     'blur [name=time]': -> @model.set 'time', @elm('time').val(), silent: true
     'change [name=inviteOwner]': ->
-      inviteOwner = @elm('inviteOwner').is(':checked')
-      storage('inviteOwner', inviteOwner)
+      storage 'inviteOwner', @elm('inviteOwner').is(':checked')
     'change [name=sendNotifications]': ->
       sendNotifications = @elm('sendNotifications').is(':checked')
       @model.set('sendNotifications', sendNotifications, silent: true)
-    'click .save': '_save'
+    'click .save': (e) ->
+      $(e.target).attr('disabled', true)
+      @save(e)
   initialize: ->
     @listenTo @request, 'change', @render
     @listenTo @collection, 'reset', @render
     @listenTo @model, 'change', @render
-    @model.set 'sendNotifications', true, silent:true
+
   render: ->
     orders = @collection.toJSON()
     selectedExpert = null
@@ -70,31 +71,28 @@ class exports.CallScheduleView extends BB.ModelSaveView
     if selectedExpert
       byType = selectedExpert.credit.byType[@mget('type')] || {}
       balance = byType.balance || 0
-      selectedExpert.selectOptions =
-        _.range(1, balance + 1).map (num) -> { num }
+      selectedExpert.selectOptions = _.range(1, balance + 1)
 
     if !@mget 'date' # default to today
       today = moment().format(dateFormat)
       @model.set 'date', today
 
-    requestId = @request.get('_id')
-    available = suggested
-    owner = @request.get('owner')
-    inviteOwner = true
-    if storage('inviteOwner') == 'false' then inviteOwner = false
-    d = @model.extendJSON {
-      available, selectedExpert, requestId, owner, inviteOwner
-    }
+    d =
+      available: suggested
+      selectedExpert: selectedExpert
+      requestId: requestId = @request.get('_id')
+      owner: @request.get('owner')
+      inviteOwner: storage('inviteOwner') == 'true'
+
     @$('.datepicker').stop()
-    @$el.html @tmpl d
+    @$el.html @tmpl @model.extendJSON d
     @$('.datepicker').pickadate(pickadateOptions)
     @
-  # prevents double-saves, provides feedback that request is in progress.
-  _save: (e) ->
-    $(e.target).attr('disabled', true)
-    @model.set('inviteOwner', @elm('inviteOwner').is(':checked'))
-    @model.set('sendNotifications', @elm('sendNotifications').is(':checked'))
-    @save e
+  getViewData: ->
+    d = @getValsFromInputs @viewData
+    d.inviteOwner = @elm('inviteOwner').is(':checked')
+    d.sendNotifications = @elm('sendNotifications').is(':checked')
+    d
   renderSuccess: (model, response, options) =>
     window.location = "/adm/inbound/request/#{@request.get('_id')}"
   renderError: (model, response, options) ->
@@ -156,7 +154,9 @@ class exports.CallEditView extends BB.ModelSaveView
   tmpl: require './templates/CallEdit'
   viewData: ['duration', 'date', 'time', 'type', 'notes']
   events:
-    'click .save': '_save'
+    'click .save': (e) ->
+      $(e.target).attr('disabled', true)
+      @save(e)
   initialize: ->
     # orders and request are already set by the time the router sets the model
     @listenTo @model, 'change', @render
@@ -176,7 +176,7 @@ class exports.CallEditView extends BB.ModelSaveView
 
     # hours dropdown
     balance = expert.credit.byType[call.type].balance
-    expert.selectOptions = _.range(1, balance + 1).map (num) -> { num }
+    expert.selectOptions = _.range(1, balance + 1)
 
     # TODO call.status
     d = _.extend call, { expert, requestId: @request.id }
@@ -189,10 +189,6 @@ class exports.CallEditView extends BB.ModelSaveView
     d.sendNotifications = @elm('sendNotifications').is(':checked')
     d.recordings = @videos.toJSON()
     d
-  # prevents double-saves, provides feedback that request is in progress.
-  _save: (e) ->
-    $(e.target).attr('disabled', true)
-    @save e
   renderSuccess: (model, response, options) =>
     window.location = "/adm/inbound/request/#{@request.get('_id')}"
   renderError: (model, response, options) ->

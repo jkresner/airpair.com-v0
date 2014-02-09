@@ -9,6 +9,8 @@ exports.Request = class Request extends Shared.Request
 exports.RequestCall = class RequestCall extends BB.BadassModel
   urlRoot: ->
     "/api/requests/#{@requestId}/calls"
+  defaults:
+    sendNotifications: true
 
 exports.Video = class VideoData extends BB.BadassModel
   urlRoot: ->

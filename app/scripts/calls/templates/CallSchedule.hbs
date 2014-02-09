@@ -61,8 +61,8 @@
         <div class="controls">
           <select name="duration">
             {{#each selectOptions }}
-              <option value="{{num}}" {{#is ../../duration num}}selected{{/is}}>
-                {{num}} {{inflect num "hour" "hours"}}
+              <option value="{{this}}" {{#is ../../duration this}}selected{{/is}}>
+                {{this}} {{inflect this "hour" "hours"}}
               </option>
             {{else}}
               <option disabled>0 hours available for this expert</option>
