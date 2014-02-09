@@ -1,209 +1,199 @@
-# ###
-# we manually
-# - choose scopes, run generate-google-refresh-token.js
-# - get code
-# - enter code
-# - generate-google-refresh-token.js gives you your REFRESH_TOKEN, put in project
+#
+# Woe be unto you if anything in here ever breaks!
+#
+_ = require 'underscore'
+ApiConfig = require '../../models/ApiConfig'
+googleapis = require 'googleapis'
+OAuth2Client = googleapis.OAuth2Client
 
-# our project then does...
-# - discover APIs
-# - get client
-# - make API calls
-# - Auth will get an access token occasionally, need to save that to DB if you
-#   have more than one computer accessing the API, otherwise they invalidate
-#   eachother
-# ###
-# googleapis = require 'googleapis'
-# OAuth2Client = googleapis.OAuth2Client
-# ExpertsAccessToken = require '../../models/expertsGoogleAccessToken'
-# TeamAccessToken = require '../../models/teamGoogleAccessToken'
+# Doesn't support multiple versions of same API.
+# Google will give you an error if you request an API with an account that
+# doesnt have correct privileges.
+class Google
+  # map of email:AuthClient
+  aclients: undefined
 
-# # TODO refactor this whole thing cause it's nasty
-# class Google
-#   # TODO remove the command queue stuff b/c its not needed.
-#   # for function calls that arrive before the discover call has returned
-#   queue: []
-#   constructor: (apis, oauth, tokens, model, cb) ->
-#     @model = model
-#     # set up auth details
-#     googleapis.withAuthClient(
-#       new OAuth2Client(oauth.CLIENT_ID, oauth.CLIENT_SECRET, oauth.REDIRECT_URL)
-#     )
-#     googleapis.authClient.setCredentials(tokens)
+  # map of email:ApiConfig (access_token, refresh_token, etc)
+  configs: undefined
 
-#     # discover apis
-#     _.each apis, (version, name) ->
-#       googleapis.discover(name, version)
+  # map of email:access_token (the most recently seen one)
+  lastSeen: {}
 
-#     if cfg.env is 'test'
-#       console.log 'google wrapper in test mode.'
-#       return cb && cb()
+  # the googleapi client, passed back from discovery call
+  client: undefined
 
-#     googleapis.execute (err, client) =>
-#       if err
-#         stack = new Error('discovery: ' + err.message).stack
-#         console.log stack
-#         if cfg.isProd then winston.error stack
-#         return cb && cb(err)
-#       @client = client
-#       @clearQueue()
-#       cb && cb(err, @, client)
-#   clearQueue: ->
-#     console.log 'clearQueue', @queue
-#     @queue.forEach (item) ->
-#       @[item[0]].apply(@, item[1])
-#     @queue = []
-#   # getter/setter style function
-#   # TODO: make a PR to the google library that allows you to subscribe to
-#   # access_token changes. Also publish our own version to npm, so we dont have
-#   # to wait for them to merge. This will make our code WAY simpler.
-#   _token: (access_token) ->
-#     if !access_token
-#       console.log 'get', googleapis.authClient.credentials.access_token
-#       return googleapis.authClient.credentials.access_token
-#     console.log 'set', access_token
-#     googleapis.authClient.credentials.access_token = access_token
-#     access_token
+  constructor: (oauth, cb) ->
+    cb = cb || -> # usually this is undefined
 
-#   # call this before every client call
-#   # goes to mongo, takes the latest access token
-#   getToken: (cb) =>
-#     # there should only ever be one object in the collection
-#     @model.findOne {}, (err, doc) =>
-#       if err then return cb err
-#       doc = doc || {}
-#       @lastSeen = doc.access_token
-#       console.log 'trying to set from mongo:', doc.access_token
-#       @_token doc.access_token # when no token in DB, this does nothing
-#       cb()
+    onError = (err) =>
+      if !err then return
+      stack = new Error('Google constructor: ' + err.message).stack
+      console.log stack
+      if cfg.isProd then winston.error stack
+      return cb(err)
 
-#   # call this after every client call
-#   # goes to mongo, saves the current access token as the latest one.
-#   setToken: =>
-#     printErr = (err) =>
-#       if err then return console.log err.stack
-#     access_token = @_token(null) # googleapis lib might have changed it
+    query = name: 'googleapi'
+    ApiConfig.find(query).lean().exec (err, configs) =>
+      if err then return onError err
+      @_createAuthClients(oauth, configs)
+      @_createConfigMap(configs)
+      @_discover(configs, cb)
 
-#     # it has never once been set in mongo, so no need to check&set
-#     if @lastSeen == undefined
-#       doc = access_token: access_token
-#       console.log 'new access_token', access_token
-#       return new @model(doc).save printErr
+  _createAuthClients: (oauth, configs) =>
+    @aclients = {}
+    # c.user is an email, e.g. 'team@airpair.com'
+    for c in configs
+      @aclients[c.user] =
+        new OAuth2Client(oauth.CLIENT_ID, oauth.CLIENT_SECRET, oauth.REDIRECT_URL)
+      @aclients[c.user].setCredentials(c.data.tokens)
 
-#     # it's the same, no need to save it back to mongo.
-#     if access_token == @lastSeen
-#       console.log 'unchanged', @lastSeen
-#       return
+  _createConfigMap: (configs) =>
+    @configs = {}
+    for c in configs
+      @configs[c.user] = c
 
-#     # update mongo, but only if someone else didn't get to it first.
-#     # this is a check and set.
-#     query = access_token: @lastSeen
-#     ups = access_token: access_token
+  # discover all unique APIs
+  _discover: (configs, cb) ->
+    apis = {
+      # youtube: 'v3'
+    }
 
-#     console.log 'update', query, ups
-#     @model.update query, ups, printErr
+    for c in configs
+      # this is why it doesnt support multiple versions of the same API
+      _.defaults(apis, c.data.discover)
 
-#   #
-#   # calls to specific API endpoints
-#   # TODO stop the silly repetition of getToken somecode setToken
-#   #
-#   createEvent: (body, cb) ->
-#     if !@client then return @queue.push [ 'createEvent', arguments ]
+    _.each apis, (version, name) ->
+      googleapis.discover(name, version)
 
-#     params = _.clone cfg.google.calendar.params
-#     @getToken (err) =>
-#       if err then return cb err
+    if cfg.env is 'test'
+      console.log 'google wrapper in test mode.'
+      return cb && cb()
 
-#       @client.calendar.events.insert(params, body)
-#       .execute (err, data) =>
-#         @setToken() # always want to set the token
-#         if err then return cb new Error err.message
-#         cb null, data
+    googleapis.execute (err, client) =>
+      if err
+        stack = new Error('discovery: ' + err.message).stack
+        console.log stack
+        if cfg.isProd then winston.error stack
+        return cb(err)
+      @client = client
+      cb(err, @)
 
-#   patchEvent: (params, body, cb) ->
-#     if !@client then return @queue.push [ 'patchEvent', arguments ]
+  do: (user, fn, cb) ->
+    if !@client then return cb new Error 'Handshaking with Google, please wait'
 
-#     # the properties in here that matter are eventId and sendNotifications
-#     params = _.defaults params, cfg.google.calendar.params
+    @getToken user, (err) =>
+      if err then return cb err
+      req = fn(@client) # e.g. (client) -> client.youtube.videos.list(params)
+      req.withAuthClient(@aclients[user])
+      req.execute (err, data) =>
+        @setToken(user) # always want to set the token
+        if err then return cb new Error err.message
+        cb null, data
 
-#     @getToken (err) =>
-#       if err then return cb err
+  # call this before every client call
+  # goes to mongo, takes the latest access token
+  getToken: (user, cb) =>
+    # there should only ever be one matching object in the collection
+    query =
+      name: 'googleapi'
+      user: user
+    ApiConfig.findOne(query).lean().exec (err, doc) =>
+      if err then return cb err
+      doc = doc || {}
+      access_token = doc.data.tokens.access_token
+      @lastSeen[user] = access_token
+      console.log 'trying to set from mongo:', access_token
+      # when no token in DB, this does nothing
+      @aclients[user].credentials.access_token = access_token
+      cb()
 
-#       @client.calendar.events.patch(params, body)
-#       .execute (err, data) =>
-#         @setToken() # always want to set the token
-#         if err then return cb new Error err.message
-#         cb null, data
+  # call this after every client call
+  # goes to mongo, saves the current access token as the latest one.
+  setToken: (user) =>
+    printErr = (err) =>
+      if err then return console.log err.stack
 
-#   videosList: (params, cb) ->
-#     if !@client then return @queue.push [ 'videosList', arguments ]
+    # googleapis lib might have changed it
+    access_token = @aclients[user].credentials.access_token
 
-#     part = 'id,snippet,contentDetails,fileDetails,liveStreamingDetails,player,processingDetails,recordingDetails,statistics,status,suggestions,topicDetails'
-#     params.part = params.part || part
-#     @getToken (err) =>
-#       if err then return cb err
+    # it has never once been set in mongo, so no need to check&set
+    if @lastSeen[user] == undefined
+      query =
+        'name': 'googleapi'
+        'user': user
+        'data.tokens.access_token': null
+      ups = $set: 'data.tokens.access_token': access_token
+      console.log 'new access_token', access_token
+      return ApiConfig.update query, ups, printErr
 
-#       @client.youtube.videos.list(params)
-#       .execute (err, data) =>
-#         @setToken() # always want to set the token
-#         if err then return cb new Error err.message
-#         cb null, data
+    # it's the same, no need to save it back to mongo.
+    if access_token == @lastSeen[user]
+      console.log 'unchanged', @lastSeen[user]
+      return
 
-# # if !cfg? then require '../../util/appConfig'
+    # update mongo, but only if someone else didn't get to it first.
+    # this is a check and set.
+    query =
+      'name': 'googleapi'
+      'user': user
+      'data.tokens.access_token': @lastSeen[user]
+    ups = 'data.tokens.access_token': access_token
 
-# # making it a singleton prevents duplicate discovery calls
-# apis =
-#   calendar: 'v3'
-#   youtube: 'v3'
-# module.exports =
-#   team: new Google(apis, cfg.google.oauth, cfg.google.tokens, TeamAccessToken)
-#   experts: new Google(apis, cfg.google.oauth, cfg.google.expert_tokens, ExpertsAccessToken)
+    console.log 'update', query, ups
+    ApiConfig.update query, ups, printErr
 
-# # if !module.parent
-# #   inspect = require('util').inspect
-# #   createClient = module.exports
+  #
+  # calls to specific API endpoints
+  #
+  videosList: (user, params, cb) ->
+    part = 'id,snippet,contentDetails,fileDetails,liveStreamingDetails,player,processingDetails,recordingDetails,statistics,status,suggestions,topicDetails'
+    params.part = params.part || part
+    fn = (client) -> client.youtube.videos.list(params)
+    @do user, fn, cb
 
-# #   mongoose = require 'mongoose'
-# #   mongoose.connect cfg.mongoUri
-# #   db = mongoose.connection
-# #   db.on 'error', ->
-# #     console.error.bind console, 'connection error:'
-# #   db.once 'open', ->
+  createEvent: (user, body, cb) ->
+    params = _.clone cfg.google.calendar.params
+    fn = (client) -> client.calendar.events.insert(params, body)
+    @do user, fn, cb
 
-# #     if process.argv[2] == 'yt'
-# #       createClient (err, goog, _) ->
-# #         if err then return console.log 'ready err', err.stack || err
-# #         params = id: 'z1Z6xEYMYNY,d4QJDkdwLpc'
-# #         goog.videosList params, (err, data) ->
-# #           if err then return console.log 'dfgsgs', err.stack || err
-# #           console.log 'vd', inspect(data, depth: null)
+  patchEvent: (user, params, body, cb) ->
+    # the properties in here that matter are eventId and sendNotifications
+    params = _.defaults params, cfg.google.calendar.params
+    fn = (client) -> client.calendar.events.patch(params, body)
+    @do user, fn, cb
 
-# #     if process.argv[2] == 'gc'
-# #       createClient (err, goog, _) ->
-# #         if err then return console.log 'ready err', err
-# #         body =
-# #           start: { dateTime: '2014-01-24T03:04:06.543Z' },
-# #           end: { dateTime: '2014-01-24T05:04:06.543Z' },
-# #           # attendees:
-# #           #   [ { email: 'jkATairpair.com@example.com' },
-# #           #   { email: 'kirkATstrobeck.com@example.com' },
-# #           #   { email: 'qualls.jamesATgmail.com@example.com' } ]
-# #           summary: 'Airpair Kirk+James (AngularJS)',
-# #           # colorId: 6,
-# #           description: 'hihi'
+  # TODO for testing only: remove me!
+  # calendarList: (user, cb) ->
+  #   fn = (client) -> client.calendar.calendarList.list()
+  #   @do user, fn, cb
 
-# #         goog.client.calendar.calendarList.list()
-# #         .execute (err, data) ->
-# #           if err then return console.log('cal', err.stack || err)
-# #           console.log('callist', data)
+# if !cfg? then require '../../util/appConfig'
 
-# #           goog.client.calendar.events.insert(cfg.google.calendar.params, body)
-# #           .execute (err, data) =>
-# #             if err
-# #               # again = ->
-# #               #   goog.createEvent body, (err, data) ->
-# #               #     if err then return console.log 'againerr', err.stack
-# #               #     console.log 'againdata', data
-# #               # setTimeout again, 1000
-# #               return console.log 'dfgsgs', err.stack
-# #             console.log 'vd', data
+# ready = ->
+#   goog = module.exports
+#   inspect = require('util').inspect
+
+#   if process.argv[2] == 'yt'
+#     params = id: 'z1Z6xEYMYNY,d4QJDkdwLpc'
+#     goog.videosList params, (err, videoData) =>
+#       if err then return console.log "wah" + err.stack
+#       console.log 'vl', videoData
+
+#   if process.argv[2] == 'gc'
+#     users = _.keys goog.aclients
+#     console.log 'users', users
+#     users.forEach (u) ->
+#       goog.calendarList u, (err, data) ->
+#         if err then return console.log u, err.message
+#         console.log u, _.keys data
+
+module.exports = new Google(cfg.google.oauth)
+
+# if !module.parent
+#   mongoose = require 'mongoose'
+#   mongoose.connect "mongodb://localhost/airpair_dev"
+#   db = mongoose.connection
+#   db.on 'error', (err) ->
+#     console.error 'connection error:', err
+#   db.once 'open', ->
+#     console.log 'open'

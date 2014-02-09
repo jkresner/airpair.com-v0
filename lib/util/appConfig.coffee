@@ -19,27 +19,17 @@ c.payment =
     publishedKey: 'pk_test_aj305u5jk2uN1hrDQWdH0eyl'
     secretKey:    'sk_test_8WOe71OlRWPyB3rDRcnthSCc'
 
-# This is for development: it contains auth to both youtube and gcal for the
-# experts@airpair.com account
-EXPERT_REFRESH_TOKEN = '1/NDqeY5kn4DdpWtuHQU-hMPzvlmVMiB8tWgb8LOc8uNY'
-
 c.oauthHost = 'http://localhost:3333'
 c.google =
   oauth:
     CLIENT_ID: "980673476043-qo125e4cghau62thkrb4igkm50a1rp0l.apps.googleusercontent.com"
     CLIENT_SECRET: "T3OP1W-LjcdiS_cg8Ib8bBsc"
     REDIRECT_URL: "https://www.airpair.com/oauth2callback"
-  tokens:
-    refresh_token: EXPERT_REFRESH_TOKEN
-  # we write it twice so that prod still has access to the experts@ account
-  expert_tokens:
-    refresh_token: EXPERT_REFRESH_TOKEN
   calendar:
+    account: 'experts@airpair.com'
     params:
       calendarId: 'experts@airpair.com' # experts@ primary calendar ID
-      # calendarId: 'primary'
-      sendNotifications: false
-
+      sendNotifications: false # TODO remove these b/c they arent used anymore
 
 if c.env is 'test'
   process.env.Payment_Env = 'test'
@@ -53,13 +43,11 @@ if c.env is 'prod'
     publishedKey: 'pk_live_FEGruKDm6OZyagTHqhXWvV8G'
     secretKey:    'sk_live_qSxo06x8iwaYuIIw1Bkx7hsz'
   c.oauthHost = 'https://www.airpair.com' # note https
+  c.google.calendar.account = 'team@airpair.com'
   c.google.calendar.params =
     sendNotifications: true
     # team@ Air Pairings Calendar
     calendarId: 'airpair.co_19t01n0gd6g7548k38pd3m5bm0@group.calendar.google.com'
-
-  # refresh token for team@ with gcal & youtube scope
-  c.google.tokens.refresh_token = '1/g6UgiRz90-E2T_rS1gxivGnO3drqb11sri_1WOqHwr8'
 
 # option to overwrite in staging etc.
 c.oauthHost = process.env.oauthHost if process.env.oauthHost?
