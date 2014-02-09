@@ -20,13 +20,33 @@ configs = [
       tokens:
         refresh_token: '1/NDqeY5kn4DdpWtuHQU-hMPzvlmVMiB8tWgb8LOc8uNY'
       discover:
-          'calendar': 'v3'
-          'youtube': 'v3'
+        'calendar': 'v3'
+        'youtube': 'v3'
+  }
+  {
+    user: 'jk@airpair.com'
+    name: 'googleapi',
+    data:
+      tokens:
+        refresh_token: '1/U0PtEAcHs8D21uZw03M1UYXIPWarCw1eKSkzWp1FgsE'
+      discover:
+        'calendar': 'v3'
+        'youtube': 'v3'
+  }
+  {
+    user: 'jkresner@gmail.com'
+    name: 'googleapi',
+    data:
+      tokens:
+        refresh_token: '1/TsxKiF5VyiLIS6sLpR1PsXKv-Y0ATk_3ZTqN8tQrfXw'
+      discover:
+        'calendar': 'v3'
+        'youtube': 'v3'
   }
 ]
 
 # drop the collection
-mongoose.connect "mongodb://localhost/airpair_dev"
+mongoose.connect process.env.MONGO_URI || "mongodb://localhost/airpair_dev"
 
 mongoose.connection.once 'open', ->
   coll = mongoose.connection.collections[ApiConfig.collection.name]
@@ -41,7 +61,11 @@ mongoose.connection.once 'open', ->
     console.log 'inserting...\n', configs
 
     # insert the docs
+    numDone = 0
     configs.map (c, i) ->
-      new ApiConfig(c).save =>
-        console.log "##{i} of #{configs.length-1} done"
-        if i == configs.length - 1 then console.log 'FIN'
+      new ApiConfig(c).save (err) =>
+        if err then console.log err.stack
+
+        console.log "##{i+1} of #{configs.length} done"
+        numDone++
+        if numDone == configs.length then console.log 'FIN'
