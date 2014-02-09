@@ -12,15 +12,16 @@ module.exports = class Router extends S.AirpairSessionRouter
 
   routes:
     'list'        : 'list'
-    'edit'        : 'edit'
+    'edit/:id'    : 'edit'
 
   appConstructor: (pageData, callback) ->
     d =
       selected: new M.Expert()
       experts: new C.Experts()
+      tags: new C.Tags()
     v =
       expertsView: new V.ExpertsView collection: d.experts, model: d.selected
-      expertView: new V.ExpertView el: '#expertPreview', model: d.selected
+      expertView: new V.ExpertView collection: d.experts, model: d.selected, tags: d.tags
 
     @resetOrFetch d.experts, pageData.experts
 
@@ -28,3 +29,8 @@ module.exports = class Router extends S.AirpairSessionRouter
 
   initialize: (args) ->
     @navTo 'list'
+
+  edit: (id) ->
+    if @app.tags.length is 0 then @app.tags.fetch()
+    @app.selected.set { '_id': id }, { silent: true }
+    @app.selected.fetch()
