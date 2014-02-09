@@ -23,7 +23,7 @@ addTime = (original, milliseconds) ->
   new Date original.getTime() + milliseconds
 
 class CalendarService
-  google: google.team
+  google: google
   create: (request, call, cb) ->
     params =
       sendNotifications: call.sendNotifications

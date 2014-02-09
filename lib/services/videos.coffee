@@ -3,8 +3,16 @@ async = require 'async'
 
 ###
 Some old videos to help test this:
+
+- team at airpair:
+  https://www.youtube.com/watch?v=qhpIA4O1jx4
+
+- experts at airpair:
+  http://www.youtube.com/watch?v=dA23bgwhDAE
+
 - jkresner at gmail.com:
   http://www.youtube.com/watch?v=yc3NmCuOnpQ
+
 - jk at airpair.com
   http://www.youtube.com/watch?v=OyFNWeQbe-0
 ###
@@ -34,9 +42,9 @@ class VideosService
           google.videosList accounts.shift(), params, (err, data) =>
             video = found(err, data)
             if video then return cb null, video
-            return callback new Error message
+            return cb new Error message
 
-    found: (err, data) ->
+    found = (err, data) ->
       forbidden = err && err.message.indexOf('Forbidden') == 0
       if forbidden then return false
 
