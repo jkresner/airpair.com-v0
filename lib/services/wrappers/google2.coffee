@@ -172,37 +172,37 @@ class Google
     @do 'team@airpair.com', fn, cb
 
   # TODO for testing only: remove me!
-  calendarList: (user, cb) ->
-    fn = (client) -> client.calendar.calendarList.list()
-    @do user, fn, cb
+  # calendarList: (user, cb) ->
+  #   fn = (client) -> client.calendar.calendarList.list()
+  #   @do user, fn, cb
 
-if !cfg? then require '../../util/appConfig'
+# if !cfg? then require '../../util/appConfig'
 
-ready = ->
-  goog = module.exports
-  inspect = require('util').inspect
+# ready = ->
+#   goog = module.exports
+#   inspect = require('util').inspect
 
-  if process.argv[2] == 'yt'
-    params = id: 'z1Z6xEYMYNY,d4QJDkdwLpc'
-    goog.videosList params, (err, videoData) =>
-      if err then return console.log "wah" + err.stack
-      console.log 'vl', videoData
+#   if process.argv[2] == 'yt'
+#     params = id: 'z1Z6xEYMYNY,d4QJDkdwLpc'
+#     goog.videosList params, (err, videoData) =>
+#       if err then return console.log "wah" + err.stack
+#       console.log 'vl', videoData
 
-  if process.argv[2] == 'gc'
-    users = _.keys goog.aclients
-    console.log 'users', users
-    users.forEach (u) ->
-      goog.calendarList u, (err, data) ->
-        if err then return console.log u, err.message
-        console.log u, _.keys data
+#   if process.argv[2] == 'gc'
+#     users = _.keys goog.aclients
+#     console.log 'users', users
+#     users.forEach (u) ->
+#       goog.calendarList u, (err, data) ->
+#         if err then return console.log u, err.message
+#         console.log u, _.keys data
 
-module.exports = new Google(cfg.google.oauth, ready)
+module.exports = new Google(cfg.google.oauth)
 
-if !module.parent
-  mongoose = require 'mongoose'
-  mongoose.connect "mongodb://localhost/airpair_dev"
-  db = mongoose.connection
-  db.on 'error', (err) ->
-    console.error 'connection error:', err
-  db.once 'open', ->
-    console.log 'open'
+# if !module.parent
+#   mongoose = require 'mongoose'
+#   mongoose.connect "mongodb://localhost/airpair_dev"
+#   db = mongoose.connection
+#   db.on 'error', (err) ->
+#     console.error 'connection error:', err
+#   db.once 'open', ->
+#     console.log 'open'
