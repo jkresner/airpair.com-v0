@@ -80,20 +80,20 @@ class VideosService
             console.log c.expertId, expertId
             if !_.idsEqual(c.expertId, expertId) then continue
             for recording in c.recordings
-              if recording?.data?.status?.privacyStatus == 'public'
-                recording.requestId = r._id
-                recording.callId = c._id
-                recording.expertId = expertId
-                recording.tags = r.tags
-                recording.data.status = undefined
-                console.log _.keys(r), recording
-                # recording.data = undefined
-                recordings.push recording
-              else
-                recordings.push
-                  data:
-                    id: 'none' # trigger an empty thumbnail
-                    snippet: title: 'Private Video'
+              # if recording?.data?.status?.privacyStatus == 'public'
+              recording.requestId = r._id
+              recording.callId = c._id
+              recording.expertId = expertId
+              recording.tags = r.tags
+              recording.data.status = undefined
+              console.log _.keys(r), recording
+              # recording.data = undefined
+              recordings.push recording
+              # else
+              #   recordings.push
+              #     data:
+              #       id: 'none' # trigger an empty thumbnail
+              #       snippet: title: 'Private Video'
 
 
 
@@ -101,6 +101,8 @@ class VideosService
           name: expert.name
           rate: expert.rate
           so: expert.so
+          hours: expert.hours
+          status: expert.status
           recordings: recordings
           email: expert.email
           brief: expert.brief

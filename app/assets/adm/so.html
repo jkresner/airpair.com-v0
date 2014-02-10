@@ -43,6 +43,9 @@
         padding-right: 8px;
         text-transform: none;
       }
+      .profile:hover {
+        text-decoration: none;
+      }
     </style>
 </head>
 
@@ -58,9 +61,9 @@
           </label>
           <div class="controls">
             <input name="name" type="text" class="soInput input-medium"
-              placeholder="stackoverflow ID" value="1345135/john">
+              placeholder="stackoverflow ID" value="1345135">
           </div>
-          <span>e.g. <code>1345135</code> or <code>87298/nilbus</code></span>
+          <span>e.g. <code>1345135</code>, <code>87298</code>, or <code>266795</code></span>
           <br>
         </div>
 
@@ -72,17 +75,26 @@
         <div id="elist">
           <!-- template -->
           <div class="hidden">
-            <!-- <img src="" height="15px"> -->
-            $<span class="rate">70</span>
+            <a class="profile" href="http://stackoverflow.com/users/999"
+              target="_blank">
+              <img height="16px"
+               src="https://1.gravatar.com/avatar/6107fee2deafa6c3761963b72f97c4db?s=16">
+            </a>
             <span class="name">David Trejo</span>
             <a href="#" class="so button slim btn-primary btn-small">
-              view <span class="soId">101010/dtrejo</span></a>
+              view <span class="soId">101010</span></a>
           </div>
         </div>
       </fieldset>
     </div> <!-- end #marketingTagForm -->
 
+<!--
+show private video thumbnails
+  -->
+
+
     <div id="marketingTagList" style="float:right;width:840px">
+      <p class="hidden expert"><span class="name">David Trejo</span> is <code class="status">busy</code> and prefers to do ~<code><span class="hours">3</span>h</code> of AirPairs a week.</p>
       <div class="videos">
         <div class="hidden video">
           <div class="lcol">
@@ -104,6 +116,7 @@
         API response</h4>
       <pre>
         <!-- JSON goes here -->
+        LOADING
       </pre>
     </div>
 
@@ -127,18 +140,24 @@
         })
         function soRep(e) { return -1 * (e.so.reputation || 0) }
         _.sortBy(experts, soRep).slice(3).forEach(addToList)
+        lookup() // add in the name and hours and status
       }
       var templ = elist.find('.hidden').clone()
       templ.removeClass('hidden')
       function addToList(e) {
         var row = templ.clone()
-        row.find('.rate').text(e.rate)
+        if (e.pic && e.pic.indexOf('gravatar') > -1) {
+          e.pic = e.pic.replace(/(\?.*)/, '')
+          row.find('img').attr('src', e.pic + '?s=16')
+        }
         row.find('.name').text(e.name)
-        row.find('.soId').text(e.so.link)
-
+        soId = e.so.link.replace(/(\/.*)/, '')
+        row.find('.soId').text(soId)
+        row.find('.profile').attr('href',
+          'http://stackoverflow.com/users/' + e.so.link)
         elist.append(row)
       }
-      elist.on('click', 'a', listClick)
+      elist.on('click', '.so', listClick)
       function listClick (e) {
         var soId = $(this).find('.soId').text()
         soInput.val(soId)
@@ -161,7 +180,13 @@
         return false
       }
       var pre = $('pre')
+      var expert = $('.expert')
       function renderSo(data) {
+        expert.show()
+        expert.find('.name').text(data.name)
+        expert.find('.hours').text(data.hours)
+        expert.find('.status').text(data.status)
+
         pre.text(JSON.stringify(data, null, 2))
         data.recordings.forEach(renderVideo)
       }
@@ -177,8 +202,7 @@
         row.find('.tags').text(_.pluck(recording.tags, 'name').join(', '))
         videos.append(row)
       };
-
-      lookup()
+      // lookup()
 
       // TODO
 
