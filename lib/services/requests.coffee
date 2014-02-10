@@ -98,6 +98,7 @@ module.exports = class RequestsService extends DomainService
     'suggested.expertStatus': 1
     'suggested.expert.pic': 1
     'tags.short': 1
+    'calls.recordings.type': 1
 
   # Used for adm/inbound dashboard list
   getActive: (callback) ->

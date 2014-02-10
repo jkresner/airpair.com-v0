@@ -52,7 +52,7 @@ class exports.RequestRowView extends BB.BadassView
       suggestedCount:     d.suggested.length
       suggestedFitCount:  _.filter(d.suggested, (s) -> s.status is 'chosen').length
       callCount:          d.calls.length
-      callCompleteCount:  _.filter(d.calls, (s) -> s.status is 'complete').length
+      callCompleteCount:  _.filter(d.calls, (c) -> c.recordings.length > 0).length
     }
     @$el.html @tmpl tmplData
     @
