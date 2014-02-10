@@ -29,7 +29,7 @@ c.google =
     account: 'experts@airpair.com'
     params:
       calendarId: 'experts@airpair.com' # experts@ primary calendar ID
-      sendNotifications: false # TODO remove these b/c they arent used anymore
+      sendNotifications: false
 
 if c.env is 'test'
   process.env.Payment_Env = 'test'
@@ -45,7 +45,6 @@ if c.env is 'prod'
   c.oauthHost = 'https://www.airpair.com' # note https
   c.google.calendar.account = 'team@airpair.com'
   c.google.calendar.params =
-    sendNotifications: true
     # team@ Air Pairings Calendar
     calendarId: 'airpair.co_19t01n0gd6g7548k38pd3m5bm0@group.calendar.google.com'
 

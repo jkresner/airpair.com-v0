@@ -151,7 +151,7 @@ class Google
     fn = (client) -> client.youtube.videos.list(params)
     @do user, fn, cb
 
-  createEvent: (user, body, cb) ->
+  createEvent: (user, params, body, cb) ->
     params = _.clone cfg.google.calendar.params
     fn = (client) -> client.calendar.events.insert(params, body)
     @do user, fn, cb
