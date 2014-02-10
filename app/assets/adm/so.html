@@ -22,7 +22,8 @@
       }
       .video .lcol {
         float: left;
-        width: 17%;
+        width: 25%;
+        margin-right: 1em;
       }
       .video .rcol {
         float: left;
@@ -45,6 +46,9 @@
       }
       .profile:hover {
         text-decoration: none;
+      }
+      .description {
+        white-space: pre;
       }
     </style>
 </head>
@@ -98,14 +102,15 @@ show private video thumbnails
       <div class="videos">
         <div class="hidden video">
           <div class="lcol">
-            <a href="#" class="youtube" target="_blank">
-              <img src="" alt="thumbnail" height="50px">
-            </a>
+            <iframe height="150" src="" frameborder="0" allowfullscreen></iframe>
           </div>
           <div class="rcol">
             <a href="#" class="youtube" target="_blank">
               <span class="title">video title</span>
             </a>
+            <br>
+            <span class="description"></span>
+            <br>
             <br>
             <span class="tags"></span>
           </div>
@@ -197,10 +202,12 @@ show private video thumbnails
         var row = vtempl.clone()
         row.find('.title').text(recording.data.snippet.title)
         row.find('.youtube').attr('href', 'http://youtu.be/' + recording.data.id)
-        row.find('img').attr('src'
-          , 'https://i1.ytimg.com/vi/' + recording.data.id + '/default.jpg')
+        row.find('iframe').attr('src'
+          , '//www.youtube.com/embed/' + recording.data.id)
+
         row.find('.tags').text(_.pluck(recording.tags, 'name').join(', '))
         videos.append(row)
+        row.find('.description').text(recording.data.snippet.description)
       };
       // lookup()
 
