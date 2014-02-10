@@ -18,7 +18,7 @@ storySteps = [
 ]
 
 testNum = -1
-dateFormat = "DD MMM 'YY"
+dateFormat = "DD MMM YYYY"
 timeFormat = 'HH:mm'
 
 # This story is meant to test the call editing functionality; for this reason,
