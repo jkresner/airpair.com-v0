@@ -20,7 +20,7 @@ class RequestCallsApi  # Always passes back a full request object
 
   validate: (req, res, next) ->
     req.checkBody('duration', 'Invalid duration').notEmpty().isInt()
-    req.checkBody('date', 'Invalid date').notEmpty().is(/^\d\d \w\w\w '\d\d$/)
+    req.checkBody('date', 'Invalid date').notEmpty().is(/^\d\d \w\w\w \d\d\d\d$/)
     req.checkBody('time', 'Invalid time').notEmpty().is(/^\d\d:\d\d$/)
     errors = req.validationErrors()
     if errors
