@@ -245,7 +245,7 @@ module.exports = class OrdersService extends DomainService
 
   # removes redeemed calls matching the call's ID from the orders, then tries to
   # schedule it again with this calls duration (the duration is different)
-  update: (requestId, call, cb) =>
+  updateWithCall: (requestId, call, cb) =>
     @getByRequestId requestId, (err, orders) =>
       if err then return cb err
       ordersWithoutCall = unschedule orders, call._id

@@ -90,4 +90,4 @@ module.exports = class RequestCallsService
       return process.nextTick callback
     callWithNewDuration = _.clone oldCall
     callWithNewDuration.duration = newDuration
-    OrdersSvc.update requestId, callWithNewDuration, callback
+    OrdersSvc.updateWithCall requestId, callWithNewDuration, callback
