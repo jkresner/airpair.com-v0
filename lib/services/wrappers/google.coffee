@@ -1,7 +1,3 @@
-#
-# Woe be unto you if anything in here ever breaks!
-#
-_ = require 'underscore'
 ApiConfig = require '../../models/ApiConfig'
 googleapis = require 'googleapis'
 OAuth2Client = googleapis.OAuth2Client
@@ -78,7 +74,7 @@ class Google
       @client = client
       cb(err, @)
 
-  do: (user, fn, cb) ->
+  makeCall: (user, fn, cb) ->
     if !@client then return cb new Error 'Handshaking with Google, please wait'
 
     @getToken user, (err) =>
@@ -149,51 +145,17 @@ class Google
     part = 'id,snippet,contentDetails,fileDetails,liveStreamingDetails,player,processingDetails,recordingDetails,statistics,status,suggestions,topicDetails'
     params.part = params.part || part
     fn = (client) -> client.youtube.videos.list(params)
-    @do user, fn, cb
+    @makeCall user, fn, cb
 
   createEvent: (user, params, body, cb) ->
     params = _.clone cfg.google.calendar.params
     fn = (client) -> client.calendar.events.insert(params, body)
-    @do user, fn, cb
+    @makeCall user, fn, cb
 
   patchEvent: (user, params, body, cb) ->
     # the properties in here that matter are eventId and sendNotifications
     params = _.defaults params, cfg.google.calendar.params
     fn = (client) -> client.calendar.events.patch(params, body)
-    @do user, fn, cb
-
-  # TODO for testing only: remove me!
-  # calendarList: (user, cb) ->
-  #   fn = (client) -> client.calendar.calendarList.list()
-  #   @do user, fn, cb
-
-# if !cfg? then require '../../util/appConfig'
-
-# ready = ->
-#   goog = module.exports
-#   inspect = require('util').inspect
-
-#   if process.argv[2] == 'yt'
-#     params = id: 'z1Z6xEYMYNY,d4QJDkdwLpc'
-#     goog.videosList params, (err, videoData) =>
-#       if err then return console.log "wah" + err.stack
-#       console.log 'vl', videoData
-
-#   if process.argv[2] == 'gc'
-#     users = _.keys goog.aclients
-#     console.log 'users', users
-#     users.forEach (u) ->
-#       goog.calendarList u, (err, data) ->
-#         if err then return console.log u, err.message
-#         console.log u, _.keys data
+    @makeCall user, fn, cb
 
 module.exports = new Google(cfg.google.oauth)
-
-# if !module.parent
-#   mongoose = require 'mongoose'
-#   mongoose.connect "mongodb://localhost/airpair_dev"
-#   db = mongoose.connection
-#   db.on 'error', (err) ->
-#     console.error 'connection error:', err
-#   db.once 'open', ->
-#     console.log 'open'

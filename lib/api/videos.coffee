@@ -7,10 +7,10 @@ class VideosApi
   svc: videos
 
   constructor: (app, route) ->
-    app.get "/api/#{route}/youtube/:youtubeId", admin, @fetchFromYoutube
+    app.get "/api/#{route}/youtube/:youtubeId", admin, @fetchYouTube
 
-  fetchFromYoutube: (req, res, next) =>
-    @svc.fetch req.params.youtubeId, (err, videoData) =>
+  fetchYouTube: (req, res, next) =>
+    @svc.fetchYouTube req.params.youtubeId, (err, videoData) =>
       if err?.message.indexOf('Forbidden') == 0 || err?.message.indexOf('Not Found') == 0
         return res.send data: youtube: err.message, 400
       if err then return next err
