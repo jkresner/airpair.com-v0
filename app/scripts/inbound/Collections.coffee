@@ -49,6 +49,24 @@ class exports.Requests extends BB.FilteringCollection
     r = _.filter r, (m) =>
       m.get('owner') == owner || !m.get('owner')
     r
+  _sort: ->
+    byTime = _.sortBy @filteredModels, @comparator
+    byTimeAndStatus = _.sortBy byTime, (r) ->
+      ordering =
+        received:   0
+        incomplete: 1
+        holding:    2
+        review:     3
+        scheduled:  4
+        completed:  5
+        canceled:   6
+      ordering[r.get('status')]
+    byTimeAndStatus
+
+  prevNext: (id) ->
+    ids = _.pluck(@filteredModels, 'id')
+    curIndex = ids.indexOf id
+    prev: ids[curIndex - 1], next: ids[curIndex + 1]
 
 class exports.Orders extends BB.FilteringCollection
   model: Models.Order
