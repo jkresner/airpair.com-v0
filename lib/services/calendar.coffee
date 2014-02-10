@@ -24,6 +24,7 @@ addTime = (original, milliseconds) ->
 
 class CalendarService
   google: google
+  account: cfg.google.calendar.account
   create: (request, call, cb) ->
     params =
       sendNotifications: call.sendNotifications
@@ -72,7 +73,7 @@ class CalendarService
     if cfg.env is 'test'
       return cb null, { htmlLink: 'http://example.com/google-calendar-link' }
 
-    @google.createEvent params, body, cb
+    @google.createEvent @account, params, body, cb
 
   patch: (oldCall, newCall, cb) ->
     sameStart = oldCall.datetime.getTime() == newCall.datetime.getTime()
@@ -102,6 +103,6 @@ class CalendarService
       fakeEventData = _.extend oldCall.gcal, body
       return process.nextTick -> cb null, fakeEventData
 
-    @google.patchEvent params, body, cb
+    @google.patchEvent @account, params, body, cb
 
 module.exports = new CalendarService()
