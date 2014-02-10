@@ -7,9 +7,9 @@
 </div>
 
 
-<fieldset class="form-horizontal" style="width:50%">
+<fieldset id="info" class="form-horizontal">
 
-  <div class="links" style="float:right"></div>
+  <div class="links"></div>
 
   <div>
     <div class="control-group">
@@ -92,5 +92,54 @@
       </div>
     </div>
   </div>
+
+</fieldset>
+
+<fieldset id="bookme" class="form-horizontal">
+
+  {{#with bookMe}}
+
+  <div class="control-group">
+    <label class="control-label">enabled</label>
+    <div class="controls">
+      <select name="enabled">
+        <option>false</option>
+        <option>true</option>
+      </select>
+    </div>
+  </div>
+
+
+  <div class="control-group">
+    <label class="control-label">rate</label>
+    <div class="controls">
+      <input type="text" placeholder="Full name" value="" data-error-style="inline">
+    </div>
+  </div>
+
+  <div class="control-group">
+    <label class="control-label">urlSlug</label>
+    <div class="controls">
+      <input type="text" placeholder="Full name" value="" data-error-style="inline">
+    </div>
+  </div>
+
+
+  <div class="control-group">
+    <label class="control-label">urlBitly</label>
+    <div class="controls">
+      <input type="text" placeholder="Full name" value="" data-error-style="inline">
+    </div>
+  </div>
+
+
+  <div class="control-group">
+    <label class="control-label">urlBlog</label>
+    <div class="controls">
+      <input type="text" placeholder="Full name" value="" data-error-style="inline">
+    </div>
+  </div>
+
+  {{/with}}
 
 </fieldset>
