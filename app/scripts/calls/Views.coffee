@@ -9,9 +9,9 @@ unschedule = require '../shared/mix/unschedule'
 storage = require('../util').storage
 
 pickadateOptions =
-  format: "dd mmm 'yy"
+  format: "dd mmm yyyy"
 
-dateFormat = "DD MMM 'YY"
+dateFormat = "DD MMM YYYY"
 
 class exports.CallScheduleView extends BB.ModelSaveView
   async: off

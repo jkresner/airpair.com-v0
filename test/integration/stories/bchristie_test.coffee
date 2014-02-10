@@ -163,7 +163,7 @@ describe "Stories: Bruce Christie", ->
     expect(duration.val()).to.equal '2'
 
     date = v.elm('date')
-    expect(moment().format("DD MMM 'YY")).to.equal date.val()
+    expect(moment().format("DD MMM YYYY")).to.equal date.val()
 
     expectedTime = '16:30'
     v.elm('time').val('16:30')
