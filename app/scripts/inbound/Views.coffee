@@ -208,7 +208,10 @@ class exports.RequestInfoView extends BB.ModelSaveView
     @
   renderMailTemplates: ->
     mailTemplates = new CustomerMailTemplates @model, @session
-    data = { mailTemplates: mailTemplates, tagsString: @model.tagsString() }
+    data =
+      mailTemplates: mailTemplates,
+      tagsString: @model.tagsString()
+      first3tags: _.pluck(@mget('tags'), 'name').slice(0, 3).join(', ')
     tmplCompanyData = _.extend data, @mget('company')
     @$('#company-controls').html @tmplCompany(tmplCompanyData)
     @$('[data-toggle="popover"]').popover()
