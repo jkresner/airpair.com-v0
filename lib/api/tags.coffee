@@ -1,6 +1,7 @@
 TagsSvc = require './../services/tags'
-authz     = require './../identity/authz'
-loggedIn  = authz.LoggedIn isApi:true
+authz = require './../identity/authz'
+loggedIn = authz.LoggedIn isApi:true
+cSend = require '../util/csend'
 
 class TagsApi
 
@@ -21,19 +22,13 @@ class TagsApi
         res.send r
 
   update: (req, res, next) =>
-    @svc.update req.params.id, req.body, (e, r) ->
-      if e then return next e
-      res.send r
+    @svc.update req.params.id, req.body, cSend(res, next)
 
   delete: (req, res, next) =>
-    @svc.delete req.params.id, (e, r) ->
-      if e then return next e
-      res.send r
+    @svc.delete req.params.id, cSend(res, next)
 
   list: (req, res, next) =>
-    @svc.getAll (e, r) ->
-      if e then return next e
-      res.send r
+    @svc.getAll cSend(res, next)
 
 
 module.exports = (app) -> new TagsApi app, 'tags'
