@@ -148,7 +148,7 @@ class Google
     @makeCall user, fn, cb
 
   createEvent: (user, params, body, cb) ->
-    params = _.clone cfg.google.calendar.params
+    params = _.defaults params, cfg.google.calendar.params
     fn = (client) -> client.calendar.events.insert(params, body)
     @makeCall user, fn, cb
 

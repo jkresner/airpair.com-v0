@@ -29,7 +29,6 @@ c.google =
     account: 'experts@airpair.com'
     params:
       calendarId: 'experts@airpair.com' # experts@ primary calendar ID
-      sendNotifications: false
 
 if c.env is 'test'
   process.env.Payment_Env = 'test'
