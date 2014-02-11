@@ -59,12 +59,12 @@ class exports.CallScheduleView extends BB.ModelSaveView
         # selects the first expert by default when there's only one
         if filtered.length == 1
           @model.set 'expertId', suggestion.expert._id
-          if !@model.get 'type'
-            @model.set 'type', suggestion.expert.credit.byTypeArray[0].type
 
         if @mget('expertId') == suggestion.expert._id
           suggestion.expert.selected = suggestion.expert
           selectedExpert = suggestion.expert
+          if !@model.get 'type'
+            @model.set 'type', suggestion.expert.credit.byTypeArray[0].type
         else suggestion.expert.selected = undefined
         suggestion
 
