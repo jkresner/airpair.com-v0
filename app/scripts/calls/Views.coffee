@@ -8,10 +8,11 @@ parseYoutubeId = require '../shared/mix/parseYoutubeId'
 unschedule = require '../shared/mix/unschedule'
 storage = require('../util').storage
 
+dateFormat = "DD MMM YYYY"
 pickadateOptions =
   format: "dd mmm yyyy"
-
-dateFormat = "DD MMM YYYY"
+timepickerOptions =
+  timeFormat: 'H:i'
 
 class exports.CallScheduleView extends BB.ModelSaveView
   async: off
@@ -85,8 +86,10 @@ class exports.CallScheduleView extends BB.ModelSaveView
       inviteOwner: storage('inviteOwner') == 'true'
 
     @$('.datepicker').stop()
+    @$('.timepicker').timepicker('remove')
     @$el.html @tmpl @model.extendJSON d
     @$('.datepicker').pickadate(pickadateOptions)
+    @$('.timepicker').timepicker(timepickerOptions)
     @
   getViewData: ->
     d = @getValsFromInputs @viewData
@@ -181,8 +184,10 @@ class exports.CallEditView extends BB.ModelSaveView
     # TODO call.status
     d = _.extend call, { expert, requestId: @request.id }
     @$('.datepicker').stop()
+    @$('.timepicker').timepicker('remove')
     @$('#callEdit').html @tmpl d
     @$('.datepicker').pickadate(pickadateOptions)
+    @$('.timepicker').timepicker(timepickerOptions)
     @
   getViewData: ->
     d = @getValsFromInputs @viewData

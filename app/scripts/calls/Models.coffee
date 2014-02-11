@@ -11,6 +11,7 @@ exports.RequestCall = class RequestCall extends BB.BadassModel
     "/api/requests/#{@requestId}/calls"
   defaults:
     sendNotifications: true
+    time: '12:00'
 
 exports.Video = class VideoData extends BB.BadassModel
   urlRoot: ->
