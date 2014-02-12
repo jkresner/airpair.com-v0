@@ -1,7 +1,7 @@
 exports = {}
-BB = require './../../lib/BB'
-Models = require './Models'
-Shared = require './../shared/Collections'
+BB      = require './../../lib/BB'
+Models  = require './Models'
+Shared  = require './../shared/Collections'
 
 exports.Tags = Shared.Tags
 exports.MarketingTags = Shared.MarketingTags
@@ -50,8 +50,8 @@ class exports.Requests extends BB.FilteringCollection
       m.get('owner') == owner || !m.get('owner')
     r
   _sort: ->
-    byTime = _.sortBy @filteredModels, @comparator
-    byTimeAndStatus = _.sortBy byTime, (r) ->
+    # filteredModels are already sorted by time
+    _.sortBy @filteredModels, (r) ->
       ordering =
         received:   0
         incomplete: 1
@@ -61,7 +61,6 @@ class exports.Requests extends BB.FilteringCollection
         completed:  5
         canceled:   6
       ordering[r.get('status')]
-    byTimeAndStatus
 
   prevNext: (id) ->
     ids = _.pluck(@filteredModels, 'id')
