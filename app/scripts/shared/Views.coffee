@@ -1,7 +1,7 @@
-exports = {}
-BB = require './../../lib/BB'
-M = require './Models'
-exports.TagsInputView = require('./../tags/Views').TagsInputView
+exports                        = {}
+BB                             = require './../../lib/BB'
+M                              = require './Models'
+exports.TagsInputView          = require('./../tags/Views').TagsInputView
 exports.MarketingTagsInputView =
   require('../marketingtags/Views').MarketingTagsInputView
 

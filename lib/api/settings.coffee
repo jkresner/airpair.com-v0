@@ -1,8 +1,8 @@
-authz = require './../identity/authz'
-loggedIn = authz.LoggedIn isApi:true
-admin = authz.Admin isApi: true
+authz       = require './../identity/authz'
+loggedIn    = authz.LoggedIn isApi:true
+admin       = authz.Admin isApi: true
 SettingsSvc = require './../services/settings'
-cSend = require '../util/csend'
+cSend       = require '../util/csend'
 
 class SettingsApi
 

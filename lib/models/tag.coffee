@@ -1,5 +1,5 @@
 mongoose = require 'mongoose'
-Schema = mongoose.Schema
+Schema   = mongoose.Schema
 
 ## Chosen to use abbreviations for tag model (eg. short == shortName)
 ## because of the volume of tags and bloating size of search results

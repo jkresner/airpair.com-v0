@@ -1,5 +1,5 @@
 api_key = cfg.payment.stripe.secretKey
-stripe = require('stripe')(api_key)
+stripe  = require('stripe')(api_key)
 
 
 module.exports = class StripeService

@@ -1,12 +1,12 @@
-async = require 'async'
-calendar = require './calendar'
-videos = require './videos'
+async      = require 'async'
+calendar   = require './calendar'
+videos     = require './videos'
 {ObjectId} = require('mongoose').Types
 
-OrdersSvc = new (require('./orders'))()
+OrdersSvc  = new (require('./orders'))()
 RequestSvc = new (require './requests')()
 
-Order = new require '../models/order'
+Order   = new require '../models/order'
 Request = new require '../models/request'
 
 module.exports = class RequestCallsService

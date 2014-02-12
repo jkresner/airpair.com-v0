@@ -1,6 +1,6 @@
 
-und = require 'underscore'
-Expert = require './../models/expert'
+und       = require 'underscore'
+Expert    = require './../models/expert'
 v0_3_devs = require './data/v0.3/devs'
 
 migrate = (d, all_tags) ->

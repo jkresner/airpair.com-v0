@@ -1,6 +1,6 @@
-users = require './users'
+users    = require './users'
 ObjectId = (s) -> s
-ISODate = (s) -> s
+ISODate  = (s) -> s
 
 module.exports = [
 

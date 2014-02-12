@@ -1,6 +1,6 @@
-authz             = require './lib/identity/authz'
-authd             = authz.LoggedIn()
-adm               = authz.Admin()
+authz            = require './lib/identity/authz'
+authd            = authz.LoggedIn()
+adm              = authz.Admin()
 { file, render } = require './lib/util/viewRender'
 
 module.exports = (app) ->

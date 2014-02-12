@@ -1,7 +1,7 @@
-TagsSvc = require './../services/tags'
-authz = require './../identity/authz'
+TagsSvc  = require './../services/tags'
+authz    = require './../identity/authz'
 loggedIn = authz.LoggedIn isApi:true
-cSend = require '../util/csend'
+cSend    = require '../util/csend'
 
 class TagsApi
 

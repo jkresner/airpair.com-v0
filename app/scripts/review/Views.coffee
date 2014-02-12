@@ -1,7 +1,7 @@
 exports = {}
-BB = require './../../lib/BB'
-M = require './Models'
-SV = require './../shared/Views'
+BB      = require './../../lib/BB'
+M       = require './Models'
+SV      = require './../shared/Views'
 
 Handlebars.registerPartial "Expert", require './../shared/templates/Expert'
 Handlebars.registerPartial "ExpertMini", require './../shared/templates/ExpertMini'
