@@ -64,7 +64,7 @@ class exports.CallScheduleView extends BB.ModelSaveView
         if @mget('expertId') == suggestion.expert._id
           suggestion.expert.selected = suggestion.expert
           selectedExpert = suggestion.expert
-          if !@model.get 'type'
+          if !@mget 'type'
             @model.set 'type', suggestion.expert.credit.byTypeArray[0].type
         else suggestion.expert.selected = undefined
         suggestion

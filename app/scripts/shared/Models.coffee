@@ -67,6 +67,7 @@ class exports.Request extends BB.SublistModel
     if s? then return s
     suggested[index]
   tagsString: -> util.tagsString @get('tags')
+  threeTagsString: -> util.tagsString @get('tags').slice(0, 3)
   isCustomer: (session) ->
     return false if !session.id?
     return true if /iscust/.test(location.href)

@@ -1,8 +1,8 @@
-exports = {}
-BB = require './../../lib/BB'
-M = require './Models'
-SV = require './../shared/Views'
-storage = require('../util').storage
+exports          = {}
+BB               = require './../../lib/BB'
+M                = require './Models'
+SV               = require './../shared/Views'
+storage          = require('../util').storage
 calcExpertCredit = require '../shared/mix/calcExpertCredit'
 
 #############################################################################
@@ -211,7 +211,7 @@ class exports.RequestInfoView extends BB.ModelSaveView
     data =
       mailTemplates: mailTemplates,
       tagsString: @model.tagsString()
-      first3tags: _.pluck(@mget('tags'), 'name').slice(0, 3).join(', ')
+      threeTagsString: @model.threeTagsString()
     tmplCompanyData = _.extend data, @mget('company')
     @$('#company-controls').html @tmplCompany(tmplCompanyData)
     @$('[data-toggle="popover"]').popover()
