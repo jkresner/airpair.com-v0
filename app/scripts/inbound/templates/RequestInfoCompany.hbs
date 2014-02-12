@@ -23,7 +23,11 @@
         <td>{{fullName}}</td>
         <td style="width:20px"> </td>
         <td class="halfButtons"><a href="https://mail.google.com/mail/u/0/?shva=1#search/%22{{fullName}}%22+OR+{{email}}" class="email btn btn-small btn-inverse" target="_blank"><i class="icon-envelope icon-white"></i> History</a>
+        {{#if mixpanelId}}
+        <a href="https://mixpanel.com/report/271245/explore/#user?distinct_id={{mixpanelId}}" class="email btn btn-small btn-primary" target="_blank">MP</a>
+        {{else}}
         <a href="https://mixpanel.com/report/271245/explore/#list/filter:(conjunction:and,filters:!((filter:(operand:'{{fullName}}',operator:in),property:'$name',selected_property_type:string,type:string))),sort_order:descending,sort_property:'$created',sort_property_type:datetime" class="email btn btn-small btn-primary" target="_blank">MP</a>
+        {{/if}}
         </td>
       </tr>
       <tr>

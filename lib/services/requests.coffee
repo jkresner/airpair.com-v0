@@ -53,9 +53,16 @@ module.exports = class RequestsService extends DomainService
       request = null
 
       if r?
+        for s in r.suggested
+          s.suggestedRate = @rates.calcSuggestedRates r, s.expert
+
         if Roles.isAdmin usr
           request = r
           r.base = @rates.base
+          # TODO does this work? or only on first signin?
+          return User.findOne('_id': r.userId).lean().exec (e, user) =>
+            request.company.contacts[0].mixpanelId = user?.cohort?.mixpanel?.id
+            callback null, request
         else if Roles.isRequestExpert usr, r
           @addViewEvent r, usr, "expert view"
           request = @associatedView r
@@ -65,9 +72,6 @@ module.exports = class RequestsService extends DomainService
         else
           @addViewEvent r, usr, "anon view"
           request = @publicView r
-
-        for s in r.suggested
-          s.suggestedRate = @rates.calcSuggestedRates r, s.expert
 
       callback null, request
 
