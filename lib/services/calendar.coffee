@@ -57,7 +57,9 @@ class CalendarService
 
         You are encouraged to make sure beforehand your mic/webcam are working
         on your system. Please let #{owner2name[owner]} know if you'd like to do
-        a dry run."""
+        a dry run.
+
+        Request: https://airpair.com/review/#{request._id}"""
 
     # maksim & jonathon watch everything, so duplicate invites are annoying
     if call.inviteOwner == false
