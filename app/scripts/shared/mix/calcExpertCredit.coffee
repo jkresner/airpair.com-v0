@@ -1,5 +1,5 @@
 idsEqual = require './idsEqual'
-sum = require './sum'
+sum      = require './sum'
 
 ###
 orders is a list of orders associated with a certain request

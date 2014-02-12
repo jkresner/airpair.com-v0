@@ -1,6 +1,6 @@
 {owner2name} = require '../identity/roles'
-google = require('./wrappers/google')
-ONE_HOUR = 3600000 # milliseconds
+google       = require('./wrappers/google')
+ONE_HOUR     = 3600000 # milliseconds
 
 owner2colorIndex =
   mi: undefined # default color for the calendar, #9A9CFF

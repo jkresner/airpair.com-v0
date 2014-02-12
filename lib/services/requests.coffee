@@ -1,9 +1,10 @@
-async           = require 'async'
-DomainService   = require './_svc'
-Roles           = require '../identity/roles'
-RatesSvc        = require './rates'
-SettingsSvc     = require './settings'
-Order           = require '../models/order'
+async         = require 'async'
+DomainService = require './_svc'
+Roles         = require '../identity/roles'
+RatesSvc      = require './rates'
+SettingsSvc   = require './settings'
+Order         = require '../models/order'
+User          = require '../models/user'
 
 
 module.exports = class RequestsService extends DomainService

@@ -1,9 +1,9 @@
-S = require '../shared/Routers'
+S   = require '../shared/Routers'
 SC = require '../shared/Collections'
 SM = require '../shared/Models'
-M = require './Models'
-C = require './Collections'
-V = require './Views'
+M  = require './Models'
+C  = require './Collections'
+V  = require './Views'
 
 
 module.exports = class Router extends S.AirpairSessionRouter

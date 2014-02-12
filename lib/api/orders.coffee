@@ -1,10 +1,10 @@
-CRUDApi = require './_crud'
+CRUDApi   = require './_crud'
 OrdersSvc = require './../services/orders'
-authz = require './../identity/authz'
-loggedIn = authz.LoggedIn isApi: true
-admin = authz.Admin isApi: true
-Roles = authz.Roles
-cSend = require '../util/csend'
+authz     = require './../identity/authz'
+loggedIn  = authz.LoggedIn isApi: true
+admin     = authz.Admin isApi: true
+Roles     = authz.Roles
+cSend     = require '../util/csend'
 
 
 class OrdersApi

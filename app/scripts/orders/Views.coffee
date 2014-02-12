@@ -1,11 +1,11 @@
-exports = {}
-BB = require '../../lib/BB'
-M = require './Models'
-Shared = require '../shared/Views'
-SM = require '../shared/Models'
-SC = require '../shared/Collections'
-calcExpertCredit = require '../shared/mix/calcExpertCredit'
-sum = require '../shared/mix/sum'
+exports                = {}
+BB                     = require '../../lib/BB'
+M                      = require './Models'
+Shared                 = require '../shared/Views'
+SM                     = require '../shared/Models'
+SC                     = require '../shared/Collections'
+calcExpertCredit       = require '../shared/mix/calcExpertCredit'
+sum                    = require '../shared/mix/sum'
 MarketingTagsInputView = Shared.MarketingTagsInputView
 
 #############################################################################

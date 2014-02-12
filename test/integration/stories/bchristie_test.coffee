@@ -1,5 +1,5 @@
 Tags = require('/scripts/request/Collections').Tags
-f = data.fixtures
+f    = data.fixtures
 
 request = _.clone(data.requests[10])  #Bruce Christie
 

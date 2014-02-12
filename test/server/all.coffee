@@ -1,6 +1,6 @@
-global.suiteCtx = true
 {dbConnect,dbDestroy} = require './test-lib-setup'
-mongoose = require 'mongoose'
+mongoose              = require 'mongoose'
+global.suiteCtx       = true
 
 describe "Server-side suite", ->
 

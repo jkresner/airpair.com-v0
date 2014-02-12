@@ -1,5 +1,5 @@
 Tags = require('/scripts/request/Collections').Tags
-f = data.fixtures
+f    = data.fixtures
 
 storySteps = [
   { app:'request', usr:'sirramongabriel', frag: '#', fixture: f.request, pageData: {} }

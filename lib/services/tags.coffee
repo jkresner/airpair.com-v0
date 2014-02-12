@@ -1,5 +1,5 @@
-request = require 'superagent'
-DomainService   = require './_svc'
+request       = require 'superagent'
+DomainService = require './_svc'
 
 
 module.exports = class TagsService extends DomainService

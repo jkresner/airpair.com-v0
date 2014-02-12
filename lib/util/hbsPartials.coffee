@@ -1,6 +1,6 @@
 # http://stackoverflow.com/questions/8059914/express-js-hbs-module-register-partials-from-hbs-file
 hbs = require('hbs')
-fs = require('fs')
+fs  = require('fs')
 
 module.exports =
   register: (rootDir, subDirs) ->

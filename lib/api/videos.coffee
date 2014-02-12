@@ -1,5 +1,5 @@
-authz = require '../identity/authz'
-admin = authz.Admin isApi: true
+authz  = require '../identity/authz'
+admin  = authz.Admin isApi: true
 videos = require '../services/videos'
 
 class VideosApi

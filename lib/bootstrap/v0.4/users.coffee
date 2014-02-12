@@ -1,4 +1,4 @@
-User = require './../models/user'
+User       = require './../models/user'
 v0_4_users = require './data/v0.4/users'
 
 # step 1 :: load in devs from v0 (to maintain original ids)

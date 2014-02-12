@@ -1,7 +1,7 @@
 exports = {}
-BB = require './../../lib/BB'
-M = require './Models'
-SV = require './../shared/Views'
+BB      = require './../../lib/BB'
+M       = require './Models'
+SV      = require './../shared/Views'
 
 exports.ExpertView = SV.ExpertView
 
@@ -17,7 +17,7 @@ class exports.WelcomeView extends BB.BadassView
     @e = addjs.events.expertLogin
     @e2 = addjs.events.expertWelcome
   render: ->
-    if !@timer? then @timer = new addjs.Timer(@e.category).start()    
+    if !@timer? then @timer = new addjs.Timer(@e.category).start()
     @$el.html @tmpl()
     trackWelcome = => addjs.trackEvent @e2.category, @e2.name, @e2.uri, 0
     setTimeout trackWelcome, 400

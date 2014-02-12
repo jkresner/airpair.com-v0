@@ -1,6 +1,6 @@
 exports = {}
-BB = require './../../lib/BB'
-Models = require './Models'
+BB      = require './../../lib/BB'
+Models  = require './Models'
 
 
 class exports.Users extends BB.FilteringCollection

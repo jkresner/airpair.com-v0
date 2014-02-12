@@ -1,4 +1,4 @@
-BB = require './../../lib/BB'
+BB            = require './../../lib/BB'
 objectId2Date = require './mix/objectId2Date'
 
 exports = {}

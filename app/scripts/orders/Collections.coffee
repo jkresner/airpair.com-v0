@@ -1,6 +1,6 @@
 exports = {}
-BB = require './../../lib/BB'
-Models = require './Models'
+BB      = require './../../lib/BB'
+Models  = require './Models'
 
 LAST_SATURDAY = -1
 SATURDAY = 6

@@ -1,5 +1,5 @@
 ApiConfig = require('../lib/models/ApiConfig')
-mongoose = require 'mongoose'
+mongoose  = require 'mongoose'
 
 configs = [
   {

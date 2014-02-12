@@ -1,7 +1,7 @@
 {_,sinon,chai,expect} = require './../../test-lib-setup'
-global._ = _
-global.Backbone = require './../../../../vendor/scripts/backbone'
-sm = require './../../../../app/scripts/shared/models'
+global._              = _
+global.Backbone       = require './../../../../vendor/scripts/backbone'
+sm                    = require './../../../../app/scripts/shared/models'
 
 describe "UI models shared", ->
 

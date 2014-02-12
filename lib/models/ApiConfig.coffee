@@ -1,6 +1,6 @@
 mongoose = require 'mongoose'
-Schema = mongoose.Schema
-{Mixed} = Schema.Types
+Schema   = mongoose.Schema
+{Mixed}  = Schema.Types
 
 schema = new Schema
   # unique name of the API

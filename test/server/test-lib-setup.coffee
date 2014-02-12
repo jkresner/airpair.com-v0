@@ -1,8 +1,7 @@
 global.$log = console.log
 
-
-mongoose      = require 'mongoose'
-chai          = require 'chai'
+mongoose = require 'mongoose'
+chai     = require 'chai'
 chai.use require 'sinon-chai'
 #require "sinon/lib/sinon/util/fake_xml_http_request"
 

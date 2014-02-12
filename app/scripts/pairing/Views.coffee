@@ -1,7 +1,7 @@
 exports = {}
-BB = require './../../lib/BB'
-M = require './Models'
-SV = require './../shared/Views'
+BB      = require './../../lib/BB'
+M       = require './Models'
+SV      = require './../shared/Views'
 
 #############################################################################
 ## Content Views

@@ -1,6 +1,6 @@
 exports = {}
-BB = require './../../lib/BB'
-M = require './Models'
+BB      = require './../../lib/BB'
+M       = require './Models'
 
 class exports.MarketingTags extends BB.FilteringCollection
   model: M.MarketingTag

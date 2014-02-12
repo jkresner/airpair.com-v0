@@ -1,7 +1,7 @@
-authz = require './../identity/authz'
-admin = authz.Admin isApi: true
+authz            = require './../identity/authz'
+admin            = authz.Admin isApi: true
 MarketingTagsSvc = require './../services/marketingtags'
-cSend = require '../util/csend'
+cSend            = require '../util/csend'
 
 class MarketingTagsApi
 
