@@ -1,12 +1,13 @@
-exports                = {}
-BB                     = require '../../lib/BB'
-M                      = require './Models'
-Shared                 = require '../shared/Views'
-SM                     = require '../shared/Models'
-SC                     = require '../shared/Collections'
-calcExpertCredit       = require '../shared/mix/calcExpertCredit'
-sum                    = require '../shared/mix/sum'
-MarketingTagsInputView = Shared.MarketingTagsInputView
+exports          = {}
+BB               = require '../../lib/BB'
+M                = require './Models'
+Shared           = require '../shared/Views'
+SM               = require '../shared/Models'
+SC               = require '../shared/Collections'
+sum              = require '../shared/mix/sum'
+calcExpertCredit = require '../shared/mix/calcExpertCredit'
+
+{calcTotal, calcRedeemed, calcCompleted} = calcExpertCredit
 
 #############################################################################
 ##  To render all experts for admin
@@ -19,7 +20,7 @@ class exports.FiltersView extends BB.BadassView
   events:
     'click .btn': 'filter'
   initialize: ->
-    @marketingTagView = new MarketingTagsInputView
+    @marketingTagView = new Shared.MarketingTagsInputView
       collection: @marketingTags, model: @dummyRequest
     @listenTo @dummyRequest, 'change:marketingTags', @filter
   filter: (e) ->
@@ -58,7 +59,6 @@ class exports.OrderRowView extends BB.ModelSaveView
       li.linePaidout = @model.isLineItemPaidOut li
       # hide the link so you can't double-click / double-payout:
       li.linePayoutPending = pendingId == li._id
-      li.completed = sum _.pluck li.redeemedCalls, 'qtyCompleted'
       _.extend li, calcExpertCredit([d], li.suggestion.expert._id)
 
     _.extend d, {
@@ -99,7 +99,9 @@ class exports.OrdersView extends Backbone.View
     $list = @$('tbody').html ''
     totalRevenue = 0
     totalProfit = 0
-    hourCount = 0
+    totalHours = 0
+    totalRedeemed = 0
+    totalCompleted = 0
     orderCount = @collection.filteredModels.length
     expertIds = []
     for m in @collection.filteredModels #.reverse()
@@ -107,14 +109,18 @@ class exports.OrdersView extends Backbone.View
       totalProfit += m.get 'profit'
       totalRevenue += m.get 'total'
       for li in m.get 'lineItems'
-        hourCount += li.qty
         expertIds.push li.suggestion.expert._id
-        # TODO reuse calcTotal, calcRedeemed, to calculate hour stats
+        if 'pending' == m.get 'paymentStatus' then continue
+        totalHours += calcTotal [li]
+        totalRedeemed += calcRedeemed [li]
+        totalCompleted += calcCompleted [li]
     filteredModelsJson = _.pluck @collection.filteredModels, 'attributes'
     requestCount = _.uniq(_.pluck filteredModelsJson, 'requestId').length
     customerCount = _.uniq(_.pluck filteredModelsJson, 'userId').length
     expertCount = _.uniq(expertIds).length
-    @$('#rowsSummary').html @tmpl {totalProfit,totalRevenue,customerCount,requestCount,hourCount,orderCount,expertCount}
+    @$('#rowsSummary').html @tmpl { totalProfit, totalRevenue, customerCount,
+      requestCount, orderCount, totalHours, totalRedeemed, totalCompleted,
+      expertCount }
     @
 
 

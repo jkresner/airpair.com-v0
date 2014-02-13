@@ -17,15 +17,23 @@ calcExpertCredit = (orders, expertId) ->
   total = calcTotal lisForExpert
   redeemed = calcRedeemed lisForExpert
   balance = total - redeemed
+  completed = calcCompleted lisForExpert
 
-  { total, redeemed, balance, byType }
+  { total, redeemed, balance, completed, byType }
 
 calcTotal = (lineItems) ->
   sum _.pluck lineItems || [], 'qty'
 
+getRedeemedCalls = (lineItems) ->
+  _.flatten _.pluck lineItems, 'redeemedCalls'
+
 calcRedeemed = (lineItems) ->
-  redeemedCalls = _.flatten _.pluck lineItems, 'redeemedCalls'
+  redeemedCalls = getRedeemedCalls(lineItems)
   redeemed = sum _.pluck redeemedCalls, 'qtyRedeemed'
+
+calcCompleted = (lineItems) =>
+  redeemedCalls = getRedeemedCalls(lineItems)
+  sum _.pluck redeemedCalls, 'qtyCompleted'
 
 getBalanceByType = (liByType) ->
   balanceByType = {}
@@ -56,5 +64,6 @@ getLineItemsForExpert = (orders, expertId) ->
 
 module.exports = calcExpertCredit
 _.extend module.exports, {
-  getBalanceByType, groupExpertLineItemsByType, getLineItemsForExpert
+  getBalanceByType, groupExpertLineItemsByType, getLineItemsForExpert,
+  calcTotal, calcRedeemed, calcCompleted
 }
