@@ -29,68 +29,133 @@
   </nav>
 
   <div class="route" style="display: block;">
-    <div id="marketingTagForm" class="twocol">
       <div id="marketingTagList" style="float:left;width:840px"></div>
 
-      <fieldset style="float:right;width:340px">
-        <h3>Create a new marketing tag</h3>
-        <div class="control-group">
-          <label class="control-label" for="name"><strong>name</strong>
-            e.g. twitter. (Warning: must be unique!)</label>
-          <div class="controls">
-            <input name="name" type="text" class="input-medium"
-              placeholder="name">
+      <div style="float:right;width:340px">
+        <fieldset id="marketingTagForm">
+          <h3>Create a new marketing tag</h3>
+          <div class="control-group">
+            <label class="control-label" for="name"><strong>name</strong>
+              e.g. twitter. (Warning: must be unique!)</label>
+            <div class="controls">
+              <input name="name" type="text" class="input-medium"
+                placeholder="name">
+            </div>
           </div>
-        </div>
-        <div class="control-group">
-          <label class="control-label" for="type"><strong>type</strong></label>
-          <div class="controls">
-            <select name="type" class="input-medium">
-              <option value="channel">channel</option>
-              <option value="campaign">campaign</option>
-              <option value="usage">usage</option>
-            </select>
+          <div class="control-group">
+            <label class="control-label" for="type"><strong>type</strong></label>
+            <div class="controls">
+              <select name="type" class="input-medium">
+                <option value="channel">channel</option>
+                <option value="campaign">campaign</option>
+                <option value="usage">usage</option>
+              </select>
+            </div>
           </div>
-        </div>
-        <div class="control-group">
-          <label class="control-label" for="group"><strong>group</strong></label>
-          <div class="controls">
-            <select name="group" class="input-medium">
-              <option value="" selected></option>
-              <optgroup label="Channels">
-                <option>ad</option>
-                <option>affiliate</option>
-                <option>direct</option>
-                <option>newsletter</option>
-                <option>incubator</option>
-                <option>press</option>
-                <option>seo</option>
-                <option>social</option>
-                <option>wordofmouth</option>
-                <option>untracked</option>
-              </optgroup>
-              <optgroup label="Campaign">
-                <option>newsletter-airpair</option>
-                <option>newsletter-3rdparty</option>
-                <option>stackoverflow-ads</option>
-              </optgroup>
-            </select>
+          <div class="control-group">
+            <label class="control-label" for="group"><strong>group</strong></label>
+            <div class="controls">
+              <select name="group" class="input-medium">
+                <option value="" selected></option>
+                <optgroup label="Channels">
+                  <option>ad</option>
+                  <option>affiliate</option>
+                  <option>direct</option>
+                  <option>newsletter</option>
+                  <option>incubator</option>
+                  <option>press</option>
+                  <option>seo</option>
+                  <option>social</option>
+                  <option>wordofmouth</option>
+                  <option>untracked</option>
+                </optgroup>
+                <optgroup label="Campaign">
+                  <option>newsletter-airpair</option>
+                  <option>newsletter-3rdparty</option>
+                  <option>stackoverflow-ads</option>
+                </optgroup>
+              </select>
+            </div>
           </div>
-        </div>
 
-        <div class="alert alert-success">
-          <button type="button" class="close" data-dismiss="alert">&times;</button>
-          <h4>Saved</h4>
-        </div>
-        <div class="alert alert-error">
-          <button type="button" class="close" data-dismiss="alert">&times;</button>
-          <h4>Error</h4>
-        </div>
-        <div class="form-actions">
-          <a href="#" class="save button">Save</a>
-        </div>
+          <div class="alert alert-success">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <h4>Saved</h4>
+          </div>
+          <div class="alert alert-error">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <h4>Error</h4>
+          </div>
+          <div class="form-actions">
+            <a href="#" class="save button">Save New Tag</a>
+          </div>
+        </fieldset>
 
-      </fieldset>
+        <fieldset id="marketingTagEditForm">
+          <h3>Edit a marketing tag</h3>
+          <!-- <div class="control-group">
+            <label class="control-label" for="_id"><strong>_id</strong></label>
+            <div class="controls">
+              <input name="_id" type="text" class="input-medium"
+                placeholder="_id">
+            </div>
+          </div> -->
+          <div class="control-group">
+            <label class="control-label" for="name"><strong>name</strong>
+              e.g. twitter. (Warning: must be unique!)</label>
+            <div class="controls">
+              <input name="name" type="text" class="input-medium"
+                placeholder="name">
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="type"><strong>type</strong></label>
+            <div class="controls">
+              <select name="type" class="input-medium">
+                <option value="channel">channel</option>
+                <option value="campaign">campaign</option>
+                <option value="usage">usage</option>
+              </select>
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="group"><strong>group</strong></label>
+            <div class="controls">
+              <select name="group" class="input-medium">
+                <option value="" selected></option>
+                <optgroup label="Channels">
+                  <option>ad</option>
+                  <option>affiliate</option>
+                  <option>direct</option>
+                  <option>newsletter</option>
+                  <option>incubator</option>
+                  <option>press</option>
+                  <option>seo</option>
+                  <option>social</option>
+                  <option>wordofmouth</option>
+                  <option>untracked</option>
+                </optgroup>
+                <optgroup label="Campaign">
+                  <option>newsletter-airpair</option>
+                  <option>newsletter-3rdparty</option>
+                  <option>stackoverflow-ads</option>
+                </optgroup>
+              </select>
+            </div>
+          </div>
+
+          <div class="alert alert-success">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <h4>Saved</h4>
+          </div>
+          <div class="alert alert-error">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <h4>Error</h4>
+          </div>
+          <div class="form-actions">
+            <a href="#" class="save button">Save Edits</a>
+          </div>
+        </fieldset>
     </div> <!-- end #marketingTagForm -->
 
 

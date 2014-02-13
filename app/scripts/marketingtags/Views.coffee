@@ -3,30 +3,61 @@ BB = require './../../lib/BB'
 VIEW_DATA = [ 'group', 'type', 'name']
 Handlebars.registerPartial 'MarketingTag', require './templates/MarketingTag'
 
-class exports.MarketingTagForm extends BB.ModelSaveView
-  el: '#marketingTagForm'
-  viewData: VIEW_DATA
+class exports.MarketingTagList extends BB.ModelSaveView
+  el: '#marketingTagList'
   tmpl: require './templates/MarketingTagList'
   events:
-    'click .save': 'addTag'
-    'click .delete': 'deleteTag'
+    'click .marketingtag': 'select'
   initialize: ->
     @listenTo @collection, 'sync', @render
     # by putting the popover only over the text, it disappears when you hover
     # the delete button. We do this b/c .popover('destroy') is broken
     @$el.popover(selector: '[data-toggle="popover"]')
   render: ->
-    @$('#marketingTagList').html @tmpl { marketingTags: @collection.toJSON() }
+    @$el.html @tmpl { marketingTags: @collection.toJSON() }
+    @
+  select: (e) ->
+    id = $(e.currentTarget).data('id')
+    if !id then return
+    @selected.set '_id', id, silent: true
+    @selected.fetch()
+
+class exports.MarketingTagForm extends BB.ModelSaveView
+  el: '#marketingTagForm'
+  viewData: VIEW_DATA
+  tmpl: require './templates/MarketingTagList'
+  events:
+    'click .save': 'addTag'
+    # 'click .delete': 'deleteTag'
+  initialize: ->
+  render: ->
     @
   addTag: (e) ->
     @model.unset('_id')
     @save e
-  deleteTag: (e) ->
-    e.preventDefault()
-    id = $(e.target).data('id')
-    model = _.find @collection.models, (m) -> m.get('_id') == id
-    model.destroy()
+  # deleteTag: (e) ->
+  #   e.preventDefault()
+  #   id = $(e.target).data('id')
+  #   model = _.find @collection.models, (m) -> m.get('_id') == id
+  #   model.destroy()
+  #   @collection.fetch()
+  renderSuccess: ->
+    @$('.alert-success').fadeIn(800).fadeOut(5000)
     @collection.fetch()
+
+class exports.MarketingTagEditForm extends BB.ModelSaveView
+  el: '#marketingTagEditForm'
+  viewData: VIEW_DATA
+  tmpl: require './templates/MarketingTagList'
+  events:
+    'click .save': 'save'
+  initialize: ->
+    @listenTo @model, 'sync', @render
+  render: ->
+    d = VIEW_DATA.concat('_id')
+    console.log 'd', d
+    @setValsFromModel d
+    @
   renderSuccess: ->
     @$('.alert-success').fadeIn(800).fadeOut(5000)
     @collection.fetch()
