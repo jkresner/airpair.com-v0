@@ -1,6 +1,6 @@
 exports = {}
-BB = require './../../lib/BB'
-Shared = require './../shared/Models'
+BB      = require './../../lib/BB'
+Shared  = require './../shared/Models'
 
 
 exports.User = Shared.User

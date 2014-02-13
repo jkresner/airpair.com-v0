@@ -1,6 +1,9 @@
 exports = {}
-BB = require './../../lib/BB'
-Models = require './Models'
+BB      = require './../../lib/BB'
+Models  = require './Models'
+
+LAST_SATURDAY = -1
+SATURDAY = 6
 
 class exports.Orders extends BB.FilteringCollection
   model: Models.Order
@@ -30,10 +33,16 @@ class exports.Orders extends BB.FilteringCollection
       return _.filter orders, (m) ->
         moment(m.get('utc')).local().isSame(now, 'day')
 
+    # shows orders since last saturday.
+    # if today is saturday, it only shows orders from today.
     if 'wk' == timeString
-      lastSaturday = now.day(-1).hour(0).minute(0).second(0).millisecond(0)
+      if now.day() == SATURDAY
+        saturday = now.clone()
+      else
+        saturday = now.clone().day(LAST_SATURDAY)
+      saturday = saturday.hour(0).minute(0).second(0).millisecond(0)
       return _.filter orders, (m) ->
-        moment(m.get('utc')).local().isAfter(lastSaturday)
+        moment(m.get('utc')).local().isAfter(saturday)
 
     day = now.day()
     # support current month button

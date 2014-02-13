@@ -1,5 +1,5 @@
-mongoose = require 'mongoose'
-Schema = mongoose.Schema
+mongoose          = require 'mongoose'
+Schema            = mongoose.Schema
 {ObjectId, Mixed} = Schema.Types
 
 ## Extra content for tag specific landing page

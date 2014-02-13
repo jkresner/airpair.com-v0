@@ -14,6 +14,7 @@ setHtmlfixture = (html) ->
 
 clearHtmlfixture = ->
   $('.datepicker').stop()
+  $('.timepicker').timepicker?('remove')
   $('#fixture').remove()
 
 

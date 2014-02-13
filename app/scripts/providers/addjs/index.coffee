@@ -1,7 +1,7 @@
-Events = require './events'
+Events               = require './events'
 AddjsGoogleAnalytics = require './googleanalytics'
-AddjsMixPanel = require './mixpanel'
-# AddjsOptimizely = require './addjs/optimizely'
+AddjsMixPanel        = require './mixpanel'
+# AddjsOptimizely    = require './addjs/optimizely'
 
 module.exports = class Addjs
 

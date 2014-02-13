@@ -1,8 +1,8 @@
-exports = {}
-BB = require './../../lib/BB'
-M = require './Models'
-SV = require './../shared/Views'
-storage = require('../util').storage
+exports          = {}
+BB               = require './../../lib/BB'
+M                = require './Models'
+SV               = require './../shared/Views'
+storage          = require('../util').storage
 calcExpertCredit = require '../shared/mix/calcExpertCredit'
 
 #############################################################################
@@ -35,6 +35,7 @@ class exports.FiltersView extends BB.BadassView
   filterByOwner: (owner) ->
     @collection.filterFilteredModels
       filter: owner
+      sort: true
 
 class exports.RequestRowView extends BB.BadassView
   tagName: 'tr'
@@ -207,7 +208,10 @@ class exports.RequestInfoView extends BB.ModelSaveView
     @
   renderMailTemplates: ->
     mailTemplates = new CustomerMailTemplates @model, @session
-    data = { mailTemplates: mailTemplates, tagsString: @model.tagsString() }
+    data =
+      mailTemplates: mailTemplates,
+      tagsString: @model.tagsString()
+      threeTagsString: @model.threeTagsString()
     tmplCompanyData = _.extend data, @mget('company')
     @$('#company-controls').html @tmplCompany(tmplCompanyData)
     @$('[data-toggle="popover"]').popover()
@@ -358,7 +362,9 @@ class exports.RequestEventsView extends BB.BadassView
 class exports.RequestNavView extends BB.BadassView
   tmpl: require './templates/RequestNav'
   initialize: -> @listenTo @model, 'change', @render
-  render: -> @$el.html @tmpl @model.toJSON()
+  render: ->
+    d = @collection.prevNext(@model.id)
+    @$el.html @tmpl @model.extendJSON d
 
 
 class exports.RequestView extends BB.ModelSaveView
@@ -371,7 +377,7 @@ class exports.RequestView extends BB.ModelSaveView
     'click .deleteRequest': 'deleteRequest'
   initialize: ->
     @$el.html @tmpl()
-    @navView = new exports.RequestNavView el: '#requestNav', model: @model
+    @navView = new exports.RequestNavView el: '#requestNav', model: @model, collection: @collection
     @eventsView = new exports.RequestEventsView el: '#events', model: @model
     @infoView = new exports.RequestInfoView model: @model, tags: @tags, marketingTags: @marketingTags, session: @session, parentView: @
     @marketingInfoView = new exports.RequestMarketingTagsInfoView model: @model, marketingTags: @marketingTags, parentView: @

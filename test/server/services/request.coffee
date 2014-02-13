@@ -1,5 +1,5 @@
 {http,_,sinon,chai,expect,dbConnect,dbDestroy} = require './../test-lib-setup'
-{app, data} = require './../test-app-setup'
+{app, data}                                    = require './../test-app-setup'
 
 RequestsService = require('./../../../lib/services/requests')
 svc = new RequestsService()

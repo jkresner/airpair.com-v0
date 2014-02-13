@@ -1,8 +1,10 @@
-authz     = require './../identity/authz'
-admin = authz.Admin()
-loggedIn  = authz.LoggedIn isApi:true
-CallsSvc   = require './../services/requestCalls'
+authz                  = require './../identity/authz'
+admin                  = authz.Admin()
+loggedIn               = authz.LoggedIn isApi:true
+CallsSvc               = require './../services/requestCalls'
 formatValidationErrors = require '../util/formatValidationErrors'
+cSend                  = require '../util/csend'
+moment                 = require 'moment-timezone'
 
 class RequestCallsApi  # Always passes back a full request object
 
@@ -14,9 +16,7 @@ class RequestCallsApi  # Always passes back a full request object
     app.put     "/api/#{route}/:requestId/calls/:callId", admin, @validate, @update
 
   detail: (req, res, next) =>
-    @svc.getByCallPermalink req.params.permalink, (e, r) ->
-      if e then return next e
-      res.send r
+    @svc.getByCallPermalink req.params.permalink, cSend(res, next)
 
   validate: (req, res, next) ->
     req.checkBody('duration', 'Invalid duration').notEmpty().isInt()
@@ -28,7 +28,7 @@ class RequestCallsApi  # Always passes back a full request object
     req.sanitize('duration').toInt()
 
     {date, time} = req.body
-    req.body.datetime = new Date "#{date} #{time} PST"
+    req.body.datetime = moment("#{date} #{time}").tz('America/Los_Angeles').toDate()
     if isNaN(req.body.datetime.getTime())
       return res.send data: date: 'Invalid Date', 400
 

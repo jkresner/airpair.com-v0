@@ -1,6 +1,6 @@
 {owner2name} = require '../identity/roles'
-google = require('./wrappers/google')
-ONE_HOUR = 3600000 # milliseconds
+google       = require('./wrappers/google')
+ONE_HOUR     = 3600000 # milliseconds
 
 owner2colorIndex =
   mi: undefined # default color for the calendar, #9A9CFF
@@ -57,7 +57,9 @@ class CalendarService
 
         You are encouraged to make sure beforehand your mic/webcam are working
         on your system. Please let #{owner2name[owner]} know if you'd like to do
-        a dry run."""
+        a dry run.
+
+        Request: https://airpair.com/review/#{request._id}"""
 
     # maksim & jonathon watch everything, so duplicate invites are annoying
     if call.inviteOwner == false

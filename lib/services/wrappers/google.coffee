@@ -1,5 +1,5 @@
-ApiConfig = require '../../models/ApiConfig'
-googleapis = require 'googleapis'
+ApiConfig    = require '../../models/ApiConfig'
+googleapis   = require 'googleapis'
 OAuth2Client = googleapis.OAuth2Client
 
 # Doesn't support multiple versions of same API.

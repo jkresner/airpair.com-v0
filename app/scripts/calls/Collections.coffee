@@ -1,7 +1,7 @@
 exports = {}
-BB = require './../../lib/BB'
-Models = require './Models'
-Shared = require './../shared/Collections'
+BB      = require './../../lib/BB'
+Models  = require './Models'
+Shared  = require './../shared/Collections'
 
 class exports.Orders extends BB.FilteringCollection
   model: Models.Order

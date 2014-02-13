@@ -1,7 +1,6 @@
-BB = require './../../lib/BB'
-Shared = require './../shared/Models'
+BB      = require '../../lib/BB'
+Shared  = require '../shared/Models'
 exports = {}
-
 
 exports.Expert = Shared.Expert
 

@@ -1,16 +1,16 @@
-async = require 'async'
+async    = require 'async'
 mongoose = require 'mongoose'
 
-mailman = require '../mail/mailman'
-Roles = require '../identity/roles'
-sum = require '../../app/scripts/shared/mix/sum'
+mailman     = require '../mail/mailman'
+Roles       = require '../identity/roles'
+sum         = require '../../app/scripts/shared/mix/sum'
 canSchedule = require '../../app/scripts/shared/mix/canSchedule'
-unschedule = require '../../app/scripts/shared/mix/unschedule'
+unschedule  = require '../../app/scripts/shared/mix/unschedule'
 
-DomainService = require './_svc'
+DomainService     = require './_svc'
 PaypalAdaptiveSvc = require '../services/payment/paypal-adaptive'
-RequestService = require './requests'
-StripeSvc = require '../services/payment/stripe'
+RequestService    = require './requests'
+StripeSvc         = require '../services/payment/stripe'
 
 module.exports = class OrdersService extends DomainService
 

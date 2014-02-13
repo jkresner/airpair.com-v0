@@ -1,9 +1,10 @@
-CRUDApi = require './_crud'
+CRUDApi    = require './_crud'
 ExpertsSvc = require './../services/experts'
-authz       = require './../identity/authz'
-admin       = authz.Admin isApi: true
-loggedIn    = authz.LoggedIn isApi: true
-Roles       = authz.Roles
+authz      = require './../identity/authz'
+admin      = authz.Admin isApi: true
+loggedIn   = authz.LoggedIn isApi: true
+Roles      = authz.Roles
+cSend      = require '../util/csend'
 
 class ExpertApi extends CRUDApi
 
@@ -15,9 +16,7 @@ class ExpertApi extends CRUDApi
     super app, route
 
   list: (req, res, next) =>
-    @svc.getAll (e, r) ->
-      if e then return next e
-      res.send r
+    @svc.getAll cSend(res, next)
 
   detail: (req, res, next) =>
 

@@ -709,7 +709,7 @@
     },
     "moment": {
       "version": "2.0.0",
-      "from": "https://registry.npmjs.org/moment/-/moment-2.0.0.tgz",
+      "from": "moment@2.0.0",
       "resolved": "https://registry.npmjs.org/moment/-/moment-2.0.0.tgz"
     },
     "superagent": {
@@ -1262,7 +1262,7 @@
                 },
                 "async": {
                   "version": "0.2.10",
-                  "from": "async@0.2.10",
+                  "from": "https://registry.npmjs.org/async/-/async-0.2.10.tgz",
                   "resolved": "https://registry.npmjs.org/async/-/async-0.2.10.tgz"
                 }
               }
@@ -1272,105 +1272,6 @@
         "async": {
           "version": "0.2.6",
           "from": "async@0.2.6"
-        },
-        "gapitoken": {
-          "version": "0.1.0",
-          "from": "gapitoken@0.1.0",
-          "dependencies": {
-            "jws": {
-              "version": "0.0.2",
-              "from": "jws@0.0.2",
-              "dependencies": {
-                "tap": {
-                  "version": "0.3.3",
-                  "from": "tap@0.3.3",
-                  "dependencies": {
-                    "inherits": {
-                      "version": "1.0.0"
-                    },
-                    "yamlish": {
-                      "version": "0.0.5"
-                    },
-                    "slide": {
-                      "version": "1.1.5",
-                      "from": "slide@1.1.5"
-                    },
-                    "runforcover": {
-                      "version": "0.0.2",
-                      "from": "runforcover@0.0.2",
-                      "dependencies": {
-                        "bunker": {
-                          "version": "0.1.2",
-                          "from": "bunker@0.1.2",
-                          "dependencies": {
-                            "burrito": {
-                              "version": "0.2.12",
-                              "from": "burrito@0.2.12",
-                              "dependencies": {
-                                "traverse": {
-                                  "version": "0.5.2",
-                                  "from": "traverse@0.5.2"
-                                },
-                                "uglify-js": {
-                                  "version": "1.1.1",
-                                  "from": "uglify-js@1.1.1"
-                                }
-                              }
-                            }
-                          }
-                        }
-                      }
-                    },
-                    "nopt": {
-                      "version": "2.1.2",
-                      "from": "nopt@2.1.2",
-                      "dependencies": {
-                        "abbrev": {
-                          "version": "1.0.4",
-                          "from": "abbrev@1.0.4"
-                        }
-                      }
-                    },
-                    "mkdirp": {
-                      "version": "0.3.5",
-                      "from": "mkdirp@0.3.5",
-                      "resolved": "https://registry.npmjs.org/mkdirp/-/mkdirp-0.3.5.tgz"
-                    },
-                    "difflet": {
-                      "version": "0.2.6",
-                      "from": "difflet@0.2.6",
-                      "dependencies": {
-                        "traverse": {
-                          "version": "0.6.6",
-                          "from": "traverse@0.6.6"
-                        },
-                        "charm": {
-                          "version": "0.1.2",
-                          "from": "charm@0.1.2"
-                        },
-                        "deep-is": {
-                          "version": "0.1.2",
-                          "from": "deep-is@0.1.2"
-                        }
-                      }
-                    },
-                    "deep-equal": {
-                      "version": "0.0.0",
-                      "from": "deep-equal@0.0.0"
-                    },
-                    "buffer-equal": {
-                      "version": "0.0.0",
-                      "from": "buffer-equal@0.0.0"
-                    }
-                  }
-                },
-                "base64url": {
-                  "version": "0.0.3",
-                  "from": "base64url@0.0.3"
-                }
-              }
-            }
-          }
         }
       }
     },
@@ -1646,6 +1547,16 @@
         }
       }
     },
+    "moment-timezone": {
+      "version": "0.0.3",
+      "from": "moment-timezone@",
+      "dependencies": {
+        "moment": {
+          "version": "2.5.1",
+          "from": "moment@>= 2.1.0"
+        }
+      }
+    },
     "awssum-amazon": {
       "version": "1.1.1",
       "from": "https://registry.npmjs.org/awssum-amazon/-/awssum-amazon-1.1.1.tgz",
@@ -1672,6 +1583,104 @@
               "version": "0.5.5",
               "from": "https://registry.npmjs.org/sax/-/sax-0.5.5.tgz",
               "resolved": "https://registry.npmjs.org/sax/-/sax-0.5.5.tgz"
+            }
+          }
+        }
+      }
+    },
+    "gapitoken": {
+      "version": "0.1.0",
+      "from": "gapitoken@",
+      "dependencies": {
+        "jws": {
+          "version": "0.0.2",
+          "from": "jws@0.0.2",
+          "dependencies": {
+            "tap": {
+              "version": "0.3.3",
+              "from": "tap@~0.3.3",
+              "dependencies": {
+                "inherits": {
+                  "version": "1.0.0"
+                },
+                "yamlish": {
+                  "version": "0.0.5"
+                },
+                "slide": {
+                  "version": "1.1.5",
+                  "from": "slide@*"
+                },
+                "runforcover": {
+                  "version": "0.0.2",
+                  "from": "runforcover@~0.0.2",
+                  "dependencies": {
+                    "bunker": {
+                      "version": "0.1.2",
+                      "from": "bunker@0.1.X",
+                      "dependencies": {
+                        "burrito": {
+                          "version": "0.2.12",
+                          "from": "burrito@>=0.2.5 <0.3",
+                          "dependencies": {
+                            "traverse": {
+                              "version": "0.5.2",
+                              "from": "traverse@~0.5.1"
+                            },
+                            "uglify-js": {
+                              "version": "1.1.1",
+                              "from": "uglify-js@~1.1.1"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "nopt": {
+                  "version": "2.1.2",
+                  "from": "nopt@~2",
+                  "dependencies": {
+                    "abbrev": {
+                      "version": "1.0.4",
+                      "from": "abbrev@1"
+                    }
+                  }
+                },
+                "mkdirp": {
+                  "version": "0.3.5",
+                  "from": "mkdirp@~0.3"
+                },
+                "difflet": {
+                  "version": "0.2.6",
+                  "from": "difflet@~0.2.0",
+                  "dependencies": {
+                    "traverse": {
+                      "version": "0.6.6",
+                      "from": "traverse@0.6.x"
+                    },
+                    "charm": {
+                      "version": "0.1.2",
+                      "from": "charm@0.1.x"
+                    },
+                    "deep-is": {
+                      "version": "0.1.2",
+                      "from": "deep-is@0.1.x"
+                    }
+                  }
+                },
+                "deep-equal": {
+                  "version": "0.0.0",
+                  "from": "deep-equal@~0.0.0"
+                },
+                "buffer-equal": {
+                  "version": "0.0.0",
+                  "from": "buffer-equal@~0.0.0"
+                }
+              }
+            },
+            "base64url": {
+              "version": "0.0.3",
+              "from": "base64url@0.0.3"
             }
           }
         }

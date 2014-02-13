@@ -1,11 +1,7 @@
-authz     = require './../identity/authz'
-loggedIn  = authz.LoggedIn isApi:true
-admin     = authz.Admin isApi:true
-
-
+authz    = require './../identity/authz'
+loggedIn = authz.LoggedIn isApi:true
+admin    = authz.Admin isApi:true
 mailSend =  require './../mail/mailman'
-
-
 
 class MailApi
 

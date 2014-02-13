@@ -1,17 +1,18 @@
-exports = {}
-BB = require '../../lib/BB'
-M = require './Models'
-C = require './Collections'
-SV = require '../shared/Views'
+exports          = {}
+BB               = require '../../lib/BB'
+M                = require './Models'
+C                = require './Collections'
+SV               = require '../shared/Views'
 calcExpertCredit = require '../shared/mix/calcExpertCredit'
-parseYoutubeId = require '../shared/mix/parseYoutubeId'
-unschedule = require '../shared/mix/unschedule'
-storage = require('../util').storage
-
-pickadateOptions =
-  format: "dd mmm yyyy"
+parseYoutubeId   = require '../shared/mix/parseYoutubeId'
+unschedule       = require '../shared/mix/unschedule'
+storage          = require('../util').storage
 
 dateFormat = "DD MMM YYYY"
+pickadateOptions =
+  format: "dd mmm yyyy"
+timepickerOptions =
+  timeFormat: 'H:i'
 
 class exports.CallScheduleView extends BB.ModelSaveView
   async: off
@@ -59,12 +60,12 @@ class exports.CallScheduleView extends BB.ModelSaveView
         # selects the first expert by default when there's only one
         if filtered.length == 1
           @model.set 'expertId', suggestion.expert._id
-          if !@model.get 'type'
-            @model.set 'type', suggestion.expert.credit.byTypeArray[0].type
 
         if @mget('expertId') == suggestion.expert._id
           suggestion.expert.selected = suggestion.expert
           selectedExpert = suggestion.expert
+          if !@mget 'type'
+            @model.set 'type', suggestion.expert.credit.byTypeArray[0].type
         else suggestion.expert.selected = undefined
         suggestion
 
@@ -85,8 +86,10 @@ class exports.CallScheduleView extends BB.ModelSaveView
       inviteOwner: storage('inviteOwner') == 'true'
 
     @$('.datepicker').stop()
+    @$('.timepicker').timepicker('remove')
     @$el.html @tmpl @model.extendJSON d
     @$('.datepicker').pickadate(pickadateOptions)
+    @$('.timepicker').timepicker(timepickerOptions)
     @
   getViewData: ->
     d = @getValsFromInputs @viewData
@@ -181,8 +184,10 @@ class exports.CallEditView extends BB.ModelSaveView
     # TODO call.status
     d = _.extend call, { expert, requestId: @request.id }
     @$('.datepicker').stop()
+    @$('.timepicker').timepicker('remove')
     @$('#callEdit').html @tmpl d
     @$('.datepicker').pickadate(pickadateOptions)
+    @$('.timepicker').timepicker(timepickerOptions)
     @
   getViewData: ->
     d = @getValsFromInputs @viewData

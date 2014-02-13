@@ -1,8 +1,9 @@
-authz       = require './../identity/authz'
-admin       = authz.Admin isApi: true
-loggedIn    = authz.LoggedIn isApi: true
-moment = require 'moment'
-errors = require './errors'
+authz    = require './../identity/authz'
+admin    = authz.Admin isApi: true
+loggedIn = authz.LoggedIn isApi: true
+moment   = require 'moment'
+errors   = require './errors'
+cSend    = require '../util/csend'
 
 class CRUDApi
 
@@ -34,9 +35,7 @@ class CRUDApi
 
 
   list: (req, res, next) =>
-    @model.find (e, r) ->
-      if e then return next e
-      res.send r
+    @model.find cSend(res, next)
 
 
   create: (req, res, next) =>

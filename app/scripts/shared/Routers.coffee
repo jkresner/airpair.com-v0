@@ -1,7 +1,7 @@
 exports = {}
-M = require './Models'
-BB = require './../../lib/BB'
-AddJS = require '/scripts/providers/addjs/index'
+M       = require './Models'
+BB      = require './../../lib/BB'
+AddJS   = require '/scripts/providers/addjs/index'
 
 class exports.AirpairRouter extends BB.BadassAppRouter
 

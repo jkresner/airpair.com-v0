@@ -1,9 +1,7 @@
+mongoose = require 'mongoose'
+
 module.exports = (app, express) ->
-
-  mongoose = require 'mongoose'
-
   mongoose.connect cfg.mongoUri
-
   db = mongoose.connection
 
   db.on 'error', ->

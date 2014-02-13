@@ -5,17 +5,17 @@
 
 {app, data} = require '../test-app-setup'
 
-async = require 'async'
+async     = require 'async'
 cloneDeep = require 'lodash.clonedeep'
-moment = require 'moment'
-ObjectId = require('mongoose').Types.ObjectId
+moment    = require 'moment'
+ObjectId  = require('mongoose').Types.ObjectId
 
-unschedule = require '../../../app/scripts/shared/mix/unschedule'
+unschedule       = require '../../../app/scripts/shared/mix/unschedule'
 calcExpertCredit = require '../../../app/scripts/shared/mix/calcExpertCredit'
-ordersSvc = new (require '../../../lib/services/orders')()
-requestsSvc = new (require '../../../lib/services/requests')()
-viewDataSvc = new (require '../../../lib/services/_viewdata')()
-svc = new (require '../../../lib/services/requestCalls')()
+ordersSvc        = new (require '../../../lib/services/orders')()
+requestsSvc      = new (require '../../../lib/services/requests')()
+viewDataSvc      = new (require '../../../lib/services/_viewdata')()
+svc              = new (require '../../../lib/services/requestCalls')()
 
 describe "RequestCallsService", ->
   @testNum = 0

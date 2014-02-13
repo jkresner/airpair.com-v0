@@ -1,5 +1,5 @@
-Tag = require './../models/tag'
-v0_skillsdata = require './data/v0.3/skills'
+Tag                        = require './../models/tag'
+v0_skillsdata              = require './data/v0.3/skills'
 stackoverflow_tagWikisdata = require './data/stackoverflow/wikis'
 
 migrateFromSkill = (s) ->

@@ -4,6 +4,7 @@ authz       = require './../identity/authz'
 admin       = authz.Admin isApi: true
 loggedIn    = authz.LoggedIn isApi: true
 Roles       = authz.Roles
+cSend       = require '../util/csend'
 
 class RequestApi extends CRUDApi
 
@@ -29,25 +30,17 @@ class RequestApi extends CRUDApi
 
 
   admin: (req, res, next) =>
-    @svc.getAll (e, r) ->
-      if e then return next e
-      res.send r
+    @svc.getAll cSend(res, next)
 
   active: (req, res, next) =>
-    @svc.getActive (e, r) ->
-      if e then return next e
-      res.send r
+    @svc.getActive cSend(res, next)
 
   inactive: (req, res, next) =>
-    @svc.getInactive (e, r) ->
-      if e then return next e
-      res.send r
+    @svc.getInactive cSend(res, next)
 
 
   list: (req, res, next) =>
-    @svc.getByUserId req.user._id, (e, r) ->
-      if e then return next e
-      res.send r
+    @svc.getByUserId req.user._id, cSend(res, next)
 
 
   detail: (req, res, next) =>
@@ -58,9 +51,7 @@ class RequestApi extends CRUDApi
 
 
   create: (req, res, next) =>
-    @svc.create req.user, req.body, (e, r) ->
-      if e then return next e
-      res.send r
+    @svc.create req.user, req.body, cSend(res, next)
 
 
   update: (req, res, next) =>
@@ -132,9 +123,7 @@ class RequestApi extends CRUDApi
         return next new Error('Customer update suggestion not implemented')
         #@updateSuggestionByCustomer(req, res, next, r)
       else if Roles.isRequestExpert(usr, r) || Roles.isAdmin(usr)
-        @svc.updateSuggestionByExpert r, usr, req.body, (e, r) =>
-          if e then return next e
-          res.send r
+        @svc.updateSuggestionByExpert r, usr, req.body, cSend(res, next)
       else
         res.send 403
 

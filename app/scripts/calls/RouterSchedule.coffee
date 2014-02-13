@@ -26,3 +26,8 @@ module.exports = class Router extends S.AirpairSessionRouter
     @resetOrFetch d.orders, pageData.orders
 
     _.extend d, v
+
+  schedule: ->
+    match = /expertId=((?:[a-z0-9_]*))/i.exec(window.location.search)
+    if match
+      @app.requestCall.set('expertId', match[1])

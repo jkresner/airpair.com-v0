@@ -1,6 +1,6 @@
-M = require '/scripts/review/Models'
-C = require '/scripts/review/Collections'
-V = require '/scripts/review/Views'
+M  = require '/scripts/review/Models'
+C  = require '/scripts/review/Collections'
+V  = require '/scripts/review/Views'
 SV = require '/scripts/settings/Views'
 
 
@@ -44,7 +44,7 @@ describe "Review: book with stripe", ->
     rv = @app.requestView
     bv = @app.bookView
     req = rv.request
-  
+
     rv.settings.once 'sync', =>
 
       router.navTo "#stripe/book"
