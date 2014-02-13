@@ -48,7 +48,7 @@ class exports.ExpertView extends BB.ModelSaveView
   el: '#edit'
   tmpl: require './templates/Expert'
   tmplLinks: require './../shared/templates/DevLinks'
-  viewData: ['name','email','gmail','pic', 'homepage', 'skills', 'rate']
+  viewData: ['name', 'email', 'gmail', 'pic', 'homepage', 'skills', 'rate']
   events:
     'click .save': 'save'
   initialize: ->
@@ -56,7 +56,7 @@ class exports.ExpertView extends BB.ModelSaveView
     @tagsInput = new SV.TagsInputView model: @model, collection: @tags
     @listenTo @model, 'change', @render
   render: (model) ->
-    @setValsFromModel ['name','email','gmail','pic','homepage','brief','hours']
+    @setValsFromModel ['name', 'email', 'gmail', 'pic', 'homepage', 'brief', 'hours']
     @$(":radio[value=#{@model.get('rate')}]").prop('checked',true).click()
     @$(":radio[value=#{@model.get('status')}]").prop('checked',true).click()
     @$(".links").html @tmplLinks @model.toJSON()
