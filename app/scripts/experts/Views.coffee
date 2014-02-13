@@ -1,7 +1,7 @@
 exports = {}
 BB      = require './../../lib/BB'
 M       = require './Models'
-Shared  = require './../shared/Views'
+SV      = require './../shared/Views'
 
 #############################################################################
 ##  To render all experts for admin
@@ -11,8 +11,10 @@ class exports.ExpertRowView extends BB.BadassView
   tagName: 'tr'
   className: 'expert'
   tmpl: require './templates/Row'
-  events: { 'click .deleteExpert': 'deleteExpert' }
-  initialize: -> @listenTo @model, 'change', @render
+  events:
+    'click .deleteExpert': 'deleteExpert'
+  initialize: ->
+    @listenTo @model, 'change', @render
   render: ->
     d = (_.extend @model.toJSON(), { hasLinks: @model.hasLinks() } )
     @$el.html @tmpl d
@@ -25,7 +27,8 @@ class exports.ExpertRowView extends BB.BadassView
 
 class exports.ExpertsView extends Backbone.View
   el: '#experts'
-  events: { 'click .select': 'select' }
+  events:
+    'click .select': 'select'
   initialize: (args) ->
     @listenTo @collection, 'reset add remove filter', @render
   render: ->
@@ -41,37 +44,35 @@ class exports.ExpertsView extends Backbone.View
     @model.set expert.attributes
 
 
-# class exports.DevFormView extends BB.ModelSaveView
-#   el: '#devFormView'
-#   tmpl: require './templates/DevForm'
-#   async: off  # async off because we want skills objects back from server
-#   viewData: ['name','email','gmail','pic', 'homepage', 'gh', 'so', 'bb', 'in', 'other', 'skills', 'rate']
-#   events: { 'click .save': 'save' }
-#   initialize: ->
-#   render: (model) ->
-#     if model? then @model = model
-#     tmplData = _.extend @model.toJSON(), { skillsSoIds: @model.skillSoIdsList() }
-#     @$el.html @tmpl tmplData
-#     @
-#   renderSuccess: (model, response, options) =>
-#     @$('.alert-success').fadeIn(800).fadeOut(5000)
-#     @collection.add model
-#     @render new M.Dev()
-
-# class exports.DevsView extends DataListView
-#   el: '#devs'
-#   tmpl: require './templates/Devs'
-#   initialize: (args) ->
-#     @$el.html @tmpl()
-#     @formView = new exports.DevFormView( model: new M.Dev(), collection: @collection ).render()
-#     @collection.on 'reset add remove filter', @render, @
-#   render: ->
-#     $tbody = @$('tbody').html ''
-#     for m in @collection.models
-#       $tbody.append new exports.DevRowView( model: m ).render().el
-#     @
-
-exports.ExpertView = Shared.ExpertView
-
+class exports.ExpertView extends BB.ModelSaveView
+  el: '#edit'
+  tmpl: require './templates/Expert'
+  tmplLinks: require './../shared/templates/DevLinks'
+  viewData: ['name','email','gmail','pic', 'homepage', 'skills', 'rate']
+  events:
+    'click .save': 'save'
+  initialize: ->
+    @$el.html @tmpl {}
+    @tagsInput = new SV.TagsInputView model: @model, collection: @tags
+    @listenTo @model, 'change', @render
+  render: (model) ->
+    @setValsFromModel ['name','email','gmail','pic','homepage','brief','hours']
+    @$(":radio[value=#{@model.get('rate')}]").prop('checked',true).click()
+    @$(":radio[value=#{@model.get('status')}]").prop('checked',true).click()
+    @$(".links").html @tmplLinks @model.toJSON()
+    @
+  renderSuccess: (model, response, options) =>
+    @$('.alert-success').fadeIn(800).fadeOut(5000)
+    m = @collection.findWhere(_id: model.id)
+    m.set model.attributes
+    m.trigger 'change' # for the expert row to re-render
+  getViewData: ->
+    pic: @elm('pic').val()
+    homepage: @elm('homepage').val()
+    brief: @elm('brief').val()
+    hours: @elm('hours').val()
+    rate: @$("[name='rate']:checked").val()
+    status: @$("[name='status']:checked").val()
+    tags: @tagsInput.getViewData()
 
 module.exports = exports

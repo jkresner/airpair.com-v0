@@ -13,10 +13,5 @@ class exports.Requests extends BB.FilteringCollection
   comparator: (m) -> m.createdDate()
 
 
-class exports.Skills extends BB.FilteringCollection
-  model: Models.Skill
-  url: '/api/skills'
-  comparator: (m) -> m.get 'name'
-
 
 module.exports = exports

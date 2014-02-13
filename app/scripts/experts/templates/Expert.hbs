@@ -1,0 +1,145 @@
+<div class="form-actions admin-nav">
+  <div class="controls">
+    <a href="#list" class="btn">Back</a>
+    <a href="#" class="btn btn-primary save">Save</a>
+    <a href="#" class="btn btn-danger deleteRequest">Delete</a>
+  </div>
+</div>
+
+
+<fieldset id="info" class="form-horizontal">
+
+  <div class="links"></div>
+
+  <div>
+    <div class="control-group">
+      <label class="control-label" for="devName">Name</label>
+      <div class="controls">
+        <input type="text" id="devName" name="name" placeholder="Full name" value="{{ name }}" data-error-style="inline">
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="devEmail">Email</label>
+      <div class="controls">
+        <input type="text" id="devEmail" name="email" placeholder="Email" value="{{ email }}" data-error-style="inline">
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="devEmail">Gmail</label>
+      <div class="controls">
+        <input type="text" id="devGmail" name="gmail" placeholder="Gmail" value="{{ gmail }}" data-error-style="inline">
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="skillShort">Pic</label>
+      <div class="controls">
+        <input type="text" id="devPic" name="pic" placeholder="Picture Url" value="{{ pic }}" data-error-style="inline" style="width:500px">
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="devHompage">Home</label>
+      <div class="controls">
+        <div class="input-prepend" style="width:88%">
+          <span class="add-on">http://</span>
+          <input type="text" id="devHomepage" name="homepage" placeholder="Homepage url" value="{{ homepage }}" data-error-style="inline" style="width:300px">
+        </div>
+      </div>
+    </div>
+    <div class="control-group" style="height:100px">
+      <label class="control-label" for="tagsInput">Tags</label>
+      <div id="tagsInput" class="controls controls-tags">
+          <div id="tagNewForm"></div>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label" for="brief">Brief</label>
+      <div class="controls controls-brief">
+        <textarea id="brief" name="brief" style="width:500px">{{ brief }}</textarea>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label" for="reqHrs">Hours / wk</label>
+      <div class="controls">
+        <select id="hours" name="hours" class="span2">
+          <option value="1">1</option>
+          <option value="2" selected="selected">2</option>
+          <option value="3-5">3-5</option>
+          <option value="5-10">5-10</option>
+          <option value="10-20">10-20</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label" for="rate">Rate /hr</label>
+      <div class="budget rb-group controls">
+        <label for="rate10">$10</label> <input type="radio" id="rate10" name="rate" value="10" />
+        <label for="rate40">$40</label>  <input type="radio" id="rate40" name="rate" value="40" />
+        <label for="rate70">$70</label>  <input type="radio" id="rate70" name="rate" value="70" checked="checked" />
+        <label for="rate110">$110</label>  <input type="radio" id="rate110" name="rate" value="110" />
+        <label for="rate160">$160</label>  <input type="radio" id="rate160" name="rate" value="160" />
+        <label for="rate230">$230</label>  <input type="radio" id="rate230" name="rate" value="230" />
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label" for="reqHrs">Status</label>
+      <div class="status rb-group controls">
+        <label for="statusReady">Send me airpairs!</label> <input type="radio" id="statusReady" name="status" value="ready" checked="checked" />
+        <label for="statusBusy">Busy atm</label>  <input type="radio" id="statusBusy" name="status" value="busy" />
+      </div>
+    </div>
+  </div>
+
+</fieldset>
+
+<fieldset id="bookme" class="form-horizontal">
+
+  {{#with bookMe}}
+
+  <div class="control-group">
+    <label class="control-label">enabled</label>
+    <div class="controls">
+      <select name="enabled">
+        <option>false</option>
+        <option>true</option>
+      </select>
+    </div>
+  </div>
+
+
+  <div class="control-group">
+    <label class="control-label">rate</label>
+    <div class="controls">
+      <input type="text" placeholder="Full name" value="" data-error-style="inline">
+    </div>
+  </div>
+
+  <div class="control-group">
+    <label class="control-label">urlSlug</label>
+    <div class="controls">
+      <input type="text" placeholder="Full name" value="" data-error-style="inline">
+    </div>
+  </div>
+
+
+  <div class="control-group">
+    <label class="control-label">urlBitly</label>
+    <div class="controls">
+      <input type="text" placeholder="Full name" value="" data-error-style="inline">
+    </div>
+  </div>
+
+
+  <div class="control-group">
+    <label class="control-label">urlBlog</label>
+    <div class="controls">
+      <input type="text" placeholder="Full name" value="" data-error-style="inline">
+    </div>
+  </div>
+
+  {{/with}}
+
+</fieldset>
