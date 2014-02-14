@@ -20,7 +20,7 @@ class exports.MarketingTagList extends BB.ModelSaveView
     id = $(e.currentTarget).data('id')
     if !id then return
     @selected.set '_id', id, silent: true
-    @selected.fetch()
+    @selected.fetch reset: true
 
 class exports.MarketingTagForm extends BB.ModelSaveView
   el: '#marketingTagForm'
@@ -43,24 +43,28 @@ class exports.MarketingTagForm extends BB.ModelSaveView
   #   @collection.fetch()
   renderSuccess: ->
     @$('.alert-success').fadeIn(800).fadeOut(5000)
-    @collection.fetch()
+    @collection.fetch reset: true
 
 class exports.MarketingTagEditForm extends BB.ModelSaveView
   el: '#marketingTagEditForm'
   viewData: VIEW_DATA
   tmpl: require './templates/MarketingTagList'
   events:
-    'click .save': 'save'
+    'click .save': (e) ->
+      $(e.currentTarget).text('Patience young padawan').attr('disabled', true)
+      @save(e)
   initialize: ->
     @listenTo @model, 'sync', @render
   render: ->
-    d = VIEW_DATA.concat('_id')
-    console.log 'd', d
-    @setValsFromModel d
+    @setValsFromModel @viewData.concat('_id')
     @
-  renderSuccess: ->
+  renderSuccess: =>
+    @$('.save').attr('disabled', false).text('Save Edits')
     @$('.alert-success').fadeIn(800).fadeOut(5000)
-    @collection.fetch()
+    @collection.fetch reset: true
+  renderError: (model, response, options) ->
+    @$('.save').attr('disabled', false).text('Save Edits')
+    super model, response, options
 
 class exports.MarketingTagsInputView extends BB.HasBootstrapErrorStateView
   el: '#marketingTagsInput'

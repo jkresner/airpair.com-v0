@@ -264,6 +264,12 @@ body#admexperts table.select { font-weight:bold }
   visibility: visible;
 }
 
+/* feedback that the request is in progress */
+#admmarketingtagspage button:disabled {
+  background: darkgray;
+  border: solid 3px gray;
+}
+
 nav div { padding-top:6px;height:54px;width:1240px;margin:auto;border-bottom:solid 1px white; }
 nav div > a { float:left; }
 nav img { display:inline-block;width:180px;padding:3px 12px; }
