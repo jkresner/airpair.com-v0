@@ -11,18 +11,12 @@ class exports.ExpertRowView extends BB.BadassView
   tagName: 'tr'
   className: 'expert'
   tmpl: require './templates/Row'
-  events:
-    'click .deleteExpert': 'deleteExpert'
   initialize: ->
     @listenTo @model, 'change', @render
+    @listenTo @model, 'destroy', => @$el.remove()
   render: ->
-    d = (_.extend @model.toJSON(), { hasLinks: @model.hasLinks() } )
-    @$el.html @tmpl d
+    @$el.html @tmpl _.extend @model.toJSON(), { hasLinks: @model.hasLinks() }
     @
-  deleteExpert: ->
-    $log 'deleting', @model.attributes
-    @model.destroy()
-    @$el.remove()
 
 
 class exports.ExpertsView extends Backbone.View
@@ -51,6 +45,7 @@ class exports.ExpertView extends BB.ModelSaveView
   viewData: ['name', 'email', 'gmail', 'pic', 'homepage', 'skills', 'rate']
   events:
     'click .save': 'save'
+    'click .deleteExpert': 'destroy'
   initialize: ->
     @$el.html @tmpl {}
     @tagsInput = new SV.TagsInputView model: @model, collection: @tags
@@ -74,5 +69,9 @@ class exports.ExpertView extends BB.ModelSaveView
     rate: @$("[name='rate']:checked").val()
     status: @$("[name='status']:checked").val()
     tags: @tagsInput.getViewData()
+  destroy: ->
+    m = @collection.findWhere(_id: @model.id)
+    m.destroy()
+    router.navTo '#list'
 
 module.exports = exports
