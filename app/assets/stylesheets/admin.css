@@ -55,6 +55,9 @@ body#admexperts table#experts img { max-width:36px }
 body#admexperts table#experts td { font-size:11px;padding:4px 8px!important; }
 body#admexperts table#experts td.i a { display:inline-block;font-size:16px;padding-left:4px; }
 body#admexperts table#experts .label { font-weight:normal }
+body#admexperts #info { float:left;width:45%; }
+body#admexperts #info .links { float:right; }
+body#admexperts #bookme { float:right;width:45%; }
 /*body#admexperts table#expertPreview { float:right;width:300px }*/
 
 #admorderspage {}
