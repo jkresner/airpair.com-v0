@@ -3,42 +3,7 @@
   <img src="{{ pic }}?s=32" />
   <a href="#edit/{{ _id }}">{{ name }}</a>
 </td>
-<td>
-
-    <a href="//mixpanel.com/report/271245/explore/#list/filter:(conjunction:and,filters:!((filter:(operand:'{{name}}',operator:in),property:'$name',selected_property_type:string,type:string))),sort_order:descending,sort_property:'$created',sort_property_type:datetime" class="mp" target="_blank"></a>
-
-    <a href="//mail.google.com/mail/u/0/?shva=1#search/%22{{name}}%22+OR+{{email}}" class="em" target="_blank"></a>
-
-    <a href="mailto:{{ email }}" target="_blank" class="gm"></a>
-
-    {{!-- <a href="//plus.google.com/google.id" target="_blank" class="zocial googleplus icon"></a> --}}
-
-    {{#if gh}}
-      <a href="//github.com/{{ gh.username }}" target="_blank" class="gh"></a>
-    {{/if}}
-
-
-    {{#if so}}
-      <a href="//stackoverflow.com/users/{{ so.link }}" target="_blank" class="so"></a>
-    {{/if }}
-
-    {{#if bb}}
-      <a href="//bitbucket.org/{{ bb.id }}" target="_blank" class="bb"></a>
-    {{/if}}
-
-    {{#if in}}
-      <a href="//linkedin.com/x/profile/sy5n2q8o2i49/{{ in.id }}" target="_blank" class="in"></a>
-    {{/if}}
-
-    {{#if tw}}
-      <a href="//twitter.com/{{ tw.username }}" target="_blank" class="tw"></a>
-    {{/if}}
-
-    {{#if homepage}}
-      <a href="http://{{ homepage }}" target="_blank" class="hm"></a>
-    {{/if}}
-
-</td>
+<td>{{> Links}}</td>
 <td>
   {{#each tags}}
     <span class="label">{{short}}</span>

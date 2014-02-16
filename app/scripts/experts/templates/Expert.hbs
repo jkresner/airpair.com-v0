@@ -8,9 +8,12 @@
 
 <fieldset id="info" class="form-horizontal">
 
-  <div class="links"></div>
+  <div style="float:right;width:300px">
+    <div class="links"></div>
+    <img class="pic" src="#">
+  </div>
 
-  <div>
+  <div style="float:left;width:300px">
     <div class="control-group">
       <label class="control-label" for="devName">Name</label>
       <div class="controls">
@@ -29,10 +32,12 @@
         <input type="text" id="devGmail" name="gmail" placeholder="Gmail" value="{{ gmail }}" data-error-style="inline">
       </div>
     </div>
+  </div>
+  <div style="clear:both">
     <div class="control-group">
       <label class="control-label" for="skillShort">Pic</label>
       <div class="controls">
-        <input type="text" id="devPic" name="pic" placeholder="Picture Url" value="{{ pic }}" data-error-style="inline" style="width:500px">
+        <input type="text" id="devPic" name="pic" placeholder="Picture Url" value="{{ pic }}" data-error-style="inline" style="width:506px"><a href="#" class="btn btn-gravatar">Grav</a>
       </div>
     </div>
     <div class="control-group">
@@ -54,12 +59,12 @@
     <div class="control-group">
       <label class="control-label" for="brief">Brief</label>
       <div class="controls controls-brief">
-        <textarea id="brief" name="brief" style="width:500px">{{ brief }}</textarea>
+        <textarea id="brief" name="brief" style="width:96%;height:140px">{{ brief }}</textarea>
       </div>
     </div>
 
     <div class="control-group">
-      <label class="control-label" for="reqHrs">Hours / wk</label>
+      <label class="control-label" for="reqHrs">Hrs /wk</label>
       <div class="controls">
         <select id="hours" name="hours" class="span2">
           <option value="1">1</option>
