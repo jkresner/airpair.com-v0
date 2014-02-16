@@ -37,6 +37,7 @@ class exports.FiltersView extends BB.BadassView
       filter: owner
       sort: true
 
+
 class exports.RequestRowView extends BB.BadassView
   tagName: 'tr'
   className: 'requestRow'
@@ -50,6 +51,8 @@ class exports.RequestRowView extends BB.BadassView
       contactPic:         d.company.contacts[0].pic
       contactEmail:       d.company.contacts[0].email
       createdDate:        @model.createdDateString()
+      createdAgoString:   moment(@model.createdDate()).fromNow()
+      createdAgoClass:    @createdAgoHtml()
       suggestedCount:     d.suggested.length
       suggestedFitCount:  _.filter(d.suggested, (s) -> s.status is 'chosen').length
       callCount:          d.calls.length
@@ -68,6 +71,13 @@ class exports.RequestRowView extends BB.BadassView
       success: =>
         router.navTo route
     false
+  createdAgoHtml: ->
+    if @model.get('status') == 'received'
+      createdDate = @model.createdDate()
+      return ' overdue' if moment(createdDate).add('hours',3).isBefore()
+      return ' slow' if moment(createdDate).add('hours',1).isBefore()
+      ' ok'
+
 
 class exports.RequestsView extends BB.BadassView
   el: '#requests'

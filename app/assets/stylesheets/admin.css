@@ -90,6 +90,12 @@ body#admexperts table.select { font-weight:bold }
 #adminboundpage #requests .t a { display:inline; }
 #adminboundpage #requests .s { width:280px; }
 
+#adminboundpage a.ok span { background-color:#5cb85c;margin:1px 0 0 -1px;font-weight:normal; }
+#adminboundpage a.slow { color:#f0ad4e }
+#adminboundpage a.slow span { background-color:#f0ad4e;margin:1px 0 0 -1px;font-weight:normal; }
+#adminboundpage a.overdue { color:#F22222 }
+#adminboundpage a.overdue span { background-color:#F22222;margin:1px 0 0 -1px;font-weight:normal; }
+
 #adminboundpage #requests .label-tags { font-weight:normal;margin:2px 0; }
 .label-owner { margin:10px 10px 10px 0;width:20px;text-align:center;font-weight: normal;}
 .label-jk { background-color: #FFB878; }
