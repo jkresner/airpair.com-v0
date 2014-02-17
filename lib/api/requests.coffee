@@ -119,11 +119,11 @@ class RequestApi extends CRUDApi
     usr = req.user
     @model.findOne { _id: req.params.id }, (e, r) =>
       if e then return next e
-      if Roles.isRequestExpert(usr, r) || Roles.isAdmin(usr)
-        @svc.updateSuggestionByExpert r, usr, req.body, cSend(res, next)
-      else if Roles.isRequestOwner(usr, r)
+      if Roles.isRequestOwner(usr, r)
         return next new Error('Customer update suggestion not implemented')
         #@updateSuggestionByCustomer(req, res, next, r)
+      else if Roles.isRequestExpert(usr, r)
+        @svc.updateSuggestionByExpert r, usr, req.body, cSend(res, next)
       else
         res.send 403
 
