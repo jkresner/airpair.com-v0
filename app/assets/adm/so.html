@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Stackoverflow API</title>
+    <meta name="viewport" content="width=device-width">
+    <link rel='stylesheet' href='/stylesheets/epik.css' type='text/css' media='all' />
+    <link rel='stylesheet' href='/stylesheets/epik-ap.css' type='text/css' media='all' />
+    <link rel='stylesheet' href='/stylesheets/epik-ap-migration.css' />
+    <style>
+      .fieldset {
+        float:left;
+        width: 410px;
+      }
+      .hidden {
+        display: none;
+      }
+      .video {
+        overflow: hidden;
+        width: 100%;
+      }
+      .video .lcol {
+        float: left;
+        width: 25%;
+        margin-right: 1em;
+      }
+      .video .rcol {
+        float: left;
+        width: 50%;
+      }
+      .video + .video {
+        border-top: 1px dashed grey;
+        padding-top: 1em;
+        margin-top: 1em;
+      }
+      .videos {
+        margin-top: 1em;
+        margin-bottom: 1em;
+      }
+      .so.button.slim {
+        display: inline;
+        padding-left:  8px;
+        padding-right: 8px;
+        text-transform: none;
+      }
+      .profile:hover {
+        text-decoration: none;
+      }
+      .description {
+        white-space: pre;
+      }
+    </style>
+</head>
+
+<body id="admmarketingtagspage">
+
+  <div class="route" style="display: block;">
+    <div id="marketingTagForm" class="twocol">
+
+      <fieldset class="fieldset">
+        <h3>StackOverflow API</h3>
+        <div class="control-group">
+          <label class="control-label" for="name"><strong>Stackoverflow ID</strong>
+          </label>
+          <div class="controls">
+            <input name="name" type="text" class="soInput input-medium"
+              placeholder="stackoverflow ID" value="1345135">
+          </div>
+          <span>e.g. <code>1345135</code>, <code>87298</code>, or <code>266795</code></span>
+          <br>
+        </div>
+
+        <div class="form-actions">
+          <a href="#" class="search button slim btn-primary">View</a>
+        </div>
+        <br>
+        <br>
+        <div id="elist">
+          <!-- template -->
+          <div class="hidden">
+            <a class="profile" href="http://stackoverflow.com/users/999"
+              target="_blank">
+              <img height="16px"
+               src="https://1.gravatar.com/avatar/6107fee2deafa6c3761963b72f97c4db?s=16">
+            </a>
+            <span class="name">David Trejo</span>
+            <a href="#" class="so button slim btn-primary btn-small">
+              view <span class="soId">101010</span></a>
+          </div>
+        </div>
+      </fieldset>
+    </div> <!-- end #marketingTagForm -->
+
+<!--
+show private video thumbnails
+  -->
+
+
+    <div id="marketingTagList" style="float:right;width:840px">
+      <p class="hidden expert"><span class="name">David Trejo</span> is <code class="status">busy</code> and prefers to do ~<code><span class="hours">3</span>h</code> of AirPairs a week.</p>
+      <div class="videos">
+        <div class="hidden video">
+          <div class="lcol">
+            <iframe height="150" src="" frameborder="0" allowfullscreen></iframe>
+          </div>
+          <div class="rcol">
+            <a href="#" class="youtube" target="_blank">
+              <span class="title">video title</span>
+            </a>
+            <br>
+            <span class="description"></span>
+            <br>
+            <br>
+            <span class="tags"></span>
+          </div>
+        </div>
+      </div>
+      <h4><code><a class="api" target="_blank" href="/api/so/:stackoverflowID">
+        /api/so/:stackoverflowID</a></code>
+        API response</h4>
+      <pre>
+        <!-- JSON goes here -->
+        LOADING
+      </pre>
+    </div>
+
+  </div> <!-- end .route -->
+</body>
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.0/lodash.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+  <script type="text/javascript">
+    $(function() {
+      $.get('/api/experts')
+      .done(onExperts)
+
+      var soInput = $('.soInput')
+
+      var elist = $('#elist')
+      function onExperts(experts) {
+        experts = experts.filter(function(e) {
+          if (!e._id || !e.so || !e.so.link) return false
+          return true
+        })
+        function soRep(e) { return -1 * (e.so.reputation || 0) }
+        _.sortBy(experts, soRep).slice(3).forEach(addToList)
+        lookup() // add in the name and hours and status
+      }
+      var templ = elist.find('.hidden').clone()
+      templ.removeClass('hidden')
+      function addToList(e) {
+        var row = templ.clone()
+        if (e.pic && e.pic.indexOf('gravatar') > -1) {
+          e.pic = e.pic.replace(/(\?.*)/, '')
+          row.find('img').attr('src', e.pic + '?s=16')
+        }
+        row.find('.name').text(e.name)
+        soId = e.so.link.replace(/(\/.*)/, '')
+        row.find('.soId').text(soId)
+        row.find('.profile').attr('href',
+          'http://stackoverflow.com/users/' + e.so.link)
+        elist.append(row)
+      }
+      elist.on('click', '.so', listClick)
+      function listClick (e) {
+        var soId = $(this).find('.soId').text()
+        soInput.val(soId)
+        lookup()
+      }
+
+      var search = $('.search')
+      search.on('click', lookup)
+      var api = $('.api')
+      function lookup() {
+        console.log ('lookup')
+        var soId = soInput.val()
+        var url = '/api/so/' + soId
+        $.get(url)
+        .done(renderSo)
+        api.text(url)
+        api.attr('href', url)
+        videos.html('')
+        pre.html('')
+        return false
+      }
+      var pre = $('pre')
+      var expert = $('.expert')
+      function renderSo(data) {
+        expert.show()
+        expert.find('.name').text(data.name)
+        expert.find('.hours').text(data.hours)
+        expert.find('.status').text(data.status)
+
+        pre.text(JSON.stringify(data, null, 2))
+        data.recordings.forEach(renderVideo)
+      }
+      var videos = $('.videos')
+      var vtempl = videos.find('.hidden').clone()
+      vtempl.removeClass('hidden')
+      function renderVideo(recording) {
+        var row = vtempl.clone()
+        row.find('.title').text(recording.data.snippet.title)
+        row.find('.youtube').attr('href', 'http://youtu.be/' + recording.data.id)
+        row.find('iframe').attr('src'
+          , '//www.youtube.com/embed/' + recording.data.id)
+
+        row.find('.tags').text(_.pluck(recording.tags, 'name').join(', '))
+        videos.append(row)
+        row.find('.description').text(recording.data.snippet.description)
+      };
+      // lookup()
+
+      // TODO
+
+      //     "embedHtml": "<iframe type='text/html' src='http://www.youtube.com/embed/eAPot6SS13k' width='640' height='360' frameborder='0' allowfullscreen='true'/>"
+      //   "status": {
+      //     "privacyStatus": "public"
+      //   },
+      /*
+       "thumbnails": {
+            "maxres": {
+              "url": "https://i1.ytimg.com/vi/eAPot6SS13k/maxresdefault.jpg"
+            },
+            "standard": {
+              "url": "https://i1.ytimg.com/vi/eAPot6SS13k/sddefault.jpg"
+            },
+            "high": {
+              "url": "https://i1.ytimg.com/vi/eAPot6SS13k/hqdefault.jpg"
+            },
+            "medium": {
+              "url": "https://i1.ytimg.com/vi/eAPot6SS13k/mqdefault.jpg"
+            },
+            "default": {
+              "url": "https://i1.ytimg.com/vi/eAPot6SS13k/default.jpg"
+
+      */
+    })
+  </script>
+</html>

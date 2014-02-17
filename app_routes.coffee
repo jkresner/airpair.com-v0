@@ -25,6 +25,11 @@ module.exports = (app) ->
   app.get '/review/:id', render 'review', ['params.id']
   app.get '/review/book/:id', authd, render 'review', ['params.id']
 
+  # TODO remove
+  app.get '/adm/so', (req, res, next) =>
+    console.log 'hi'
+    res.sendfile './public/adm/so.html'
+
   # admin pages
   app.get '/adm/tags*', authd, adm, render 'adm/tags'
   app.get '/adm/marketingtags', authd, adm, render 'adm/marketingtags'
