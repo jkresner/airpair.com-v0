@@ -5,7 +5,11 @@
       {{#unless createdAgoClass}}{{ createdDate }}{{/unless}}
 </td>
 <td>
-  <span class="label label-owner label-{{ owner }}">{{ owner }}</span>
+  {{#unless prevOwner}}
+    <span class="label label-owner label-{{ owner }}">{{ owner }}</span>
+  {{else}}
+    <span class="label label-owner label-prev">prev: {{ prevOwner }}</span>
+  {{/unless}}
 </td>
 <td>
     {{#if contactPic }}

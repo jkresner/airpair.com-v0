@@ -109,7 +109,25 @@ module.exports = class RequestsService extends DomainService
       .exec (e, requests) =>
         if e then return callback e
         if !requests then requests = {}
-        callback null, requests
+
+        iterator = (receivedReq, cb) =>
+          if receivedReq.owner # do not bother checking/setting prevOwner if owner is already set
+            cb null
+            return
+
+          @model.find({}, @inboundSelect)
+              .where('status').nin(['received'])
+              .where('company.contacts.email' : receivedReq.company.contacts[0].email)
+              .exec (e, prevRequests) =>
+                if prevRequests && prevRequests[0]
+                  receivedReq.prevOwner = prevRequests[0].owner
+
+                cb null
+
+        receivedList = _.filter(requests, (r) -> r.status == 'received')
+        async.each receivedList, iterator, (err) =>
+          if err then return callback err
+          callback null, requests
 
   # Used for history
   getInactive: (callback) ->
