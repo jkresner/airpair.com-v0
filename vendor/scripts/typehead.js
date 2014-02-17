@@ -127,7 +127,7 @@
             return $.trim(str).toLowerCase().split(/[\s]+/);
         },
         tokenizeText: function(str) {
-            return $.trim(str).toLowerCase().split(/[\s\-_]+/);
+            return $.trim(str).toLowerCase().split(/[\s_]+/);
         },
         getProtocol: function() {
             return location.protocol;
@@ -504,6 +504,11 @@
                         });
                     });
                     isMatch && suggestions.push(item);
+                });
+                suggestions = suggestions.sort(function(a, b) {
+                    if (a.value.length > b.value.length) return 1
+                    if (a.value.length < b.value.length) return -1
+                    return 0
                 });
                 return suggestions;
             },
