@@ -51,15 +51,15 @@ module.exports = class RequestsService extends DomainService
       request = null
 
       if r?
-        if Roles.isRequestExpert usr, r
+        if Roles.isAdmin usr
+          request = r
+          r.base = @rates.base
+        else if Roles.isRequestExpert usr, r
           @addViewEvent r, usr, "expert view"
           request = @associatedView r
         else if Roles.isRequestOwner usr, r
           @addViewEvent r, usr, "customer view"
           request = r
-        else if Roles.isAdmin usr
-          request = r
-          r.base = @rates.base
         else
           @addViewEvent r, usr, "anon view"
           request = @publicView r
