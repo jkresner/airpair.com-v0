@@ -40,6 +40,38 @@ class exports.ExpertsView extends Backbone.View
     @model.set expert.attributes
 
 
+class exports.BookMeView extends BB.ModelSaveView
+  el: '#bookMe'
+  tmpl: require './templates/BookMe'
+  viewData: ['rate', 'urlSlug', 'urlBitly', 'urlBlog']
+  events:
+    'change .enabled': 'setEnabled'
+  initialize: ->
+    @model.once 'change', =>
+      @render()
+      @listenTo @model, 'change:bookMe', @render
+  render: ->
+    d = @model.get('bookMe')
+    @$el.html @tmpl if d? then d else {}
+    c = @model.get('bookMe').coupons
+    if c[0]? then @elm('code1').val(c[0].code); @elm('rate1').val(c[0].rate)
+    if c[1]? then @elm('code2').val(c[1].code); @elm('rate2').val(c[1].rate)
+    @
+  setEnabled: (e) ->
+    bm =_.clone @model.get('bookMe')
+    if !bm?
+      @model.set 'bookMe', { enabled: true }
+    else
+      bm.enabled = @elm('enabled').val() is 'true'
+      @model.set 'bookMe', bm
+  getViewData: ->
+    d = @getValsFromInputs @viewData
+    d.enabled = @elm('enabled').val() is 'true'
+    d.coupons = []
+    if @elm('code1').val() then d.coupons.push { code: @elm('code1').val(), rate: @elm('rate1').val() }
+    if @elm('code2').val() then d.coupons.push { code: @elm('code2').val(), rate: @elm('rate2').val() }
+    d
+
 class exports.ExpertView extends BB.ModelSaveView
   el: '#edit'
   tmpl: require './templates/Expert'
@@ -52,6 +84,7 @@ class exports.ExpertView extends BB.ModelSaveView
   initialize: ->
     @$el.html @tmpl {}
     @tagsInput = new SV.TagsInputView model: @model, collection: @tags
+    @bookMe = new exports.BookMeView model: @model
     @listenTo @model, 'change', @render
   render: (model) ->
     @setValsFromModel ['name', 'email', 'gmail', 'pic', 'homepage', 'brief', 'hours']
@@ -63,10 +96,10 @@ class exports.ExpertView extends BB.ModelSaveView
     @
   renderSuccess: (model, response, options) =>
     @$('.alert-success').fadeIn(800).fadeOut(5000)
-    if @collection.length > 0
-      m = @collection.findWhere(_id: model.id)
-      m.set model.attributes
-      m.trigger 'change' # for the expert row to re-render
+    # if @collection.length > 0
+    #   m = @collection.findWhere(_id: model.id)
+    #   m.set model.attributes
+    #   m.trigger 'change' # for the expert row to re-render
   getViewData: ->
     pic: @elm('pic').val()
     homepage: @elm('homepage').val()
@@ -75,6 +108,7 @@ class exports.ExpertView extends BB.ModelSaveView
     rate: @$("[name='rate']:checked").val()
     status: @$("[name='status']:checked").val()
     tags: @tagsInput.getViewData()
+    bookMe: @bookMe.getViewData()
   destroy: ->
     m = @collection.findWhere(_id: @model.id)
     m.destroy()

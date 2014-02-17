@@ -62,7 +62,7 @@ body#admexperts #info .links { float:right;line-height:10px;margin-bottom:20px; 
 body#admexperts #info img.pic { clear:right;float:right;max-width:80px;max-height:80px }
 body#admexperts .control-label { width:64px;font-weight:bold }
 body#admexperts .controls { margin-left:74px; }
-body#admexperts #bookme { float:right;width:35%; }
+body#admexperts #bookme { float:right;width:540px; }
 body#admexperts .rb-group label { float:left;margin:5px 6px 0px 0px }
 body#admexperts .rb-group input { float:left;margin:9px 26px 0px 0px }
 

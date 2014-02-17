@@ -1,0 +1,78 @@
+<div class="control-group control-enabled">
+  <label class="control-label">airpair.me</label>
+  <div class="controls">
+    <select name="enabled" class="enabled">
+      <option{{#if enabled}} selected="selected"{{/if}}>false</option>
+      <option{{#if enabled}} selected="selected"{{/if}}>true</option>
+    </select>
+  </div>
+</div>
+
+{{#if enabled}}
+
+<div class="control-group">
+  <label class="control-label">Rate</label>
+  <div class="controls">
+    <div class="input-prepend">
+      <span class="add-on">$</span>
+      <input style="width:30px" type="text" name="rate" placeholder="rate" value="{{rate}}" data-error-style="inline">
+    </div>
+  </div>
+</div>
+
+
+<div class="control-group">
+  <label class="control-label">Rake</label>
+  <div class="controls">
+    <div class="input-append">
+      <input style="width:30px" type="text" name="rake" placeholder="rake-cut" value="{{rake}}" data-error-style="inline">
+      <span class="add-on">%</span>
+    </div>
+    <span class="muted">Default 30%</span>
+  </div>
+</div>
+
+
+<div class="control-group">
+  <label class="control-label">Url slug</label>
+  <div class="controls">
+    <div class="input-prepend">
+      <span class="add-on" style="padding-right:1px">airpair.me/</span>
+      <input type="text" name="urlSlug" placeholder="Url part" value="{{urlSlug}}" data-error-style="inline">
+    </div>
+  </div>
+</div>
+
+<div class="control-group">
+  <label class="control-label">Url blog</label>
+  <div class="controls">
+    <input type="text" name="urlBlog" placeholder="Bio post url" value="{{urlBlog}}" data-error-style="inline" style="width:280px">
+  </div>
+</div>
+
+<hr />
+
+<div class="control-group">
+  <label class="control-label">Coupon1</label>
+  <div class="controls">
+    <input type="text" name="code1" placeholder="Coupon 1 code" value="" data-error-style="inline" style="width:130px">
+    <div class="input-prepend">
+      <span class="add-on">$</span>
+      <input style="width:30px" type="text" name="rate1" placeholder="rate" value="" data-error-style="inline">
+    </div>
+  </div>
+</div>
+
+<div class="control-group">
+  <label class="control-label">Coupon2</label>
+  <div class="controls">
+    <input type="text" name="code2" placeholder="Coupon 2 code" value="" data-error-style="inline" style="width:130px">
+    <div class="input-prepend">
+      <span class="add-on">$</span>
+      <input style="width:30px" type="text" name="rate2" placeholder="rate" value="" data-error-style="inline">
+    </div>
+  </div>
+</div>
+
+
+{{/if}}
