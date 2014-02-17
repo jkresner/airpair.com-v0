@@ -505,6 +505,11 @@
                     });
                     isMatch && suggestions.push(item);
                 });
+                suggestions = suggestions.sort(function(a, b) {
+                    if (a.value.length > b.value.length) return 1
+                    if (a.value.length < b.value.length) return -1
+                    return 0
+                });
                 return suggestions;
             },
             initialize: function() {
