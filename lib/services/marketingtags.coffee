@@ -1,10 +1,8 @@
 async         = require 'async'
-DomainService = require './_svc'
-oSvc          = new (require './orders')()
-Request       = require '../models/request'
 ObjectId      = require('mongoose').Types.ObjectId
-
-setMarketingTagsOnOrders = require '../util/setMarketingTagsOnOrders'
+DomainService = require './_svc'
+Order         = require '../models/order'
+Request       = require '../models/request'
 
 module.exports = class MarketingTagsService extends DomainService
   model: require '../models/marketingtag'
@@ -23,22 +21,26 @@ module.exports = class MarketingTagsService extends DomainService
       Request.find query, select, lean: true, (err, requests) =>
         async.map requests, updateRequestAndOrders, sendSavedTag
 
-    updateRequestAndOrders = (request, cb) ->
+    updateRequestAndOrders = (request, cb) =>
       mtags = request.marketingTags
       tag = _.find mtags, (t) -> t._id == tagId
       tag.name = savedTag.name
       tag.type = savedTag.type
       tag.group = savedTag.group
       tasks = [
-        (done) ->
+        (done) => @copyToOrders request._id, mtags, request.owner, done
+        (done) =>
           updates = $set: marketingTags: mtags
           Request.findByIdAndUpdate request._id, updates, done
-
-        (done) ->
-          setMarketingTagsOnOrders request._id, mtags, request.owner, done
       ]
       async.parallel tasks, cb
 
     sendSavedTag = (err, results) ->
       if err then return callback err
       callback null, savedTag
+
+  # copy owner and marketingTags to every associated order.
+  copyToOrders: (requestId, marketingTags, owner, callback) =>
+    query = requestId: requestId
+    updates = $set: { marketingTags: marketingTags, owner: owner || '' }
+    Order.update query, updates, multi: true, callback

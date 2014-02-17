@@ -1,69 +1,55 @@
 BB = require './../../lib/BB'
 
-VIEW_DATA = [ 'group', 'type', 'name']
+VIEW_DATA = [ 'group', 'type', 'name', '_id' ]
 Handlebars.registerPartial 'MarketingTag', require './templates/MarketingTag'
 
-class exports.MarketingTagList extends BB.ModelSaveView
-  el: '#marketingTagList'
-  tmpl: require './templates/MarketingTagList'
+class exports.MarketingTagSingleView extends BB.BadassView
+  tagName: 'span'
+  tmpl: require './templates/MarketingTag'
   events:
     'click .marketingtag': 'select'
-  initialize: ->
-    @listenTo @collection, 'sync', @render
+  initialize: -> @model.on 'change', @render, @
+  render: ->
+    @$el.html @tmpl @model.toJSON()
     # by putting the popover only over the text, it disappears when you hover
     # the delete button. We do this b/c .popover('destroy') is broken
     @$el.popover(selector: '[data-toggle="popover"]')
-  render: ->
-    @$el.html @tmpl { marketingTags: @collection.toJSON() }
     @
-  select: (e) ->
-    id = $(e.currentTarget).data('id')
-    if !id then return
-    @selected.set '_id', id, silent: true
+  select: ->
+    @selected.set '_id', @model.id, silent: true
     @selected.fetch reset: true
+
+class exports.MarketingTagList extends BB.ModelSaveView
+  el: '#marketingTagList'
+  initialize: -> @listenTo @collection, 'sync', @render
+  render: ->
+    $list = @$el.html ''
+    for m in @collection.models
+      single = new exports.MarketingTagSingleView model: m, selected: @selected
+      $list.append single.render().el
+    @
 
 class exports.MarketingTagForm extends BB.ModelSaveView
   el: '#marketingTagForm'
   viewData: VIEW_DATA
-  tmpl: require './templates/MarketingTagList'
-  events:
-    'click .save': 'addTag'
-    # 'click .delete': 'deleteTag'
-  initialize: ->
-  render: ->
-    @
-  addTag: (e) ->
-    @model.unset('_id')
-    @save e
-  # deleteTag: (e) ->
-  #   e.preventDefault()
-  #   id = $(e.target).data('id')
-  #   model = _.find @collection.models, (m) -> m.get('_id') == id
-  #   model.destroy()
-  #   @collection.fetch()
-  renderSuccess: ->
-    @$('.alert-success').fadeIn(800).fadeOut(5000)
-    @collection.fetch reset: true
-
-class exports.MarketingTagEditForm extends BB.ModelSaveView
-  el: '#marketingTagEditForm'
-  viewData: VIEW_DATA
-  tmpl: require './templates/MarketingTagList'
+  tmpl: require './templates/MarketingTagForm'
   events:
     'click .save': (e) ->
-      $(e.currentTarget).text('Patience young padawan').attr('disabled', true)
+      $(e.currentTarget).attr('disabled', true)
       @save(e)
   initialize: ->
     @listenTo @model, 'sync', @render
+    @render()
   render: ->
-    @setValsFromModel @viewData.concat('_id')
+    @$el.html @tmpl @model.toJSON()
+    @setValsFromModel @viewData
     @
   renderSuccess: =>
-    @$('.save').attr('disabled', false).text('Save Edits')
+    @$('.save').attr('disabled', false)
     @$('.alert-success').fadeIn(800).fadeOut(5000)
     @collection.fetch reset: true
   renderError: (model, response, options) ->
-    @$('.save').attr('disabled', false).text('Save Edits')
+    @$('.save').attr('disabled', false)
     super model, response, options
 
 class exports.MarketingTagsInputView extends BB.HasBootstrapErrorStateView
@@ -104,7 +90,7 @@ class exports.MarketingTagsInputView extends BB.HasBootstrapErrorStateView
     @_toggleMarketingTag data
     @$auto.val ''
   _toggleMarketingTag: (value) ->
-    tag = _.pick value, VIEW_DATA.concat '_id'
+    tag = _.pick value, VIEW_DATA
     equalById = (m) -> m._id == value._id
     @model.toggleAttrSublistElement 'marketingTags', tag, equalById
   deselect: (e) =>

@@ -1,11 +1,11 @@
-async                    = require 'async'
-DomainService            = require './_svc'
-Roles                    = require '../identity/roles'
-Order                    = require '../models/order'
-User                     = require '../models/user'
-RatesSvc                 = require './rates'
-SettingsSvc              = require './settings'
-setMarketingTagsOnOrders = require '../util/setMarketingTagsOnOrders'
+async            = require 'async'
+DomainService    = require './_svc'
+Roles            = require '../identity/roles'
+Order            = require '../models/order'
+User             = require '../models/user'
+RatesSvc         = require './rates'
+SettingsSvc      = require './settings'
+MarketingTagsSvc = require './marketingtags'
 
 
 module.exports = class RequestsService extends DomainService
@@ -14,6 +14,7 @@ module.exports = class RequestsService extends DomainService
   model: require '../models/request'
   rates: new RatesSvc()
   settingsSvc: new SettingsSvc()
+  mTagsSvc: new MarketingTagsSvc()
 
   publicView: (request) ->
     r = _.pick request, ['_id','tags','company','brief','availability','owner']
@@ -75,7 +76,7 @@ module.exports = class RequestsService extends DomainService
       if e then return callback e
       @_setRatesForRequest r
 
-      setMarketingTagsOnOrders id, r.marketingTags, r.owner, (err, numChanged) =>
+      @mTagsSvc.copyToOrders id, r.marketingTags, r.owner, (err, numChanged) =>
         if err then return callback err
         callback null, r
 

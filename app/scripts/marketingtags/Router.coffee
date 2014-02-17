@@ -11,14 +11,11 @@ module.exports = class Router extends S.AirpairSessionRouter
     d =
       marketingTag: new M.MarketingTag()
       marketingTags: new C.MarketingTags()
-      selected: new M.MarketingTag()
     v =
       marketingTagList: new V.MarketingTagList
-        collection: d.marketingTags, selected: d.selected
+        selected: d.marketingTag, collection: d.marketingTags
       marketingTagForm: new V.MarketingTagForm
-        model: d.marketingTag, selected: d.selected, collection: d.marketingTags
-      marketingTagEditForm: new V.MarketingTagEditForm
-        model: d.selected, collection: d.marketingTags
+        model: d.marketingTag, collection: d.marketingTags
 
     @resetOrFetch d.marketingTags, pageData.marketingTags
 
