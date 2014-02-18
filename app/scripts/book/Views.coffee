@@ -7,6 +7,20 @@ SV      = require './../shared/Views'
 ##
 #############################################################################
 
+class exports.RequestView extends BB.BadassView
+  el: '#request'
+  initialize: ->
+
+
+class exports.ExpertView extends BB.BadassView
+  logging: on
+  el: '#expert'
+  tmpl: require './templates/Expert'
+  initialize: ->
+    @listenTo @model, 'change', @render
+  render: ->
+    @$el.html @tmpl @model.toJSON()
+
 # class exports.SigninView extends BB.BadassView
 #   el: '#signin'
 #   events: { 'click .track': 'track' }

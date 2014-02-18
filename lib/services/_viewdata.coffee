@@ -75,7 +75,7 @@ module.exports = class ViewDataService
           orders: JSON.stringify orders
 
   book: (usr, id, callback) ->
-    eSvc.getById id, (e, r) =>
+    eSvc.getByBookme id, (e, r) =>
       if e then return callback e
       callback null,
         isAnonymous:  !usr?

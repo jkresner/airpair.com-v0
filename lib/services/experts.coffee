@@ -4,11 +4,14 @@ module.exports = class ExpertsService extends DomainService
 
   model: require './../models/expert'
 
-  # getByBookme: (urlSlug, callback) =>
-  #   @model.findOne({ 'bookMe.urlSlug': urlSlug }).lean().exec (e, r) =>
-  #     return callback e if e then
-  #     return callback null, {} if !r.bookMe || !r.bookMe.enabled
-  #     callback null, r
+
+  getByBookme: (urlSlug, callback) =>
+    @model.findOne({ 'bookMe.urlSlug': urlSlug, 'bookMe.enabled': true })
+      .lean().exec (e, r) =>
+        return callback e if e
+        return callback null, {} if !r || !r.bookMe || !r.bookMe.enabled
+        callback null, r
+
 
   admSelect:
     'userId': 1

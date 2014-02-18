@@ -1,0 +1,32 @@
+<h4 class="widget-title widgettitle">{{name}}</h4>
+<article class="entry">
+
+  <span class="alignright social-icons">
+    {{#if gh}}<a href="//github.com/{{ gh.username }}" target="_blank" class="github"></a>{{/if}}
+    {{#if so}}<a href="//stackoverflow.com/users/{{ so.link }}" target="_blank" class="stackoverflow"></a>{{/if }}
+    {{#if bb}}<a href="//bitbucket.org/{{ bb.id }}" target="_blank" class="bitbucket"></a>{{/if}}
+    {{#if in}}<a href="//linkedin.com/x/profile/sy5n2q8o2i49/{{ in.id }}" target="_blank" class="linkedin"></a>{{/if}}
+    {{#if tw}}<a href="//twitter.com/{{ tw.username }}" target="_blank" class="twitter"></a>{{/if}}
+  </span>
+  <span class="alignleft">
+    <img src="{{pic}}?s=200" class="avatar user" />
+  </span>
+  <header class="entry-header">
+    <h2 class="entry-title"><span class="label label-status label-available">available</span></h2>
+    <span class="entry-author">
+      {{#if homepage}}
+        <a href="http://{{homepage}}" target="_blank" class="guest">
+          {{name}}
+        </a>
+      {{else}}
+        {{name}}
+      {{/if}}
+    </span>
+    <label>${{ bookMe.rate }} p.h.</label>
+  </header>
+
+  <div class="entry-content">
+    {{markdown brief }}
+  </div>
+
+</article>

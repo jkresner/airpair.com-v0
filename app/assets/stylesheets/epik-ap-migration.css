@@ -127,6 +127,9 @@ body#review #expertReply .controls-agree { padding-top:20px; }
 body#review #expertReply .controls-agree input { float:left;width:20px; }
 body#review #expertReply .controls-agree span { font-size:11px;float:left;margin:0px 0px 10px 8px;color:#CC523E;width:360px; }
 
+body#book #detail { }
+body#book #none { padding:40px 0 200px 0 }
+
 #tagsInput header, .controls-tags header { font-size:11px;font-style:italic;border-bottom:dashed 1px #d3d3d3;padding:0 0 5px 5px;color:gray; }
 #tagsInput .autocomplete, .controls-tags .autocomplete { width:200px; }
 #tagsInput span, .controls-tags span { clear:both; }
