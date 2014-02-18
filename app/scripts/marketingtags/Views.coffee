@@ -3,12 +3,12 @@ BB = require './../../lib/BB'
 VIEW_DATA = [ 'group', 'type', 'name', '_id' ]
 Handlebars.registerPartial 'MarketingTag', require './templates/MarketingTag'
 
-class exports.MarketingTagSingleView extends BB.BadassView
+class MarketingTagView extends BB.BadassView
   tagName: 'span'
   tmpl: require './templates/MarketingTag'
   events:
     'click .marketingtag': 'select'
-  initialize: -> @model.on 'change', @render, @
+  initialize: -> @listenTo @model, 'change', @render
   render: ->
     @$el.html @tmpl @model.toJSON()
     # by putting the popover only over the text, it disappears when you hover
@@ -24,9 +24,8 @@ class exports.MarketingTagList extends BB.ModelSaveView
   initialize: -> @listenTo @collection, 'sync', @render
   render: ->
     $list = @$el.html ''
-    for m in @collection.models
-      single = new exports.MarketingTagSingleView model: m, selected: @selected
-      $list.append single.render().el
+    for model in @collection.models
+      $list.append new MarketingTagView({ model, @selected }).render().el
     @
 
 class exports.MarketingTagForm extends BB.ModelSaveView
@@ -38,11 +37,10 @@ class exports.MarketingTagForm extends BB.ModelSaveView
       $(e.currentTarget).attr('disabled', true)
       @save(e)
   initialize: ->
-    @listenTo @model, 'sync', @render
-    @render()
+    @listenTo @model, 'change', @render
+    @$el.html @tmpl {}
   render: ->
     @$el.html @tmpl @model.toJSON()
-    @setValsFromModel @viewData
     @
   renderSuccess: =>
     @$('.save').attr('disabled', false)

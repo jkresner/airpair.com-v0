@@ -5,8 +5,7 @@
 <div class="control-group">
   <label class="control-label" for="_id"><strong>_id</strong></label>
   <div class="controls">
-    <input name="_id" type="text" readonly
-      placeholder="_id">
+    <input name="_id" type="text" readonly placeholder="_id" value="{{_id}}">
   </div>
 </div>
 {{else}}
@@ -17,17 +16,17 @@
   <label class="control-label" for="name"><strong>name</strong>
     e.g. twitter. (must be unique)</label>
   <div class="controls">
-    <input name="name" type="text" class="input-medium"
-      placeholder="name">
+    <input name="name" type="text" class="input-medium" placeholder="name"
+      value="{{name}}">
   </div>
 </div>
 <div class="control-group">
   <label class="control-label" for="type"><strong>type</strong></label>
   <div class="controls">
     <select name="type" class="input-medium">
-      <option value="channel">channel</option>
-      <option value="campaign">campaign</option>
-      <option value="usage">usage</option>
+      <option value="channel" {{#is type 'channel'}}selected{{/is}}>channel</option>
+      <option value="campaign" {{#is type 'campaign'}}selected{{/is}}>campaign</option>
+      <option value="usage" {{#is type 'usage'}}selected{{/is}}>usage</option>
     </select>
   </div>
 </div>
@@ -37,21 +36,21 @@
     <select name="group" class="input-medium">
       <option value="" selected></option>
       <optgroup label="Channels">
-        <option>ad</option>
-        <option>affiliate</option>
-        <option>direct</option>
-        <option>newsletter</option>
-        <option>incubator</option>
-        <option>press</option>
-        <option>seo</option>
-        <option>social</option>
-        <option>wordofmouth</option>
-        <option>untracked</option>
+        <option {{#is group "ad"}}selected{{/is}}>ad</option>
+        <option {{#is group "affiliate"}}selected{{/is}}>affiliate</option>
+        <option {{#is group "direct"}}selected{{/is}}>direct</option>
+        <option {{#is group "newsletter"}}selected{{/is}}>newsletter</option>
+        <option {{#is group "incubator"}}selected{{/is}}>incubator</option>
+        <option {{#is group "press"}}selected{{/is}}>press</option>
+        <option {{#is group "seo"}}selected{{/is}}>seo</option>
+        <option {{#is group "social"}}selected{{/is}}>social</option>
+        <option {{#is group "wordofmouth"}}selected{{/is}}>wordofmouth</option>
+        <option {{#is group "untracked"}}selected{{/is}}>untracked</option>
       </optgroup>
       <optgroup label="Campaign">
-        <option>newsletter-airpair</option>
-        <option>newsletter-3rdparty</option>
-        <option>stackoverflow-ads</option>
+        <option {{#is group "newsletter-airpair"}}selected{{/is}}>newsletter-airpair</option>
+        <option {{#is group "newsletter-3rdparty"}}selected{{/is}}>newsletter-3rdparty</option>
+        <option {{#is group "stackoverflow-ads"}}selected{{/is}}>stackoverflow-ads</option>
       </optgroup>
     </select>
   </div>
