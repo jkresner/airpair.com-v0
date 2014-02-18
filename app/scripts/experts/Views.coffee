@@ -52,10 +52,13 @@ class exports.BookMeView extends BB.ModelSaveView
       @listenTo @model, 'change:bookMe', @render
   render: ->
     d = @model.get('bookMe')
-    @$el.html @tmpl if d? then d else {}
-    c = @model.get('bookMe').coupons
-    if c[0]? then @elm('code1').val(c[0].code); @elm('rate1').val(c[0].rate)
-    if c[1]? then @elm('code2').val(c[1].code); @elm('rate2').val(c[1].rate)
+    if !d?
+      @$el.html @tmpl {}
+    else
+      @$el.html @tmpl d
+      c = @model.get('bookMe').coupons
+      if c && c[0]? then @elm('code1').val(c[0].code); @elm('rate1').val(c[0].rate)
+      if c && c[1]? then @elm('code2').val(c[1].code); @elm('rate2').val(c[1].rate)
     @
   setEnabled: (e) ->
     bm =_.clone @model.get('bookMe')
