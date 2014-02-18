@@ -69,7 +69,7 @@ Call = new Schema
 
 
 RequestSchema = new Schema
-  userId:           { required: true, type: ObjectId }
+  userId:           { required: true, type: ObjectId, ref: 'User', index: true }
   company:          { required: true, type: Mixed }
   tags:             [{}]
   marketingTags:    { type: [{}], default: [] }
