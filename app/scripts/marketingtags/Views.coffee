@@ -1,35 +1,54 @@
 BB = require './../../lib/BB'
 
-VIEW_DATA = [ 'group', 'type', 'name']
+VIEW_DATA = [ 'group', 'type', 'name', '_id' ]
 Handlebars.registerPartial 'MarketingTag', require './templates/MarketingTag'
+
+class MarketingTagView extends BB.BadassView
+  tagName: 'span'
+  tmpl: require './templates/MarketingTag'
+  events:
+    'click .marketingtag': 'select'
+  initialize: -> @listenTo @model, 'change', @render
+  render: ->
+    @$el.html @tmpl @model.toJSON()
+    # by putting the popover only over the text, it disappears when you hover
+    # the delete button. We do this b/c .popover('destroy') is broken
+    @$el.popover(selector: '[data-toggle="popover"]')
+    @
+  select: ->
+    @selected.set '_id', @model.id, silent: true
+    @selected.fetch reset: true
+
+class exports.MarketingTagList extends BB.ModelSaveView
+  el: '#marketingTagList'
+  initialize: -> @listenTo @collection, 'sync', @render
+  render: ->
+    $list = @$el.html ''
+    for model in @collection.models
+      $list.append new MarketingTagView({ model, @selected }).render().el
+    @
 
 class exports.MarketingTagForm extends BB.ModelSaveView
   el: '#marketingTagForm'
   viewData: VIEW_DATA
-  tmpl: require './templates/MarketingTagList'
+  tmpl: require './templates/MarketingTagForm'
   events:
-    'click .save': 'addTag'
-    'click .delete': 'deleteTag'
+    'click .save': (e) ->
+      $(e.currentTarget).attr('disabled', true)
+      @save(e)
   initialize: ->
-    @listenTo @collection, 'sync', @render
-    # by putting the popover only over the text, it disappears when you hover
-    # the delete button. We do this b/c .popover('destroy') is broken
-    @$el.popover(selector: '[data-toggle="popover"]')
+    @listenTo @model, 'change', @render
+    @$el.html @tmpl {}
   render: ->
-    @$('#marketingTagList').html @tmpl { marketingTags: @collection.toJSON() }
+    @$el.html @tmpl @model.toJSON()
     @
-  addTag: (e) ->
-    @model.unset('_id')
-    @save e
-  deleteTag: (e) ->
-    e.preventDefault()
-    id = $(e.target).data('id')
-    model = _.find @collection.models, (m) -> m.get('_id') == id
-    model.destroy()
-    @collection.fetch()
-  renderSuccess: ->
+  renderSuccess: =>
+    @$('.save').attr('disabled', false)
     @$('.alert-success').fadeIn(800).fadeOut(5000)
-    @collection.fetch()
+    @collection.fetch reset: true
+  renderError: (model, response, options) ->
+    @$('.save').attr('disabled', false)
+    super model, response, options
 
 class exports.MarketingTagsInputView extends BB.HasBootstrapErrorStateView
   el: '#marketingTagsInput'
@@ -69,7 +88,7 @@ class exports.MarketingTagsInputView extends BB.HasBootstrapErrorStateView
     @_toggleMarketingTag data
     @$auto.val ''
   _toggleMarketingTag: (value) ->
-    tag = _.pick value, VIEW_DATA.concat '_id'
+    tag = _.pick value, VIEW_DATA
     equalById = (m) -> m._id == value._id
     @model.toggleAttrSublistElement 'marketingTags', tag, equalById
   deselect: (e) =>

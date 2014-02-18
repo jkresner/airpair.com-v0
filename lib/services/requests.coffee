@@ -1,10 +1,11 @@
-async         = require 'async'
-DomainService = require './_svc'
-Roles         = require '../identity/roles'
-RatesSvc      = require './rates'
-SettingsSvc   = require './settings'
-Order         = require '../models/order'
-User          = require '../models/user'
+async            = require 'async'
+DomainService    = require './_svc'
+Roles            = require '../identity/roles'
+Order            = require '../models/order'
+User             = require '../models/user'
+RatesSvc         = require './rates'
+SettingsSvc      = require './settings'
+MarketingTagsSvc = require './marketingtags'
 
 
 module.exports = class RequestsService extends DomainService
@@ -13,6 +14,7 @@ module.exports = class RequestsService extends DomainService
   model: require '../models/request'
   rates: new RatesSvc()
   settingsSvc: new SettingsSvc()
+  mTagsSvc: new MarketingTagsSvc()
 
   publicView: (request) ->
     r = _.pick request, ['_id','tags','company','brief','availability','owner']
@@ -69,16 +71,14 @@ module.exports = class RequestsService extends DomainService
 
       callback null, request
 
-  update: (id, data, callback) ->
+  update: (id, data, callback) =>
     @model.findByIdAndUpdate(id, data).lean().exec (e, r) =>
       if e then return callback e
       @_setRatesForRequest r
 
-      # copy owner and marketingTags to every associated order.
-      updates = { marketingTags: r.marketingTags, owner: r.owner || '' }
-      Order.update { requestId: id }, updates, multi: true, (err, numChanged) =>
+      @mTagsSvc.copyToOrders id, r.marketingTags, r.owner, (err, numChanged) =>
         if err then return callback err
-        callback(null, r)
+        callback null, r
 
   _setRatesForRequest: (request) ->
     for suggested in request.suggested

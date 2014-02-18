@@ -9,10 +9,13 @@ module.exports = class Router extends S.AirpairSessionRouter
   enableExternalProviders: off
   appConstructor: (pageData, callback) ->
     d =
-      marketingTag: new M.MarketingTag();
-      marketingTags: new C.MarketingTags();
+      marketingTag: new M.MarketingTag()
+      marketingTags: new C.MarketingTags()
     v =
-      marketingTagForm: new V.MarketingTagForm model: d.marketingTag, collection: d.marketingTags
+      marketingTagList: new V.MarketingTagList
+        selected: d.marketingTag, collection: d.marketingTags
+      marketingTagForm: new V.MarketingTagForm
+        model: d.marketingTag, collection: d.marketingTags
 
     @resetOrFetch d.marketingTags, pageData.marketingTags
 
