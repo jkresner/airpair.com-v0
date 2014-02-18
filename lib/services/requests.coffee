@@ -100,16 +100,30 @@ module.exports = class RequestsService extends DomainService
     'suggested.expert.pic': 1
     'tags.short': 1
     'calls.recordings.type': 1
+    'userId': 1
 
   # Used for adm/inbound dashboard list
   getActive: (callback) ->
-    @model.find({}, @inboundSelect)
-      .where('status').in(['received','incomplete','review','scheduled','holding'])
-      .lean()
-      .exec (e, requests) =>
-        if e then return callback e
-        if !requests then requests = {}
+    query = status: $in: ['received', 'incomplete', 'review', 'scheduled', 'holding']
+    @model.find(query, @inboundSelect).lean().exec (e, requests) =>
+      if e then return callback e
+      if !requests then requests = {}
+
+      receivedList = _.filter requests, (r) ->
+        r.status == 'received' && !r.owner
+      async.each receivedList, iterator, (err) =>
+        if err then return callback err
         callback null, requests
+
+    iterator = (receivedReq, cb) =>
+      query =
+        userId: receivedReq.userId
+        status: $nin: ['received']
+      @model.find query, 'owner': 1, (e, prevRequests) =>
+        if e then return cb e
+        if prevRequests && prevRequests[0]
+          receivedReq.prevOwner = prevRequests[0].owner
+        cb()
 
   # Used for history
   getInactive: (callback) ->
