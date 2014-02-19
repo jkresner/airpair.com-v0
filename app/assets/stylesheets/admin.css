@@ -1,3 +1,14 @@
+a.mp { width:32px;height:32px;background:url('/images/icons/mp.png');display:inline-block }
+a.em { width:32px;height:32px;background:url('/images/icons/em.png');display:inline-block }
+a.gm { width:32px;height:32px;background:url('/images/icons/gm.png');display:inline-block }
+a.gh { width:32px;height:32px;background:url('/images/icons/gh.png');display:inline-block }
+a.so { width:32px;height:32px;background:url('/images/icons/so.png');display:inline-block }
+a.bb { width:32px;height:32px;background:url('/images/icons/bb.png');display:inline-block }
+a.in { width:32px;height:32px;background:url('/images/icons/in.png');display:inline-block }
+a.tw { width:32px;height:32px;background:url('/images/icons/tw.png');display:inline-block }
+a.hm { width:32px;height:32px;background:url('/images/icons/hm.png');display:inline-block }
+a.ap { width:32px;height:32px;background:url('/images/icons/ap.png');display:inline-block }
+
 .marketingTagsInput { float:left;padding:8px 0px 12px 0px; }
 .marketingTagsInput .selected {
   display: inline;
@@ -36,16 +47,25 @@
 nav a.zocial { padding:0; }
 
 .admin-nav { margin-top:0;padding:15px 10px; }
+.admin-nav .controls { margin-left:5px!important; }
 
 /* keep the delete button away from the other buttons */
 .controls a.btn-danger:last-child { float: right; }
 
 body#admexperts {}
 body#admexperts table { width:100% }
-body#admexperts table#experts img { max-width:40px }
-body#admexperts table#experts td { font-size:11px; }
-body#admexperts table#expertPreview { float:right;width:300px }
-body#admexperts table.select { font-weight:bold }
+body#admexperts table#experts img { max-width:36px }
+body#admexperts table#experts td { font-size:11px;padding:4px 8px 0px 8px!important; }
+body#admexperts table#experts td.i a { display:inline-block;font-size:16px;padding-left:4px; }
+body#admexperts table#experts .label { font-weight:normal }
+body#admexperts #info { float:left;width:53%;border-right:solid 1px #d3d3d3;padding-right:20px;margin-right:20px }
+body#admexperts #info .links { float:right;line-height:10px;margin-bottom:20px; }
+body#admexperts #info img.pic { clear:right;float:right;max-width:80px;max-height:80px }
+body#admexperts .control-label { width:64px;font-weight:bold }
+body#admexperts .controls { margin-left:74px; }
+body#admexperts #bookme { float:right;width:540px; }
+body#admexperts .rb-group label { float:left;margin:5px 6px 0px 0px }
+body#admexperts .rb-group input { float:left;margin:9px 26px 0px 0px }
 
 #admorderspage {}
 #admorderspage .selectOrder { display:block;font-size:9px; }
@@ -172,15 +192,16 @@ body#admexperts table.select { font-weight:bold }
 #adminboundpage #suggestions .sortBy label { display: inline; margin-right: 10px;}
 #adminboundpage #suggestions .sortBy input { vertical-align: baseline; margin-right: 5px;}
 #adminboundpage #suggestions .nav-pills { padding-top:10px }
-#adminboundpage .suggestion { float:left;margin-bottom:6px }
+#adminboundpage .suggestion { float:left;margin:0px 3px 6px 0px;line-height:18px;font-size:10px;border:none }
 #adminboundpage .suggestion .pic { width:40px;margin:2px;float:left; }
 #adminboundpage .suggestion .deets { overflow:hidden;height:76px }
 #adminboundpage .suggestion .fullName { font-size:9px;line-height:12px;max-height:24px;overflow:hidden; }
 #adminboundpage .suggestion .links { width:50%;margin:0 4px 0px 0px;float:right; }
 #adminboundpage .suggestion .tags { padding:1px 2px!important;clear:both;height:100px;overflow:hidden }
 #adminboundpage .suggestion .label-tag { padding:0px 2px 1px 2px;font-size:9px;margin-bottom:1px }
-#adminboundpage .suggestion .add-suggestion { padding-top:0px;width:48px;line-height:13px;margin:0;float:left;height:26px; }
-#adminboundpage .suggestion a.email { padding:4px 7px;margin:0;float:left; }
+#adminboundpage .suggestion .add { padding:0px 5px;width:32px;line-height:13px;margin:-21px 0 0 0;height:27px; }
+#adminboundpage .suggestion a.em { width:28px;height:28px;margin:0;display:inline-block }
+#adminboundpage .suggestion a.ap { width:28px;height:28px;margin:0;display:inline-block }
 #adminboundpage .suggested { border-top:solid 0.5px #d3d3d3;margin:5px; }
 #adminboundpage .suggested hr { margin:0; }
 #adminboundpage .suggested .pic { width:40px;height:40px;margin:0;float:left; }

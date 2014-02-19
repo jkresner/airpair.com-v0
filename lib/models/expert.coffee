@@ -12,19 +12,18 @@ Coupon =
 # # # This object helps us to motivate our experts to promote us
 # # # E.g. if they do a certain amount of hours we change our rake and they
 # # # Get paid more.
-Affiliate =
-  rake:           { required: true, type: Number, default: 30 }     # E.g. 30%
+# Affiliate =
+#   rake:           { required: true, type: Number, default: 30 }     # E.g. 30%
 
 
 # This object helps lets us build a landing page for an expert
 Bookme =
   enabled:        { required: true, type: Boolean    }  # allow us or the expert to turn themselves off
-  urlSlug:        { required: true, type: String     }  # https://www.airpair.com/@domenic (urlSlug == 'domnic')
-  urlBitly:       { required: true, type: String     }  # urlBitly == http://airpa.ir/book-domenic
+  urlSlug:        { required: true, type: String , index: true }  # https://www.airpair.com/@domenic (urlSlug == 'domnic')
   urlBlog:        String                                # www.airpair.com/node.js/expert-training-domenic-denicola
   rate:           { required: true, type: Number     }  # experts external rate
+  rake:           { required: true, type: Number     }  # allow the expert commission deals
   coupons:        [Coupon]                              # allow the expert to hand out promotions
-  affiliate:      { required: true, type: Affiliate  }  # allow the expert commission deals
 
 
 schema = new Schema
@@ -37,6 +36,7 @@ schema = new Schema
   homepage:       String      # homepage
   sideproject:    String      # sideproject Url
   other:          String      # other url
+  gp:             {}          # googleplus
   gh:             {}          # github
   so:             {}          # stackoverflow
   bb:             {}          # bitbucket

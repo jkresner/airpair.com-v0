@@ -6,22 +6,31 @@ V = require './Views'
 
 module.exports = class Router extends S.AirpairSessionRouter
 
-  pushStateRoot: '/@'
+  pushStateRoot: '/book'
 
   routes:
-    ':id': 'index'
+    'none'  : 'none'
+    ':id'   : 'detail'
+
 
   appConstructor: (pageData, callback) ->
-    e =
+    d =
       expert: new M.Expert()
       request: new M.Request()
       tags: new C.Tags()
     v =
+      expertView: new V.ExpertView model: d.expert
+      # requestView: new V.RequestView()
       # signinView: new V.SigninView()
 
-    _.extend e, v
+    @setOrFetch d.expert, pageData.expert
+
+    _.extend d, v
 
   initialize: (args) ->
 
-  index: (id) ->
-    # todo
+  detail: (id) ->
+    if !@app.expert.id? then return @none()
+    $('#detail').show()
+
+

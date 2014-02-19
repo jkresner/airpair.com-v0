@@ -21,7 +21,7 @@ module.exports = (app) ->
   app.get '/find-an-expert*', render 'request'
   app.get '/dashboard*', authd, render 'dashboard'
   app.get '/settings*', authd, render 'settings'
-  app.get '/@:id', render 'book', ['params.id']
+  app.get '/book/:id', render 'book', ['params.id']
   app.get '/review/:id', render 'review', ['params.id']
   app.get '/review/book/:id', authd, render 'review', ['params.id']
 

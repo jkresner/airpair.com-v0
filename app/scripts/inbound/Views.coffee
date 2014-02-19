@@ -248,7 +248,7 @@ class exports.RequestSuggestionsView extends BB.BadassView
   tmplSuggestion: require './templates/RequestSuggestion'
   events:
     'input .autocomplete': 'renderSearchSuggestions'
-    'click .add-suggestion': 'add'
+    'click .add': 'add'
     'click .js-tag': 'filterTag'
     'click .sortBy input': 'sort'
   initialize: ->

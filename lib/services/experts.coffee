@@ -4,11 +4,13 @@ module.exports = class ExpertsService extends DomainService
 
   model: require './../models/expert'
 
-  # getByBookme: (urlSlug, callback) =>
-  #   @model.findOne({ 'bookMe.urlSlug': urlSlug }).lean().exec (e, r) =>
-  #     return callback e if e then
-  #     return callback null, {} if !r.bookMe || !r.bookMe.enabled
-  #     callback null, r
+
+  getByBookme: (urlSlug, callback) =>
+    @model.findOne({ 'bookMe.urlSlug': urlSlug, 'bookMe.enabled': true })
+      .lean().exec (e, r) =>
+        r = {} if !r || !r.bookMe || !r.bookMe.enabled
+        callback e, r
+
 
   admSelect:
     'userId': 1
@@ -36,6 +38,6 @@ module.exports = class ExpertsService extends DomainService
     query = rate: { $gt: 0 }
     options = lean: true
     @model.find query, @admSelect, options, (e, r) =>
-        if e then return callback e
-        if !r then r = []
-        callback null, r
+      if e then return callback e
+      if !r then r = []
+      callback null, r

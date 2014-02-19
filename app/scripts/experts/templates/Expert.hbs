@@ -2,16 +2,18 @@
   <div class="controls">
     <a href="#list" class="btn">Back</a>
     <a href="#" class="btn btn-primary save">Save</a>
-    <a href="#" class="btn btn-danger deleteRequest">Delete</a>
+    <a href="#" class="btn btn-danger deleteExpert">Delete</a>
   </div>
 </div>
 
-
 <fieldset id="info" class="form-horizontal">
 
-  <div class="links"></div>
+  <div style="float:right;width:320px">
+    <div class="links"></div>
+    <img class="pic" src="#">
+  </div>
 
-  <div>
+  <div style="float:left;width:310px">
     <div class="control-group">
       <label class="control-label" for="devName">Name</label>
       <div class="controls">
@@ -30,10 +32,12 @@
         <input type="text" id="devGmail" name="gmail" placeholder="Gmail" value="{{ gmail }}" data-error-style="inline">
       </div>
     </div>
+  </div>
+  <div style="clear:both">
     <div class="control-group">
       <label class="control-label" for="skillShort">Pic</label>
       <div class="controls">
-        <input type="text" id="devPic" name="pic" placeholder="Picture Url" value="{{ pic }}" data-error-style="inline" style="width:500px">
+        <input type="text" id="devPic" name="pic" placeholder="Picture Url" value="{{ pic }}" data-error-style="inline" style="width:489px"><a href="#" class="btn btn-gravatar">Gravatar</a>
       </div>
     </div>
     <div class="control-group">
@@ -55,12 +59,12 @@
     <div class="control-group">
       <label class="control-label" for="brief">Brief</label>
       <div class="controls controls-brief">
-        <textarea id="brief" name="brief" style="width:500px">{{ brief }}</textarea>
+        <textarea id="brief" name="brief" style="width:96%;height:140px">{{ brief }}</textarea>
       </div>
     </div>
 
     <div class="control-group">
-      <label class="control-label" for="reqHrs">Hours / wk</label>
+      <label class="control-label" for="reqHrs">Hrs /wk</label>
       <div class="controls">
         <select id="hours" name="hours" class="span2">
           <option value="1">1</option>
@@ -95,51 +99,4 @@
 
 </fieldset>
 
-<fieldset id="bookme" class="form-horizontal">
-
-  {{#with bookMe}}
-
-  <div class="control-group">
-    <label class="control-label">enabled</label>
-    <div class="controls">
-      <select name="enabled">
-        <option>false</option>
-        <option>true</option>
-      </select>
-    </div>
-  </div>
-
-
-  <div class="control-group">
-    <label class="control-label">rate</label>
-    <div class="controls">
-      <input type="text" placeholder="rate" value="" data-error-style="inline">
-    </div>
-  </div>
-
-  <div class="control-group">
-    <label class="control-label">urlSlug</label>
-    <div class="controls">
-      <input type="text" placeholder="urlSlug" value="" data-error-style="inline">
-    </div>
-  </div>
-
-
-  <div class="control-group">
-    <label class="control-label">urlBitly</label>
-    <div class="controls">
-      <input type="text" placeholder="urlBitly" value="" data-error-style="inline">
-    </div>
-  </div>
-
-
-  <div class="control-group">
-    <label class="control-label">urlBlog</label>
-    <div class="controls">
-      <input type="text" placeholder="urlBlog" value="" data-error-style="inline">
-    </div>
-  </div>
-
-  {{/with}}
-
-</fieldset>
+<fieldset id="bookMe" class="form-horizontal"></fieldset>
