@@ -47,7 +47,9 @@ class exports.BookMeView extends BB.ModelSaveView
   events:
     'change .enabled': 'setEnabled'
   initialize: ->
-    @listenTo @model, 'change:bookMe', @render
+    @model.once 'change', =>
+      @render()
+      @listenTo @model, 'change:bookMe', @render
   render: ->
     d = @model.get('bookMe')
     if !d?
