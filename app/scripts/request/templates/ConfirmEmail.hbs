@@ -3,26 +3,37 @@
     <article class="post type-post format-standard entry">
       <header class="entry-header">
         <h1 class="entry-title" itemprop="headline">Find Your Expert</h1>
-        <p class="entry-meta"><time>Step 2 of 3:</time>
+        <p class="entry-meta"><time>Optional:</time>
           <b>Confirm your email address</b>
         </p>
       </header>
       <div class="entry-content" style="padding:20px">
 
-        <p style="width:620px;margin:0 0 20px 0">Shortly, you will receive an email from your Customer Account Manager.</p>
+        <p>Shortly, you will receive an email from your Customer Account Manager.</p>
+
+        <p>Please verify your email with a short message to <a target="_blank" href="mailto:team@airpair.com?Subject=Verify Email ({{tagsString}})&Body=Hi Team,%0AThis is a short message to verify my email.%0A%0A(https://www.airpair.com/review/{{requestId}})">team@airpair.com</a>.</p>
+
+        <p>Please also add us to your circles so our emails make it to your inbox.</p>
+        <!-- Place this tag where you want the widget to render. -->
+        <div class="g-person" data-width="400" data-href="//plus.google.com/105075583437166504731" data-layout="landscape" data-rel="author"></div>
+
+        <!-- Place this tag in your head or just before your close body tag. -->
+        <script type="text/javascript" src="https://apis.google.com/js/platform.js"></script>
+
+        <br>
+        <br>
+
         <div class="alert alert-error">
           <button type="button" class="close" data-dismiss="alert">&times;</button>
           <h4>Error</h4>
         </div>
 
-          <div class="control-group">
-            <label class="control-label">Please confirm we have the right address</label>
-            <div class="controls">
-              <input type="text" data-error-style="inline" value="{{ email }}" placeholder="Email" name="email" id="contactEmail" class="input-block-level" style="width:400px">
-            </div>
+        <div class="control-group">
+          <label class="control-label">Please confirm we have the right email for you</label>
+          <div class="controls">
+            <input type="text" data-error-style="inline" value="{{ email }}" placeholder="Email" name="email" id="contactEmail" class="input-block-level" style="width:400px">
           </div>
-
-        <div style="clear:both"></div>
+        </div>
 
       </div>
       <footer class="entry-footer">
