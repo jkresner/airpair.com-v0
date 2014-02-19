@@ -19,7 +19,7 @@ Coupon =
 # This object helps lets us build a landing page for an expert
 Bookme =
   enabled:        { required: true, type: Boolean    }  # allow us or the expert to turn themselves off
-  urlSlug:        { required: true, type: String     }  # https://www.airpair.com/@domenic (urlSlug == 'domnic')
+  urlSlug:        { required: true, type: String , index: true }  # https://www.airpair.com/@domenic (urlSlug == 'domnic')
   urlBlog:        String                                # www.airpair.com/node.js/expert-training-domenic-denicola
   rate:           { required: true, type: Number     }  # experts external rate
   rake:           { required: true, type: Number     }  # allow the expert commission deals

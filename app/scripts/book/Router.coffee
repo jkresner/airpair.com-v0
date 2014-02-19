@@ -19,7 +19,7 @@ module.exports = class Router extends S.AirpairSessionRouter
       request: new M.Request()
       tags: new C.Tags()
     v =
-      expertView: new V.ExpertView model:d.expert
+      expertView: new V.ExpertView model: d.expert
       # requestView: new V.RequestView()
       # signinView: new V.SigninView()
 

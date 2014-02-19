@@ -47,9 +47,7 @@ class exports.BookMeView extends BB.ModelSaveView
   events:
     'change .enabled': 'setEnabled'
   initialize: ->
-    @model.once 'change', =>
-      @render()
-      @listenTo @model, 'change:bookMe', @render
+    @listenTo @model, 'change:bookMe', @render
   render: ->
     d = @model.get('bookMe')
     if !d?
@@ -57,19 +55,19 @@ class exports.BookMeView extends BB.ModelSaveView
     else
       @$el.html @tmpl d
       c = @model.get('bookMe').coupons
-      if c && c[0]? then @elm('code1').val(c[0].code); @elm('rate1').val(c[0].rate)
-      if c && c[1]? then @elm('code2').val(c[1].code); @elm('rate2').val(c[1].rate)
+      if c && c[0] then @elm('code1').val(c[0].code); @elm('rate1').val(c[0].rate)
+      if c && c[1] then @elm('code2').val(c[1].code); @elm('rate2').val(c[1].rate)
     @
   setEnabled: (e) ->
     bm =_.clone @model.get('bookMe')
     if !bm?
       @model.set 'bookMe', { enabled: true }
     else
-      bm.enabled = @elm('enabled').val() is 'true'
+      bm.enabled = @elm('enabled').val() == 'true'
       @model.set 'bookMe', bm
   getViewData: ->
     d = @getValsFromInputs @viewData
-    d.enabled = @elm('enabled').val() is 'true'
+    d.enabled = @elm('enabled').val() == 'true'
     d.coupons = []
     if @elm('code1').val() then d.coupons.push { code: @elm('code1').val(), rate: @elm('rate1').val() }
     if @elm('code2').val() then d.coupons.push { code: @elm('code2').val(), rate: @elm('rate2').val() }
@@ -91,7 +89,7 @@ class exports.ExpertView extends BB.ModelSaveView
     @listenTo @model, 'change', @render
   render: (model) ->
     @setValsFromModel ['name', 'email', 'gmail', 'pic', 'homepage', 'brief', 'hours']
-    @$("img.pic").prop('src',@model.get('pic'))
+    @$("img.pic").prop 'src', @model.get('pic')
     @$(":radio[value=#{@model.get('rate')}]").prop('checked',true).click()
     @$(":radio[value=#{@model.get('status')}]").prop('checked',true).click()
     @$(".links").html @tmplLinks @model.toJSON()
@@ -99,10 +97,10 @@ class exports.ExpertView extends BB.ModelSaveView
     @
   renderSuccess: (model, response, options) =>
     @$('.alert-success').fadeIn(800).fadeOut(5000)
-    # if @collection.length > 0
-    #   m = @collection.findWhere(_id: model.id)
-    #   m.set model.attributes
-    #   m.trigger 'change' # for the expert row to re-render
+    m = @collection.findWhere(_id: model.id)
+    if m
+      m.set model.attributes
+      m.trigger 'change' # for the expert row to re-render
   getViewData: ->
     pic: @elm('pic').val()
     homepage: @elm('homepage').val()
