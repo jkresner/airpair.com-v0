@@ -6,7 +6,8 @@ User             = require '../models/user'
 RatesSvc         = require './rates'
 SettingsSvc      = require './settings'
 MarketingTagsSvc = require './marketingtags'
-
+UsersSvc         = require './users'
+panel            = require './wrappers/mixpanel'
 
 module.exports = class RequestsService extends DomainService
 
@@ -15,6 +16,7 @@ module.exports = class RequestsService extends DomainService
   rates: new RatesSvc()
   settingsSvc: new SettingsSvc()
   mTagsSvc: new MarketingTagsSvc()
+  userSvc: new UsersSvc()
 
   publicView: (request) ->
     r = _.pick request, ['_id','tags','company','brief','availability','owner']
@@ -59,10 +61,12 @@ module.exports = class RequestsService extends DomainService
         if Roles.isAdmin usr
           request = r
           r.base = @rates.base
-          # TODO does this work? or only on first signin?
-          return User.findOne('_id': r.userId).lean().exec (e, user) =>
+
+          return User.findById(r.userId).lean().exec (e, user) =>
             request.company.contacts[0].mixpanelId = user?.cohort?.mixpanel?.id
+            request.firstEvent = panel.firstEvent user?.cohort?.mixpanel?.data
             callback null, request
+
         else if Roles.isRequestExpert usr, r
           @addViewEvent r, usr, "expert view"
           request = @associatedView r

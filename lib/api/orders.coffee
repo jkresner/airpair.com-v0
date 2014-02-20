@@ -32,6 +32,8 @@ class OrdersApi
       name: req.body.company.name
       contacts: req.body.company.contacts
     order.paymentMethod = req.body.paymentMethod
+    # TODO copy over initial referrer as well
+    # TODO put these properties on the user object instead of the order object
     order.utm = req.body.utm
 
     toPick = ['_id','userId','name','username','rate','email','pic','paymentMethod']

@@ -209,6 +209,7 @@ class exports.RequestInfoView extends BB.ModelSaveView
       @listenTo @model, "change:#{prop}", @render
     @listenTo @model, 'change:tags', @renderMailTemplates
     @listenTo @model, 'change:company', @renderMailTemplates
+    @listenTo @customer, 'change', @renderMailTemplates
   render: ->
     @setValsFromModel @modelProps
     # TODO: kinda hacky:
@@ -222,7 +223,11 @@ class exports.RequestInfoView extends BB.ModelSaveView
       mailTemplates: mailTemplates,
       tagsString: @model.tagsString()
       threeTagsString: @model.threeTagsString()
+      mixpanelId: @customer.get('cohort')?.mixpanel?.id
     tmplCompanyData = _.extend data, @mget('company')
+    # TODO really strange bug here where the mixpanelId is defined, but doesnt
+    # get rendered into the template!
+    # console.log 'mixpanelId', tmplCompanyData.mixpanelId
     @$('#company-controls').html @tmplCompany(tmplCompanyData)
     @$('[data-toggle="popover"]').popover()
   toggleCanceledIncompleteFields: =>
@@ -236,10 +241,23 @@ class exports.RequestInfoView extends BB.ModelSaveView
 class exports.RequestMarketingTagsInfoView extends BB.BadassView
   el: '#marketingTagsInfo'
   tmpl: require './templates/RequestMarketingTagsInfo'
+  tmplMixpanel: require './templates/Mixpanel'
   initialize: ->
     @$el.html @tmpl()
     @marketingTagsInput = new SV.MarketingTagsInputView
       model: @model, collection: @marketingTags
+    @listenTo @model, 'change:userId', @fetchCustomer
+    @listenTo @model, 'change:marketingTags', @render
+    @listenTo @customer, 'change', @render
+    @
+  fetchCustomer: =>
+    @customer.set '_id', @model.get('userId'), silent: true
+    @customer.fetch reset: true
+  render: =>
+    firstEvent = @customer.get('cohort')?.mixpanel?.data?.results?.events?[0]
+    firstEvent = _.omit firstEvent, ['time', 'distinct_id']
+    firstEvent = JSON.stringify(firstEvent, null, 2).replace(/[{}]/gi, '').trim()
+    @$('.mixpanel').html @tmplMixpanel @model.extendJSON(firstEvent: firstEvent)
 
 class exports.RequestSuggestionsView extends BB.BadassView
   # logging: on
@@ -390,8 +408,8 @@ class exports.RequestView extends BB.ModelSaveView
     @$el.html @tmpl()
     @navView = new exports.RequestNavView el: '#requestNav', model: @model, collection: @collection
     @eventsView = new exports.RequestEventsView el: '#events', model: @model
-    @infoView = new exports.RequestInfoView model: @model, tags: @tags, marketingTags: @marketingTags, session: @session, parentView: @
-    @marketingInfoView = new exports.RequestMarketingTagsInfoView model: @model, marketingTags: @marketingTags, parentView: @
+    @infoView = new exports.RequestInfoView model: @model, tags: @tags, marketingTags: @marketingTags, session: @session, customer: @customer, parentView: @
+    @marketingInfoView = new exports.RequestMarketingTagsInfoView model: @model, marketingTags: @marketingTags, customer: @customer, parentView: @
     @suggestionsView = new exports.RequestSuggestionsView model: @model, collection: @experts, parentView: @
     @suggestedView = new exports.RequestSuggestedView model: @model, collection: @experts, session: @session, orders: @orders, parentView: @
     @callsView = new exports.RequestCallsView el: '#calls', model: @model, parentView: @

@@ -72,6 +72,9 @@ module.exports = class OrdersService extends DomainService
       total: order.total, profit: order.profit, type: type
     }
 
+    # TODO pull these off the user object instead
+    # TODO also pull off the inital referrer and send it to mixpanel in the
+    # customerpayment event
     if order.utm?
       props.utm_source   = order.utm.utm_source
       props.utm_medium   = order.utm.utm_medium

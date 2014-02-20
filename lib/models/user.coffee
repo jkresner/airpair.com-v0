@@ -21,5 +21,7 @@ User = new Schema
   cohort:       {}
   #  mixpanel:
   #    id:
+  #    utm:
+  #    data: exported from mixpanel
 
 module.exports = mongoose.model 'User', User

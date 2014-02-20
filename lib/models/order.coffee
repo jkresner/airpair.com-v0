@@ -41,6 +41,7 @@ schema = new Schema
   payment:        { required: true, type: {} }
   payouts:        { type: [ExpertPayout] }
   paymentStatus:  { required: true, type: String, default: 'pending' }
+  # TODO remove this, it is going on the user object
   utm:            { required: false, type: {} }
   # when a request is saved, this gets copied over from request.owner
   owner:          { type: String, default: '' }

@@ -64,6 +64,9 @@ class exports.OrderView extends BB.ModelSaveView
       e.preventDefault()
       alert('please select at least one hour')
     else
+      # TODO also send up initial referrer.
+      # TODO might be able to remove this if every dashboard hit saves these,
+      # and we import them from mixpanel as well.
       if mixpanel? && mixpanel.get_property? && mixpanel.get_property('utm_source')?
         utm_values =
           utm_source: mixpanel.get_property('utm_source')

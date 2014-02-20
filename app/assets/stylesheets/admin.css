@@ -9,7 +9,7 @@ a.tw { width:32px;height:32px;background:url('/images/icons/tw.png');display:inl
 a.hm { width:32px;height:32px;background:url('/images/icons/hm.png');display:inline-block }
 a.ap { width:32px;height:32px;background:url('/images/icons/ap.png');display:inline-block }
 
-.marketingTagsInput { float:left;padding:8px 0px 12px 0px; }
+.marketingTagsInput { float:left;padding:8px 0px 0px 0px; margin-bottom: 12px; }
 .marketingTagsInput .selected {
   display: inline;
 }
@@ -42,7 +42,7 @@ a.ap { width:32px;height:32px;background:url('/images/icons/ap.png');display:inl
   color: #3a87ad;
   background-color: #d9edf7;
 }
-.marketingtag a.delete { display: none; }
+
 
 nav a.zocial { padding:0; }
 
@@ -292,6 +292,7 @@ body#admexperts .rb-group input { float:left;margin:9px 26px 0px 0px }
   background: darkgray;
   border: solid 3px gray;
 }
+#admmarketingtagspage .marketingtag a.delete { display: none; }
 
 nav div { padding-top:6px;height:54px;width:1240px;margin:auto;border-bottom:solid 1px white; }
 nav div > a { float:left; }
