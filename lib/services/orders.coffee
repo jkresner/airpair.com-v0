@@ -260,6 +260,15 @@ module.exports = class OrdersService extends DomainService
       modifiedOrders = @_markComplete modifiedOrders, call
       @_saveLineItems modifiedOrders, cb
 
+  # when a recording has been added to a call and nothing else has changed,
+  # this is used to complete the relevant hours on the orders
+  updateCompletion: (requestId, call, cb) =>
+    @getByRequestId requestId, (err, orders) =>
+      if err then return cb err
+
+      modifiedOrders = @_markComplete orders, call
+      @_saveLineItems modifiedOrders, cb
+
   # adds the appropriate redeemedCall object to orders that match the call's
   # criteria (same type, same expert).
   # the math.min stuff allows a 3 hour call to be spread across more than one
@@ -294,7 +303,7 @@ module.exports = class OrdersService extends DomainService
     for order in orders
       for li in order.lineItems
         for rc in li.redeemedCalls
-          if rc.callId != call._id then continue
+          if !_.idsEqual(rc.callId, call._id) then continue
           # the length of the video doesn't matter; any video marks it completed
           rc.qtyCompleted = rc.qtyRedeemed
     orders

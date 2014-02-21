@@ -1,8 +1,4 @@
 {http,_,sinon,chai,expect,dbConnect,dbDestroy} = require '../test-lib-setup'
-
-# NOTE: this causes mocha-phantom to hang instead of exiting!
-# chai.Assertion.includeStack = true;
-
 {app, data} = require '../test-app-setup'
 
 async     = require 'async'
@@ -261,8 +257,8 @@ describe "RequestCallsService", ->
       saveOrdersForRequest orders, newRequest, (err, newOrders) =>
         if err then return done err
 
-        # console.log JSON.stringify(_.flatten(_.pluck(_.flatten(_.pluck(orders,
-        #  'lineItems')), 'redeemedCalls')), null, 2)
+        # console.log JSON.stringify(_.flatten(_.pluck(_.flatten(
+        #   _.pluck(orders, 'lineItems')), 'redeemedCalls')), null, 2)
         c = calcExpertCredit(newOrders, expertId)
         expect(c.redeemed).to.equal 2
         expect(c.completed).to.equal 0
@@ -313,4 +309,18 @@ describe "RequestCallsService", ->
             expect(c.redeemed).to.equal 9
             expect(c.completed).to.equal 0
             expect(c.balance).to.equal 3
-            done()
+            addRecording(newCall)
+
+    addRecording = (call) ->
+      call.recordings = [ { type: 'fake-recording', data: none: true } ]
+      svc.update request.userId, request._id, call, (err, newCall) =>
+        if err then return done err
+        expect(newCall.duration).to.equal 7
+
+        ordersSvc.getByRequestId request._id, (err, orders) =>
+          if err then return done err
+          c = calcExpertCredit(orders, expertId)
+          expect(c.redeemed).to.equal 9
+          expect(c.completed).to.equal 7
+          expect(c.balance).to.equal 3
+          done()
