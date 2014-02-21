@@ -335,6 +335,7 @@ class exports.RequestSuggestedView extends BB.BadassView
           requestId: @model.id,
           mailTemplates: mailTemplates
           tagsString: @model.tagsString(),
+          threeTagsString: @model.threeTagsString()
           rates: rates
         @$el.append @tmpl _.extend tmplData, s
     @
