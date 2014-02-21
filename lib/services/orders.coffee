@@ -1,11 +1,13 @@
 async    = require 'async'
 mongoose = require 'mongoose'
 
-mailman     = require '../mail/mailman'
-Roles       = require '../identity/roles'
-sum         = require '../../app/scripts/shared/mix/sum'
-canSchedule = require '../../app/scripts/shared/mix/canSchedule'
-unschedule  = require '../../app/scripts/shared/mix/unschedule'
+mailman          = require '../mail/mailman'
+Roles            = require '../identity/roles'
+sum              = require '../../app/scripts/shared/mix/sum'
+canSchedule      = require '../../app/scripts/shared/mix/canSchedule'
+unschedule       = require '../../app/scripts/shared/mix/unschedule'
+calcExpertCredit = require '../../app/scripts/shared/mix/calcExpertCredit'
+calcRedeemed     = calcExpertCredit.calcRedeemed
 
 DomainService     = require './_svc'
 PaypalAdaptiveSvc = require '../services/payment/paypal-adaptive'
@@ -263,35 +265,32 @@ module.exports = class OrdersService extends DomainService
   # the math.min stuff allows a 3 hour call to be spread across more than one
   # lineItem (the customer made more than one order).
   _modifyWithDuration: (orders, call) =>
-    allocatedSoFar = 0
-    done = false
+    toAllocate = call.duration
     modified = []
     for order in orders
-      if done then break
+      if toAllocate == 0 then break
       order.lineItems.filter (lineItem) =>
         sameType = lineItem.type == call.type
         sameExpert = _.idsEqual lineItem.suggestion.expert._id, call.expertId
         sameType && sameExpert
-      .map (lineItem) =>
-        if done then return
+      .forEach (lineItem) =>
+        if toAllocate == 0 then return
+        qtyRemaining = lineItem.qty - calcRedeemed([lineItem])
+        if qtyRemaining == 0 then return # this lineItem is already full
         redeemedCall = { callId: call._id, qtyRedeemed: 0, qtyCompleted: 0 }
         lineItem.redeemedCalls = lineItem.redeemedCalls || []
-        allocated = Math.min call.duration, @_qtyRemaining(lineItem)
-        allocatedSoFar += allocated
+        allocated = Math.min toAllocate, qtyRemaining
+        toAllocate -= allocated
         redeemedCall.qtyRedeemed += allocated
         lineItem.redeemedCalls.push redeemedCall
         # this doesnt push duplicate orders b/c there is only one lineitem for
         # each expert in an order
         modified.push order
-        done = allocatedSoFar == call.duration
     modified
 
-  # TODO move this into calcExpertCredit
-  _qtyRemaining: (lineItem) ->
-    lineItem.qty - sum _.pluck lineItem.redeemedCalls, 'qtyRedeemed'
-
-  # marks a redeemedCall as complete if the matching call has a recording
+  # if call has a recording, marks the call's matching redeemedCalls as complete
   _markComplete: (orders, call) =>
+    if !call.recordings.length then return orders
     for order in orders
       for li in order.lineItems
         for rc in li.redeemedCalls

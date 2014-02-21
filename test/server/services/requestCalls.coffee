@@ -48,7 +48,8 @@ describe "RequestCallsService", ->
           expect(newRequestWithCall.calls.length).to.equal 1
           expect(newRequestWithCall.calls[0]).to.be.a 'object'
           newCall = newRequestWithCall.calls[0]
-          expect(_.idsEqual newCall.expertId, request.suggested[0].expert._id).to.be.true
+          expect(_.idsEqual newCall.expertId, request.suggested[0].expert._id)
+            .to.be.true
           expect(newCall.type).to.equal request.pricing
           return callback null, results.orders, newRequestWithCall, newCall
 
@@ -56,7 +57,7 @@ describe "RequestCallsService", ->
     @timeout 10000
     call = data.calls[1] # expert is paul
     orders = [cloneDeep data.orders[5]] # expert is paul, 2 line items
-    runCreateCallSuccess orders, call, (err, newOrders, newRequestWithCall, newCall) ->
+    runCreateCallSuccess orders, call, (err, newOrders, __, ___) ->
       if err then return done err
       order = newOrders[0]
       redeemed = order.lineItems[0].redeemedCalls
@@ -85,7 +86,7 @@ describe "RequestCallsService", ->
           expect(err.message).to.match /Not enough/i
           done()
 
-  it "can book a 2 hour open source session and then a 5 hour private session", (done) ->
+  it "can book a 2h OSS session and then a 5 hour private session", (done) ->
     @timeout 10000
     callos2 = cloneDeep data.calls[3]
     callp5 = cloneDeep data.calls[4]
@@ -140,7 +141,7 @@ describe "RequestCallsService", ->
   getCall = (request, callId) ->
     _.find request.calls, (c) -> _.idsEqual c._id, callId
 
-  it 'can edit a 2hr OSS call and a 5hr private call down to 1hr then the private back to 4hr', (done) ->
+  it 'edit 2h OSS & 5h private down to 1h then private back to 4h', (done) ->
     @timeout 10000
     callId1 = @modifiedRequest.calls[0]._id
     callId2 = @modifiedRequest.calls[1]._id
@@ -199,7 +200,7 @@ describe "RequestCallsService", ->
         expect(call.type).to.equal 'private'
         expect(credit.byType[call.type].balance).to.equal 5
 
-        # change the duration to 1, and the time just for kicks, and also the note
+        # change duration to 1, and the time just for kicks, and also the note
         call.duration = 1
         hammerTime = new Date()
         call.datetime = hammerTime
@@ -244,3 +245,72 @@ describe "RequestCallsService", ->
           end = moment newCall.gcal.end.dateTime
           expect(end.diff(start, 'hours')).to.equal 4
           done()
+
+  it '2h call exists. schedule 5h, edit to 7hr, expect 3h left', (done) ->
+    @timeout 10000
+    user = data.users[14] # tinfow
+    callp5 = cloneDeep data.calls[5] # domenic
+    callp5.datetime = new Date(callp5.datetime)
+    expertId = callp5.expertId # domenic
+    request = cloneDeep data.requests[14] # tinfow and imageplant
+    orders = data.orders[8].map(cloneDeep)
+
+    requestsSvc.create user, request, (err, newRequest) =>
+      if err then return done err
+
+      saveOrdersForRequest orders, newRequest, (err, newOrders) =>
+        if err then return done err
+
+        # console.log JSON.stringify(_.flatten(_.pluck(_.flatten(_.pluck(orders,
+        #  'lineItems')), 'redeemedCalls')), null, 2)
+        c = calcExpertCredit(newOrders, expertId)
+        expect(c.redeemed).to.equal 2
+        expect(c.completed).to.equal 0
+        expect(c.balance).to.equal 10
+
+        svc.create user._id, newRequest._id, callp5, (err, results) =>
+          if err then return done err
+
+          # not all the orders were modified, so this gives us the big picture
+          ordersSvc.getByRequestId request._id, (err, orders) =>
+            if err then return done err
+            c = calcExpertCredit(orders, expertId)
+            expect(c.redeemed).to.equal 7
+            expect(c.completed).to.equal 0
+            expect(c.balance).to.equal 5
+            makeEdits()
+
+    makeEdits = ->
+      callId = callp5._id
+      # let's run thru it like we were a real client!
+      # hit viewdata for the call and unscheduled orders
+      viewDataSvc.callEdit null, callId, (err, json) =>
+        if err then return done err
+        request = JSON.parse json.request
+        call = getCall request, callId
+        call.datetime = new Date(call.datetime)
+        orders = JSON.parse json.orders
+        ordersWithoutCall = unschedule orders, call._id
+        # assert that there are no redeemedCalls whose callIds match this call
+        expect(callInOrders(callId, ordersWithoutCall)).to.equal false
+        credit = calcExpertCredit ordersWithoutCall, call.expertId
+        expect(call.type).to.equal 'private'
+        expect(call.duration).to.equal 5
+        expect(credit.byType[call.type].balance).to.equal 10
+
+        call.duration = 7
+
+        # dont let it make calls to google
+        svc.calendar.google.patchEvent = (eventId, body, cb) ->
+          cb null, _.extend call.gcal, body
+        svc.update request.userId, request._id, call, (err, newCall) =>
+          if err then return done err
+          expect(newCall.duration).to.equal 7
+
+          ordersSvc.getByRequestId request._id, (err, orders) =>
+            if err then return done err
+            c = calcExpertCredit(orders, expertId)
+            expect(c.redeemed).to.equal 9
+            expect(c.completed).to.equal 0
+            expect(c.balance).to.equal 3
+            done()
