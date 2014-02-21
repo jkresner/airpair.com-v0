@@ -94,6 +94,7 @@ module.exports = class ViewDataService
       callback null,
         session: @session usr
         experts: JSON.stringify r
+        stripePK: cfg.payment.stripe.publishedKey
 
   experts: (usr, callback) ->
     eSvc.getAll (e, r) =>
@@ -107,6 +108,7 @@ module.exports = class ViewDataService
       callback null,
         session: @session usr
         order: JSON.stringify null, o
+        stripePK: cfg.payment.stripe.publishedKey
 
   paypalSuccess: (usr, orderId, callback) ->
     oSvc.markPaymentReceived orderId, usr, {}, (e, o) =>
