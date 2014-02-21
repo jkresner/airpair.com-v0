@@ -66,6 +66,7 @@ module.exports = class RequestCallsService
       oldCall = _.find request.calls, (c) -> _.idsEqual c._id, call._id
       if !oldCall then return callback new Error('no such call ' + call._id)
 
+      oldCall.recordings = call.recordings
       @_updateOrders requestId, oldCall, call.duration, (err) =>
         if err then return callback err
 
@@ -73,7 +74,6 @@ module.exports = class RequestCallsService
         @calendar.patch oldCall, call, (err, eventData) =>
           if err then return callback err
           oldCall.gcal = eventData
-          oldCall.recordings = call.recordings
           oldCall.notes = call.notes
           oldCall.datetime = call.datetime
           oldCall.duration = call.duration
@@ -85,9 +85,10 @@ module.exports = class RequestCallsService
             callback null, newCall
 
   _updateOrders: (requestId, oldCall, newDuration, callback) =>
-    if oldCall.duration == newDuration && _.deep
+    if oldCall.duration == newDuration
       console.log 'duration unchanged'
-      return process.nextTick callback
+      return OrdersSvc.updateCompletion requestId, oldCall, callback
+
     callWithNewDuration = _.clone oldCall
     callWithNewDuration.duration = newDuration
     OrdersSvc.updateWithCall requestId, callWithNewDuration, callback
