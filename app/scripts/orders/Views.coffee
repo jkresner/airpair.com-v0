@@ -62,6 +62,7 @@ class exports.OrderRowView extends BB.ModelSaveView
       _.extend li, calcExpertCredit([d], li.suggestion.expert._id)
 
     _.extend d, {
+      completed:          d.lineItems[0].completed
       isPending:          d.paymentStatus is 'pending'
       isReceived:         d.paymentStatus is 'received'
       isPaidout:          d.paymentStatus is 'paidout'

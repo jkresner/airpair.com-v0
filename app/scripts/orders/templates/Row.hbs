@@ -50,9 +50,10 @@
       {{#if payoutOptions}}
       <b>payout</b> {{!-- feedback for the user that it's in progress --}}
       {{else}}
-      <a class="payOutPayPalAdaptive" href="#">payout</a>
+      <a class="payOutPayPalAdaptive completed-{{completed}}"
+        href="#">payout</a>
       {{/if}}
-    {{/if}}{{/if }}
+    {{/if}}{{/if}}
 
     {{#if isStripe}}
       {{#each lineItems}}
@@ -62,7 +63,8 @@
           {{#if linePayoutPending}}
           <b>payout</b> {{!-- feedback for the user that it's in progress --}}
           {{else}}
-          <a class="payOutPaypalSingle" href="#" data-id="{{ _id }}">payout</a>
+          <a class="payOutPaypalSingle completed-{{completed}}" href="#"
+            data-id="{{ _id }}">payout</a>
           {{/if}}
         {{/if}}
       {{/each}}
