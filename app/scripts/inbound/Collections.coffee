@@ -29,7 +29,7 @@ class exports.Experts extends BB.FilteringCollection
         pattern = new RegExp f.searchTerm, 'gi'
         r = _.filter r, (m) -> _.any ['name','username'], (attr) => pattern.test m.get attr
       if f.tag?
-        r = _.filter r, (m) -> _.find(m.get('tags'), (t) -> t.short == f.tag.short )
+        r = _.filter r, (m) -> _.find(m.get('tags'), (t) -> t.short.toLowerCase() == f.tag.short.toLowerCase() )
       if f.excludes?
         for e in f.excludes
           exclude = _.find r, (m) -> m.get('_id') == e._id

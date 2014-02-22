@@ -262,7 +262,7 @@ class exports.RequestSuggestionsView extends BB.BadassView
   filterTag: (e) ->
     short = $(e.currentTarget).closest('li').data 'short'
     #$log 'filterTag', short
-    @rTag = _.find @model.get('tags'), (t) -> t.short == short
+    @rTag = _.find @model.get('tags'), (t) -> t.short.toLowerCase() == short.toLowerCase()
     @renderTagSuggestions()
   sort: (e) ->
     @collection.comparator = @collection.comparators[$(e.target).val()]
