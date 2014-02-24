@@ -9,11 +9,6 @@ module.exports = class AddjsMixPanel
 
     if args.peopleProps then @peopleProps = args.peopleProps
 
-  # TODO if this is the first view event EVER && no utm params, then
-  # take the initial referrer and save it. Also set the utm_source = 'none'
-  # if there are utm params, and utm_source != none then
-  #   save the utm params like normal
-  # This code should go in identify. tracksession is called on every page load.
   trackSession: ->
     if @logging is on
       console.log 'Addjs.MP.trackSession', @debug(), @peopleProps

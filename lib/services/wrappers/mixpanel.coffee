@@ -1,10 +1,5 @@
-require '../../util/appConfig' # TODO remove
-_ = require 'underscore'
-
 request = require 'superagent'
-
 buildURL = require('mixpanel-helper')(cfg.analytics.mixpanel)
-
 
 makeCall = (path, params, cb) ->
   uri = 'http://mixpanel.com/api/2.0/' + path
@@ -55,15 +50,15 @@ makeCall.sanitizeForMongo = sanitizeForMongo = (data) =>
 
 module.exports = makeCall
 
-if !module.parent
-  mp = module.exports
-  # distinct_id = '1444d01231f554-0f00e02d4-117a373b-fa000-1444d012320e9b'
-  email = "davidlbrundige@gmail.com"
-  params = where: 'properties["$email"]=="'+email+'"' # distinct_id: distinct_id
+# if !module.parent
+#   mp = module.exports
+#   # distinct_id = '1444d01231f554-0f00e02d4-117a373b-fa000-1444d012320e9b'
+#   email = "davidlbrundige@gmail.com"
+#   params = where: 'properties["$email"]=="'+email+'"' # distinct_id: distinct_id
 
-  mp.eventsFor email, (err, events) =>
-    if err then return console.log err
-    console.log JSON.stringify events, null, 2
-    console.log 'firstEvent', mp.firstEvent events
+#   mp.eventsFor email, (err, events) =>
+#     if err then return console.log err
+#     console.log JSON.stringify events, null, 2
+#     console.log 'firstEvent', mp.firstEvent events
 
-    console.log 'yay', JSON.stringify(sanitizeForMongo(events), null, 2)
+#     console.log 'yay', JSON.stringify(sanitizeForMongo(events), null, 2)
