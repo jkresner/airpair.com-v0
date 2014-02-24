@@ -1,6 +1,7 @@
 CRUDApi   = require './_crud'
-OrdersSvc = require './../services/orders'
-authz     = require './../identity/authz'
+OrdersSvc = require '../services/orders'
+UsersSvc  = require '../services/users'
+authz     = require '../identity/authz'
 loggedIn  = authz.LoggedIn isApi: true
 admin     = authz.Admin isApi: true
 Roles     = authz.Roles
@@ -10,6 +11,7 @@ cSend     = require '../util/csend'
 class OrdersApi
 
   svc: new OrdersSvc()
+  uSvc: new UsersSvc()
 
   constructor: (app, route) ->
     app.post    "/api/#{route}", loggedIn, @create
@@ -32,9 +34,11 @@ class OrdersApi
       name: req.body.company.name
       contacts: req.body.company.contacts
     order.paymentMethod = req.body.paymentMethod
-    # TODO copy over initial referrer as well
-    # TODO put these properties on the user object instead of the order object
-    order.utm = req.body.utm
+
+    @uSvc.saveUtm req.user._id, req.body.utm, (err) =>
+      if err
+        console.log 'saveUtm ' + err.stack
+        winston.error 'saveUtm ' + err.stack if cfg.isProd
 
     toPick = ['_id','userId','name','username','rate','email','pic','paymentMethod']
     for li in req.body.lineItems

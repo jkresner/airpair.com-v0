@@ -19,3 +19,7 @@ module.exports = class UsersService
         'cohort.mixpanel.data': data
 
       User.findByIdAndUpdate(user._id, ups).lean().exec cb
+
+  saveUtm: (userId, utm, cb) ->
+    ups = 'cohort.mixpanel.utm': utm
+    User.findByIdAndUpdate(userId, ups).lean().exec cb

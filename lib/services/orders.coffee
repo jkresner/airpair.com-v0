@@ -72,15 +72,12 @@ module.exports = class OrdersService extends DomainService
       total: order.total, profit: order.profit, type: type
     }
 
-    # TODO pull these off the user object instead
-    # TODO also pull off the inital referrer and send it to mixpanel in the
-    # customerpayment event
-    if order.utm?
-      props.utm_source   = order.utm.utm_source
-      props.utm_medium   = order.utm.utm_medium
-      props.utm_term     = order.utm.utm_term
-      props.utm_content  = order.utm.utm_content
-      props.utm_campaign = order.utm.utm_campaign
+    if usr.cohort?.mixpanel?.utm
+      props.utm_source   = usr.cohort.mixpanel.utm.utm_source
+      props.utm_medium   = usr.cohort.mixpanel.utm.utm_medium
+      props.utm_term     = usr.cohort.mixpanel.utm.utm_term
+      props.utm_content  = usr.cohort.mixpanel.utm.utm_content
+      props.utm_campaign = usr.cohort.mixpanel.utm.utm_campaign
 
     mixpanel.track 'customerPayment', props
     mixpanel.people.track_charge usr.google._json.email, order.total
