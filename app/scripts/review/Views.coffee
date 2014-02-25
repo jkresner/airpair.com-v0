@@ -21,6 +21,9 @@ class exports.SuggestionView extends BB.BadassView
     d = @model.extendJSON isCustomer: @request.isCustomer(@session)
     d.rates = @model.get('suggestedRate')[@request.get('pricing')]
     d.calls = _.filter @request.get('calls'), (c) -> c.expertId == d.expert._id
+    d.calls[0]?.status = 'pending'
+    d.calls[1]?.status = 'confirmed'
+    d.calls[2]?.status = 'declined'
     @$el.html @tmpl d
     # cust = @request.contact(0)
     # if @request.isCustomer @session

@@ -38,12 +38,16 @@
 
     <br>
     <br>
-    <h2>customer view kinda</h2>
+    <h2>Calls</h2>
     {{#each calls}}
-    <div class="call">
+    <div class="call {{status}}">
+      <h5>{{type}} call on
+        <a href="{{gcal.htmlLink}}">{{{callDateTime datetime}}}</a> for {{duration}}h
+      </h5>
       <p>
-        {{../expert.name}} marked themself as <strong>{{status}}</strong> for this {{duration}}h {{type}} call on
-        <a href="{{gccal.htmlLink}}">{{{callDateTime datetime}}}</a>
+        {{#is 'pending' status}}&gt; Awaiting RSVP from {{../../expert.name}}{{/is}}
+        {{#is 'confirmed' status}}&gt; {{../../expert.name}} is <strong>available <!--{{status}}--></strong> for this call.{{/is}}
+        {{#is 'declined' status}}&gt; {{../../expert.name}} <strong>declined<!--{{status}}--></strong> this call.{{/is}}
       </p>
     </div>
     {{/each}}
@@ -52,19 +56,36 @@
     {{#empty calls}} {{else}}
     <hr><h2>expert view, kinda</h2>
     {{/empty}}
+    <h2>Unconfirmed Calls</h2>
 
     {{#each calls}}
-    <div class="call">
-      <p>
-        {{duration}}h {{type}} call on
-        <a href="{{gcal.htmlLink}}">{{{callDateTime datetime}}}</a>
-      </p>
-
-      <a href="?{{_id}}/yes" class="schedule red button">I'm available</a>
-      <a href="?{{_id}}/no" class="schedule green button">this time doesn't work for me</a>
+    <div class="expert call {{status}}">
+      <h5>
+        {{type}} call on
+        <a href="{{gcal.htmlLink}}">{{{callDateTime datetime}}}</a> for {{duration}}h
+      </h5>
+      {{#is 'pending' status}}
+        <a href="?{{_id}}/yes" class="schedule slim green button">I'm available</a>
+        <a href="?{{_id}}/no" class="schedule slim gray button">This time doesn't work for me</a>
+      {{/is}}
+      {{#is 'confirmed' status}}&gt; You RSVP'd as <strong>available <!--{{status}}--></strong> for this call.
+      Change RSVP to <a href="?{{_id}}/yes">declined</a>.
+      {{/is}}
+      {{#is 'declined' status}}&gt; You <strong>declined<!--{{status}}--></strong> this call.
+      Change RSVP to <a href="?{{_id}}/yes">available</a>.
+      {{/is}}
     </div>
     {{/each}}
-    {{debug}}
+
+    <h2>Upcoming Calls</h2>
+    {{#each calls}}
+    <div class="expert call upcoming-{{status}}">
+      <h5>
+        {{type}} call on
+        <a href="{{gcal.htmlLink}}">{{{callDateTime datetime}}}</a> for {{duration}}h
+      </h5>
+    </div>
+    {{/each}}
   </div>
 
 </article>
