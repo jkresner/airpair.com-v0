@@ -167,6 +167,134 @@ body#review .expert.call.upcoming-pending, .expert.call.upcoming-declined {
 body#book #detail { }
 body#book #none { padding:40px 0 200px 0 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* START schedulepage */
+/* TODO use body#schedule and resolve id conflicts */
+#schedulepage .admin-nav { display: none;}
+#schedulepage fieldset {
+  border: none;
+}
+#schedulepage .controls > a { vertical-align: text-bottom; }
+#schedulepage .controls input[type="checkbox"] {
+  width: initial;
+}
+#schedulepage select[name="duration"] {
+  width: 90px;
+}
+#schedulepage input[name="date"] {
+  width: 117px;
+  padding: 4px;
+}
+#schedulepage input[name="time"] {
+  width: 80px;
+  padding: 4px;
+}
+#schedulepage select[name="type"] {
+  width: 120px;
+}
+#schedulepage select[name="timezone"] {
+  width: 100px;
+}
+#schedulepage .experts,
+#schedulepage .datetimeduration {
+  overflow: auto;
+  width: 100%
+}
+#schedulepage .datetimeduration .control-group { float: left; margin-right: 2em;}
+#schedulepage .experts label { margin:0; }
+#schedulepage .experts .fullName { background-color: black; color: white;padding:5px;}
+#schedulepage .experts .expertMini { margin: 0px 10px 0px 0px; display:  inline-block; background-color: lightcyan;}
+#schedulepage .experts .expertMini.selected {
+  background-color: yellow;
+}
+#schedulepage .experts .hours { background-color:black;font-size:11px;color:white;height:40px; text-align: center; padding:  5px;}
+#schedulepage .experts img { width: 60px; display: block; margin: 6px auto;}
+#schedulepage .experts .select { height: 25px; margin: 0 auto; width: 25px;}
+#schedulepage .form-actions {
+  margin-top: 10px;
+}
+#schedulepage button:disabled {
+  background: darkgray;
+  border: solid 3px gray;
+}
+#schedulepage #videos .list > div {
+  display: inline-block;
+
+  background-color: lightyellow;
+  padding: 10px;
+  border-radius: 4px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  border: 1px solid grey;
+}
+#schedulepage #videos .list > div .delete {
+  visibility: hidden;
+}
+#schedulepage #videos .list > div:hover .delete {
+  visibility: visible;
+}
+
+/* END schedulepage */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #tagsInput header, .controls-tags header { font-size:11px;font-style:italic;border-bottom:dashed 1px #d3d3d3;padding:0 0 5px 5px;color:gray; }
 #tagsInput .autocomplete, .controls-tags .autocomplete { width:200px; }
 #tagsInput span, .controls-tags span { clear:both; }

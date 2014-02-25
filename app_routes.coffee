@@ -24,6 +24,7 @@ module.exports = (app) ->
   app.get '/book/:id', render 'book', ['params.id']
   app.get '/review/:id', render 'review', ['params.id']
   app.get '/review/book/:id', authd, render 'review', ['params.id']
+  app.get '/schedule/:id', authd, render 'callSchedule', ['params.id']
 
   # admin pages
   app.get '/adm/tags*', authd, adm, render 'adm/tags'

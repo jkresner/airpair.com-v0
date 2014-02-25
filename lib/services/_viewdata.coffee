@@ -52,6 +52,8 @@ module.exports = class ViewDataService
         request:    JSON.stringify r
         tagsString: if r? then util.tagsString(r.tags) else 'Not found'
 
+  # used for both customer and admin versions
+  # TODO dont send down sensitive data
   callSchedule: (usr, requestId, callback) ->
     tasks =
       request: (cb) -> rSvc.getById requestId, cb

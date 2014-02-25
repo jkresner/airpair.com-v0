@@ -3,7 +3,7 @@
 </div>
 
 <fieldset>
-  <h4>Call expert</h4>
+  <h4>Schedule an AirPair session with...</h4>
   <div class="experts">
   {{#each available}}
     {{#with expert}}
@@ -11,19 +11,16 @@
     <label for="expertId{{_id}}">
       <div class="expertMini suggestion {{#selected}}selected{{/selected}}" >
         <div class="deets">
-          <div class="fullName">
-            {{name}}
-          </div>
-          <hr>
+          <div class="fullName">{{name}}</div>
           <img src="{{pic}}" alt="{{name}}" draggable="false" class="expertPic">
         </div>
 
         <div class="hours">
-            {{#each credit.byTypeArray}}
-              {{balance}} {{inflect balance "hr" "hrs"}}
-              {{type}}
-              <br>
-            {{/each}}
+          {{#each credit.byTypeArray}}
+            {{balance}} {{inflect balance "hr" "hrs"}}
+            {{type}}
+            <br>
+          {{/each}}
         </div>
 
         <div class="select">
@@ -83,6 +80,7 @@
         </div>
       </div>
     </div> <!-- end .datetimeduration -->
+    {{!-- TODO hide these on the customer-facing version --}}
     <div class="control-group">
       <div class="controls">
         <label class="control-label">
@@ -109,6 +107,6 @@
   </div>
 
   <div class="form-actions">
-    <button class="save button" style="width:160px">Create</button>
+    <button class="save button" style="width:200px">Create session</button>
   </div>
 </fieldset>

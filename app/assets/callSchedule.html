@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="robots" content="noindex, nofollow">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Schedule AirPair | {{ tagsString }} request</title>
+    <meta name="viewport" content="width=device-width">
+    <!-- TODO bundle these into app.css -->
+    <link rel="stylesheet" href="/stylesheets/pickadate-classic.css">
+    <link rel="stylesheet" href="/stylesheets/pickadate-classic-date.css">
+    <link rel="stylesheet" href="/stylesheets/jquery.timepicker.css">
+    {{> siteStyles }}
+</head>
+
+<body id="schedulepage">
+  <div class="site-container">
+
+    {{> siteNav this }}
+
+    <div class="site-inner">
+      <div class="wrap">
+
+
+        <main class="content">
+          <article class="post type-post format-standard entry">
+            <div class="entry-content" style="padding:0px 20px">
+
+              <div id="schedule">
+                <div id="scheduleForm"></div>
+              </div>
+
+            </div>
+          </article>
+        </main>
+
+     </div>
+    </div>
+
+  </div> <!-- end .site-container -->
+
+  {{> siteFooter }}
+
+</body>
+
+  <script type="text/javascript">
+    window.useOlark = true;
+    function initApp() {
+      var pageData = {
+        request: {{{ request }}},
+        orders: {{{ orders }}},
+        session: {} // TODO
+      };
+      Router = require('/scripts/calls/RouterSchedule');
+      window.router = new Router(pageData);
+    }
+  </script>
+  <script src="/javascripts/vendor.js" defer></script>
+  <script src="/javascripts/picker.js" defer></script>
+  <script src="/javascripts/picker.date.js" defer></script>
+  <script src="/javascripts/jquery.timepicker.js" defer></script>
+  <script src="/javascripts/app.js" defer onload="initApp()"></script>
+</html>
