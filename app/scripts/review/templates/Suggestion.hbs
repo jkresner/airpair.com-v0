@@ -34,6 +34,37 @@
       <b>Availability</b>
       {{markdown expertAvailability }}
     {{/if}}
+    <a href="/schedule/{{requestId}}" class="schedule green button">Schedule a call with {{expert.firstName}}</a>
+
+    <br>
+    <br>
+    <h2>customer view kinda</h2>
+    {{#each calls}}
+    <div class="call">
+      <p>
+        {{../expert.name}} marked themself as <strong>{{status}}</strong> for this {{duration}}h {{type}} call on
+        <a href="{{gccal.htmlLink}}">{{{callDateTime datetime}}}</a>
+      </p>
+    </div>
+    {{/each}}
+
+
+    {{#empty calls}} {{else}}
+    <hr><h2>expert view, kinda</h2>
+    {{/empty}}
+
+    {{#each calls}}
+    <div class="call">
+      <p>
+        {{duration}}h {{type}} call on
+        <a href="{{gcal.htmlLink}}">{{{callDateTime datetime}}}</a>
+      </p>
+
+      <a href="?{{_id}}/yes" class="schedule red button">I'm available</a>
+      <a href="?{{_id}}/no" class="schedule green button">this time doesn't work for me</a>
+    </div>
+    {{/each}}
+    {{debug}}
   </div>
 
 </article>

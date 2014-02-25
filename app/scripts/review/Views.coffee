@@ -18,8 +18,9 @@ class exports.SuggestionView extends BB.BadassView
     @reviewForm = new exports.CustomerReviewFormView args
     @model.set requestId: @request.id
   render: ->
-    d = @model.extend isCustomer: @request.isCustomer(@session)
+    d = @model.extendJSON isCustomer: @request.isCustomer(@session)
     d.rates = @model.get('suggestedRate')[@request.get('pricing')]
+    d.calls = _.filter @request.get('calls'), (c) -> c.expertId == d.expert._id
     @$el.html @tmpl d
     # cust = @request.contact(0)
     # if @request.isCustomer @session
