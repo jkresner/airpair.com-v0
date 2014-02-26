@@ -210,12 +210,13 @@ class exports.ExpertCallRowView extends BB.ModelSaveView
     @listenTo @model, 'change', @render
     @
   render: ->
-    @$el.html @tmpl @model.toJSON()
+    d = @model.toJSON()
+    # if d.gcal then d.status = 'confirmed' # TODO uncomment
+    @$el.html @tmpl d
     @
 
 class exports.CallsView extends BB.ModelSaveView
   el: '#calls'
-  logging: on
   initialize: ->
     @listenTo @collection, 'sync', @render
   render: ->

@@ -21,13 +21,14 @@
     <a href="{{gcal.htmlLink}}">{{{callDateTime datetime}}}</a> for {{duration}}h
   </h5>
   {{#is 'pending' status}}
-    <a href="?{{_id}}/yes" class="schedule slim green button">I'm available</a>
-    <a href="?{{_id}}/no" class="schedule slim gray button">This time doesn't work for me</a>
+    <a href="/calls/{{_id}}/yes" class="schedule slim green button">I'm available</a>
+    <a href="/calls/{{_id}}/no" class="schedule slim gray button">This time doesn't work for me</a>
   {{/is}}
-  {{#is 'confirmed' status}}&gt; You RSVP'd as <strong>available <!--{{status}}--></strong> for this call.
-  Change RSVP to <a href="?{{_id}}/yes">declined</a>.
+
+  {{#is 'confirmed' status}}&gt; You RSVP'd as <strong>available</strong> for this call.
+  <!-- Change RSVP to <a href="/calls/{{_id}}/no">declined</a>. -->
   {{/is}}
-  {{#is 'declined' status}}&gt; You <strong>declined<!--{{status}}--></strong> this call.
-  Change RSVP to <a href="?{{_id}}/yes">available</a>.
+  {{#is 'declined' status}}&gt; You <strong>declined</strong> this call.
+  <!-- Change RSVP to <a href="/calls/{{_id}}/yes">available</a>. -->
   {{/is}}
 </div>

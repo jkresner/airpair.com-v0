@@ -52,12 +52,20 @@ module.exports = class ViewDataService
         request:    JSON.stringify r
         tagsString: if r? then util.tagsString(r.tags) else 'Not found'
 
-  calls: (usr, callback) ->
-    # get all calls for an expert
+  calls: (usr, callId, answer, callback) ->
     usr._id = "51a6167218dd8a0200000005" # pederson
-    rcSvc.getByExpertId usr._id, (err, calls) =>
-      callback null,
-        calls: JSON.stringify calls
+    # get all calls for an expert
+    serveCalls = =>
+      rcSvc.getByExpertId usr._id, (err, calls) =>
+        callback null, calls: JSON.stringify calls
+
+    if !callId || !answer
+      callback = callId
+      return serveCalls()
+
+    rcSvc.rsvp usr._id, callId, answer, (err) =>
+      if err then return callback err
+      serveCalls()
 
   # used for both customer and admin versions
   # TODO dont send down sensitive data

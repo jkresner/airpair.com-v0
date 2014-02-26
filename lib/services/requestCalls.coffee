@@ -58,10 +58,45 @@ module.exports = class RequestCallsService
         Request.findByIdAndUpdate requestId, ups, (err, modifiedRequest) =>
           callback null, { request: modifiedRequest, orders: orders }
 
-  expertReply: (userId, data, callback) =>
-    { callId, status } = data # stats (accept / decline)
-    # expert = something.userId
-    # adjust the order qtyRedeemedCallIds
+  rsvp: (expertId, callId, answer, callback) =>
+    console.log '0'
+    validAnswer = answer == 'yes' || answer == 'no'
+    if !validAnswer then return callback() # do nothing
+
+    query =
+      calls:
+        $elemMatch:
+          '_id': callId
+          'expertId': expertId
+          'status': 'pending'
+    select =
+      '_id': 1
+      'calls': 1
+    Request.findOne(query, select).lean().exec (err, request) =>
+      console.log '1'
+      if !request then return callback()
+      console.log '2'
+
+      call = _.find request.calls, (c) -> _.idsEqual c._id, callId
+
+      # if call.gcal then return callback() # TODO legacy admin calls no touchy!
+
+      if answer == 'yes' then call.status = 'confirmed'
+      if answer == 'no' then call.status = 'declined'
+
+      console.log 'ey', call.status
+
+      query._id = request._id # add the requestId to make it faster
+      ups = 'calls.$': call
+      Request.update(query, ups).lean().exec callback
+      ### TODO
+      handleResponse
+        confirmed: ->
+          # create gcal
+
+        declined: ->
+          # email customer saying the expert said no
+      ###
 
   customerFeedback: (userId, data, callback) =>
     # adjust the order qtyRedeemedCallIds
@@ -71,8 +106,6 @@ module.exports = class RequestCallsService
 
   updateCms: (userId, data, callback) =>
 
-  # TODO this is going to look way different once we start completing calls
-  # when they have a youtube video. We'll be passing old & new orders around.
   update: (userId, requestId, call, callback) =>
     RequestSvc.getById(requestId).lean().exec (err, request) =>
       oldCall = _.find request.calls, (c) -> _.idsEqual c._id, call._id

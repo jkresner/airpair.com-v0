@@ -285,6 +285,9 @@ body#book #none { padding:40px 0 200px 0 }
   padding-left:  10px;
   padding-right: 10px;
 }
+#callspage .call .schedule.green {
+  color: black!important;
+}
 #callspage .call.pending {
   background-color: rgba(0,0,0, .1);
   background-color: hsl(0, 0%, 90%)
