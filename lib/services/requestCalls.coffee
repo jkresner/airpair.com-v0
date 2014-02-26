@@ -1,6 +1,7 @@
 async      = require 'async'
 calendar   = require './calendar'
 videos     = require './videos'
+mailman    = require '../mail/mailman'
 {ObjectId} = require('mongoose').Types
 
 OrdersSvc  = new (require('./orders'))()
@@ -13,6 +14,7 @@ module.exports = class RequestCallsService
 
   model: require './../models/request'
   calendar: calendar
+  mailman: mailman
 
   getByCallPermalink: (permalink, callback) =>
     # find by permalink
@@ -58,17 +60,16 @@ module.exports = class RequestCallsService
         Request.findByIdAndUpdate requestId, ups, (err, modifiedRequest) =>
           callback null, { request: modifiedRequest, orders: orders }
 
+  # TODO move the valid answer stuff and argument coercion of yes/no to status
+  # into _viewdata
   rsvp: (expertId, callId, answer, callback) =>
     console.log '0'
     validAnswer = answer == 'yes' || answer == 'no'
     if !validAnswer then return callback() # do nothing
 
-    query =
-      calls:
-        $elemMatch:
-          '_id': callId
-          'expertId': expertId
-          'status': 'pending'
+    query = calls: $elemMatch:
+      '_id': callId
+      'status': 'pending'
     select =
       '_id': 1
       'calls': 1
@@ -88,15 +89,24 @@ module.exports = class RequestCallsService
 
       query._id = request._id # add the requestId to make it faster
       ups = 'calls.$': call
-      Request.update(query, ups).lean().exec callback
-      ### TODO
-      handleResponse
-        confirmed: ->
-          # create gcal
+      Request.findOneAndUpdate(query, ups).lean().exec (err) =>
+        if err then return callback err
+        if call.status == 'confirmed' then return confirmed(request, call)
+        if call.status == 'declined' then return declined(request, call)
+        return callback()
 
-        declined: ->
-          # email customer saying the expert said no
-      ###
+    # create gcal
+    confirmed = (request, call) =>
+      @calendar.create request, call, (err, eventData) =>
+        if err then return callback err
+        call.gcal = eventData
+        query = calls: $elemMatch: _id: callId
+        ups = 'calls.$': call
+        Request.findOneAndUpdate(query, ups).lean().exec callback
+
+    # email customer saying the expert said no
+    declined = (request, call) =>
+      @mailman.callDeclined expert, request, call, callback
 
   customerFeedback: (userId, data, callback) =>
     # adjust the order qtyRedeemedCallIds

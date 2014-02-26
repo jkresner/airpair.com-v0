@@ -66,6 +66,24 @@ class Mailman
 
     @sendEmail o, callback
 
+  # TODO consider changing argument order
+  callDeclined: (expert, request, call, callback) ->
+    data = { expert, request, call }
+
+    o =
+      expertName: expert.google.displayName
+      request: request
+      customerName: request.company.contacts[0].fullName
+      customerEmail: request.company.contacts[0].email
+      tagsString: util.tagsString(request.tags)
+      suggested: request.suggested
+    console.log o
+    o.templateName = 'callDeclined'
+    o.to = "dt+#{customerEmail.replace('@', 'AT')}@airpair.com"
+    o.subject = # TODO top 3 tags
+      "#{o.expertName} declined call on #{call.datetime} about #{o.tagsString}"
+
+    @sendEmail o, callback
 
   expertReviewRequest: (data, callback) ->
     @renderEmail data, "expertReviewRequest", (err, rendered) ->
