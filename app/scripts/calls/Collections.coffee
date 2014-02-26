@@ -12,6 +12,9 @@ class exports.Videos extends BB.FilteringCollection
   getByYoutubeId: (youtubeId) ->
     _.find @models, (m) -> m.get('data').id == youtubeId
 
+class exports.RequestCalls extends BB.FilteringCollection
+  model: Models.RequestCall
+
 exports.Requests = Shared.Requests
 
 module.exports = exports

@@ -19,7 +19,19 @@ module.exports = class RequestCallsService
     # check SEO completed & AirPair Authorized
     throw new Error 'not imp'
 
-  getByExpertId: (expertId, callback) => throw new Error 'not imp'
+  getByExpertId: (expertId, callback) =>
+    query = 'calls.expertId': expertId
+    select = 'calls.notes': 0
+    Request.find(query, select).lean().exec (err, requests) =>
+      if err then return callback err
+      calls = _.flatten requests.map (r) ->
+        r.calls.filter((c) -> _.idsEqual c.expertId, expertId)
+          .map (c) ->
+            c.company = r.company
+            c.userId = r.userId
+            c
+
+      callback null, calls
 
   create: (userId, requestId, call, callback) =>
     call.status = 'pending'

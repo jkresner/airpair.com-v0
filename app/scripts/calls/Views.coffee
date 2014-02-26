@@ -200,4 +200,26 @@ class exports.CallEditView extends BB.ModelSaveView
     @$('.save').attr('disabled', false)
     super model, response, options
 
+#
+# show the expert calls that need an RSVP
+#
+class exports.ExpertCallRowView extends BB.ModelSaveView
+  tagName: 'div'
+  tmpl: require './templates/ExpertCallRow'
+  initialize: ->
+    @listenTo @model, 'change', @render
+    @
+  render: ->
+    @$el.html @tmpl @model.toJSON()
+    @
+
+class exports.CallsView extends BB.ModelSaveView
+  el: '#calls'
+  logging: on
+  initialize: ->
+    @listenTo @collection, 'sync', @render
+  render: ->
+    for m in @collection.models
+      @$el.append new exports.ExpertCallRowView( model: m ).render().el
+
 module.exports = exports

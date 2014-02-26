@@ -13,7 +13,7 @@
     {{> siteStyles }}
 </head>
 
-<body id="schedulepage">
+<body id="callspage">
   <div class="site-container">
 
     {{> siteNav this }}
@@ -26,8 +26,8 @@
           <article class="entry">
             <div class="entry-content" style="padding:0px 20px">
 
-              <div id="schedule">
-                <div id="scheduleForm"></div>
+              <h2>Your Calls</h2>
+              <div id="calls">
               </div>
 
             </div>
@@ -47,11 +47,10 @@
     window.useOlark = true;
     function initApp() {
       var pageData = {
-        request: {{{ request }}},
-        orders: {{{ orders }}},
+        calls: {{{ calls }}},
         session: {} // TODO
       };
-      Router = require('/scripts/calls/RouterSchedule');
+      Router = require('/scripts/calls/RouterCalls');
       window.router = new Router(pageData);
     }
   </script>
