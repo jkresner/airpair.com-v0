@@ -90,7 +90,7 @@ body#admexperts .rb-group input { float:left;margin:9px 26px 0px 0px }
 #admorderspage #orders .pending { color:#b94a48; }
 #admorderspage #orders .received { color:#333333 }
 #admorderspage #orders .paidout { color:#468847; }
-#admorderspage #orders .completed-0 { display: none; }
+#admorderspage #orders .incomplete { display: none; }
 #adminboundpage .form-actions { margin-top:0;padding:15px 10px; }
 #adminboundpage #filters { float:right;display:block;padding:0px; }
 

@@ -7,7 +7,7 @@ User = new Schema
   pic:          String
   githubId:     Number
   github:       {}
-  googleId:     String
+  googleId:     { required: true, type: String, index: { unique: true, dropDups: true } }
   google:       {}
   twitterId:    Number
   twitter:      {}

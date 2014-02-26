@@ -73,7 +73,11 @@
           <h1>The World's Best Software Experts</h1>
           <p>At your finger tips</p>
           <p class="about">On-demand through video chat & screen sharing</p>
-          <a id="fold-action" class="trackCustomerLogin button large" href="/find-an-expert">Find an expert & video chat, NOW.</a>
+          <div class="cta-group">
+            <a id="fold-action" class="trackCustomerLogin button large" href="/find-an-expert">Find an expert & video chat, NOW.</a>
+            <br />
+            <span class="already-a-member">Already a member? <a href="/login">Login now</a></span>
+          </div>
           <br />
           <a id="tw-follow" href="https://twitter.com/airpair" class="twitter-follow-button" data-show-count="false" data-size="large" data-dnt="true">Follow @airpair</a>
 
@@ -231,6 +235,10 @@
     body#home #fold p.about { color:black;font-weight:100;margin-top:0px;font-size:28px }
     body#home #fold a.button { background-color:#CE5323;width:500px;margin:30px 50px }
     body#home #fold .twitter-follow-button { margin:30px 0 0 224px; }
+    body#home #fold .cta-group { padding-right: 136px; }
+    body#home #fold .cta-group .already-a-member { float: right; font-size: 14px; }
+    body#home #fold .cta-group .already-a-member a { color: #CE5323; }
+
     body#home #customers { padding-bottom:30px; }
     body#home #customers span { width:140px;height:120px;margin-right:30px; }
     body#home #customers img { width:140px;margin:8px }
