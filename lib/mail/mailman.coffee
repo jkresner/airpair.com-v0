@@ -1,8 +1,10 @@
-ses =         require './ses'
-async =       require 'async'
-fs =          require 'fs'
-handlebars =  require 'handlebars'
-util =        require '../../app/scripts/util.coffee'
+ses        = require './ses'
+async      = require 'async'
+fs         = require 'fs'
+handlebars = require 'handlebars'
+util       = require '../../app/scripts/util.coffee'
+moment     = require 'moment'
+owner2name = require('../identity/roles').owner2name
 
 renderHandlebars = (data, templatePath, callback) ->
   fs.readFile templatePath, "utf-8", (error, templateData) ->
@@ -23,6 +25,8 @@ class Mailman
   sendEmail: (options, callback) =>
     @renderEmail(options, options.templateName, (e, rendered) ->
       rendered.Subject = options.subject
+      console.log '==sendEmail==\n', rendered.Html
+      console.log '==sendEmail==\n', rendered.Text
       ses.send(options.to, rendered, callback)
     )
 
@@ -73,16 +77,18 @@ class Mailman
     o =
       expertName: expert.google.displayName
       request: request
-      customerName: request.company.contacts[0].fullName
+      customerName: request.company.contacts[0].fullName # TODO firstname
       customerEmail: request.company.contacts[0].email
-      tagsString: util.tagsString(request.tags)
-      suggested: request.suggested
-    console.log o
-    o.templateName = 'callDeclined'
-    o.to = "dt+#{customerEmail.replace('@', 'AT')}@airpair.com"
-    o.subject = # TODO top 3 tags
-      "#{o.expertName} declined call on #{call.datetime} about #{o.tagsString}"
+      tagsString: util.tagsString(request.tags.slice(0,3))
+      # TODO display datetime in correct TIMEZONE
+      callDateTime: moment(call.datetime).format('DD MMM HH:mm')
+      ownerName: owner2name[request.owner]
 
+    o.templateName = 'callDeclined'
+    o.to = "dt+#{o.customerEmail.replace('@', 'AT')}@airpair.com"
+    o.subject =
+      "#{o.expertName} declined call on #{o.callDateTime} about #{o.tagsString}"
+    console.log 'mailman', o
     @sendEmail o, callback
 
   expertReviewRequest: (data, callback) ->

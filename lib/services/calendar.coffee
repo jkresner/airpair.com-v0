@@ -25,13 +25,14 @@ addTime = (original, milliseconds) ->
 class CalendarService
   google: google
   account: cfg.google.calendar.account
+
   create: (request, call, cb) ->
     params =
       sendNotifications: call.sendNotifications
 
     start = call.datetime
     owner = request.owner
-    sug = _.find request.suggested, (s) -> s.expert._id == call.expertId
+    sug = _.find request.suggested, (s) -> _.idsEqual s.expert._id, call.expertId
     expert = sug.expert
     expertName = capitalizeFirstLetter(expert.name.trim())
     expertFirst = expertName.slice(0, expertName.indexOf(' '))

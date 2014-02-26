@@ -1,16 +1,18 @@
-<p>Hi CUSTOMER,<p>
+<p>Hi {{ customerName }},<p>
 
-<p>EXPERTNAME declined the proposed call on CALLDATETIME<p>
+<p>{{ expertName }} declined the proposed call on {{callDateTime}}<p>
 
 Speak with your expert and schedule another time:
-<br><a href='http://www.airpair.com/schedule/{{ request._id }}'>http://www.airpair.com/schedule/{{ request._id }}</a>
+<br><a href="http://www.airpair.com/schedule/{{ request._id }}">http://www.airpair.com/schedule/{{ request._id }}</a>
 
 Here is the request page, for your records:
-<br><a href='http://www.airpair.com/review/{{ request._id }}'>http://www.airpair.com/review/{{ request._id }}</a>
+<br><a href="http://www.airpair.com/review/{{ request._id }}">http://www.airpair.com/review/{{ request._id }}</a>
 
 <p>
 Best,
 <br>AirPair Email Robot
-<br>http://airpair.com/
+<br>https://airpair.com
 <br>twitter.com/airpair
 <p>
+
+<p>PS Just reply to this email to reach {{#if ownerName}}{{ ownerName }}, your account manager{{else}}a real person at AirPair{{/if}}.</p>

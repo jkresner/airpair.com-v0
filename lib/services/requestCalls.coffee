@@ -60,19 +60,13 @@ module.exports = class RequestCallsService
         Request.findByIdAndUpdate requestId, ups, (err, modifiedRequest) =>
           callback null, { request: modifiedRequest, orders: orders }
 
-  # TODO move the valid answer stuff and argument coercion of yes/no to status
-  # into _viewdata
-  rsvp: (expertId, callId, answer, callback) =>
+  rsvp: (expert, callId, status, callback) =>
     console.log '0'
-    validAnswer = answer == 'yes' || answer == 'no'
-    if !validAnswer then return callback() # do nothing
-
     query = calls: $elemMatch:
       '_id': callId
+      'expertId': expert._id
       'status': 'pending'
-    select =
-      '_id': 1
-      'calls': 1
+    select = 'events': 0
     Request.findOne(query, select).lean().exec (err, request) =>
       console.log '1'
       if !request then return callback()
@@ -82,31 +76,35 @@ module.exports = class RequestCallsService
 
       # if call.gcal then return callback() # TODO legacy admin calls no touchy!
 
-      if answer == 'yes' then call.status = 'confirmed'
-      if answer == 'no' then call.status = 'declined'
-
+      call.status = status
       console.log 'ey', call.status
-
-      query._id = request._id # add the requestId to make it faster
-      ups = 'calls.$': call
-      Request.findOneAndUpdate(query, ups).lean().exec (err) =>
-        if err then return callback err
-        if call.status == 'confirmed' then return confirmed(request, call)
-        if call.status == 'declined' then return declined(request, call)
-        return callback()
+      if call.status == 'confirmed' then return confirmed(request, call)
+      if call.status == 'declined' then return declined(request, call)
+      return callback new Error 'rsvp: this should never happen'
 
     # create gcal
     confirmed = (request, call) =>
+      console.log '3c'
+      call.sendNotifications = true
       @calendar.create request, call, (err, eventData) =>
         if err then return callback err
         call.gcal = eventData
-        query = calls: $elemMatch: _id: callId
-        ups = 'calls.$': call
-        Request.findOneAndUpdate(query, ups).lean().exec callback
+        updateCall null, request, call
 
     # email customer saying the expert said no
     declined = (request, call) =>
-      @mailman.callDeclined expert, request, call, callback
+      console.log '3d'
+      @mailman.callDeclined expert, request, call, (err) =>
+        updateCall(err, request, call)
+
+    updateCall = (err, request, call) =>
+      console.log '4'
+      if err then return callback err
+      query =
+        _id: request._id
+        calls: $elemMatch: _id: callId # TODO add requestId for speed
+      ups = 'calls.$': call
+      Request.findOneAndUpdate(query, ups).lean().exec callback
 
   customerFeedback: (userId, data, callback) =>
     # adjust the order qtyRedeemedCallIds

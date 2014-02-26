@@ -20,6 +20,7 @@ Handlebars.registerHelper "callDateTime", (utcDateString) ->
   day = moment utcDateString
   day.format("DD MMM <b>HH:mm</b>")
 
+
 Handlebars.registerHelper 'markdown', (text) ->
   options =
     sanitize: true

@@ -53,7 +53,7 @@ module.exports = class ViewDataService
         tagsString: if r? then util.tagsString(r.tags) else 'Not found'
 
   calls: (usr, callId, answer, callback) ->
-    usr._id = "51a6167218dd8a0200000005" # pederson
+    usr._id = "51a6167218dd8a0200000005" # edward anderson
     # get all calls for an expert
     serveCalls = =>
       rcSvc.getByExpertId usr._id, (err, calls) =>
@@ -63,7 +63,10 @@ module.exports = class ViewDataService
       callback = callId
       return serveCalls()
 
-    rcSvc.rsvp usr._id, callId, answer, (err) =>
+    answer2status = 'yes': 'confirmed', 'no': 'declined'
+    status = answer2status[answer]
+    if !status then return serveCalls()
+    rcSvc.rsvp usr, callId, status, (err) =>
       if err then return callback err
       serveCalls()
 
