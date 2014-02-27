@@ -2,6 +2,7 @@ async      = require 'async'
 calendar   = require './calendar'
 videos     = require './videos'
 mailman    = require '../mail/mailman'
+roles      = require '../identity/roles'
 {ObjectId} = require('mongoose').Types
 
 OrdersSvc  = new (require('./orders'))()
@@ -35,7 +36,7 @@ module.exports = class RequestCallsService
 
       callback null, calls
 
-  create: (userId, requestId, call, callback) =>
+  create: (user, requestId, call, callback) =>
     call.status = 'pending'
     # this lets us to update orders before inserting the call into Mongo
     call._id = new ObjectId()
@@ -49,16 +50,21 @@ module.exports = class RequestCallsService
       if err then return callback err
       {orders, request} = results
 
+      # dont make gcal right away for customers
+      if true || !roles.isAdmin(user) then return saveCallToRequest(orders)
+
       # we make the gcal event first, because we need to put the event info
       # into the call object, and it is fiddly to get out the correct call
       # after it's been inserted into the calls array.
       @calendar.create request, call, (err, eventData) =>
         if err then return callback err
         call.gcal = eventData
+        saveCallToRequest(orders)
 
-        ups = $push: calls: call
-        Request.findByIdAndUpdate requestId, ups, (err, modifiedRequest) =>
-          callback null, { request: modifiedRequest, orders: orders }
+    saveCallToRequest = (orders) =>
+      ups = $push: calls: call
+      Request.findByIdAndUpdate requestId, ups, (err, modifiedRequest) =>
+        callback null, { request: modifiedRequest, orders: orders }
 
   rsvp: (expert, callId, status, callback) =>
     console.log '0'
@@ -102,7 +108,7 @@ module.exports = class RequestCallsService
       if err then return callback err
       query =
         _id: request._id
-        calls: $elemMatch: _id: callId # TODO add requestId for speed
+        calls: $elemMatch: _id: callId
       ups = 'calls.$': call
       Request.findOneAndUpdate(query, ups).lean().exec callback
 
@@ -145,3 +151,12 @@ module.exports = class RequestCallsService
     callWithNewDuration = _.clone oldCall
     callWithNewDuration.duration = newDuration
     OrdersSvc.updateWithCall requestId, callWithNewDuration, callback
+
+  delete: (requestId, callId, callback) =>
+    query =
+      '_id': requestId
+      calls: $elemMatch: _id: callId
+    ups = $pull: calls: _id: new ObjectId callId
+    Request.findOneAndUpdate(query, ups).lean().exec (err, request) =>
+      if err then return callback err
+      callback null, {}

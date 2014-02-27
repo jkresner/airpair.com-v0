@@ -286,6 +286,9 @@ body#admexperts .rb-group input { float:left;margin:9px 26px 0px 0px }
 #schedulepage #videos .list > div:hover .delete {
   visibility: visible;
 }
+#schedulepage .delete {
+  float: right;
+}
 
 /* feedback that the request is in progress */
 #admmarketingtagspage button:disabled {

@@ -21,6 +21,7 @@ module.exports = class Router extends S.AirpairSessionRouter
     v =
       callScheduleView: new V.CallScheduleView
         model: d.requestCall, request: d.request, collection: d.orders
+    v.callScheduleView.isAdmin = pageData.isAdmin
 
     @setOrFetch d.request, pageData.request
     @resetOrFetch d.orders, pageData.orders

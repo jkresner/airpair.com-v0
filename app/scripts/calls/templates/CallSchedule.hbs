@@ -32,8 +32,8 @@
     {{/with}}
   {{else}}
     <p><code>Can't schedule any more calls:</code> all hours have been scheduled
-      for available experts</p>
-    <p>Ask the customer to book more hours?</p>
+      for available experts.</p>
+    <p><a href="/review/{{_id}}">Consider booking more hours?</a></p>
   {{/each}}
   </div>
 
@@ -80,7 +80,7 @@
         </div>
       </div>
     </div> <!-- end .datetimeduration -->
-    {{!-- TODO hide these on the customer-facing version --}}
+    {{#if isAdmin}}
     <div class="control-group">
       <div class="controls">
         <label class="control-label">
@@ -99,6 +99,7 @@
         </label>
       </div>
     </div>
+    {{/if}}
   {{/selectedExpert}}
 
   <div class="alert alert-error">

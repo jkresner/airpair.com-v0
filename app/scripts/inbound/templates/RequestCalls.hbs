@@ -16,6 +16,11 @@
         {{duration}} {{inflect duration "hour" "hours"}}
       </label>
 
+      {{#if gcal}}
+      {{else}}
+        {{#is status 'pending'}}<label><strong>{{status}}</strong></label>{{/is}}
+        {{#is status 'declined'}}<label><strong>{{status}}</strong></label>{{/is}}
+      {{/if}}
       <!-- <span class="label label-{{status}}">{{status}}</span> -->
 
       {{#each recordings}}

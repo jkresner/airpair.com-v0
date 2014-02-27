@@ -198,9 +198,6 @@ body#book #none { padding:40px 0 200px 0 }
   border: none;
 }
 #schedulepage .controls > a { vertical-align: text-bottom; }
-#schedulepage .controls input[type="checkbox"] {
-  width: initial;
-}
 #schedulepage select[name="duration"] {
   width: 90px;
 }
@@ -231,7 +228,7 @@ body#book #none { padding:40px 0 200px 0 }
   background-color: yellow;
 }
 #schedulepage .experts .hours { background-color:black;font-size:11px;color:white;height:40px; text-align: center; padding:  5px;}
-#schedulepage .experts img { width: 60px; display: block; margin: 6px auto;}
+#schedulepage .experts img { width: 60px; height: 60px; display: block; margin: 6px auto;}
 #schedulepage .experts .select { height: 25px; margin: 0 auto; width: 25px;}
 #schedulepage .form-actions {
   margin-top: 10px;

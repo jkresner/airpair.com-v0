@@ -1,11 +1,12 @@
-util             = require './../../app/scripts/util'
+util             = require '../../app/scripts/util'
 async            = require 'async'
-RequestsSvc      = require './../services/requests'
-ExpertsSvc       = require './../services/experts'
-TagsSvc          = require './../services/tags'
-OrdersSvc        = require './../services/orders'
-SettingsSvc      = require './../services/settings'
-RequestCallsSvc  = require './../services/requestCalls'
+RequestsSvc      = require '../services/requests'
+ExpertsSvc       = require '../services/experts'
+TagsSvc          = require '../services/tags'
+OrdersSvc        = require '../services/orders'
+SettingsSvc      = require '../services/settings'
+RequestCallsSvc  = require '../services/requestCalls'
+roles            = require '../identity/roles'
 
 rSvc  = new RequestsSvc()
 eSvc  = new ExpertsSvc()
@@ -80,6 +81,7 @@ module.exports = class ViewDataService
     async.parallel tasks, (e, results) =>
       if e then return callback e
       callback null,
+        isAdmin: false # TODO roles.isAdmin usr
         request: JSON.stringify results.request
         orders: JSON.stringify results.orders
 

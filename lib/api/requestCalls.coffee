@@ -14,6 +14,7 @@ class RequestCallsApi  # Always passes back a full request object
     app.get     "/api/#{route}/calls/:permalink", loggedIn, @detail
     app.post    "/api/#{route}/:requestId/calls", admin, @validate, @create
     app.put     "/api/#{route}/:requestId/calls/:callId", admin, @validate, @update
+    app.delete  "/api/#{route}/:requestId/calls/:callId", admin, @delete
 
   detail: (req, res, next) =>
     @svc.getByCallPermalink req.params.permalink, cSend(res, next)
@@ -38,7 +39,7 @@ class RequestCallsApi  # Always passes back a full request object
 
   create: (req, res, next) =>
     # TODO also send 400 errors when google API has problems.
-    @svc.create req.user._id, req.params.requestId, req.body, (e, results) ->
+    @svc.create req.user, req.params.requestId, req.body, (e, results) ->
       if e && e.message.indexOf('Not enough hours') == 0
         errors = duration: e.message
         return res.send data: errors, 400
@@ -54,5 +55,8 @@ class RequestCallsApi  # Always passes back a full request object
         return res.send data: errors, 400
       if e then return next e
       res.send call
+
+  delete: (req, res, next) =>
+    @svc.delete req.params.requestId, req.params.callId, cSend(res, next)
 
 module.exports = (app) -> new RequestCallsApi app, 'requests'

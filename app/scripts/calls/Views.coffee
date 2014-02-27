@@ -84,6 +84,7 @@ class exports.CallScheduleView extends BB.ModelSaveView
       requestId: requestId = @request.get('_id')
       owner: @request.get('owner')
       inviteOwner: storage('inviteOwner') == 'true'
+      isAdmin: @isAdmin
 
     @$('.datepicker').stop()
     @$('.timepicker').timepicker('remove')
@@ -97,7 +98,9 @@ class exports.CallScheduleView extends BB.ModelSaveView
     d.sendNotifications = @elm('sendNotifications').is(':checked')
     d
   renderSuccess: (model, response, options) =>
-    window.location = "/adm/inbound/request/#{@request.get('_id')}"
+    if @isAdmin
+      return window.location = "/adm/inbound/request/#{@request.get('_id')}"
+    window.location = "/review/#{@request.get('_id')}"
   renderError: (model, response, options) ->
     @$('.save').attr('disabled', false)
     super model, response, options
@@ -160,6 +163,10 @@ class exports.CallEditView extends BB.ModelSaveView
     'click .save': (e) ->
       $(e.target).attr('disabled', true)
       @save(e)
+    'click .delete': (e) ->
+      $(e.target).attr('disabled', true)
+      @model.destroy(wait: true, success: @renderSuccess, error: @renderError)
+      false
   initialize: ->
     # orders and request are already set by the time the router sets the model
     @listenTo @model, 'change', @render
