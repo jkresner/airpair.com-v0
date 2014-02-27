@@ -260,6 +260,15 @@ module.exports = class OrdersService extends DomainService
       modifiedOrders = @_markComplete modifiedOrders, call
       @_saveLineItems modifiedOrders, cb
 
+  removeCallFromOrders: (requestId, callId, cb) =>
+    # TODO dont allow deletion of certian kinds of orders
+    # if call.status == 'pending'
+    # TODO write some tests for this
+    @getByRequestId requestId, (err, orders) =>
+      if err then return cb err
+      ordersWithoutCall = unschedule orders, callId
+      @_saveLineItems ordersWithoutCall, cb
+
   # when a recording has been added to a call and nothing else has changed,
   # this is used to complete the relevant hours on the orders
   updateCompletion: (requestId, call, cb) =>

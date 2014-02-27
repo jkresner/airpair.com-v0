@@ -102,6 +102,7 @@ module.exports = class RequestCallsService
       console.log '3d'
       @mailman.callDeclined expert, request, call, (err) =>
         updateCall(err, request, call)
+        # TODO delete the call as well.
 
     updateCall = (err, request, call) =>
       console.log '4'
@@ -159,4 +160,7 @@ module.exports = class RequestCallsService
     ups = $pull: calls: _id: new ObjectId callId
     Request.findOneAndUpdate(query, ups).lean().exec (err, request) =>
       if err then return callback err
-      callback null, {}
+
+      OrdersSvc.removeCallFromOrders requestId, callId, (err) =>
+        if err then return callback err
+        callback null, {}
