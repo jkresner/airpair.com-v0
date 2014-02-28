@@ -18,7 +18,7 @@ class exports.CallScheduleView extends BB.ModelSaveView
   async: off
   el: '#scheduleForm'
   tmpl: require './templates/CallSchedule'
-  viewData: ['duration', 'date', 'time', 'type']
+  viewData: ['duration', 'date', 'time', 'type', 'timezone']
   events:
     'click input:radio': (e) ->
       @model.set 'expertId', @$(e.target).val()
@@ -40,7 +40,6 @@ class exports.CallScheduleView extends BB.ModelSaveView
     @listenTo @request, 'change', @render
     @listenTo @collection, 'reset', @render
     @listenTo @model, 'change', @render
-
   render: ->
     orders = @collection.toJSON()
     selectedExpert = null
@@ -88,9 +87,11 @@ class exports.CallScheduleView extends BB.ModelSaveView
 
     @$('.datepicker').stop()
     @$('.timepicker').timepicker('remove')
+    if !@isAdmin then @timezoneInputView?.cleanTypehead()
     @$el.html @tmpl @model.extendJSON d
     @$('.datepicker').pickadate(pickadateOptions)
     @$('.timepicker').timepicker(timepickerOptions)
+    if !@isAdmin then @timezoneInputView = new exports.TimezoneInputView()
     @
   getViewData: ->
     d = @getValsFromInputs @viewData
@@ -229,5 +230,41 @@ class exports.CallsView extends BB.ModelSaveView
   render: ->
     for m in @collection.models
       @$el.append new exports.ExpertCallRowView( model: m ).render().el
+
+class exports.TimezoneInputView extends BB.HasBootstrapErrorStateView
+  el: '#timezoneInput'
+  # tmpl: require './templates/TimezoneInput'
+  tmplResult: require './templates/TypeAheadResult'
+  initialize: (args) ->
+    # @$el.append @tmpl() # TODO user model has a saved timezone
+    @initTypehead()
+  render: ->
+    @
+  initTypehead: =>
+    names = []
+    now = moment()
+    col = _.each window.ap_timezones.zones, (value, key) ->
+      names.push
+        name: key
+        # TODO compute the offsets to show at the end.
+        # tz: now.tz(key).format('[GMT]Z')
+
+    @cleanTypehead().val('').show()
+    @$el.typeahead(
+      header: '<header><strong>&nbsp;&nbsp;Timezones</strong></header>'
+      noresultsHtml: '&nbsp;&nbsp;No results'
+      name: 'collection' + new Date().getTime()
+      valueKey: 'name'
+      template: @tmplResult
+      local: names
+    ).on('typeahead:selected', @select)
+    @
+  select: (e, data) =>
+    if e then e.preventDefault()
+    console.log 'select', data
+  cleanTypehead: ->
+    @$el.typeahead('destroy').off 'typeahead:selected'
+  getViewData: ->
+    @$el.val()
 
 module.exports = exports

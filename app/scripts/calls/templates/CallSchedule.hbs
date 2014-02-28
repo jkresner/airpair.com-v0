@@ -70,9 +70,14 @@
       <div class="control-group">
         <label class="control-label" for="date">Timezone / Date / Time</label>
         <div class="controls">
+          {{#if isAdmin}}
           <select name="timezone" class="input-mini">
             <option value="PST" selected>PST</option>
           </select>
+          {{else}}
+          <input id="timezoneInput"
+            type="text" name="timezone" placeholder="timezone">
+          {{/if}}
           <input name="date" type="text" class="datepicker input-medium"
             value="{{../date}}" placeholder="pick a date">
           <input name="time" type="text" class="timepicker input-mini"
@@ -101,7 +106,7 @@
     </div>
     {{/if}}
   {{/selectedExpert}}
-
+  <div style="clear:both"></div>
   <div class="alert alert-error">
     <button type="button" class="close" data-dismiss="alert">&times;</button>
     <h4>Error</h4>

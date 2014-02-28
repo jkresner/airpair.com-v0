@@ -8,10 +8,10 @@ storySteps = [
   { app:'request/Router', usr:'jdowd', frag: '#', fixture: f.request, pageData: {} }
   { app:'inbound/Router', usr:'admin', frag: '#', fixture: f.inbound, pageData: { experts: data.experts, tags: data.tags } }
   { app:'review/Router', usr:'jdowd', frag: '#rId', fixture: f.review, pageData: {} }
-  { app:'calls/RouterSchedule', usr: 'admin', frag: '#/schedule/rId', fixture: f.callSchedule, pageData: { request: request } }
-  { app:'calls/RouterSchedule', usr: 'admin', frag: '#/schedule/rId', fixture: f.callSchedule, pageData: { request: request } }
-  { app:'calls/RouterSchedule', usr: 'admin', frag: '#/schedule/rId', fixture: f.callSchedule, pageData: { request: request } }
-  { app:'calls/RouterSchedule', usr: 'admin', frag: '#/schedule/rId', fixture: f.callSchedule, pageData: { request: request } }
+  { app:'calls/RouterSchedule', usr: 'admin', frag: '#/schedule/rId', fixture: f.callSchedule, pageData: { request: request, isAdmin: true } }
+  { app:'calls/RouterSchedule', usr: 'admin', frag: '#/schedule/rId', fixture: f.callSchedule, pageData: { request: request, isAdmin: true } }
+  { app:'calls/RouterSchedule', usr: 'admin', frag: '#/schedule/rId', fixture: f.callSchedule, pageData: { request: request, isAdmin: true } }
+  { app:'calls/RouterSchedule', usr: 'admin', frag: '#/schedule/rId', fixture: f.callSchedule, pageData: { request: request, isAdmin: true } }
   # note: these two have a callId set as @rId
   { app:'calls/RouterEdit', usr: 'admin', frag: '#', fixture: f.callEdit, pageData: { request: request } }
   { app:'calls/RouterEdit', usr: 'admin', frag: '#', fixture: f.callEdit, pageData: { request: request } }

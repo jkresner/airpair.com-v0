@@ -212,13 +212,9 @@ body#book #none { padding:40px 0 200px 0 }
 #schedulepage select[name="type"] {
   width: 120px;
 }
-#schedulepage select[name="timezone"] {
-  width: 100px;
-}
-#schedulepage .experts,
-#schedulepage .datetimeduration {
-  overflow: auto;
-  width: 100%
+#schedulepage input[name="timezone"], #schedulepage .tt-hint {
+  width: 175px;
+  padding: 4px;
 }
 #schedulepage .datetimeduration .control-group { float: left; margin-right: 2em;}
 #schedulepage .experts label { margin:0; }

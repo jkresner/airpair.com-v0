@@ -50,8 +50,9 @@ module.exports = class RequestCallsService
       if err then return callback err
       {orders, request} = results
 
-      # dont make gcal right away for customers
-      if true || !roles.isAdmin(user) then return saveCallToRequest(orders)
+      # dont make gcal right away for customers.
+      # TODO make tests understand that they are admin:
+      # if true || !roles.isAdmin(user) then return saveCallToRequest(orders)
 
       # we make the gcal event first, because we need to put the event info
       # into the call object, and it is fiddly to get out the correct call
