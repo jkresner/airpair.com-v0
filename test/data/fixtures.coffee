@@ -27,6 +27,7 @@ module.exports =
               <div id='stripe' class='route'>
                 <div id='stripeRegister'></div>
               </div>"
+
   orders:   "<div id='list' class='route'>
               <table id='orders' class='table table-striped'>
                 <thead>
@@ -35,9 +36,11 @@ module.exports =
                 <tbody></tbody>
               </table>3
             </div>"
+
   callSchedule: "<div id='schedule' class='route'>
                   <div id='scheduleForm'></div>
                 </div>"
+
   callEdit: "<div id='edit' class='route'>
                 <div id='callEdit'></div>
                 <div id='videos'></div>
@@ -46,3 +49,5 @@ module.exports =
                   <button class='save button'>Save</button>
                 </div>
             </div>"
+
+  calls: "<div id='calls'></div>"

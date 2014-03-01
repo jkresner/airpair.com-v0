@@ -11,6 +11,8 @@ module.exports = class ExpertsService extends DomainService
         r = {} if !r || !r.bookMe || !r.bookMe.enabled
         callback e, r
 
+  getByUserId: (userId, callback) =>
+    @model.findOne(userId: userId).lean().exec callback
 
   admSelect:
     'userId': 1

@@ -226,7 +226,7 @@ class exports.ExpertCallRowView extends BB.ModelSaveView
 class exports.CallsView extends BB.ModelSaveView
   el: '#calls'
   initialize: ->
-    @listenTo @collection, 'sync', @render
+    @listenTo @collection, 'reset', @render
   render: ->
     for m in @collection.models
       @$el.append new exports.ExpertCallRowView( model: m ).render().el

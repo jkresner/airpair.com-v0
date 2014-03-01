@@ -14,6 +14,7 @@ class exports.Videos extends BB.FilteringCollection
 
 class exports.RequestCalls extends BB.FilteringCollection
   model: Models.RequestCall
+  url: -> "/api/requests/calls/list"
   comparator: (m) -> -1 * (new Date m.get('datetime')).getTime()
 
 exports.Requests = Shared.Requests

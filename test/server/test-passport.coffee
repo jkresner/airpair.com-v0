@@ -16,6 +16,8 @@ data.users.janPetrovic = users[11] # Jan Petrovic
 data.users.sirramongabriel = users[12] # sirramongabriel (Ramon Porter)
 data.users.bchristie = users[13] # bchristie (Bruce Christie) customer
 data.users.jdowd = users[14] # jdowd (John Dowd) customer
+data.users.rbigg = users[15] # rbigg (Ryan Bigg) expert
+
 
 setSession = (userKey) ->
   if data.users[userKey]?

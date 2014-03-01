@@ -49,7 +49,7 @@
     function initApp() {
       var pageData = {
         calls: {{{ calls }}},
-        session: {} // TODO
+        session: {{{ session }}}
       };
       Router = require('/scripts/calls/RouterCalls');
       window.router = new Router(pageData);

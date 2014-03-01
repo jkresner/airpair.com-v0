@@ -1,5 +1,6 @@
 Tags = require('/scripts/request/Collections').Tags
-f    = data.fixtures
+calcExpertCredit = require '/scripts/shared/mix/calcExpertCredit'
+f                = data.fixtures
 
 request = _.clone(data.requests[13]) # John Dowd
 
@@ -8,13 +9,18 @@ storySteps = [
   { app:'request/Router', usr:'jdowd', frag: '#', fixture: f.request, pageData: {} }
   { app:'inbound/Router', usr:'admin', frag: '#', fixture: f.inbound, pageData: { experts: data.experts, tags: data.tags } }
   { app:'review/Router', usr:'jdowd', frag: '#rId', fixture: f.review, pageData: {} }
-  { app:'calls/RouterSchedule', usr: 'admin', frag: '#/schedule/rId', fixture: f.callSchedule, pageData: { request: request, isAdmin: true } }
-  { app:'calls/RouterSchedule', usr: 'admin', frag: '#/schedule/rId', fixture: f.callSchedule, pageData: { request: request, isAdmin: true } }
-  { app:'calls/RouterSchedule', usr: 'admin', frag: '#/schedule/rId', fixture: f.callSchedule, pageData: { request: request, isAdmin: true } }
-  { app:'calls/RouterSchedule', usr: 'admin', frag: '#/schedule/rId', fixture: f.callSchedule, pageData: { request: request, isAdmin: true } }
-  # note: these two have a callId set as @rId
-  { app:'calls/RouterEdit', usr: 'admin', frag: '#', fixture: f.callEdit, pageData: { request: request } }
-  { app:'calls/RouterEdit', usr: 'admin', frag: '#', fixture: f.callEdit, pageData: { request: request } }
+  # { app:'calls/RouterSchedule', usr: 'admin', frag: '#/schedule/rId', fixture: f.callSchedule, pageData: { request: request, isAdmin: true } }
+  # { app:'calls/RouterSchedule', usr: 'admin', frag: '#/schedule/rId', fixture: f.callSchedule, pageData: { request: request, isAdmin: true } }
+  # { app:'calls/RouterSchedule', usr: 'admin', frag: '#/schedule/rId', fixture: f.callSchedule, pageData: { request: request, isAdmin: true } }
+  # { app:'calls/RouterSchedule', usr: 'admin', frag: '#/schedule/rId', fixture: f.callSchedule, pageData: { request: request, isAdmin: true } }
+  # # note: these two have a callId set as @rId
+  # { app:'calls/RouterEdit', usr: 'admin', frag: '#', fixture: f.callEdit, pageData: { request: request } }
+  # { app:'calls/RouterEdit', usr: 'admin', frag: '#', fixture: f.callEdit, pageData: { request: request } }
+  # john does some customer call scheduling
+  { app:'calls/RouterSchedule', usr: 'jdowd', frag: '#/schedule/rId', fixture: f.callSchedule, pageData: { request: request, isAdmin: false } }
+  { app:'calls/RouterCalls', usr: 'rbigg', frag: '#', fixture: f.calls, pageData: {} }
+  { app:'calls/RouterSchedule', usr: 'jdowd', frag: '#/schedule/rId', fixture: f.callSchedule, pageData: { request: request, isAdmin: false } }
+  { app:'calls/RouterCalls', usr: 'rbigg', frag: '#', fixture: f.calls, pageData: {  } }
 ]
 
 testNum = -1
@@ -37,8 +43,10 @@ describe "Stories: John Dowd", ->
     hlpr.cleanSetup @, storySteps[testNum].fixture
     window.location = storySteps[testNum].frag.replace 'rId', @rId
     hlpr.setInitApp @, "/scripts/#{storySteps[testNum].app}"
-    hlpr.setSession storySteps[testNum].usr, =>
-      # $log 'app', storySteps[testNum].app, storySteps[testNum].pageData
+    console.log "===== #{storySteps[testNum].usr}"
+    hlpr.setSession storySteps[testNum].usr, (__, session) =>
+      console.log 'app', storySteps[testNum].app #, storySteps[testNum].pageData
+      # console.log 'session', session
       initApp(storySteps[testNum].pageData, done)
 
   afterEach ->
@@ -130,20 +138,20 @@ describe "Stories: John Dowd", ->
       $ryanB = $($bookableExperts[0])
       $ivanS = $($bookableExperts[2])
 
-      $ryanB.find('[name=qty]').val('5').trigger 'change'
+      $ryanB.find('[name=qty]').val('10').trigger 'change'
       expect( bv.$('#pay').is(':visible') ).to.equal true
       expect( bv.$('.payStripe').is(':visible') ).to.equal true
 
       bv.model.once 'sync', (model) =>
-        expect( model.get('total') ).to.equal 1300
+        expect( model.get('total') ).to.equal 2600
         done()
-
       bv.$('.payStripe').click()
 
   callId = null
   scheduleCall = (app, call, duration, done) =>
     {requestCall, orders, callScheduleView} = app
     orders.once 'sync', =>
+
       v = callScheduleView
       delete call._id
       call.date = moment(call.datetime).format(dateFormat)
@@ -152,6 +160,7 @@ describe "Stories: John Dowd", ->
       requestCall.save()
       v.renderSuccess = -> # disable the redirect after save
       v.model.once 'sync', (model, resp) =>
+        console.log 'saved'
         expect(v.model.get('errors')).to.equal undefined
         # the model is now a full request
         newCall = _.last v.model.toJSON().calls
@@ -160,7 +169,8 @@ describe "Stories: John Dowd", ->
         expect(newCall.duration).to.equal duration
         expect(newCall.type).to.equal call.type
         expect(newCall.expertId).to.equal '52854908dc3dd1020000001c' # Ryan
-        done()
+        done(null, newCall)
+  ###
   it 'can schedule first 1 hour call as admin', (done) ->
     @timeout 20000
     call = request.calls[0]
@@ -245,4 +255,71 @@ describe "Stories: John Dowd", ->
     onSync = =>
       saved = @app.requestCall.toJSON()
       expect(saved.duration).to.equal 2
+      done()
+  ###
+
+  it 'can customer-schedule first 1 hour call', (done) ->
+    @timeout 20000
+    call = request.calls[4]
+    scheduleCall(@app, call, 1, done)
+    # TODO test timezone stuff
+
+  it 'expert Ryan can decline first call', (done) ->
+    @timeout 20000
+    v = @app.callsView
+
+    synced = 0
+    # save ryan's expert profile
+    $.post('/api/experts', data.experts[10]).done(-> fetch('d')).fail(-> fetch('f'))
+    fetch = (data) =>
+      # cant see his calls if he doesnt have an expert profile
+      @app.calls.fetch( success: (-> setTimeout hitPage, 100), reset: true )
+
+    declinedCallId = null
+    hitPage = =>
+      # console.log 'hitpage', @app.calls.toJSON()
+      # the correct call is in there
+      expect(!!_.find @app.calls.toJSON(), (c) -> c._id == callId).to.equal true
+
+      # now trigger a get request on the decline url.
+      decline = $(v.$(".schedule[data-id='#{callId}']")[1])
+      declineUrl = decline.attr('href')
+      declinedCallId = decline.data('id')
+      expect(!!declinedCallId).to.equal true
+      expect(!!declineUrl).to.equal true
+      $.get(declineUrl).done(fetchCalls).fail(fetchCalls)
+    fetchCalls = => @app.calls.fetch(success: assertDeclined, reset: true )
+    assertDeclined = (calls) =>
+      updated = _.find calls.toJSON(), (c) -> c._id == declinedCallId
+      expect(updated.status).to.equal 'declined'
+      done()
+    # console.log 'ec', calcExpertCredit orders.toJSON(), '52854908dc3dd1020000001c'
+
+  it 'can customer-schedule second 1 hour call', (done) ->
+    @timeout 20000
+    call = _.cloneDeep request.calls[4]
+    call.duration = 5
+    scheduleCall(@app, call, 5, done)
+
+  it 'expert ryan can accept second call', (done) ->
+    @timeout 20000
+    v = @app.callsView
+    confirmCallId = null
+    @app.calls.once 'reset', =>
+      # the correct call is in there
+      expect(!!_.find @app.calls.toJSON(), (c) -> c._id == callId).to.equal true
+
+      # now trigger a get request on the confirm url.
+      confirm = $(v.$(".schedule[data-id='#{callId}']")[0])
+      confirmUrl = confirm.attr('href')
+      confirmCallId = confirm.data('id')
+      expect(!!confirmCallId).to.equal true
+      expect(!!confirmUrl).to.equal true
+      $.get(confirmUrl).done(fetchCalls).fail(fetchCalls)
+    fetchCalls = =>
+      @app.calls.fetch(success: assertConfirm, reset: true )
+    assertConfirm = (calls) =>
+      console.log calls.toJSON()
+      updated = _.find calls.toJSON(), (c) -> c._id == confirmCallId
+      expect(updated.status).to.equal 'confirmed'
       done()

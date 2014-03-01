@@ -1,7 +1,7 @@
-authz                  = require './../identity/authz'
+authz                  = require '../identity/authz'
 admin                  = authz.Admin()
 loggedIn               = authz.LoggedIn isApi:true
-CallsSvc               = require './../services/requestCalls'
+CallsSvc               = require '../services/requestCalls'
 formatValidationErrors = require '../util/formatValidationErrors'
 cSend                  = require '../util/csend'
 moment                 = require 'moment-timezone'
@@ -11,10 +11,14 @@ class RequestCallsApi  # Always passes back a full request object
   svc: new CallsSvc()
 
   constructor: (app, route) ->
+    app.get     "/api/#{route}/calls/list", loggedIn, @list # used in test mode
     app.get     "/api/#{route}/calls/:permalink", loggedIn, @detail
-    app.post    "/api/#{route}/:requestId/calls", admin, @validate, @create
+    app.post    "/api/#{route}/:requestId/calls", loggedIn, @validate, @create
     app.put     "/api/#{route}/:requestId/calls/:callId", admin, @validate, @update
     app.delete  "/api/#{route}/:requestId/calls/:callId", admin, @delete
+
+  list: (req, res, next) =>
+    @svc.getByUserId req.user._id, cSend(res, next)
 
   detail: (req, res, next) =>
     @svc.getByCallPermalink req.params.permalink, cSend(res, next)

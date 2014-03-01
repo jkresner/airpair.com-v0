@@ -186,10 +186,14 @@ module.exports = class OrdersService extends DomainService
         callback null, status: 'deleted'
 
   # oldest orders first (smallest timestamp -> biggest timestamp)
-  getByRequestId: (requestId, callback) =>
+  _getByRequestId: (requestId, callback) =>
     query = requestId: requestId
     sort = utc: 'asc'
     @search(query).sort(sort).exec callback
+
+  getByRequestId: (requestId, callback) => @_getByRequestId requestId, callback
+  # TODO actually censor it
+  getByRequestIdCensored: (requestId, callback) => @_getByRequestId requestId, callback
 
   ###
 

@@ -1,11 +1,11 @@
 CRUDApi   = require './_crud'
-OrdersSvc = require './../services/orders'
-authz     = require './../identity/authz'
+OrdersSvc = require '../services/orders'
+authz     = require '../identity/authz'
 loggedIn  = authz.LoggedIn isApi: true
 admin     = authz.Admin isApi: true
-Roles     = authz.Roles
+roles     = require '../identity/roles'
 cSend     = require '../util/csend'
-
+Request   = require '../models/request'
 
 class OrdersApi
 
@@ -14,7 +14,7 @@ class OrdersApi
   constructor: (app, route) ->
     app.post    "/api/#{route}", loggedIn, @create
     app.get     "/api/admin/#{route}", admin, @adminList
-    app.get     "/api/#{route}/request/:id", admin, @getByRequestId
+    app.get     "/api/#{route}/request/:id", loggedIn, @getByRequestId
     app.put     "/api/#{route}/:id", admin, @update
     app.delete  "/api/#{route}/:id", admin, @delete
 
@@ -22,7 +22,17 @@ class OrdersApi
     @svc.getAll cSend(res, next)
 
   getByRequestId: (req, res, next) =>
-    @svc.getByRequestId req.params.id, cSend(res, next)
+    if roles.isAdmin req.user
+      console.log 'admin'
+      return @svc.getByRequestId req.params.id, cSend(res, next)
+
+    select = userId: 1
+    Request.findOne(req.params.id, select).lean().exec (err, request) =>
+      if roles.isRequestOwner req.user, request
+        console.log 'censor'
+        return @svc.getByRequestIdCensored req.params.id, cSend(res, next)
+
+      res.send 400, 'you can only view your own orders'
 
   create: (req, res, next) =>
     order = _.pick req.body, ['total','requestId']

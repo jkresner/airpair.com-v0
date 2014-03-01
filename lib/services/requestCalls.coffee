@@ -7,6 +7,7 @@ roles      = require '../identity/roles'
 
 OrdersSvc  = new (require('./orders'))()
 RequestSvc = new (require './requests')()
+ExpertsSvc = new (require './experts')()
 
 Order   = new require '../models/order'
 Request = new require '../models/request'
@@ -16,6 +17,13 @@ module.exports = class RequestCallsService
   model: require './../models/request'
   calendar: calendar
   mailman: mailman
+
+  getByUserId: (userId, callback) ->
+    ExpertsSvc.getByUserId userId, (err, expert) =>
+      if err then return callback err
+      # get all calls for an expert
+      if !expert then return callback null, [] # TODO consider sending error msg
+      @getByExpertId expert._id, callback
 
   getByCallPermalink: (permalink, callback) =>
     # find by permalink
@@ -37,6 +45,7 @@ module.exports = class RequestCallsService
       callback null, calls
 
   create: (user, requestId, call, callback) =>
+    console.log 'c0'
     call.status = 'pending'
     # this lets us to update orders before inserting the call into Mongo
     call._id = new ObjectId()
@@ -67,14 +76,16 @@ module.exports = class RequestCallsService
       Request.findByIdAndUpdate requestId, ups, (err, modifiedRequest) =>
         callback null, { request: modifiedRequest, orders: orders }
 
-  rsvp: (expert, callId, status, callback) =>
-    console.log '0'
+  rsvp: (user, expert, callId, status, callback) =>
+    console.log '0rsvp'
     query = calls: $elemMatch:
       '_id': callId
       'expertId': expert._id
       'status': 'pending'
     select = 'events': 0
+    console.log 'rsvp', query
     Request.findOne(query, select).lean().exec (err, request) =>
+      if err then return callback err
       console.log '1'
       if !request then return callback()
       console.log '2'
@@ -101,9 +112,8 @@ module.exports = class RequestCallsService
     # email customer saying the expert said no
     declined = (request, call) =>
       console.log '3d'
-      @mailman.callDeclined expert, request, call, (err) =>
+      @mailman.callDeclined user, request, call, (err) =>
         updateCall(err, request, call)
-        # TODO delete the call as well.
 
     updateCall = (err, request, call) =>
       console.log '4'
@@ -158,7 +168,7 @@ module.exports = class RequestCallsService
     query =
       '_id': requestId
       calls: $elemMatch: _id: callId
-    ups = $pull: calls: _id: new ObjectId callId
+    ups = $pull: calls: _id: callId
     Request.findOneAndUpdate(query, ups).lean().exec (err, request) =>
       if err then return callback err
 

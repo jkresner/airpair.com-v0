@@ -113,7 +113,7 @@ exports.cleanTearDown = (ctx) ->
 
 
 exports.setSession = (userKey, callback) ->
-  $.ajax(url: "/set-session/#{userKey}").done( -> callback() )
-
+  $.ajax(url: "/set-session/#{userKey}").done (data) ->
+    callback(null, data)
 
 module.exports = exports
