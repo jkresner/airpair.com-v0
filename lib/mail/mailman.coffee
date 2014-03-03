@@ -25,8 +25,8 @@ class Mailman
   sendEmail: (options, callback) =>
     @renderEmail(options, options.templateName, (e, rendered) ->
       rendered.Subject = options.subject
-      console.log '==sendEmail==\n', rendered.Html
-      console.log '==sendEmail==\n', rendered.Text
+      # console.log '==sendEmail==\n', rendered.Html # TODO remove
+      # console.log '==sendEmail==\n', rendered.Text # TODO remove
       ses.send(options.to, rendered, callback)
     )
 
@@ -88,7 +88,7 @@ class Mailman
     o.to = "dt+#{o.customerEmail.replace('@', 'AT')}@airpair.com"
     o.subject =
       "#{o.expertName} declined call on #{o.callDateTime} about #{o.tagsString}"
-    console.log 'mailman', o
+    # console.log 'mailman', o # TODO remove
     @sendEmail o, callback
 
   expertReviewRequest: (data, callback) ->
