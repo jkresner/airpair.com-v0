@@ -228,8 +228,11 @@ class exports.CallsView extends BB.ModelSaveView
   initialize: ->
     @listenTo @collection, 'reset', @render
   render: ->
-    for m in @collection.models
+    pending = _.filter @collection.models, (m) -> m.get('status') == 'pending'
+    for m in pending
       @$el.append new exports.ExpertCallRowView( model: m ).render().el
+    if pending.length == 0
+      @$el.append('<p><strong>Inbox zero, congrats!</strong></p>')
 
 class exports.TimezoneInputView extends BB.HasBootstrapErrorStateView
   el: '#timezoneInput'
