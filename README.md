@@ -129,6 +129,7 @@ Ideas to airpair on
   e.g. https://trello.com/c/kRkudmGQ/365-take-david-through-pipeline-request
 - get a <your-initals>@airpair.com address
 - add yourself to roles.coffee using the gPlus id of your airpair email.
+- add your initials to your color in calendar.coffee
 - install
     - editor
       - cs highlighting
