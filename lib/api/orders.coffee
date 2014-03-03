@@ -22,17 +22,8 @@ class OrdersApi
     @svc.getAll cSend(res, next)
 
   getByRequestId: (req, res, next) =>
-    if roles.isAdmin req.user
-      console.log 'admin'
-      return @svc.getByRequestId req.params.id, cSend(res, next)
-
-    select = userId: 1
-    Request.findOne(req.params.id, select).lean().exec (err, request) =>
-      if roles.isRequestOwner req.user, request
-        console.log 'censor'
-        return @svc.getByRequestIdCensored req.params.id, cSend(res, next)
-
-      res.send 400, 'you can only view your own orders'
+    # TODO admins can view everything, users can only view their own
+    @svc.getByRequestId req.params.id, cSend(res, next)
 
   create: (req, res, next) =>
     order = _.pick req.body, ['total','requestId']

@@ -94,6 +94,7 @@ describe "Stories: John Dowd", ->
           r = @app.request.toJSON()
           expect(r.company.name).to.equal request.company.name
           expect(r.pricing).to.equal request.pricing
+          expect(r.userId).to.equal request.userId
 
           # we need the ID for the call stuff
           storySteps[4].pageData.request._id = @rId
@@ -179,7 +180,7 @@ describe "Stories: John Dowd", ->
       postCredit = calcExpertCredit orders.toJSON(), call.expertId
       expect(postCredit.balance).to.equal preCredit.balance - duration
       expect(postCredit.redeemed).to.equal preCredit.redeemed + duration
-      done(null, newCall)
+      done(null, newCall, preCredit, postCredit)
   ###
   it 'can schedule first 1 hour call as admin', (done) ->
     @timeout 20000
@@ -272,15 +273,14 @@ describe "Stories: John Dowd", ->
     @timeout 20000
     call = _.cloneDeep request.calls[4]
     call.timezone = 'Europe/Berlin'
-    scheduleCall @app, call, 1, (err, newCall) =>
+
+    scheduleCall @app, call, 1, (err, newCall, preCredit) =>
+      credit = preCredit
       expect(newCall.gcal).to.equal undefined
       console.log call.datetime, 'vs', newCall.datetime
       sameTime = new Date(call.datetime).getTime() == new Date(newCall.datetime).getTime()
       expect(sameTime).to.equal false
       done()
-
-    @app.orders.once 'sync', =>
-      credit = calcExpertCredit @app.orders.toJSON(), call.expertId
 
   it 'expert Ryan can decline first call', (done) ->
     @timeout 20000
@@ -295,7 +295,7 @@ describe "Stories: John Dowd", ->
 
     declinedCallId = null
     hitPage = =>
-      # console.log 'hitpage', @app.calls.toJSON()
+      console.log 'hitpage', @app.calls.toJSON()
       # the correct call is in there
       expect(!!_.find @app.calls.toJSON(), (c) -> c._id == callId).to.equal true
 
@@ -317,13 +317,11 @@ describe "Stories: John Dowd", ->
     call = _.cloneDeep request.calls[4]
     call.duration = 5
 
-    @app.orders.once 'sync', =>
+    scheduleCall @app, call, 5, (err, newCall, preCredit, postCredit) =>
       # the declined call should not count against their balance.
-      updatedCredit = calcExpertCredit @app.orders.toJSON(), call.expertId
-      expect(updatedCredit.balance).to.equal credit.balance
-      expect(updatedCredit.redeemed).to.equal credit.redeemed
+      expect(preCredit.balance).to.equal credit.balance
+      expect(preCredit.redeemed).to.equal credit.redeemed
 
-    scheduleCall @app, call, 5, (err, newCall) =>
       expect(newCall.gcal).to.equal undefined
       done()
 

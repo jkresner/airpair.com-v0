@@ -18,6 +18,7 @@ describe "RequestCallsService", ->
   user = data.users[13]  # bchristie
   request = data.requests[10] # experts[0] = paul, experts[1] = matthews
   request = _.omit request, '_id'
+  admin = data.users[0]
   before dbConnect
   after (done) -> dbDestroy @, done
   beforeEach () ->
@@ -37,7 +38,7 @@ describe "RequestCallsService", ->
       if err then return callback err
       saveOrdersForRequest orders, newRequest, (err, __) ->
         if err then return callback err
-        svc.create user._id, newRequest._id, call, (err, results) ->
+        svc.create admin, newRequest._id, call, (err, results) ->
           if err then return callback err
           newRequestWithCall = results.request
           expect(newRequestWithCall).to.be.a 'object'
@@ -77,7 +78,7 @@ describe "RequestCallsService", ->
       if err then return done err
       saveOrdersForRequest orders, newRequest, (err, newOrders) ->
         if err then return done err
-        svc.create user._id, newRequest._id, call, (err, newRequestWithCall) ->
+        svc.create admin, newRequest._id, call, (err, newRequestWithCall) ->
           expect(err).to.exist
           expect(err.message).to.match /Not enough/i
           done()
@@ -94,7 +95,7 @@ describe "RequestCallsService", ->
 
       saveOrdersForRequest orders, newRequest, (err, newOrders) =>
         if err then return done err
-        svc.create user._id, newRequest._id, callos2, (err, results) =>
+        svc.create admin, newRequest._id, callos2, (err, results) =>
           if err then return done err
           modifiedRequest = results.request
           modifiedOrders = results.orders
@@ -104,7 +105,7 @@ describe "RequestCallsService", ->
           expect(modifiedRequest.calls.length).to.equal 1
           expect(modifiedRequest.calls[0].duration).to.equal 2
 
-          svc.create user._id, newRequest._id, callp5, (err, results) =>
+          svc.create admin, newRequest._id, callp5, (err, results) =>
             if err then return done err
             modifiedRequest = results.request
             modifiedOrders = results.orders
@@ -264,7 +265,7 @@ describe "RequestCallsService", ->
         expect(c.completed).to.equal 0
         expect(c.balance).to.equal 10
 
-        svc.create user._id, newRequest._id, callp5, (err, results) =>
+        svc.create admin, newRequest._id, callp5, (err, results) =>
           if err then return done err
 
           # not all the orders were modified, so this gives us the big picture

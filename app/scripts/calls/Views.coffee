@@ -97,7 +97,8 @@ class exports.CallScheduleView extends BB.ModelSaveView
     d = @getValsFromInputs @viewData
     d.inviteOwner = @elm('inviteOwner').is(':checked')
     d.sendNotifications = @elm('sendNotifications').is(':checked')
-    d.timezone = @timezoneInputView.getViewData()
+    # TODO make this prettier; viewdata handles it for the adm version
+    if !@isAdmin then d.timezone = @timezoneInputView.getViewData()
     d
   renderSuccess: (model, response, options) =>
     if @isAdmin
