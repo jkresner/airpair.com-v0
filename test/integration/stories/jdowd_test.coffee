@@ -281,7 +281,7 @@ describe "Stories: John Dowd", ->
 
     @app.orders.once 'sync', =>
       credit = calcExpertCredit @app.orders.toJSON(), call.expertId
-  return
+
   it 'expert Ryan can decline first call', (done) ->
     @timeout 20000
     v = @app.callsView
