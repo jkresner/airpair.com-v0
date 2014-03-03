@@ -150,26 +150,36 @@ describe "Stories: John Dowd", ->
   callId = null
   scheduleCall = (app, call, duration, done) =>
     {requestCall, orders, callScheduleView} = app
+    v = callScheduleView
+    preCredit = null
     orders.once 'sync', =>
+      preCredit = calcExpertCredit orders.toJSON(), call.expertId
 
-      v = callScheduleView
       delete call._id
       call.date = moment(call.datetime).format(dateFormat)
       call.time = moment(call.datetime).format(timeFormat)
       requestCall.set call
       requestCall.save()
       v.renderSuccess = -> # disable the redirect after save
-      v.model.once 'sync', (model, resp) =>
-        console.log 'saved'
-        expect(v.model.get('errors')).to.equal undefined
-        # the model is now a full request
-        newCall = _.last v.model.toJSON().calls
-        callId = newCall._id
+      v.model.once 'sync', onSync
+    onSync = (model, resp) =>
+      console.log 'saved'
+      expect(v.model.get('errors')).to.equal undefined
+      # the model is now a full request
+      newCall = _.last v.model.toJSON().calls
+      callId = newCall._id
+      if newCall.timezone == 'America/Los_Angeles'
         expect(newCall.datetime).to.equal call.datetime
-        expect(newCall.duration).to.equal duration
-        expect(newCall.type).to.equal call.type
-        expect(newCall.expertId).to.equal '52854908dc3dd1020000001c' # Ryan
-        done(null, newCall)
+      expect(newCall.duration).to.equal duration
+      expect(newCall.type).to.equal call.type
+      expect(newCall.expertId).to.equal '52854908dc3dd1020000001c' # Ryan
+
+      orders.fetch success: (-> assertCredit newCall), reset: true
+    assertCredit = (newCall) =>
+      postCredit = calcExpertCredit orders.toJSON(), call.expertId
+      expect(postCredit.balance).to.equal preCredit.balance - duration
+      expect(postCredit.redeemed).to.equal preCredit.redeemed + duration
+      done(null, newCall)
   ###
   it 'can schedule first 1 hour call as admin', (done) ->
     @timeout 20000
@@ -257,13 +267,21 @@ describe "Stories: John Dowd", ->
       expect(saved.duration).to.equal 2
       done()
   ###
-
+  credit = null
   it 'can customer-schedule first 1 hour call', (done) ->
     @timeout 20000
-    call = request.calls[4]
-    scheduleCall(@app, call, 1, done)
-    # TODO test timezone stuff
+    call = _.cloneDeep request.calls[4]
+    call.timezone = 'Europe/Berlin'
+    scheduleCall @app, call, 1, (err, newCall) =>
+      expect(newCall.gcal).to.equal undefined
+      console.log call.datetime, 'vs', newCall.datetime
+      sameTime = new Date(call.datetime).getTime() == new Date(newCall.datetime).getTime()
+      expect(sameTime).to.equal false
+      done()
 
+    @app.orders.once 'sync', =>
+      credit = calcExpertCredit @app.orders.toJSON(), call.expertId
+  return
   it 'expert Ryan can decline first call', (done) ->
     @timeout 20000
     v = @app.callsView
@@ -293,13 +311,21 @@ describe "Stories: John Dowd", ->
       updated = _.find calls.toJSON(), (c) -> c._id == declinedCallId
       expect(updated.status).to.equal 'declined'
       done()
-    # console.log 'ec', calcExpertCredit orders.toJSON(), '52854908dc3dd1020000001c'
 
   it 'can customer-schedule second 1 hour call', (done) ->
     @timeout 20000
     call = _.cloneDeep request.calls[4]
     call.duration = 5
-    scheduleCall(@app, call, 5, done)
+
+    @app.orders.once 'sync', =>
+      # the declined call should not count against their balance.
+      updatedCredit = calcExpertCredit @app.orders.toJSON(), call.expertId
+      expect(updatedCredit.balance).to.equal credit.balance
+      expect(updatedCredit.redeemed).to.equal credit.redeemed
+
+    scheduleCall @app, call, 5, (err, newCall) =>
+      expect(newCall.gcal).to.equal undefined
+      done()
 
   it 'expert ryan can accept second call', (done) ->
     @timeout 20000
@@ -319,7 +345,6 @@ describe "Stories: John Dowd", ->
     fetchCalls = =>
       @app.calls.fetch(success: assertConfirm, reset: true )
     assertConfirm = (calls) =>
-      console.log calls.toJSON()
       updated = _.find calls.toJSON(), (c) -> c._id == confirmCallId
       expect(updated.status).to.equal 'confirmed'
       done()

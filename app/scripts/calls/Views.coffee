@@ -97,6 +97,7 @@ class exports.CallScheduleView extends BB.ModelSaveView
     d = @getValsFromInputs @viewData
     d.inviteOwner = @elm('inviteOwner').is(':checked')
     d.sendNotifications = @elm('sendNotifications').is(':checked')
+    d.timezone = @timezoneInputView.getViewData()
     d
   renderSuccess: (model, response, options) =>
     if @isAdmin
@@ -261,10 +262,8 @@ class exports.TimezoneInputView extends BB.HasBootstrapErrorStateView
       template: @tmplResult
       local: names
     ).on('typeahead:selected', @select)
-    @
   select: (e, data) =>
     if e then e.preventDefault()
-    console.log 'select', data
   cleanTypehead: ->
     @$el.typeahead('destroy').off 'typeahead:selected'
   getViewData: ->

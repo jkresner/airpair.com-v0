@@ -70,9 +70,9 @@
       <div class="control-group">
         <label class="control-label" for="date">Timezone / Date / Time</label>
         <div class="controls">
-          {{#if isAdmin}}
+          {{#if ../isAdmin}}
           <select name="timezone" class="input-mini">
-            <option value="PST" selected>PST</option>
+            <option value="America/Los_Angeles" selected>PT</option>
           </select>
           {{else}}
           <input id="timezoneInput"

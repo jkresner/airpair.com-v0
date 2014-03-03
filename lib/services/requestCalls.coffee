@@ -60,9 +60,8 @@ module.exports = class RequestCallsService
       if err then return callback err
       {orders, request} = results
 
-      # dont make gcal right away for customers.
-      # TODO make tests understand that they are admin:
-      # if true || !roles.isAdmin(user) then return saveCallToRequest(orders)
+      # dont make gcal for customers; only make it when expert confirms
+      if !roles.isAdmin(user) then return saveCallToRequest(orders)
 
       # we make the gcal event first, because we need to put the event info
       # into the call object, and it is fiddly to get out the correct call
@@ -108,17 +107,18 @@ module.exports = class RequestCallsService
       @calendar.create request, call, (err, eventData) =>
         if err then return callback err
         call.gcal = eventData
-        updateCall null, request, call
+        updateCall request, call
 
     # email customer saying the expert said no
     declined = (request, call) =>
-      console.log '3d'
+      console.log '3d, gcal', call.gcal
       @mailman.callDeclined user, request, call, (err) =>
-        updateCall(err, request, call)
+        OrdersSvc.removeCallFromOrders request._id, call._id, (err) =>
+          if err then return callback err
+          updateCall request, call
 
-    updateCall = (err, request, call) =>
+    updateCall = (request, call) =>
       console.log '4'
-      if err then return callback err
       query =
         _id: request._id
         calls: $elemMatch: _id: callId

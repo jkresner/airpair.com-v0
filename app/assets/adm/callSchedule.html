@@ -40,7 +40,8 @@
     function initApp() {
       var pageData = {
         request: {{{ request }}},
-        orders: {{{ orders }}}
+        orders: {{{ orders }}},
+        isAdmin: true
       };
       Router = require('/scripts/calls/RouterSchedule');
       window.router = new Router(pageData);
@@ -50,5 +51,7 @@
   <script src="/javascripts/picker.js" defer></script>
   <script src="/javascripts/picker.date.js" defer></script>
   <script src="/javascripts/jquery.timepicker.js" defer></script>
+  <script src="/javascripts/moment-timezone.js" defer></script>
+  <script src="/javascripts/timezones.js" defer></script>
   <script src="/javascripts/app.js" defer onload="initApp()"></script>
 </html>

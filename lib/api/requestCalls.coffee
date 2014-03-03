@@ -27,13 +27,15 @@ class RequestCallsApi  # Always passes back a full request object
     req.checkBody('duration', 'Invalid duration').notEmpty().isInt()
     req.checkBody('date', 'Invalid date').notEmpty().is(/^\d\d \w\w\w \d\d\d\d$/)
     req.checkBody('time', 'Invalid time').notEmpty().is(/^\d\d:\d\d$/)
+    # TODO validate against moment's list of timezones.
+    req.checkBody('timezone', 'Invalid timezone').notEmpty()
     errors = req.validationErrors()
     if errors
       return res.send formatValidationErrors(errors), 400
     req.sanitize('duration').toInt()
 
     {date, time} = req.body
-    req.body.datetime = moment.tz("#{date} #{time}", 'America/Los_Angeles').toDate()
+    req.body.datetime = moment.tz("#{date} #{time}", req.body.timezone).toDate()
     if isNaN(req.body.datetime.getTime())
       return res.send data: date: 'Invalid Date', 400
 

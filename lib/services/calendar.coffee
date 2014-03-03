@@ -30,7 +30,7 @@ class CalendarService
     params =
       sendNotifications: call.sendNotifications
 
-    start = call.datetime
+    start = call.datetime # is already in the call's timezone
     owner = request.owner
     sug = _.find request.suggested, (s) -> _.idsEqual s.expert._id, call.expertId
     expert = sug.expert

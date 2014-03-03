@@ -89,7 +89,7 @@ module.exports = class ViewDataService
     async.parallel tasks, (e, results) =>
       if e then return callback e
       callback null,
-        isAdmin: false # TODO roles.isAdmin usr
+        isAdmin: roles.isAdmin usr
         request: JSON.stringify results.request
         orders: JSON.stringify results.orders
 
