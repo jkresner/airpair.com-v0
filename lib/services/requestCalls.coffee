@@ -38,8 +38,9 @@ module.exports = class RequestCallsService
       calls = _.flatten requests.map (r) ->
         r.calls.filter((c) -> _.idsEqual c.expertId, expertId)
           .map (c) ->
-            c.company = r.company
+            c.requestId = r._id
             c.userId = r.userId
+            c.company = r.company
             c
 
       callback null, calls
