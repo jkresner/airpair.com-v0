@@ -43,7 +43,7 @@ class exports.ExpertsView extends Backbone.View
 class exports.BookMeView extends BB.ModelSaveView
   el: '#bookMe'
   tmpl: require './templates/BookMe'
-  viewData: ['rate', 'urlSlug', 'urlBitly', 'urlBlog']
+  viewData: ['rate', 'rake', 'urlSlug', 'urlBitly', 'urlBlog']
   events:
     'change .enabled': 'setEnabled'
   initialize: ->
@@ -81,7 +81,7 @@ class exports.ExpertView extends BB.ModelSaveView
   tmplLinks: require './templates/Links'
   viewData: ['name', 'email', 'gmail', 'pic', 'homepage', 'skills', 'rate']
   events:
-    'click .save': 'save'
+    'click .save': (e) -> @save e; false
     'click .deleteExpert': 'destroy'
     'click .btn-gravatar': 'setGravatar'
   initialize: ->
