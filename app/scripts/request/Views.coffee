@@ -187,6 +187,7 @@ class exports.ConfirmEmailView extends BB.EnhancedFormView
   initialize: ->
     @e = addjs.events.customerEmailConfirm
     @listenTo @model, 'change:contacts', @render
+    @listenTo @request, 'change:_id', @render
   saveEmail: (e) ->
     e.preventDefault()
     confirmedEmail = @elm('email').val()
@@ -202,7 +203,10 @@ class exports.ConfirmEmailView extends BB.EnhancedFormView
     contacts[0].email = email
     contacts: contacts
   render: ->
-    @$el.html @tmpl { email: @model.get('contacts')[0].email }
+    @$el.html @tmpl
+      email: @model.get('contacts')?[0]?.email
+      requestId: @request.id
+      tagsString: @request.get('tags') && @request.threeTagsString()
     @
   renderSuccess: (model, response, options) =>
     addjs.trackEvent @e.category, @e.name, @model.get('contacts')[0].fullName
