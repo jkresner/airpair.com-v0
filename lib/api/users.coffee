@@ -1,6 +1,7 @@
 authz = require './../identity/authz'
 admin = authz.Admin isApi: true
 cSend = require '../util/csend'
+uSvc  = new (require '../services/users')()
 
 class UserApi
 
@@ -9,6 +10,7 @@ class UserApi
   constructor: (app) ->
     app.get     "/api/users/me", @detail
     app.get     "/api/admin/users", admin, @adminlist
+    app.get     "/api/admin/users/mixpanel/:id", admin, @mixpanelData
 
   detail: (req, res, next) =>
 
@@ -26,10 +28,11 @@ class UserApi
 
     res.send user
 
-
   adminlist: (req, res, next) =>
     $log 'users.adminlist'
     @model.find {}, cSend(res, next)
 
+  mixpanelData: (req, res, next) =>
+    uSvc.mixpanelData req.params.id, cSend(res, next)
 
 module.exports = (app) -> new UserApi(app)

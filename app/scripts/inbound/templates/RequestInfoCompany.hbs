@@ -23,20 +23,24 @@
         <td>{{fullName}}</td>
         <td style="width:20px"> </td>
         <td class="halfButtons"><a href="https://mail.google.com/mail/u/0/?shva=1#search/%22{{fullName}}%22+OR+{{email}}" class="email btn btn-small btn-inverse" target="_blank"><i class="icon-envelope icon-white"></i> History</a>
+        {{#if mixpanelId}}
+        <a href="https://mixpanel.com/report/271245/explore/#user?distinct_id={{mixpanelId}}" class="email btn btn-small btn-primary" target="_blank">MP</a>
+        {{else}}
         <a href="https://mixpanel.com/report/271245/explore/#list/filter:(conjunction:and,filters:!((filter:(operand:'{{fullName}}',operator:in),property:'$name',selected_property_type:string,type:string))),sort_order:descending,sort_property:'$created',sort_property_type:datetime" class="email btn btn-small btn-primary" target="_blank">MP</a>
+        {{/if}}
         </td>
       </tr>
       <tr>
         <th>Email</th>
         <td>{{email}}</td>
         <td></td>
-        <td><a id="receivedBtn" href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to={{email}}&su=ACTION REQUIRED - Upcoming AirPair Session! ({{../threeTagsString}})&body=Hi {{firstName}},{{../mailTemplates.received}}" target="_blank" class="email btn btn-small btn-warning"><i class="icon-envelope icon-white"></i> Received</a></td>
+        <td><a id="receivedBtn" href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to={{email}}&su=ACTION REQUIRED - Upcoming {{../threeTagsString}} AirPair Session&body=Hi {{firstName}},{{../mailTemplates.received}}" target="_blank" class="email btn btn-small btn-warning"><i class="icon-envelope icon-white"></i> Received</a></td>
       </tr>
       <tr>
         <th>Gmail</th>
         <td>{{gmail}}</td>
         <td></td>
-        <td><a href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to={{email}}&su=AirPair - We've got you experts! ({{../threeTagsString}})&body=Hi {{firstName}},{{../mailTemplates.review}}" target="_blank" class="email btn btn-small btn-warning"><i class="icon-envelope icon-white"></i> Review</a></td>
+        <td><a href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to={{email}}&su=AirPair - We've got you {{../threeTagsString}} experts&body=Hi {{firstName}},{{../mailTemplates.review}}" target="_blank" class="email btn btn-small btn-warning"><i class="icon-envelope icon-white"></i> Review</a></td>
       </tr>
       <tr>
         <th>Twitter</th>

@@ -26,6 +26,7 @@ module.exports = class Router extends S.AirpairSessionRouter
       marketingTags: new C.MarketingTags()
       experts: new C.Experts()
       orders: new C.Orders()
+      customer: new M.User()
     v =
       requestsView: new V.RequestsView collection: d.requests, model: d.selected
       requestView: new V.RequestView
@@ -36,6 +37,7 @@ module.exports = class Router extends S.AirpairSessionRouter
         experts: d.experts
         orders: d.orders
         session: @app.session
+        customer: d.customer
       filtersView: new V.FiltersView collection: d.requests
       farmingView: new V.RequestFarmView model: d.selected
 

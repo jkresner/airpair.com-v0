@@ -9,7 +9,6 @@ module.exports = class AddjsMixPanel
 
     if args.peopleProps then @peopleProps = args.peopleProps
 
-
   trackSession: ->
     if @logging is on
       console.log 'Addjs.MP.trackSession', @debug(), @peopleProps

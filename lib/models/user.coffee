@@ -18,6 +18,10 @@ User = new Schema
   bitbucketId:  String
   bitbucket:    {}
   referrer:     {}
-
+  cohort:       {}
+  #  mixpanel:
+  #    id:
+  #    utm:
+  #    data: exported from mixpanel
 
 module.exports = mongoose.model 'User', User

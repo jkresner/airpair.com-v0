@@ -11,6 +11,9 @@ exports.Request = class Request extends Shared.Request
     term: encodeURIComponent @tagsString()
     tagsString: @tagsString()
 
+exports.User = class User extends Shared.User
+  urlRoot: '/api/admin/users/mixpanel'
+
 exports.Order = Shared.Order
 
 module.exports = exports

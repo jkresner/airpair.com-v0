@@ -9,7 +9,11 @@ c.isProd   = c.env is 'prod'
 c.mongoUri = process.env.MONGOHQ_URL || "mongodb://localhost/airpair_#{c.env}"
 
 c.analytics =
-  mixpanel: { id: '836dbdc21253fa8f3a68657c2f5ec4f1' }
+  mixpanel:
+    id: '836dbdc21253fa8f3a68657c2f5ec4f1'
+    apiKey: '700fdc0126f37c4a5b22666f92be6be3'
+    apiSecret: '468ef07fb0edeb07c1c47be0269e3f6f'
+    token: '076cac7a822e2ca5422c38f8ab327d62'
 
 c.SES_ACCESS_KEY = process.env.AP_SES_ACCESS_KEY ? 'blah'
 c.SES_SECRET_KEY = process.env.AP_SES_SECRET_KEY ? 'gah'

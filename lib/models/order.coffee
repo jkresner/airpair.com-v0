@@ -41,7 +41,6 @@ schema = new Schema
   payment:        { required: true, type: {} }
   payouts:        { type: [ExpertPayout] }
   paymentStatus:  { required: true, type: String, default: 'pending' }
-  utm:            { required: false, type: {} }
   # when a request is saved, this gets copied over from request.owner
   owner:          { type: String, default: '' }
   # when a request is saved, this gets copied over from request.marketingTags

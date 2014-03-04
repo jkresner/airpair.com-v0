@@ -80,6 +80,7 @@ exports.insertOrUpdateUser = (req, done, providerName, profile) ->
       if err then return done err
       $log 'userExists', user?, user
       if !user?
+        update.cohort = mixpanel: id: mpId
         mixpanel.alias mpId, update.google._json.email, =>
           $log 'alias callback', update.google._json.email, mpId
           mixpanel.track 'signUp', { distinct_id: mpId }, =>
