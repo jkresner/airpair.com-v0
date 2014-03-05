@@ -7,6 +7,18 @@ SV      = require './../shared/Views'
 ##
 #############################################################################
 
+
+class exports.WelcomeView extends BB.BadassView
+  el: '#welcome'
+  tmpl: require './templates/Welcome'
+  events: { 'click .track': 'track' }
+  initialize: ->
+    @$el.html @tmpl()
+    @listenTo @model, 'change', @render
+  render: ->
+    @$('#bookme-login').html "Login to book hours with #{@model.get('name')}"
+
+
 class exports.RequestView extends BB.BadassView
   el: '#request'
   initialize: ->

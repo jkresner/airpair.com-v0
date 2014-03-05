@@ -12,7 +12,6 @@ module.exports = class Router extends S.AirpairSessionRouter
     'none'  : 'none'
     ':id'   : 'detail'
 
-
   appConstructor: (pageData, callback) ->
     d =
       expert: new M.Expert()
@@ -22,6 +21,14 @@ module.exports = class Router extends S.AirpairSessionRouter
       expertView: new V.ExpertView model: d.expert
       # requestView: new V.RequestView()
       # signinView: new V.SigninView()
+
+    if pageData.session._id?
+      # if !pageData.settings?
+        # welcomeView: new V.WelcomeView model: d.expert
+    else
+      welcomeView: new V.WelcomeView model: d.expert
+
+
 
     @setOrFetch d.expert, pageData.expert
 

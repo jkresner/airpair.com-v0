@@ -74,7 +74,7 @@ exports.insertOrUpdateUser = (req, done, providerName, profile) ->
 
   # We are only tracking sign ups from known flows (1:Request,2:BeExpert)
   mpId = req.session.mixpanelId if req.session
-  $log 'mpIdExists', mpId?, mpId
+  $log 'mpIdExists', mpId?, mpId, search
   if mpId?
     User.findOne search, (err, user) ->
       if err then return done err

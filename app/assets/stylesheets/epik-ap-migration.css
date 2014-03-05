@@ -16,6 +16,14 @@ a.button { background-color:#CE5323;text-align:center;width:100%;color:#FFFFFF;f
 a.secondary { background-color:#000000!important;color:white!important; }
 .login a { background-color:#000000!important;color:white!important;line-height:14px }
 
+body#book .suggestion h2 { margin-top:0px; }
+body#book .suggestion header { border-bottom:solid 1px #d3d3d3;height:108px;line-height:1.9 }
+body#book .suggestion label { display:block }
+body#book .suggestion article { padding-bottom:0; }
+body#book .suggestion .entry-author { font-weight:bold }
+body#book .suggestion .entry-content { font-size:13px;padding:10px;clear:both;background:none repeat scroll 0 0 #EEEEEE;margin:0; }
+body#book #expertHours main { width:540px; }
+
 #requestpage .site-inner { min-height:900px }
 #requestpage nav.nav-header { display:none }
 #requestpage article.entry { padding-bottom:0; }
@@ -127,8 +135,14 @@ body#review #expertReply .controls-agree { padding-top:20px; }
 body#review #expertReply .controls-agree input { float:left;width:20px; }
 body#review #expertReply .controls-agree span { font-size:11px;float:left;margin:0px 0px 10px 8px;color:#CC523E;width:360px; }
 
+body#book .site-inner { min-height:500px }
 body#book #detail { }
 body#book #none { padding:40px 0 200px 0 }
+body#book #welcome h1 { font-weight:200;font-size:44px;color:#333333;margin:0px 0 0 0 }
+body#book #welcome p { color:gray;font-weight:100;margin:-5px 0 0 0;font-size:36px }
+body#book #welcome p.about { color:black;font-weight:100;margin-top:0px;font-size:28px }
+body#book #welcome a.button { background-color:#CE5323;width:500px;margin:30px 50px }
+
 
 #tagsInput header, .controls-tags header { font-size:11px;font-style:italic;border-bottom:dashed 1px #d3d3d3;padding:0 0 5px 5px;color:gray; }
 #tagsInput .autocomplete, .controls-tags .autocomplete { width:200px; }

@@ -53,7 +53,9 @@ module.exports = class Addjs
 
     if mixpanel?
       if e? then e.preventDefault()
-      redirectLocation = "https://www.airpair.com/#{destUrl}&mixpanelId=#{mixpanel.get_distinct_id()}"
-      redirect = => window.location = redirectLocation
+      redirectLocation = "#{window.location.origin}/#{destUrl}&mixpanelId=#{mixpanel.get_distinct_id()}"
+      redirect = =>
+        # $log 'redirect', redirectLocation
+        window.location = redirectLocation
 
       setTimeout(redirect,300)

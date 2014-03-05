@@ -13,6 +13,9 @@ mpInitCallback = function() {
   {
     addjs.providers.mp.trackSession();
 
+    jQuery('.trackBookLogin').click(function (e) {
+      addjs.trackClick(e,'auth/google?return_to='+window.location.pathname,addjs.events.customerLogin,getElmId(this));
+    });
     jQuery('.trackLogin,.trackCustomerLogin').click(function (e) {
       addjs.trackClick(e,'auth/google?return_to=/find-an-expert',addjs.events.customerLogin,getElmId(this));
     });
