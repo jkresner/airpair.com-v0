@@ -20,21 +20,19 @@ module.exports = class Router extends S.AirpairSessionRouter
       tags: new C.Tags()
     v =
       expertView: new V.ExpertView model: d.expert
-      stripeRegisterView: new V.StripeRegisterView model: d.settings, session: @app.session
-      # requestView: new V.RequestView()
-      # signinView: new V.SigninView()
+      requestView: new V.RequestView model: d.request, settings: d.settings
 
-    if pageData.session._id?
-      if !pageData.settings?
-        a = 1
-        # welcomeView: new V.WelcomeView model: d.expert
-    else
+
+    if !pageData.session._id?
       welcomeView: new V.WelcomeView model: d.expert
 
-    @setOrFetch d.settings, pageData.settings
-    @setOrFetch d.expert, pageData.expert
 
-    Stripe.setPublishableKey pageData.stripePK
+    @setOrFetch d.expert, pageData.expert
+    @setOrFetch d.settings, pageData.settings, success: (model, resp) =>
+      if !model.paymentMethod('stripe')?
+        v.stripeRegisterView = new V.StripeRegisterView model: d.settings, session: @app.session
+        v.stripeRegisterView.$el.show()
+        Stripe.setPublishableKey pageData.stripePK
 
     _.extend d, v
 
@@ -43,5 +41,7 @@ module.exports = class Router extends S.AirpairSessionRouter
   detail: (id) ->
     if !@app.expert.id? then return @none()
     $('#detail').show()
+
+
 
 

@@ -1,13 +1,15 @@
-<p style="width:55%">To setup billing so that you only have to edit your credit card information one time.</p>
-
-{{!-- , we are going to charge your card $10. This amount will be credited as a discount on your first AirPair session. --}}
-
-<hr />
+<header class="entry-header">
+  <h1 class="entry-title">Setup your billing info</h1>
+  <p class="entry-meta">Note your card will NOT be charged until you book hours.</p>
+</header>
 
 <form action="" method="POST" id="payment-form">
+
+<div class="entry-content">
+
   <span class="payment-errors text-error"></span>
 
-  <img src="/images/logos/stripe.png" alt="Stripe logo" style="float:right;width:100px;height:auto" />
+  <img src="/images/logos/stripe.png" alt="Stripe logo" />
 
   <div class="control-group">
     <label class="control-label">Card Number</label>
@@ -26,14 +28,19 @@
   <div class="control-group">
     <label class="control-label">Expiration (MM/YYYY)</label>
     <div class="controls">
-      <input type="text" size="2" data-stripe="exp-month" placeholder="MM" style="width:40px" />
+      <input class="mm" type="text" size="2" data-stripe="exp-month" placeholder="MM" />
       <span> / </span>
-      <input type="text" size="4" data-stripe="exp-year" placeholder="YYYY" style="width:40px" />
+      <input class="yyyy" type="text" size="4" data-stripe="exp-year" placeholder="YYYY" />
     </div>
   </div>
 
-  <div class="form-actions" style="border-top:1px solid gray">
-     <button class="button" type="submit">Setup billing</button>
-  </div>
+</div>
+
+  <footer class="entry-footer">
+    <div class="form-actions">
+       <button class="button" type="submit">Setup billing</button>
+    </div>
+  </footer>
+
 
 </form>

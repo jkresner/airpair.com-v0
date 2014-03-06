@@ -3,11 +3,21 @@ BB      = require './../../lib/BB'
 M       = require './Models'
 SV      = require './../shared/Views'
 
+
 #############################################################################
 ##
 #############################################################################
 
-exports.StripeRegisterView = SV.StripeRegisterView
+
+class exports.StripeRegisterView extends SV.StripeRegisterView
+  email: ->
+    @session.get('google')._json.email
+  stripeCustomerSuccess: (model, resp, opts) =>
+    @model.unset 'stripeCreate'
+    addjs.providers.mp.setPeopleProps paymentInfoSet: 'stripe'
+    @successAction()
+  successAction: =>
+    @$el.remove()
 
 
 class exports.WelcomeView extends BB.BadassView
@@ -23,7 +33,12 @@ class exports.WelcomeView extends BB.BadassView
 
 class exports.RequestView extends BB.BadassView
   el: '#request'
+  tmpl: require './templates/Request'
   initialize: ->
+    @listenTo @settings, 'change', @render
+  render: ->
+    if @settings.paymentMethod('stripe')?
+      @$el.html @tmpl @model.toJSON()
 
 
 class exports.ExpertView extends BB.BadassView

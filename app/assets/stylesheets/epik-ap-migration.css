@@ -16,14 +16,6 @@ a.button { background-color:#CE5323;text-align:center;width:100%;color:#FFFFFF;f
 a.secondary { background-color:#000000!important;color:white!important; }
 .login a { background-color:#000000!important;color:white!important;line-height:14px }
 
-body#book .suggestion h2 { margin-top:0px; }
-body#book .suggestion header { border-bottom:solid 1px #d3d3d3;height:108px;line-height:1.9 }
-body#book .suggestion label { display:block }
-body#book .suggestion article { padding-bottom:0; }
-body#book .suggestion .entry-author { font-weight:bold }
-body#book .suggestion .entry-content { font-size:13px;padding:10px;clear:both;background:none repeat scroll 0 0 #EEEEEE;margin:0; }
-body#book #expertHours main { width:540px; }
-
 #requestpage .site-inner { min-height:900px }
 #requestpage nav.nav-header { display:none }
 #requestpage article.entry { padding-bottom:0; }
@@ -142,7 +134,21 @@ body#book #welcome h1 { font-weight:200;font-size:44px;color:#333333;margin:0px 
 body#book #welcome p { color:gray;font-weight:100;margin:-5px 0 0 0;font-size:36px }
 body#book #welcome p.about { color:black;font-weight:100;margin-top:0px;font-size:28px }
 body#book #welcome a.button { background-color:#CE5323;width:500px;margin:30px 50px }
-
+body#book .suggestion h2 { margin-top:0px; }
+body#book .suggestion header { border-bottom:solid 1px #d3d3d3;height:108px;line-height:1.9 }
+body#book .suggestion label { display:block }
+body#book .suggestion article { padding-bottom:0; }
+body#book .suggestion .entry-author { font-weight:bold }
+body#book .suggestion .entry-content { font-size:13px;padding:10px;clear:both;background:none repeat scroll 0 0 #EEEEEE;margin:0; }
+body#book #expertHours main { width:540px; }
+body#book #stripeRegister { margin-bottom:300px;display:none; }
+body#book #stripeRegister #payment-form img { float:right;width:60px;height:auto;margin-bottom:0px; }
+body#book #stripeRegister #payment-form .control-group { clear:both;padding-top:10px; }
+body#book #stripeRegister #payment-form footer { margin-top:30px; }
+body#book #stripeRegister #payment-form .form-actions { display:block; }
+body#book #stripeRegister #payment-form .mm { width:60px; }
+body#book #stripeRegister #payment-form .yyyy { width:70px; }
+body#book #stripeRegister #payment-form button { background-color:#CE5323;color:#FFFFFF;font-size:18px;line-height:24px;margin:0;padding:16px 32px;text-align:center;width:100%; }
 
 #tagsInput header, .controls-tags header { font-size:11px;font-style:italic;border-bottom:dashed 1px #d3d3d3;padding:0 0 5px 5px;color:gray; }
 #tagsInput .autocomplete, .controls-tags .autocomplete { width:200px; }
