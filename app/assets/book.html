@@ -56,7 +56,7 @@
 
   <script type="text/javascript">
     function initApp() {
-      var pageData = { session: {{{ session }}}, settings: {{{ settings }}}, expert: {{{ expertStr }}}};
+      var pageData = { session: {{{ session }}}, expert: {{{ expertStr }}}};
       Router = require('/scripts/book/Router');
       window.router = new Router(pageData);
     }

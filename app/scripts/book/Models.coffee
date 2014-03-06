@@ -2,9 +2,9 @@ BB      = require './../../lib/BB'
 Shared  = require './../shared/Models'
 exports = {}
 
-
 exports.User = Shared.User
 exports.Expert = Shared.Expert
+exports.Settings = Shared.Settings
 
 exports.Request = class Request extends Shared.Request
 

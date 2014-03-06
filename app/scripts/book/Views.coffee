@@ -7,6 +7,8 @@ SV      = require './../shared/Views'
 ##
 #############################################################################
 
+exports.StripeRegisterView = SV.StripeRegisterView
+
 
 class exports.WelcomeView extends BB.BadassView
   el: '#welcome'
