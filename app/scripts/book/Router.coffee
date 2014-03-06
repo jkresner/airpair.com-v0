@@ -13,14 +13,14 @@ module.exports = class Router extends S.AirpairSessionRouter
     ':id'   : 'detail'
 
   appConstructor: (pageData, callback) ->
+
     d =
       expert: new M.Expert()
       settings: new M.Settings()
-      request: new M.Request()
-      tags: new C.Tags()
+      request: new M.Request { budget: pageData.expert.bookMe.rate }
     v =
       expertView: new V.ExpertView model: d.expert
-      requestView: new V.RequestView model: d.request, settings: d.settings
+      requestView: new V.RequestView model: d.request, settings: d.settings, expert: d.expert
 
 
     if !pageData.session._id?

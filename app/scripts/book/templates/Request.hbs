@@ -2,24 +2,10 @@
   <main class="content">
     <article class="post type-post format-standard entry">
       <header class="entry-header">
-        <h1 class="entry-title" itemprop="headline">Book</h1>
-        <p class="entry-meta"><time>Step 3 of 3: </time>
-          <b>What do you need help with?</b>
-        </p>
+        <h1 class="entry-title" itemprop="headline">Request hours with {{expert.name}}</h1>
+        <p class="entry-meta"><time>Tell {{expert.name}} what you'd like to pair on.</time></p>
       </header>
 
-
-      <footer class="entry-footer">
-        <div class="form-actions">
-          <a href="save" class="save button large">Submit</a>
-        </div>
-      </footer>
-    </article>
-  </main>
-</div>
-
-
-{{!--  <div class="content-sidebar-wrap">
 
       <div class="entry-content" style="padding:0px 20px">
 
@@ -28,39 +14,32 @@
           <h4>Error</h4>
         </div>
 
-        <div class="control-group" style="height:100px">
-          <label class="control-label" for="tagsInput">What technologies do you want help with?</label>
-          <div id="tagsInput" class="controls controls-tags">
-              <div id="tagNewForm"></div>
-          </div>
-        </div>
-
         <div class="control-group" style="clear:both">
           <label class="control-label" for="reqBrief">What challenges do you want to solve? <span id="breifCount" class="muted" style="float:right;margin:5px 16px 0 0px">0 chars</span></label>
           <div class="controls controls-brief">
-            <textarea id="reqBrief" name="brief" placeholder="We pass your brief onto experts. The more detail you provide, the better help you get."></textarea>
+            <textarea id="reqBrief" name="brief" placeholder="We recommend min 250 characters. The more detail you provide, the better help you get."></textarea>
           </div>
         </div>
 
-        <div class="control-group" style="display:none">
-          <label class="control-label" for="reqHrs"> Around how many hours of help do you need?</label>
+        <div class="control-group">
+          <label class="control-label" for="reqHrs"> How hours do you want to purchase?</label>
           <select name="hours" class="span2">
             <option value="1">1</option>
             <option value="2" selected="selected">2</option>
-            <option value="3-5">3-5</option>
-            <option value="5-10">5-10</option>
-            <option value="10-20">10-20</option>
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="20">20</option>
           </select>
         </div>
 
-       <div class="control-group pricing-group">
-          <label class="control-label">Want to Open source your session recording? </label>
+        <div class="control-group pricing-group">
+          <label class="control-label">Want to open source your session recordings? </label>
           <div class="pricing rb-group controls">
             <input type="radio" id="pricingOpensource" name="pricing" value="opensource" />
             <label for="pricingOpensource" class="pricingOpensource">Open source <em class="opensource">$<span></span>/hr discount</em> </label>
 
             <input type="radio" id="pricingPrivate" name="pricing" value="private" checked="checked" />
-            <label for="pricingPrivate" class="checked">Keep Private</label>
+            <label for="pricingPrivate" class="checked">Keep private</label>
 
             <input type="radio" id="pricingNDA" name="pricing" value="nda" />
             <label for="pricingNDA" class="pricingNDA">Organize NDA <em class="nda">+$<span></span>/hr</label></em>
@@ -68,51 +47,16 @@
 
         </div>
 
-
-        <div class="control-group" style="height:86px;margin:12px 0">
-          <label class="control-label" for="reqBudget">What's your hourly budget?</label>
-          <div class="budget rb-group controls">
-
-            <input type="radio" id="budget1" name="budget" value="80" />
-            <label for="budget1">$80</label>
-
-            <input type="radio" id="budget2" name="budget" value="110" checked="checked" />
-            <label for="budget2" class="checked">$110</label>
-
-            <input type="radio" id="budget3" name="budget" value="150" />
-            <label for="budget3">$150</label>
-
-            <input type="radio" id="budget4" name="budget" value="180" />
-            <label for="budget4">$200</label>
-
-            <input type="radio" id="budget5" name="budget" value="270" />
-            <label for="budget5">$270</label>
-
-            <p class="budgetExplanation budget1">Access <b>20%</b> of our experts</p>
-            <p class="budgetExplanation budget2">Access <b>50%</b> of our experts</p>
-            <p class="budgetExplanation budget3">Access <b>75%</b> of our experts</p>
-            <p class="budgetExplanation budget4">Access <b>95%</b> of our experts</p>
-            <p class="budgetExplanation budget5">Access <b>All</b> of our experts</p>
-          </div>
-        </div>
-
-
-        <div class="control-group">
-          <label class="control-label" for="availabilityInput">What is your location / timezone, urgency & availability?</label>
-          <div class="controls controls-availability">
-            <textarea id="availability" name="availability" placeholder="How soon do you need help? What city & timezone are you in?" style="height:70px">{{ availability</textarea>
-          </div>
-        </div>
-        <br />
       </div>
 
 
-<aside class="sidebar sidebar-primary widget-area">
-  <section class="widget featured-content featuredpost">
-    <div class="widget-wrap">
-
-    </div>
-  </section>
-</aside>
-
- --}}
+      <div style="clear:both;height:40px"></div>
+      <footer class="entry-footer">
+        <div class="form-actions">
+          <a href="save" class="save button large">Choose # of hours to continue</a>
+          <p style="text-align:center">Your card will be charged when {{expert.name}} accepts your request.</p>
+        </div>
+      </footer>
+    </article>
+  </main>
+</div>

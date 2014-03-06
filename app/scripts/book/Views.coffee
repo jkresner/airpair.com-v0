@@ -31,14 +31,47 @@ class exports.WelcomeView extends BB.BadassView
     @$('#bookme-login').html "Login to book hours with #{@model.get('name')}"
 
 
-class exports.RequestView extends BB.BadassView
+class exports.RequestView extends BB.ModelSaveView
   el: '#request'
   tmpl: require './templates/Request'
+  events: { 'click .save': 'save' }
   initialize: ->
     @listenTo @settings, 'change', @render
   render: ->
     if @settings.paymentMethod('stripe')?
-      @$el.html @tmpl @model.toJSON()
+      # @e = addjs.events.bookRequest
+      @$el.html @tmpl @model.extend { expert: @expert.toJSON() }
+      @elm('hours').on 'change', @update
+      @elm('pricing').on 'click', @update
+      @$('.pricing input:radio').on 'click', @showPricingExplanation
+      @elm('brief').on 'input', =>
+        @$('#breifCount').html(@elm('brief').val().length+ ' chars')
+      @$(":radio[value=#{@model.get('pricing')}]").click().prop('checked',true)
+      @$(".pricingOpensource span").html (-1*@model.opensource)
+      @$(".pricingNDA span").html @model.nda
+      # $log '@elm', @elm('hours')
+  update: (e) =>
+    hrs = parseInt @elm('hours').val()
+    pricing = @$("[name='pricing']:checked").val()
+    rate = parseInt(@model.get('budget')) + @model[pricing]
+    total = hrs * rate
+    if hrs == 1
+      @$('.save').html "Request #{hrs} hour for $#{total} <span>( #{pricing} )</span>"
+    else
+      @$('.save').html "Request #{hrs} hours for $#{total} <span>( $#{rate}/#{pricing} hr )</span>"
+  selectRB: (e) =>
+    rb = $(e.currentTarget)
+    group = rb.parent()
+    group.find("label").removeClass 'checked'
+    rb.prev().addClass 'checked'
+  showPricingExplanation: =>
+    @$('.pricing-group em').removeClass 'selected'
+    val = @$("[name='pricing']:checked").val()
+    @$("em.#{val}").addClass 'selected'
+  getViewData: ->
+    brief: @elm("brief").val()
+    hours: @elm("hours").val()
+    pricing: @$("[name='pricing']:checked").val()
 
 
 class exports.ExpertView extends BB.BadassView
@@ -49,6 +82,8 @@ class exports.ExpertView extends BB.BadassView
     @listenTo @model, 'change', @render
   render: ->
     @$el.html @tmpl @model.toJSON()
+
+
 
 # class exports.SigninView extends BB.BadassView
 #   el: '#signin'
