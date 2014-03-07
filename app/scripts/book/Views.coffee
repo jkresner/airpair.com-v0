@@ -97,7 +97,7 @@ class exports.ExpertView extends BB.BadassView
   initialize: ->
     @listenTo @model, 'change', @render
   render: ->
-    rate = @model.get('bookMe').rate + @request.private
+    rate = parseInt(@model.get('bookMe').rate) + @request.private
     @$el.html @tmpl @model.extend { publicRate: rate }
 
 
