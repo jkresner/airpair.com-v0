@@ -69,4 +69,31 @@ module.exports = class RatesService extends DomainService
 
     ## how quickly since the suggestion is the expert responding
 
+  # NOTE suggestedRate is the developers rate
+  # not including airpair's margin
+  calcSuggestedBookmeRates: (pricing, bookMe) ->
+    r = bookMe: true
+    r.opensource =
+      total: pricing.opensource.total
+      expert: @_getExpertByRake pricing.opensource.total, bookMe.rake
+    r.private =
+      total: pricing.private.total
+      expert: @_getExpertByRake pricing.private.total, bookMe.rake
+    r.nda =
+      total: pricing.nda.total
+      expert: @_getExpertByRake pricing.nda.total, bookMe.rake
+    r
+    # offline:
+    #   total: customerRates.offline
+    #   expert: customerRates.offline * expertBookMe.rake
+
+  _getExpertByRake: (total, rake) =>
+    total - (total*rake/100)
+
+
+
+
+
+
+
 

@@ -51,10 +51,11 @@ module.exports = class RequestsService extends DomainService
     request.userId = usr._id
     request.events = [@newEvent(usr, "created")]
     request.status = 'pending'
-    d = { availability: [], expertStatus: 'waiting', suggestedRate: {} }
-    d[request.pricing] = request.budget
+    d = { availability: [], expertStatus: 'waiting' }
+    $log 'r1', request.suggested[0].suggestedRate
     _.extend request.suggested[0], d
     new @model(request).save (e, r) =>
+      $log 'r2', r.suggested[0].suggestedRate
       if e then $log 'request.create error:', e
       if e then return callback e
       @notifyAdmins(r)
@@ -159,10 +160,10 @@ module.exports = class RequestsService extends DomainService
   updateSuggestionByExpert: (request, usr, expertReview, callback) =>
     # TODO, add some validation!!
     # if expertReview.agree
+    # @settingsSvc.addPayPalSettings usr._id, expertReview.payPalEmail, (e, r) =>
+      # if e then $log 'save.settings error:', e, r
 
-    @settingsSvc.addPayPalSettings usr._id, expertReview.payPalEmail, (e, r) =>
-      if e then $log 'save.settings error:', e, r
-
+    $log 'expertReview', expertReview?, usr._id
     ups = expertReview
     data = { suggested: request.suggested, events: request.events }
     sug = _.find request.suggested, (s) -> _.idsEqual s.expert.userId, usr._id
@@ -176,10 +177,12 @@ module.exports = class RequestsService extends DomainService
       type: 'paypal', info: { email: expertReview.payPalEmail }
     data.events.push @newEvent(usr, "expert reviewed", ups)
 
+    if request.status == 'pending' then data.status = 'review'
+
     @update request._id, data, (e, updatedRequest) =>
       if e then return callback e
       @mailman.importantRequestEvent "expert reviewed #{ups.expertStatus}", usr, updatedRequest
-      callback(null, updatedRequest)
+      callback null, updatedRequest
 
   notifyAdmins: (model) ->
     tags = model.tags.map((o) -> o.short).join(' ')

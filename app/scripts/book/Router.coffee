@@ -23,7 +23,7 @@ module.exports = class Router extends S.AirpairSessionRouter
 
     if pageData.expert._id?
       v =
-        expertView: new V.ExpertView model: d.expert
+        expertView: new V.ExpertView model: d.expert, request: d.request
         requestView: new V.RequestView model: d.request, settings: d.settings, expert: d.expert, company: d.company
 
     @setOrFetch d.expert, pageData.expert

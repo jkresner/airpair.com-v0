@@ -28,9 +28,10 @@ exports.Request = class Request extends Shared.Request
   defaults:
     pricing: 'private'
 
-  opensource: -20
-  private: 0
-  nda: 50
+  opensource: 0
+  offline: 20
+  private: 20
+  nda: 70
 
   validation:
     userId:         { required: true }

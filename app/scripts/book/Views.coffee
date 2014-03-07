@@ -70,16 +70,24 @@ class exports.RequestView extends BB.ModelSaveView
     @$("em.#{val}").addClass 'selected'
   getViewData: ->
     company: @company.toJSON()
-    budget: parseInt(@expert.get('bookMe').rate) + @model[@$("[name='pricing']:checked").val()]
+    budget: @getBudget()
     brief: @elm("brief").val()
     hours: @elm("hours").val()
     availability: @elm("availability").val()
     pricing: @$("[name='pricing']:checked").val()
-    suggested: [{expert:@expert.toJSON()}]
+    suggested: [{expert:@expert.toJSON(),suggestedRate:@getBudget()}]
   renderSuccess: (model, response, options) =>
     addjs.providers.mp.incrementPeopleProp "requestCount"
     # addjs.trackEvent @e.category, @e.name, @model.contact(0).fullName, @timer.timeSpent()
     router.navTo 'thanks'
+  getBudget: ->
+    parseInt(@expert.get('bookMe').rate) + @model[@$("[name='pricing']:checked").val()]
+  # getSuggestedRates: ->
+  #   base = parseInt @expert.get('bookMe').rate
+  #   opensource = base + @model.opensource
+  #   nda = base + @model.nda
+  #   offline = base + @model.offline
+  #   { opensource, nda, offline, private: base + @model.private }
 
 
 class exports.ExpertView extends BB.BadassView
@@ -89,7 +97,8 @@ class exports.ExpertView extends BB.BadassView
   initialize: ->
     @listenTo @model, 'change', @render
   render: ->
-    @$el.html @tmpl @model.toJSON()
+    rate = @model.get('bookMe').rate + @request.private
+    @$el.html @tmpl @model.extend { publicRate: rate }
 
 
 
