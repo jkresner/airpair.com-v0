@@ -53,12 +53,12 @@ class exports.RequestView extends BB.ModelSaveView
   update: (e) =>
     hrs = parseInt @elm('hours').val()
     pricing = @$("[name='pricing']:checked").val()
-    rate = parseInt(@model.get('budget')) + @model[pricing]
-    total = hrs * rate
+    budget = parseInt(@expert.get('bookMe').rate) + @model[pricing]
+    total = hrs * budget
     if hrs == 1
       @$('.save').html "Request #{hrs} hour for $#{total} <span>( #{pricing} )</span>"
     else
-      @$('.save').html "Request #{hrs} hours for $#{total} <span>( $#{rate}/#{pricing} hr )</span>"
+      @$('.save').html "Request #{hrs} hours for $#{total} <span>( $#{budget}/#{pricing} hr )</span>"
   selectRB: (e) =>
     rb = $(e.currentTarget)
     group = rb.parent()
@@ -70,11 +70,16 @@ class exports.RequestView extends BB.ModelSaveView
     @$("em.#{val}").addClass 'selected'
   getViewData: ->
     company: @company.toJSON()
-    budget: parseInt(@model.get('budget')) + @model[@$("[name='pricing']:checked").val()]
+    budget: parseInt(@expert.get('bookMe').rate) + @model[@$("[name='pricing']:checked").val()]
     brief: @elm("brief").val()
     hours: @elm("hours").val()
+    availability: @elm("availability").val()
     pricing: @$("[name='pricing']:checked").val()
     suggested: [{expert:@expert.toJSON()}]
+  renderSuccess: (model, response, options) =>
+    addjs.providers.mp.incrementPeopleProp "requestCount"
+    # addjs.trackEvent @e.category, @e.name, @model.contact(0).fullName, @timer.timeSpent()
+    router.navTo 'thanks'
 
 
 class exports.ExpertView extends BB.BadassView

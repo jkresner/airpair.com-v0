@@ -37,7 +37,7 @@ exports.Request = class Request extends Shared.Request
     # company:        { required: true }
     brief:          { required: true, msg: 'Provide as much detail as possible (min one sentence / 80 chars) on what you want to work on.'}
     budget:         { required: true }
-    # availability:   { required: true, msg: 'Please detail your timezone, urgency & availability' }
+    availability:   { required: true, msg: 'Please detail your timezone, urgency & availability' }
     # tags:           { fn: 'validateNonEmptyArray', msg: 'At least one technology tag required' }
 
 

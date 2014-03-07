@@ -9,8 +9,9 @@ module.exports = class Router extends S.AirpairSessionRouter
   pushStateRoot: '/book'
 
   routes:
-    'none'  : 'none'
-    ':id'   : 'detail'
+    'none'        : 'none'
+    'thanks'      : 'thanks'
+    ':id'         : 'detail'
 
   appConstructor: (pageData, callback) ->
 
@@ -18,11 +19,12 @@ module.exports = class Router extends S.AirpairSessionRouter
       company: new M.Company _id: 'me'
       expert: new M.Expert()
       settings: new M.Settings()
-      request: new M.Request { budget: pageData.expert.bookMe.rate }
-    v =
-      expertView: new V.ExpertView model: d.expert
-      requestView: new V.RequestView model: d.request, settings: d.settings, expert: d.expert, company: d.company
+      request: new M.Request()
 
+    if pageData.expert._id?
+      v =
+        expertView: new V.ExpertView model: d.expert
+        requestView: new V.RequestView model: d.request, settings: d.settings, expert: d.expert, company: d.company
 
     @setOrFetch d.expert, pageData.expert
 
@@ -45,6 +47,10 @@ module.exports = class Router extends S.AirpairSessionRouter
   detail: (id) ->
     if !@app.expert.id? then return @none()
     $('#detail').show()
+
+  thanks: ->
+    if $('#thanks').html() is ''
+      $('#thanks').html require('./templates/ThankYou')()
 
 
 
