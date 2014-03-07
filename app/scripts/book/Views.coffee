@@ -69,9 +69,12 @@ class exports.RequestView extends BB.ModelSaveView
     val = @$("[name='pricing']:checked").val()
     @$("em.#{val}").addClass 'selected'
   getViewData: ->
+    company: @company.toJSON()
+    budget: parseInt(@model.get('budget')) + @model[@$("[name='pricing']:checked").val()]
     brief: @elm("brief").val()
     hours: @elm("hours").val()
     pricing: @$("[name='pricing']:checked").val()
+    suggested: [{expert:@expert.toJSON()}]
 
 
 class exports.ExpertView extends BB.BadassView

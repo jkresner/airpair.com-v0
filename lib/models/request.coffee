@@ -3,26 +3,7 @@ Schema   = mongoose.Schema
 
 {ObjectId, Mixed} = Schema.Types
 
-"""
-Request status
 
-  received      : requires review by airpair
-  incomplete    : more detail required
-  holding       : waiting for go ahead by customer
-  review        : customer must review & choose one or more experts
-  scheduled     : one or more airpairs scheduled
-  complete      : feedback on all calls collected
-  canceled      : company has canceled the request
-
-  ** after a user saves info from incomplete state, request goes back into received
-
-Suggestion expertStatus
-
-  waiting       : waiting to hear from the expert
-  abstained     : expert does not want the call
-  available     : expert wants the call
-  unwanted      : customer does not want the expert
-"""
 VALID_CALL_TYPES = ['opensource', 'private', 'nda', 'subscription', 'offline']
 
 Suggestion = new Schema
@@ -66,6 +47,32 @@ Call = new Schema
   # cmsStatus:        { request: true, type: String, default: 'nocontent' }  # nocontent, pending, incomplete, approved
   # cmsPermalink:     { required: true, type: ObjectId, unique: true, sparse: true } # index for quick search
   # airpairRating:    { type: Number }  # How we sort session by awesomeness
+
+
+"""
+Request status
+
+  received      : requires review by airpair
+  incomplete    : more detail required
+  holding       : waiting for go ahead by customer
+  waiting       : no experts available yet
+  pending       : [bookme] customer put in request and expert has to confirm
+  review        : customer must review & choose one or more experts
+  scheduled     : one or more calls scheduled
+  consumed      : feedback on all calls collected, but lead still warm for up-sell
+  complete      : transaction final and time to archive
+  canceled      : company has canceled the request
+  deferred      : customer indicated they need more time
+
+  ** after a user saves info from incomplete state, request goes back into received
+
+Suggestion expertStatus
+
+  waiting       : waiting to hear from the expert
+  abstained     : expert does not want the call
+  available     : expert wants the call
+  unwanted      : customer does not want the expert
+"""
 
 
 RequestSchema = new Schema

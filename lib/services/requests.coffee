@@ -47,6 +47,20 @@ module.exports = class RequestsService extends DomainService
       @notifyAdmins(r)
       callback null, r
 
+  createBookme: (usr, request, callback) =>
+    request.userId = usr._id
+    request.events = [@newEvent(usr, "created")]
+    request.status = 'pending'
+    d = { availability: [], expertStatus: 'waiting', suggestedRate: {} }
+    d[request.pricing] = request.budget
+    _.extend request.suggested[0], d
+    new @model(request).save (e, r) =>
+      if e then $log 'request.create error:', e
+      if e then return callback e
+      @notifyAdmins(r)
+      callback null, r
+
+
   getByIdSmart: (id, usr, callback) =>
     @model.findOne({ _id: id }).lean().exec (e, r) =>
       if e then return callback e
@@ -104,7 +118,7 @@ module.exports = class RequestsService extends DomainService
 
   # Used for adm/inbound dashboard list
   getActive: (callback) ->
-    query = status: $in: ['received', 'incomplete', 'review', 'scheduled', 'holding']
+    query = status: $in: ['received', 'incomplete', 'waiting', 'review', 'scheduled', 'holding', 'consumed', 'deferred', 'pending']
     @model.find(query, @inboundSelect).lean().exec (e, requests) =>
       if e then return callback e
       if !requests then requests = {}

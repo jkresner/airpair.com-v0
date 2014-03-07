@@ -12,11 +12,12 @@ class RequestApi extends CRUDApi
   svc:      new RequestsSvc()
 
   constructor: (app, route) ->
-    app.get  "/api/admin/#{route}", admin, @admin
-    app.get  "/api/admin/#{route}/active", admin, @active
-    app.get  "/api/admin/#{route}/inactive", admin, @inactive
-    app.put  "/api/#{route}/:id/suggestion", loggedIn, @updateSuggestion
-    app.get  "/api/#{route}/:id", @detail
+    app.get   "/api/admin/#{route}", admin, @admin
+    app.get   "/api/admin/#{route}/active", admin, @active
+    app.get   "/api/admin/#{route}/inactive", admin, @inactive
+    app.put   "/api/#{route}/:id/suggestion", loggedIn, @updateSuggestion
+    app.get   "/api/#{route}/:id", @detail
+    app.post  "/api/#{route}/book", @createBookme
     super app, route
 
 
@@ -52,6 +53,9 @@ class RequestApi extends CRUDApi
 
   create: (req, res, next) =>
     @svc.create req.user, req.body, cSend(res, next)
+
+  createBookme: (req, res, next) =>
+    @svc.createBookme req.user, req.body, cSend(res, next)
 
 
   update: (req, res, next) =>
