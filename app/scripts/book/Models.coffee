@@ -2,32 +2,44 @@ BB      = require './../../lib/BB'
 Shared  = require './../shared/Models'
 exports = {}
 
-
 exports.User = Shared.User
 exports.Expert = Shared.Expert
+exports.Settings = Shared.Settings
+
+exports.Company = class Company extends Shared.Company
+
+  populateFromGoogle: (user) ->
+    if @get('contacts').length is 0
+      gplus = user.get('google')
+      @set _id: undefined, contacts: [{
+        userId:     user.get('_id')
+        fullName:   gplus.displayName
+        email:      gplus.emails[0].value
+        gmail:      gplus.emails[0].value
+        pic:        gplus._json.picture
+        timezone:   new Date().toString().substring(25, 45)
+      }]
+
 
 exports.Request = class Request extends Shared.Request
 
-  # defaults:
-  #   pricing: 'private'
-  #   budget: 110
+  urlRoot: '/api/requests/book'
 
-  # baseRates: [80,110,150,210,300]
+  defaults:
+    pricing: 'private'
 
-  # opensource: -20
+  opensource: 0
+  offline: 20
+  private: 20
+  nda: 70
 
-  # nda: 50
-
-  # rates: (pricing) ->
-  #   i = 0
-  #   rates = []
-  #   pricing = @get('pricing') if !pricing?
-  #   for r in @baseRates
-  #     if pricing is 'opensource' then rates.push r+@opensource
-  #     else if pricing is 'nda' then rates.push r+@nda
-  #     else rates.push r
-  #     i++
-  #   rates
+  validation:
+    userId:         { required: true }
+    # company:        { required: true }
+    brief:          { required: true, msg: 'Provide as much detail as possible (min one sentence / 80 chars) on what you want to work on.'}
+    budget:         { required: true }
+    availability:   { required: true, msg: 'Please detail your timezone, urgency & availability' }
+    # tags:           { fn: 'validateNonEmptyArray', msg: 'At least one technology tag required' }
 
 
 module.exports = exports

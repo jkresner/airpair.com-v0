@@ -1,10 +1,12 @@
 CRUDApi     = require './_crud'
+cSend       = require '../util/csend'
 RequestsSvc = require './../services/requests'
 authz       = require './../identity/authz'
 admin       = authz.Admin isApi: true
 loggedIn    = authz.LoggedIn isApi: true
 Roles       = authz.Roles
-cSend       = require '../util/csend'
+OrdersSvc   = require './../services/orders'
+oSvc = new OrdersSvc()
 
 class RequestApi extends CRUDApi
 
@@ -12,11 +14,12 @@ class RequestApi extends CRUDApi
   svc:      new RequestsSvc()
 
   constructor: (app, route) ->
-    app.get  "/api/admin/#{route}", admin, @admin
-    app.get  "/api/admin/#{route}/active", admin, @active
-    app.get  "/api/admin/#{route}/inactive", admin, @inactive
-    app.put  "/api/#{route}/:id/suggestion", loggedIn, @updateSuggestion
-    app.get  "/api/#{route}/:id", @detail
+    app.get   "/api/admin/#{route}", admin, @admin
+    app.get   "/api/admin/#{route}/active", admin, @active
+    app.get   "/api/admin/#{route}/inactive", admin, @inactive
+    app.put   "/api/#{route}/:id/suggestion", loggedIn, @updateSuggestion
+    app.get   "/api/#{route}/:id", @detail
+    app.post  "/api/#{route}/book", @createBookme
     super app, route
 
 
@@ -52,6 +55,9 @@ class RequestApi extends CRUDApi
 
   create: (req, res, next) =>
     @svc.create req.user, req.body, cSend(res, next)
+
+  createBookme: (req, res, next) =>
+    @svc.createBookme req.user, req.body, cSend(res, next)
 
 
   update: (req, res, next) =>
@@ -118,13 +124,17 @@ class RequestApi extends CRUDApi
   updateSuggestion: (req, res, next) =>
     usr = req.user
     @model.findOne { _id: req.params.id }, (e, r) =>
+      $log 'request.status', r.status
       if e then return next e
       if Roles.isRequestOwner(usr, r)
         return next new Error('Customer update suggestion not implemented')
         #@updateSuggestionByCustomer(req, res, next, r)
+      else if Roles.isRequestExpert(usr, r) && r.status == 'pending'
+        oSvc.confirmBookme r, usr, req.body, cSend(res, next)
       else if Roles.isRequestExpert(usr, r)
         @svc.updateSuggestionByExpert r, usr, req.body, cSend(res, next)
       else
         res.send 403
+
 
 module.exports = (app) -> new RequestApi app, 'requests'

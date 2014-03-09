@@ -25,7 +25,15 @@
 
         <div id="detail" class="route" style="display:none">
           <div class="content-sidebar-wrap">
-            <main class="content"></main>
+            <main class="content">
+
+              <div id="welcome"></div>
+
+              <article id="stripeRegister" class="post type-post format-standard entry"></article>
+
+              <div id="request"></div>
+
+            </main>
             <aside class="sidebar sidebar-primary widget-area">
               <section class="widget featured-content featuredpost">
                 <div class="widget-wrap" id="expert"></div>
@@ -33,6 +41,8 @@
             </aside>
           </div>
         </div>
+
+        <div id="thanks" class="route"></div>
 
         <div id="none" class="route" style="display:none">
           <h2>Expert not found ...</h2>
@@ -51,7 +61,7 @@
 
   <script type="text/javascript">
     function initApp() {
-      var pageData = { session: {{{ session }}}, expert: {{{ expertStr }}}};
+      var pageData = { session: {{{ session }}}, expert: {{{ expertStr }}}, stripePK: '{{{stripePK }}}' };
       Router = require('/scripts/book/Router');
       window.router = new Router(pageData);
     }

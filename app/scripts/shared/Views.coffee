@@ -69,6 +69,45 @@ class exports.ExpertView extends BB.BadassView
     @
 
 
+#############################################################################
+##
+#############################################################################
+
+
+class exports.StripeRegisterView extends BB.BadassView
+  el: '#stripeRegister'
+  tmpl: require '/scripts/shared/templates/StripeRegister'
+  initialize: (args) ->
+    require '/scripts/providers/stripe.v2'
+    @model.once 'sync', @render, @
+  render: ->
+    @$el.html @tmpl()
+    @$form = @$('form')
+    @$form.on 'submit', (e) =>
+      e.preventDefault()
+      @$('button').prop 'disabled', true  # Disable submitBtn to prevent repeat clicks
+      Stripe.card.createToken @$form, @responseHandler
+    @
+  responseHandler: (status, response) =>
+    if response.error # Show the errors on the form
+      @$('.payment-errors').text response.error.message
+      @$('button').prop 'disabled', false
+    else
+      token = response.id  # token contains id, last4, and card type
+      @model.save stripeCreate: { token: token, email: @email() }, { success: @stripeCustomerSuccess }
+  email: ->
+    @session.get('google')._json.email
+  stripeCustomerSuccess: (model, resp, opts) =>
+    @model.unset 'stripeCreate'
+    name = @session.get('google').displayName
+    addjs.trackEvent 'request', 'customerSetStripeInfo', name
+    addjs.providers.mp.setPeopleProps paymentInfoSet: 'stripe'
+    @successAction()
+  successAction: => # give the power to override this action so we can put the view in different flows
+    router.navTo '#'
+
+
+
 # class exports.locationInput = ($el, selector, hidden_selector) ->
 #   if google? && google.maps?
 #     input = $el.find selector

@@ -80,6 +80,8 @@ module.exports = class ViewDataService
         session:      @session usr
         expert:       r
         expertStr:    JSON.stringify r
+        stripePK:     cfg.payment.stripe.publishedKey
+        # settings:     srs    ## settings crashes app for some reason
 
   inbound: (usr, callback) ->
     rSvc.getActive (err, requests) =>
@@ -87,7 +89,6 @@ module.exports = class ViewDataService
       callback null,
         session: @session usr
         requests: JSON.stringify(requests)
-
 
   companys: (usr, callback) ->
     eSvc.getAll (e, r) =>

@@ -13,6 +13,9 @@ DomainService     = require './_svc'
 PaypalAdaptiveSvc = require '../services/payment/paypal-adaptive'
 RequestService    = require './requests'
 StripeSvc         = require '../services/payment/stripe'
+SettingsSvc       = require './settings'
+RatesSvc         = require './rates'
+
 
 module.exports = class OrdersService extends DomainService
 
@@ -20,6 +23,8 @@ module.exports = class OrdersService extends DomainService
   paypalSvc: new PaypalAdaptiveSvc()
   stripSvc: new StripeSvc()
   requestSvc: new RequestService()
+  settingsSvc: new SettingsSvc()
+  rates: new RatesSvc()
 
   _calculateProfitAndPayouts: (order) ->
     airpairMargin = order.total
@@ -40,14 +45,17 @@ module.exports = class OrdersService extends DomainService
     payWith = 'paypal'
     if order.paymentMethod? && order.paymentMethod.type == 'stripe' then payWith = 'stripe'
 
+    # $log 'create.payWith', payWith
     # ? if order.email != usr.primaryEmail
     # update user's primary email
 
     # 3rd party invoice integration ?
     order.invoice = {}
     @_calculateProfitAndPayouts order
+    # $log 'create._calculateProfitAndPayouts.payWith', payWith
 
     savePaymentResponse = (e, paymentResponse) =>
+      $log 'savePaymentResponse.e', e
       if e then return callback e
       order.payment = paymentResponse
 
@@ -56,15 +64,55 @@ module.exports = class OrdersService extends DomainService
         @trackPayment usr, order, 'stripe'
 
       new @model(order).save (e, rr) ->
+        $log 'order.save.e', e, callback
         if e?
           $log "order.save.error", e
           winston.error "order.save.error", e
         callback e, rr
 
     if order.paymentMethod? && order.paymentMethod.type == 'stripe'
+      $log 'stripSvc.createCharge', order
       @stripSvc.createCharge order, savePaymentResponse
     else
       @paypalSvc.Pay order, savePaymentResponse
+
+
+  confirmBookme: (request, usr, expertReview, callback) ->
+    @settingsSvc.getByUserId request.userId, (ee, settings) =>
+      if ee then return callback ee
+      pm = _.find settings.paymentMethods, (p) -> p.type == 'stripe'
+      # $log 'pm', pm
+
+      @requestSvc.updateSuggestionByExpert request, usr, expertReview, (e, r) =>
+        $log 'request updated', r.status
+        if e then return callback e
+        order = { requestId: request._id, paymentMethod: pm, lineItems: [] }
+        order.total = request.hours * request.budget
+        order.company =
+          _id: request.company._id
+          name: request.company.name
+          contacts: request.company.contacts
+
+        expertBookMe = { rake: 10 }
+        # price = r.suggested[0].suggestedRate
+        # $log 'suggestedRate.price', price
+        suggestedRates = @rates.calcSuggestedBookmeRates r.suggested[0].suggestedRate, expertBookMe
+
+        $log 'suggestedRate', suggestedRates
+
+        toPick = ['_id','userId','name','username','rate','email','pic','paymentMethod']
+        order.lineItems.push
+          type: request.pricing
+          total: order.total
+          unitPrice: request.budget
+          qty: parseInt request.hours
+          suggestion:
+            _id: request.suggested[0]._id
+            suggestedRate: suggestedRates
+            expert: _.pick request.suggested[0].expert, toPick
+
+        @create order, usr, (eeee,rrrr) -> callback(eeee,r)
+
 
   trackPayment: (usr, order, type) ->
     props = {

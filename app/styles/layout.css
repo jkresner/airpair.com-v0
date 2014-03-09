@@ -109,3 +109,11 @@ legend em { color:#7F761C;font-style:normal; }
 .expertMini .links .zocial:before { font: 40%/1.4 zocial; }
 .expertMini .tags { padding:8px;background:black; }
 .expertMini .label-tag { padding:0px 2px 1px 2px;font-size:9px; }
+
+
+#settingspage h1 { font-size: 24.5px; }
+#settingspage #payment-form { border-top:solid 1px gray;margin-top:20px;padding-top:20px; }
+#settingspage #payment-form img { float:right;width:100px;height:auto }
+#settingspage #payment-form .form-action { border-top:1px solid gray }
+#settingspage #payment-form .mm { width:30px; }
+#settingspage #payment-form .yyyy { width:40px; }

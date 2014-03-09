@@ -1,0 +1,46 @@
+<header class="entry-header">
+  <h1 class="entry-title">Setup your billing info</h1>
+  <p class="entry-meta">Note your card will NOT be charged until you book hours.</p>
+</header>
+
+<form action="" method="POST" id="payment-form">
+
+<div class="entry-content">
+
+  <span class="payment-errors text-error"></span>
+
+  <img src="/images/logos/stripe.png" alt="Stripe logo" />
+
+  <div class="control-group">
+    <label class="control-label">Card Number</label>
+    <div class="controls">
+      <input type="text" size="20" placeholder="Card Number" data-stripe="number"/>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <label class="control-label">CVC</label>
+    <div class="controls">
+      <input type="text" size="4" placeholder="CVC" data-stripe="cvc"/>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <label class="control-label">Expiration (MM/YYYY)</label>
+    <div class="controls">
+      <input class="mm" type="text" size="2" data-stripe="exp-month" placeholder="MM" />
+      <span> / </span>
+      <input class="yyyy" type="text" size="4" data-stripe="exp-year" placeholder="YYYY" />
+    </div>
+  </div>
+
+</div>
+
+  <footer class="entry-footer">
+    <div class="form-actions">
+       <button class="button" type="submit">Setup billing</button>
+    </div>
+  </footer>
+
+
+</form>

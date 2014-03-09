@@ -1,4 +1,4 @@
-<h4 class="widget-title widgettitle">{{name}}</h4>
+<h4 class="widget-title widgettitle expert">Book {{name}} on AirPair</h4>
 <article class="entry">
 
   <span class="alignright social-icons">
@@ -9,20 +9,13 @@
     {{#if tw}}<a href="//twitter.com/{{ tw.username }}" target="_blank" class="twitter"></a>{{/if}}
   </span>
   <span class="alignleft">
-    <img src="{{pic}}?s=200" class="avatar user" />
+    <img src="{{pic}}?s=120" class="avatar user" />
   </span>
   <header class="entry-header">
-    <h2 class="entry-title"><span class="label label-status label-available">available</span></h2>
     <span class="entry-author">
-      {{#if homepage}}
-        <a href="http://{{homepage}}" target="_blank" class="guest">
-          {{name}}
-        </a>
-      {{else}}
-        {{name}}
-      {{/if}}
+      <b>{{name}}</b>
     </span>
-    <label>${{ bookMe.rate }} p.h.</label>
+    <br /><label>${{ publicRate }} p.h.</label>
   </header>
 
   <div class="entry-content">
