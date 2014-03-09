@@ -21,6 +21,7 @@ class exports.StripeRegisterView extends SV.StripeRegisterView
 
 
 class exports.WelcomeView extends BB.BadassView
+  logging: on
   el: '#welcome'
   tmpl: require './templates/Welcome'
   events: { 'click .track': 'track' }
@@ -91,7 +92,7 @@ class exports.RequestView extends BB.ModelSaveView
 
 
 class exports.ExpertView extends BB.BadassView
-  logging: on
+  # logging: on
   el: '#expert'
   tmpl: require './templates/Expert'
   initialize: ->

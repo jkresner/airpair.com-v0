@@ -14,6 +14,7 @@ module.exports = class Router extends S.AirpairSessionRouter
     ':id'         : 'detail'
 
   appConstructor: (pageData, callback) ->
+    {expert,session,settings} = pageData
 
     d =
       company: new M.Company _id: 'me'
@@ -21,17 +22,15 @@ module.exports = class Router extends S.AirpairSessionRouter
       settings: new M.Settings()
       request: new M.Request()
 
-    if pageData.expert._id?
+    if expert._id?
       v =
         expertView: new V.ExpertView model: d.expert, request: d.request
         requestView: new V.RequestView model: d.request, settings: d.settings, expert: d.expert, company: d.company
 
-    @setOrFetch d.expert, pageData.expert
-
-    if !pageData.session._id?
+    if !session._id? && expert._id?
       v.welcomeView = new V.WelcomeView model: d.expert
-    else
-      @setOrFetch d.settings, pageData.settings, success: (model, resp) =>
+    else if session._id?
+      @setOrFetch d.settings, settings, success: (model, resp) =>
         if !model.paymentMethod('stripe')?
           v.stripeRegisterView = new V.StripeRegisterView model: d.settings, session: @app.session
           v.stripeRegisterView.$el.show()
@@ -39,6 +38,8 @@ module.exports = class Router extends S.AirpairSessionRouter
 
       d.company.fetch success: (m, opts, resp) =>
         m.populateFromGoogle d.session
+
+    @setOrFetch d.expert, expert
 
     _.extend d, v
 
