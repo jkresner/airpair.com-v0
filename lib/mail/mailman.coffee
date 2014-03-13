@@ -27,7 +27,7 @@ class Mailman
     )
 
   sendEmailToAdmins: (options, callback) ->
-    options.to = ['mi@airpair.com', 'jk@airpair.com', 'il@airpair.com', 'ds@airpair.com']
+    options.to = ['em@airpair.com', 'jk@airpair.com', 'il@airpair.com', 'ds@airpair.com']
     @sendEmail(options, callback)
 
   ###

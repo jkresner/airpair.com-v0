@@ -1,17 +1,17 @@
 adminIds = [
   '117132380360243205600' #JK
-  '112300854530824394263' #MI
-  '117634739628779860480' #DT
+  '117634739628779860480' #EM
   '105314633561185226973' #IL
   '105922668830552511365' #DS
+  '112300854530824394263' #MI
 ]
 
 adminInitials = {}
 adminInitials['117132380360243205600'] = 'jk'
-adminInitials['112300854530824394263'] = 'mi'
-adminInitials['117634739628779860480'] = 'dt'
+adminInitials['100358155378996572027'] = 'em'
 adminInitials['105314633561185226973'] = 'il'
 adminInitials['105922668830552511365'] = 'ds'
+adminInitials['112300854530824394263'] = 'mi'
 
 module.exports =
 
@@ -41,8 +41,8 @@ module.exports =
     adminInitials[googleId]
 
   owner2name:
-    mi: 'Maksim'
     il: 'Igor'
-    dt: 'David'
+    em: 'Eoin'
     jk: 'Jonathon'
     ds: 'Dilys'
+    mi: 'Maksim'
