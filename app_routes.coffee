@@ -14,6 +14,8 @@ module.exports = (app) ->
     else r.sendfile "./public/home.html"
 
   app.get '/', renderHome, render 'dashboard'
+  app.get '/yc', file 'yc'
+  app.get '/book/buttons', file 'buttons'
 
   # pages
   app.get '/login', file 'login'
