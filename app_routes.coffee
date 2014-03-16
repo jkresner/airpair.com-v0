@@ -15,7 +15,7 @@ module.exports = (app) ->
 
   app.get '/', renderHome, render 'dashboard'
   app.get '/yc', file 'yc'
-  app.get '/book/buttons', file 'buttons'
+  app.get '/book/buttons', authd, file 'buttons'
 
   # pages
   app.get '/login', file 'login'
