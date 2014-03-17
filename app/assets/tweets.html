@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>AirPair{}Me Buttons</title>
+    <meta name="viewport" content="width=device-width">
+    <style>
+      pre { font-size:12px;border-top:solid 1px gray;background-color:#dddddd }
+      code span { color:red;font-weight:bold }
+      usr { color:red; }
+      tag { color:blue; }
+      rate { color:green; }
+    </style>
+  </head>
+<body>
+
+
+<br />
+<br /><usr>Username</usr> <input type="text" id="usr" value="hackerpreneur" />
+<br /><tag>Tag</tag> <input type="text" id="tag" value="backbonejs" />
+<br /><rate>Rate</rate> <input type="text" id="rate" value="180" />
+
+<div id="tweets">
+
+  <div id="b1">
+    <h2>First ever Tweet</h2>
+
+    Upload this image with your tweet for increased exposure / CTR.
+
+    <img src="/images/me.png" style="display:block;padding:15px 0 0 0" />
+    <pre>
+      <code>
+  I'm #AirPairMe approved! You can now book me on @AirPair by the hour for #<tag>backbonejs</tag> help
+  http://airpair.me/<usr>hackerpreneur</usr>?utm_source=expert&utm_medium=tweet&utm_content=<usr>hackerpreneur</usr>&utm_campaign=airpairme
+      </code>
+    </pre>
+
+
+  </div>
+
+  <div id="b2">
+    <h2>Others example tweets</h2>
+
+    <pre>
+      <code>
+  Need help #cooding #<tag>backbonejs</tag>? #AirPairMe for $<rate>180</rate>/hr
+  http://airpair.me/<usr>hackerpreneur</usr>?utm_source=expert&utm_medium=tweet&utm_content=<usr>hackerpreneur</usr>&utm_campaign=airpairme
+      </code>
+    </pre>
+
+    <pre>
+      <code>
+  I've got spare time this week. #AirPairMe by the hour for $<rate>180</rate>/hr
+  http://airpair.me/<usr>hackerpreneur</usr>?utm_source=expert&utm_medium=tweet&utm_content=<usr>hackerpreneur</usr>&utm_campaign=airpairme
+      </code>
+    </pre>
+
+    <pre>
+      <code>
+  Need help #cooding #backbonejs? #AirPairMe for $<rate>180</rate>/hr
+  http://airpair.me/<usr>hackerpreneur</usr>?utm_source=expert&utm_medium=tweet&utm_content=<usr>hackerpreneur</usr>&utm_campaign=airpairme
+      </code>
+    </pre>
+  </div>
+
+  </div>
+
+</div>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+<script type="text/javascript">
+$(function(e){
+  $('input').on('input',function(e){
+    tagName = $(this).attr('id');
+    newVal = $(this).val()
+    console.log(tagName,newVal,$(tagName));
+    $('#tweets ' +tagName).html(newVal);
+  });
+})
+</script>
+
+</html>
