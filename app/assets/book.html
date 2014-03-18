@@ -60,11 +60,18 @@
 </body>
 
   <script type="text/javascript">
+    window.useOlark = true;
+
     function initApp() {
+      if (window.addjs)
+        addjs.trackEvent('page','view', window.location.pathname, {book:'{{ expert.name }}'});
       var pageData = { session: {{{ session }}}, expert: {{{ expertStr }}}, stripePK: '{{{stripePK }}}' };
       Router = require('/scripts/book/Router');
       window.router = new Router(pageData);
     }
+
+  </script>
+
   </script>
   <script src="/javascripts/vendor.js" defer></script>
   <script src="/javascripts/app.js" defer onload="initApp()"></script>
