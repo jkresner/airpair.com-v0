@@ -130,6 +130,12 @@ body#review #expertReply .controls-agree span { font-size:11px;float:left;margin
 body#book .site-inner { min-height:500px }
 body#book #detail { }
 body#book #none { padding:40px 0 200px 0 }
+body#book #expert header { }
+body#book #expert .alignleft { margin-bottom:15px }
+body#book #expert label { font-weight:bold;padding:10px 5px 0 0;float:right;display:block;clear:right; }
+body#book #expert article { padding-bottom:0; }
+body#book #expert p { clear:both; }
+body#book #expert .entry-content { border-top:1px solid #eee;clear:both;padding-top:10px; }
 body#book #welcome h1 { font-weight:200;font-size:44px;color:#333333;margin:0px 0 0 0 }
 body#book #welcome p { color:gray;font-weight:100;margin:-5px 0 0 0;font-size:36px }
 body#book #welcome p.about { color:black;font-weight:100;margin-top:0px;font-size:28px }
@@ -143,7 +149,7 @@ body#book .suggestion .entry-content { font-size:13px;padding:10px;clear:both;ba
 body#book .control-group { clear:both;padding-top:20px; }
 body#book #expertHours main { width:540px; }
 body#book #stripeRegister { margin-bottom:300px;display:none; }
-body#book #stripeRegister #payment-form img { float:right;width:60px;height:auto;margin-bottom:0px; }
+body#book #stripeRegister #payment-form img { float:right;width:66px;height:auto;margin-bottom:0px; }
 body#book #stripeRegister #payment-form footer { margin-top:30px; }
 body#book #stripeRegister #payment-form .form-actions { display:block; }
 body#book #stripeRegister #payment-form .mm { width:60px; }
@@ -157,6 +163,8 @@ body#book .pricing-group em { font-style:normal; }
 body#book .pricing-group em.selected { font-weight:bold;color:#CC523E; }
 body#book .save { background-color:#CE5323;color:#FFFFFF; }
 body#book .save span { font-size:14px;font-weight:300 }
+body#book .form-actions p { text-align:center;margin-bottom:5px; }
+
 
 #tagsInput header, .controls-tags header { font-size:11px;font-style:italic;border-bottom:dashed 1px #d3d3d3;padding:0 0 5px 5px;color:gray; }
 #tagsInput .autocomplete, .controls-tags .autocomplete { width:200px; }

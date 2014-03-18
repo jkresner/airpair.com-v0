@@ -1,15 +1,17 @@
 <header class="entry-header">
-  <h1 class="entry-title">Setup your billing info</h1>
-  <p class="entry-meta">Note your card will NOT be charged until you book hours.</p>
+  <h1 class="entry-title">Add a payment method</h1>
+  <p class="entry-meta">We'll store your card info securely using <b>stripe</b> for easy reuse.</p>
 </header>
 
 <form action="" method="POST" id="payment-form">
 
 <div class="entry-content">
 
-  <span class="payment-errors text-error"></span>
-
   <img src="/images/logos/stripe.png" alt="Stripe logo" />
+
+  <p>{{meta}}</p>
+
+  <span class="payment-errors text-error"></span>
 
   <div class="control-group">
     <label class="control-label">Card Number</label>
@@ -38,7 +40,7 @@
 
   <footer class="entry-footer">
     <div class="form-actions">
-       <button class="button" type="submit">Setup billing</button>
+       <button class="button" type="submit">Save payment method</button>
     </div>
   </footer>
 

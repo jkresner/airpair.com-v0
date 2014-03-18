@@ -81,7 +81,7 @@ class exports.StripeRegisterView extends BB.BadassView
     require '/scripts/providers/stripe.v2'
     @model.once 'sync', @render, @
   render: ->
-    @$el.html @tmpl()
+    @$el.html @tmpl meta: @meta()
     @$form = @$('form')
     @$form.on 'submit', (e) =>
       e.preventDefault()
@@ -97,6 +97,7 @@ class exports.StripeRegisterView extends BB.BadassView
       @model.save stripeCreate: { token: token, email: @email() }, { success: @stripeCustomerSuccess }
   email: ->
     @session.get('google')._json.email
+  meta: -> ''
   stripeCustomerSuccess: (model, resp, opts) =>
     @model.unset 'stripeCreate'
     name = @session.get('google').displayName

@@ -9,13 +9,15 @@
     {{#if tw}}<a href="//twitter.com/{{ tw.username }}" target="_blank" class="twitter"></a>{{/if}}
   </span>
   <span class="alignleft">
-    <img src="{{pic}}?s=120" class="avatar user" />
+    <img src="{{pic}}?s=140" class="avatar user" />
   </span>
   <header class="entry-header">
-    <span class="entry-author">
-      <b>{{name}}</b>
-    </span>
-    <br /><label>${{ publicRate }} p.h.</label>
+    {{!-- <span class="entry-author">
+      <b>{{name</b>
+    </span> --}}
+    <label>${{ publicRate }} per hr</label>
+    <label>Available {{hours}} hrs/week</label>
+    {{#if bookMe.urlBlog }}<label><a href="{{ bookMe.urlBlog }}" target="_blank">Full Expert Bio on AirPair</a></label>{{/if}}
   </header>
 
   <div class="entry-content">

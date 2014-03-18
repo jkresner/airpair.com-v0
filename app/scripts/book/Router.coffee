@@ -32,7 +32,7 @@ module.exports = class Router extends S.AirpairSessionRouter
     else if session._id?
       @setOrFetch d.settings, settings, success: (model, resp) =>
         if !model.paymentMethod('stripe')?
-          v.stripeRegisterView = new V.StripeRegisterView model: d.settings, session: @app.session
+          v.stripeRegisterView = new V.StripeRegisterView model: d.settings, session: @app.session, expert: d.expert
           v.stripeRegisterView.$el.show()
           Stripe.setPublishableKey pageData.stripePK
 

@@ -12,6 +12,8 @@ SV      = require './../shared/Views'
 class exports.StripeRegisterView extends SV.StripeRegisterView
   email: ->
     @session.get('google')._json.email
+  meta: ->
+    "Enter the card you want to use to pay #{@expert.get('name')}."
   stripeCustomerSuccess: (model, resp, opts) =>
     @model.unset 'stripeCreate'
     addjs.providers.mp.setPeopleProps paymentInfoSet: 'stripe'
