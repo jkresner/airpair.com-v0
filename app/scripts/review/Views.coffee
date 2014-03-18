@@ -160,6 +160,7 @@ class exports.ExpertReviewFormView extends BB.EnhancedFormView
     'expertAvailability','payPalEmail']
   events:
     'click .saveFeedback': 'saveFeedback'
+    'input textarea': 'enableSubmit'
   initialize: (args) ->
   render: ->
     expertRate = @model.get('suggestedRate')[@request.get('pricing')].expert
@@ -193,10 +194,15 @@ class exports.ExpertReviewFormView extends BB.EnhancedFormView
       # @renderInputValid @elm('payPalEmail'), 'You must supply your PayPal email address'
       alert 'You must supply your PayPal email address'
     else
+      # Disable submitBtn to prevent repeat clicks
+      @$('.saveFeedback').html('Submitting ...').prop 'disabled', true
       @save(e)
     false
   renderSuccess: (model, resp, options) =>
     @request.set model.attributes
+  enableSubmit: (e) ->
+    # $log 'in'
+    @$('.saveFeedback').html('Submit').prop 'disabled', false
 
 
 class exports.ExpertReviewDetailView extends BB.BadassView
