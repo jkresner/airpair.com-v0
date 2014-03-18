@@ -51,7 +51,7 @@ module.exports = class Router extends S.AirpairSessionRouter
 
   thanks: ->
     if $('#thanks').html() is ''
-      $('#thanks').html require('./templates/ThankYou')()
+      $('#thanks').html require('./templates/ThankYou')(@app.expert.get('name'))
 
 
 
