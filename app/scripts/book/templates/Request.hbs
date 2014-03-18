@@ -2,8 +2,8 @@
   <main class="content">
     <article class="post type-post format-standard entry">
       <header class="entry-header">
-        <h1 class="entry-title" itemprop="headline">Request hours with {{expert.name}}</h1>
-        <p class="entry-meta"><time>Tell {{expert.name}} what you'd like to pair on.</time></p>
+        <h1 class="entry-title" itemprop="headline">Request to AirPair with {{expertFirstName}}</h1>
+        <p class="entry-meta"><time>Before AirPairing, {{expertFirstName}} will review your request to confirm he can help you.</time></p>
       </header>
 
 
@@ -15,17 +15,18 @@
         </div>
 
         <div class="control-group" style="clear:both">
-          <label class="control-label" for="reqBrief">What challenges do you want to solve? <span id="breifCount" class="muted" style="float:right;margin:5px 16px 0 0px">0 chars</span></label>
+          <label class="control-label">What do you want help with?</label>
           <div class="controls controls-brief">
-            <textarea id="reqBrief" name="brief" placeholder="We recommend min 250 characters. The more detail you provide, the better help you get." style="height:110px"></textarea>
+            <textarea id="reqBrief" name="brief" placeholder="{{expertFirstName}} may decline your request if there isn't enough detail..." style="height:110px"></textarea>
           </div>
         </div>
 
         <div class="control-group">
-          <label class="control-label" for="reqHrs"> How hours do you want to purchase?</label>
-          <select name="hours" class="span2">
+          <label class="control-label">How many hours do you want?</label>
+          <select name="hours">
             <option value="1">1</option>
             <option value="2" selected="selected">2</option>
+            <option value="3">3</option>
             <option value="5">5</option>
             <option value="10">10</option>
             <option value="20">20</option>
@@ -33,24 +34,24 @@
         </div>
 
         <div class="control-group pricing-group">
-          <label class="control-label">Want to open source your session recordings? </label>
+          <label class="control-label">Want to 'open source' your session recordings? </label>
           <div class="pricing rb-group controls">
             <input type="radio" id="pricingOpensource" name="pricing" value="opensource" />
-            <label for="pricingOpensource" class="pricingOpensource">Open source <em class="opensource">$<span></span>/hr discount</em> </label>
+            <label for="pricingOpensource" class="pricingOpensource">Yes <em class="opensource">$<span></span>/hr discount</em> </label>
 
             <input type="radio" id="pricingPrivate" name="pricing" value="private" checked="checked" />
             <label for="pricingPrivate" class="checked">Keep private</label>
 
             <input type="radio" id="pricingNDA" name="pricing" value="nda" />
-            <label for="pricingNDA" class="pricingNDA">Organize NDA <em class="nda">+$<span></span>/hr</label></em>
+            <label for="pricingNDA" class="pricingNDA">Sign NDA <em class="nda">+$<span></span>/hr</label></em>
           </div>
 
         </div>
 
         <div class="control-group">
-          <label class="control-label" for="availabilityInput">What is your location / timezone, urgency & availability?</label>
+          <label class="control-label" for="availabilityInput">What's your timezone & urgency?</label>
           <div class="controls controls-availability">
-            <textarea id="availability" name="availability" placeholder="What are your  response time expectations. The expert will decline your request if they do not have availability." style="height:70px">{{ availability }}</textarea>
+            <textarea id="availability" name="availability" placeholder="E.g. 'San Francisco (PST). I am flexible any time in the next week.'" style="height:70px">{{ availability }}</textarea>
           </div>
         </div>
 
@@ -61,7 +62,6 @@
       <footer class="entry-footer">
         <div class="form-actions">
           <a href="save" class="save button large">Choose # of hours to continue</a>
-          <p>Your card will be charged when {{expert.name}} accepts your request.</p>
         </div>
       </footer>
     </article>

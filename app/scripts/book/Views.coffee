@@ -42,15 +42,24 @@ class exports.RequestView extends BB.ModelSaveView
   render: ->
     if @settings.paymentMethod('stripe')?
       # @e = addjs.events.bookRequest
-      @$el.html @tmpl @model.extend { expert: @expert.toJSON() }
+      fName = @expert.get('name').split(' ')[0]
+      @$el.html @tmpl @model.extend { expert: @expert.toJSON(), expertFirstName: fName }
       @elm('hours').on 'change', @update
       @elm('pricing').on 'click', @update
       @$('.pricing input:radio').on 'click', @showPricingExplanation
-      @elm('brief').on 'input', =>
-        @$('#breifCount').html(@elm('brief').val().length+ ' chars')
       @$(":radio[value=#{@model.get('pricing')}]").click().prop('checked',true)
-      @$(".pricingOpensource span").html (-1*@model.opensource)
-      @$(".pricingNDA span").html @model.nda
+      @$(".pricingOpensource span").html @model.private
+      @$(".pricingNDA span").html @model.nda-@model.private
+
+      @$(".save").mouseover(=>
+        hrs = parseInt @elm('hours').val()
+        @$('.save').html "We'll charge your card $#{@getBudget()*hrs} if #{fName} accepts"
+      ).mouseout(=>
+        @update()
+      )
+
+      # <p></p>
+
       # $log '@elm', @elm('hours')
   update: (e) =>
     hrs = parseInt @elm('hours').val()
@@ -84,12 +93,6 @@ class exports.RequestView extends BB.ModelSaveView
     router.navTo 'thanks'
   getBudget: ->
     parseInt(@expert.get('bookMe').rate) + @model[@$("[name='pricing']:checked").val()]
-  # getSuggestedRates: ->
-  #   base = parseInt @expert.get('bookMe').rate
-  #   opensource = base + @model.opensource
-  #   nda = base + @model.nda
-  #   offline = base + @model.offline
-  #   { opensource, nda, offline, private: base + @model.private }
 
 
 class exports.ExpertView extends BB.BadassView

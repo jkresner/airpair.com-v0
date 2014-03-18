@@ -29,7 +29,7 @@ exports.Request = class Request extends Shared.Request
     pricing: 'private'
 
   opensource: 0
-  offline: 20
+  offline: 0
   private: 20
   nda: 70
 
