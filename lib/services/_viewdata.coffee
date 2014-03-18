@@ -72,8 +72,17 @@ module.exports = class ViewDataService
           request: JSON.stringify request
           orders: JSON.stringify orders
 
-  book: (usr, id, callback) ->
+  book: (usr, id, code, callback) ->
     eSvc.getByBookme id, (e, r) =>
+      if code? && r._id?
+        r.bookMe.code = "invalid code"
+        for coupon in r.bookMe.coupons
+          if coupon.code == code
+            r.bookMe.code = code
+            r.bookMe.rate = coupon.rate
+      if r._id?
+        delete r.bookMe.rake
+        delete r.bookMe.coupons
       if e then return callback e
       callback null,
         isAnonymous:  !usr?

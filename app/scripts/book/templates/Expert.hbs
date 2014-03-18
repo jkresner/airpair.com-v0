@@ -15,7 +15,7 @@
     {{!-- <span class="entry-author">
       <b>{{name</b>
     </span> --}}
-    <label>${{ publicRate }}/hr</label>
+    <label>${{ publicRate }}/hr {{#if bookMe.code}}<span style="font-family:courier;font-size:12px">(#{{bookMe.code}})</span>{{/if}}</label>
     <label><span>Available {{hours}} hrs/wk</span></label>
     {{#if bookMe.urlBlog }}<label><a href="{{ bookMe.urlBlog }}" target="_blank">Full Bio on AirPair</a></label>{{/if}}
   </header>
