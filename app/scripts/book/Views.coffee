@@ -24,9 +24,8 @@ class exports.WelcomeView extends BB.BadassView
   logging: on
   el: '#welcome'
   tmpl: require './templates/Welcome'
-  events: { 'click .track': 'track' }
   initialize: ->
-    @$el.html @tmpl()
+    @$el.html @tmpl { localUrl: window.location.pathname }
     @listenTo @model, 'change', @render
   render: ->
     @$('#bookme-login').html "Login to book hours with #{@model.get('name')}"
