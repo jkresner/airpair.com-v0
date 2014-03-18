@@ -27,7 +27,7 @@ class exports.WelcomeView extends BB.BadassView
   el: '#welcome'
   tmpl: require './templates/Welcome'
   initialize: ->
-    @$el.html @tmpl { localUrl: window.location.pathname }
+    @$el.html @tmpl { localUrl: window.location.pathname+window.location.search }
     @listenTo @model, 'change', @render
   render: ->
     @$('#bookme-login').html "Login to pair with #{@model.get('name')}"
