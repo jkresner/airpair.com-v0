@@ -58,7 +58,7 @@ Request status
   waiting       : no experts available yet
   pending       : [bookme] customer put in request and expert has to confirm
   review        : customer must review & choose one or more experts
-  # scheduling    : call needs to be scheduled
+  scheduling    : call needs to be scheduled
   scheduled     : one or more calls already scheduled
   consumed      : feedback on all calls collected, but lead still warm for up-sell
   complete      : transaction final and time to archive

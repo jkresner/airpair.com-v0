@@ -119,7 +119,7 @@ module.exports = class RequestsService extends DomainService
 
   # Used for adm/inbound dashboard list
   getActive: (callback) ->
-    query = status: $in: ['received', 'incomplete', 'waiting', 'review', 'scheduled', 'holding', 'consumed', 'deferred', 'pending']
+    query = status: $in: ['received','incomplete','waiting','review','scheduling','scheduled','holding','consumed','deferred','pending']
     @model.find(query, @inboundSelect).lean().exec (e, requests) =>
       if e then return callback e
       if !requests then requests = {}
