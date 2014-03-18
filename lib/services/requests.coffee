@@ -177,7 +177,13 @@ module.exports = class RequestsService extends DomainService
       type: 'paypal', info: { email: expertReview.payPalEmail }
     data.events.push @newEvent(usr, "expert reviewed", ups)
 
-    if request.status == 'pending' then data.status = 'review'
+    if request.status == 'pending'
+      if sug.expertStatus == 'available' then data.status = 'pending'
+      if sug.expertStatus == 'abstained'
+        data.canceledDetail = ups.expertComment + ups.expertFeedback
+        data.status = 'canceled'
+    # Thinking here is we still want to use the request with another experts so
+    # maybe setting to 'canceled' is not the right thing to do ...
 
     @update request._id, data, (e, updatedRequest) =>
       if e then return callback e
