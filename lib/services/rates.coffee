@@ -10,12 +10,17 @@ module.exports = class RatesService extends DomainService
     private: 40
     nda: 90
 
+
   getRelativeBudget: (budget, requestPricing, pricing) ->
     return budget - (@base[requestPricing]-@base[pricing])
+
 
   # NOTE suggestedRate is the developers rate
   # not including airpair's margin
   calcSuggestedRates: (request, expert) ->
+    if request.status == 'pending' && expert.bookMe?
+      return @calcSuggestedBookmeRates request, expert
+
     e = expert
 
     r = {}
@@ -69,23 +74,33 @@ module.exports = class RatesService extends DomainService
 
     ## how quickly since the suggestion is the expert responding
 
-  # NOTE suggestedRate is the developers rate
-  # not including airpair's margin
-  calcSuggestedBookmeRates: (pricing, bookMe) ->
+  weight:
+    opensource: { opensource:0, private:20, nda:70 }
+    private: { opensource:-20, private:0, nda:50 }
+    nda: { opensource:-70, private:-50, nda:0 }
+
+  calcSuggestedBookmeRates: (request, expert) ->
+    pricing = request.pricing
+    weight = @weight[pricing]
+    rake = expert.bookMe.rake
+    total = request.budget
+    $log 'bookme.calc', pricing, rake, total, weight, expert.bookMe
     r = bookMe: true
     r.opensource =
-      total: pricing.opensource.total
-      expert: @_getExpertByRake pricing.opensource.total, bookMe.rake
+      total: total+weight.opensource
+      expert: @_getExpertByRake total+weight.opensource, rake
     r.private =
-      total: pricing.private.total
-      expert: @_getExpertByRake pricing.private.total, bookMe.rake
+      total: total+weight.private
+      expert: @_getExpertByRake total+weight.private, rake
     r.nda =
-      total: pricing.nda.total
-      expert: @_getExpertByRake pricing.nda.total, bookMe.rake
+      total: total+weight.nda
+      expert: @_getExpertByRake total+weight.nda, rake
+    $log 'bookme.r', r
     r
     # offline:
     #   total: customerRates.offline
     #   expert: customerRates.offline * expertBookMe.rake
+
 
   _getExpertByRake: (total, rake) =>
     total - (total*rake/100)

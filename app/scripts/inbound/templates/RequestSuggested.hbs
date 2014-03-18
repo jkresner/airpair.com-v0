@@ -31,14 +31,20 @@
 
     <a href="#" data-id="{{ _id }}" class="delete deleteSuggested btn btn-small btn-danger"><i class="icon-trash icon-white"></i> </a>
 
-    <a href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to={{expert.name}}%20%3c{{expert.email}}%3e&su=AirPair - request canceled {{requestId}} ({{threeTagsString}})&body={{mailTemplates.canceled}}" class="email btn btn-small btn-warning" target="_blank"><i class="icon-envelope icon-white"></i> cancel</a>
+    {{#if isBookMe}}
+      <a href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to={{expert.name}}%20%3c{{expert.email}}%3e&su=AirPairMe Request by {{ contact.fullName }}&body={{mailTemplates.bookMe}}" class="email btn btn-small btn-warning" target="_blank"><i class="icon-envelope icon-white"></i> AirPairMe</a>
 
-    <a href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to={{expert.name}}%20%3c{{expert.email}}%3e&su=Another expert was selected for AirPair {{requestId}} ({{threeTagsString}})?&body={{mailTemplates.another}}" class="email btn btn-small btn-warning" target="_blank"><i class="icon-envelope icon-white"></i> another</a>
 
-    <a href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to={{expert.name}}%20%3c{{expert.email}}%3e&su=You've been chosen for AirPair {{requestId}} ({{threeTagsString}})&body={{mailTemplates.chosen}}" class="email btn btn-small btn-warning" target="_blank"><i class="icon-envelope icon-white"></i> chosen</a>
+    {{else}}
+      <a href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to={{expert.name}}%20%3c{{expert.email}}%3e&su=AirPair - request canceled {{requestId}} ({{threeTagsString}})&body={{mailTemplates.canceled}}" class="email btn btn-small btn-warning" target="_blank"><i class="icon-envelope icon-white"></i> cancel</a>
 
-    <a href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to={{expert.name}}%20%3c{{expert.email}}%3e&su={{tagsString}} AirPair?&body={{mailTemplates.suggested}}" class="email btn btn-small btn-warning" target="_blank"><i class="icon-envelope icon-white"></i> suggested</a>
+      <a href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to={{expert.name}}%20%3c{{expert.email}}%3e&su=Another expert was selected for AirPair {{requestId}} ({{threeTagsString}})?&body={{mailTemplates.another}}" class="email btn btn-small btn-warning" target="_blank"><i class="icon-envelope icon-white"></i> another</a>
 
+      <a href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to={{expert.name}}%20%3c{{expert.email}}%3e&su=You've been chosen for AirPair {{requestId}} ({{threeTagsString}})&body={{mailTemplates.chosen}}" class="email btn btn-small btn-warning" target="_blank"><i class="icon-envelope icon-white"></i> chosen</a>
+
+      <a href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to={{expert.name}}%20%3c{{expert.email}}%3e&su={{tagsString}} AirPair?&body={{mailTemplates.suggested}}" class="email btn btn-small btn-warning" target="_blank"><i class="icon-envelope icon-white"></i> suggested</a>
+
+    {{/if}}
     <a href="https://mail.google.com/mail/u/0/?shva=1#search/%22{{expert.name}}%22+OR+{{expert.email}}" class="email btn btn-small btn-inverse" target="_blank"><i class="icon-envelope icon-white"></i> history</a>
 
     <span class="status label label-{{expertStatus}}">{{ expertStatus }}</span>

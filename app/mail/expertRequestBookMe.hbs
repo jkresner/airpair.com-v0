@@ -1,0 +1,11 @@
+Hi {{ suggestion.expert.firstName }},
+
+You've been booked via AirPair{}Me by {{ contact.fullName }}. Your rate is ${{ suggestedExpertRate }} per hour on this request. As soon as you reply as available, the customer will be charged. If you cannot or do not want to this request, please abstain ASAP so we can find someone else.
+
+https://www.airpair.com/review/{{ _id }}
+
+Regards,
+
+{{ session.google.name.givenName }}
+
+{{> MailSignature }}

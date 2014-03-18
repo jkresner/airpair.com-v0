@@ -81,7 +81,7 @@ module.exports = class ViewDataService
             r.bookMe.code = code
             r.bookMe.rate = coupon.rate
       if r._id?
-        delete r.bookMe.rake
+        # delete r.bookMe.rake
         delete r.bookMe.coupons
       if e then return callback e
       callback null,

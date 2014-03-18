@@ -51,8 +51,8 @@ module.exports = class RequestsService extends DomainService
     request.userId = usr._id
     request.events = [@newEvent(usr, "created")]
     request.status = 'pending'
+    $log 'r1', request.suggested[0]
     d = { availability: [], expertStatus: 'waiting' }
-    $log 'r1', request.suggested[0].suggestedRate
     _.extend request.suggested[0], d
     new @model(request).save (e, r) =>
       $log 'r2', r.suggested[0].suggestedRate

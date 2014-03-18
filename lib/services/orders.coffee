@@ -84,7 +84,7 @@ module.exports = class OrdersService extends DomainService
       # $log 'pm', pm
 
       @requestSvc.updateSuggestionByExpert request, usr, expertReview, (e, r) =>
-        $log 'request updated', r.status
+        $log 'request updated', r.status, r.suggested
         if e then return callback e
         order = { requestId: request._id, paymentMethod: pm, lineItems: [] }
         order.total = request.hours * request.budget
@@ -94,11 +94,6 @@ module.exports = class OrdersService extends DomainService
           contacts: request.company.contacts
 
         expertBookMe = { rake: 10 }
-        # price = r.suggested[0].suggestedRate
-        # $log 'suggestedRate.price', price
-        suggestedRates = @rates.calcSuggestedBookmeRates r.suggested[0].suggestedRate, expertBookMe
-
-        $log 'suggestedRate', suggestedRates
 
         toPick = ['_id','userId','name','username','rate','email','pic','paymentMethod']
         order.lineItems.push
@@ -108,7 +103,7 @@ module.exports = class OrdersService extends DomainService
           qty: parseInt request.hours
           suggestion:
             _id: request.suggested[0]._id
-            suggestedRate: suggestedRates
+            suggestedRate: r.suggested[0].suggestedRate
             expert: _.pick request.suggested[0].expert, toPick
 
         @create order, usr, (eeee,rrrr) -> callback(eeee,r)

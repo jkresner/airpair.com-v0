@@ -72,7 +72,8 @@ class exports.RequestRowView extends BB.BadassView
         router.navTo route
     false
   createdAgoHtml: ->
-    if @model.get('status') == 'received'
+    status = @model.get('status')
+    if status == 'received' || status == 'pending'
       createdDate = @model.createdDate()
       return ' overdue' if moment(createdDate).add('hours',3).isBefore()
       return ' slow' if moment(createdDate).add('hours',1).isBefore()
@@ -179,6 +180,7 @@ class ExpertMailTemplates
   tmplCancelled: require './../../mail/expertRequestCancelled'
   tmplChosen: require './../../mail/expertRequestChosen'
   tmplSuggested: require './../../mail/expertRequestSuggested'
+  tmplBookMe: require './../../mail/expertRequestBookMe'
   constructor: (request, session, expertId) ->
     suggestion = request.suggestion expertId
     suggestion.expert.firstName = suggestion.expert.name.split(' ')[0]
@@ -186,11 +188,13 @@ class ExpertMailTemplates
     try
       suggestedExpertRate = suggestion.suggestedRate[request.get('pricing')].expert
     # $log 'suggestion', suggestion, contact, request
+
     r = request.extendJSON { tagsString: request.tagsString(), suggestion: suggestion, contact: contact, suggestedExpertRate: suggestedExpertRate, session: session.toJSON() }
     @another = encodeURIComponent(@tmplAnother r)
     @canceled = encodeURIComponent(@tmplCancelled r)
     @chosen = encodeURIComponent(@tmplChosen r)
     @suggested = encodeURIComponent(@tmplSuggested r)
+    @bookMe = encodeURIComponent(@tmplBookMe r)
 
 
 class exports.RequestInfoView extends BB.ModelSaveView
@@ -332,9 +336,11 @@ class exports.RequestSuggestedView extends BB.BadassView
           rates = s.suggestedRate[@model.get('pricing')]
         s.credit = calcExpertCredit(@orders.toJSON(), s.expert._id)
         tmplData =
-          requestId: @model.id,
+          requestId: @model.id
+          isBookMe: @model.get('status') == 'pending'
+          contact: @model.get('company').contacts[0]
           mailTemplates: mailTemplates
-          tagsString: @model.tagsString(),
+          tagsString: @model.tagsString()
           threeTagsString: @model.threeTagsString()
           rates: rates
         @$el.append @tmpl _.extend tmplData, s
