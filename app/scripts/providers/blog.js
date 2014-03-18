@@ -1,6 +1,6 @@
 module.exports = function()
 {
-  jQuery('.trackCustomerLogin').each(function (idx) {
+  jQuery('.trackCustomerLogin, .trackBookLogin').each(function (idx) {
     this.$btn = jQuery(this);
     this.$btn.mouseover(function (emover) {
       btn = jQuery(this)

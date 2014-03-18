@@ -30,7 +30,7 @@ class exports.WelcomeView extends BB.BadassView
     @$el.html @tmpl { localUrl: window.location.pathname }
     @listenTo @model, 'change', @render
   render: ->
-    @$('#bookme-login').html "Login to book hours with #{@model.get('name')}"
+    @$('#bookme-login').html "Login to pair with #{@model.get('name')}"
 
 
 class exports.RequestView extends BB.ModelSaveView
@@ -103,7 +103,7 @@ class exports.ExpertView extends BB.BadassView
     @listenTo @model, 'change', @render
   render: ->
     rate = parseInt(@model.get('bookMe').rate) + @request.private
-    @$el.html @tmpl @model.extend { publicRate: rate }
+    @$el.html @tmpl @model.extend { publicRate: rate, authenticated: @session.id? }
 
 
 

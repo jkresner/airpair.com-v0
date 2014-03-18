@@ -63,8 +63,11 @@
     window.useOlark = true;
 
     function initApp() {
-      if (window.addjs)
+      console.log('book.initApp');
+      if (window.addjs) {
+        console.log('addjs.track', window.location.pathname);
         addjs.trackEvent('page','view', window.location.pathname, {book:'{{ expert.name }}'});
+      }
       var pageData = { session: {{{ session }}}, expert: {{{ expertStr }}}, stripePK: '{{{stripePK }}}' };
       Router = require('/scripts/book/Router');
       window.router = new Router(pageData);
