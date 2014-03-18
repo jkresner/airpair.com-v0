@@ -16,6 +16,8 @@ class exports.StripeRegisterView extends SV.StripeRegisterView
     "Enter the card you want to use to pay #{@expert.get('name')}."
   stripeCustomerSuccess: (model, resp, opts) =>
     @model.unset 'stripeCreate'
+    name = @session.get('google').displayName
+    addjs.trackEvent 'book', 'customerSetStripeInfo', name
     addjs.providers.mp.setPeopleProps paymentInfoSet: 'stripe'
     @successAction()
   successAction: =>
@@ -41,7 +43,7 @@ class exports.RequestView extends BB.ModelSaveView
     @listenTo @settings, 'change', @render
   render: ->
     if @settings.paymentMethod('stripe')?
-      # @e = addjs.events.bookRequest
+      @e = addjs.events.customerRequest
       fName = @expert.get('name').split(' ')[0]
       @$el.html @tmpl @model.extend { expert: @expert.toJSON(), expertFirstName: fName }
       @elm('hours').on 'change', @update
@@ -89,7 +91,7 @@ class exports.RequestView extends BB.ModelSaveView
     suggested: [{expert:@expert.toJSON(),suggestedRate:@getBudget()}]
   renderSuccess: (model, response, options) =>
     addjs.providers.mp.incrementPeopleProp "requestCount"
-    # addjs.trackEvent @e.category, @e.name, @model.contact(0).fullName, @timer.timeSpent()
+    addjs.trackEvent 'book', @e.name, @model.contact(0).fullName
     router.navTo 'thanks'
   getBudget: ->
     parseInt(@expert.get('bookMe').rate) + @model[@$("[name='pricing']:checked").val()]
