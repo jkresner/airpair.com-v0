@@ -46,6 +46,8 @@ class exports.RequestRowView extends BB.BadassView
     'click .edit': 'edit'
   render: ->
     d = @model.toJSON()
+    d.company.contacts[0] = {} if !d.company.contacts[0]?
+
     tmplData = _.extend d, {
       contactName:        d.company.contacts[0].fullName
       contactPic:         d.company.contacts[0].pic
