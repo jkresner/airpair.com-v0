@@ -44,7 +44,7 @@ module.exports = class RequestsService extends DomainService
     new @model(request).save (e, r) =>
       if e then $log 'request.create error:', e
       if e then return callback e
-      @notifyAdmins(r)
+      @notifyAdmins(r, usr)
       callback null, r
 
   createBookme: (usr, request, callback) =>
@@ -58,7 +58,7 @@ module.exports = class RequestsService extends DomainService
       $log 'r2', r.suggested[0].suggestedRate
       if e then $log 'request.create error:', e
       if e then return callback e
-      @notifyAdmins(r)
+      @notifyAdmins(r, usr)
       callback null, r
 
 
@@ -190,11 +190,14 @@ module.exports = class RequestsService extends DomainService
       @mailman.importantRequestEvent "expert reviewed #{ups.expertStatus}", usr, updatedRequest
       callback null, updatedRequest
 
-  notifyAdmins: (model) ->
+  notifyAdmins: (model, usr) ->
+    fullName = usr.name
+    if model.company? then fullName = model.company.contacts[0].fullName
+
     tags = model.tags.map((o) -> o.short).join(' ')
     @mailman.sendEmailToAdmins
       templateName: "admNewRequest"
-      subject: "New airpair request: #{model.company.contacts[0].fullName} #{model.budget}$"
+      subject: "New airpair request: #{fullName} #{model.budget}$"
       request: model
       tags: tags
       (e) ->
