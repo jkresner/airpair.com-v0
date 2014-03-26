@@ -92,7 +92,7 @@ module.exports = class ViewDataService
         stripePK:     cfg.payment.stripe.publishedKey
         # settings:     srs    ## settings crashes app for some reason
 
-  inbound: (usr, callback) ->
+  pipeline: (usr, callback) ->
     rSvc.getActive (err, requests) =>
       if err then return callback err
       callback null,
