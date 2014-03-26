@@ -13,7 +13,7 @@ owner2colorIndex =
   '': 7  # turqoise
   '': 8  # gray
   '': 9  # bold blue
-  em: 10 # bold green
+  er: 10 # bold green
   '': 11 # bold red
 
 capitalizeFirstLetter = (str) ->
