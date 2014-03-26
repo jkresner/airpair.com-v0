@@ -5,7 +5,7 @@ V = require './Views'
 
 module.exports = class Router extends S.AirpairSessionRouter
 
-  pushStateRoot: '/adm/inbound'
+  pushStateRoot: '/adm/pipeline'
 
   enableExternalProviders: off  # don't want uservoice + ga on admin
 
