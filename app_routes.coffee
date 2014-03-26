@@ -35,7 +35,7 @@ module.exports = (app) ->
   app.get '/adm/orders*', authd, adm, render 'adm/orders'
   app.get '/adm/companys*', authd, adm, render 'adm/companys'
   app.get '/adm/experts*', authd, adm, render 'adm/experts'
-  app.get '/adm/inbound*', authd, adm, render 'adm/inbound'
+  app.get '/adm/pipeline*', authd, adm, render 'adm/pipeline'
   app.get '/adm/call/schedule/:id*', authd, adm, render 'adm/callSchedule', ['params.id']
   app.get '/adm/call/edit/:id*', authd, adm, render 'adm/callEdit', ['params.id']
 
