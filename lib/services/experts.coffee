@@ -33,7 +33,7 @@ module.exports = class ExpertsService extends DomainService
     'sideproject': 1
     'other': 1
 
-  # Used for adm/inbound dashboard list
+  # Used for adm/pipeline dashboard list
   getAll: (callback) ->
     query = rate: { $gt: 0 }
     options = lean: true

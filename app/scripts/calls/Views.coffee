@@ -97,7 +97,7 @@ class exports.CallScheduleView extends BB.ModelSaveView
     d.sendNotifications = @elm('sendNotifications').is(':checked')
     d
   renderSuccess: (model, response, options) =>
-    window.location = "/adm/inbound/request/#{@request.get('_id')}"
+    window.location = "/adm/pipeline/request/#{@request.get('_id')}"
   renderError: (model, response, options) ->
     @$('.save').attr('disabled', false)
     super model, response, options
@@ -195,7 +195,7 @@ class exports.CallEditView extends BB.ModelSaveView
     d.recordings = @videos.toJSON()
     d
   renderSuccess: (model, response, options) =>
-    window.location = "/adm/inbound/request/#{@request.get('_id')}"
+    window.location = "/adm/pipeline/request/#{@request.get('_id')}"
   renderError: (model, response, options) ->
     @$('.save').attr('disabled', false)
     super model, response, options
