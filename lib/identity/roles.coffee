@@ -4,6 +4,7 @@ adminIds = [
   '102299765632981130643' #ER
   '105922668830552511365' #DS
   '112300854530824394263' #MI
+  '103614010394533051287' #LT
 ]
 
 adminInitials = {}
@@ -12,6 +13,7 @@ adminInitials['105314633561185226973'] = 'il'
 adminInitials['102299765632981130643'] = 'er'
 adminInitials['105922668830552511365'] = 'ds'
 adminInitials['112300854530824394263'] = 'mi'
+adminInitials['103614010394533051287'] = 'lt'
 
 module.exports =
 
@@ -46,3 +48,4 @@ module.exports =
     jk: 'Jonathon'
     ds: 'Dilys'
     mi: 'Maksim'
+    lt: 'Lissanthea'
