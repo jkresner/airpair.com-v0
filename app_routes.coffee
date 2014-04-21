@@ -8,9 +8,12 @@ module.exports = (app) ->
   # login / auth routes
   require('./lib/auth/base')(app)
 
-  # home based on if authenticated
+  app.get '/railsconf2014', (req, r, next) ->
+    if req.isAuthenticated() then r.redirect '/logout'
+    else r.sendfile "./public/railsconf.html"
+
   renderHome = (req, r, next) ->
-    if req.isAuthenticated() then next()
+    if req.isAuthenticated() then r.logout
     else r.sendfile "./public/home.html"
 
   app.get '/', renderHome, render 'dashboard'
