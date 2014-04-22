@@ -8,16 +8,14 @@ module.exports = (app) ->
   # login / auth routes
   require('./lib/auth/base')(app)
 
-  app.get '/railsconf2014', (req, r, next) ->
-    if req.isAuthenticated() then r.redirect '/logout'
-    else r.sendfile "./public/railsconf.html"
 
   renderHome = (req, r, next) ->
-    if req.isAuthenticated() then r.logout
+    if req.isAuthenticated() then next()
     else r.sendfile "./public/home.html"
 
   app.get '/', renderHome, render 'dashboard'
   app.get '/yc', file 'yc'
+  app.get '/railsconf2014', file 'railsconf'
   app.get '/book/buttons', authd, file 'buttons'
   app.get '/book/tweets', authd, file 'tweets'
 
