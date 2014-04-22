@@ -26,7 +26,7 @@ body#book-new a {
 }
 
 body#book-new #welcome {
-	margin-bottom: 150px;
+	margin-bottom:0px;
 }
 
 .left-container {
@@ -138,6 +138,16 @@ a.home-large.selected {
 	background-color: #25DBBF;
 }
 
+body#book-new #stripeRegister { margin-bottom:300px;display:none; }
+body#book-new #stripeRegister h1 { margin-left:10px }
+body#book-new #stripeRegister #payment-form img { float:right;width:66px;height:auto;margin-bottom:0px; }
+body#book-new #stripeRegister #payment-form footer { margin-top:30px; }
+body#book-new #stripeRegister #payment-form .form-actions { display:block; }
+body#book-new #stripeRegister #payment-form .mm { width:60px; }
+body#book-new #stripeRegister #payment-form .yyyy { width:70px; }
+body#book-new #stripeRegister #payment-form button { background-color:#CE5323;color:#FFFFFF;font-size:18px;line-height:24px;margin:0;padding:16px 32px;text-align:center;width:100%; }
+
+
 /**************************** profiles end ****************************/
 
 
@@ -224,5 +234,14 @@ ul.expertise li {
 	color: white;
 	font-weight: normal;
 }
+
+.pricing-group { height:86px;margin:22px 0 0px 0 }
+.pricing-group em { font-style:normal; }
+.pricing-group em.selected { font-weight:bold;color:#CC523E; }
+.rb-group { margin:18px 8px 0 0;display:block;height:20px; }
+.rb-group label { float:left;margin-right:38px;color:gray; }
+.rb-group input { float:left;margin-top:7px;margin-right:4px;width:20px; }
+.rb-group .error-message { display:block; }
+
 
 /**************************** end sidebar ****************************/
