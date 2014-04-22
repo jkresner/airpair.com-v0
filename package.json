@@ -37,7 +37,7 @@
     "underscore": "1.4.x",
     "async": "~0.2.8",
     "express": "3.x",
-    "mongoose": "3.x",
+    "mongoose": "3.8.5",
     "connect-mongo": "0.3.x",
     "passport": "0.1.x",
     "passport-oauth": "0.1.x",
