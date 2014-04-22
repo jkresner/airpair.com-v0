@@ -1,0 +1,228 @@
+body#book-new {
+	background: #f2f2f2;
+}
+
+body#book-new h1 {
+	font-weight: 100;
+	font-size: 28px;
+	color: #4c4c4c;
+	margin: 0;
+	padding: 15px 10px;
+	z-index: 500;
+	position: relative;
+	border-radius: 3px 3px 0 0;
+	letter-spacing: 1px;
+}
+
+body#book-new h1.how-header {
+	padding-left: 20px;
+	border: 3px solid #e6e6e6;
+	font-size: 16px;
+	text-transform: uppercase;
+}
+
+body#book-new a {
+	color: #ce5323;
+}
+
+body#book-new #welcome {
+	margin-bottom: 150px;
+}
+
+.left-container {
+	border-radius: 0 0 3px 3px;
+	border: 3px solid #e6e6e6;
+	padding: 40px;
+	background: white;
+	margin: 0 0 40px 0;
+}
+
+.left-container p {
+	font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	font-size: 21px;
+	color: #333333;
+}
+
+.left-container p span {
+	font-weight: bold;
+	color: #ce5323;
+}
+
+img.how-to-book {
+	margin: 75px 0;
+}
+
+#stripeRegister {
+	display: none;
+}
+
+/**************************** profiles ****************************/
+
+.profiles {
+	padding: 0;
+}
+
+.social-icons-large a {
+	width: 46px;
+	height: 117px;
+	display: inline-block;
+	float: left;
+	background-color: #f2f2f2;
+	margin-right: 6px;
+	background-position: center;
+	background-size: 94px;
+	background-repeat: no-repeat;
+}
+
+.social-icons-large a.selected {
+	background-color: #ce5323;
+}
+
+.social-icons-large a.selected:hover {
+	background-color: #ce5323;
+}
+
+.social-icons-large a:first-child {
+	margin-right: 8px;
+}
+
+.social-icons-large a:last-child {
+	margin-right: 0px;
+}
+
+a.github-large {
+	background-image: url('../images/icons/social-github.png');
+}
+
+a.github-large.selected {
+	background-color: #3B3B3B;
+}
+
+a.twitter-large {
+	background-image: url('../images/icons/social-twitter.png');
+}
+
+a.twitter-large.selected {
+	background-color: #00AFEA;
+}
+
+a.bitbucket-large {
+	background-image: url('../images/icons/social-bitbucket.png');
+}
+
+a.bitbucket-large.selected {
+	background-color: #1A4F7E;
+}
+
+a.linkedin-large {
+	background-image: url('../images/icons/social-linkedin.png');
+}
+
+a.linkedin-large.selected {
+	background-color: #0081AF;
+}
+
+a.stackoverflow-large {
+	background-image: url('../images/icons/social-stackoverflow.png');
+}
+
+a.stackoverflow-large.selected {
+	background-color: #FFA43C;
+}
+
+a.home-large {
+	background-image: url('../images/icons/social-home.png');
+}
+
+a.home-large.selected {
+	background-color: #25DBBF;
+}
+
+/**************************** profiles end ****************************/
+
+
+/**************************** sidebar ****************************/
+
+.book .entry {
+	padding: 20px;
+	background: white;
+	border: 3px solid #e6e6e6;
+	padding-bottom: 100px;
+	border-radius: 3px;
+	box-shadow: none !important;
+}
+
+.book .entry h5 {
+	text-transform: uppercase;
+	color: #4c4c4c;
+	font-weight: normal;
+	font-size: 13px;
+	letter-spacing: 1px;
+	float: left;
+	margin: 0;
+	margin-top: 10px;
+
+}
+
+.book .entry h4 {
+	color: #4c4c4c;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+	font-size: 16px;
+	margin: 40px 0 20px 5px;
+	float: left;
+	width: 100%;
+	font-weight: normal;
+}
+
+a#bookme-login {
+	background: #CE5323;
+	margin: 20px 0;
+	letter-spacing: 1px;
+}
+
+img.avatar.user {
+	width: 314px;
+}
+
+.social-icons {
+	width: 100%;
+	float: left;
+}
+
+.social-icons a {
+	float: left;
+}
+
+.social-icons a:first-child {
+	margin-left: 0;
+}
+
+ul.booking-stats li {
+	width: 100%;
+	background: #f2f2f2;
+	float: left;
+	padding: 20px;
+	margin-bottom: 3px;
+}
+
+ul.booking-stats li h3 {
+	float: right;
+	margin: 0;
+}
+
+span.highlight-color {
+	color:  #CE5323;
+}
+
+ul.expertise li {
+	float: left;
+	background: #CE5323;
+	padding: 5px 15px;
+	border-radius: 3px;
+	margin-right: 10px;
+	color: white;
+	font-weight: normal;
+}
+
+/**************************** end sidebar ****************************/
