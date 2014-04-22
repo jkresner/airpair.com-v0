@@ -1,0 +1,38 @@
+
+<h1><span class="highlight-color">
+    {{#if authenticated}}{{name}}{{else}}Book a session{{/if}}
+</span></h1>
+<article class="entry">
+  <span class="alignleft" style="width:308px">
+    <img src="{{pic}}?s=300" class="avatar user" style="margin-right:0">
+  </span>
+
+
+  {{#if authenticated}}<div style="clear:both;height:10px"></div>{{else}}
+    <a id="bookme-login" class="trackBookLogin button large" href="/auth/google?return_to={{localUrl}}">Book {{name}}</a>
+  {{/if}}
+
+  <ul class="booking-stats clearfix">
+    <li>
+      <h5><span class="highlight-color">hourly rate</span></h5>
+      <h3><span class="highlight-color">${{ publicRate }} {{#if bookMe.code}}<span style="font-family:courier;font-size:12px">(#{{bookMe.code}})</span>{{/if}}</span></h3>
+    </li>
+    <li>
+      <h5>hours per week available</h5>
+      <h3>{{hours}}</h3>
+    </li>
+  </ul>
+  <h4>profiles</h4>
+  <span class="alignleft social-icons-large clearfix">
+    {{#if gh}}<a href="//github.com/{{ gh.username }}" target="_blank" class="github-large selected"></a>{{/if}}
+    {{#if so}}<a href="//stackoverflow.com/users/{{ so.link }}" target="_blank" class="stackoverflow-large selected"></a>{{/if }}
+    {{#if bb}}<a href="//bitbucket.org/{{ bb.id }}" target="_blank" class="bitbucket-large selected"></a>{{/if}}
+    {{#if in}}<a href="//linkedin.com/x/profile/sy5n2q8o2i49/{{ in.id }}" target="_blank" class="linkedin-large selected"></a>{{/if}}
+    {{#if tw}}<a href="//twitter.com/{{ tw.username }}" target="_blank" class="twitter-large selected"></a>{{/if}}
+    {{!-- <a href="http://jonathonkresner.com" target="_blank" class="home-large"></a> --}}
+  </span>
+  <h4>expertise</h4>
+  <ul class="expertise clearfix alignleft">
+    {{#each tags}}<li>{{short}}</li>{{/each}}
+  </ul>
+</article>
