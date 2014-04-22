@@ -35,5 +35,10 @@ class ExpertApi extends CRUDApi
           r = {} if r is null
           res.send r
 
+  update: (req, res, next) =>
+    data = _.clone req.body
+    if data.bookMe? then data.bookMe.urlSlug = data.bookMe.urlSlug.toLowerCase()
+    @svc.update data._id, data, cSend(res, next)
+
 
 module.exports = (app) -> new ExpertApi app, 'experts'

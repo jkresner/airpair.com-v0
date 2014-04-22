@@ -6,11 +6,11 @@ module.exports = class ExpertsService extends DomainService
 
 
   getByBookme: (urlSlug, callback) =>
+    urlSlug = urlSlug.toLowerCase()
     @model.findOne({ 'bookMe.urlSlug': urlSlug, 'bookMe.enabled': true })
       .lean().exec (e, r) =>
         r = {} if !r || !r.bookMe || !r.bookMe.enabled
         callback e, r
-
 
   admSelect:
     'userId': 1
