@@ -65,7 +65,7 @@
   <div class="wrap">
     <div class="welcome-features" style="padding-bottom:40px">
 
-      <h2 style="margin-bottom:30px"><b style="font-family:courier">#livepair</b> Schedule <div style="font-size:20px;dispaly:block">( Click the tweet icon to Pair with a Speaker )</div></h2>
+      <h2 style="margin-bottom:30px"><b style="font-family:courier">#livepair</b> Schedule <div style="font-size:20px;dispaly:block">( Click tweet icon to Pair with a Speaker )</div></h2>
 
 
 <ul>
@@ -248,7 +248,7 @@
         </div>
         <div class="home-feature-2">
           <section class="widget widget_text">
-            <a href="/be-an-expert" class="trackExpertLogin" style="margin-top:0">
+            <a href="/be-an-expert" class="trackExpertLogin">
               <button>Be an Expert</button>
             </a>
           </section>
@@ -418,7 +418,7 @@
 
     body#home #join { padding-bottom:30px; }
     body#home #join a { margin-top:14px;font-weight:400;font-size:15px }
-    body#home #join a button { margin:0;padding:20px;width:100%;font-size:1rem }
+    body#home #join a button { margin:0!important;padding:20px;width:100%;font-size:1rem;text-align:center }
     body#home #join a:hover { text-decoration:none }
     body#home #join a:hover button { background-color:#CE5323 }
     body#home #join div.head { float:right;width:40px;height:40px;margin:4px;border-radius:10px }
@@ -438,18 +438,9 @@
     body#home #experts article:hover img { opacity:0.25;transition:all 0.5s ease 0s; }
     body#home #experts article button { margin:0 0 20px 0;padding: 4px 12px;width:100%;font-size:0.875rem }
     body#home #experts article:hover button { background-color:#CE5323 }
-    body#home .trackExpertLogin { background-color:#CE5323;margin:20px auto;display:block;width:540px;text-align:center }
 
-    body#home #cost { padding:20px; }
-    body#home #cost .plan-col { width:20%; }
-    body#home #cost .plan-col-popular { width:20%; }
-    body#home #cost a:hover { color:black; }
-    body#home #cost a:hover .plan-col { background:#D1F5B3; }
-    body#home #cost a:hover .plan-col-popular { background:#D1F5B3; }
-    body#home #cost .plan-button { background:none repeat scroll 0 0 #303236;border-radius:3px;color:#FFFFFF;font-size:18px;font-weight:400;padding:6px 25px 8px; }
-    body#home #cost a:hover .plan-button { background:#CE5323; }
+    body#home #comp td.prize { width:230px; }
 
-    body#home #partners .button { background-color:#CE5323;margin:10px auto 20px auto;display:block;width:540px;text-align:center;margin-bottom:60px; }
 
     @media (max-width:1140px) {
       body#home aside.header-widget-area { width:720px!important; }
@@ -457,15 +448,13 @@
       body#home #fold h1 { font-size:36px }
       body#home #fold p { font-size:28px }
       body#home #fold p.about { font-size:24px }
-      body#home .felienne-hermans { display:none; }
-
-
       body#home #pit li label.ap { display:none }
       body#home #pit li label { float:left;width:30%; }
-      body#home #pit li a { font-size:0.9rem; }
+      body#home #pit li a.ap { font-size:0.9rem; }
     }
 
     @media (max-width:1024px) {
+      body#home aside.header-widget-area { display:none!important }
       body#home #fold h1 { font-size:32px }
       body#home #fold img { width:280px }
       body#home #fold-action { margin-left:0!important }
@@ -476,20 +465,12 @@
     }
 
     @media (max-width:880px) {
-      body#home aside.header-widget-area { width:480px!important; }
-      body#home .menu-services li { height:35px; }
-      body#home .menu-services a { font-size:15;font-weight:800 }
-      body#home #menu-services .training{ display:none }
       body#home #fold img { display:none }
       body#home #fold #about { float:none;width:100% }
       body#home #fold h1 { font-size:40px;margin-top:0!important; }
       body#home #fold p { font-size:32px }
       body#home #fold p.about { font-size:28px }
       body#home #fold iframe { display:none }
-    }
-
-    @media (max-width:760px) {
-      body#home aside.header-widget-area { display:none!important }
     }
 
     @media (max-width:640px) {
@@ -513,13 +494,18 @@
       body#home .about { margin-bottom:0!important; }
 
       body#home #pit h2 { width:80%!important; }
-      body#home #pit ul { width:80%;margin:auto;float:none; }
+      body#home #pit ul { width:90%;margin:auto;float:none!important; }
       body#home #pit li { }
       body#home #pit li a { margin:0 0 6px 0;display:block;float:none }
+      body#home #pit li a.tw { width:80px; }
       body#home #pit li a.ap { display:none }
       body#home #pit li label { margin:0 0 6px 0;display:block;float:none;width:100% }
+      body#home #pit li.day { font-size:30px; }
       body#home #pit li.day span { display:block;width:100%;text-align:center;margin-bottom:20px; }
       body#home #pit li.day label { display:none }
+
+      body#home #comp td.prize p { display:none }
+      body#home #comp td { width:100%!important; }
     }
 
     @media (max-width:320px) {
@@ -539,50 +525,44 @@
 <div id="comp" class="home-feature-bg-alt">
   <div class="wrap">
     <div class="home-feature-14">
-      <section id="text-23" class="widget widget_text">
-        <div class="widget-wrap">
-          <div class="textwidget">
-            <center><h4>WIN an AirPair with Yehuda Katz & Tom Dale</h4></center>
+      <center><h4>WIN an AirPair with Yehuda Katz & Tom Dale</h4></center>
 
-            <div class="plans">
-              <table style="width:100%">
-                <tr>
-                  <td style="width:230px">
-                   <div class="plan-col" style="width:100%">
-                      <div class="plan-col-wrap">
-                        <div class="plan-head"><h4>Yehuda Katz</h4></div>
-                        <div class="plan-pricing">
-                          <img src="//0.gravatar.com/avatar/428167a3ec72235ba971162924492609?s=200">
-                        </div>
-                          Yehuda Katz is a member of the Ember.js, Ruby on Rails and jQuery Core Teams. Yehuda is the co-author of best-selling jQuery in Action and Rails 3 in Action. He spends most of his time hacking on open source—his main projects, along with others, like Thor, Handlebars and Janus or traveling the world doing open source evangelism work.
-                      </div>
-                    </div>
-                  </td>
-                  <td style="padding:0px 50px">
-                    <p style="font-size:42px;color:#CE5323">#wanttowin #omg #pairprogramming #yehudakatz #tomdale #1hourawesome #railsconf #bestpics #fomo</p>
-
-                    <p style="font-size:26px">Wonder what it would be like to pair programming with Yehuda Katz or Tom Dale? We've got two hours from each to give away to those that capture and share the best pair programming moments from RailsConf 2014.</p>
-
-                    <p style="font-size:26px">Tweet us your best photos of pair programming in action using the <span style="color:#CE5323">#pairprogramming</span> and <span style="color:#CE5323">#railsconf</span> hashtags. Add your own unique hashtags that sum up the pic and leave out the text. We'll pick a daily winner to pair up with Yehuda or Tom.</p>
-                  </td>
-                  <td style="width:230px">
-                    <div class="plan-col" style="width:100%">
-                      <div class="plan-col-wrap">
-                        <div class="plan-head"><h4>Tom Dale</h4></div>
-                        <div class="plan-pricing">
-                          <img src="//0.gravatar.com/avatar/9bf3a766e037b9d5a4da0a6f9d0f4f68?s=200">
-                        </div>
-                          Tom is one of the creators of Ember.js, and Co-founder at Tilde Inc. He spends his days working on the open source projects Tilde supports, and their first developer product, Skylight. He's a former Apple engineer who first gained expert front-end JavaScript skills working on MobileMe and iCloud. He's a super hipster, and still isn't sure if it's serious or ironic.
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-              </table>
+      <table style="width:100%">
+        <tr>
+          <td class="prize">
+           <div class="plan-col" style="width:100%">
+              <div class="plan-col-wrap">
+                <div class="plan-head"><h4>Yehuda Katz</h4></div>
+                <div class="plan-pricing">
+                  <img src="//0.gravatar.com/avatar/428167a3ec72235ba971162924492609?s=200">
+                </div>
+                <p>Yehuda Katz is a member of the Ember.js, Ruby on Rails and jQuery Core Teams. Yehuda is the co-author of best-selling jQuery in Action and Rails 3 in Action. He spends most of his time hacking on open source—his main projects, along with others, like Thor, Handlebars and Janus or traveling the world doing open source evangelism work.</p>
+              </div>
             </div>
+          </td>
+          <td style="padding:0px 50px">
+            <p style="font-size:42px;color:#CE5323">#wanttowin #omg #pairprogramming #yehudakatz #tomdale #1hourawesome #railsconf #bestpics #fomo</p>
 
-          </div>
-        </div>
-      </section>
+            <p style="font-size:26px">Wonder what it would be like to pair programming with Yehuda Katz or Tom Dale? We've got two hours from each to give away to those that capture and share the best pair programming moments from RailsConf 2014.</p>
+
+            <p style="font-size:26px">Tweet us your best photos of pair programming in action using the <span style="color:#CE5323">#pairprogramming</span> and <span style="color:#CE5323">#railsconf</span> hashtags. Add your own unique hashtags that sum up the pic and leave out the text. We'll pick a daily winner to pair up with Yehuda or Tom.</p>
+          </td>
+          <td class="prize">
+            <div class="plan-col" style="width:100%">
+              <div class="plan-col-wrap">
+                <div class="plan-head"><h4>Tom Dale</h4></div>
+                <div class="plan-pricing">
+                  <img src="//0.gravatar.com/avatar/9bf3a766e037b9d5a4da0a6f9d0f4f68?s=200">
+                </div>
+                <p>
+                  Tom is one of the creators of Ember.js, and Co-founder at Tilde Inc. He spends his days working on the open source projects Tilde supports, and their first developer product, Skylight. He's a former Apple engineer who first gained expert front-end JavaScript skills working on MobileMe and iCloud. He's a super hipster, and still isn't sure if it's serious or ironic.
+                </p>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </table>
+
     </div>
   </div>
 </div>
