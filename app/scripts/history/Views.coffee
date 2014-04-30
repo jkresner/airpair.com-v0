@@ -10,17 +10,13 @@ calcExpertCredit = require '../shared/mix/calcExpertCredit'
 {calcTotal, calcRedeemed, calcCompleted} = calcExpertCredit
 
 #############################################################################
-##  To render all experts for admin
+##  To render all orders for the customers
 #############################################################################
 
-class exports.OrderRowView extends BB.ModelSaveView
+class exports.OrderRowView extends BB.BadassView
   tagName: 'tr'
   className: 'order'
   tmpl: require './templates/OrderRow'
-  events:
-    'click .deleteOrder': 'deleteOrder'
-    'click .payOutPayPalAdaptive': 'payOutPayPalAdaptive'
-    'click .payOutPaypalSingle':   'payOutPaypalSingleExpert'
   initialize: -> @listenTo @model, 'change', @render
   render: ->
     @$el.html @tmpl @tmplData()
@@ -54,26 +50,10 @@ class exports.OrderRowView extends BB.ModelSaveView
       contactEmail:       d.company.contacts[0].email
       createdDate:        @model.createdDateString()
     }
-  deleteOrder: ->
-    @model.destroy()
-    @$el.remove()
-  payOutPayPalAdaptive: (e) ->
-    @model.set 'payoutOptions', { type: 'paypalAdaptive' }
-    @save (e)
-  renderError: (model, xhr, opts) => # BB doesnt recognize these server errors
-    try res = JSON.parse(xhr.responseText)
-    catch e then return console.log e.stack
-    @model.set('payment', res.data)
-  payOutPaypalSingleExpert: (e) =>
-    lineItemId = $(e.target).data('id')
-    @model.set 'payoutOptions', { type: 'paypalSingle', lineItemId: lineItemId }
-    @save (e)
-  getViewData: ->
-    payOut: true
+
 
 
 class exports.OrdersView extends BB.BadassView
-  logging: on
   el: '#orders'
   initialize: (args) ->
     @listenTo @collection, 'reset add remove filter', @render
@@ -81,6 +61,25 @@ class exports.OrdersView extends BB.BadassView
     $list = @$('tbody').html ''
     for m in @collection.filteredModels #.reverse()
       $list.append new exports.OrderRowView( model: m ).render().el
+    @
+
+
+#############################################################################
+##  To render all calls for the customer
+#############################################################################
+
+
+
+class exports.CallsView extends BB.BadassView
+  logging: on
+  el: '#calls'
+  tmpl: require './templates/Call'
+  initialize: (args) ->
+    @listenTo @collection, 'reset add remove filter', @render
+  render: ->
+    for m in @collection.calls()
+      m.isAdmin = @isAdmin
+      @$el.append @tmpl m
     @
 
 

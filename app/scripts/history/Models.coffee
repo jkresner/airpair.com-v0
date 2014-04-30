@@ -14,4 +14,9 @@ exports.Order = class Order extends Shared.Order
   isLineItemPaidOut: (li) =>
     _.contains @successfulPayoutIds(), li._id
 
+
+class exports.Request extends BB.BadassModel
+
+
+
 module.exports = exports

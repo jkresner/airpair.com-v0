@@ -1,6 +1,5 @@
 S   = require '../shared/Routers'
 SC = require '../shared/Collections'
-SM = require '../shared/Models'
 C  = require './Collections'
 V  = require './Views'
 
@@ -17,12 +16,14 @@ module.exports = class Router extends S.AirpairSessionRouter
 
   appConstructor: (pageData, callback) ->
     d =
-      # requests: new C.Requests()
+      requests: new C.Requests()
       orders: new C.Orders()
     v =
       ordersView: new V.OrdersView collection: d.orders
+      callsView: new V.CallsView collection: d.requests, isAdmin: pageData.isAdmin
 
-    @resetOrFetch d.orders
+    @resetOrFetch d.orders, pageData.orders
+    @resetOrFetch d.requests, pageData.requests
     _.extend d, v
 
   initialize: (args) ->

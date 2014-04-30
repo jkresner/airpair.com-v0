@@ -9,6 +9,13 @@
     <meta name="description" content="AirPair connects companies with expert developers for remote software consulting and pair programming. Hire the best of the best 1 hour at a time.">
     <meta property="og:title" content="AirPair | History" />
     {{> siteStyles }}
+    <style type="text/css">
+      .call { font-size:10px;float:left;width:80px;margin:10px 5px 12px 5px;text-align:center; }
+      .call img { height:80px; width:80px; }
+      .call .dateTime { clear:both;display:block;background:#d3d3d3 }
+      .call label { clear:both;display:block;margin-bottom:0;line-height:14px;background:#d3d3d3 }
+      .call .youtubeThumbnail { border-top:1px solid yellow;height:70px; }
+    </style>
 </head>
 
 <body id="history">
@@ -23,9 +30,9 @@
         <div id="detail" class="route" style="display:none">
           <div class="content-sidebar-wrap">
             <main class="content">
-
+              <div id="calls"></div>
             </main>
-            <aside class="sidebar sidebar-primary widget-area" style="width:460px">
+            <aside class="sidebar sidebar-primary widget-area" >
               <section class="widget book featuredpost">
                 <div class="widget-wrap">
 
@@ -34,8 +41,7 @@
                       <tr>
                         <th style="width:30px">Date</th>
                         <th style="width:30px">Total</th>
-                        <th>Booked / Scheduled / Completed</th>
-                        <th>Order</th>
+                        <th style="font-weight:200">Scheduled / Complete / Booked</th>
                       </tr>
                       <tr id="rowsSummary"></tr>
                     </thead>
@@ -60,7 +66,7 @@
     window.useOlark = true;
 
     function initApp() {
-      var pageData = {};
+      var pageData = { session: {{{ session }}}, orders: {{{ orders }}}, requests: {{{ requests }}}, isAdmin: {{{ isAdmin }}} };
       Router = require('/scripts/history/Router');
       window.router = new Router(pageData);
     }
