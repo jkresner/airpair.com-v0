@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>AirPair | History</title>
+    <meta charset="utf-8">
+    <meta name="robots" content="noindex, nofollow" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width">
+    <meta name="description" content="AirPair connects companies with expert developers for remote software consulting and pair programming. Hire the best of the best 1 hour at a time.">
+    <meta property="og:title" content="AirPair | History" />
+    {{> siteStyles }}
+    <style type="text/css">
+      .call { font-size:10px;float:left;width:80px;margin:10px 5px 12px 5px;text-align:center; }
+      .call img { height:80px; width:80px; }
+      .call .dateTime { clear:both;display:block;background:#d3d3d3 }
+      .call label { clear:both;display:block;margin-bottom:0;line-height:14px;background:#d3d3d3 }
+      .call .youtubeThumbnail { border-top:1px solid yellow;height:70px; }
+    </style>
+</head>
+
+<body id="history">
+
+  <div class="site-container">
+
+    {{> siteNav this }}
+
+    <div class="site-inner">
+      <div class="wrap">
+
+        <div id="detail" class="route" style="display:none">
+          <div class="content-sidebar-wrap">
+            <main class="content">
+              <div id="calls"></div>
+            </main>
+            <aside class="sidebar sidebar-primary widget-area" >
+              <section class="widget book featuredpost">
+                <div class="widget-wrap">
+
+                  <table id="orders" class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th style="width:30px">Date</th>
+                        <th style="width:30px">Total</th>
+                        <th style="font-weight:200">Scheduled / Complete / Booked</th>
+                      </tr>
+                      <tr id="rowsSummary"></tr>
+                    </thead>
+                    <tbody></tbody>
+                  </table>
+
+                </div>
+              </section>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  {{> siteFooter }}
+
+</body>
+
+  <script type="text/javascript">
+    window.useOlark = true;
+
+    function initApp() {
+      var pageData = { session: {{{ session }}}, orders: {{{ orders }}}, requests: {{{ requests }}}, isAdmin: {{{ isAdmin }}} };
+      Router = require('/scripts/history/Router');
+      window.router = new Router(pageData);
+    }
+
+  </script>
+
+  <script src="/javascripts/vendor.js" defer></script>
+  <script src="/javascripts/app.js" defer onload="initApp()"></script>
+
+</html>

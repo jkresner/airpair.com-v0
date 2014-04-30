@@ -94,8 +94,8 @@ class exports.OrderRowView extends BB.ModelSaveView
   getViewData: ->
     payOut: true
 
-class exports.OrdersView extends Backbone.View
-  # logging: on
+
+class exports.OrdersView extends BB.BadassView
   el: '#orders'
   tmpl: require './templates/RowsSummary'
   initialize: (args) ->

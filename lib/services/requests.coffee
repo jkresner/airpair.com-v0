@@ -101,6 +101,26 @@ module.exports = class RequestsService extends DomainService
         @rates.calcSuggestedRates request, suggested.expert
     request.base = @rates.base
 
+
+  historySelect:
+    '_id': 1
+    'company.name': 1
+    'company.contacts': { $slice: [0, 1] }
+    'company.contacts.email': 1
+    'company.contacts.fullName': 1
+    'company.contacts.pic': 1
+    'status': 1
+    'owner': 1
+    'suggested.expert._id': 1
+    'suggested.expert.name': 1
+    'suggested.expert.pic': 1
+    'calls': 1
+    'userId': 1
+
+
+  getForHistory: (id, callback) =>
+    @model.find userId: id, @historySelect, callback
+
   inboundSelect:
     '_id': 1
     'company.name': 1
@@ -116,6 +136,8 @@ module.exports = class RequestsService extends DomainService
     'tags.short': 1
     'calls.recordings.type': 1
     'userId': 1
+
+
 
   # Used for adm/inbound dashboard list
   getActive: (callback) ->
