@@ -13,33 +13,10 @@ calcExpertCredit = require '../shared/mix/calcExpertCredit'
 ##  To render all experts for admin
 #############################################################################
 
-# TODO on paypal payout, Uncaught TypeError: Cannot read property 'qtyRedeemed' of undefined
-
-class exports.FiltersView extends BB.BadassView
-  el: '#filters'
-  events:
-    'click .btn': 'filter'
-  initialize: ->
-    @marketingTagView = new Shared.MarketingTagsInputView
-      collection: @marketingTags, model: @dummyRequest
-    @listenTo @dummyRequest, 'change:marketingTags', @filter
-  filter: (e) ->
-    if e && e.target
-      $btn = $(e.target)
-      @$('button').removeClass('btn-warning')
-      $btn.addClass('btn-warning')
-
-      @timeString = $btn.text().toLowerCase()
-      @month = $btn.data('month')
-
-    @marketingTags = @dummyRequest.get('marketingTags')
-    @collection.filterFilteredModels { @timeString, @month, @marketingTags }
-
-
 class exports.OrderRowView extends BB.ModelSaveView
   tagName: 'tr'
   className: 'order'
-  tmpl: require './templates/Row'
+  tmpl: require './templates/OrderRow'
   events:
     'click .deleteOrder': 'deleteOrder'
     'click .payOutPayPalAdaptive': 'payOutPayPalAdaptive'
@@ -96,46 +73,15 @@ class exports.OrderRowView extends BB.ModelSaveView
 
 
 class exports.OrdersView extends BB.BadassView
+  logging: on
   el: '#orders'
-  tmpl: require './templates/RowsSummary'
   initialize: (args) ->
     @listenTo @collection, 'reset add remove filter', @render
   render: ->
     $list = @$('tbody').html ''
-    totalRevenue = 0
-    totalProfit = 0
-    totalHours = 0
-    totalRedeemed = 0
-    totalCompleted = 0
-    orderCount = @collection.filteredModels.length
-    expertIds = []
     for m in @collection.filteredModels #.reverse()
       $list.append new exports.OrderRowView( model: m ).render().el
-      totalProfit += m.get 'profit'
-      totalRevenue += m.get 'total'
-      for li in m.get 'lineItems'
-        expertIds.push li.suggestion.expert._id
-        if 'pending' == m.get 'paymentStatus' then continue
-        totalHours += calcTotal [li]
-        totalRedeemed += calcRedeemed [li]
-        totalCompleted += calcCompleted [li]
-    filteredModelsJson = _.pluck @collection.filteredModels, 'attributes'
-    requestCount = _.uniq(_.pluck filteredModelsJson, 'requestId').length
-    customerCount = _.uniq(_.pluck filteredModelsJson, 'userId').length
-    expertCount = _.uniq(expertIds).length
-    @$('#rowsSummary').html @tmpl { totalProfit, totalRevenue, customerCount,
-      requestCount, orderCount, totalHours, totalRedeemed, totalCompleted,
-      expertCount }
     @
 
-
-class exports.OrderView extends BB.ModelSaveView
-  # logging: on
-  el: '#order'
-  initialize: (args) ->
-    @listenTo @model, 'change', @render
-  render: ->
-    @$('pre').text JSON.stringify(@model.toJSON(), null, 2)
-    @
 
 module.exports = exports

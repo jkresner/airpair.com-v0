@@ -15,6 +15,7 @@ class OrdersApi
     app.post    "/api/#{route}", loggedIn, @create
     app.get     "/api/admin/#{route}", admin, @adminList
     app.get     "/api/#{route}/request/:id", admin, @getByRequestId
+    app.get     "/api/#{route}/me", loggedIn, @getByMe
     app.put     "/api/#{route}/:id", admin, @update
     app.delete  "/api/#{route}/:id", admin, @delete
 
@@ -23,6 +24,11 @@ class OrdersApi
 
   getByRequestId: (req, res, next) =>
     @svc.getByRequestId req.params.id, cSend(res, next)
+
+  getByMe: (req, res, next) =>
+    meId = req.user._id
+    meId = '51f7026666a6f999a465f4b0'
+    @svc.getByUserId meId, cSend(res, next)
 
   create: (req, res, next) =>
     order = _.pick req.body, ['total','requestId']

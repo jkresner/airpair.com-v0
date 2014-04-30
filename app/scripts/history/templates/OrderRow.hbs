@@ -1,0 +1,21 @@
+<td>{{ createdDate }}</td>
+<td class="total">${{ total }}
+  <img src="/images/{{ paymentType }}-favicon.ico" class="favicon">
+</td>
+<td>
+  {{#each lineItems}}
+
+    {{#with suggestion.expert }}
+      <a href="/adm/pipeline/request/{{ requestId }}" target="_blank"
+    data-id="{{ _requestId }}">
+        <img class="expertPic" src="{{ pic }}" style="width:40px;float:left;margin-right:10px" />
+        <div style="float:left">{{ name }}
+        <br />{{ ../redeemed }} / {{ ../completed }} / {{ ../total }}</div>
+      </a>
+    {{/with}}
+
+  {{/each}}
+</td>
+<td>
+  <b class="{{ paymentStatus }}">{{ paymentStatus }}</b>
+</td>
