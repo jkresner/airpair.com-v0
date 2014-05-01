@@ -136,12 +136,46 @@ class exports.OrdersView extends BB.BadassView
 
 
 class exports.OrderView extends BB.ModelSaveView
-  # logging: on
   el: '#order'
+  tmpl: require './templates/Edit'
+  events:
+    'click .swap': 'swapExpert'
   initialize: (args) ->
-    @listenTo @model, 'change', @render
-  render: ->
-    @$('pre').text JSON.stringify(@model.toJSON(), null, 2)
+    @listenTo @request, 'change', @render
+  render: =>
+    {lineItems,payment} = @model.attributes
+    order = _.omit @model.attributes, ['lineItems','payment']
+
+    cantSwap = false
+    if @model.get('paymentStatus') is 'paidout'
+      cantSwap = 'Cant swap already paidout order'
+    else if lineItems.length != 1
+      cantSwap = 'Swap only supported with 1 expert on order'
+    # else if order.paymentType != 'stripe'
+      # cantSwap = 'Swap only support for stripe orders'
+    else
+      li = lineItems[0]
+      canSwapExpert = true
+      toSwap = []
+      for s in @request.get('suggested')
+        if s.expertStatus is 'available' && s._id != li.suggestion._id
+          toSwap.push s
+
+    @$el.html @tmpl
+      lineItems: JSON.stringify(lineItems, null, 1)
+      payment: JSON.stringify(payment, null, 1)
+      order: JSON.stringify(order, null, 1)
+      request: @request.toJSON()
+      calls: @request.calls()
+      canSwapExpert: canSwapExpert
+      toSwap: toSwap
+      cantSwap: cantSwap
     @
+  swapExpert: (e) ->
+    suggestion = @request.suggestion $(e.target).data('expertid')
+    @model.save { swapExpert: { suggestion } }, { success: => @request.fetch() }
+    false
+
+
 
 module.exports = exports

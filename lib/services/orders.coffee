@@ -1,20 +1,19 @@
-async    = require 'async'
-mongoose = require 'mongoose'
-
-mailman          = require '../mail/mailman'
-Roles            = require '../identity/roles'
-sum              = require '../../app/scripts/shared/mix/sum'
-canSchedule      = require '../../app/scripts/shared/mix/canSchedule'
-unschedule       = require '../../app/scripts/shared/mix/unschedule'
-calcExpertCredit = require '../../app/scripts/shared/mix/calcExpertCredit'
-calcRedeemed     = calcExpertCredit.calcRedeemed
-
+async             = require 'async'
+mongoose          = require 'mongoose'
+mailman           = require '../mail/mailman'
+Roles             = require '../identity/roles'
+sum               = require '../../app/scripts/shared/mix/sum'
+canSchedule       = require '../../app/scripts/shared/mix/canSchedule'
+unschedule        = require '../../app/scripts/shared/mix/unschedule'
+calcExpertCredit  = require '../../app/scripts/shared/mix/calcExpertCredit'
+calcRedeemed      = calcExpertCredit.calcRedeemed
 DomainService     = require './_svc'
 PaypalAdaptiveSvc = require '../services/payment/paypal-adaptive'
 RequestService    = require './requests'
 StripeSvc         = require '../services/payment/stripe'
 SettingsSvc       = require './settings'
-RatesSvc         = require './rates'
+RatesSvc          = require './rates'
+calendar          = require './calendar'
 
 
 module.exports = class OrdersService extends DomainService
@@ -64,17 +63,21 @@ module.exports = class OrdersService extends DomainService
         @trackPayment usr, order, 'stripe'
 
       new @model(order).save (e, rr) ->
-        $log 'order.save.e', e, callback
+        # $log 'order.save.e', e, callback
         if e?
-          $log "order.save.error", e
+          # $log "order.save.error", e
           winston.error "order.save.error", e
         callback e, rr
 
     if order.paymentMethod? && order.paymentMethod.type == 'stripe'
-      $log 'stripSvc.createCharge', order
+      # $log 'stripSvc.createCharge', order
       @stripSvc.createCharge order, savePaymentResponse
     else
       @paypalSvc.Pay order, savePaymentResponse
+
+
+  getForHistory: (id, callback) =>
+    @model.find userId: id, @historySelect, callback
 
   historySelect:
     '_id': 1
@@ -93,15 +96,11 @@ module.exports = class OrdersService extends DomainService
     'userId': 1
     'utc': 1
 
-  getForHistory: (id, callback) =>
-    @model.find userId: id, @historySelect, callback
-
 
   confirmBookme: (request, usr, expertReview, callback) ->
     @settingsSvc.getByUserId request.userId, (ee, settings) =>
       if ee then return callback ee
       pm = _.find settings.paymentMethods, (p) -> p.type == 'stripe'
-      # $log 'pm', pm
 
       @requestSvc.updateSuggestionByExpert request, usr, expertReview, (e, r) =>
         $log 'request updated', r.status, r.suggested
@@ -160,6 +159,7 @@ module.exports = class OrdersService extends DomainService
         if e
           return winston.error 'trackPayment.@requestSvc.update.error' + e.stack
 
+
   markPaymentReceived: (id, usr, paymentDetail, callback) ->
     @model.findOne { _id: id }, (e, r) =>
       if e then return callback e
@@ -211,7 +211,7 @@ module.exports = class OrdersService extends DomainService
       order = @_calculateProfitAndPayouts order
       @paypalSvc.PaySingle order, lineItem, (e, req, res) =>
         if e then return callback e
-        $log 'payOutPayPalSingle res', JSON.stringify(res)
+        # $log 'payOutPayPalSingle res', JSON.stringify(res)
         if res.responseEnvelope.ack != 'Success'
           message = "failed executing single payment #{id}"
           return callback status: 'failed', message: message, data: res
@@ -240,6 +240,40 @@ module.exports = class OrdersService extends DomainService
         ups = paymentStatus: 'paidout', payment: r.payment
         ups.payment.payout = resp
         @update id, ups, callback
+
+  #
+  swapExpert: (id, usr, suggestion, callback) ->
+    @model.findOne { _id: id }, (e, r) =>
+      if e then return callback e
+      if !r?
+        callback status: 'failed', message: "order does not exist"
+      else if r.paymentStatus == "paidout"
+        callback status: 'failed', message: "not appropriate to swap a paidout order"
+      else if r.lineItems.length != 1
+        callback status: 'failed', message: "can only swap on order with one expert"
+      else
+        r.lineItems[0].suggestion._id = suggestion._id
+        r.lineItems[0].suggestion.expert = _.pick suggestion.expert, '_id','userId','name','username','rate','email','pic','paymentMethod'
+
+        callIds = _.pluck r.lineItems[0].redeemedCalls, 'callId'
+
+        @requestSvc.getById r.requestId, (e, request) =>
+          request.events.push @newEvent(usr, 'swaped order expert')
+
+          updateCallAndInvite = (callId, cb) =>
+            call = _.find request.calls, (c) -> _.idsEqual c._id, callId
+            call.expertId = suggestion.expert._id
+            calendar.changeExpert request, call, suggestion.expert, (err, eventData) =>
+              if err then return callback err
+              call.gcal = eventData
+              cb()
+
+          async.map callIds, updateCallAndInvite, =>
+            @requestSvc.update request.id, { events: request.events, calls: request.calls }, (e) =>
+              @update id, { lineItems: r.lineItems }, callback
+
+
+
 
   delete: (id, callback) =>
     @model.findOne { _id: id }, (e, r) =>

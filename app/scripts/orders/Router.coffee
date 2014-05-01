@@ -13,18 +13,19 @@ module.exports = class Router extends S.AirpairSessionRouter
   enableExternalProviders: off  # don't want uservoice + ga on admin
 
   routes:
-    'list'    : 'list'
-    'edit/:id': 'edit'
+    'list'        : 'list'
+    'edit/:id'    : 'edit'
 
   appConstructor: (pageData, callback) ->
     d =
       selected: new M.Order()
       orders: new C.Orders()
       marketingTags: new SC.MarketingTags()
+      request: new SM.Request()
       dummyRequest: new SM.Request marketingTags: []
     v =
       ordersView: new V.OrdersView collection: d.orders, model: d.selected
-      orderView: new V.OrderView model: d.selected
+      orderView: new V.OrderView model: d.selected, request: d.request
       filtersView: new V.FiltersView
         collection: d.orders,
         marketingTags: d.marketingTags,
@@ -45,3 +46,9 @@ module.exports = class Router extends S.AirpairSessionRouter
 
     @app.selected.clear { silent: true }
     @app.selected.set d.attributes
+
+    @app.request.clear { silent: true }
+    @app.request.set { _id: d.attributes.requestId }, { silent: true }
+    @app.request.fetch()
+
+    $('#edit a.request').attr 'href', "/adm/pipeline/#{d.attributes.requestId}"

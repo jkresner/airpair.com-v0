@@ -25,19 +25,24 @@ addTime = (original, milliseconds) ->
 class CalendarService
   google: google
   account: cfg.google.calendar.account
-  create: (request, call, cb) ->
-    params =
-      sendNotifications: call.sendNotifications
 
-    start = call.datetime
-    owner = request.owner
-    sug = _.find request.suggested, (s) -> s.expert._id == call.expertId
+  _getEventName: (request, expertId) ->
+    sug = _.find request.suggested, (s) -> _.idsEqual s.expert._id, expertId
     expert = sug.expert
     expertName = capitalizeFirstLetter(expert.name.trim())
     expertFirst = expertName.slice(0, expertName.indexOf(' '))
     customerName = capitalizeFirstLetter(request.company.contacts[0].fullName.trim())
     customerFirst = customerName.slice(0, customerName.indexOf(' '))
     tag = request.tags[0]?.name || 'n/a'
+    "Airpair #{customerFirst}+#{expertFirst} (#{tag})"
+
+  create: (request, call, cb) ->
+    params =
+      sendNotifications: call.sendNotifications
+
+    sug = _.find request.suggested, (s) -> _.idsEqual s.expert._id, call.expertId
+    start = call.datetime
+    owner = request.owner
     body =
       start:
         dateTime: start.toISOString()
@@ -46,9 +51,9 @@ class CalendarService
       attendees: [
         { email: "#{owner}@airpair.com" }
         { email: request.company.contacts[0].email }
-        { email: expert.email }
+        { email: sug.expert.email }
       ]
-      summary: "Airpair #{customerFirst}+#{expertFirst} (#{tag})"
+      summary: @_getEventName(request, call.expertId)
       colorId: owner2colorIndex[owner]
       description:
         """Your account manager, #{owner2name[owner]}, will set up a Google
@@ -80,8 +85,8 @@ class CalendarService
   patch: (oldCall, newCall, cb) ->
     sameStart = oldCall.datetime.getTime() == newCall.datetime.getTime()
     sameDuration = oldCall.duration == newCall.duration
+
     if sameStart && sameDuration
-      console.log 'datetime && duration unchanged'
       return process.nextTick ->
         cb null, oldCall.gcal
 
@@ -106,5 +111,32 @@ class CalendarService
       return process.nextTick -> cb null, fakeEventData
 
     @google.patchEvent @account, params, body, cb
+
+
+  changeExpert: (request, call, expert, cb) ->
+
+    params =
+      eventId: call.gcal.id
+      sendNotifications: call.sendNotifications
+
+    body =
+      attendees: [
+        { email: "#{request.owner}@airpair.com" }
+        { email: request.company.contacts[0].email }
+        { email: expert.email }
+      ]
+      summary: @_getEventName(request, expert._id)
+
+    # allow development to edit prod's calls, but don't update gcal
+    # TODO wow so ugly.
+    isTest = cfg?.env is 'test'
+    isDevButNotOurs = cfg?.env is 'dev' &&
+      call.gcal.creator?.email == 'team@airpair.com'
+    if !cfg || isTest || isDevButNotOurs
+      fakeEventData = _.extend call.gcal, body
+      return process.nextTick -> cb null, fakeEventData
+
+    @google.patchEvent @account, params, body, cb
+
 
 module.exports = new CalendarService()
