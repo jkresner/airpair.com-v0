@@ -98,9 +98,15 @@ class exports.OrderRowView extends BB.ModelSaveView
 class exports.OrdersView extends BB.BadassView
   el: '#orders'
   tmpl: require './templates/RowsSummary'
+  firstRender: true
   initialize: (args) ->
     @listenTo @collection, 'reset add remove filter', @render
   render: ->
+    # first render default to month only
+    if @firstRender
+      @firstRender = false
+      return @collection.filterFilteredModels { timeString: 'Mth' }
+
     $list = @$('tbody').html ''
     totalRevenue = 0
     totalProfit = 0

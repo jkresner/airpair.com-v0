@@ -30,7 +30,7 @@ module.exports = class Router extends S.AirpairSessionRouter
         marketingTags: d.marketingTags,
         dummyRequest: d.dummyRequest
 
-    @resetOrFetch d.orders, pageData.experts
+    @resetOrFetch d.orders, pageData.orders
     @resetOrFetch d.marketingTags, pageData.marketingTags
     _.extend d, v
 

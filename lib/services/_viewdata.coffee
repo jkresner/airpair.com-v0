@@ -145,3 +145,10 @@ module.exports = class ViewDataService
           requests: JSON.stringify r
           orders: JSON.stringify o
           isAdmin: Roles.isAdmin(usr).toString()
+
+  orders: (usr, callback) ->
+    oSvc.getAll (ee,o) =>
+      callback null,
+        session: @session usr
+        orders: JSON.stringify o
+

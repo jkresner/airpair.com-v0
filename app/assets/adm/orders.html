@@ -34,10 +34,10 @@
       <span id="marketingTagsInput"></span>
 
       <div id="timefilter" class="btn-group btn-group-xs">
-        <button type="button" class="btn btn-default btn-warning">All</button>
+        <button type="button" class="btn btn-default">All</button>
         <button type="button" class="btn btn-default">Tod</button>
         <button type="button" class="btn btn-default">Wk</button>
-        <button type="button" class="btn btn-default">Mth</button>
+        <button type="button" class="btn btn-default btn-warning">Mth</button>
         <button type="button" class="btn btn-default" data-month="7">Aug</button>
         <button type="button" class="btn btn-default" data-month="8">Sep</button>
         <button type="button" class="btn btn-default" data-month="9">Oct</button>
@@ -46,11 +46,9 @@
         <button type="button" class="btn btn-default" data-month="0">Jan</button>
         <button type="button" class="btn btn-default" data-month="1">Feb</button>
         <button type="button" class="btn btn-default" data-month="2">Mar</button>
-        <!--
         <button type="button" class="btn btn-default" data-month="3">Apr</button>
         <button type="button" class="btn btn-default" data-month="4">May</button>
-        <button type="button" class="btn btn-default" data-month="5">Jun</button>
-        -->
+        <!--<button type="button" class="btn btn-default" data-month="5">Jun</button>-->
       </div>
     </div>
 
@@ -88,7 +86,7 @@
 
   <script type="text/javascript">
     function initApp() {
-      var pageData = {};
+      var pageData = { session: {{{session}}}, orders: {{{orders}}} };
       Router = require('/scripts/orders/Router');
       window.router = new Router(pageData);
     }
