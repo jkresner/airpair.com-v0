@@ -117,7 +117,7 @@ class CalendarService
 
     params =
       eventId: call.gcal.id
-      sendNotifications: call.sendNotifications
+      sendNotifications: true
 
     $log 'cal.changeExpert', params
 
