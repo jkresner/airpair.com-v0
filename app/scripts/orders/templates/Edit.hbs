@@ -1,0 +1,38 @@
+<div class="form">
+
+  <h3>Request calls</h3>
+  <table class="table" style="width:80%;text-align:left">
+    <tr>
+      <th>Call</th>
+      <th>Length</th>
+      <th>Expert</th>
+      <th>Recording</th>
+    </tr>
+  {{#each calls}}
+    <tr>
+      <td>{{{callDateTime datetime}}}</td>
+      <td>{{duration}}</td>
+      <td>{{expert.name}}</td>
+      <td>{{hasRecording}}</td>
+    </tr>
+  {{/each}}
+  </table>
+
+  <h3>Expert swap</h3>
+  {{#if cantSwap}}
+    <p>{{cantSwap}}</p>
+  {{else}}
+  <table>
+  {{#each toSwap}}
+    <tr>
+      <td>{{expertStatus}}</td>
+      <td><a href="#swap" class="swap" data-expertid="{{expert._id}}">{{expert.name}}</a></td>
+    </tr>
+  {{/each}}
+  </table>
+  {{/if}}
+
+</div>
+<pre>{{lineItems}}</pre>
+<pre>{{order}}</pre>
+<pre>{{payment}}</pre>

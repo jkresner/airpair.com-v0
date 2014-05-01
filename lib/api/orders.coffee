@@ -64,10 +64,10 @@ class OrdersApi
     if req.body.payoutOptions
       opts = req.body.payoutOptions
       delete req.body.payoutOptions
-      return @svc.payOut req.params.id, opts, req.body, (e, r) ->
-        if e && e.status then return res.send(400, e) # backbone will render errors
-        if e then return next e
-        return res.send r
+      return @svc.payOut req.params.id, opts, req.body, cSend(res, next)
+    if req.body.swapExpert
+      {suggestion} = req.body.swapExpert
+      return @svc.swapExpert req.params.id, req.user, suggestion, cSend(res, next)
     return res.send(400, 'updating orders not yet implemented')
 
 
