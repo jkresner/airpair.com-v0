@@ -76,6 +76,26 @@ module.exports = class OrdersService extends DomainService
     else
       @paypalSvc.Pay order, savePaymentResponse
 
+  historySelect:
+    '_id': 1
+    'lineItems': 1
+    'lineItems.completed': 1
+    'lineItems.qty': 1
+    'lineItems.unitPrice': 1
+    'lineItems.redeemedCalls': 1
+    'lineItems.total': 1
+    'lineItems.suggestion.expert': 1
+    'owner': 1
+    'paymentStatus': 1
+    'paymentType': 1
+    'requestId': 1
+    'total': 1
+    'userId': 1
+    'utc': 1
+
+  getForHistory: (id, callback) =>
+    @model.find userId: id, @historySelect, callback
+
 
   confirmBookme: (request, usr, expertReview, callback) ->
     @settingsSvc.getByUserId request.userId, (ee, settings) =>

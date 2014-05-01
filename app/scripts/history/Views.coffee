@@ -19,38 +19,12 @@ class exports.OrderRowView extends BB.BadassView
   tmpl: require './templates/OrderRow'
   initialize: -> @listenTo @model, 'change', @render
   render: ->
-    @$el.html @tmpl @tmplData()
+    d = @model.extendJSON createdDate: @model.createdDateString()
+    for li in d.lineItems
+      _.extend li, calcExpertCredit([d], li.suggestion.expert._id)
+
+    @$el.html @tmpl d
     @
-  isIncomplete: (expertCredit) ->
-    expertCredit.total == 0 || expertCredit.completed < expertCredit.total
-  tmplData: ->
-    d = @model.toJSON()
-    if d.payment.error? then d.error = d.payment.error[0]
-
-    # now each lineitem knows whether it is paidout, simplifying templating
-    opts = @model.get('payoutOptions') || {}
-    pendingId = opts.lineItemId
-    d.lineItems = d.lineItems.map (li) =>
-      li.linePaidout = @model.isLineItemPaidOut li
-      # hide the link so you can't double-click / double-payout:
-      li.linePayoutPending = pendingId == li._id
-      expertCredit = calcExpertCredit([d], li.suggestion.expert._id)
-      li.incomplete = @isIncomplete expertCredit
-      _.extend li, expertCredit
-
-    _.extend d, {
-      incomplete:         @isIncomplete d.lineItems[0] # paypal has one lineItem
-      isPending:          d.paymentStatus is 'pending'
-      isReceived:         d.paymentStatus is 'received'
-      isPaidout:          d.paymentStatus is 'paidout'
-      isPaypal:           d.paymentType is 'paypal'
-      isStripe:           d.paymentType is 'stripe'
-      contactName:        d.company.contacts[0].fullName
-      contactPic:         d.company.contacts[0].pic
-      contactEmail:       d.company.contacts[0].email
-      createdDate:        @model.createdDateString()
-    }
-
 
 
 class exports.OrdersView extends BB.BadassView
@@ -69,9 +43,7 @@ class exports.OrdersView extends BB.BadassView
 #############################################################################
 
 
-
 class exports.CallsView extends BB.BadassView
-  logging: on
   el: '#calls'
   tmpl: require './templates/Call'
   initialize: (args) ->
