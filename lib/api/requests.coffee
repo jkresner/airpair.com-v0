@@ -31,34 +31,21 @@ class RequestApi extends CRUDApi
   newEvent: (req, evtName, evtData) ->
     @svc.newEvent req.user, evtName, evtData
 
-
-  admin: (req, res, next) =>
-    @svc.getAll cSend(res, next)
-
-  active: (req, res, next) =>
-    @svc.getActive cSend(res, next)
-
-  inactive: (req, res, next) =>
-    @svc.getInactive cSend(res, next)
-
-
-  list: (req, res, next) =>
-    @svc.getByUserId req.user._id, cSend(res, next)
-
+  admin: (req, res, next) => @svc.getAll cSend(res, next)
+  active: (req, res, next) => @svc.getActive cSend(res, next)
+  inactive: (req, res, next) => @svc.getInactive cSend(res, next)
+  list: (req, res, next) => @svc.getByUserId req.user._id, cSend(res, next)
 
   detail: (req, res, next) =>
-    user = req.user
-    @svc.getByIdSmart req.params.id, user, (e, r) =>
+    @svc.getByIdSmart req.params.id, req.user, (e, r) =>
       if e then return next e
       if r? then res.send r else res.send(400, {})
-
 
   create: (req, res, next) =>
     @svc.create req.user, req.body, cSend(res, next)
 
   createBookme: (req, res, next) =>
     @svc.createBookme req.user, req.body, cSend(res, next)
-
 
   update: (req, res, next) =>
     usr = req.user

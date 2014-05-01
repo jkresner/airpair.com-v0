@@ -6,6 +6,8 @@ TagsSvc          = require './../services/tags'
 OrdersSvc        = require './../services/orders'
 SettingsSvc      = require './../services/settings'
 RequestCallsSvc  = require './../services/requestCalls'
+authz            = require './../identity/authz'
+Roles            = authz.Roles
 
 rSvc  = new RequestsSvc()
 eSvc  = new ExpertsSvc()
@@ -133,3 +135,13 @@ module.exports = class ViewDataService
       callback null,
         session: @session usr
         order: JSON.stringify o
+
+  history: (usr, id, callback) ->
+    custUserId = if id? && Roles.isAdmin(usr) then id else usr._id
+    rSvc.getForHistory custUserId, (e,r) =>
+      oSvc.getByUserId custUserId, (ee,o) =>
+        callback null,
+          session: @session usr
+          requests: JSON.stringify r
+          orders: JSON.stringify o
+          isAdmin: Roles.isAdmin usr
