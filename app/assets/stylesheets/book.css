@@ -2,16 +2,31 @@ body#book-new {
 	background: #f2f2f2;
 }
 
+
+ul {
+	list-style: none;
+}
+
+a:hover {
+	text-decoration: none !important;
+}
+
+.airpairme-name {
+	background: #141414;
+	margin: -40px 0 20px 0;
+}
+
 body#book-new h1 {
 	font-weight: 100;
-	font-size: 28px;
-	color: #4c4c4c;
+	font-size: 24px;
+	color: #6C6C6C;
 	margin: 0;
-	padding: 15px 10px;
-	z-index: 500;
-	position: relative;
-	border-radius: 3px 3px 0 0;
+	padding: 15px 0px;
 	letter-spacing: 1px;
+}
+
+body#book-new h1 span {
+	color: #DFDFDF;
 }
 
 body#book-new h1.how-header {
@@ -29,32 +44,94 @@ body#book-new #welcome {
 	margin-bottom:0px;
 }
 
+article {
+	box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+	-moz-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+	-webkit-box-shadow: 0 3px 6px rgba(0,0,0, .2);
+}
+
+ul.toggle-header {
+	background: #FAFAFA;
+	border-bottom: 1px solid #e2e2e2;
+	padding-left: 30px
+}
+
+ul.toggle-header li a, ul.book-session li {
+	display: block;
+	cursor: pointer;
+	font-size: 18px;
+	float: left;
+	padding: 16px 0;
+	line-height: 24px;
+	text-align: center;
+	border-radius: 3px;
+	margin: 5px 15px;
+	transition: background 0.5s, color 0.5s;
+	-webkit-transition: background 0.5s, color 0.5s;
+	font-weight: bold;
+	color: #878787 !important;
+}
+
+ul.toggle-header li a.selected, ul.toggle-header li a:hover {
+	color: #CE5323 !important;
+
+}
+
+ul.book-session {
+	margin: 0 3px 0 3px !important;
+	box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+	-moz-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+	-webkit-box-shadow: 0 3px 6px rgba(0,0,0, .2);
+}
+
+ul.book-session li {
+	margin-left: 0;
+	cursor: default;
+	color: #CE5323 !important;
+}
+
 .left-container {
-	border-radius: 0 0 3px 3px;
-	border: 3px solid #e6e6e6;
-	padding: 40px;
 	background: white;
-	margin: 0 0 40px 0;
+	margin: 0 0 200px 0;
+	display: none;
+}
+
+.left-container h4 {
+	color: black !important;
 }
 
 .left-container p {
 	font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-	font-size: 21px;
+	font-size: 18px;
 	color: #333333;
+	font-weight: normal;
+	padding: 41px;
 }
 
 .left-container p span {
-	font-weight: bold;
 	color: #ce5323;
 }
 
 img.how-to-book {
-	margin: 75px 0;
+	padding: 75px 53px;
+	border-bottom: 1px solid #e2e2e2;
+	border-top: 1px solid #e2e2e2;
 }
 
 #stripeRegister {
 	display: none;
 }
+
+section#text-2 {
+	display: none;
+}
+
+.left-container section {
+	border-top: 1px solid #e2e2e2;
+	padding: 0 40px 40px 40px;
+}
+
+
 
 /**************************** profiles ****************************/
 
@@ -153,13 +230,22 @@ body#book-new #stripeRegister #payment-form button { background-color:#CE5323;co
 
 /**************************** sidebar ****************************/
 
+h1.book-session {
+	color: white !important;
+	background: #4d4d4d;
+	padding: 10px 107px;
+	margin-left: -5px;
+	font-size: 18px !important;
+	text-align: center;
+}
+
+.sidebar ul > li:last-child {
+	margin-bottom: 5px !important;
+}
+
 .book .entry {
 	padding: 20px;
 	background: white;
-	border: 3px solid #e6e6e6;
-	padding-bottom: 100px;
-	border-radius: 3px;
-	box-shadow: none !important;
 }
 
 .book .entry h5 {
@@ -174,12 +260,12 @@ body#book-new #stripeRegister #payment-form button { background-color:#CE5323;co
 
 }
 
-.book .entry h4 {
+#book-new h4 {
 	color: #4c4c4c;
 	letter-spacing: 1px;
 	text-transform: uppercase;
 	font-size: 16px;
-	margin: 40px 0 20px 5px;
+	margin: 40px 0 20px 0px;
 	float: left;
 	width: 100%;
 	font-weight: normal;
@@ -192,7 +278,7 @@ a#bookme-login {
 }
 
 img.avatar.user {
-	width: 314px;
+	width: 100%;
 }
 
 .social-icons {
@@ -210,7 +296,7 @@ img.avatar.user {
 
 ul.booking-stats li {
 	width: 100%;
-	background: #f2f2f2;
+	background: #e2e2e2;
 	float: left;
 	padding: 20px;
 	margin-bottom: 3px;
@@ -227,10 +313,9 @@ span.highlight-color {
 
 ul.expertise li {
 	float: left;
-	background: #CE5323;
+	background: #3B3B3B;
 	padding: 5px 15px;
-	border-radius: 3px;
-	margin-right: 10px;
+	margin: 0 10px 10px 0;
 	color: white;
 	font-weight: normal;
 }
