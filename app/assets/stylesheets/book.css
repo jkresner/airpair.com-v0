@@ -330,3 +330,20 @@ ul.expertise li {
 
 
 /**************************** end sidebar ****************************/
+
+/*********************** iframe css for article
+
+<style type="text/css">
+@media screen and (width:740px){
+body {background: white;}
+.head-wrap {display:none;}
+aside.sidebar {display:none;}
+div#habla_panel_div {display:none !important;}
+.site-inner {padding:0px;}
+#layout {padding: 0 40px;}
+.content {padding: 0 20px;}
+}
+.entry {box-shadow: none; -webkit-box-shadow: none; margin: 0 0 40px;}
+</style>
+
+***********************************/
