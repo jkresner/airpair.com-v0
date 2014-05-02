@@ -273,12 +273,14 @@ h1.book-session {
 
 a#bookme-login {
 	background: #CE5323;
-	margin: 20px 0;
+	margin: 20px 0 20px 3%;
 	letter-spacing: 1px;
+	width: 94%;
 }
 
 img.avatar.user {
-	width: 100%;
+	width: 94%;
+	margin-left: 3%;
 }
 
 .social-icons {
