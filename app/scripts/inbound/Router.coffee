@@ -66,7 +66,7 @@ module.exports = class Router extends S.AirpairSessionRouter
 
     # load orders for the request
     if @app.orders.requestId != id
-      @app.orders.reset([],{ silent: true })
+      @app.orders.reset []
       @app.orders.requestId = id
       @app.orders.fetch()
 
