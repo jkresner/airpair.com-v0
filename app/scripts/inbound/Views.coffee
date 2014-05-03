@@ -2,6 +2,7 @@ exports          = {}
 BB               = require './../../lib/BB'
 M                = require './Models'
 SV               = require './../shared/Views'
+OV               = require './../orders/Views'
 storage          = require('../util').storage
 calcExpertCredit = require '../shared/mix/calcExpertCredit'
 
@@ -355,6 +356,26 @@ class exports.RequestSuggestedView extends BB.BadassView
     @parentView.save e
 
 
+class exports.OrderRowView extends OV.OrderRowView
+  logging: on
+  tmpl: require './templates/OrderRow'
+
+class exports.RequestOrdersView extends BB.BadassView
+  el: '#orders'
+  initialize: (args) ->
+    @listenTo @collection, 'reset add remove filter', @render
+  render: ->
+    $log '@$el', @$el
+    @$el.toggle @collection.models.length > 0
+    $list = @$('tbody').html ''
+    for m in @collection.models
+      $list.append new exports.OrderRowView( model: m ).render().el
+      for li in m.get 'lineItems'
+        if 'pending' == m.get 'paymentStatus' then continue
+    @
+
+
+
 class exports.RequestCallsView extends BB.BadassView
   tmpl: require './templates/RequestCalls'
   initialize: -> @listenTo @model, 'change', @render
@@ -403,6 +424,7 @@ class exports.RequestView extends BB.ModelSaveView
     @suggestionsView = new exports.RequestSuggestionsView model: @model, collection: @experts, parentView: @
     @suggestedView = new exports.RequestSuggestedView model: @model, collection: @experts, session: @session, orders: @orders, parentView: @
     @callsView = new exports.RequestCallsView el: '#calls', model: @model, parentView: @
+    @ordersView = new exports.RequestOrdersView el: '#orders', collection: @orders, model: new @orders.model()
   renderSuccess: (model, response, options) =>
     @$('.alert-success').fadeIn(800).fadeOut(5000)
     m = @collection.findWhere(_id: model.id)

@@ -2,6 +2,7 @@ exports = {}
 BB      = require './../../lib/BB'
 Models  = require './Models'
 Shared  = require './../shared/Collections'
+OC  = require './../orders/Collections'
 
 exports.Tags = Shared.Tags
 exports.MarketingTags = Shared.MarketingTags
@@ -67,8 +68,8 @@ class exports.Requests extends BB.FilteringCollection
     curIndex = ids.indexOf id
     prev: ids[curIndex - 1], next: ids[curIndex + 1]
 
-class exports.Orders extends BB.FilteringCollection
-  model: Models.Order
+class exports.Orders extends OC.Orders
   url: -> "/api/orders/request/#{@requestId}"
+
 
 module.exports = exports
