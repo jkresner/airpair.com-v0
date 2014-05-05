@@ -1,6 +1,6 @@
-M = require '/scripts/inbound/Models'
-C = require '/scripts/inbound/Collections'
-V = require '/scripts/inbound/Views'
+M = require '/scripts/pipeline/Models'
+C = require '/scripts/pipeline/Collections'
+V = require '/scripts/pipeline/Views'
 
 rI = -1
 cloneReq = (id) ->
@@ -17,7 +17,7 @@ requests = [
 describe "Inbound: RequestView", ->
 
   before (done) ->
-    hlpr.setInitApp @, '/scripts/inbound/Router'
+    hlpr.setInitApp @, '/scripts/pipeline/Router'
     hlpr.setSession 'admin', done
   afterEach -> hlpr.cleanTearDown @
   beforeEach (done) ->

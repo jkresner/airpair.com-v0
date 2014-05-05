@@ -33,7 +33,7 @@ module.exports = (grep) ->
   tests = [
     './beexpert/connect_test'
     './beexpert/infoform_test'
-    './inbound/requestform_test'
+    './pipeline/requestform_test'
     './request/customersignin_test'
     './request/infoform_test'
     './request/requestform_test'
