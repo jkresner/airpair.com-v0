@@ -1,7 +1,7 @@
 {http,_,sinon,chai,expect,dbConnect,dbDestroy} = require './../test-lib-setup'
 {app,data,passportMock}                        = require './../test-app-setup'
 
-PaypalService = require('../../../lib/services/payment/paypal-adaptive')
+PaypalService = require('../../../lib/services/wrappers/paypal-adaptive')
 svc = new PaypalService()
 
 describe "PaypalService", ->
