@@ -2,8 +2,8 @@ ses =         require './ses'
 async =       require 'async'
 fs =          require 'fs'
 handlebars =  require 'handlebars'
+roles =       require '../identity/roles'
 util =        require '../../app/scripts/util'
-roles =       require '../../identity/roles'
 
 renderHandlebars = (data, templatePath, callback) ->
   fs.readFile templatePath, "utf-8", (error, templateData) ->

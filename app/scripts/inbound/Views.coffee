@@ -164,6 +164,7 @@ class exports.RequestFarmView extends BB.ModelSaveView
 
 class CustomerMailTemplates
   tmplReceived: require './../../mail/customerRequestReceived'
+  tmplIncomplete: require './../../mail/customerRequestIncomplete'
   tmplReview: require './../../mail/customerRequestReview'
   tmplMatched: require './../../mail/customerRequestMatched'
   tmplFollowup: require './../../mail/customerRequestFollowup'
@@ -172,7 +173,8 @@ class CustomerMailTemplates
     firstName = request.contact(0).fullName.split(' ')[0]
     request.contact(0).firstName = firstName
     r = request.extendJSON tagsString: request.tagsString(), isOpensource: isOpensource, session: session.toJSON()
-    @received = encodeURIComponent(@tmplReceived r)
+    tmplReceived = if r.status == 'incomplete' then @tmplIncomplete else @tmplReceived
+    @received = encodeURIComponent(tmplReceived r)
     @review = encodeURIComponent(@tmplReview r)
     @matched = encodeURIComponent(@tmplMatched r)
     @followup = encodeURIComponent(@tmplFollowup r)
@@ -206,6 +208,7 @@ class exports.RequestInfoView extends BB.ModelSaveView
   tmplCompany: require './templates/RequestInfoCompany'
   events:
     'click #receivedBtn': 'updateStatusToHolding'
+    'change #status': 'updateStatus'
   modelProps: ['brief', 'availability', 'status', 'owner', 'canceledDetail',
     'incompleteDetail', 'budget', 'pricing']
   initialize: ->
@@ -226,9 +229,11 @@ class exports.RequestInfoView extends BB.ModelSaveView
   renderMailTemplates: ->
     mailTemplates = new CustomerMailTemplates @model, @session
     data =
+      receivedTxt: if @model.get('status') == 'incomplete' then 'Incomplete' else 'Received'
       mailTemplates: mailTemplates,
       tagsString: @model.tagsString()
       threeTagsString: @model.threeTagsString()
+    $log 'renderMailTemplates.data', data
     tmplCompanyData = _.extend data, @mget('company')
     @$('#company-controls').html @tmplCompany(tmplCompanyData)
     @$('[data-toggle="popover"]').popover()
@@ -237,8 +242,11 @@ class exports.RequestInfoView extends BB.ModelSaveView
     @$('#incomplete-control-group').toggle @$('#status').val() == 'incomplete'
   updateStatusToHolding: ->
     if @mget('status') is 'received'
-      @model.set status: 'holding'
-      @parentView.save null
+      @elm('status').val('holding').change()
+  updateStatus: (e) ->
+    @model.set status: @$('#status').val()
+    @parentView.save e
+
 
 class exports.RequestMarketingTagsInfoView extends BB.BadassView
   el: '#marketingTagsInfo'
@@ -357,7 +365,6 @@ class exports.RequestSuggestedView extends BB.BadassView
 
 
 class exports.OrderRowView extends OV.OrderRowView
-  logging: on
   tmpl: require './templates/OrderRow'
 
 class exports.RequestOrdersView extends BB.BadassView
@@ -365,7 +372,6 @@ class exports.RequestOrdersView extends BB.BadassView
   initialize: (args) ->
     @listenTo @collection, 'reset add remove filter', @render
   render: ->
-    $log '@$el', @$el
     @$el.toggle @collection.models.length > 0
     $list = @$('tbody').html ''
     for m in @collection.models
