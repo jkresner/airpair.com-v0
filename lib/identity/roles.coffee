@@ -19,6 +19,11 @@ module.exports =
     return false if !user?
     _.contains adminIds, user.googleId
 
+  getAdminInitials: () ->
+    admins = []
+    for id in admins
+      admins.push adminInitials[id]
+    admins
 
   isRequestOwner: (user, request) ->
     return false if !user?
@@ -36,6 +41,7 @@ module.exports =
       if _.idsEqual s.expert.userId, user._id
         return true
     false
+
 
   getAdminInitials: (googleId) ->
     adminInitials[googleId]
