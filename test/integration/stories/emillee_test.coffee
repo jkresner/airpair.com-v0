@@ -7,12 +7,12 @@ storySteps = [
   { app:'review', usr:'emilLee', frag: '#rId', fixture: f.review, pageData: {} }
   { app:'request', usr:'emilLee', frag: '#edit/rId', fixture: f.request, pageData: {} }
   { app:'review', usr:'anon', frag: '#rId', fixture: f.review, pageData: {} }
-  { app:'inbound', usr:'admin', frag: '#', fixture: f.inbound, pageData: { experts: data.experts, tags: data.tags } }
+  { app:'pipeline', usr:'admin', frag: '#', fixture: f.inbound, pageData: { experts: data.experts, tags: data.tags } }
   { app:'review', usr:'richkuo', frag: '#rId', fixture: f.review, pageData: {} }
   { app:'review', usr:'mattvanhorn', frag: '#rId', fixture: f.review, pageData: {} }
   { app:'review', usr:'emilLee', frag: '#rId', fixture: f.review, pageData: {} }
-  { app:'inbound', usr:'jk', frag: '#', fixture: f.inbound, pageData: {} }
-  { app:'inbound', usr:'jk', frag: '#', fixture: f.inbound, pageData: {} }
+  { app:'pipeline', usr:'jk', frag: '#', fixture: f.inbound, pageData: {} }
+  { app:'pipeline', usr:'jk', frag: '#', fixture: f.inbound, pageData: {} }
   { app:'feedback', usr:'mattvanhorn', frag: '#', fixture: f.feedback, pageData: {} }
   { app:'feedback', usr:'emilLee', frag: '#', fixture: f.feedback, pageData: {} }
 ]

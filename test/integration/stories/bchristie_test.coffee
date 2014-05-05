@@ -6,7 +6,7 @@ request = _.clone(data.requests[10])  #Bruce Christie
 storySteps = [
   { app:'settings/Router', usr:'bchristie', frag: '#', fixture: f.settings, pageData: { stripePK: 'pk_test_aj305u5jk2uN1hrDQWdH0eyl' } }
   { app:'request/Router', usr:'bchristie', frag: '#', fixture: f.request, pageData: {} }
-  { app:'inbound/Router', usr:'admin', frag: '#', fixture: f.inbound, pageData: { experts: data.experts, tags: data.tags } }
+  { app:'pipeline/Router', usr:'admin', frag: '#', fixture: f.inbound, pageData: { experts: data.experts, tags: data.tags } }
   { app:'review/Router', usr:'bchristie', frag: '#rId', fixture: f.review, pageData: {} }
   { app:'calls/RouterSchedule', usr: 'admin', frag: '#/schedule/rId', fixture: f.callSchedule, pageData: { request: request, orders: data.orders[2] } }
   { app:'orders/Router', usr: 'admin', frag: '#', fixture: f.orders, pageData: {} }

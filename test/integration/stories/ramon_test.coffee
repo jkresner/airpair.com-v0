@@ -3,7 +3,7 @@ f    = data.fixtures
 
 storySteps = [
   { app:'request', usr:'sirramongabriel', frag: '#', fixture: f.request, pageData: {} }
-  { app:'inbound', usr:'admin', frag: '#', fixture: f.inbound, pageData: { experts: data.experts, tags: data.tags } }
+  { app:'pipeline', usr:'admin', frag: '#', fixture: f.inbound, pageData: { experts: data.experts, tags: data.tags } }
   { app:'review', usr:'sirramongabriel', frag: '#rId', fixture: f.review, pageData: {} }
 ]
 

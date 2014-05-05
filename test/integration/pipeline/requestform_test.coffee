@@ -14,7 +14,7 @@ requests = [
   cloneReq '51c71ad46c50380200000006'
 ]
 
-describe "Inbound: RequestView", ->
+describe "Pipeline: RequestView", ->
 
   before (done) ->
     hlpr.setInitApp @, '/scripts/pipeline/Router'
