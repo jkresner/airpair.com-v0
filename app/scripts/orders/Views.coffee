@@ -151,8 +151,8 @@ class exports.OrderView extends BB.ModelSaveView
       cantSwap = 'Cant swap already paidout order'
     else if lineItems.length != 1
       cantSwap = 'Swap only supported with 1 expert on order'
-    # else if order.paymentType != 'stripe'
-      # cantSwap = 'Swap only support for stripe orders'
+    else if order.paymentType != 'stripe'
+      cantSwap = 'Swap only support for stripe orders. Edit payment type by hand?'
     else
       li = lineItems[0]
       canSwapExpert = true
