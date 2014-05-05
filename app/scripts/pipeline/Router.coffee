@@ -15,6 +15,7 @@ module.exports = class Router extends S.AirpairSessionRouter
     'inactive'     : 'inactive'
     'request/:id'  : 'request'
     'farm/:id'     : 'farm'
+    'room/:id/:eid': 'room'
     'owners'       : 'owners'
     ':id'          : 'request'
 
@@ -37,6 +38,7 @@ module.exports = class Router extends S.AirpairSessionRouter
         orders: d.orders
         session: @app.session
       filtersView: new V.FiltersView collection: d.requests
+      farmingView: new V.RequestFarmView model: d.selected
       farmingView: new V.RequestFarmView model: d.selected
 
     @resetOrFetch d.requests, pageData.requests
