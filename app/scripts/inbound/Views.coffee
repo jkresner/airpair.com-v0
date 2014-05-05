@@ -195,12 +195,17 @@ class ExpertMailTemplates
     # $log 'suggestion', suggestion, contact, request
 
     r = request.extendJSON { tagsString: request.tagsString(), suggestion: suggestion, contact: contact, suggestedExpertRate: suggestedExpertRate, session: session.toJSON() }
-    @another = encodeURIComponent(@tmplAnother r)
-    @canceled = encodeURIComponent(@tmplCancelled r)
-    @chosen = encodeURIComponent(@tmplChosen r)
-    @suggested = encodeURIComponent(@tmplSuggested r)
-    @bookMe = encodeURIComponent(@tmplBookMe r)
 
+    if suggestion.expertStatus is 'waiting'
+      @suggested = encodeURIComponent @tmplSuggested r
+      @canceled = encodeURIComponent @tmplCancelled r
+    else if suggestion.expertStatus is 'available'
+      @another = encodeURIComponent @tmplAnother r
+      @chosen = encodeURIComponent @tmplChosen r
+    else if suggestion.expertStatus is 'pending'
+      @bookMe = encodeURIComponent @tmplBookMe r
+    # else if suggestion.expertStatus is 'declined'
+      # details changes... more money new brief?
 
 class exports.RequestInfoView extends BB.ModelSaveView
   el: '#info'
@@ -233,7 +238,6 @@ class exports.RequestInfoView extends BB.ModelSaveView
       mailTemplates: mailTemplates,
       tagsString: @model.tagsString()
       threeTagsString: @model.threeTagsString()
-    $log 'renderMailTemplates.data', data
     tmplCompanyData = _.extend data, @mget('company')
     @$('#company-controls').html @tmplCompany(tmplCompanyData)
     @$('[data-toggle="popover"]').popover()
@@ -348,7 +352,6 @@ class exports.RequestSuggestedView extends BB.BadassView
         s.credit = calcExpertCredit(@orders.toJSON(), s.expert._id)
         tmplData =
           requestId: @model.id
-          isBookMe: @model.get('status') == 'pending'
           contact: @model.get('company').contacts[0]
           mailTemplates: mailTemplates
           tagsString: @model.tagsString()
