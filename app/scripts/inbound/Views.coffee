@@ -338,12 +338,12 @@ class exports.RequestSuggestedView extends BB.BadassView
     @listenTo @orders, 'sync', @render
   render: ->
     @$el.html '<legend>Suggested</legend>'
-    suggested = @model.get 'suggested'
+    suggested = @model.sortedSuggestions()
     if !suggested? then return
     else if suggested.length == 0
       @$el.append '<p>No suggestion made...</p>'
     else
-      for s in @model.get 'suggested'
+      for s in suggested
         s.tags =  @mget 'tags'
         s.expert.hasLinks = new M.Expert(s.expert).hasLinks()
         mailTemplates = new ExpertMailTemplates @model, @session, s.expert._id

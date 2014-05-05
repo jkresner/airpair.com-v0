@@ -66,6 +66,9 @@ class exports.Request extends BB.SublistModel
     s = _.find suggested, (o) -> o.expert._id == index || o.expert.userId == index
     if s? then return s
     suggested[index]
+  sortedSuggestions: ->
+    orderBy = available: 0, abstained: 1
+    _.sortBy @get('suggested'), (s) -> orderBy[s.expertStatus] ? 10
   tagsString: -> util.tagsString @get('tags')
   threeTagsString: -> util.tagsString @get('tags').slice(0, 3)
   isCustomer: (session) ->
