@@ -196,9 +196,9 @@ class ExpertMailTemplates
 
     r = request.extendJSON { tagsString: request.tagsString(), suggestion: suggestion, contact: contact, suggestedExpertRate: suggestedExpertRate, session: session.toJSON() }
 
+    @canceled = encodeURIComponent @tmplCancelled r
     if suggestion.expertStatus is 'waiting'
       @suggested = encodeURIComponent @tmplSuggested r
-      @canceled = encodeURIComponent @tmplCancelled r
     else if suggestion.expertStatus is 'available'
       @another = encodeURIComponent @tmplAnother r
       @chosen = encodeURIComponent @tmplChosen r
@@ -248,8 +248,10 @@ class exports.RequestInfoView extends BB.ModelSaveView
     if @mget('status') is 'received'
       @elm('status').val('holding').change()
   updateStatus: (e) ->
-    @model.set status: @$('#status').val()
-    @parentView.save e
+    s = @$('#status').val()
+    if s != 'incomplete' && s != 'canceled' # don't want to fire validation
+      @model.set status: s
+      @parentView.save e
 
 
 class exports.RequestMarketingTagsInfoView extends BB.BadassView
