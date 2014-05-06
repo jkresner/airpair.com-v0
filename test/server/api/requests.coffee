@@ -90,7 +90,7 @@ describe "REST api requests", ->
           expect( d.events[1].by.name ).to.equal 'Airpair Kresner'
           done()
 
-  it "should add suggested event & update status to review when expert suggested by admin", (done) ->
+  it "should add suggested event & update status to waiting when expert suggested by admin", (done) ->
     passportMock.setSession 'admin'
     createReq data.requests[3], (e, up) =>
       if e then return done e
@@ -105,7 +105,7 @@ describe "REST api requests", ->
           expect( d.events[1].name ).to.equal "suggested #{suggestion.expert.username}"
           expect( d.events[1].by.name ).to.equal 'Airpair Kresner'
 
-          expect( d.status ).to.equal "review"
+          expect( d.status ).to.equal "waiting"
 
           expect( d.suggested.length ).to.equal 1
           expect( d.suggested[0].events.length ).to.equal 1
