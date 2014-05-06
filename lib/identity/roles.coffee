@@ -5,6 +5,10 @@ adminIds = [
   '103614010394533051287' #LT
 ]
 
+matchmakerIds = [
+  '117132380360243205600' #SP
+]
+
 adminInitials = {}
 adminInitials['117132380360243205600'] = 'jk'
 adminInitials['105314633561185226973'] = 'il'

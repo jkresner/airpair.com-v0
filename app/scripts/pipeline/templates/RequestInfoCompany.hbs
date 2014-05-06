@@ -29,19 +29,34 @@
         <th>Email</th>
         <td>{{email}}</td>
         <td></td>
-        <td><a id="receivedBtn" href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to={{email}}&su=ACTION REQUIRED - Upcoming AirPair Session! ({{../threeTagsString}})&body=Hi {{firstName}},{{../mailTemplates.received}}" target="_blank" class="email btn btn-small btn-warning"><i class="icon-envelope icon-white"></i> {{../receivedTxt}}</a></td>
+        <td>
+          {{#if ../mailTmpls.incomplete}}
+            <a id="receivedBtn" href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to={{email}}&su=MORE INFO REQUEST for your AirPair Session ({{../threeTagsString}})&body=Hi {{firstName}},{{../mailTemplates.incomplete}}" target="_blank" class="email btn btn-small btn-warning"><i class="icon-envelope icon-white"></i> Incomplete</a></td>
+          {{/if}}
+
+          {{#if ../mailTmpls.received}}
+            <a id="receivedBtn" href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to={{email}}&su=Your Upcoming AirPair Session ({{../threeTagsString}})&body=Hi {{firstName}},{{../mailTemplates.received}}" target="_blank" class="email btn btn-small btn-warning"><i class="icon-envelope icon-white"></i> Received</a></td>
+          {{/if}}
       </tr>
       <tr>
         <th>Gmail</th>
         <td>{{gmail}}</td>
         <td></td>
-        <td><a href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to={{email}}&su=AirPair - We've got you experts! ({{../threeTagsString}})&body=Hi {{firstName}},{{../mailTemplates.review}}" target="_blank" class="email btn btn-small btn-warning"><i class="icon-envelope icon-white"></i> Review</a></td>
+        <td>
+          {{#if ../mailTmpls.review}}
+            <a href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to={{email}}&su=AirPair - We've got you experts! ({{../threeTagsString}})&body=Hi {{firstName}},{{../mailTemplates.review}}" target="_blank" class="email btn btn-small btn-warning"><i class="icon-envelope icon-white"></i> Review</a>
+          {{/if}}
+        </td>
       </tr>
       <tr>
         <th>Twitter</th>
         <td>{{#if twitter}}<a href="http://twitter.com/{{twitter}}" target="_blank">{{twitter}}</a>{{/if}}</td>
         <td></td>
-        <td><a href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to={{email}}&su=How was your {{../tagsString}} AirPair?&body={{firstName}},{{../mailTemplates.followup}}" target="_blank" class="email btn btn-small btn-warning"><i class="icon-envelope icon-white"></i> How was?</a></td>
+        <td>
+          {{#if ../mailTmpls.followup}}
+            <a href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to={{email}}&su=How was your {{../tagsString}} AirPair?&body={{firstName}},{{../mailTemplates.followup}}" target="_blank" class="email btn btn-small btn-warning"><i class="icon-envelope icon-white"></i> How was?</a>
+          {{/if}}
+        </td>
       </tr>
     </table>
 

@@ -166,18 +166,22 @@ class CustomerMailTemplates
   tmplReceived: require './../../mail/customerRequestReceived'
   tmplIncomplete: require './../../mail/customerRequestIncomplete'
   tmplReview: require './../../mail/customerRequestReview'
-  tmplMatched: require './../../mail/customerRequestMatched'
   tmplFollowup: require './../../mail/customerRequestFollowup'
   constructor: (request, session) ->
     isOpensource = request.get('pricing') == 'opensource'
     firstName = request.contact(0).fullName.split(' ')[0]
     request.contact(0).firstName = firstName
     r = request.extendJSON tagsString: request.tagsString(), isOpensource: isOpensource, session: session.toJSON()
-    tmplReceived = if r.status == 'incomplete' then @tmplIncomplete else @tmplReceived
-    @received = encodeURIComponent(tmplReceived r)
-    @review = encodeURIComponent(@tmplReview r)
-    @matched = encodeURIComponent(@tmplMatched r)
-    @followup = encodeURIComponent(@tmplFollowup r)
+    if r.status == 'incomplete'
+      @incomplete = encodeURIComponent(tmplIncomplete r)
+    else if r.status == 'pending'
+      # no email templates
+    else if r.status == 'received' || r.status == 'holding'
+      @received = encodeURIComponent(@tmplReceived r)
+    else if r.status == 'consumed'
+      @followup = encodeURIComponent(@tmplFollowup r)
+    else
+      @review = encodeURIComponent(@tmplReview r)
 
 
 class ExpertMailTemplates
@@ -197,13 +201,13 @@ class ExpertMailTemplates
     r = request.extendJSON { tagsString: request.tagsString(), suggestion: suggestion, contact: contact, suggestedExpertRate: suggestedExpertRate, session: session.toJSON() }
 
     @canceled = encodeURIComponent @tmplCancelled r
-    if suggestion.expertStatus is 'waiting'
+    if r.status is 'pending'
+      @bookMe = encodeURIComponent @tmplBookMe r
+    else if suggestion.expertStatus is 'waiting'
       @suggested = encodeURIComponent @tmplSuggested r
     else if suggestion.expertStatus is 'available'
       @another = encodeURIComponent @tmplAnother r
       @chosen = encodeURIComponent @tmplChosen r
-    else if suggestion.expertStatus is 'pending'
-      @bookMe = encodeURIComponent @tmplBookMe r
     # else if suggestion.expertStatus is 'declined'
       # details changes... more money new brief?
 
@@ -232,10 +236,8 @@ class exports.RequestInfoView extends BB.ModelSaveView
     @toggleCanceledIncompleteFields()
     @
   renderMailTemplates: ->
-    mailTemplates = new CustomerMailTemplates @model, @session
     data =
-      receivedTxt: if @model.get('status') == 'incomplete' then 'Incomplete' else 'Received'
-      mailTemplates: mailTemplates,
+      mailTmpls: new CustomerMailTemplates @model, @session
       tagsString: @model.tagsString()
       threeTagsString: @model.threeTagsString()
     tmplCompanyData = _.extend data, @mget('company')

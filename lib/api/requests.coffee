@@ -79,7 +79,7 @@ class RequestApi extends CRUDApi
       for s in req.body.suggested
 
         if !s.events?
-          data.status = "review"
+          data.status = "waiting"
           reqEvt = @newEvent(req, "suggested #{s.expert.username}")
           evts.push reqEvt
 
