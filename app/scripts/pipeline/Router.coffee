@@ -1,7 +1,8 @@
-S = require('./../shared/Routers')
-M = require './Models'
-C = require './Collections'
-V = require './Views'
+BB = require './../../lib/BB'
+S  = require('./../shared/Routers')
+M  = require './Models'
+C  = require './Collections'
+V  = require './Views'
 
 module.exports = class Router extends S.AirpairSessionRouter
 
@@ -15,7 +16,7 @@ module.exports = class Router extends S.AirpairSessionRouter
     'inactive'     : 'inactive'
     'request/:id'  : 'request'
     'farm/:id'     : 'farm'
-    'room/:id/:eid': 'room'
+    'room/:id'     : 'room'
     'owners'       : 'owners'
     ':id'          : 'request'
 
@@ -27,6 +28,7 @@ module.exports = class Router extends S.AirpairSessionRouter
       marketingTags: new C.MarketingTags()
       experts: new C.Experts()
       orders: new C.Orders()
+      suggestion: new BB.BadassModel()
     v =
       requestsView: new V.RequestsView collection: d.requests, model: d.selected
       requestView: new V.RequestView
@@ -39,7 +41,7 @@ module.exports = class Router extends S.AirpairSessionRouter
         session: @app.session
       filtersView: new V.FiltersView collection: d.requests
       farmingView: new V.RequestFarmView model: d.selected
-      farmingView: new V.RequestFarmView model: d.selected
+      roomView: new V.RoomView model: d.suggestion, request: d.selected
 
     @resetOrFetch d.requests, pageData.requests
     @resetOrFetch d.experts, pageData.experts
@@ -83,3 +85,9 @@ module.exports = class Router extends S.AirpairSessionRouter
       @app.selected.set('_id', id, { silent: true })
       @app.selected.fetch reset: true, success: => route.show()
       return
+
+  room: (id) ->
+    sug = @app.selected.suggestion id
+    if !sug? then return $log "uhhh no suggestion for eid #{id}"
+    @app.suggestion.clear { silent: true }
+    @app.suggestion.set sug

@@ -159,6 +159,62 @@ class exports.RequestFarmView extends BB.ModelSaveView
 
 
 #############################################################################
+##  To auto setup a HipChat Room
+#############################################################################
+
+
+class exports.RoomView extends BB.ModelSaveView
+  logging: on
+  el: '#room'
+  tmpl: require './templates/Room'
+  initialize: ->
+    @listenTo @model, 'change', @render
+  events: ->
+    'click .btn-create': 'createRoom'
+    'click .btn-add': 'createUser'
+  render: ->
+    if @request.get('tags').length is 0
+      return alert('need at least one tech tag')
+
+    c = @request.contact(0)
+    e = @model.get('expert')
+    customer = email: c.email, firstName: c.firstName
+    expert = email: e.email, firstName: e.firstName
+    owner = email: "#{@request.get('owner')}@airpair.com"
+
+    members = []
+    members.push name: 'Jonathon Kresner', mention_name: 'JonathonKresner', email: owner.email
+    members.push name: 'Stefan Penner', mention_name: 'StefanPenner', email: expert.email
+    members.push name: 'Devin McQueeney', mention_name: 'DevinMcQueeney', email: customer.email
+
+    rId = @request.id
+    primaryTag = "{"+@request.get('tags')[0].short+"}"
+    tagsString = @request.tagsString()
+    d = {members,customer,expert,primaryTag,tagsString,rId}
+    $log 'd', d
+    @$el.html @tmpl @model.extendJSON d
+    @
+  createRoom: (e) ->
+    url = "/api/admin/requests/#{@request.id}/room"
+    $.post url, { name: @elm('roomName').val() }
+    false
+    # privacy: 'private',
+    # is_archived: false,
+    # is_guest_accessible: false,
+    # topic: "New Topic",
+    # owner: {id: ownerId}
+  createUser: ->
+    url = "/api/admin/requests/#{@request.id}/roomuser"
+    $.post url, { name: 'Devin McQueeney', mention_name: 'DevinMcQueeney', email: 'jamesnewportbeach@gmail.com' }
+    false
+    # title: 'Matchmaker',
+    # is_group_admin: false,
+    # timezone: 'UTC',
+    # password: '',
+  # deletRoom: (e) ->
+
+
+#############################################################################
 ##  To edit request
 #############################################################################
 
