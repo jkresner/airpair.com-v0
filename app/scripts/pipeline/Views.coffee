@@ -164,7 +164,6 @@ class exports.RequestFarmView extends BB.ModelSaveView
 
 
 class exports.RoomView extends BB.ModelSaveView
-  logging: on
   el: '#room'
   tmpl: require './templates/Room'
   initialize: ->
@@ -229,15 +228,15 @@ class CustomerMailTemplates
     request.contact(0).firstName = firstName
     r = request.extendJSON tagsString: request.tagsString(), isOpensource: isOpensource, session: session.toJSON()
     if r.status == 'incomplete'
-      @incomplete = encodeURIComponent(tmplIncomplete r)
+      @incomplete = encodeURIComponent tmplIncomplete r
     else if r.status == 'pending'
       # no email templates
     else if r.status == 'received' || r.status == 'holding'
-      @received = encodeURIComponent(@tmplReceived r)
+      @received = encodeURIComponent @tmplReceived r
     else if r.status == 'consumed'
-      @followup = encodeURIComponent(@tmplFollowup r)
+      @followup = encodeURIComponent @tmplFollowup r
     else
-      @review = encodeURIComponent(@tmplReview r)
+      @review = encodeURIComponent @tmplReview r
 
 
 class ExpertMailTemplates
