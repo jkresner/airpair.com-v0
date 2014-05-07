@@ -3,19 +3,27 @@ adminIds = [
   '105314633561185226973' #IL
   '105922668830552511365' #DS
   '103614010394533051287' #LT
+  '110496794584456738170' #PG
+  # '110496794584456738170' #TB
 ]
+
 
 matchmakerIds = [
-  '117132380360243205600' #SP
+  '101062250088370367878' #SP
 ]
 
-adminInitials = {}
-adminInitials['117132380360243205600'] = 'jk'
-adminInitials['105314633561185226973'] = 'il'
-adminInitials['102299765632981130643'] = 'er'
-adminInitials['105922668830552511365'] = 'ds'
-adminInitials['112300854530824394263'] = 'mi'
-adminInitials['103614010394533051287'] = 'lt'
+
+initials = {}
+initials['117132380360243205600'] = 'jk'
+initials['105314633561185226973'] = 'il'
+initials['103614010394533051287'] = 'lt'
+initials['110496794584456738170'] = 'pg'
+initials['105922668830552511365'] = 'ds'
+initials['112300854530824394263'] = 'mi'
+initials['102299765632981130643'] = 'er'
+# initials['102299765632981130643'] = 'tb'
+initials['101062250088370367878'] = 'sp'  (Steve Purves)
+
 
 module.exports =
 
@@ -23,21 +31,17 @@ module.exports =
     return false if !user?
     _.contains adminIds, user.googleId
 
-  getAdminInitials: () ->
-    admins = []
-    for id in admins
-      admins.push adminInitials[id]
-    admins
+  isMatchmaker: (user) ->
+    return false if !user?
+    _.contains adminIds, user.googleId
 
   isRequestOwner: (user, request) ->
     return false if !user?
     _.idsEqual request.userId, user._id
 
-
   isOrderOwner: (user, order) ->
     return false if !user?
     _.idsEqual order.userId, user._id
-
 
   isRequestExpert: (user, request) ->
     return false if !user?
@@ -46,15 +50,15 @@ module.exports =
         return true
     false
 
-
   getAdminInitials: (googleId) ->
-    adminInitials[googleId]
+    initials[googleId]
 
   owner2name:
     il: 'Igor'
-    er: 'Ed'
-    jk: 'Jonathon'
-    ds: 'Dilys'
-    dt: 'David'
-    mi: 'Maksim'
     lt: 'Lissanthea'
+    jk: 'Jonathon'
+    jk: 'Prateek'
+    ds: 'Dilys'
+    mi: 'Maksim'
+    dt: 'David'
+    er: 'Ed'

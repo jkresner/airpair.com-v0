@@ -121,9 +121,9 @@ body#admorders #order pre { float:right;width:59%;font-size:10px;line-height:1.1
 #adminboundpage #requests .label-tags { font-weight:normal;margin:2px 0; }
 .label-owner { margin:10px 10px 10px 0;min-width:20px;text-align:center;font-weight: normal;}
 .label-jk { background-color: #FFB878; }
-.label-mi { background-color: #9A9CFF; }
+.label-tb { background-color: #9A9CFF; }
 .label-il { background-color: #7AE7BF; }
-.label-er { background-color: #51B749; }
+.label-pg { background-color: #51B749; }
 .label-ds { background-color: #FF887C; }
 .label-prev { background-color: #FF0000; }
 
