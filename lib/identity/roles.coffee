@@ -22,7 +22,7 @@ initials['105922668830552511365'] = 'ds'
 initials['112300854530824394263'] = 'mi'
 initials['102299765632981130643'] = 'er'
 # initials['102299765632981130643'] = 'tb'
-initials['101062250088370367878'] = 'sp'  (Steve Purves)
+initials['101062250088370367878'] = 'sp' # (Steve Purves)
 
 
 module.exports =
