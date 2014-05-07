@@ -82,7 +82,7 @@ module.exports = class Router extends S.AirpairSessionRouter
       route = $('#request')
       route.hide()
       # get fresh data
-      @app.selected.set('_id', id, { silent: true })
+      @app.selected.silentReset '_id' : id
       @app.selected.fetch reset: true, success: => route.show()
       return
 
