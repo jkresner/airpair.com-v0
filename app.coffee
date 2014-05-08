@@ -26,7 +26,8 @@ partials.register __dirname, ['/app/partials','/app/scripts/shared/templates']
 
 app.use express.compress() # gzip
 app.use express.static(__dirname + '/public')
-app.use express.bodyParser()
+app.use express.json()
+app.use express.urlencoded()
 app.use expressValidator() # must be immediately after express.bodyParser()!
 app.use express.cookieParser()
 app.use express.session
