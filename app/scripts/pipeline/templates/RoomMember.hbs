@@ -1,0 +1,17 @@
+<label class="control-label" style="width:220px">Email</label>
+<label class="control-label">Full name</label>
+<label class="control-label">Mention name</label>
+<div class="controls">
+  <input type="text" data-error-style="inline" value="{{ email }}" placeholder="Email" name="email" class="input-block-level email" style="width:220px">
+  <input type="text" data-error-style="inline" value="{{ name }}" placeholder="Full name" name="name" class="input-block-level name">
+  <input type="text" data-error-style="inline" value="{{ mention_name }}" placeholder="Mention name" name="mention_name" class="input-block-level mention_name">
+  {{#if id}}
+    {{#if is_deleted}}
+      <a href="#" class="btn-undelete btn">Undelete Add</a>
+    {{else}}
+      <a href="#" class="btn-add btn">Add</a>
+    {{/if}}
+  {{else}}
+    <a href="#" class="btn-create btn">Create</a>
+  {{/if}}
+</div>

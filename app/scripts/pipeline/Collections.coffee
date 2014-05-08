@@ -68,8 +68,13 @@ class exports.Requests extends BB.FilteringCollection
     curIndex = ids.indexOf id
     prev: ids[curIndex - 1], next: ids[curIndex + 1]
 
+
 class exports.Orders extends OC.Orders
   url: -> "/api/orders/request/#{@requestId}"
+
+
+class exports.Rooms extends BB.FilteringCollection
+  url: -> "/api/chat/rooms/#{@companyId}"
 
 
 module.exports = exports

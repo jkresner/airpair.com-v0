@@ -10,7 +10,7 @@
 <div class="control-group">
   <label class="control-label">Room name</label>
   <div class="controls">
-    <input type="text" data-error-style="inline" value="{{ customer.firstName }}+{{expert.firstName}} {{primaryTag}}" placeholder="Full name" name="roomName" class="input-block-level">
+    <input type="text" data-error-style="inline" value="{{ name }}" placeholder="Room name" name="roomName" class="input-block-level">
     <a href="#" class="btn-create btn">Create</a>
     <div style="float:right">{{{tagsString}}}</div>
   </div>
@@ -20,31 +20,18 @@
 <h2>Members</h2>
 
 <style type="text/css">
-  .member label.control-label { float:left;width:200px; }
-  .member input { width:200px; }
-  .member div.controls { clear:both; }
+  #members label.control-label { float:left;width:200px; }
+  #members input { width:200px; }
+  #members div.controls { clear:both; }
 </style>
 
-{{#each members}}
+<div id="members"></div>
 
-<div class="control-group member">
-  <label class="control-label">Full name</label>
-  <label class="control-label">Mention name</label>
-  <label class="control-label">Email</label>
-  <div class="controls">
-    <input type="text" data-error-style="inline" value="{{ name }}" placeholder="Full name" name="name" class="input-block-level name">
-    <input type="text" data-error-style="inline" value="{{ mention_name }}" placeholder="Mention name" name="mention_name" class="input-block-level mention_name">
-    <input type="text" data-error-style="inline" value="{{ email }}" placeholder="Email" name="email" class="input-block-level email" style="width:220px">
-    <a href="#" class="btn-add btn">Add</a>
-  </div>
-</div>
-
-{{/each}}
-
-<div class="control-group">
+{{!-- <div class="control-group">
   <label class="control-label" for="reqOwner">Hello Msg</label>
   <div class="controls">
     <textarea style="width:100%">@HassanAjan & @JamesGill welcome to your private HipChat room! Use this room to agree on a schedule time & length (1 or 2 hours) of your AirPair. HipChat is asy  nchronous chat, so even if the other person isn't in the room, message each other here and not via email. If you want to get another person's attention when they are not in the room, @ reference their name and they will get an email notification. HipChat is a great place for pre-session questions and post session conversation + sharing links & resources. If you have any unanswered questions about the AirPair process feel free to drop them in here too.
     </textarea>
   </div>
 </div>
+ --}}

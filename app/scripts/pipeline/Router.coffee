@@ -29,6 +29,7 @@ module.exports = class Router extends S.AirpairSessionRouter
       experts: new C.Experts()
       orders: new C.Orders()
       suggestion: new BB.BadassModel()
+      rooms: new C.Rooms()
     v =
       requestsView: new V.RequestsView collection: d.requests, model: d.selected
       requestView: new V.RequestView
@@ -41,7 +42,7 @@ module.exports = class Router extends S.AirpairSessionRouter
         session: @app.session
       filtersView: new V.FiltersView collection: d.requests
       farmingView: new V.RequestFarmView model: d.selected
-      roomView: new V.RoomView model: d.suggestion, request: d.selected
+      roomView: new V.RoomView collection: d.rooms, model: d.suggestion, request: d.selected
 
     @resetOrFetch d.requests, pageData.requests
     @resetOrFetch d.experts, pageData.experts
@@ -83,11 +84,16 @@ module.exports = class Router extends S.AirpairSessionRouter
       route.hide()
       # get fresh data
       @app.selected.silentReset '_id' : id
-      @app.selected.fetch reset: true, success: => route.show()
+      @app.selected.fetch reset: true, success: =>
+        route.show()
       return
 
   room: (id) ->
     sug = @app.selected.suggestion id
     if !sug? then return $log "uhhh no suggestion for eid #{id}"
+    @app.rooms.companyId = @app.selected.attributes.company._id
     @app.suggestion.clear { silent: true }
     @app.suggestion.set sug
+    $log 'sug', sug
+    @app.rooms.fetch()
+

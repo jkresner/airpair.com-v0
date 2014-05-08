@@ -66,7 +66,9 @@
     "googleapis": "~0.6.1",
     "lodash.clonedeep": "~2.4.1",
     "moment-timezone": "0.0.3",
-    "hipchatter": "0.x.x"
+
+    "needle": "~0.6.3",
+    "hipchatter": "0.1.2"
   },
   "devDependencies": {
     "supertest": "0.5.x",
