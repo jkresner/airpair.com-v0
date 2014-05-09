@@ -3,14 +3,10 @@ HipChatter = require 'hipchatter'
 
 module.exports = class HipChatService
 
-  constructor: () ->
+  constructor: (token) ->
 
-    # todo figure out the token situation
-
-    @HC = new HipChatter(cfg.hipChat.tokens['jk'])
-    @HC.capabilities (err, r) =>
-
-    # $log(r.capabilities.hipchatApiProvider)
+    @HC = new HipChatter(token)
+    # @HC.capabilities (err, r) => $log(r.capabilities.hipchatApiProvider)
 
   createRoom: (ownerEmail, roomData, callback) =>
     roomData.privacy = "private"

@@ -7,11 +7,16 @@ module.exports = class ChatService extends DomainService
   logging: on
 
   room: require './../models/room'
-  hc: new HC()
   rSvc: new RequestSevice()
 
+  constructor: (user) ->
+    admin = user.google._json.email.split('@')[0]
+    token = cfg.hipChat.tokens[admin];
+    $log 'ChatService', user.google._json.email, admin, token
+    @hc = new HC token
+
+
   createRoom: (user, data, callback) =>
-    $log 'svc.createRoom', user.google._json.email, data.name
     @hc.createRoom user.google._json.email, data, (e, r) =>
       if e? then callback e, r
 

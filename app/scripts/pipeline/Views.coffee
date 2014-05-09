@@ -170,6 +170,7 @@ class exports.RoomMemberView extends BB.ModelSaveView
   viewData: ['email','name','mention_name']
   events:
     'click .btn-create': 'createUser'
+    'change .email': 'lookupUser'
   initialize: ->
     @listenTo @model, 'change', @render
     @model.fetch()
@@ -185,8 +186,9 @@ class exports.RoomMemberView extends BB.ModelSaveView
     # is_group_admin: false,
     # timezone: 'UTC',
     # password: '',
-  # deletRoom: (e) ->
-
+  lookupUser: ->
+    @model.set 'email', @elm('email').val()
+    @model.fetch()
 
 class exports.RoomView extends BB.ModelSaveView
   logging: on
