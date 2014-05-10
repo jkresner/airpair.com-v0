@@ -305,7 +305,7 @@ class ExpertMailTemplates
       # details changes... more money new brief?
 
 class exports.RequestInfoView extends BB.ModelSaveView
-  logging: on
+  # logging: on
   el: '#info'
   tmpl: require './templates/RequestInfo'
   tmplCompany: require './templates/RequestInfoCompany'
