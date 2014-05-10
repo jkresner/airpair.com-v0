@@ -305,6 +305,7 @@ class ExpertMailTemplates
       # details changes... more money new brief?
 
 class exports.RequestInfoView extends BB.ModelSaveView
+  logging: on
   el: '#info'
   tmpl: require './templates/RequestInfo'
   tmplCompany: require './templates/RequestInfoCompany'
@@ -317,15 +318,10 @@ class exports.RequestInfoView extends BB.ModelSaveView
     @$el.html @tmpl @model.toJSON()
     @$('#status').on 'change', @toggleCanceledIncompleteFields
     @tagsInput = new SV.TagsInputView model: @model, collection: @tags
-    for prop in @modelProps
-      @listenTo @model, "change:#{prop}", @render
-    @listenTo @model, 'change:tags', @renderMailTemplates
-    @listenTo @model, 'change:company', @renderMailTemplates
+    @listenTo @model, "change:brief change:vailability change:status change:owner change:canceledDetail change:incompleteDetail change:budget change:pricing", @render
+    @listenTo @model, 'change:tags change:company change:status', @renderMailTemplates
   render: ->
     @setValsFromModel @modelProps
-    # TODO: kinda hacky:
-    @$('.status').attr('class', "label status label-#{@model.get('status')}")
-    @$('.status').html @model.get('status')
     @toggleCanceledIncompleteFields()
     @
   renderMailTemplates: ->
