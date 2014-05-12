@@ -816,6 +816,10 @@ Structure and Layout
 /* Site Containers
 --------------------------------------------- */
 
+.site-container {
+  min-height: 1000px;
+}
+
 .wrap {
   margin: 0 auto;
   max-width: 1140px;
