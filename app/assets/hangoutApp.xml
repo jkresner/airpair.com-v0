@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-        <!-- Copyright 2012 Google Inc. All Rights Reserved -->
-        <Module>
-      <ModulePrefs title="Face Movement">
-          <Require feature="rpc"/>
-          <Require feature="views" />
-          <Require feature="dynamic-height"/>
-      </ModulePrefs>
-      <Content type="html"><![CDATA[
+<Module>
+  <ModulePrefs title="AirPar">
+      <Require feature="rpc"/>
+      <Require feature="views" />
+      <Require feature="dynamic-height"/>
+  </ModulePrefs>
+  <Content type="html"><![CDATA[
 <!DOCTYPE html>
 
 <script src="//plus.google.com/hangouts/_/api/v1/hangout.js"></script>
 <div>
-  <p>Welcome to the remote pair programmers meetup. Use the "invite" button to invite other members to join you for pair programming.</p>
+  <p>Welcome to your AirPair hangout.</p>
 </div>
 
-]]></Content></Module>
+]]></Content>
+</Module>

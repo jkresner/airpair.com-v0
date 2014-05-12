@@ -86,7 +86,6 @@ module.exports = class RequestCallsService
 
   _updateOrders: (requestId, oldCall, newDuration, callback) =>
     if oldCall.duration == newDuration
-      console.log 'duration unchanged'
       return OrdersSvc.updateCompletion requestId, oldCall, callback
 
     callWithNewDuration = _.clone oldCall

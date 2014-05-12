@@ -139,9 +139,16 @@ module.exports = class ViewDataService
   history: (usr, id, callback) ->
     custUserId = if id? && Roles.isAdmin(usr) then id else usr._id
     rSvc.getForHistory custUserId, (e,r) =>
-      oSvc.getByUserId custUserId, (ee,o) =>
+      oSvc.getForHistory custUserId, (ee,o) =>
         callback null,
           session: @session usr
           requests: JSON.stringify r
           orders: JSON.stringify o
-          isAdmin: Roles.isAdmin usr
+          isAdmin: Roles.isAdmin(usr).toString()
+
+  orders: (usr, callback) ->
+    oSvc.getAll (ee,o) =>
+      callback null,
+        session: @session usr
+        orders: JSON.stringify o
+

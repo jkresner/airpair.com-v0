@@ -72,7 +72,16 @@ class exports.Request extends BB.SublistModel
     return false if !session.id?
     return true if /iscust/.test(location.href)
     @get('userId') == session.id
-
+  calls: ->
+    c = []
+    {calls} = @attributes
+    if calls? && calls.length > 0
+      for call in calls
+        call.expert = (_.find @get('suggested'), (o) ->
+          o.expert._id == call.expertId).expert
+        call.hasRecording = call.recordings? && call.recordings.length > 0
+        c.push call
+    c
 
 class exports.Expert extends BB.SublistModel
   urlRoot: '/api/experts'

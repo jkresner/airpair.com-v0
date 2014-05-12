@@ -67,30 +67,30 @@ body#admexperts #bookme { float:right;width:540px; }
 body#admexperts .rb-group label { float:left;margin:5px 6px 0px 0px }
 body#admexperts .rb-group input { float:left;margin:9px 26px 0px 0px }
 
-#admorderspage {}
-#admorderspage .selectOrder { display:block;font-size:9px; }
-#admorderspage .info { font-size:9px; }
-#admorderspage .info .marketingtag { border: none; background-color: inherit; font-size:9px; margin: 0; padding: 0; font-weight: normal;}
-#admorderspage .info .label-owner { font-size:9px; margin: 0;}
-#admorderspage .total { font-weight:bold;text-align:right;padding-right:10px; }
-#admorderspage th { font-size:12px; }
-#admorderspage #rowsSummary th { font-size:10px;padding:2px 8px; }
+body#admorders {}
+body#admorders .selectOrder { display:block;font-size:9px; }
+body#admorders .info { font-size:9px; }
+body#admorders .info .marketingtag { border: none; background-color: inherit; font-size:9px; margin: 0; padding: 0; font-weight: normal;}
+body#admorders .info .label-owner { font-size:9px; margin: 0;}
+body#admorders .total { font-weight:bold;text-align:right;padding-right:10px; }
+body#admorders th { font-size:12px; }
+body#admorders #rowsSummary th { font-size:10px;padding:2px 8px; }
+body#admorders td { padding:2px 0px 2px 8px;font-size:12px; }
+body#admorders td span { display:inline-block; }
+body#admorders .expertPic { width:16px!important;height:16px!important }
+body#admorders #timefilter { float:right;padding:10px 0px; }
+body#admorders #orders { margin-top:25px;clear:both; }
+body#admorders #orders img { height: 32px;width: 32px }
+body#admorders #orders img.favicon { height: 8px;width: 8px; }
+body#admorders #orders th { padding:2px 6px; }
+body#admorders #rowsSummary th { color:black;background:#FAA732 }
+body#admorders #orders .pending { color:#b94a48; }
+body#admorders #orders .received { color:#333333 }
+body#admorders #orders .paidout { color:#468847; }
+body#admorders #orders .incomplete { display: none; }
+body#admorders #order .form { float:left;width:39%; }
+body#admorders #order pre { float:right;width:59%;font-size:10px;line-height:1.1; }
 
-#admorderspage td { padding:2px 0px 2px 8px;font-size:12px; }
-#admorderspage td span { display:inline-block; }
-#admorderspage .expertPic { width:16px!important;height:16px!important }
-#admorderspage pre { font-size: 11px; line-height: 1.2;}
-
-#admorderspage #timefilter { float:right;padding:10px 0px; }
-#admorderspage #orders { margin-top:25px;clear:both; }
-#admorderspage #orders img { height: 32px;width: 32px }
-#admorderspage #orders img.favicon { height: 8px;width: 8px; }
-#admorderspage #orders th { padding:2px 6px; }
-#admorderspage #rowsSummary th { color:black;background:#FAA732 }
-#admorderspage #orders .pending { color:#b94a48; }
-#admorderspage #orders .received { color:#333333 }
-#admorderspage #orders .paidout { color:#468847; }
-#admorderspage #orders .incomplete { display: none; }
 #adminboundpage .form-actions { margin-top:0;padding:15px 10px; }
 #adminboundpage #filters { float:right;display:block;padding:0px; }
 
