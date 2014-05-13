@@ -16,6 +16,27 @@ a:hover {
 	margin: -40px 0 20px 0;
 }
 
+.wrap {
+	width: 90% !important;
+}
+
+.site-header .wrap {
+	padding: 0;
+	margin: 0;
+}
+
+body#book-new .content {
+	max-width: 740px;
+	min-width: 610px;
+	width: 65%;
+}
+
+body#book-new .sidebar-primary {
+	max-width: 360px;
+	min-width: 300px;
+	width: 32%;
+}
+
 body#book-new h1 {
 	font-weight: 100;
 	font-size: 24px;
@@ -279,8 +300,10 @@ a#bookme-login {
 }
 
 img.avatar.user {
+	margin-bottom: 20px;
 	width: 94%;
 	margin-left: 3%;
+	max-width: 300px;
 }
 
 .social-icons {
@@ -349,3 +372,57 @@ div#habla_panel_div {display:none !important;}
 </style>
 
 ***********************************/
+
+/**************************** media queries ****************************/
+
+@media only screen and (max-width: 1023px) {
+	#full-bio {
+		display: none;
+	}
+
+	body#book-new .sidebar-primary {
+	min-width: 300px;
+	width: 100%;
+	float: left;
+	max-width: none;
+	}
+	ul.booking-stats {
+		float: left;
+		min-width: 275px;
+		width: 100%;
+	}
+	img.avatar.user {
+		margin-bottom: 20px;
+		width: 100%;
+		max-width: 300px;
+		margin-left: 0px;
+	}
+	#menu-services {
+		display: none !important;
+	}
+	body#book-new .content {
+	width: 100%;
+	min-width: 0px;
+	max-width: none;
+	}
+	img.how-to-book {
+		display: none;
+	}
+	.site-header .wrap {
+		margin: 0;
+	}
+	.site-header {
+	width: 90% !important;
+	}
+}
+
+/**************************** end media queries ****************************/
+
+
+
+
+
+
+
+
+
