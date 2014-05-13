@@ -12,8 +12,10 @@ a:hover {
 }
 
 .airpairme-name {
-	background: #141414;
-	margin: -40px 0 20px 0;
+	margin: -40px 0 40px 0;
+	box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+	-moz-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+	-webkit-box-shadow: 0 3px 6px rgba(0,0,0, .2);
 }
 
 .wrap {
@@ -23,6 +25,13 @@ a:hover {
 .site-header .wrap {
 	padding: 0;
 	margin: 0;
+}
+
+.head-wrap {
+	margin-bottom: 2px !important;
+	box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+	-moz-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+	-webkit-box-shadow: 0 3px 6px rgba(0,0,0, .2);
 }
 
 body#book-new .content {
@@ -47,7 +56,7 @@ body#book-new h1 {
 }
 
 body#book-new h1 span {
-	color: #DFDFDF;
+	color: #ce5323;
 }
 
 body#book-new h1.how-header {
@@ -90,7 +99,7 @@ ul.toggle-header li a, ul.book-session li {
 	transition: background 0.5s, color 0.5s;
 	-webkit-transition: background 0.5s, color 0.5s;
 	font-weight: bold;
-	color: #878787 !important;
+	color: #4d4d4d !important;
 }
 
 ul.toggle-header li a.selected, ul.toggle-header li a:hover {
@@ -300,7 +309,6 @@ a#bookme-login {
 }
 
 img.avatar.user {
-	margin-bottom: 20px;
 	width: 94%;
 	margin-left: 3%;
 	max-width: 300px;
