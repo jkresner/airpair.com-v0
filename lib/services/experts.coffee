@@ -12,6 +12,12 @@ module.exports = class ExpertsService extends DomainService
         r = {} if !r || !r.bookMe || !r.bookMe.enabled
         callback e, r
 
+  getByBookmeByUserId: (userId, callback) =>
+    @model.findOne({ userId: userId, 'bookMe.enabled': true })
+      .lean().exec (e, r) =>
+        r = {} if !r || !r.bookMe || !r.bookMe.enabled
+        callback e, r
+
   admSelect:
     'userId': 1
     'pic': 1

@@ -35,29 +35,55 @@ h3 {
 	padding-bottom:5px;
 }
 
-pre { 
-	font-size:12px;
+pre {
+	width:100%;
+  font-size:12px;
 	border-top:solid 1px gray;
-	background-color:#dddddd;  
-	padding-right: 20px;
+	background-color:#dddddd;
+	padding-right:20px;
 	display: none;
 	float: left;
+  display:none;
 }
 
-code span { 
+code {
+  word-wrap:normal;
+}
+
+code usr {
 	color:red;
-	font-weight:bold 
+	font-weight:bold
 }
 
-.airpairme { 
-	width:240px; 
+code tag {
+  color:blue;
+  font-weight:bold
 }
 
-.airpairme p { 
+code project {
+  color:green;
+  font-weight:bold
+}
+
+
+ul.tags { margin:0;padding:0; }
+ul.tags li { float:left;margin-right:10px;margin-left:12px;font-size:12px;height:20px; }
+ul.tags li:hover { text-decoration:underline; }
+
+
+ul.projects { margin:0;padding:0; }
+ul.projects li { float:left;margin-right:10px;margin-left:12px;font-size:12px;height:20px; }
+ul.projects li:hover { text-decoration:underline; }
+
+.airpairme {
+	width:240px;
+}
+
+.airpairme p {
 	font:11px arial;
 	text-align:center;
 	margin:0;
-	padding:3px 0 0 6px; 
+	padding:3px 0 0 6px;
 }
 
 .clearfix:before {
@@ -113,7 +139,7 @@ code span {
 }
 
  #b3 .airpairme > a {
-   border:1px solid #262626; 
+   border:1px solid #262626;
    box-shadow:inset 0px 1px 0px 0px #878787;
    -moz-box-shadow:inset 0px 1px 0px 0px #878787;
    -webkit-box-shadow:inset 0px 1px 0px 0px #878787;
