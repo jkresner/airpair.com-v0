@@ -5,6 +5,7 @@ adminIds = [
   '110496794584456738170' #PG gravatar: 2b22b4cd4f65cbef1331cf07e82e6b27
   '103614010394533051287' #LT
   '105922668830552511365' #DS
+  '104421101970649173838' #AR
 ]
 
 
@@ -24,6 +25,7 @@ initials['102299765632981130643'] = 'er'
 initials['105922668830552511365'] = 'tb'
 initials['101062250088370367878'] = 'sp' # (Steve Purves)
 
+initials['104421101970649173838'] = 'team' # (Alyssa Reese)
 
 module.exports =
 
@@ -55,9 +57,10 @@ module.exports =
 
   owner2name:
     il: 'Igor'
-    lt: 'Lissanthea'
     jk: 'Jonathon'
-    jk: 'Prateek'
+    pg: 'Prateek'
+    tb: 'Tyler'
+    lt: 'Lissanthea'
     ds: 'Dilys'
     mi: 'Maksim'
     dt: 'David'

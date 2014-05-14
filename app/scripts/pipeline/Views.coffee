@@ -271,7 +271,7 @@ class CustomerMailTemplates
       # no email templates
     else if r.status == 'received' || r.status == 'holding'
       @received = encodeURIComponent @tmplReceived r
-    else if r.status == 'consumed'
+    else if r.status == 'consumed' || r.status == 'completed'
       @followup = encodeURIComponent @tmplFollowup r
     else
       @review = encodeURIComponent @tmplReview r
