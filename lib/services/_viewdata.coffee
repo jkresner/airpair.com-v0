@@ -94,7 +94,7 @@ module.exports = class ViewDataService
         stripePK:     cfg.payment.stripe.publishedKey
         # settings:     srs    ## settings crashes app for some reason
 
-  buttons: (usr, callback) ->
+  bookme: (usr, callback) ->
     token = if usr.github.token? then usr.github.token.token else ''
     eSvc.getByBookmeByUserId usr._id, (e, r) =>
       if e then return callback e
