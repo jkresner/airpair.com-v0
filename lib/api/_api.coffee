@@ -22,17 +22,11 @@ class Api
 
 
   cSend: (res, next) ->
-    (e, r) ->
+    (e, r) =>
       if @logging then $log 'cSend', e, r
       if e && e.status then return res.send(400, e) # backbone will render errors
       if e then return next e
       res.send r
-
-
-  getFieldError: (msg, attr, attrMsg) ->
-    err = isServer: true, msg: msg + " failed", data: {}
-    err.data[attr] = attrMsg
-    err
 
 
   tFE: (res, msg, attr, attrMsg) ->
@@ -40,6 +34,10 @@ class Api
     res.send 400, @getFieldError(msg, attr, attrMsg)
 
 
+  getFieldError: (msg, attr, attrMsg) ->
+    err = isServer: true, msg: msg + " failed", data: {}
+    err.data[attr] = attrMsg.toString()
+    err
 
 
 module.exports = Api

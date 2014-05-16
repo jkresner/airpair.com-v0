@@ -74,7 +74,22 @@ class exports.Orders extends OC.Orders
 
 
 class exports.Rooms extends BB.FilteringCollection
+  model: Models.Room
   url: -> "/api/chat/rooms/#{@companyId}"
+  getForSuggestion: (suggestionId) ->
+    room = null
+    for m in @models
+      if (_.find m.get('suggestionIds'), (sId) -> sId == suggestionId)
+        room = m.attributes
+    return room
 
+
+class exports.RoomMembers extends BB.FilteringCollection
+  model: Models.RoomMember
+  existingCount: ->
+    count = 0
+    for m in @models
+      count++ if m.get('id')?
+    count
 
 module.exports = exports

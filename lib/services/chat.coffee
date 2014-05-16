@@ -1,6 +1,7 @@
-DomainService = require './_svc'
-HC = require './wrappers/hipchat'
-RequestSevice = require './requests'
+DomainService    = require './_svc'
+HC               = require './wrappers/hipchat'
+RequestSevice    = require './requests'
+async            = require 'async'
 
 module.exports = class ChatService extends DomainService
 
@@ -18,17 +19,29 @@ module.exports = class ChatService extends DomainService
 
   createRoom: (user, data, callback) =>
     @hc.createRoom user.google._json.email, data, (e, r) =>
-      if e? then callback e, r
+      if e? then return callback e
 
       $log 'room.created', r.id, e, r
-      for m in data.members
-        @hc.addMember data.name, m.email, ->
+      async.each data.members,
+        (m,cb) => @hc.addMember data.name, m.email, cb
+        =>
+          data.hipChatId = r.id
+          data.status = 'active'
+          new @room(data).save (ee,rr) ->
+            $log 'room.collection,save', rr
+            callback ee, rr
 
-      data.hipChatId = r.id
-      data.status = 'active'
-      new @room(data).save (ee,rr) ->
-        $log 'room.collection,save', rr
-        callback ee, rr
+
+  # NOTE this does not update hipChat only associates and de-associates rooms
+  updateRoom: (id, data, callback) =>
+    ups = _.omit data, '_id' # so mongo doesn't complain
+    @room.findByIdAndUpdate(id, ups).lean().exec (e, r) =>
+      if e? then return callback e
+      callback null, r
+
+
+  sendMsg: (data, callback) =>
+    @hc.sendMsg data.roomId, data.msg, data.format, callback
 
 
   createUser: (chatUser, callback) =>
@@ -52,5 +65,5 @@ module.exports = class ChatService extends DomainService
     @hc.getUsers emails, callback
 
 
-  getUserByEmail: (email, callback) ->
-    @hc.getUserByEmail email, callback
+  getUser: (email, name, callback) ->
+    @hc.getUserByEmailOrName email, name, callback

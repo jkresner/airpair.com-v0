@@ -190,65 +190,81 @@ class exports.RoomMemberView extends BB.ModelSaveView
     @model.set 'email', @elm('email').val()
     @model.fetch()
 
+
 class exports.RoomView extends BB.ModelSaveView
   logging: on
   el: '#room'
   tmpl: require './templates/Room'
+  events: ->
+    'click .btn-create': 'save'
+    'click .toggle': 'toggleAssociation'
+    'click .send-msg': 'sendMsg'
   initialize: ->
     @listenTo @collection, 'sync', @render
-  events: ->
-    'click .btn-create': 'createRoom'
+    @listenTo @members, 'change', @renderCreate
+  setFromSuggestion: (suggestionId) ->
+    sug = @request.suggestion suggestionId
+    if !sug? then return $log "RoomView. uhhh no suggestion for #{suggestionId}"
+    @suggestion.silentReset sug
+    @collection.companyId = @request.get('company')._id
+    @collection.fetch()
   render: ->
-    if @request.get('tags').length is 0
-      return alert('need at least one tech tag')
+    if @request.get('tags').length is 0 then return alert 'need one tech tag'
+    @model.silentReset @collection.getForSuggestion @suggestion.id
 
-    # if @collection.length == 0
-    if true
-      c = @request.contact(0)
-      e = @model.get('expert')
-      customer = email: c.email, firstName: c.firstName
-      expert = email: e.email, firstName: e.firstName
-      owner = email: "#{@request.get('owner')}@airpair.com"
-      # matchmaker = email: "#{@request.get('owner')}@airpair.com"
+    customer = @request.contact 0
+    expert = @suggestion.get('expert')
 
-      members = []
-      members.push email: owner.email
-      members.push email: expert.email, name: e.name
-      members.push email: customer.email, name: c.name
+    d =
+      rId: @request.id
+      tagsString: @request.tagsString()
+      primaryTag: @request.get('tags')[0].short
+      rooms: @collection.toJSON()
+      room: @model.toJSON()
 
-      rId = @request.id
-      primaryTag = @request.get('tags')[0].short
-      name = "#{c.firstName}+#{e.firstName} {#{primaryTag}}"
+    if @model.id
+      @$el.html @tmpl _.extend d,
+        members: @model.get('members')
+        roomJSON: JSON.stringify(_.omit(@model.attributes,'members'), null, 2)
 
-      tagsString = @request.tagsString()
-      rooms = @collection.toJSON()
-      @$el.html @tmpl {members,name,tagsString,rId,rooms}
-      @memberViews = []
-      for m in members
-        v = new exports.RoomMemberView model: new M.RoomMember(m)
-        @memberViews.push v
-        @$('#members').append v.$el
-      $log '@memberViews.length', @memberViews.length
+    else
+      customer.name = customer.fullName
+      @members.reset []
+      @members.add email: "#{@request.get('owner')}@airpair.com", name: 'adm'
+      @members.add _.pick expert, 'email','name'
+      @members.add _.pick customer, 'email','name'
+
+      name = "#{customer.firstName}+#{expert.firstName} {#{d.primaryTag}}"
+      @$el.html @tmpl _.extend d, {@members,name,expert,customer}
+      for m in @members.models
+        @$('#members').append new exports.RoomMemberView(model: m).$el
     @
-  renderDefaultRoom: ->
-    $log 'renderDefaultRoom'
-  createRoom: (e) ->
-    new M.Room(@getViewData()).save()
+  renderCreate: ->
+    if @members.existingCount() >= 3
+      @$('.btn-create').removeClass('disabled').addClass('btn-success')
+  toggleAssociation: (e) ->
+    room = @model
+    roomId = $(e.target).data 'roomid'
+    if roomId? then room = @collection.findWhere _id: roomId
+    sIds = room.get('suggestionIds')
+    if _.contains sIds, @suggestion.id
+      sIds = _.without sIds, @suggestion.id
+    else
+      sIds.push @suggestion.id
+    room.save {suggestionIds:sIds}, {success:@render}
     false
-    # privacy: 'private',
-    # is_archived: false,
-    # is_guest_accessible: false,
-    # topic: "New Topic",
-    # owner: {id: ownerId}
   getViewData: ->
-    members = []
-    members.push mv.model.toJSON() for mv in @memberViews
-    $log 'getViewData', @request, @
-    members: members
-    suggestionIds: [@model.id]
+    members: @members.toJSON()
+    suggestionIds: [@suggestion.id]
     name: @elm('roomName').val()
     owner: @request.get('owner')
     companyId: @request.get('company')._id
+  sendMsg: ->
+    msg = new Backbone.Model()
+    msg.urlRoot = '/api/chat/msg'
+    msg.save { msg: @elm('msg').val(), roomId: @model.get('hipChatId'), format: 'text' }, success: -> alert('sent')
+    false
+  renderSuccess: (model) => @collection.fetch()
 
 
 #############################################################################

@@ -17,9 +17,12 @@ exports.Order = Shared.Order
 
 
 exports.Room = class Room extends BB.BadassModel
-  url: -> "/api/chat/rooms"
+  urlRoot: -> "/api/chat/rooms"
+
 
 exports.RoomMember = class RoomMember extends BB.BadassModel
-  url: -> "/api/chat/users/#{@get('email')}"
+  url: ->
+    "/api/chat/users/#{@get('email')}/#{@get('name').replace(' ','')}"
+
 
 module.exports = exports
