@@ -1,0 +1,75 @@
+<div class="form-actions" style="margin-top:0">
+  <div class="controls">
+    <a href="#request/{{ rId }}" class="btn btn-inverse">Back</a>
+    {{#if room._id}}
+    <a href="#" class="btn btn-danger toggle" data-roomid="{{room._id}}">Disassociate</a>{{/if}}
+  </div>
+</div>
+
+<div class="alert alert-success">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <h4>Room save</h4>
+</div>
+
+<div class="alert alert-error">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <h4>Error</h4>
+</div>
+
+{{#if roomJSON}}
+
+<pre>{{roomJSON}}</pre>
+
+
+{{#each members}}
+  <br /><b>{{name}}</b> | @{{mention_name}}
+{{/each}}
+
+<br /><br />
+<div class="control-group">
+  <label class="control-label" for="reqOwner">Hello Msg</label>
+  <div class="controls">
+<textarea name="msg" style="width:400px;height:200px">
+Hi guys, welcome to your private chat room :{}
+HipChat is asynchronous chat, offline users will see your messages as soon as they come online. To send an email notification to another user @ mention them like:{{#each members}}
+@{{mention_name}}{{/each}}.
+Please use this room to agree on a time to pair, then mention @all so when can schedule you in and track your hours for you.
+</textarea>
+  </div>
+</div>
+<a href="#" class="send-msg btn btn-primary">Send</a>
+
+{{else}}
+
+<div class="new">
+
+<h2>Room</h2>
+
+<div class="control-group">
+  <label class="control-label">Room name</label>
+  <div class="controls">
+    <input type="text" data-error-style="inline" value="{{ name }}" placeholder="Room name" name="roomName" class="input-block-level">
+    <a href="#" class="btn-create btn disabled">Create</a>
+    <div style="float:right">{{{tagsString}}}</div>
+  </div>
+</div>
+
+
+<h2>Members</h2>
+
+<div id="members"></div>
+
+</div>
+<div class="existing">
+  <h2>Existing rooms</h2>
+
+  <ul>
+  {{#each rooms}}
+    <li>{{name}} <a href="#" class="toggle associate" data-roomid="{{_id}}">associate</a></li>
+  {{/each}}
+  </ul>
+
+</div>
+
+{{/if}}
+

@@ -30,6 +30,13 @@ c.google =
     params:
       calendarId: 'experts@airpair.com' # experts@ primary calendar ID
 
+c.hipChat = tokens: []
+c.hipChat.tokens['jk'] = '6JoPYqdFoAaX1oFaf30Y2JA40uQkuiq3jWksQejU'
+c.hipChat.tokens['il'] = 'PGtSa73sSh5sYYmGvX7ZNLxtnlVaSvlSQ5rE0SqB'
+c.hipChat.tokens['pg'] = 'rEoSqeUhfbRdXkfSbzcAEkVqfrDq62Lvr7bicVjz'
+c.hipChat.tokens['tb'] = 'QKEM7igo28kNhdSLht91qnqu5CGlEH5rf6sPToOE'
+c.hipChat.tokens['lt'] = 'Eu7RFTEXS4DSXFPpg5vx5eopwx6CyTcvIQ7Pn3oG'
+
 if c.env is 'test'
   process.env.Payment_Env = 'test'
   c.SES_ACCESS_KEY = 'test'

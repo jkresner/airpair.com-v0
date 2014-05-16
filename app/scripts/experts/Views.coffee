@@ -104,6 +104,7 @@ class exports.ExpertView extends BB.ModelSaveView
       m.set model.attributes
       m.trigger 'change' # for the expert row to re-render
   getViewData: ->
+    name: @elm('name').val()
     pic: @elm('pic').val()
     homepage: @elm('homepage').val()
     brief: @elm('brief').val()

@@ -266,12 +266,7 @@ class exports.CustomerReviewView extends BB.BadassView
   initialize: (args) ->
   render: ->
     @$el.html @tmpl @request.toJSON()
-    order =
-      'available': 0
-      'abstained': 1
-    sortedSuggestions = _.sortBy @request.get('suggested'), (elem) ->
-      order[elem.expertStatus] ? 10
-    for s in sortedSuggestions when s.expertStatus != 'waiting'
+    for s in @request.sortedSuggestions() when s.expertStatus != 'waiting'
       args = model: new M.CustomerReview(s), request: @request, session: @session
       @$('.suggested').append new exports.SuggestionView(args).render().el
     @

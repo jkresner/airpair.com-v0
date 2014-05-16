@@ -30,6 +30,10 @@ module.exports = class BadassModel extends Backbone.Model
 
   extend: (args) -> @extendJSON args
 
+  silentReset: (args) ->
+    @clear silent: true
+    @set args, { silent: true }
+
   enableLogging: ->
 
     # Get type name of the model to distinguish it in log statements

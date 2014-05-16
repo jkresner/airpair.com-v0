@@ -35,6 +35,8 @@
       <button type="button" class="btn btn-default btn-warning">All</button>
       <button type="button" class="btn btn-default">jk</button>
       <button type="button" class="btn btn-default">il</button>
+      <button type="button" class="btn btn-default">pg</button>
+      <button type="button" class="btn btn-default">tb</button>
       <button type="button" class="btn btn-default">ds</button>
     </div>
     <div id="requests"></div>
@@ -43,6 +45,8 @@
   <div id="request" class="route"></div>
 
   <div id="farm" class="route"></div>
+
+  <div id="room" class="route"></div>
 
   <div id="owners" class="route">
     <div class="form-actions admin-nav">
@@ -95,7 +99,7 @@
         session: {{{ session }}},
         requests: {{{ requests }}},
       };
-      Router = require('/scripts/inbound/Router');
+      Router = require('/scripts/pipeline/Router');
       window.router = new Router(pageData);
     }
   </script>

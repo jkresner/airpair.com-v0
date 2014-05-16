@@ -3,7 +3,7 @@ google       = require('./wrappers/google')
 ONE_HOUR     = 3600000 # milliseconds
 
 owner2colorIndex =
-  mi: undefined # default color for the calendar, #9A9CFF
+  tb: undefined # default color for the calendar, #9A9CFF
   '': 1  # blue
   il: 2  # green
   '': 3  # purple
@@ -13,7 +13,7 @@ owner2colorIndex =
   '': 7  # turqoise
   '': 8  # gray
   '': 9  # bold blue
-  er: 10 # bold green
+  pg: 10 # bold green
   '': 11 # bold red
 
 capitalizeFirstLetter = (str) ->
@@ -117,7 +117,9 @@ class CalendarService
 
     params =
       eventId: call.gcal.id
-      sendNotifications: call.sendNotifications
+      sendNotifications: true
+
+    $log 'cal.changeExpert', params
 
     body =
       attendees: [
@@ -127,6 +129,8 @@ class CalendarService
       ]
       summary: @_getEventName(request, expert._id)
 
+    $log 'google cal body', body
+
     # allow development to edit prod's calls, but don't update gcal
     # TODO wow so ugly.
     isTest = cfg?.env is 'test'
@@ -135,6 +139,8 @@ class CalendarService
     if !cfg || isTest || isDevButNotOurs
       fakeEventData = _.extend call.gcal, body
       return process.nextTick -> cb null, fakeEventData
+
+    $log 'google patching', @account
 
     @google.patchEvent @account, params, body, cb
 

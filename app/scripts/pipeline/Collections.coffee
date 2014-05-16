@@ -2,6 +2,7 @@ exports = {}
 BB      = require './../../lib/BB'
 Models  = require './Models'
 Shared  = require './../shared/Collections'
+OC  = require './../orders/Collections'
 
 exports.Tags = Shared.Tags
 exports.MarketingTags = Shared.MarketingTags
@@ -67,8 +68,28 @@ class exports.Requests extends BB.FilteringCollection
     curIndex = ids.indexOf id
     prev: ids[curIndex - 1], next: ids[curIndex + 1]
 
-class exports.Orders extends BB.FilteringCollection
-  model: Models.Order
+
+class exports.Orders extends OC.Orders
   url: -> "/api/orders/request/#{@requestId}"
+
+
+class exports.Rooms extends BB.FilteringCollection
+  model: Models.Room
+  url: -> "/api/chat/rooms/#{@companyId}"
+  getForSuggestion: (suggestionId) ->
+    room = null
+    for m in @models
+      if (_.find m.get('suggestionIds'), (sId) -> sId == suggestionId)
+        room = m.attributes
+    return room
+
+
+class exports.RoomMembers extends BB.FilteringCollection
+  model: Models.RoomMember
+  existingCount: ->
+    count = 0
+    for m in @models
+      count++ if m.get('id')?
+    count
 
 module.exports = exports

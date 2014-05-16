@@ -1,0 +1,18 @@
+
+
+My name is {{ session.google.name.givenName }}, I'm your personal account manager assigned to help you with your request. We have insufficient detail from you to reach out to our experts. You requests must be updated within 24 hours or it will be automatically removed from our dashboard.
+
+https://www.airpair.com/find-an-expert/edit/{{ _id }}
+
+Once updated, please reply to this email answering the following questions.
+
+    How soon are you ready to start?
+    How many hours do you want to book?
+    How did you hear about us?
+    Do you prefer to pay with PayPal or Credit Card?
+
+Regards,
+
+{{ session.google.name.givenName }}
+
+{{> MailSignature }}

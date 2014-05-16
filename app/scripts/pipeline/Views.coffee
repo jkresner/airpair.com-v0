@@ -2,6 +2,7 @@ exports          = {}
 BB               = require './../../lib/BB'
 M                = require './Models'
 SV               = require './../shared/Views'
+OV               = require './../orders/Views'
 storage          = require('../util').storage
 calcExpertCredit = require '../shared/mix/calcExpertCredit'
 
@@ -158,23 +159,138 @@ class exports.RequestFarmView extends BB.ModelSaveView
 
 
 #############################################################################
+##  To auto setup a HipChat Room
+#############################################################################
+
+
+class exports.RoomMemberView extends BB.ModelSaveView
+  # logging: on
+  class: 'control-group'
+  tmpl: require './templates/RoomMember'
+  viewData: ['email','name','mention_name']
+  events:
+    'click .btn-create': 'createUser'
+    'change .email': 'lookupUser'
+  initialize: ->
+    @listenTo @model, 'change', @render
+    @model.fetch()
+  render: ->
+    @$el.html @tmpl @model.toJSON()
+  renderError: =>
+    @render()
+  createUser: ->
+    @model.url = -> "/api/chat/users"
+    @model.save @getViewData()
+    false
+    # title: 'Matchmaker',
+    # is_group_admin: false,
+    # timezone: 'UTC',
+    # password: '',
+  lookupUser: ->
+    @model.set 'email', @elm('email').val()
+    @model.fetch()
+
+
+class exports.RoomView extends BB.ModelSaveView
+  logging: on
+  el: '#room'
+  tmpl: require './templates/Room'
+  events: ->
+    'click .btn-create': 'save'
+    'click .toggle': 'toggleAssociation'
+    'click .send-msg': 'sendMsg'
+  initialize: ->
+    @listenTo @collection, 'sync', @render
+    @listenTo @members, 'change', @renderCreate
+  setFromSuggestion: (suggestionId) ->
+    sug = @request.suggestion suggestionId
+    if !sug? then return $log "RoomView. uhhh no suggestion for #{suggestionId}"
+    @suggestion.silentReset sug
+    @collection.companyId = @request.get('company')._id
+    @collection.fetch()
+  render: ->
+    if @request.get('tags').length is 0 then return alert 'need one tech tag'
+    @model.silentReset @collection.getForSuggestion @suggestion.id
+
+    customer = @request.contact 0
+    expert = @suggestion.get('expert')
+
+    d =
+      rId: @request.id
+      tagsString: @request.tagsString()
+      primaryTag: @request.get('tags')[0].short
+      rooms: @collection.toJSON()
+      room: @model.toJSON()
+
+    if @model.id
+      @$el.html @tmpl _.extend d,
+        members: @model.get('members')
+        roomJSON: JSON.stringify(_.omit(@model.attributes,'members'), null, 2)
+
+    else
+      customer.name = customer.fullName
+      @members.reset []
+      @members.add email: "#{@request.get('owner')}@airpair.com", name: 'adm'
+      @members.add _.pick expert, 'email','name'
+      @members.add _.pick customer, 'email','name'
+
+      name = "#{customer.firstName}+#{expert.firstName} {#{d.primaryTag}}"
+      @$el.html @tmpl _.extend d, {@members,name,expert,customer}
+      for m in @members.models
+        @$('#members').append new exports.RoomMemberView(model: m).$el
+    @
+  renderCreate: ->
+    if @members.existingCount() >= 3
+      @$('.btn-create').removeClass('disabled').addClass('btn-success')
+  toggleAssociation: (e) ->
+    room = @model
+    roomId = $(e.target).data 'roomid'
+    if roomId? then room = @collection.findWhere _id: roomId
+    sIds = room.get('suggestionIds')
+    if _.contains sIds, @suggestion.id
+      sIds = _.without sIds, @suggestion.id
+    else
+      sIds.push @suggestion.id
+    room.save {suggestionIds:sIds}, {success:@render}
+    false
+  getViewData: ->
+    members: @members.toJSON()
+    suggestionIds: [@suggestion.id]
+    name: @elm('roomName').val()
+    owner: @request.get('owner')
+    companyId: @request.get('company')._id
+  sendMsg: ->
+    msg = new Backbone.Model()
+    msg.urlRoot = '/api/chat/msg'
+    msg.save { msg: @elm('msg').val(), roomId: @model.get('hipChatId'), format: 'text' }, success: -> alert('sent')
+    false
+  renderSuccess: (model) => @collection.fetch()
+
+
+#############################################################################
 ##  To edit request
 #############################################################################
 
 class CustomerMailTemplates
   tmplReceived: require './../../mail/customerRequestReceived'
+  tmplIncomplete: require './../../mail/customerRequestIncomplete'
   tmplReview: require './../../mail/customerRequestReview'
-  tmplMatched: require './../../mail/customerRequestMatched'
   tmplFollowup: require './../../mail/customerRequestFollowup'
   constructor: (request, session) ->
     isOpensource = request.get('pricing') == 'opensource'
     firstName = request.contact(0).fullName.split(' ')[0]
     request.contact(0).firstName = firstName
     r = request.extendJSON tagsString: request.tagsString(), isOpensource: isOpensource, session: session.toJSON()
-    @received = encodeURIComponent(@tmplReceived r)
-    @review = encodeURIComponent(@tmplReview r)
-    @matched = encodeURIComponent(@tmplMatched r)
-    @followup = encodeURIComponent(@tmplFollowup r)
+    if r.status == 'incomplete'
+      @incomplete = encodeURIComponent @tmplIncomplete r
+    else if r.status == 'pending'
+      # no email templates
+    else if r.status == 'received' || r.status == 'holding'
+      @received = encodeURIComponent @tmplReceived r
+    else if r.status == 'consumed' || r.status == 'completed'
+      @followup = encodeURIComponent @tmplFollowup r
+    else
+      @review = encodeURIComponent @tmplReview r
 
 
 class ExpertMailTemplates
@@ -192,40 +308,41 @@ class ExpertMailTemplates
     # $log 'suggestion', suggestion, contact, request
 
     r = request.extendJSON { tagsString: request.tagsString(), suggestion: suggestion, contact: contact, suggestedExpertRate: suggestedExpertRate, session: session.toJSON() }
-    @another = encodeURIComponent(@tmplAnother r)
-    @canceled = encodeURIComponent(@tmplCancelled r)
-    @chosen = encodeURIComponent(@tmplChosen r)
-    @suggested = encodeURIComponent(@tmplSuggested r)
-    @bookMe = encodeURIComponent(@tmplBookMe r)
 
+    @canceled = encodeURIComponent @tmplCancelled r
+    if r.status is 'pending'
+      @bookMe = encodeURIComponent @tmplBookMe r
+    else if suggestion.expertStatus is 'waiting'
+      @suggested = encodeURIComponent @tmplSuggested r
+    else if suggestion.expertStatus is 'available'
+      @another = encodeURIComponent @tmplAnother r
+      @chosen = encodeURIComponent @tmplChosen r
+    # else if suggestion.expertStatus is 'declined'
+      # details changes... more money new brief?
 
 class exports.RequestInfoView extends BB.ModelSaveView
+  # logging: on
   el: '#info'
   tmpl: require './templates/RequestInfo'
   tmplCompany: require './templates/RequestInfoCompany'
   events:
     'click #receivedBtn': 'updateStatusToHolding'
+    'change #status': 'updateStatus'
   modelProps: ['brief', 'availability', 'status', 'owner', 'canceledDetail',
     'incompleteDetail', 'budget', 'pricing']
   initialize: ->
     @$el.html @tmpl @model.toJSON()
     @$('#status').on 'change', @toggleCanceledIncompleteFields
     @tagsInput = new SV.TagsInputView model: @model, collection: @tags
-    for prop in @modelProps
-      @listenTo @model, "change:#{prop}", @render
-    @listenTo @model, 'change:tags', @renderMailTemplates
-    @listenTo @model, 'change:company', @renderMailTemplates
+    @listenTo @model, "change:brief change:vailability change:status change:owner change:canceledDetail change:incompleteDetail change:budget change:pricing", @render
+    @listenTo @model, 'change:tags change:company change:status', @renderMailTemplates
   render: ->
     @setValsFromModel @modelProps
-    # TODO: kinda hacky:
-    @$('.status').attr('class', "label status label-#{@model.get('status')}")
-    @$('.status').html @model.get('status')
     @toggleCanceledIncompleteFields()
     @
   renderMailTemplates: ->
-    mailTemplates = new CustomerMailTemplates @model, @session
     data =
-      mailTemplates: mailTemplates,
+      mailTmpls: new CustomerMailTemplates @model, @session
       tagsString: @model.tagsString()
       threeTagsString: @model.threeTagsString()
     tmplCompanyData = _.extend data, @mget('company')
@@ -236,8 +353,13 @@ class exports.RequestInfoView extends BB.ModelSaveView
     @$('#incomplete-control-group').toggle @$('#status').val() == 'incomplete'
   updateStatusToHolding: ->
     if @mget('status') is 'received'
-      @model.set status: 'holding'
-      @parentView.save null
+      @elm('status').val('holding').change()
+  updateStatus: (e) ->
+    s = @$('#status').val()
+    if s != 'incomplete' && s != 'canceled' # don't want to fire validation
+      @model.set status: s
+      @parentView.save e
+
 
 class exports.RequestMarketingTagsInfoView extends BB.BadassView
   el: '#marketingTagsInfo'
@@ -325,12 +447,12 @@ class exports.RequestSuggestedView extends BB.BadassView
     @listenTo @orders, 'sync', @render
   render: ->
     @$el.html '<legend>Suggested</legend>'
-    suggested = @model.get 'suggested'
+    suggested = @model.sortedSuggestions()
     if !suggested? then return
     else if suggested.length == 0
       @$el.append '<p>No suggestion made...</p>'
     else
-      for s in @model.get 'suggested'
+      for s in suggested
         s.tags =  @mget 'tags'
         s.expert.hasLinks = new M.Expert(s.expert).hasLinks()
         mailTemplates = new ExpertMailTemplates @model, @session, s.expert._id
@@ -339,7 +461,6 @@ class exports.RequestSuggestedView extends BB.BadassView
         s.credit = calcExpertCredit(@orders.toJSON(), s.expert._id)
         tmplData =
           requestId: @model.id
-          isBookMe: @model.get('status') == 'pending'
           contact: @model.get('company').contacts[0]
           mailTemplates: mailTemplates
           tagsString: @model.tagsString()
@@ -353,6 +474,24 @@ class exports.RequestSuggestedView extends BB.BadassView
     $log 'suggestRemove', suggestionId, toRemove
     @model.set 'suggested', _.without( @model.get('suggested'), toRemove )
     @parentView.save e
+
+
+class exports.OrderRowView extends OV.OrderRowView
+  tmpl: require './templates/OrderRow'
+
+class exports.RequestOrdersView extends BB.BadassView
+  el: '#orders'
+  initialize: (args) ->
+    @listenTo @collection, 'reset add remove filter', @render
+  render: ->
+    @$el.toggle @collection.models.length > 0
+    $list = @$('tbody').html ''
+    for m in @collection.models
+      $list.append new exports.OrderRowView( model: m ).render().el
+      for li in m.get 'lineItems'
+        if 'pending' == m.get 'paymentStatus' then continue
+    @
+
 
 
 class exports.RequestCallsView extends BB.BadassView
@@ -403,6 +542,7 @@ class exports.RequestView extends BB.ModelSaveView
     @suggestionsView = new exports.RequestSuggestionsView model: @model, collection: @experts, parentView: @
     @suggestedView = new exports.RequestSuggestedView model: @model, collection: @experts, session: @session, orders: @orders, parentView: @
     @callsView = new exports.RequestCallsView el: '#calls', model: @model, parentView: @
+    @ordersView = new exports.RequestOrdersView el: '#orders', collection: @orders, model: new @orders.model()
   renderSuccess: (model, response, options) =>
     @$('.alert-success').fadeIn(800).fadeOut(5000)
     m = @collection.findWhere(_id: model.id)

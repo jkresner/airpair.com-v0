@@ -2,7 +2,8 @@ ses =         require './ses'
 async =       require 'async'
 fs =          require 'fs'
 handlebars =  require 'handlebars'
-util =        require '../../app/scripts/util.coffee'
+roles =       require '../identity/roles'
+util =        require '../../app/scripts/util'
 
 renderHandlebars = (data, templatePath, callback) ->
   fs.readFile templatePath, "utf-8", (error, templateData) ->
@@ -23,12 +24,12 @@ class Mailman
   sendEmail: (options, callback) =>
     @renderEmail(options, options.templateName, (e, rendered) ->
       rendered.Subject = options.subject
-      ses.send(options.to, rendered, callback)
+      ses.send options.to, rendered, callback
     )
 
   sendEmailToAdmins: (options, callback) ->
-    options.to = ['jk@airpair.com', 'il@airpair.com', 'er@airpair.com', 'ds@airpair.com']
-    @sendEmail(options, callback)
+    options.to = _.map roles.getAdminInitials(), (initials) -> "#{initials}@airpair.com"
+    @sendEmail options, callback
 
   ###
     the options object should have these properties:

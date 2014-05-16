@@ -1,5 +1,5 @@
 DomainService = require './_svc'
-StripeService = require './payment/stripe'
+StripeService = require './wrappers/stripe'
 stripeSvc     = new StripeService()
 
 module.exports = class SettingsService extends DomainService

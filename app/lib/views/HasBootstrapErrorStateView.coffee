@@ -14,9 +14,9 @@ module.exports = class HasBootstrapErrorStateView extends HasErrorStateView
 
   constructor: (args) ->
     HasErrorStateView::constructor.apply @, arguments
-    @errorSummary = @$('.alert-error')
 
   renderErrorSummary: (model, errors) =>
+    @errorSummary = @$('.alert-error')
     if @logging then $log 'renderErrorSummary', model, errors, @errorSummary
 
     # Use big red alert box on server errors

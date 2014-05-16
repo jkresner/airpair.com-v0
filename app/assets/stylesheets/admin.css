@@ -75,19 +75,19 @@ body#admorders .info .label-owner { font-size:9px; margin: 0;}
 body#admorders .total { font-weight:bold;text-align:right;padding-right:10px; }
 body#admorders th { font-size:12px; }
 body#admorders #rowsSummary th { font-size:10px;padding:2px 8px; }
-body#admorders td { padding:2px 0px 2px 8px;font-size:12px; }
+#orders td { padding:2px 0px 2px 8px;font-size:12px; }
 body#admorders td span { display:inline-block; }
-body#admorders .expertPic { width:16px!important;height:16px!important }
+#orders .expertPic { width:16px!important;height:16px!important }
 body#admorders #timefilter { float:right;padding:10px 0px; }
-body#admorders #orders { margin-top:25px;clear:both; }
-body#admorders #orders img { height: 32px;width: 32px }
-body#admorders #orders img.favicon { height: 8px;width: 8px; }
-body#admorders #orders th { padding:2px 6px; }
+#orders { margin-top:25px;clear:both; }
+#orders img { height: 32px;width: 32px }
+#orders img.favicon { height: 8px;width: 8px; }
+#orders th { padding:2px 6px; }
 body#admorders #rowsSummary th { color:black;background:#FAA732 }
-body#admorders #orders .pending { color:#b94a48; }
-body#admorders #orders .received { color:#333333 }
-body#admorders #orders .paidout { color:#468847; }
-body#admorders #orders .incomplete { display: none; }
+#orders .pending { color:#b94a48; }
+#orders .received { color:#333333 }
+#orders .paidout { color:#468847; }
+#orders .incomplete { display: none; }
 body#admorders #order .form { float:left;width:39%; }
 body#admorders #order pre { float:right;width:59%;font-size:10px;line-height:1.1; }
 
@@ -121,9 +121,9 @@ body#admorders #order pre { float:right;width:59%;font-size:10px;line-height:1.1
 #adminboundpage #requests .label-tags { font-weight:normal;margin:2px 0; }
 .label-owner { margin:10px 10px 10px 0;min-width:20px;text-align:center;font-weight: normal;}
 .label-jk { background-color: #FFB878; }
-.label-mi { background-color: #9A9CFF; }
+.label-tb { background-color: #9A9CFF; }
 .label-il { background-color: #7AE7BF; }
-.label-er { background-color: #51B749; }
+.label-pg { background-color: #51B749; }
 .label-ds { background-color: #FF887C; }
 .label-prev { background-color: #FF0000; }
 
@@ -147,34 +147,19 @@ body#admorders #order pre { float:right;width:59%;font-size:10px;line-height:1.1
 #adminboundpage #farm input { border-radius:0;float:left;width:28% }
 #adminboundpage #farm textarea { font-size:10px;border-radius:0;padding:1px;float:left;width:68%;line-height:16px }
 
-#adminboundpage #farm .twocol {
-  overflow: auto;
-  width: 100%
-}
-#adminboundpage #farm .twocol .lcol {
-  width: 35%;
-  float: left;
-}
-#adminboundpage #farm .twocol .lcol input {
-  width: 100%;
-}
-#adminboundpage #farm .twocol .rcol {
-  width: 58%;
-  float: right;
-  margin-right:34px;
-}
+#adminboundpage #farm .twocol { overflow:auto;width: 100% }
+#adminboundpage #farm .twocol .lcol { width:35%;float:left; }
+#adminboundpage #farm .twocol .lcol input { width:100%; }
+#adminboundpage #farm .twocol .rcol { width:58%;float:right;margin-right:34px; }
+#adminboundpage #farm #coldMailBody { font-size:13px;color:#222;background-color:white;padding:10px;border-radius:5px; }
+#adminboundpage #farm #coldMailBody a { color:#15c;text-decoration:underline; }
 
-#adminboundpage #farm #coldMailBody {
-  font-size: 13px;
-  color: #222;
-  background-color: white;
-  padding: 10px;
-  border-radius: 5px;
-}
-#adminboundpage #farm #coldMailBody a {
-  color: #15c;
-  text-decoration: underline;
-}
+#adminboundpage #room pre { float:right;width:59%;font-size:10px;line-height:1.1; }
+#adminboundpage #room div.new { width:65%;float:left; }
+#adminboundpage #room div.existing { width:25%;float:right; }
+#adminboundpage #room #members label.control-label { float:left;width:200px; }
+#adminboundpage #room #members input { width:200px; }
+#adminboundpage #room #members div.controls { clear:both; }
 
 #adminboundpage .table-events td { padding:0 }
 #adminboundpage #company-controls { font-weight:bold;margin-bottom:0 }
@@ -207,10 +192,13 @@ body#admorders #order pre { float:right;width:59%;font-size:10px;line-height:1.1
 #adminboundpage .suggested hr { margin:0; }
 #adminboundpage .suggested .pic { width:40px;height:40px;margin:0;float:left; }
 #adminboundpage .suggested .deets { background-color:#CC523E;color:white;font-size:11px;float:right;width:500px }
-#adminboundpage .suggested .names { padding:0px 0 0 4px;float:left;}
+#adminboundpage .suggested .names { padding:0px 0 0 4px;float:left;overflow:hidden; }
 #adminboundpage .suggested .links { margin:0 4px 0px 0px;height:20px; }
-#adminboundpage .suggested .links .icon { width:1.2em;height:1.2em;margin-right:-2px;margin-top:1px }
+#adminboundpage .suggested .links a { float:left;margin-right:2px; }
+#adminboundpage .suggested .links .icon { width:1.2em;height:1.2em;margin-right:2px;margin-top:1px;width:12px; }
 #adminboundpage .suggested .links .zocial:before { font: 60%/1.5 zocial; }
+#adminboundpage .suggested .links i { color:white;margin:-7px 0 0 2px;display:inline-block;font-style:none;padding:0; }
+#adminboundpage .suggested .links i:hover { text-decoration:underline; }
 #adminboundpage .suggested .tags { margin-top:-1px;padding:0px 2px;float:right;max-width:275px;max-height:40px;text-align:right;overflow:hidden; }
 #adminboundpage .suggested .tags .label-tag { margin:-2px 1px 0 1px; }
 #adminboundpage .suggested .label-tag { padding:0px 2px 1px 2px;font-size:9px;float-right }
@@ -222,6 +210,7 @@ body#admorders #order pre { float:right;width:59%;font-size:10px;line-height:1.1
 #adminboundpage .suggested .rate em { display:block;color:gray;font-size:11px;font-style:normal; }
 #adminboundpage .suggested p { clear:both;font-size:11px; }
 #adminboundpage .suggested .btn-schedule { float:left;background-color:rgb(70, 136, 71) }
+#adminboundpage .suggested .btn-room { float:left }
 
 #adminboundpage p {  margin:10px 5px 12px 5px }
 #adminboundpage .call { float:left;width:70px;margin:10px 5px 12px 5px;text-align:center; }

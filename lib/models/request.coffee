@@ -73,6 +73,7 @@ Suggestion expertStatus
   abstained     : expert does not want the call
   available     : expert wants the call
   unwanted      : customer does not want the expert
+  booked        : customer has booked the expert
 """
 
 

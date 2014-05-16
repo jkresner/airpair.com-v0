@@ -8,7 +8,6 @@ module.exports = (app) ->
   # login / auth routes
   require('./lib/auth/base')(app)
 
-
   renderHome = (req, r, next) ->
     if req.isAuthenticated() then next()
     else r.sendfile "./public/home.html"
@@ -16,8 +15,7 @@ module.exports = (app) ->
   app.get '/', renderHome, render 'dashboard'
   app.get '/yc', file 'yc'
   app.get '/railsconf2014', file 'railsconf'
-  app.get '/book/buttons', authd, file 'buttons'
-  app.get '/book/tweets', authd, file 'tweets'
+  app.get '/book/me', authd, render 'bookme'
 
   # pages
   app.get '/login', file 'login'
@@ -55,6 +53,7 @@ module.exports = (app) ->
   require('./lib/api/paymethods')(app)
   require('./lib/api/marketingtags')(app)
   require('./lib/api/videos')(app)
+  require('./lib/api/chat')(app)
 
   app.get '/paypal/success/:id', authd, render 'payment/paypalSuccess', ['params.id']
   app.get '/paypal/cancel/:id', authd, render 'payment/paypalCancel', ['params.id']

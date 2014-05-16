@@ -1,7 +1,8 @@
-S = require('./../shared/Routers')
-M = require './Models'
-C = require './Collections'
-V = require './Views'
+BB = require './../../lib/BB'
+S  = require('./../shared/Routers')
+M  = require './Models'
+C  = require './Collections'
+V  = require './Views'
 
 module.exports = class Router extends S.AirpairSessionRouter
 
@@ -15,6 +16,7 @@ module.exports = class Router extends S.AirpairSessionRouter
     'inactive'     : 'inactive'
     'request/:id'  : 'request'
     'farm/:id'     : 'farm'
+    'room/:id'     : 'room'
     'owners'       : 'owners'
     ':id'          : 'request'
 
@@ -26,6 +28,10 @@ module.exports = class Router extends S.AirpairSessionRouter
       marketingTags: new C.MarketingTags()
       experts: new C.Experts()
       orders: new C.Orders()
+      suggestion: new BB.BadassModel()
+      rooms: new C.Rooms()
+      room: new M.Room()
+      members: new C.RoomMembers()
     v =
       requestsView: new V.RequestsView collection: d.requests, model: d.selected
       requestView: new V.RequestView
@@ -38,6 +44,7 @@ module.exports = class Router extends S.AirpairSessionRouter
         session: @app.session
       filtersView: new V.FiltersView collection: d.requests
       farmingView: new V.RequestFarmView model: d.selected
+      roomView: new V.RoomView model: d.room, collection: d.rooms, suggestion: d.suggestion, request: d.selected, members: d.members
 
     @resetOrFetch d.requests, pageData.requests
     @resetOrFetch d.experts, pageData.experts
@@ -66,6 +73,7 @@ module.exports = class Router extends S.AirpairSessionRouter
 
     # load orders for the request
     if @app.orders.requestId != id
+      @app.orders.reset []
       @app.orders.requestId = id
       @app.orders.fetch()
 
@@ -77,6 +85,12 @@ module.exports = class Router extends S.AirpairSessionRouter
       route = $('#request')
       route.hide()
       # get fresh data
-      @app.selected.set('_id', id, { silent: true })
-      @app.selected.fetch reset: true, success: => route.show()
+      @app.selected.silentReset '_id' : id
+      @app.selected.fetch reset: true, success: =>
+        route.show()
       return
+
+  room: (id) ->
+    @app.roomView.setFromSuggestion id
+
+

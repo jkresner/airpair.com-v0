@@ -26,6 +26,7 @@ describe "mailman", ->
       expect(sendMock.calledOnce).to.equal true
       sendMock.restore()
       done()
+
     mailman.importantRequestEvent "evtName", user, request, callback
 
   it "should correctly render emails for important events", (done) ->
