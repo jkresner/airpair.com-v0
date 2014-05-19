@@ -4,7 +4,7 @@ videos     = require './videos'
 {ObjectId} = require('mongoose').Types
 
 OrdersSvc  = new (require('./orders'))()
-RequestSvc = new (require './requests')()
+RequestSvc = new require './requests'
 
 Order   = new require '../models/order'
 Request = new require '../models/request'
@@ -13,6 +13,7 @@ module.exports = class RequestCallsService
 
   model: require './../models/request'
   calendar: calendar
+  rSvc: new RequestSvc()
 
   getByCallPermalink: (permalink, callback) =>
     # find by permalink
@@ -62,7 +63,7 @@ module.exports = class RequestCallsService
   # TODO this is going to look way different once we start completing calls
   # when they have a youtube video. We'll be passing old & new orders around.
   update: (userId, requestId, call, callback) =>
-    RequestSvc.getById(requestId).lean().exec (err, request) =>
+    @rSvc.getById requestId, (err, request) =>
       oldCall = _.find request.calls, (c) -> _.idsEqual c._id, call._id
       if !oldCall then return callback new Error('no such call ' + call._id)
 
@@ -79,7 +80,7 @@ module.exports = class RequestCallsService
           oldCall.duration = call.duration
 
           ups = { calls: request.calls }
-          RequestSvc.update requestId, ups, (err, newRequest) =>
+          @rSvc.update requestId, ups, (err, newRequest) =>
             if err then return callback err
             newCall = _.find newRequest.calls, (c) -> _.idsEqual c._id, call._id
             callback null, newCall

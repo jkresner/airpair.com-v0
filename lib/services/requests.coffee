@@ -6,6 +6,7 @@ User             = require '../models/user'
 RatesSvc         = require './rates'
 SettingsSvc      = require './settings'
 MarketingTagsSvc = require './marketingtags'
+Query            = require './requests.query'
 
 
 module.exports = class RequestsService extends DomainService
@@ -16,15 +17,29 @@ module.exports = class RequestsService extends DomainService
   settingsSvc: new SettingsSvc()
   mTagsSvc: new MarketingTagsSvc()
 
-  publicView: (request) ->
-    r = _.pick request, ['_id','tags','company','brief','availability','owner']
-    r.company = _.pick r.company, ['about']
-    r.company.contacts = request.company.contacts.map (c) ->
-      _.pick c, ['pic']
-    r
 
-  associatedView: (request) ->
-    _.pick request, ['_id','tags','company','brief','availability','budget','pricing','suggested','owner']
+  """ Get a request, shapes viewData by viewer + logs view events """
+  getByIdSmart: (id, usr, callback) ->
+    @getById id, (e, r) =>
+      if r?
+
+        if Roles.isAdmin usr
+          r.base = @rates.base
+
+        else if Roles.isRequestExpert usr, r
+          @addViewEvent r, usr, "expert view"
+          r = Query.select r, 'associated'
+
+        else if Roles.isRequestOwner usr, r
+          @addViewEvent r, usr, "customer view"
+
+        else
+          @addViewEvent r, usr, "anon view"
+          r = Query.select r, 'public'
+
+        @rates.addRequestSuggestedRates r
+
+      callback null, r
 
   # log event when the request is viewed
   addViewEvent: (request, usr, evtName) =>
@@ -62,30 +77,6 @@ module.exports = class RequestsService extends DomainService
       callback null, r
 
 
-  getByIdSmart: (id, usr, callback) =>
-    @model.findOne({ _id: id }).lean().exec (e, r) =>
-      if e then return callback e
-      request = null
-
-      if r?
-        if Roles.isAdmin usr
-          request = r
-          r.base = @rates.base
-        else if Roles.isRequestExpert usr, r
-          @addViewEvent r, usr, "expert view"
-          request = @associatedView r
-        else if Roles.isRequestOwner usr, r
-          @addViewEvent r, usr, "customer view"
-          request = r
-        else
-          @addViewEvent r, usr, "anon view"
-          request = @publicView r
-
-        for s in r.suggested
-          s.suggestedRate = @rates.calcSuggestedRates r, s.expert
-
-      callback null, request
-
   update: (id, data, callback) =>
     @model.findByIdAndUpdate(id, data).lean().exec (e, r) =>
       if e then return callback e
@@ -102,40 +93,8 @@ module.exports = class RequestsService extends DomainService
     request.base = @rates.base
 
 
-  historySelect:
-    '_id': 1
-    'company.name': 1
-    'company.contacts': { $slice: [0, 1] }
-    'company.contacts.email': 1
-    'company.contacts.fullName': 1
-    'company.contacts.pic': 1
-    'status': 1
-    'owner': 1
-    'suggested.expert._id': 1
-    'suggested.expert.name': 1
-    'suggested.expert.pic': 1
-    'calls': 1
-    'userId': 1
-
-
   getForHistory: (id, callback) =>
     @model.find userId: id, @historySelect, callback
-
-  inboundSelect:
-    '_id': 1
-    'company.name': 1
-    'company.contacts': { $slice: [0, 1] }
-    'company.contacts.email': 1
-    'company.contacts.fullName': 1
-    'company.contacts.pic': 1
-    'status': 1
-    'owner': 1
-    'calls.status': 1
-    'suggested.expertStatus': 1
-    'suggested.expert.pic': 1
-    'tags.short': 1
-    'calls.recordings.type': 1
-    'userId': 1
 
 
 
@@ -178,6 +137,7 @@ module.exports = class RequestsService extends DomainService
         if e then return callback e
         if !request then request = {}
         callback null, request
+
 
   updateSuggestionByExpert: (request, usr, expertReview, callback) =>
     # TODO, add some validation!!

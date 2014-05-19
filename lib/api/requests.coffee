@@ -111,11 +111,9 @@ class RequestApi extends CRUDApi
   updateSuggestion: (req, res, next) =>
     usr = req.user
     @model.findOne { _id: req.params.id }, (e, r) =>
-      $log 'request.status', r.status
       if e then return next e
       if Roles.isRequestOwner(usr, r)
         return next new Error('Customer update suggestion not implemented')
-        #@updateSuggestionByCustomer(req, res, next, r)
       else if Roles.isRequestExpert(usr, r) && r.status == 'pending'
         oSvc.confirmBookme r, usr, req.body, cSend(res, next)
       else if Roles.isRequestExpert(usr, r)

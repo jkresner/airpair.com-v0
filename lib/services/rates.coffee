@@ -15,6 +15,12 @@ module.exports = class RatesService extends DomainService
     return budget - (@base[requestPricing]-@base[pricing])
 
 
+  addRequestSuggestedRates: (request) ->
+    if request.suggested
+      for s in request.suggested
+        s.suggestedRate = @calcSuggestedRates request, s.expert
+
+
   # NOTE suggestedRate is the developers rate
   # not including airpair's margin
   calcSuggestedRates: (request, expert) ->

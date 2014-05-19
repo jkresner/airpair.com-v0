@@ -2,6 +2,8 @@ moment = require 'moment'
 
 module.exports = class DomainService
 
+  logging: off
+
   # TODO use lean and exec on everything here!
 
   # Used to dump full list of customers
@@ -13,7 +15,11 @@ module.exports = class DomainService
 
 
   getById: (id, callback) =>
-    @model.findOne { _id: id }, callback
+    @model.findOne( _id: id ).lean().exec (e, r) =>
+      if e
+        if @logging then $log 'getById.err', e
+        return callback e
+      callback null, r
 
 
   getByUserId: (id, callback) =>
