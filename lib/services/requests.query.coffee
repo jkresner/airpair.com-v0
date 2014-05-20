@@ -12,6 +12,9 @@ class QueryHelper
     active:
       status: $in: ['received','incomplete','waiting','review','scheduling','scheduled','holding','consumed','deferred','pending']
 
+    inactive:
+      status: $in: ['canceled','completed']
+
 
   view:
 

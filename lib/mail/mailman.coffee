@@ -13,6 +13,7 @@ renderHandlebars = (data, templatePath, callback) ->
     callback null, rendered
 
 class Mailman
+
   renderEmail: (d, templateName, callback) ->
     htmlPath = "#{__dirname}/templates/#{templateName}.html.hbs"
     txtPath = "#{__dirname}/templates/#{templateName}.txt.hbs"
@@ -30,6 +31,18 @@ class Mailman
   sendEmailToAdmins: (options, callback) ->
     options.to = _.map roles.getAdminInitials(), (initials) -> "#{initials}@airpair.com"
     @sendEmail options, callback
+
+
+  admNewRequest: (request) ->
+    fullName = ''  #temporary until fix bookme flow
+    if request.company? then fullName = request.company.contacts[0].fullName
+    @sendEmailToAdmins
+      templateName: "admNewRequest"
+      subject: "New request: #{fullName} #{request.budget}$"
+      request: request
+      tags: request.tags.map((o) -> o.short).join(' ')
+      (e) -> if e then $log 'admNewRequest error', e
+
 
   ###
     the options object should have these properties:

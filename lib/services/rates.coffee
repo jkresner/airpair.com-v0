@@ -19,7 +19,7 @@ module.exports = class RatesService extends DomainService
     if request.suggested
       for s in request.suggested
         s.suggestedRate = @calcSuggestedRates request, s.expert
-
+    request.base = @base
 
   # NOTE suggestedRate is the developers rate
   # not including airpair's margin

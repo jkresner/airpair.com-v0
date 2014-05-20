@@ -1,123 +1,53 @@
-CRUDApi     = require './_crud'
-cSend       = require '../util/csend'
-RequestsSvc = require './../services/requests'
-authz       = require './../identity/authz'
-admin       = authz.Admin isApi: true
-loggedIn    = authz.LoggedIn isApi: true
-Roles       = authz.Roles
-OrdersSvc   = require './../services/orders'
-oSvc = new OrdersSvc()
+Api           = require './_api'
+RequestSvc    = require './../services/requests'
+OrdersSvc     = require './../services/orders'
+Roles         = require '../identity/roles'
 
-class RequestApi extends CRUDApi
+class RequestApi extends Api
 
-  model:    require '../models/request'
-  svc:      new RequestsSvc()
+  Svc: RequestSvc
+  oSvc: new OrdersSvc()
 
-  constructor: (app, route) ->
-    app.get   "/api/admin/#{route}", admin, @admin
-    app.get   "/api/admin/#{route}/active", admin, @active
-    app.get   "/api/admin/#{route}/inactive", admin, @inactive
-    app.put   "/api/#{route}/:id/suggestion", loggedIn, @updateSuggestion
-    app.get   "/api/#{route}/:id", @detail
-    app.post  "/api/#{route}/book", @createBookme
-    super app, route
-
+  routes: (app, route) ->
+    app.get   "/api/#{route}/:id", @ap, @detail
+    app.get   "/api/#{route}", @loggedIn, @ap, @list
+    app.get   "/api/admin/#{route}/active", @admin, @ap, @active
+    app.get   "/api/admin/#{route}/inactive", @admin, @ap, @inactive
+    app.put   "/api/#{route}/:id", @ap, @update
+    app.put   "/api/#{route}/:id/suggestion", @loggedIn, @ap, @updateSuggestion
+    app.post  "/api/#{route}", @ap, @create
+    app.post  "/api/#{route}/book", @ap, @createBookme
 
 ###############################################################################
 ## CRUD extensions
 ###############################################################################
 
-  ## Temporary
-  newEvent: (req, evtName, evtData) ->
-    @svc.newEvent req.user, evtName, evtData
+  list: (req, res) => @svc.getByUserId req.user._id, @cbSend
+  active: (req, res) => @svc.getActive @cbSend
+  inactive: (req, res) => @svc.getInactive @cbSend
+  detail: (req, res) => @svc.getByIdSmart req.params.id, @cbSend
+  create: (req, res) => @svc.create @data, @cbSend
+  createBookme: (req, res) => @svc.createBookme req.body, @cbSend
 
-  admin: (req, res, next) => @svc.getAll cSend(res, next)
-  active: (req, res, next) => @svc.getActive cSend(res, next)
-  inactive: (req, res, next) => @svc.getInactive cSend(res, next)
-  list: (req, res, next) => @svc.getByUserId req.user._id, cSend(res, next)
-
-  detail: (req, res, next) =>
-    @svc.getByIdSmart req.params.id, req.user, (e, r) =>
-      if e then return next e
-      if r? then res.send r else res.send(400, {})
-
-  create: (req, res, next) =>
-    @svc.create req.user, req.body, cSend(res, next)
-
-  createBookme: (req, res, next) =>
-    @svc.createBookme req.user, req.body, cSend(res, next)
-
-  update: (req, res, next) =>
-    usr = req.user
-    search = _id: req.params.id
-    evts = []
-
-    @model.findOne search, (e, r) =>
-      if e then return next e
-
-      # stop users updating other users requests (need a better solution!)
-      if !(Roles.isAdmin(usr, r) || Roles.isRequestOwner(usr, r))
-        return res.send 403
-
-      data = _.clone req.body
-      delete data._id # so mongo doesn't complain
-
-      if data.status is "holding" && (!data.owner?||data.owner=='')
-        evts.push @newEvent req, "send received email"
-        data.owner = Roles.getAdminInitials usr.google.id
-
-      if data.status is "canceled" && !data.canceledDetail
-        return @tFE res, 'Update', 'canceledDetail', 'Must supply canceled reason'
-      else if r.status != "canceled" && data.status is "canceled"
-        evts.push @newEvent req, "canceled"
-
-      if data.status is "incomplete" && !data.incompleteDetail
-        return @tFE res, 'Update', 'incompleteDetail', 'Must supply incomplete reason'
-      else if r.status != "incomplete" && data.status is "incomplete"
-        evts.push @newEvent req, "incomplete"
-
-      for s in req.body.suggested
-
-        if !s.events?
-          data.status = "waiting"
-          reqEvt = @newEvent(req, "suggested #{s.expert.username}")
-          evts.push reqEvt
-
-          # make sure our suggested rate is less than our budget!
-          # s.suggestedRate = @rates.calcSuggestedRate r, s.expert
-
-          s.expertStatus = "waiting"
-          s.events = [ @newEvent(req, "first contacted") ]
-
-      if r.suggested?
-        for s in r.suggested
-          match = _.find req.body.suggested, (sug) ->
-            _.idsEqual sug._id, s._id
-          if !match?
-            evts.push @newEvent(req, "removed suggested #{s.expert.username}")
-
-      if evts.length is 0
-        evts.push @newEvent req, "updated"
-
-      data.events.push.apply(data.events, evts)
-
-      @svc.update req.params.id, data, (e, r) =>
-        if e then return next e
-        # if Roles.isRequestOwner(usr, r) && r.status != 'received'
-        #   @mailman.importantRequestEvent "customer updated", usr, r
-        res.send r
+  update: (req, res) =>
+    if @data.status is "canceled" && !@data.canceledDetail
+      @tFE res, 'Update', 'canceledDetail', 'Must supply canceled reason'
+    else if @data.status is "incomplete" && !@data.incompleteDetail
+      @tFE res, 'Update', 'incompleteDetail', 'Must supply incomplete reason'
+    else
+      @svc.updateSmart req.params.id, @data, @cbSend
 
 
   updateSuggestion: (req, res, next) =>
     usr = req.user
-    @model.findOne { _id: req.params.id }, (e, r) =>
-      if e then return next e
+    @svc.getById req.params.id, (e, r) =>
+
       if Roles.isRequestOwner(usr, r)
         return next new Error('Customer update suggestion not implemented')
       else if Roles.isRequestExpert(usr, r) && r.status == 'pending'
-        oSvc.confirmBookme r, usr, req.body, cSend(res, next)
+        @oSvc.confirmBookme r, usr, req.body, @cbSend
       else if Roles.isRequestExpert(usr, r)
-        @svc.updateSuggestionByExpert r, usr, req.body, cSend(res, next)
+        @svc.updateSuggestionByExpert r, @data, @cbSend
       else
         res.send 403
 
