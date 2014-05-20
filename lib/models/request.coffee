@@ -6,10 +6,14 @@ Schema   = mongoose.Schema
 
 VALID_CALL_TYPES = ['opensource', 'private', 'nda', 'subscription', 'offline']
 
+
+eStatus = ['waiting','available','abstained','chosen','released']
+
+
 Suggestion = new Schema
   events:             [{}]
   expert:             { required: true, type: {} }
-  expertStatus:       { required: true, type: String }
+  expertStatus:       { required: true, enum: eStatus, type: String, default: 'waiting' }
   expertRating:       Number
   expertFeedback:     String
   expertComment:      String
@@ -17,10 +21,13 @@ Suggestion = new Schema
   suggestedRate:      Number     # can be altered by admin or expert
   customerRating:     Number
   customerFeedback:   String
+  matchedByUseId:     { type: ObjectId, ref: 'User' }
+
 
 Recording = new Schema
   type: { required: true, type: String }
   data: { required: true, type: Mixed } # YouTube's API response
+
 
 Call = new Schema
   # TODO index on subdocument id
