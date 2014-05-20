@@ -54,7 +54,7 @@ module.exports = class OrdersService extends DomainService
     # $log 'create._calculateProfitAndPayouts.payWith', payWith
 
     savePaymentResponse = (e, paymentResponse) =>
-      $log 'savePaymentResponse.e', e
+      # $log 'savePaymentResponse.e', e
       if e then return callback e
       order.payment = paymentResponse
 
@@ -285,10 +285,8 @@ module.exports = class OrdersService extends DomainService
         callback null, status: 'deleted'
 
   # oldest orders first (smallest timestamp -> biggest timestamp)
-  getByRequestId: (requestId, callback) =>
-    query = requestId: requestId
-    sort = utc: 'asc'
-    @search(query).sort(sort).exec callback
+  getByRequestId: (requestId, cb) =>
+    @search {requestId}, {options: $sort: { utc: 1 }}, cb
 
   ###
 
@@ -410,6 +408,7 @@ module.exports = class OrdersService extends DomainService
   # TODO batch update?
   _saveLineItems: (orders, callback) =>
     saveOrder = (order, cb) =>
-      update = $set: { lineItems: order.toJSON().lineItems }
+      # update = $set: { lineItems: order.toJSON().lineItems }
+      update = $set: { lineItems: order.lineItems }
       @model.findByIdAndUpdate order._id, update, cb
     async.map orders, saveOrder, callback

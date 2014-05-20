@@ -1,40 +1,33 @@
+Api         = require './_api'
 CompanysSvc = require './../services/companys'
-authz       = require './../identity/authz'
-loggedIn    = authz.LoggedIn isApi:true
-admin       = authz.Admin isApi: true
-cSend       = require '../util/csend'
 
-class CompanyApi
 
-  svc: new CompanysSvc()
+class CompanyApi extends Api
 
-  constructor: (app, route) ->
-    app.get     "/api/#{route}/:id", loggedIn, @detail
-    app.get     "/api/admin/#{route}", admin, @adminlist
-    app.post    "/api/#{route}", loggedIn, @create
-    app.put     "/api/#{route}/:id", loggedIn, @update
-    app.delete  "/api/#{route}/:id", admin, @delete
+  Svc: CompanysSvc
 
-  detail: (req, res, next) =>
+  routes: (app, route) ->
+    app.get     "/api/#{route}/:id", @loggedIn, @ap, @detail
+    app.get     "/api/admin/#{route}", @admin, @ap, @adminlist
+    app.post    "/api/#{route}", @loggedIn, @ap, @create
+    app.put     "/api/#{route}/:id", @loggedIn, @ap, @update
+    app.delete  "/api/#{route}/:id", @admin, @ap, @delete
 
+  detail: (req, res) =>
     search = '_id': req.params.id
 
     if req.params.id is 'me'
       search = 'contacts.userId': req.user._id
 
-    @svc.searchOne search, cSend(res, next)
+    @svc.searchOne search, null, @cbSend
 
-  adminlist: (req, res, next) =>
-    @svc.getAll cSend(res, next)
+  adminlist: (req, res) => @svc.getAll @cbSend
 
-  create: (req, res, next) =>
-    @svc.create req.body, cSend(res, next)
+  create: (req, res) => @svc.create @data, @cbSend
 
-  update: (req, res, next) =>
-    @svc.update req.params.id, req.body, cSend(res, next)
+  update: (req, res) => @svc.update req.params.id, @data, @cbSend
 
-  delete: (req, res, next) =>
-    @svc.delete req.params.id, cSend(res, next)
+  delete: (req, res) => @svc.delete req.params.id, @cbSend
 
 
 module.exports = (app) -> new CompanyApi app, 'companys'
