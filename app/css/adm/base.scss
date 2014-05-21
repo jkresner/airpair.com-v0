@@ -1,22 +1,27 @@
-nav { background:url('/images/bg-top-short.jpg');height:70px;border-bottom:solid 1px #d3d3d3}
+/* adm base styles */
+
+/* bootstrap overrides */
+[class^="icon-"],[class*=" icon-"] { background-image: url("/images/css/glyphicons-halflings.png"); }
+.icon-white { background-image: url("/images/css/glyphicons-halflings-white.png"); }
+.input-prepend .add-on { height:auto;padding:3px; }
+.input-append .add-on { height:auto;padding:3px; }
+
+/* adm custom styles */
+
+body { background:none repeat scroll 0 0 #E2E2E2 }
+
+nav { height:40px;margin-bottom:12px;border-bottom:solid 1px #d3d3d3;background-color:black }
 nav > div { padding-top:6px;height:54px;width:1240px;margin:auto }
-nav a.logo {
-  display:inline-block;
-  float:left;
-  width: 180px;
-  height: 60px;
-  margin-top: 3px;
-  /*margin-left: 12px;*/
-  background: url('/images/logos/header_old.png') no-repeat;
-}
-
-
-
-
-
+nav > div > a { background: url('/images/icons/icon48.png') no-repeat;display:inline-block;float:left;width:50px;height:50px;margin-top:-10px }
+nav ul { color:#d3d3d3;float:right;margin:2px 0px 8px 8px;display:inline;font-size:16px }
+nav ul li { float:right;display:block;margin-left:10px }
+nav ul a { color:white;display:inline-block;padding:1px 5px }
+nav ul a:hover { color:#FFB878; }
 
 
 /* adm base styles */
+.form-actions { margin-top:-13px;padding:15px 10px; }
+
 .label-owner { margin:10px 10px 10px 0;min-width:20px;text-align:center;font-weight:normal; }
 .label-jk { background-color: #FFB878; }
 .label-tb { background-color: #9A9CFF; }
@@ -38,18 +43,9 @@ nav a.logo {
 
 nav a.zocial { padding:0; }
 
-.admin-nav { margin-top:0;padding:15px 10px; }
-.admin-nav .controls { margin-left:5px!important; }
 
 /* keep the delete button away from the other buttons */
 .controls a.btn-danger:last-child { float: right; }
-
-nav div { padding-top:6px;height:54px;width:1240px;margin:auto;border-bottom:solid 1px white; }
-nav div > a { float:left; }
-nav img { display:inline-block;width:180px;padding:3px 12px; }
-nav h3 { display:inline-block;color:#999999;padding:16px 6px }
-nav ul { float:right;margin:10px 0px 8px 8px;display:inline; }
-nav ul li { float:right;display:block;margin-left:5px }
 
 /*
 #schedulepage .expertPic { height: 60px; width: 60px;}
@@ -97,7 +93,7 @@ nav ul li { float:right;display:block;margin-left:5px }
 }*/
 
 /* feedback that the request is in progress */
-#admmarketingtagspage button:disabled {
+body#mtags button:disabled {
   background: darkgray;
   border: solid 3px gray;
 }

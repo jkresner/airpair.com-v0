@@ -1,13 +1,13 @@
-body#pipeline .form-actions { margin-top:0;padding:15px 10px; }
 body#pipeline #filters { float:right;display:block;padding:0px; }
-body#pipeline #owners div.explanation { float:right;width:500px; }
-body#pipeline #owners table { width:375px; }
-body#pipeline #owners table td { padding-top: 0; padding-bottom:0; }
+body#pipeline .table-events td { padding:0 }
+body#pipeline p {  margin:10px 5px 12px 5px }
+
 body#pipeline #requests a { display:block; }
 body#pipeline #requests a.edit { width:50px; }
 body#pipeline #requests img { max-width:32px;border-style:solid;border-width:1.5px;float:left;margin-right:5px;padding:1px; }
 body#pipeline #requests td { font-size:11px;line-height:15px }
 body#pipeline #requests img { width:32px;height:32px; }
+
 body#pipeline #tagNewForm { display:none; }
 body#pipeline #requests .r { width:110px; }
 body#pipeline #requests .o { width:90px; }
@@ -15,11 +15,13 @@ body#pipeline #requests .c { width:220px; }
 body#pipeline #requests .t { width:380px; }
 body#pipeline #requests .t a { display:inline; }
 body#pipeline #requests .s { width:280px; }
+
 body#pipeline a.ok span { background-color:#5cb85c;margin:1px 0 0 -1px;font-weight:normal; }
 body#pipeline a.slow { color:#f0ad4e }
 body#pipeline a.slow span { background-color:#f0ad4e;margin:1px 0 0 -1px;font-weight:normal; }
 body#pipeline a.overdue { color:#F22222 }
 body#pipeline a.overdue span { background-color:#F22222;margin:1px 0 0 -1px;font-weight:normal; }
+
 body#pipeline #requests .label-tags { font-weight:normal;margin:2px 0; }
 body#pipeline #request textarea { width:98%;height:100px;font-size:11px; }
 body#pipeline #request legend {margin-bottom:2px;line-height:16px;background:black;padding:4px;color:white;font-size:15px;}
@@ -29,6 +31,7 @@ body#pipeline #request #reqBudget { width:50px; }
 body#pipeline #request #reqPricing { width:140px; }
 body#pipeline #request .halfButtons .btn:first-child { width: 24px;margin-right:3px}
 body#pipeline #request .halfButtons .btn:last-child { width: 56px; }
+
 body#pipeline #farm {}
 body#pipeline #farm hr { margin:20px 0px;clear:both; }
 body#pipeline #farm .zocial { float:right;clear:left;margin-top:0px;padding:0 4px 0 0;font-size:10px }
@@ -47,7 +50,8 @@ body#pipeline #room div.existing { width:25%;float:right; }
 body#pipeline #room #members label.control-label { float:left;width:200px; }
 body#pipeline #room #members input { width:200px; }
 body#pipeline #room #members div.controls { clear:both; }
-body#pipeline .table-events td { padding:0 }
+
+
 body#pipeline #company-controls { font-weight:bold;margin-bottom:0 }
 body#pipeline dl { margin-bottom:6px }
 body#pipeline dt { padding:0px 0px 4px 4px;font-weight:normal }
@@ -81,7 +85,7 @@ body#pipeline .suggested .deets { background-color:#CC523E;color:white;font-size
 body#pipeline .suggested .names { padding:0px 0 0 4px;float:left;overflow:hidden; }
 body#pipeline .suggested .links { margin:0 4px 0px 0px;height:20px; }
 body#pipeline .suggested .links a { float:left;margin-right:2px; }
-body#pipeline .suggested .links .icon { width:1.2em;height:1.2em;margin-right:2px;margin-top:1px;width:12px; }
+body#pipeline .suggested .links .icon { width:18px;height:18px;margin-right:2px;background-size:16px 16px;background-color:black;background-position:1px 1px }
 body#pipeline .suggested .links .zocial:before { font: 60%/1.5 zocial; }
 body#pipeline .suggested .links i { color:white;margin:-7px 0 0 2px;display:inline-block;font-style:none;padding:0; }
 body#pipeline .suggested .links i:hover { text-decoration:underline; }
@@ -97,7 +101,6 @@ body#pipeline .suggested .rate em { display:block;color:gray;font-size:11px;font
 body#pipeline .suggested p { clear:both;font-size:11px; }
 body#pipeline .suggested .btn-schedule { float:left;background-color:rgb(70, 136, 71) }
 body#pipeline .suggested .btn-room { float:left }
-body#pipeline p {  margin:10px 5px 12px 5px }
 body#pipeline .call { float:left;width:70px;margin:10px 5px 12px 5px;text-align:center; }
 body#pipeline .call img { height:70px; width:70px; }
 body#pipeline .call .dateTime { width:70px;font-size:10px;clear:both;display:block;background:#d3d3d3 }
@@ -105,3 +108,5 @@ body#pipeline .call label { width:70px;font-size:10px;clear:both;display:block;m
 body#pipeline .call a:first-child span { display: none; }
 body#pipeline .call a:first-child:hover span { background-color: white;display: initial;opacity: 0.8; position: absolute; width: 70px; }
 body#pipeline .call .youtubeThumbnail { border-top: 1px solid yellow; }
+body#pipeline .call .btn-hangout { padding:15px 0;height:70px;background-color:black }
+body#pipeline .call .btn-hangout img { height:30px;width:72px; }

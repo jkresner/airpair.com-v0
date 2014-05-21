@@ -32,7 +32,6 @@ module.exports = (app) ->
   # admin pages
   app.get '/adm/tags*', authd, adm, render 'adm/tags'
   app.get '/adm/marketingtags', authd, adm, render 'adm/marketingtags'
-  app.get '/adm/csvs*', authd, adm, render 'adm/csvs'
   app.get '/adm/orders*', authd, adm, render 'adm/orders'
   app.get '/adm/companys*', authd, adm, render 'adm/companys'
   app.get '/adm/experts*', authd, adm, render 'adm/experts'

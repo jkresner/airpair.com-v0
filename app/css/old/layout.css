@@ -1,8 +1,5 @@
 /*
-
-body { background:none repeat scroll 0 0 #E2E2E2 }
-
-nav .contactus {
+  nav .contactus {
   font-family: Open Sans, helvetica, sans-serif;
   color: #888888;
   margin-top: 16px;
@@ -16,22 +13,11 @@ nav .contactus {
 
 /*div.main { margin-top:20px;width:1280px;margin:auto }
 
-.codeline { clear:both;font-family:courier;color:#212F3B;float:left;border-bottom: dashed 1px #A4A4A5;
-  border-top:dashed 1px #A4A4A5;padding:10px 0;width:900px;margin-bottom:30px }
-.codeline em { color:#CE5424; }
-
 .rb-group .checked { color:#7F761C!important;font-weight:bold; }
-
-.button { background:#CC6750;padding:10px 20px;border-radius: 0.5em;
-  color:white!important;
-  border:solid 3px #CC523E;font-size:18px;margin:0px 0px;float:left;
-  -webkit-transition: margin .2s;text-decoration:none;margin-right:10px; }
-.button-gray { background:#d3d3d3;border:solid 3px darkgray }
 
 .charCount { margin:-20px 13px 0 0;float:right; }
 .charCount { font-size:11px;color:gray }
 
-.well { background:#D9D6BB }
 
 .rating { font-weight:bold }
 .rating .label { padding:1px 4px!important;font-weight:normal }

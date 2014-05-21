@@ -42,14 +42,6 @@ body {
   margin:0;
 }
 
-.site-title a {
-  background:url('/images/logos/airpair.png') no-repeat;
-  width:225px;
-  height:60px;
-  display:block;
-  margin-top:7px;
-}
-
 figure.gSignin { display:none; }
 #sidebar-action figure.gSignin { display:inherit;background:white;text-align:center;padding:10px auto; }
 #sidebar-action figure.gSignin p { font-size:13px; }

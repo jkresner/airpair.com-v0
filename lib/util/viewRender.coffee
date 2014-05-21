@@ -18,7 +18,6 @@ module.exports =
   render: (fileName, propList) ->
     propList = [] if !propList?
     (req, resp, next) ->
-      $log 'render', fileName, propList, req
       args = [ req.user ]
       for prop in propList
         args.push getProp(req, prop)
