@@ -1,12 +1,15 @@
 About
 ===============================================================================
 
-site @ http://www.airpair.com/
+http://www.airpair.com/
 
-site walk through => http://youtu.be/e0N_2T7Tdf8
+Architecture walk through => http://youtu.be/e0N_2T7Tdf8
+
 
 Branching strategy + pull requests
 ===============================================================================
+
+- ALL work is to be done on topic branches & merged into master w pull requests
 
 - **master** is ongoing development branch
 
@@ -20,8 +23,6 @@ Branching strategy + pull requests
 
     `git checkout -b prod release/v0.M.m.x prod`
 
-- ALL work is to be done on topic branches & merged into master w pull requests
-
 
 To setup + run locally
 ===============================================================================
@@ -34,13 +35,14 @@ To setup + run locally
 
 4)   Install npm package `npm install`
 
-5)   Run brunch server `brunch w` or `brunch watch`
+5)   Run brunch server `brunch w`
 
 6)   Open browser @ http://localhost:3333/
 
 7)   For testing, install PhantomJS & mocha-phantomjs `npm install -g mocha mocha-phantomjs phantomjs`
 
 8)   Run "npm run hooks" to set up the pre-push hooks"
+
 
 Running tests
 ===============================================================================
@@ -55,17 +57,17 @@ Running tests
 
 ##### 2. /test/integration
 
-   hit html & make http requests either in browser or w PhantomJS
+   hit html & make http requests in browser or w PhantomJS
 
-   First run brunch in test mode (test db/users etc.)
+   1) Run brunch in test mode (test db/users etc.)
 
-   `brunch w -e test`
+     `brunch w -e test`
 
-   Then execute tests
+   2) Then execute tests
 
-   `http://localhost:4444/test/index.html` (in browser w mocha)
+     `http://localhost:4444/test/index.html` (in browser w mocha)
 
-   `mocha-phantomjs http://localhost:4444/test/index.html` (in terminal w mocha-phantomjs)
+     `mocha-phantomjs http://localhost:4444/test/index.html` (in terminal w mocha-phantomjs)
 
 #### Pre-push git hook testing
 
@@ -82,63 +84,39 @@ Tests should run on every push. To setup locally
 - docs on sinon chai syntax            chaijs.com/plugins/sinon-chai
 
 
-List of TODO next (v.6)
+CSS Structure
 ===============================================================================
 
-- [H] Admin schedule call & redeem hours
-- [H] "Book me" flows
-- [H] Transactional email
-- [H] Schedule / google calendar integration
-  - [M] Timezone calculator
-- [M] Add linkedIn airpair share
-- [H] Split expert sign up into contact & prefs
-- [H] Ask if request can be farmed out to the public
-- [M] Add github projects to tags
-- [M] improve tag search
-- [L] Remove experts with un-associated userIds (haven't logged in)
-- [L] Pull out hasLink and mail body saving to request/suggestion
+CSS lives in 3 places
 
-TODO v.7
+1)  '/vendor/styles'
+    Vendor
+
+2)  `/app/assets/css`
+    Gets copied to /public/css and read as is
+
+3)  `/app/css`
+    Gets compiles and combined per settings in `/config.coffee`
+
+Files structured and combined into:
+
+-   [ap.css]
+    `/app/styles/ap/*css`
+    `/app/styles/shared/*css`
+    Styles for front end inheriting the WordPress epik theme which is an exact copy of the one served from the blog at
+    `http://www.airpair.com/wp-content/themes/epik/style.css`
+
+  ( if dev node offline, can't work+ slower to load )
+  ( Add hack in dev to read local-copy ) | (PROB can't pull https: YET) )
+
+--- [adm.css]
+    `/app/styles/adm/*css`
+    `/app/styles/shared/*css`
+    Styles and page layout relevant to "backend" administrator pages inheriting from bootstrap.
+
+
+Random Notes
 ===============================================================================
-
-- [H] Chat / User to user messaging system
-- [H] Show server error states for customer + expert sign in
-- [M] Mobile homepage
-- [L] Airpair techniques emails (How to intro, share code etc.)
-
-TODO low priority
-===============================================================================
-
-- [L] Try two instances with redis ?
-- [L] Downsize mongoHQ
-
-Ideas to airpair on
-===============================================================================
-
-[Jake Verbaten]
-- Mix panel & error logs pie chart
-
-[Un-assigned]
-- Update schema: https://github.com/visionmedia/node-migrate
-
-
-# Onboarding
-
-- follow instructions in higher up in this file, README.md
-- learn how to do pipeline. someone will take you through it
-  e.g. https://trello.com/c/kRkudmGQ/365-take-david-through-pipeline-request
-- get a <your-initals>@airpair.com address
-- add yourself to roles.coffee using the gPlus id of your airpair email.
-- install
-    - editor
-      - cs highlighting
-      - cs compile
-    - latest version of git [impt; without this, pre-push will not work]
-    - coffeescript
-    - mongo 2.4
-- watch some of <http://www.youtube.com/watch?v=e0N_2T7Tdf8&feature=player_detailpage#t=718>
-- add yourself to the error emails (winstonConfig), new request (mailman)  (TODO: eng alias)
-- add your color to the badges CSS for claiming a request (admin.css, `label-<initials>`)
 
 ### Common gotcha's while writing phantomJS integration tests
 - the view redirects on success. solution: `v.renderSuccess = ->`
