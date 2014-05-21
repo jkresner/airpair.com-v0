@@ -1,3 +1,27 @@
+/*
+
+article a { color:#CE5323!important }
+article a.button { color:white!important }
+div.title-area { width:420px; }
+p.site-title { width:420px; }
+p.site-title a { float:left; }
+p.site-title em { float:left;font-size:18px;font-style:normal;margin:27px 0px 0px -10px }
+a.delete { color:red; }
+.alert { display:none }
+
+main.content { float:left }
+aside.sidebar { float:right }
+label.control-label { color:darkgray; }
+.controls input, .controls textarea { color:#1F1F1F; }
+.charCount { font-size:11px;color:gray;float:right;margin-top:-15px; }
+a.button { background-color:#CE5323;text-align:center;width:100%;color:#FFFFFF;font-size:18px;line-height:24px;padding:16px 32px;margin:0; }
+a.secondary { background-color:#000000!important;color:white!important; }
+.login a { background-color:#000000!important;color:white!important;line-height:14px }
+
+*/
+
+/*
+
 body {
   font-size:1rem
 }
@@ -194,7 +218,6 @@ article#howMuch th { font-weight:500;width:18% }
 article#howMuch th i { font-size:10px }
 article#howMuch td { font-size:12px }
 
-/* Firefox fix for tech landing pages profile pic spilling over the column */
 .featuredpost a { max-width:100% }
 
 
@@ -231,7 +254,8 @@ article#howMuch td { font-size:12px }
   .title-area { float:none;display:block }
   aside.header-widget-area { width:380px!important;float:none!important;display:block!important }
   #menu-services { margin:0px!important;padding:0px;display:block;float:none; }
-/*  .menu-services li { height:35px; }*/
+ .menu-services li { height:35px; }
   #menu-services a { padding-left:0; }
   #menu-item-20324 { display:inline-block; }
 }
+*/

@@ -1,0 +1,23 @@
+body#admorders {}
+body#admorders .selectOrder { display:block;font-size:9px; }
+body#admorders .info { font-size:9px; }
+body#admorders .info .marketingtag { border: none; background-color: inherit; font-size:9px; margin: 0; padding: 0; font-weight: normal;}
+body#admorders .info .label-owner { font-size:9px; margin: 0;}
+body#admorders .total { font-weight:bold;text-align:right;padding-right:10px; }
+body#admorders th { font-size:12px; }
+body#admorders #rowsSummary th { font-size:10px;padding:2px 8px; }
+#orders td { padding:2px 0px 2px 8px;font-size:12px; }
+body#admorders td span { display:inline-block; }
+#orders .expertPic { width:16px!important;height:16px!important }
+body#admorders #timefilter { float:right;padding:10px 0px; }
+#orders { margin-top:25px;clear:both; }
+#orders img { height: 32px;width: 32px }
+#orders img.favicon { height: 8px;width: 8px; }
+#orders th { padding:2px 6px; }
+body#admorders #rowsSummary th { color:black;background:#FAA732 }
+#orders .pending { color:#b94a48; }
+#orders .received { color:#333333 }
+#orders .paidout { color:#468847; }
+#orders .incomplete { display: none; }
+body#admorders #order .form { float:left;width:39%; }
+body#admorders #order pre { float:right;width:59%;font-size:10px;line-height:1.1; }

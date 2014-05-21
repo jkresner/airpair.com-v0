@@ -1,0 +1,4 @@
+body#admcompanys .unshare { color:red; }
+body#admcompanys #stripeRegister p { display:none; }
+body#admcompanys .cardSharers { float:left;width:30% }
+body#admcompanys .cardDetail { float:right;width:65% }

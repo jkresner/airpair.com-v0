@@ -1,0 +1,85 @@
+/* adm base styles */
+.label-owner { margin:10px 10px 10px 0;min-width:20px;text-align:center;font-weight:normal; }
+.label-jk { background-color: #FFB878; }
+.label-tb { background-color: #9A9CFF; }
+.label-il { background-color: #7AE7BF; }
+.label-pg { background-color: #51B749; }
+.label-ds { background-color: #FF887C; }
+.label-prev { background-color: #FF0000; }
+
+.marketingTagsInput { float:left;padding:8px 0px 12px 0px; }
+.marketingTagsInput .selected { display: inline; }
+.marketingTagsInput .tt-hint,
+.marketingTagsInput .tt-query { width: 150px; }
+.marketingTagsInput .marketingtag { vertical-align: top; margin: 0; margin-top: 1px; }
+.marketingtag { border: 1px solid rgba(0, 0, 0, 0.25);font-size: 14px;font-weight: bold;margin: 3px 3px 0px 0px;padding: 6px 10px; text-shadow: none; }
+.marketingtag.channel { color: #b94a48; background-color: #f2dede; }
+.marketingtag.campaign { color: #c09853; background-color: #fcf8e3; }
+.marketingtag.usage { color: #3a87ad; background-color: #d9edf7; }
+.marketingtag a.delete { display: none; }
+
+nav a.zocial { padding:0; }
+
+.admin-nav { margin-top:0;padding:15px 10px; }
+.admin-nav .controls { margin-left:5px!important; }
+
+/* keep the delete button away from the other buttons */
+.controls a.btn-danger:last-child { float: right; }
+
+nav div { padding-top:6px;height:54px;width:1240px;margin:auto;border-bottom:solid 1px white; }
+nav div > a { float:left; }
+nav img { display:inline-block;width:180px;padding:3px 12px; }
+nav h3 { display:inline-block;color:#999999;padding:16px 6px }
+nav ul { float:right;margin:10px 0px 8px 8px;display:inline; }
+nav ul li { float:right;display:block;margin-left:5px }
+
+/*
+#schedulepage .expertPic { height: 60px; width: 60px;}
+#schedulepage .controls > a { vertical-align: text-bottom; }
+#schedulepage select[name="duration"] {
+  width: 90px;
+}
+#schedulepage input[name="date"] {
+  width: 110px;
+}
+#schedulepage select[name="time"] {
+  width: 80px;
+}
+#schedulepage .experts,
+#schedulepage .datetimeduration {
+  overflow: auto;
+  width: 100%
+}
+#schedulepage .datetimeduration .control-group { float: left; margin-right: 2em;}
+#schedulepage .experts label { margin:0; }
+#schedulepage .experts .expertMini { float:left;margin:10px 20px 0 0px  }
+#schedulepage .experts .hours { background-color:black;font-size:11px;color:white;height:40px; }
+#schedulepage .experts img { margin:6px auto; }
+#schedulepage .experts .selected .select { background-color: lightyellow }
+#schedulepage .experts .select { height:25px; }
+#schedulepage button:disabled {
+  background: darkgray;
+  border: solid 3px gray;
+}
+#schedulepage #videos .list > div {
+  display: inline-block;
+
+  background-color: lightyellow;
+  padding: 10px;
+  border-radius: 4px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  border: 1px solid grey;
+}
+#schedulepage #videos .list > div .delete {
+  visibility: hidden;
+}
+#schedulepage #videos .list > div:hover .delete {
+  visibility: visible;
+}*/
+
+/* feedback that the request is in progress */
+#admmarketingtagspage button:disabled {
+  background: darkgray;
+  border: solid 3px gray;
+}
