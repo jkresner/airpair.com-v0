@@ -10,17 +10,19 @@ exports.config =
     base: '/'
     run: yes
 
+
+  sourceMaps: false
+
+
   overrides:
     dev:
-      sourceMaps: false
+      sourceMaps: true
     test:
       paths:    watched: ['app','vendor', 'test']
       plugins:  autoReload: enabled: false
       server:   { port: 4444, env: 'test' }
-      sourceMaps: false
     prod:
       optimize: true
-      sourceMaps: false
 
 
   files:

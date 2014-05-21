@@ -1,3 +1,21 @@
+nav { background:url('/images/bg-top-short.jpg');height:70px;border-bottom:solid 1px #d3d3d3}
+nav > div { padding-top:6px;height:54px;width:1240px;margin:auto }
+nav a.logo {
+  display:inline-block;
+  float:left;
+  width: 180px;
+  height: 60px;
+  margin-top: 3px;
+  /*margin-left: 12px;*/
+  background: url('/images/logos/header_old.png') no-repeat;
+}
+
+
+
+
+
+
+
 /* adm base styles */
 .label-owner { margin:10px 10px 10px 0;min-width:20px;text-align:center;font-weight:normal; }
 .label-jk { background-color: #FFB878; }

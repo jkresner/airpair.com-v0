@@ -1,16 +1,6 @@
-body { background:none repeat scroll 0 0 #E2E2E2 }
+/*
 
-nav { background:url('/images/bg-top-short.jpg');height:70px;border-bottom:solid 1px #d3d3d3}
-nav > div { padding-top:6px;height:54px;width:1240px;margin:auto }
-nav a.logo {
-  display:inline-block;
-  float:left;
-  width: 180px;
-  height: 60px;
-  margin-top: 3px;
-  /*margin-left: 12px;*/
-  background: url('/images/logos/header_old.png') no-repeat;
-}
+body { background:none repeat scroll 0 0 #E2E2E2 }
 
 nav .contactus {
   font-family: Open Sans, helvetica, sans-serif;
@@ -22,18 +12,9 @@ nav .contactus {
   width: 200px;
   float: left;
 }
-
-nav img { display:inline-block;width:180px;padding:3px 12px; }
-nav .navbar-inner { float:right;margin-top:5px;padding:0px 5px; }
-nav .divider-vertical { margin:0!important; }
-/*nav ul { float:right;margin:10px 0px 8px 8px;display:inline; }
-/*nav ul li { float:right;display:block;margin-left:5px;border:solid 1px black;background:#eeeeee;padding:6px 16px;border-radius:2px }*/
-/*
-nav .twitter { background:url('/images/icons/twitter.png') }
-nav .facebook { background:url('/images/icons/facebook.png') }
 */
 
-div.main { margin-top:20px;width:1280px;margin:auto }
+/*div.main { margin-top:20px;width:1280px;margin:auto }
 
 .codeline { clear:both;font-family:courier;color:#212F3B;float:left;border-bottom: dashed 1px #A4A4A5;
   border-top:dashed 1px #A4A4A5;padding:10px 0;width:900px;margin-bottom:30px }
@@ -68,3 +49,4 @@ div.main { margin-top:20px;width:1280px;margin:auto }
 .expert i { display:block;margin:20px auto }
 .expert .links { margin:10px 0 0px 0;height:50px; }
 .expert .tags { padding:10px;background:black }
+*/
