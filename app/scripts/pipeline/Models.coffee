@@ -1,4 +1,4 @@
-BB      = require '../../lib/BB'
+BB      = require 'BB'
 Shared  = require '../shared/Models'
 exports = {}
 

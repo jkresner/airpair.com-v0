@@ -2,7 +2,6 @@ S  = require('./../shared/Routers')
 M  = require './Models'
 C  = require './Collections'
 V  = require './Views'
-BB = require './../../lib/BB'
 
 module.exports = class Router extends S.AirpairSessionRouter
 

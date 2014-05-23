@@ -1,5 +1,5 @@
 exports                        = {}
-BB                             = require './../../lib/BB'
+BB                             = require 'BB'
 M                              = require './Models'
 exports.TagsInputView          = require('./../tags/Views').TagsInputView
 exports.MarketingTagsInputView =

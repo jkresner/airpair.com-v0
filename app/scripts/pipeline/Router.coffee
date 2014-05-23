@@ -1,4 +1,4 @@
-BB = require './../../lib/BB'
+BB = require 'BB'
 S  = require('./../shared/Routers')
 M  = require './Models'
 C  = require './Collections'

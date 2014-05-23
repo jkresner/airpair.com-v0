@@ -1,4 +1,4 @@
-BB = require './../../lib/BB'
+BB = require 'BB'
 
 VIEW_DATA = [ 'group', 'type', 'name', '_id' ]
 Handlebars.registerPartial 'MarketingTag', require './templates/MarketingTag'
