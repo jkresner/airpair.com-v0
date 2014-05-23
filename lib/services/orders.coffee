@@ -7,12 +7,12 @@ RequestService    = require './requests'
 SettingsSvc       = require './settings'
 RatesSvc          = require './rates'
 calendar          = require './calendar'
-StripeSvc         = require '../services/wrappers/stripe'
-PaypalAdaptiveSvc = require '../services/wrappers/paypal-adaptive'
-sum               = require '../../app/scripts/shared/mix/sum'
-canSchedule       = require '../../app/scripts/shared/mix/canSchedule'
-unschedule        = require '../../app/scripts/shared/mix/unschedule'
-calcExpertCredit  = require '../../app/scripts/shared/mix/calcExpertCredit'
+StripeSvc         = require './wrappers/stripe'
+PaypalAdaptiveSvc = require './wrappers/paypal-adaptive'
+sum               = require '../mix/sum'
+canSchedule       = require '../mix/canSchedule'
+unschedule        = require '../mix/unschedule'
+calcExpertCredit  = require '../mix/calcExpertCredit'
 calcRedeemed      = calcExpertCredit.calcRedeemed
 
 

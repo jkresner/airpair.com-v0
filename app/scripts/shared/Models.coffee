@@ -1,9 +1,28 @@
 BB            = require 'BB'
-objectId2Date = require './mix/objectId2Date'
+objectId2Date = require 'lib/mix/objectId2Date'
+{tagsString}  = require 'lib/mix/tags'
 
 exports = {}
-_.extend exports, require './../tags/Models'
-_.extend exports, require './../marketingtags/Models'
+
+class exports.MarketingTag extends BB.BadassModel
+  urlRoot: '/api/marketingtags'
+
+
+class exports.Tag extends BB.BadassModel
+
+  urlRoot: '/api/tags'
+
+  validation:
+    name:           { required: true }
+
+class exports.TagListModel extends BB.SublistModel
+
+  defaults:
+    tags: []
+
+  toggleTag: (value) ->
+    @toggleAttrSublistElement 'tags', value, (m) -> m._id is value._id
+
 
 class exports.User extends BB.BadassModel
   urlRoot: '/api/users/me'
@@ -27,7 +46,6 @@ class exports.CompanyContact extends BB.BadassModel
     fullName:       { required: true }
     email:          { required: true, pattern: 'email' }
 
-util = require('../util')
 
 class exports.Request extends BB.SublistModel
   urlRoot: '/api/requests'
@@ -69,8 +87,8 @@ class exports.Request extends BB.SublistModel
   sortedSuggestions: ->
     orderBy = available: 0, abstained: 1
     _.sortBy @get('suggested'), (s) -> orderBy[s.expertStatus] ? 10
-  tagsString: -> util.tagsString @get('tags')
-  threeTagsString: -> util.tagsString @get('tags').slice(0, 3)
+  tagsString: -> tagsString @get('tags')
+  threeTagsString: -> tagsString @get('tags'), 3
   isCustomer: (session) ->
     return false if !session.id?
     return true if /iscust/.test(location.href)

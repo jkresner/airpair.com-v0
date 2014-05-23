@@ -1,13 +1,13 @@
-util             = require './../../app/scripts/util'
 async            = require 'async'
-RequestsSvc      = require './../services/requests'
-ExpertsSvc       = require './../services/experts'
-TagsSvc          = require './../services/tags'
-OrdersSvc        = require './../services/orders'
-SettingsSvc      = require './../services/settings'
-RequestCallsSvc  = require './../services/requestCalls'
-authz            = require './../identity/authz'
+RequestsSvc      = require '../services/requests'
+ExpertsSvc       = require '../services/experts'
+TagsSvc          = require '../services/tags'
+OrdersSvc        = require '../services/orders'
+SettingsSvc      = require '../services/settings'
+RequestCallsSvc  = require '../services/requestCalls'
+authz            = require '../identity/authz'
 Roles            = authz.Roles
+{tagsString}     = require '../mix/tags'
 
 rSvc  = new RequestsSvc()
 eSvc  = new ExpertsSvc()
@@ -52,7 +52,7 @@ module.exports = class ViewDataService
         isProd:     cfg.isProd.toString()
         session:    @session usr
         request:    JSON.stringify r
-        tagsString: if r? then util.tagsString(r.tags) else 'Not found'
+        tagsString: if r? then tagsString r.tags else 'Not found'
 
   callSchedule: (usr, requestId, callback) ->
     tasks =

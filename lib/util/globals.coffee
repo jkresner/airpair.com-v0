@@ -2,8 +2,8 @@ global.cfg            = cfg  # cfg is already declared in util/appConfig
 global.$log           = console.log
 
 global._              = require 'underscore'
-global._.pickNested   = require '../../app/scripts/shared/mix/pickNested'
-global._.idsEqual     = require '../../app/scripts/shared/mix/idsEqual'
+global._.pickNested   = require '../mix/pickNested'
+global._.idsEqual     = require '../mix/idsEqual'
 
 global.winston        = require 'winston'   # logging
 require './winstonConfig'             # setup logging configuration / plugins

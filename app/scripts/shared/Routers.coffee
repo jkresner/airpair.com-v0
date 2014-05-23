@@ -1,7 +1,8 @@
 exports = {}
 M       = require './Models'
 BB      = require 'BB'
-AddJS   = require '/scripts/providers/addjs/index'
+try
+  AddJS = require '/scripts/providers/addjs/index'
 
 class exports.AirpairRouter extends BB.BadassAppRouter
 
@@ -32,7 +33,7 @@ class exports.AirpairSessionRouter extends BB.SessionRouter
       { email, name, picture, id, family_name, given_name } = google._json
       peopleProps = { email, name, picture, id, family_name, given_name, created_at }
 
-    if !addjs?
+    if !addjs? && AddJS?
       window.addjs = new AddJS
         providers: { ga: { logging: off }, mp: { logging: off, peopleProps: peopleProps } }
 

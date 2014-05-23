@@ -3,8 +3,10 @@ BB      = require 'BB'
 Models  = require './Models'
 
 
-_.extend exports, require './../tags/Collections'
-_.extend exports, require './../marketingtags/Collections'
+class exports.Tags extends BB.FilteringCollection
+  model: Models.Tag
+  url: '/api/tags'
+  comparator: (m) -> m.get 'name'
 
 
 class exports.Requests extends BB.FilteringCollection
@@ -12,6 +14,11 @@ class exports.Requests extends BB.FilteringCollection
   url: '/api/requests'
   comparator: (m) -> m.createdDate()
 
+
+class exports.MarketingTags extends BB.FilteringCollection
+  model: Models.MarketingTag
+  url: '/api/marketingtags'
+  comparator: (m) -> m.get 'name'
 
 
 module.exports = exports

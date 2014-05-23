@@ -16,13 +16,13 @@ module.exports = class RequestsService extends DomainService
   mTagsSvc:     new MarketingTagsSvc()
 
 
-  getForHistory: (id, cb) => @search userId: id, { fields: @historySelect }, cb
+  getForHistory: (id, cb) => @searchMany userId: id, { fields: @historySelect }, cb
 
-  getByCallId: (callId, cb) -> @search { 'calls._id': callId }, {}, cb
+  getByCallId: (callId, cb) -> @searchMany { 'calls._id': callId }, {}, cb
 
   """ Used for adm/inbound dashboard inactive """
   getInactive: (cb) ->
-    @search Data.query.inactive, { fields: Data.view.pipeline }, cb
+    @searchMany Data.query.inactive, { fields: Data.view.pipeline }, cb
 
   # Show the previous account manager
   _getPreviousOwner: (request, cb) =>
@@ -33,7 +33,7 @@ module.exports = class RequestsService extends DomainService
 
   """ Used for adm/inbound dashboard list """
   getActive: (cb) ->
-    @search Data.query.active, { fields: Data.view.pipeline }, (e, requests) =>
+    @searchMany Data.query.active, { fields: Data.view.pipeline }, (e, requests) =>
       if e? then return cb e
       received = _.filter requests, (r) -> r.status == 'received' && !r.owner
       async.each received, @_getPreviousOwner, (er) => cb er, requests

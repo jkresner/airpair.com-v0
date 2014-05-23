@@ -3,7 +3,7 @@ async =       require 'async'
 fs =          require 'fs'
 handlebars =  require 'handlebars'
 roles =       require '../identity/roles'
-util =        require '../../app/scripts/util'
+
 
 renderHandlebars = (data, templatePath, callback) ->
   fs.readFile templatePath, "utf-8", (error, templateData) ->
@@ -69,7 +69,7 @@ class Mailman
       requestId: request._id
       customerName: request.company.contacts[0].fullName
       tags: request.tags
-      tagsString: util.tagsString(request.tags)
+      tagsString: request.tags.map((o) -> o.short).join(' ')
       suggested: request.suggested
 
     o.templateName = 'importantRequestEvent'

@@ -1,7 +1,7 @@
 exports.config =
 
   # do not build test directory in debug or release (only test)
-  paths:        watched: ['app','vendor']
+  paths:        watched: ['app','vendor','lib','mail']
 
   server:
     env:  'dev'
@@ -12,7 +12,7 @@ exports.config =
 
   overrides:
     test:
-      paths:    watched: ['app','vendor', 'test']
+      paths:    watched: ['app','vendor', 'test','lib']
       plugins:  autoReload: enabled: false
       server:   { port: 4444, env: 'test' }
     prod:
@@ -23,10 +23,10 @@ exports.config =
   files:
     javascripts:
       joinTo:
-       'javascripts/app.js': /^app/
        'javascripts/vendor.js': /^vendor/
+       'javascripts/ap.js': /(scripts\/ap|scripts\/shared|scripts\/providers|lib\/mix)/
+       'javascripts/adm.js': /(scripts\/adm|scripts\/shared|lib\/mix)/
        'javascripts/providers.js': /^app\/scripts\/providers/
-       'javascripts/backbone.badass.js': /^app\/lib/
        'test/javascripts/test.js': /^test(\/|\\)(?=integration)/
        'test/javascripts/test-data.js': /^test(\/|\\)(?=data)/
        'test/javascripts/test-vendor.js': /^test(\/|\\)(?=vendor)/
@@ -34,7 +34,7 @@ exports.config =
         # Files in `vendor` directories are compiled before other files
         # even if they aren't specified in order.
         before: [
-          'vendor/scripts/console-helper.js'
+          'vendor/scripts/conso le-helper.js'
           'vendor/scripts/jquery.js'
           'vendor/scripts/lodash.js'
           'vendor/scripts/backbone.js'
@@ -53,7 +53,9 @@ exports.config =
         ]
         after: ['vendor/styles/helpers.css']
     templates:
-      joinTo: 'javascripts/app.js'
+      joinTo:
+       'javascripts/adm.js': /(^mail|scripts\/adm|scripts\/shared)/
+       'javascripts/ap.js': /(scripts\/ap|scripts\/shared)/
 
   coffeelint:
     pattern: /^app\/.*\.coffee$/

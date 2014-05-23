@@ -1,18 +1,17 @@
-TagsSvc  = require './../services/tags'
-authz    = require './../identity/authz'
-loggedIn = authz.LoggedIn isApi:true
-cSend    = require '../util/csend'
+Api  = require './_api'
 
-class TagsApi
+class TagsApi extends Api
 
-  svc: new TagsSvc()
+  logging: on
 
-  constructor: (app, route) ->
-    app.get     "/api/#{route}", loggedIn, @list
-    #app.get     "/api/#{route}/:id", loggedIn, @detail
-    app.post    "/api/#{route}", loggedIn, @create
-    app.put     "/api/#{route}/:id", loggedIn, @update
-    app.delete  "/api/#{route}/:id", loggedIn, @delete
+  Svc: require './../services/tags'
+
+  routes: (app, route) ->
+    app.get     "/api/#{route}", @loggedIn, @ap, @list
+    app.post    "/api/#{route}", @loggedIn, @ap, @create
+    app.put     "/api/#{route}/:id", @loggedIn, @ap, @update
+    app.delete  "/api/#{route}/:id", @loggedIn, @ap, @delete
+    $log 'api tag yeah', route
 
   create: (req, res, next) =>
     @svc.create req.body.addMode, req.body, (e, r) ->
@@ -22,13 +21,14 @@ class TagsApi
         res.send r
 
   update: (req, res, next) =>
-    @svc.update req.params.id, req.body, cSend(res, next)
+    @svc.update req.params.id, req.body, @cbSend
 
   delete: (req, res, next) =>
-    @svc.delete req.params.id, cSend(res, next)
+    @svc.delete req.params.id, @cbSend
 
   list: (req, res, next) =>
-    @svc.getAll cSend(res, next)
+    $log 'list'
+    @svc.getAll @cbSend
 
 
 module.exports = (app) -> new TagsApi app, 'tags'

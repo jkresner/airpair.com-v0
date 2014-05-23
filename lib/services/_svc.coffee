@@ -4,26 +4,28 @@ module.exports = class DomainService
 
   logging: off
 
+
   constructor: (user) ->
     @usr = user
 
 
-  searchOne: (search, opts, callback) =>
+  searchMany: (query, opts, callback) =>
     opts = {} if !opts?
     {fields,options} = opts
-    @model.findOne(search,fields,opts).lean().exec (e, r) =>
-      if e && @logging then $log 'svc.searchOne.err', search, e
+    @model.find(query,fields,options).lean().exec (e, r) =>
+      if e && @logging then $log 'svc.search.err', query, e
       callback e, r
 
-  search: (search, opts, callback) =>
+
+  searchOne: (query, opts, callback) =>
     opts = {} if !opts?
     {fields,options} = opts
-    @model.find(search,fields,options).lean().exec (e, r) =>
-      if e && @logging then $log 'svc.search.err', search, e
+    @model.findOne(query,fields,opts).lean().exec (e, r) =>
+      if e && @logging then $log 'svc.searchOne.err', query, e
       callback e, r
 
-  getAll: (callback) => @search {}, {}, callback
-  getByUserId: (userId, callback) => @search {userId}, {}, callback
+  getAll: (callback) => @searchMany({}, {}, callback)
+  getByUserId: (userId, callback) => @searchMany {userId}, {}, callback
   getById: (id, callback) => @searchOne {_id: id}, {}, callback
 
 
