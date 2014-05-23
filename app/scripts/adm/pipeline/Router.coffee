@@ -22,34 +22,34 @@ module.exports = class Router extends S.AirpairSessionRouter
 
   appConstructor: (pageData, callback) ->
     d =
-      # selected: new M.Request()
+      selected: new M.Request()
       requests: new C.Requests()
-      # tags: new C.Tags()
-      # marketingTags: new C.MarketingTags()
-      # experts: new C.Experts()
-      # orders: new C.Orders()
-      # suggestion: new BB.BadassModel()
-      # rooms: new C.Rooms()
-      # room: new M.Room()
-      # members: new C.RoomMembers()
+      tags: new C.Tags()
+      marketingTags: new C.MarketingTags()
+      experts: new C.Experts()
+      orders: new C.Orders()
+      suggestion: new BB.BadassModel()
+      rooms: new C.Rooms()
+      room: new M.Room()
+      members: new C.RoomMembers()
     v =
-      # requestsView: new V.RequestsView collection: d.requests, model: d.selected
-      # requestView: new V.RequestView
-      #   model: d.selected
-      #   collection: d.requests
-      #   tags: d.tags
-      #   marketingTags: d.marketingTags
-      #   experts: d.experts
-      #   orders: d.orders
-      #   session: @app.session
+      requestsView: new V.RequestsView collection: d.requests, model: d.selected
+      requestView: new V.RequestView
+        model: d.selected
+        collection: d.requests
+        tags: d.tags
+        marketingTags: d.marketingTags
+        experts: d.experts
+        orders: d.orders
+        session: @app.session
       filtersView: new V.FiltersView collection: d.requests
     #   farmingView: new V.RequestFarmView model: d.selected
     #   roomView: new V.RoomView model: d.room, collection: d.rooms, suggestion: d.suggestion, request: d.selected, members: d.members
 
-    # @resetOrFetch d.requests, pageData.requests
-    # @resetOrFetch d.experts, pageData.experts
-    # @resetOrFetch d.tags, pageData.tags
-    # @resetOrFetch d.marketingTags, pageData.marketingTags
+    @resetOrFetch d.requests, pageData.requests
+    @resetOrFetch d.experts, pageData.experts
+    @resetOrFetch d.tags, pageData.tags
+    @resetOrFetch d.marketingTags, pageData.marketingTags
 
     _.extend d, v
 

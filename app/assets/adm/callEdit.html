@@ -43,11 +43,12 @@
   <script type="text/javascript">
     function initApp() {
       var pageData = {
+        session: {{{ session }}},
         request: {{{ request }}},
         // The call has been unscheduled from these orders
         orders: {{{ orders }}}
       };
-      Router = require('/scripts/calls/RouterEdit');
+      Router = require('/scripts/adm/calls/RouterEdit');
       window.router = new Router(pageData);
     }
   </script>
@@ -55,5 +56,5 @@
   <script src="/javascripts/picker.js" defer></script>
   <script src="/javascripts/picker.date.js" defer></script>
   <script src="/javascripts/jquery.timepicker.js" defer></script>
-  <script src="/javascripts/app.js" defer onload="initApp()"></script>
+  <script src="/javascripts/adm.js" defer onload="initApp()"></script>
 </html>

@@ -24,7 +24,7 @@ module.exports = class DomainService
       if e && @logging then $log 'svc.searchOne.err', query, e
       callback e, r
 
-  getAll: (callback) => @searchMany({}, {}, callback)
+  getAll: (callback) => @searchMany {}, {}, callback
   getByUserId: (userId, callback) => @searchMany {userId}, {}, callback
   getById: (id, callback) => @searchOne {_id: id}, {}, callback
 

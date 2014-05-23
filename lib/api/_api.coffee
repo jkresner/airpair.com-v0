@@ -36,6 +36,12 @@ class Api
       if e then return next e
       res.send r
 
+  dSend: (res, next) ->
+    (e, r) =>
+      if @logging then $log 'dSend', e, r
+      if e && e.status then return res.send(400, e) # backbone will render errors
+      if e then return next e
+      res.send status: 'deleted'
 
   tFE: (res, msg, attr, attrMsg) ->
     res.contentType('application/json')

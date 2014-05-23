@@ -7,9 +7,9 @@ module.exports = class TagsService extends DomainService
   model: require './../models/tag'
   cmsModel: require './../models/tagCms'
 
-  search: (searchTerm, callback) ->
+  # search: (searchTerm, callback) ->
     # Poor implementation of search, should checkout mongo-text-search or elastic-search
-    @model.findOne { $or: [ { soId: searchTerm }, { ghId: searchTerm } ] }, callback
+    # @model.findOne { $or: [ { soId: searchTerm }, { ghId: searchTerm } ] }, callback
 
   cms: (id, callback) ->
     @cmsModel.findOne { _id: id }, callback

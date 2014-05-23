@@ -540,7 +540,7 @@ class exports.RequestView extends BB.ModelSaveView
     @infoView = new exports.RequestInfoView model: @model, tags: @tags, marketingTags: @marketingTags, session: @session, parentView: @
     @marketingInfoView = new exports.RequestMarketingTagsInfoView model: @model, marketingTags: @marketingTags, parentView: @
     @suggestionsView = new exports.RequestSuggestionsView model: @model, collection: @experts, parentView: @
-    @suggestedView = new exports.RequestSuggestedView omdel: @model, collection: @experts, session: @session, orders: @orders, parentView: @
+    @suggestedView = new exports.RequestSuggestedView model: @model, collection: @experts, session: @session, orders: @orders, parentView: @
     @callsView = new exports.RequestCallsView el: '#calls', model: @model, parentView: @
     @ordersView = new exports.RequestOrdersView el: '#orders', collection: @orders, model: new @orders.model()
   renderSuccess: (model, response, options) =>

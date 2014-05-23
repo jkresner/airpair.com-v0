@@ -17,8 +17,8 @@ module.exports = class RequestsService extends DomainService
 
 
   getForHistory: (id, cb) => @searchMany userId: id, { fields: @historySelect }, cb
+  getByCallId: (callId, cb) -> @searchOne { 'calls._id': callId }, {}, cb
 
-  getByCallId: (callId, cb) -> @searchMany { 'calls._id': callId }, {}, cb
 
   """ Used for adm/inbound dashboard inactive """
   getInactive: (cb) ->

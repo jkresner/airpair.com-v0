@@ -1,4 +1,4 @@
-S = require '../shared/Routers'
+S = require '../../shared/Routers'
 M = require './Models'
 C = require './Collections'
 V = require './Views'
@@ -6,6 +6,9 @@ V = require './Views'
 module.exports = class Router extends S.AirpairSessionRouter
   # logging: on
   pushStateRoot: '/adm/call'
+
+  enableExternalProviders: off  # don't want uservoice + ga on admin
+
   routes:
     'schedule/:requestId': 'schedule'
 

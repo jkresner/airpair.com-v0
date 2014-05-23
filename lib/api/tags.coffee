@@ -2,8 +2,6 @@ Api  = require './_api'
 
 class TagsApi extends Api
 
-  logging: on
-
   Svc: require './../services/tags'
 
   routes: (app, route) ->
@@ -11,7 +9,6 @@ class TagsApi extends Api
     app.post    "/api/#{route}", @loggedIn, @ap, @create
     app.put     "/api/#{route}/:id", @loggedIn, @ap, @update
     app.delete  "/api/#{route}/:id", @loggedIn, @ap, @delete
-    $log 'api tag yeah', route
 
   create: (req, res, next) =>
     @svc.create req.body.addMode, req.body, (e, r) ->
@@ -27,7 +24,6 @@ class TagsApi extends Api
     @svc.delete req.params.id, @cbSend
 
   list: (req, res, next) =>
-    $log 'list'
     @svc.getAll @cbSend
 
 

@@ -3,42 +3,42 @@ BB = require 'BB'
 class MarketingTagsInputView extends BB.HasBootstrapErrorStateView
   el: '#marketingTagsInput'
   tmpl: require './templates/TagInput'
-  tmplResult: require './templates/TagAutocompleteResult'
+  tmplResult: require './templates/mTagAutocompleteResult'
   tmplTag: require './templates/MarketingTag'
   events:
     'click .delete': 'deselect'
   initialize: (args) ->
-    # @$el.append @tmpl @model.toJSON()
-    # @listenTo @collection, 'sync', @initTypehead
-    # @listenTo @model, 'change:_id', -> @$auto.val '' # clears it across requests
-    # @listenTo @model, 'change:marketingTags', @render
-    # @$auto = @$('.autocomplete').on 'input', =>
-    #   @renderInputValid @$('.autocomplete')
-    # @$el.popover(selector: '[data-toggle="popover"]')
+    @$el.append @tmpl @model.toJSON()
+    @listenTo @collection, 'sync', @initTypehead
+    @listenTo @model, 'change:_id', -> @$auto.val '' # clears it across requests
+    @listenTo @model, 'change:marketingTags', @render
+    @$auto = @$('.autocomplete').on 'input', =>
+      @renderInputValid @$('.autocomplete')
+    @$el.popover(selector: '[data-toggle="popover"]')
   render: ->
     @$('.selected').html ''
     if @model.get('marketingTags')?
       @$('.selected').append(@tmplTag(t)) for t in @model.get('marketingTags')
     @
   initTypehead: =>
-    # @cleanTypehead().val('').show()
-    # @$auto.typeahead(
-    #   header: '<header><strong>Marketing Tags</strong></header>'
-    #   noresultsHtml: 'No results'
-    #   name: 'collection' + new Date().getTime()
-    #   valueKey: 'name'
-    #   template: @tmplResult
-    #   local: @collection.toJSON().map (t) =>
-    #     t.name = t.name.toLowerCase()
-    #     t
-    # ).on('typeahead:selected', @select)
+    @cleanTypehead().val('').show()
+    @$auto.typeahead(
+      header: '<header><strong>Marketing Tags</strong></header>'
+      noresultsHtml: 'No results'
+      name: 'collection' + new Date().getTime()
+      valueKey: 'name'
+      template: @tmplResult
+      local: @collection.toJSON().map (t) =>
+        t.name = t.name.toLowerCase()
+        t
+    ).on('typeahead:selected', @select)
     @
   select: (e, data) =>
     if e then e.preventDefault()
     @_toggleMarketingTag data
     @$auto.val ''
   _toggleMarketingTag: (value) ->
-    tag = _.pick value, VIEW_DATA
+    tag = _.pick value, ['group', 'type', 'name', '_id']
     equalById = (m) -> m._id == value._id
     @model.toggleAttrSublistElement 'marketingTags', tag, equalById
   deselect: (e) =>

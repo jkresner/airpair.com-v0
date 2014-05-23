@@ -1,36 +1,23 @@
-CRUDApi   = require './_crud'
-OrdersSvc = require './../services/orders'
-authz     = require './../identity/authz'
-loggedIn  = authz.LoggedIn isApi: true
-admin     = authz.Admin isApi: true
-Roles     = authz.Roles
-cSend     = require '../util/csend'
+Api   = require './_api'
 
 
-class OrdersApi
+class OrdersApi extends Api
 
-  svc: new OrdersSvc()
+  Svc: require './../services/orders'
 
-  constructor: (app, route) ->
-    app.post    "/api/#{route}", loggedIn, @create
-    app.get     "/api/admin/#{route}", admin, @adminList
-    app.get     "/api/#{route}/request/:id", admin, @getByRequestId
-    app.get     "/api/#{route}/me", loggedIn, @getByMe
-    app.put     "/api/#{route}/:id", admin, @update
-    app.delete  "/api/#{route}/:id", admin, @delete
+  routes: (app, route) ->
+    app.post    "/api/#{route}", @loggedIn, @ap, @create
+    app.get     "/api/admin/#{route}", @admin, @ap, @adminList
+    app.get     "/api/#{route}/request/:id", @admin, @ap, @getByRequestId
+    app.get     "/api/#{route}/me", @loggedIn, @ap, @getByMe
+    app.put     "/api/#{route}/:id", @admin, @ap, @update
+    app.delete  "/api/#{route}/:id", @admin, @ap, @delete
 
-  adminList: (req, res, next) =>
-    @svc.getAll cSend(res, next)
+  adminList: (req, res) => @svc.getAll @cbSend
+  getByRequestId: (req, res) => @svc.getByRequestId req.params.id, @cbSend
+  getByMe: (req, res) => @svc.getByUserId req.user._id, @cbSend
 
-  getByRequestId: (req, res, next) =>
-    @svc.getByRequestId req.params.id, cSend(res, next)
-
-  getByMe: (req, res, next) =>
-    meId = req.user._id
-    meId = '51f7026666a6f999a465f4b0'
-    @svc.getByUserId meId, cSend(res, next)
-
-  create: (req, res, next) =>
+  create: (req, res) =>
     order = _.pick req.body, ['total','requestId']
     order.lineItems = []
     order.company =
@@ -60,7 +47,7 @@ class OrdersApi
       res.send r
 
 
-  update: (req, res, next) =>
+  update: (req, res) =>
     if req.body.payoutOptions
       opts = req.body.payoutOptions
       delete req.body.payoutOptions
@@ -71,8 +58,7 @@ class OrdersApi
     return res.send(400, 'updating orders not yet implemented')
 
 
-  delete: (req, res, next) =>
-    @svc.delete req.params.id, cSend(res, next)
+  delete: (req, res) => @svc.delete req.params.id, @cbSend
 
 
 module.exports = (app) -> new OrdersApi app, 'orders'

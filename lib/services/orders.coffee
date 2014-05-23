@@ -286,7 +286,8 @@ module.exports = class OrdersService extends DomainService
 
   # oldest orders first (smallest timestamp -> biggest timestamp)
   getByRequestId: (requestId, cb) =>
-    @search {requestId}, {options: $sort: { utc: 1 }}, cb
+    $log 'getByRequestId', requestId
+    @searchMany {requestId}, {options: $sort: { utc: 1 }}, cb
 
   ###
 

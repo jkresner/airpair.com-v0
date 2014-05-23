@@ -9,14 +9,15 @@ class RequestApi extends Api
   oSvc: new OrdersSvc()
 
   routes: (app, route) ->
-    app.get   "/api/#{route}/:id", @ap, @detail
-    app.get   "/api/#{route}", @loggedIn, @ap, @list
-    app.get   "/api/admin/#{route}/active", @admin, @ap, @active
-    app.get   "/api/admin/#{route}/inactive", @admin, @ap, @inactive
-    app.put   "/api/#{route}/:id", @ap, @update
-    app.put   "/api/#{route}/:id/suggestion", @loggedIn, @ap, @updateSuggestion
-    app.post  "/api/#{route}", @ap, @create
-    app.post  "/api/#{route}/book", @ap, @createBookme
+    app.get    "/api/#{route}/:id", @ap, @detail
+    app.get    "/api/#{route}", @loggedIn, @ap, @list
+    app.get    "/api/admin/#{route}/active", @admin, @ap, @active
+    app.get    "/api/admin/#{route}/inactive", @admin, @ap, @inactive
+    app.put    "/api/#{route}/:id", @ap, @update
+    app.put    "/api/#{route}/:id/suggestion", @loggedIn, @ap, @updateSuggestion
+    app.post   "/api/#{route}", @ap, @create
+    app.post   "/api/#{route}/book", @ap, @createBookme
+    app.delete "/api/#{route}/:id", @admin, @ap, @delete
 
 ###############################################################################
 ## CRUD extensions
@@ -38,7 +39,7 @@ class RequestApi extends Api
       @svc.updateSmart req.params.id, @data, @cbSend
 
 
-  updateSuggestion: (req, res, next) =>
+  updateSuggestion: (req, res) =>
     usr = req.user
     @svc.getById req.params.id, (e, r) =>
 
@@ -50,6 +51,10 @@ class RequestApi extends Api
         @svc.updateSuggestionByExpert r, @data, @cbSend
       else
         res.send 403
+
+
+  delete: (req, res, next) =>
+    @svc.delete req.params.id, @dSend(res,next)
 
 
 module.exports = (app) -> new RequestApi app, 'requests'

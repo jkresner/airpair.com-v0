@@ -1,7 +1,6 @@
 BB = require 'BB'
 SV = require '../../shared/Views'
 
-VIEW_DATA = [ 'group', 'type', 'name', '_id' ]
 Handlebars.registerPartial 'MarketingTag', require './templates/MarketingTag'
 
 class MarketingTagView extends BB.BadassView
@@ -31,7 +30,7 @@ class exports.MarketingTagList extends BB.ModelSaveView
 
 class exports.MarketingTagForm extends BB.ModelSaveView
   el: '#marketingTagForm'
-  viewData: VIEW_DATA
+  viewData: ['group', 'type', 'name', '_id']
   tmpl: require './templates/MarketingTagForm'
   events:
     'click .save': (e) ->

@@ -1,11 +1,14 @@
-S = require '../shared/Routers'
+S = require '../../shared/Routers'
 M = require './Models'
 C = require './Collections'
 V = require './Views'
 
 module.exports = class Router extends S.AirpairSessionRouter
-  # logging: on
+
   pushStateRoot: '/adm/call'
+
+  enableExternalProviders: off  # don't want uservoice + ga on admin
+
   routes:
     'edit/:callId': 'edit'
 
@@ -13,8 +16,8 @@ module.exports = class Router extends S.AirpairSessionRouter
     requestId = pageData.request._id
     d =
       request: new M.Request _id: requestId
-      requestCall: new M.RequestCall
-      orders: new C.Orders
+      requestCall: new M.RequestCall()
+      orders: new C.Orders()
       video: new M.Video() # model only used to hits video API & shows errors
       videos: new C.Videos() # collection only used to display videolist
     d.requestCall.requestId = requestId

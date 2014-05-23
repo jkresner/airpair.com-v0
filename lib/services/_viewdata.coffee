@@ -55,22 +55,20 @@ module.exports = class ViewDataService
         tagsString: if r? then tagsString r.tags else 'Not found'
 
   callSchedule: (usr, requestId, callback) ->
-    tasks =
-      request: (cb) -> rSvc.getById requestId, cb
-      orders: (cb) -> oSvc.getByRequestId requestId, cb
-
-    async.parallel tasks, (e, results) =>
-      if e then return callback e
-      callback null,
-        request: JSON.stringify results.request
-        orders: JSON.stringify results.orders
-
-  callEdit: (usr, callId, callback) ->
-    rSvc.getByCallId callId, (e, request) ->
-      if e then return callback e
-      oSvc.getByRequestId request._id, (e, orders) ->
+    rSvc.getById requestId, (e, request) =>
+      oSvc.getByRequestId request._id, (e, orders) =>
         if e then return callback e
         callback null,
+          session:  @session usr
+          request:  JSON.stringify request
+          orders:   JSON.stringify orders
+
+  callEdit: (usr, callId, callback) ->
+    rSvc.getByCallId callId, (e, request) =>
+      oSvc.getByRequestId request._id, (e, orders) =>
+        if e then return callback e
+        callback null,
+          session: @session usr
           request: JSON.stringify request
           orders: JSON.stringify orders
 

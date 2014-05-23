@@ -2,11 +2,11 @@ exports          = {}
 BB               = require 'BB'
 M                = require './Models'
 C                = require './Collections'
-SV               = require '../shared/Views'
-calcExpertCredit = require '../shared/mix/calcExpertCredit'
-parseYoutubeId   = require '../shared/mix/parseYoutubeId'
-unschedule       = require '../shared/mix/unschedule'
-storage          = require('../util').storage
+SV               = require '../../shared/Views'
+calcExpertCredit = require 'lib/mix/calcExpertCredit'
+parseYoutubeId   = require 'lib/mix/parseYoutubeId'
+unschedule       = require 'lib/mix/unschedule'
+storage          = require('../../shared/util').storage
 
 dateFormat = "DD MMM YYYY"
 pickadateOptions =
