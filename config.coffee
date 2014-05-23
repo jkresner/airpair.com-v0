@@ -26,6 +26,7 @@ exports.config =
        'javascripts/app.js': /^app/
        'javascripts/vendor.js': /^vendor/
        'javascripts/providers.js': /^app\/scripts\/providers/
+       'javascripts/backbone.badass.js': /^app\/lib/
        'test/javascripts/test.js': /^test(\/|\\)(?=integration)/
        'test/javascripts/test-data.js': /^test(\/|\\)(?=data)/
        'test/javascripts/test-vendor.js': /^test(\/|\\)(?=vendor)/

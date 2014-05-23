@@ -1,3 +1,4 @@
+require 'colors'
 process.env.Env = 'test'
 console.log "--------------------------------------------------------"
 console.log "In app TEST file", process.cwd(), 'isTest', true
@@ -15,7 +16,8 @@ app = express()
 
 app.configure ->
   app.use express.static(__dirname + '/public')
-  app.use express.bodyParser()
+  app.use express.json()
+  app.use express.urlencoded()
   app.use express.cookieParser()
 
   app.use express.session secret: 'testing is the future'

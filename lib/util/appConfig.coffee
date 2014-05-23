@@ -8,6 +8,8 @@ c.isProd   = c.env is 'prod'
 
 c.mongoUri = process.env.MONGOHQ_URL || "mongodb://localhost/airpair_#{c.env}"
 
+c.oauthHost = 'http://localhost:3333'
+
 c.analytics =
   mixpanel: { id: '836dbdc21253fa8f3a68657c2f5ec4f1' }
 
@@ -19,7 +21,6 @@ c.payment =
     publishedKey: 'pk_test_aj305u5jk2uN1hrDQWdH0eyl'
     secretKey:    'sk_test_8WOe71OlRWPyB3rDRcnthSCc'
 
-c.oauthHost = 'http://localhost:3333'
 c.google =
   oauth:
     CLIENT_ID: "980673476043-qo125e4cghau62thkrb4igkm50a1rp0l.apps.googleusercontent.com"
@@ -59,5 +60,4 @@ c.oauthHost = process.env.oauthHost if process.env.oauthHost?
 
 global.cfg = c
 
-console.log 'config: ', require('util').inspect(cfg, depth: null)
-console.log "--------------------------------------------------------"
+console.log 'config: ', require('util').inspect(cfg, depth: null).white

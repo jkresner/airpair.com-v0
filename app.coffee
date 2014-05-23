@@ -1,5 +1,5 @@
-console.log "--------------------------------------------------------"
-console.log "In app file: ", process.cwd()
+require 'colors'
+console.log "--- In app file: ".yellow, process.cwd()
 
 require './lib/util/appConfig'
 require './lib/util/globals'
@@ -73,8 +73,10 @@ process.on 'uncaughtException', (err) ->
 # exports.startServer is called automatically in brunch watch mode, but needs invoking in normal node
 exports.startServer = (port, path, callback) ->
   p = process.env.PORT || port
-  $log "started on port: #{p}, path #{path}"
+  $log "--- starting on port: #{p}, path #{path}".yellow
   app.listen p
 
 if cfg.isProd || !module.parent
   exports.startServer()
+
+

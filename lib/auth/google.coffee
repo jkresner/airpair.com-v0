@@ -19,9 +19,8 @@ class Google
   constructor: (auth, passport) ->
     @auth = auth
     @passport = passport
-    envConfig = @auth.getEnvConfig(config)    
+    envConfig = @auth.getEnvConfig(config)
     envConfig.callbackURL = "#{cfg.oauthHost}/auth/google/callback"
-    $log 'envConfig.callbackURL.google', envConfig.callbackURL
     envConfig.passReqToCallback = true
     passport.use 'google-authz', new GoogleStrategy envConfig, @verifyCallback
 
