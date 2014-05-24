@@ -8,7 +8,7 @@ module.exports = class SettingsService extends DomainService
 
 
   getByUserId: (userId, callback) =>
-    @searchOne { userId }, callback
+    @searchOne { userId }, {}, callback
 
 
   _save: (data, callback) =>

@@ -1,7 +1,7 @@
 exports = {}
 BB      = require 'BB'
 M       = require './Models'
-SV      = require './../shared/Views'
+SV      = require '../../shared/Views'
 
 
 #############################################################################

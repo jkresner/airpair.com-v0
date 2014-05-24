@@ -46,9 +46,10 @@ module.exports = class RequestsService extends DomainService
       events: [@newEvent "created"]
       status: 'received'
     super _.extend(request, defaults), (e, r) =>
-      if !e
-        @mailman.admNewRequest r
+      if r? then @mailman.admNewRequest r
       cb e, r
+
+
 
 
   """ Create a request by book direct flow """
@@ -57,9 +58,12 @@ module.exports = class RequestsService extends DomainService
       userId: @usr._id
       events: [@newEvent "created"]
       status: 'pending'
-    # d = { availability: [], expertStatus: 'waiting' }
-    # _.extend request.suggested[0], d
-    super _.extend(request, defaults), (e, r) =>
+
+    # not 100% sure why we're doing this..
+    _.extend request.suggested[0], { availability: [], expertStatus: 'waiting' }
+
+    new @model( _.extend(request, defaults) ).save (e,r) =>
+      if e && @logging then $log 'svc.create', o, e
       if r? then @mailman.admNewRequest r
       cb e, r
 

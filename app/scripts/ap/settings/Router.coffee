@@ -1,4 +1,4 @@
-S = require('./../shared/Routers')
+S = require '../../shared/Routers'
 M = require './Models'
 C = require './Collections'
 V = require './Views'
@@ -9,7 +9,7 @@ module.exports = class Router extends S.AirpairSessionRouter
   pushStateRoot: '/settings'
 
   routes:
-    ''                : 'payment'    
+    ''                : 'payment'
     'payment'         : 'payment'
     'stripe'          : 'stripe'
 

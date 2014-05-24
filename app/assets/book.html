@@ -69,7 +69,7 @@
 
     function initApp() {
       var pageData = { session: {{{ session }}}, expert: {{{ expertStr }}}, stripePK: '{{{stripePK }}}' };
-      Router = require('/scripts/book/Router');
+      Router = require('/scripts/ap/book/Router');
       window.router = new Router(pageData);
 
       if (window.addjs) {
@@ -80,6 +80,6 @@
   </script>
 
   <script src="/javascripts/vendor.js" defer></script>
-  <script src="/javascripts/app.js" defer onload="initApp()"></script>
+  <script src="/javascripts/ap.js" defer onload="initApp()"></script>
 
 </html>
