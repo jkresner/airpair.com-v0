@@ -456,9 +456,9 @@ module.exports = BadassAppRouter = (function(_super) {
     }
   };
 
-  BadassAppRouter.prototype.resetOrFetch = function(collection, data, opts) {
-    if (data != null) {
-      collection.reset(data);
+  BadassAppRouter.prototype.resetOrFetch = function(collection, collectionData, opts) {
+    if (collectionData != null) {
+      collection.reset(collectionData);
       if ((opts != null) && (opts.success != null)) {
         opts.success(collection, 'reset', opts);
       }

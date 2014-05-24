@@ -69,9 +69,12 @@ module.exports = class PayMethodsService extends DomainService
   _getObjs: (id, email, callback) =>
     @user.findOne { 'google._json.email': email }, (e, usr) =>
       if !usr? || !usr.google? then return callback new Error "User #{email} not found"
-      @settingsSvc.getByUserId usr._id, (ee, settings) =>
-        getPayMethod = (err, stgs) => @getById id, (eee, pm) =>
-          callback usr, stgs, pm
+      @settingsSvc.searchOne {userId:usr._id}, {}, (ee, settings) =>
+        getPayMethod = (err, stgs) =>
+          $log '_getObjs.getPayMethod', stgs, @getById
+          @getById id, (eee, pm) =>
+            $log '_getObjs.pm', pm
+            callback usr, stgs, pm
 
         if settings._id?
           getPayMethod null, settings
@@ -79,43 +82,43 @@ module.exports = class PayMethodsService extends DomainService
           @settingsSvc.create usr._id, null, getPayMethod
 
 
-testStripeCustomer =
-  "default_card": "card_36B3Sti9FDKquN",
-  "cards": {
-    "data": [
-      {
-        "address_zip_check": null,
-        "address_line1_check": null,
-        "cvc_check": "pass",
-        "address_country": null,
-        "address_zip": null,
-        "address_state": null,
-        "address_city": null,
-        "address_line2": null,
-        "address_line1": null,
-        "name": null,
-        "country": "US",
-        "customer": "cus_36B3nJyo2mKv0m",
-        "fingerprint": "DMfzzf5aobPBRDZg",
-        "exp_year": 2016,
-        "exp_month": 12,
-        "type": "Visa",
-        "last4": "4242",
-        "object": "card",
-        "id": "card_36B3Sti9FDKquN"
-      }
-    ],
-    "url": "/v1/customers/cus_36B3nJyo2mKv0m/cards",
-    "count": 1,
-    "object": "list"
-  },
-  "account_balance": 0,
-  "discount": null,
-  "subscription": null,
-  "delinquent": false,
-  "email": "jk@airpair.com",
-  "description": null,
-  "livemode": false,
-  "id": "cus_36B3nJyo2mKv0m",
-  "created": 1386713369,
-  "object": "customer"
+# testStripeCustomer =
+#   "default_card": "card_36B3Sti9FDKquN",
+#   "cards": {
+#     "data": [
+#       {
+#         "address_zip_check": null,
+#         "address_line1_check": null,
+#         "cvc_check": "pass",
+#         "address_country": null,
+#         "address_zip": null,
+#         "address_state": null,
+#         "address_city": null,
+#         "address_line2": null,
+#         "address_line1": null,
+#         "name": null,
+#         "country": "US",
+#         "customer": "cus_36B3nJyo2mKv0m",
+#         "fingerprint": "DMfzzf5aobPBRDZg",
+#         "exp_year": 2016,
+#         "exp_month": 12,
+#         "type": "Visa",
+#         "last4": "4242",
+#         "object": "card",
+#         "id": "card_36B3Sti9FDKquN"
+#       }
+#     ],
+#     "url": "/v1/customers/cus_36B3nJyo2mKv0m/cards",
+#     "count": 1,
+#     "object": "list"
+#   },
+#   "account_balance": 0,
+#   "discount": null,
+#   "subscription": null,
+#   "delinquent": false,
+#   "email": "jk@airpair.com",
+#   "description": null,
+#   "livemode": false,
+#   "id": "cus_36B3nJyo2mKv0m",
+#   "created": 1386713369,
+#   "object": "customer"

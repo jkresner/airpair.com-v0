@@ -20,8 +20,8 @@ class exports.FiltersView extends BB.BadassView
   events:
     'click .btn': 'filter'
   initialize: ->
-    @marketingTagView = new Shared.MarketingTagsInputView
-      collection: @marketingTags, model: @dummyRequest
+    # @marketingTagView = new Shared.MarketingTagsInputView
+    #   collection: @marketingTags, model: @dummyRequest
     @listenTo @dummyRequest, 'change:marketingTags', @filter
   filter: (e) ->
     if e && e.target

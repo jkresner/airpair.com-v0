@@ -1,5 +1,5 @@
 BB = require 'BB'
-Shared = require './../shared/Models'
+Shared = require '../../shared/Models'
 exports = {}
 
 

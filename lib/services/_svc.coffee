@@ -20,14 +20,15 @@ module.exports = class DomainService
   searchOne: (query, opts, callback) =>
     opts = {} if !opts?
     {fields,options} = opts
-    @model.findOne(query,fields,opts).lean().exec (e, r) =>
+    @model.findOne(query,fields,options).lean().exec (e, r) =>
       if e && @logging then $log 'svc.searchOne.err', query, e
       callback e, r
 
   getAll: (callback) => @searchMany {}, {}, callback
   getByUserId: (userId, callback) => @searchMany {userId}, {}, callback
-  getById: (id, callback) => @searchOne {_id: id}, {}, callback
-
+  getById: (id, callback) =>
+    $log 'getById', id, callback
+    @searchOne {_id: id}, {}, callback
 
 
   create: (o, callback) =>

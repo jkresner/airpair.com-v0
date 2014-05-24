@@ -1,11 +1,11 @@
 BB = require 'BB'
 SV = require '../../shared/Views'
 
-Handlebars.registerPartial 'MarketingTag', require './templates/MarketingTag'
+Handlebars.registerPartial 'MarketingTag', require '../../shared/templates/MarketingTag'
 
 class MarketingTagView extends BB.BadassView
   tagName: 'span'
-  tmpl: require './templates/MarketingTag'
+  tmpl: require '../../shared/templates/MarketingTag'
   events:
     'click .marketingtag': 'select'
   initialize: -> @listenTo @model, 'change', @render

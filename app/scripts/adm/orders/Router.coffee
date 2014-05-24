@@ -1,6 +1,5 @@
-S   = require '../shared/Routers'
-SC = require '../shared/Collections'
-SM = require '../shared/Models'
+S   = require '../../shared/Routers'
+SC = require '../../shared/Collections'
 M  = require './Models'
 C  = require './Collections'
 V  = require './Views'
@@ -21,8 +20,9 @@ module.exports = class Router extends S.AirpairSessionRouter
       selected: new M.Order()
       orders: new C.Orders()
       marketingTags: new SC.MarketingTags()
-      request: new SM.Request()
-      dummyRequest: new SM.Request marketingTags: []
+      request: new M.Request()
+      dummyRequest: new M.Request marketingTags: []
+
     v =
       ordersView: new V.OrdersView collection: d.orders, model: d.selected
       orderView: new V.OrderView model: d.selected, request: d.request
@@ -32,7 +32,8 @@ module.exports = class Router extends S.AirpairSessionRouter
         dummyRequest: d.dummyRequest
 
     @resetOrFetch d.orders, pageData.orders
-    @resetOrFetch d.marketingTags, pageData.marketingTags
+    # @resetOrFetch d.marketingTags, pageData.marketingTags
+
     _.extend d, v
 
   initialize: (args) ->

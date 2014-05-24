@@ -1,15 +1,14 @@
 exports  = {}
 BB       = require 'BB'
 M        = require './Models'
-Shared   = require './../shared/Views'
-Settings = require './../settings/Views'
+Shared   = require '../../shared/Views'
 
 #############################################################################
 ##  To collect the card
 #############################################################################
 
 
-class exports.StripeRegisterView extends Settings.StripeRegisterView
+class exports.StripeRegisterView extends Shared.StripeRegisterView
   email: -> $('#stripeEmail').val()
   stripeCustomerSuccess: (model, resp, opts) =>
     @model.unset 'stripeCreate'

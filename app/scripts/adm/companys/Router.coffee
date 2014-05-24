@@ -1,4 +1,4 @@
-S  = require('./../shared/Routers')
+S  = require '../../shared/Routers'
 M  = require './Models'
 C  = require './Collections'
 V  = require './Views'

@@ -86,11 +86,11 @@
   <script type="text/javascript">
     function initApp() {
       var pageData = { session: {{{session}}}, orders: {{{orders}}} };
-      Router = require('/scripts/orders/Router');
+      Router = require('/scripts/adm/orders/Router');
       window.router = new Router(pageData);
     }
   </script>
   <script src="/javascripts/vendor.js" defer></script>
-  <script src="/javascripts/app.js" defer onload="initApp()"></script>
+  <script src="/javascripts/adm.js" defer onload="initApp()"></script>
 
 </html>
