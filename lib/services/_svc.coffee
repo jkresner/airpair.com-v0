@@ -26,9 +26,7 @@ module.exports = class DomainService
 
   getAll: (callback) => @searchMany {}, {}, callback
   getByUserId: (userId, callback) => @searchMany {userId}, {}, callback
-  getById: (id, callback) =>
-    $log 'getById', id, callback
-    @searchOne {_id: id}, {}, callback
+  getById: (id, callback) => @searchOne {_id: id}, {}, callback
 
 
   create: (o, callback) =>

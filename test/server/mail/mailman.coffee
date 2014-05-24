@@ -2,7 +2,7 @@
 {data}          = require '../test-app-setup'
 
 mailman         = require '../../../lib/mail/mailman'
-{tagsString}    = require '../../../app/mix/tags'
+{tagsString}    = require '../../../lib/mix/tags'
 
 describe "mailman", ->
   # @testNum = 0

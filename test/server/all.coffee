@@ -9,7 +9,7 @@ describe "Server-side suite", ->
     dbConnect ->
       mongoose.connection.db.executeDbCommand { dropDatabase: 1 }, done
 
-  describe 'ui/models/request', (done) -> require './ui/models/request'
+  describe 'mix/tags', (done) -> require './mix/tags'
   describe 'api/companys', (done) -> require './api/companys'
   describe 'api/experts', (done) -> require './api/experts'
   describe 'api/orders', (done) -> require './api/orders'
