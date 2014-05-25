@@ -1,14 +1,14 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <title>AirPair | {{ tagsString }} request</title>
+  <title>AirPair | {{ tagsString request.tags }} request</title>
   <meta charset="utf-8">
   <meta name="robots" content="noindex, nofollow" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width">
   <meta name="description" content="airpair connects companies with expert developers for remote software consulting and pair programming. Hire the best of the best 1 hour at a time.">
-  <meta name="keywords" content="{{ tagsString }}">
-  <meta property="og:title" content="airpair, {{ tagsString }} request" />
+  <meta name="keywords" content="{{ tagsString request.tags }}">
+  <meta property="og:title" content="airpair, {{ tagsString request.tags }} request" />
   <meta property="og:type" content="airpair:request" />
   <meta property="og:image" content="http://www.airpair.com/images/icons/icon48.png" />
   {{> siteStyles }}
@@ -41,7 +41,7 @@
   <script type="text/javascript">
     window.useOlark = true;
     function initApp() {
-      var pageData = { session: {{{ stringify session }}}, request: {{{ stringify request }}}, isProd: {{ isProd }} };
+      var pageData = { {{ JSON 'isProd' }} , {{ JSON 'session' }}, {{ JSON 'request' }} };
       Router = require('/scripts/ap/review/Router');
       window.router = new Router(pageData);
     }

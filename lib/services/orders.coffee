@@ -77,7 +77,8 @@ module.exports = class OrdersService extends DomainService
 
 
   getForHistory: (id, callback) =>
-    @model.find userId: id, @historySelect, callback
+    userId = if id? && Roles.isAdmin(@usr) then id else @usr._id
+    @searchMany {userId}, { fields: @historySelect }, cb
 
   historySelect:
     '_id': 1

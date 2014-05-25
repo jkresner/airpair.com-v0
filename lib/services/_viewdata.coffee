@@ -5,8 +5,6 @@ TagsSvc          = require '../services/tags'
 OrdersSvc        = require '../services/orders'
 SettingsSvc      = require '../services/settings'
 RequestCallsSvc  = require '../services/requestCalls'
-authz            = require '../identity/authz'
-Roles            = authz.Roles
 {tagsString}     = require '../mix/tags'
 
 module.exports = class ViewDataService
@@ -34,11 +32,8 @@ module.exports = class ViewDataService
       authenticated : false
 
   review: (id, cb) ->
-    new RequestsSvc(@usr).getByIdSmart id, (e,r) =>
-      $log 'getByIdSmart', r._id
-      cb e, ->
-        request:    r
-        tagsString: if r? then tagsString r.tags else 'Not found'
+    new RequestsSvc(@usr).getByIdSmart id, (e, request) =>
+      cb e, -> { request }
 
 
   settings: (callback) ->
@@ -95,12 +90,9 @@ module.exports = class ViewDataService
         expert:       r
         expertStr:    JSON.stringify r
 
-  pipeline: (callback) ->
-    rSvc.getActive (err, requests) =>
-      if err then return callback err
-      callback null,
-        session: @session usr
-        requests: JSON.stringify(requests)
+  pipeline: (cb) ->
+    new RequestsSvc(@usr).getActive (e, requests) =>
+      cb e, -> { requests }
 
   companys: (callback) ->
     eSvc.getAll (e, r) =>
@@ -138,7 +130,6 @@ module.exports = class ViewDataService
         order: JSON.stringify o
 
   history: (id, callback) ->
-    custUserId = if id? && Roles.isAdmin(usr) then id else usr._id
     rSvc.getForHistory custUserId, (e,r) =>
       oSvc.getForHistory custUserId, (ee,o) =>
         callback null,

@@ -95,10 +95,7 @@
 
   <script type="text/javascript">
     function initApp() {
-      var pageData = {
-        session: {{{ session }}},
-        requests: {{{ requests }}},
-      };
+      var pageData = { {{ JSON 'session' }}, {{ JSON 'requests' }} };
       Router = require('/scripts/adm/pipeline/Router');
       window.router = new Router(pageData);
     }

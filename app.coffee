@@ -7,7 +7,8 @@ express          = require 'express'
 expressValidator = require 'express-validator'
 passport         = require 'passport'
 inspect          = require('util').inspect
-partials         = require './lib/util/hbsPartials'
+
+
 
 # setup our express app
 app = express()
@@ -17,14 +18,16 @@ app = express()
 storeOptions = url: "#{cfg.mongoUri}/sessions", auto_reconnect: true
 mongoSessionStore = new MongoSessionStore storeOptions
 
-hbs = require('hbs')
+hbs              = require('hbs')
+hbsPartials      = require './lib/util/hbsPartials'
+hbsHelpers       = require './lib/util/hbsHelpers'
 app.set 'views', __dirname + '/public'
 app.set 'view engine', 'hbs'
 app.engine 'html', hbs.__express #allow html extension
-hbs.registerHelper 'stringify', (o) -> JSON.stringify o
 
 # Eventually all global partials should be in '/app/partials'
-partials.register __dirname, ['/app/partials','/app/scripts/shared/templates']
+hbsPartials.register __dirname, ['/app/partials','/app/scripts/shared/templates']
+hbsHelpers.register hbs
 
 app.use express.compress() # gzip
 app.use express.static(__dirname + '/public')

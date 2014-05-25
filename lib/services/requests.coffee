@@ -18,7 +18,11 @@ module.exports = class RequestsService extends DomainService
   mTagsSvc:     new MarketingTagsSvc()
 
 
-  getForHistory: (id, cb) => @searchMany userId: id, { fields: @historySelect }, cb
+  getForHistory: (id, cb) =>
+    userId = if id? && Roles.isAdmin(@usr) then id else @usr._id
+    @searchMany {userId}, { fields: Data.view.history }, cb
+
+
   getByCallId: (callId, cb) -> @searchOne { 'calls._id': callId }, {}, cb
 
 
