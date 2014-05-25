@@ -44,13 +44,9 @@ module.exports = class HipChatService
 
 
   getUserByEmailOrName: (email, name, callback) =>
-
-    # $log 'getUser', email
     @HC.view_user email, (e, r) =>
       if !e? then return callback null, r
-      @HC.view_user '@'+name.replace(' ',''), (e, r) =>
-        if !e? then return callback null, r
-        else callback e
+      @HC.view_user '@'+name.replace(' ',''), callback
 
   # getRooms: (admin) ->
   #   @HC.rooms (data) ->

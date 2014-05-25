@@ -4,7 +4,7 @@ Roles         = require '../identity/roles'
 
 class RequestApi extends Api
 
-  logging:on
+  # logging:on
 
   Svc: require './../services/requests'
   oSvc: new OrdersSvc()

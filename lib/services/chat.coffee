@@ -61,9 +61,12 @@ module.exports = class ChatService extends DomainService
   #     new @model({ admin, customerUId, expertUId }).save callback
 
 
-  getUsersByEmail: (emails, callback) ->
-    @hc.getUsers emails, callback
+  # getUsersByEmail: (emails, callback) ->
+  #   @hc.getUsers emails, callback
 
 
   getUser: (email, name, callback) ->
-    @hc.getUserByEmailOrName email, name, callback
+    @hc.getUserByEmailOrName email, name, (e, user) ->
+      # note we swallow the error as it just means there's no user
+      if !user? then user = {}
+      callback null, user

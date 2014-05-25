@@ -9,7 +9,7 @@ Data             = require './requests.query'
 
 module.exports = class RequestsService extends DomainService
 
-  logging:on
+  # logging:on
 
   mailman:      require '../mail/mailman'
   model:        require '../models/request'

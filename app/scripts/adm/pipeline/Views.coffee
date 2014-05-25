@@ -164,7 +164,7 @@ class exports.RequestFarmView extends BB.ModelSaveView
 
 
 class exports.RoomMemberView extends BB.ModelSaveView
-  # logging: on
+  logging: on
   class: 'control-group'
   tmpl: require './templates/RoomMember'
   viewData: ['email','name','mention_name']
@@ -172,7 +172,7 @@ class exports.RoomMemberView extends BB.ModelSaveView
     'click .btn-create': 'createUser'
     'change .email': 'lookupUser'
   initialize: ->
-    @listenTo @model, 'change', @render
+    @listenTo @model, 'sync', @render
     @model.fetch()
   render: ->
     @$el.html @tmpl @model.toJSON()
