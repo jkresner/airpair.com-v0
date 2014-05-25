@@ -17,9 +17,11 @@ app = express()
 storeOptions = url: "#{cfg.mongoUri}/sessions", auto_reconnect: true
 mongoSessionStore = new MongoSessionStore storeOptions
 
-app.engine('html', require('hbs').__express)
-app.set('view engine', 'hbs')
-app.set('views', __dirname + '/public')
+hbs = require('hbs')
+app.set 'views', __dirname + '/public'
+app.set 'view engine', 'hbs'
+app.engine 'html', hbs.__express #allow html extension
+hbs.registerHelper 'stringify', (o) -> JSON.stringify o
 
 # Eventually all global partials should be in '/app/partials'
 partials.register __dirname, ['/app/partials','/app/scripts/shared/templates']

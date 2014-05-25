@@ -9,52 +9,45 @@ authz            = require '../identity/authz'
 Roles            = authz.Roles
 {tagsString}     = require '../mix/tags'
 
-rSvc  = new RequestsSvc()
-eSvc  = new ExpertsSvc()
-tSvc  = new TagsSvc()
-oSvc  = new OrdersSvc()
-sSvc  = new SettingsSvc()
-rcSvc = new RequestCallsSvc()
-
 module.exports = class ViewDataService
 
-  session: (user) ->
-    if user? && user.google?
-      u = _.clone user
+  logging: off
+
+  constructor: (user) ->
+    @usr = user
+
+  # session gets called from viewRender.render
+  session: (full) ->
+    if @usr? && @usr.google?
+      u = _.clone @usr
       if u.google then delete u.google.token
       if u.twitter then delete u.twitter.token
       if u.bitbucket then delete u.bitbucket.token
       if u.github then delete u.github.token
       if u.stack then delete u.stack.token
+      u.authenticated = true
+      if full
+        u
+      else
+        _.pick u, ['_id','google','googleId']
     else
-      u = authenticated : false
+      authenticated : false
 
-    JSON.stringify u
+  review: (id, cb) ->
+    new RequestsSvc(@usr).getByIdSmart id, (e,r) =>
+      $log 'getByIdSmart', r._id
+      cb e, ->
+        request:    r
+        tagsString: if r? then tagsString r.tags else 'Not found'
 
-  settings: (usr, callback) ->
+
+  settings: (callback) ->
     callback null,
       stripePK: cfg.payment.stripe.publishedKey
 
-  stripeCheckout: (usr, order, callback) ->
-    {qty,unitPrice} = order
-    total = qty * unitPrice
-    pk = global.cfg.payment.stripe.publishedKey
-    sSvc.getByUserId usr._id, (e, r) =>
-      if e then return callback e
-      callback null, _.extend {total,qty,unitPrice,pk},
-        session:    @session usr
-        customerId: JSON.stringify r
 
-  review: (usr, id, callback) ->
-    rSvc.getByIdSmart id, usr, (e, r) =>
-      if e then return callback e
-      callback null,
-        isProd:     cfg.isProd.toString()
-        session:    @session usr
-        request:    JSON.stringify r
-        tagsString: if r? then tagsString r.tags else 'Not found'
 
-  callSchedule: (usr, requestId, callback) ->
+  callSchedule: (requestId, callback) ->
     rSvc.getById requestId, (e, request) =>
       oSvc.getByRequestId request._id, (e, orders) =>
         if e then return callback e
@@ -63,7 +56,7 @@ module.exports = class ViewDataService
           request:  JSON.stringify request
           orders:   JSON.stringify orders
 
-  callEdit: (usr, callId, callback) ->
+  callEdit: (callId, callback) ->
     rSvc.getByCallId callId, (e, request) =>
       oSvc.getByRequestId request._id, (e, orders) =>
         if e then return callback e
@@ -72,7 +65,7 @@ module.exports = class ViewDataService
           request: JSON.stringify request
           orders: JSON.stringify orders
 
-  book: (usr, id, code, callback) ->
+  book: (id, code, callback) ->
     eSvc.getByBookme id, (e, r) =>
       if code? && r._id?
         r.bookMe.code = "invalid code"
@@ -92,7 +85,7 @@ module.exports = class ViewDataService
         stripePK:     cfg.payment.stripe.publishedKey
         # settings:     srs    ## settings crashes app for some reason
 
-  bookme: (usr, callback) ->
+  bookme: (callback) ->
     token = if usr.github.token? then usr.github.token.token else ''
     eSvc.getByBookmeByUserId usr._id, (e, r) =>
       if e then return callback e
@@ -102,27 +95,27 @@ module.exports = class ViewDataService
         expert:       r
         expertStr:    JSON.stringify r
 
-  pipeline: (usr, callback) ->
+  pipeline: (callback) ->
     rSvc.getActive (err, requests) =>
       if err then return callback err
       callback null,
         session: @session usr
         requests: JSON.stringify(requests)
 
-  companys: (usr, callback) ->
+  companys: (callback) ->
     eSvc.getAll (e, r) =>
       callback null,
         session: @session usr
         experts: JSON.stringify r
         stripePK: cfg.payment.stripe.publishedKey
 
-  experts: (usr, callback) ->
+  experts: (callback) ->
     eSvc.getAll (e, r) =>
       callback null,
         session: @session usr
         experts: JSON.stringify r
 
-  stripeCharge: (usr, orderId, token, callback) ->
+  stripeCharge: (orderId, token, callback) ->
     oSvc.markPaymentReceived orderId, usr, {}, (e, o) =>
       if e then return callback e
       callback null,
@@ -130,21 +123,21 @@ module.exports = class ViewDataService
         order: JSON.stringify null, o
         stripePK: cfg.payment.stripe.publishedKey
 
-  paypalSuccess: (usr, orderId, callback) ->
+  paypalSuccess: (orderId, callback) ->
     oSvc.markPaymentReceived orderId, usr, {}, (e, o) =>
       if e then return callback e
       callback null,
         session: @session usr
         order: JSON.stringify o
 
-  paypalCancel: (usr, orderId, callback) ->
+  paypalCancel: (orderId, callback) ->
     oSvc.getById orderId, (e, o) =>
       if e then return callback e
       callback null,
         session: @session usr
         order: JSON.stringify o
 
-  history: (usr, id, callback) ->
+  history: (id, callback) ->
     custUserId = if id? && Roles.isAdmin(usr) then id else usr._id
     rSvc.getForHistory custUserId, (e,r) =>
       oSvc.getForHistory custUserId, (ee,o) =>
@@ -154,7 +147,7 @@ module.exports = class ViewDataService
           orders: JSON.stringify o
           isAdmin: Roles.isAdmin(usr).toString()
 
-  orders: (usr, callback) ->
+  orders: (callback) ->
     oSvc.getAll (ee,o) =>
       callback null,
         session: @session usr

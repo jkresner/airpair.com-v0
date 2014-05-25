@@ -13,21 +13,26 @@ class Api
     @routes app, route
 
 
-  routes: (app, route) ->
-    $log 'override in child class'
-
-
-  utcNow: ->
-    new moment().utc().toJSON()
-
-
-  # middle ware for all airpair api calls
+  """ middleware for all airpair api calls """
   ap: (req, res, next) =>
     @svc = new @Svc(req.user)
     @cbSend = @cSend res, next
     @data = _.clone req.body
     @data._id # so mongo doesn't complain
     next()
+
+  routes: (app, route) ->
+    $log 'override in child class'
+
+  # default http operations
+  list: (req) => @svc.getAll @cbSend
+  create: (req) => @svc.create @data, @cbSend
+  detail: (req) => @svc.getById @cbSend
+  update: (req) => @svc.update req.params.id, @data, @cbSend
+  delete: (req) => @svc.delete req.params.id, @cbSend
+
+  utcNow: -> new moment().utc().toJSON()
+
 
   cSend: (res, next) ->
     (e, r) =>

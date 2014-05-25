@@ -4,6 +4,13 @@ module.exports = class ExpertsService extends DomainService
 
   model: require './../models/expert'
 
+  getById: (id, callback) =>
+    query = if id is 'me' then userId: req.user._id else _id: id
+
+    @searchOne query, (e, r) =>
+      if e? || r? then callback e, r
+      @searchOne {email: req.user.google._json.email}, callback
+
 
   getByBookme: (urlSlug, callback) =>
     urlSlug = urlSlug.toLowerCase()
@@ -47,3 +54,8 @@ module.exports = class ExpertsService extends DomainService
       if e then return callback e
       if !r then r = []
       callback null, r
+
+  update: (id, data, cb) =>
+    if data.bookMe? && data.bookMe.enabled
+      data.bookMe.urlSlug = data.bookMe.urlSlug.toLowerCase()
+    super id, data, cb

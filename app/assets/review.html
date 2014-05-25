@@ -41,11 +41,11 @@
   <script type="text/javascript">
     window.useOlark = true;
     function initApp() {
-      var pageData = { session: {{{ session }}}, request: {{{ request }}}, isProd: {{ isProd }} };
-      Router = require('/scripts/review/Router');
+      var pageData = { session: {{{ stringify session }}}, request: {{{ stringify request }}}, isProd: {{ isProd }} };
+      Router = require('/scripts/ap/review/Router');
       window.router = new Router(pageData);
     }
   </script>
   <script src="/javascripts/vendor.js" defer></script>
-  <script src="/javascripts/app.js" defer onload="initApp()"></script>
+  <script src="/javascripts/ap.js" defer onload="initApp()"></script>
 </html>

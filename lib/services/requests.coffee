@@ -9,6 +9,8 @@ Data             = require './requests.query'
 
 module.exports = class RequestsService extends DomainService
 
+  logging:on
+
   mailman:      require '../mail/mailman'
   model:        require '../models/request'
   rates:        new RatesSvc()
@@ -39,6 +41,37 @@ module.exports = class RequestsService extends DomainService
       async.each received, @_getPreviousOwner, (er) => cb er, requests
 
 
+  """ Get a request, shapes viewData by viewer + logs view events """
+  getByIdSmart: (id, cb) ->
+    @getById id, (e, r) =>
+      if r?
+        if Roles.isRequestExpert @usr, r
+          @_addViewEvent r, "expert view"
+          r = Data.select r, 'associated'
+        else if Roles.isRequestOwner @usr, r
+          @_addViewEvent r, "customer view"
+        else if !Roles.isAdmin @usr
+          @_addViewEvent r, "anon view"
+          r = Data.select r, 'public'
+        @rates.addRequestSuggestedRates r
+      else
+        r = {}
+
+      cb e, r
+
+
+  # log event when the request is viewed
+  _addViewEvent: (request, evtName) =>
+    up = events: _.clone(request.events)
+    up.events.push @newEvent evtName
+    if evtName is "expert view"
+      up.suggested = request.suggested
+      sug = _.find request.suggested, (s) => _.idsEqual s.expert.userId, @usr._id
+      sug.events.push @newEvent "viewed"
+    @model.findByIdAndUpdate request._id, up, ->
+
+
+
   """ Create a request by get help flow """
   create: (request, cb) =>
     defaults =
@@ -65,36 +98,6 @@ module.exports = class RequestsService extends DomainService
     new @model( _.extend(request, defaults) ).save (e,r) =>
       if e && @logging then $log 'svc.create', o, e
       if r? then @mailman.admNewRequest r
-      cb e, r
-
-
-  # log event when the request is viewed
-  _addViewEvent: (request, evtName) =>
-    up = events: _.clone(request.events)
-    up.events.push @newEvent evtName
-    if evtName is "expert view"
-      up.suggested = request.suggested
-      sug = _.find request.suggested, (s) => _.idsEqual s.expert.userId, @usr._id
-      sug.events.push @newEvent "viewed"
-    @model.findByIdAndUpdate request._id, up, ->
-
-
-  """ Get a request, shapes viewData by viewer + logs view events """
-  getByIdSmart: (id, cb) ->
-    @getById id, (e, r) =>
-      if r?
-        if Roles.isRequestExpert @usr, r
-          @_addViewEvent r, "expert view"
-          r = Data.select r, 'associated'
-        else if Roles.isRequestOwner @usr, r
-          @_addViewEvent r, "customer view"
-        else if !Roles.isAdmin @usr
-          @_addViewEvent r, "anon view"
-          r = Data.select r, 'public'
-        @rates.addRequestSuggestedRates r
-      else
-        r = {}
-
       cb e, r
 
 

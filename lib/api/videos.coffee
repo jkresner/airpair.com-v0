@@ -1,13 +1,11 @@
-authz  = require '../identity/authz'
-admin  = authz.Admin isApi: true
-videos = require '../services/videos'
 
-class VideosApi
+class VideosApi extends require('./_api')
 
-  svc: videos
+  Svc: require '../services/videos'
 
-  constructor: (app, route) ->
-    app.get "/api/#{route}/youtube/:youtubeId", admin, @fetchYouTube
+  routes: (app, route) ->
+    app.get "/api/#{route}/youtube/:youtubeId", @admin, @ap, @fetchYouTube
+
 
   fetchYouTube: (req, res, next) =>
     @svc.fetchYouTube req.params.youtubeId, (err, videoData) =>
@@ -15,5 +13,6 @@ class VideosApi
         return res.send data: youtube: err.message, 400
       if err then return next err
       res.send videoData
+
 
 module.exports = (app) -> new VideosApi app, 'videos'

@@ -47,7 +47,6 @@ module.exports = (app) ->
   require('./lib/api/experts')(app)
   require('./lib/api/requests')(app)
   require('./lib/api/requestCalls')(app)
-  require('./lib/api/mail')(app)
   require('./lib/api/orders')(app)
   require('./lib/api/settings')(app)
   require('./lib/api/paymethods')(app)

@@ -7,7 +7,7 @@ Schema   = mongoose.Schema
 VALID_CALL_TYPES = ['opensource', 'private', 'nda', 'subscription', 'offline']
 
 
-eStatus = ['waiting','available','abstained','chosen','released']
+eStatus = ['waiting','opened','available','abstained','busy','underpriced','chosen','released']
 
 
 Suggestion = new Schema

@@ -1,6 +1,5 @@
 exports = {}
 BB      = require 'BB'
-M       = require './Models'
 
 #############################################################################
 ##  To render requests

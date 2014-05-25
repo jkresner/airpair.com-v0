@@ -1,10 +1,10 @@
 exports = {}
 BB      = require 'BB'
 M       = require './Models'
-SV      = require './../shared/Views'
+SV      = require '../../shared/Views'
 
-Handlebars.registerPartial "Expert", require './../shared/templates/Expert'
-Handlebars.registerPartial "ExpertMini", require './../shared/templates/ExpertMini'
+Handlebars.registerPartial "Expert", require '../../shared/templates/Expert'
+Handlebars.registerPartial "ExpertMini", require '../../shared/templates/ExpertMini'
 Handlebars.registerPartial "Suggestion", require './templates/Suggestion'
 
 #############################################################################

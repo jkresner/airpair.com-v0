@@ -1,11 +1,12 @@
 Api           = require './_api'
-RequestSvc    = require './../services/requests'
 OrdersSvc     = require './../services/orders'
 Roles         = require '../identity/roles'
 
 class RequestApi extends Api
 
-  Svc: RequestSvc
+  logging:on
+
+  Svc: require './../services/requests'
   oSvc: new OrdersSvc()
 
   routes: (app, route) ->
@@ -13,21 +14,17 @@ class RequestApi extends Api
     app.get    "/api/#{route}", @loggedIn, @ap, @list
     app.get    "/api/admin/#{route}/active", @admin, @ap, @active
     app.get    "/api/admin/#{route}/inactive", @admin, @ap, @inactive
-    app.put    "/api/#{route}/:id", @ap, @update
+    app.put    "/api/#{route}/:id", @loggedIn, @ap, @update
     app.put    "/api/#{route}/:id/suggestion", @loggedIn, @ap, @updateSuggestion
-    app.post   "/api/#{route}", @ap, @create
-    app.post   "/api/#{route}/book", @ap, @createBookme
+    app.post   "/api/#{route}", @loggedIn, @ap, @create
+    app.post   "/api/#{route}/book", @loggedIn, @ap, @createBookme
     app.delete "/api/#{route}/:id", @admin, @ap, @delete
 
-###############################################################################
-## CRUD extensions
-###############################################################################
 
   list: (req, res) => @svc.getByUserId req.user._id, @cbSend
   active: (req, res) => @svc.getActive @cbSend
   inactive: (req, res) => @svc.getInactive @cbSend
   detail: (req, res) => @svc.getByIdSmart req.params.id, @cbSend
-  create: (req, res) => @svc.create @data, @cbSend
   createBookme: (req, res) => @svc.createBookme req.body, @cbSend
 
   update: (req, res) =>
@@ -37,7 +34,6 @@ class RequestApi extends Api
       @tFE res, 'Update', 'incompleteDetail', 'Must supply incomplete reason'
     else
       @svc.updateSmart req.params.id, @data, @cbSend
-
 
   updateSuggestion: (req, res) =>
     usr = req.user
@@ -51,10 +47,6 @@ class RequestApi extends Api
         @svc.updateSuggestionByExpert r, @data, @cbSend
       else
         res.send 403
-
-
-  delete: (req, res, next) =>
-    @svc.delete req.params.id, @dSend(res,next)
 
 
 module.exports = (app) -> new RequestApi app, 'requests'

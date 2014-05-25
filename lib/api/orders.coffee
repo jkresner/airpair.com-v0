@@ -1,19 +1,17 @@
-Api   = require './_api'
 
-
-class OrdersApi extends Api
+class OrdersApi extends require('./_api')
 
   Svc: require './../services/orders'
 
   routes: (app, route) ->
     app.post    "/api/#{route}", @loggedIn, @ap, @create
-    app.get     "/api/admin/#{route}", @admin, @ap, @adminList
+    app.get     "/api/admin/#{route}", @admin, @ap, @list
     app.get     "/api/#{route}/request/:id", @admin, @ap, @getByRequestId
     app.get     "/api/#{route}/me", @loggedIn, @ap, @getByMe
     app.put     "/api/#{route}/:id", @admin, @ap, @update
     app.delete  "/api/#{route}/:id", @admin, @ap, @delete
 
-  adminList: (req, res) => @svc.getAll @cbSend
+
   getByRequestId: (req, res) => @svc.getByRequestId req.params.id, @cbSend
   getByMe: (req, res) => @svc.getByUserId req.user._id, @cbSend
 
@@ -56,9 +54,6 @@ class OrdersApi extends Api
       {suggestion} = req.body.swapExpert
       return @svc.swapExpert req.params.id, req.user, suggestion, cSend(res, next)
     return res.send(400, 'updating orders not yet implemented')
-
-
-  delete: (req, res) => @svc.delete req.params.id, @cbSend
 
 
 module.exports = (app) -> new OrdersApi app, 'orders'
