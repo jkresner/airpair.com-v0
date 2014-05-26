@@ -21,7 +21,7 @@ module.exports = class ExpertsService extends DomainService
 
   detailOnRequest: (id, cb) =>
     @searchOne userId: @usr._id, {}, (e, expert) =>
-      if !expert? then return cb "expert w uid #{@usr._id} doesnt exist"
+      if !expert? then return cb e, {}
       new RequestService(@usr).getById id, (ee, request) =>
         expert.suggestedRate = new RatesService().calcSuggestedRates request, expert
         cb ee, expert
