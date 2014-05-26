@@ -16,8 +16,9 @@ nestedPick = (argv...) ->
     else
       # Pick recursively and apply only if something was picked
       # $log 'picking.recursive.key', key, props[0]
-      result = nestedPick object[props[0]], [key.replace("#{props[0]}.",'')]
-      copy[props[0]] = result unless _.isEmpty result
+      if object[props[0]?
+        result = nestedPick object[props[0]], [key.replace("#{props[0]}.",'')]
+        copy[props[0]] = result unless _.isEmpty result
 
   return copy
 
