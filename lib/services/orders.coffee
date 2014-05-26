@@ -21,9 +21,12 @@ module.exports = class OrdersService extends DomainService
   model: require './../models/order'
   paypalSvc: new PaypalAdaptiveSvc()
   stripSvc: new StripeSvc()
-  requestSvc: new RequestService()
-  settingsSvc: new SettingsSvc()
   rates: new RatesSvc()
+
+  constructor: (user) ->
+    @requestSvc = new RequestService user
+    @settingsSvc = new SettingsSvc user
+    super user
 
   _calculateProfitAndPayouts: (order) ->
     airpairMargin = order.total
@@ -37,9 +40,9 @@ module.exports = class OrdersService extends DomainService
     order.profit = airpairMargin
     order
 
-  create: (order, usr, callback) ->
+  create: (order, callback) ->
     order._id = new mongoose.Types.ObjectId;
-    order.userId = usr._id
+    order.userId = @usr._id
 
     payWith = 'paypal'
     if order.paymentMethod? && order.paymentMethod.type == 'stripe' then payWith = 'stripe'
@@ -52,7 +55,6 @@ module.exports = class OrdersService extends DomainService
     order.invoice = {}
     @_calculateProfitAndPayouts order
     # $log 'create._calculateProfitAndPayouts.payWith', payWith
-
     savePaymentResponse = (e, paymentResponse) =>
       # $log 'savePaymentResponse.e', e
       if e then return callback e
@@ -60,10 +62,10 @@ module.exports = class OrdersService extends DomainService
 
       if payWith is 'stripe' && paymentResponse? && !paymentResponse.failure_code?
         order.paymentStatus = 'received'
-        @trackPayment usr, order, 'stripe'
+        @trackPayment order, 'stripe'
 
       new @model(order).save (e, rr) ->
-        # $log 'order.save.e', e, callback
+        # $log 'order.save.e', e, rr, callback
         if e?
           # $log "order.save.error", e
           winston.error "order.save.error", e
@@ -98,12 +100,12 @@ module.exports = class OrdersService extends DomainService
     'utc': 1
 
 
-  confirmBookme: (request, usr, expertReview, callback) ->
+  confirmBookme: (request, expertReview, callback) ->
     @settingsSvc.getByUserId request.userId, (ee, settings) =>
       if ee then return callback ee
       pm = _.find settings.paymentMethods, (p) -> p.type == 'stripe'
 
-      @requestSvc.updateSuggestionByExpert request, usr, expertReview, (e, r) =>
+      @requestSvc.updateSuggestionByExpert request, expertReview, (e, r) =>
         $log 'request updated', r.status, r.suggested
         if e then return callback e
         if r.status == 'canceled' then return callback e,r
@@ -128,12 +130,12 @@ module.exports = class OrdersService extends DomainService
             suggestedRate: r.suggested[0].suggestedRate
             expert: _.pick request.suggested[0].expert, toPick
 
-        @create order, usr, (eeee,rrrr) -> callback(eeee,r)
+        @create order, (eeee,rrrr) -> callback(eeee,r)
 
 
-  trackPayment: (usr, order, type) ->
+  trackPayment: (order, type) ->
     props = {
-      usr: usr.google._json.email, distinct_id: usr.google._json.email,
+      usr: @usr.google._json.email, distinct_id: @usr.google._json.email,
       total: order.total, profit: order.profit, type: type
     }
 
@@ -145,34 +147,34 @@ module.exports = class OrdersService extends DomainService
       props.utm_campaign = order.utm.utm_campaign
 
     mixpanel.track 'customerPayment', props
-    mixpanel.people.track_charge usr.google._json.email, order.total
+    mixpanel.people.track_charge @usr.google._json.email, order.total
 
     # add event to request's log
     # TODO: when mongo can't find an ID, it returns null as the result.
     @requestSvc.getById order.requestId, (e, request) =>
       if e
-        return winston.error 'trackPayment.@requestSvc.getById.error' + e.stack
-      request.events.push @newEvent(usr, 'customer paid')
+        return winston.error 'trackPayment.@requestSvc.getById.error ' + e.stack
+      request.events.push @newEvent('customer paid')
 
-      mailman.importantRequestEvent "customer paid  #{order.total}", usr, request
+      mailman.importantRequestEvent "customer paid  #{order.total}", @usr, request
 
       @requestSvc.update request.id, { events: request.events }, (e) =>
         if e
-          return winston.error 'trackPayment.@requestSvc.update.error' + e.stack
+          return winston.error 'trackPayment.@requestSvc.update.error ' + e.stack
 
 
   markPaymentReceived: (id, paymentDetail, callback) ->
     @getById id, (e, r) =>
       if e then return callback e
 
-      if Roles.isOrderOwner(usr, r) || Roles.isAdmin(usr)
+      if Roles.isOrderOwner(@usr, r) || Roles.isAdmin(@usr)
         @paypalSvc.PaymentDetails r, (e, resp) =>
           if e then return callback e
           # INCOMPLETE = customer has paid but chained payment not executed
           # CREATED = customer has NOT yet paid
           if resp.status == 'INCOMPLETE'
             ups = paymentStatus: 'received'
-            @trackPayment usr, r, 'paypal'
+            @trackPayment r, 'paypal'
 
             @update id, ups, callback
           else
@@ -262,7 +264,7 @@ module.exports = class OrdersService extends DomainService
         callIds = _.pluck r.lineItems[0].redeemedCalls, 'callId'
 
         @requestSvc.getById r.requestId, (e, request) =>
-          request.events.push @newEvent(usr, 'swaped order expert')
+          request.events.push @newEvent('swaped order expert')
 
           updateCallAndInvite = (callId, cb) =>
             call = _.find request.calls, (c) -> _.idsEqual c._id, callId

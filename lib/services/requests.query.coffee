@@ -1,6 +1,8 @@
 class QueryHelper
 
   select: (obj, selectList) ->
+    if !obj?
+      obj
     if !selectList?
       obj
     else
@@ -36,7 +38,8 @@ class QueryHelper
       'brief': 1
       'availability': 1
       'tags': 1
-      'budget': 1
+      'status': 1
+      # 'budget': 1
       'pricing': 1
       'suggested': 1
 

@@ -8,7 +8,7 @@ ObjectId  = require('mongoose').Types.ObjectId
 
 unschedule       = require '../../../lib/mix/unschedule'
 calcExpertCredit = require '../../../lib/mix/calcExpertCredit'
-ordersSvc        = new (require '../../../lib/services/orders')()
+ordersSvc        = new (require '../../../lib/services/orders')(data.users[13])
 requestsSvc      = new (require '../../../lib/services/requests')(data.users[13])
 viewDataSvc      = new (require '../../../lib/services/_viewdata')(data.users[13])
 svc              = new (require '../../../lib/services/requestCalls')()
@@ -27,7 +27,7 @@ describe "RequestCallsService", ->
     createOrder = (order, cb) ->
       order = _.omit order, '_id'
       order.requestId = request._id
-      ordersSvc.create order, user, (err, newOrder) ->
+      ordersSvc.create order, (err, newOrder) ->
         if err then return cb new Error(err.message)
         return cb null, newOrder
     async.map orders, createOrder, callback

@@ -13,11 +13,11 @@ module.exports = class RatesService
     budget - (@base[requestPricing]-@base[pricing])
 
 
-  addRequestSuggestedRates: (request) ->
+  addRequestSuggestedRates: (request, isCust) ->
     if request.suggested
       for s in request.suggested
         s.suggestedRate = @calcSuggestedRates request, s.expert
-    request.base = @base
+    request.base = @base if isCust
 
   # NOTE suggestedRate is the developers rate
   # not including airpair's margin

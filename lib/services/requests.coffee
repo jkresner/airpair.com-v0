@@ -52,17 +52,18 @@ module.exports = class RequestsService extends DomainService
         if Roles.isRequestExpert(@usr, r) && !Roles.isAdmin(@usr, r)
           @_addViewEvent r, "expert view"
           r = Data.select r, 'associated'
+          @rates.addRequestSuggestedRates r
         else if Roles.isRequestOwner @usr, r
           @_addViewEvent r, "customer view"
+          @rates.addRequestSuggestedRates r, true
         else if Roles.isAdmin @usr
-          r = r
+          @rates.addRequestSuggestedRates r, true
         else if @usr?
           @_addViewEvent r, "unassigned view"
           r = Data.select r, 'associated'
         else
           @_addViewEvent r, "anon view"
           r = Data.select r, 'public'
-        @rates.addRequestSuggestedRates r
       cb e, r
 
 
@@ -174,7 +175,7 @@ module.exports = class RequestsService extends DomainService
       @update id, {suggested,events,status}, (ee, r) =>
         if !e
           @mailman.importantRequestEvent "expert self suggested", @usr, r
-        cb ee, r
+        cb ee, Data.select(r, 'associated')
 
 
   updateSuggestionByExpert: (request, expertReview, cb) =>

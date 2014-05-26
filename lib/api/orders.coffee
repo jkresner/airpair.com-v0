@@ -38,7 +38,7 @@ class OrdersApi extends require('./_api')
             suggestedRate: li.suggestion.suggestedRate
             expert: _.pick li.suggestion.expert, toPick
 
-    @svc.create order, req.user, (e, r) =>
+    @svc.create order, (e, r) =>
       if e then return next e
       if r.payment.responseEnvelope? && r.payment.responseEnvelope.ack is "Failure"
         res.status(400)

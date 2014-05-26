@@ -9,41 +9,40 @@ module.exports = class DomainService
     @usr = user
 
 
-  searchMany: (query, opts, callback) =>
+  searchMany: (query, opts, cb) =>
     opts = {} if !opts?
     {fields,options} = opts
     @model.find(query,fields,options).lean().exec (e, r) =>
       if e && @logging then $log 'svc.search.err', query, e
-      callback e, r
+      cb e, r
 
 
-  searchOne: (query, opts, callback) =>
+  searchOne: (query, opts, cb) =>
     opts = {} if !opts?
     {fields,options} = opts
     @model.findOne(query,fields,options).lean().exec (e, r) =>
       if e && @logging then $log 'svc.searchOne.err', query, e
-      callback e, r
+      cb e, r
 
-  getAll: (callback) => @searchMany {}, {}, callback
-  getByUserId: (userId, callback) => @searchMany {userId}, {}, callback
-  getById: (id, callback) => @searchOne {_id: id}, {}, callback
+  getAll: (cb) => @searchMany {}, {}, cb
+  getByUserId: (userId, cb) => @searchMany {userId}, {}, cb
+  getById: (id, cb) => @searchOne {_id: id}, {}, cb
 
 
-  create: (o, callback) =>
+  create: (o, cb) =>
     new @model( o ).save (e,r) =>
       if e && @logging then $log 'svc.create', o, e
-      callback e, r
+      cb e, r
 
-  delete: (id, callback) =>
-    @model.findByIdAndRemove id, callback
+  delete: (id, cb) =>
+    @model.findByIdAndRemove id, cb
 
-  # TODO this breaks the paypal payout button b/c the redeemedCalls schema isn't
-  # put in by mongoose
-  update: (id, data, callback) =>
+
+  update: (id, data, cb) =>
     ups = _.omit data, '_id' # so mongo doesn't complain
     @model.findByIdAndUpdate(id, ups).lean().exec (e, r) =>
       if e? && @logging then $log 'svc.update.error', e
-      callback e, r
+      cb e, r
 
 
   # TODO: next time someone wants to change newEvent code, first refactor
@@ -64,5 +63,5 @@ module.exports = class DomainService
     evt
 
 
-  unauthorized: (msg, callback) =>
-    callback { status: 403, message: msg }
+  unauthorized: (msg, cb) =>
+    cb { status: 403, message: msg }
