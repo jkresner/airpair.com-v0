@@ -5,8 +5,9 @@ class ExpertApi extends require('./_api')
 
   routes: (app, route) ->
     app.get  "/api/#{route}", @admin, @ap, @list
+    app.get  "/api/#{route}/:id", @loggedIn, @ap, @detail
     app.post "/api/#{route}", @loggedIn, @ap, @create
-    app.put  "/api/#{route}/:id", @admin, @ap, @list
+    app.put  "/api/#{route}/:id", @admin, @ap, @update
 
 
 module.exports = (app) -> new ExpertApi app, 'experts'

@@ -1,10 +1,10 @@
 async            = require 'async'
-DomainService    = require './_svc'
+Data             = require './requests.query'
 Roles            = require '../identity/roles'
+DomainService    = require './_svc'
 RatesSvc         = require './rates'
 SettingsSvc      = require './settings'
 MarketingTagsSvc = require './marketingtags'
-Data             = require './requests.query'
 
 
 module.exports = class RequestsService extends DomainService
@@ -49,7 +49,7 @@ module.exports = class RequestsService extends DomainService
   getByIdSmart: (id, cb) ->
     @getById id, (e, r) =>
       if r?
-        if Roles.isRequestExpert @usr, r
+        if Roles.isRequestExpert(@usr, r) && !Roles.isAdmin(@usr, r)
           @_addViewEvent r, "expert view"
           r = Data.select r, 'associated'
         else if Roles.isRequestOwner @usr, r

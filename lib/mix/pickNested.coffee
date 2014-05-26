@@ -1,7 +1,6 @@
 nestedPick = (argv...) ->
   [object, keys] = argv
 
-  $log 'nestedPick', keys
   # Delegate to the original function if not applicable
   # return _._pick.apply @, argv if not _.isObject keys, true
 
@@ -17,7 +16,6 @@ nestedPick = (argv...) ->
     else
       # Pick recursively and apply only if something was picked
       # $log 'picking.recursive.key', key, props[0]
-      $log 'nestedPick.key', key, props[0]
       result = nestedPick object[props[0]], [key.replace("#{props[0]}.",'')]
       copy[props[0]] = result unless _.isEmpty result
 

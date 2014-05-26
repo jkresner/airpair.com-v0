@@ -36,8 +36,7 @@ module.exports = class Router extends S.AirpairSessionRouter
 
 
   edit: (id) ->
-    @app.selected.clear { silent: true }
-    @app.selected.set { '_id': id }, { silent: true }
-    @app.selected.trigger 'change:bookMe'
+    @app.selected.silentReset { '_id': id }
     @app.selected.fetch()
+    @app.selected.trigger 'change:bookMe'
     if @app.tags.length is 0 then @app.tags.fetch {reset:true}

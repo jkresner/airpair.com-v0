@@ -1,11 +1,12 @@
 async            = require 'async'
-RequestsSvc      = require '../services/requests'
-ExpertsSvc       = require '../services/experts'
 TagsSvc          = require '../services/tags'
 OrdersSvc        = require '../services/orders'
+ExpertsSvc       = require '../services/experts'
+CompanysSvc      = require '../services/companys'
 SettingsSvc      = require '../services/settings'
+RequestsSvc      = require '../services/requests'
 RequestCallsSvc  = require '../services/requestCalls'
-{tagsString}     = require '../mix/tags'
+stripePK         = cfg.payment.stripe.publishedKey
 
 module.exports = class ViewDataService
 
@@ -37,8 +38,7 @@ module.exports = class ViewDataService
 
 
   settings: (callback) ->
-    callback null,
-      stripePK: cfg.payment.stripe.publishedKey
+    callback null, { stripePK }
 
 
 
@@ -94,26 +94,25 @@ module.exports = class ViewDataService
     new RequestsSvc(@usr).getActive (e, requests) =>
       cb e, -> { requests }
 
-  companys: (callback) ->
-    eSvc.getAll (e, r) =>
-      callback null,
-        session: @session usr
-        experts: JSON.stringify r
-        stripePK: cfg.payment.stripe.publishedKey
+  orders: (cb) ->
+    new OrdersSvc(@usr).getAll (e, orders) =>
+      cb e, -> { orders }
 
-  experts: (callback) ->
-    eSvc.getAll (e, r) =>
-      callback null,
-        session: @session usr
-        experts: JSON.stringify r
+  experts: (cb) ->
+    new ExpertsSvc(@usr).getAll (e, experts) =>
+      cb e, -> { experts }
 
-  stripeCharge: (orderId, token, callback) ->
-    oSvc.markPaymentReceived orderId, usr, {}, (e, o) =>
-      if e then return callback e
-      callback null,
-        session: @session usr
-        order: JSON.stringify null, o
-        stripePK: cfg.payment.stripe.publishedKey
+  companys: (cb) ->
+    new CompanysSvc(@usr).getAll (e, companys) =>
+      cb e, -> { companys, stripePK }
+
+  # stripeCharge: (orderId, token, callback) ->
+  #   oSvc.markPaymentReceived orderId, usr, {}, (e, o) =>
+  #     if e then return callback e
+  #     callback null,
+  #       session: @session usr
+  #       order: JSON.stringify null, o
+  #       stripePK: cfg.payment.stripe.publishedKey
 
   paypalSuccess: (orderId, callback) ->
     oSvc.markPaymentReceived orderId, usr, {}, (e, o) =>
@@ -137,10 +136,4 @@ module.exports = class ViewDataService
           requests: JSON.stringify r
           orders: JSON.stringify o
           isAdmin: Roles.isAdmin(usr).toString()
-
-  orders: (callback) ->
-    oSvc.getAll (ee,o) =>
-      callback null,
-        session: @session usr
-        orders: JSON.stringify o
 

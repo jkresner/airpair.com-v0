@@ -109,7 +109,7 @@
 
   <script type="text/javascript">
     function initApp() {
-      var pageData = { stripePK: '{{{stripePK}}}' }
+      var pageData = { {{JSON 'session'}}, {{JSON 'companys'}}, stripePK: '{{{stripePK}}}' }
       Router = require('/scripts/adm/companys/Router');
       window.router = new Router(pageData);
     }

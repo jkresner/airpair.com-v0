@@ -85,7 +85,7 @@
 
   <script type="text/javascript">
     function initApp() {
-      var pageData = { session: {{{session}}}, orders: {{{orders}}} };
+      var pageData = { {{JSON 'session'}}, {{JSON 'orders'}} };
       Router = require('/scripts/adm/orders/Router');
       window.router = new Router(pageData);
     }

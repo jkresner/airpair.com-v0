@@ -47,10 +47,7 @@
 
   <script type="text/javascript">
     function initApp() {
-      var pageData = {
-        session: {{{ session }}},
-        experts: {{{ experts }}},
-      };
+      var pageData = { {{JSON 'session'}}, {{JSON 'experts'}} };
       Router = require('/scripts/adm/experts/Router');
       window.router = new Router(pageData);
     }

@@ -15,7 +15,7 @@ class Api
 
   """ middleware for all airpair api calls """
   ap: (req, res, next) =>
-    @svc = new @Svc(req.user)
+    @svc = new @Svc req.user
     @cbSend = @cSend res, next
     @data = _.clone req.body
     @data._id # so mongo doesn't complain
@@ -27,7 +27,7 @@ class Api
   # default http operations
   list: (req) => @svc.getAll @cbSend
   create: (req) => @svc.create @data, @cbSend
-  detail: (req) => @svc.getById @cbSend
+  detail: (req) => @svc.getById req.params.id, @cbSend
   update: (req) => @svc.update req.params.id, @data, @cbSend
   delete: (req) => @svc.delete req.params.id, @cbSend
 
