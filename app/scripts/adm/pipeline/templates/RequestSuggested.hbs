@@ -51,7 +51,8 @@
       <a href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to={{expert.name}}%20%3c{{expert.email}}%3e&su={{tagsString}} AirPair?&body={{mailTemplates.suggested}}" class="email btn btn-small btn-warning" target="_blank"><i class="icon-envelope icon-white"></i> suggested</a>
     {{/if}}
 
-    <span class="status label label-{{expertStatus}}">{{ expertStatus }}</span>
+    <span class="status label label-{{expertStatus}}">{{ expertStatus }}
+      {{#if matchedBy}} {{matchedBy.initials}} {{/if}}</span>
 
     {{#is expertStatus 'available'}}
       {{#gt credit.total 0 }}

@@ -6,6 +6,9 @@ Shared  = require '../../shared/Models'
 exports.User = Shared.User
 exports.Settings = Shared.Settings
 
+class exports.Expert extends Shared.Expert
+  url: -> "/api/experts/request/#{@requestId}"
+
 
 class exports.Order extends BB.BadassModel
   urlRoot: '/api/orders'

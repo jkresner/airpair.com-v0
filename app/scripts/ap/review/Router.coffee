@@ -23,8 +23,9 @@ module.exports = class Router extends S.AirpairSessionRouter
       request: new M.Request _id: @defaultFragment
       order: new M.Order()
       settings: new M.Settings()
+      expert: new M.Expert _id: 'me'
     v =
-      requestView: new V.RequestView( request: d.request, settings: d.settings, session: @app.session, isProd: pageData.isProd )
+      requestView: new V.RequestView( request: d.request, settings: d.settings, session: @app.session, expert: d.expert, isProd: pageData.isProd )
       thankyouView: new V.ThankYouView( model: d.request )
 
     opts =

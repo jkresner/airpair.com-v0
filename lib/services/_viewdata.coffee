@@ -27,7 +27,7 @@ module.exports = class ViewDataService
       if full
         u
       else
-        _.pick u, ['_id','google','googleId']
+        _.pick u, ['_id','google','googleId','authenticated']
     else
       authenticated : false
 

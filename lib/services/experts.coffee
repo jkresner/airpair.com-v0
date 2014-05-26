@@ -1,4 +1,6 @@
 DomainService   = require './_svc'
+RequestService  = require './requests'
+RatesService    = require './rates'
 
 module.exports = class ExpertsService extends DomainService
 
@@ -15,6 +17,15 @@ module.exports = class ExpertsService extends DomainService
     @searchOne query, {}, (e, r) =>
       if e? || r? then return callback e, r
       @searchOne {email: @usr.google._json.email}, {}, callback
+
+
+  detailOnRequest: (id, cb) =>
+    @searchOne userId: @usr._id, {}, (e, expert) =>
+      if !expert? then return cb "expert w uid #{@usr._id} doesnt exist"
+      new RequestService(@usr).getById id, (ee, request) =>
+        expert.suggestedRate = new RatesService().calcSuggestedRates request, expert
+        cb ee, expert
+
 
 
   getByBookme: (urlSlug, code, cb) =>

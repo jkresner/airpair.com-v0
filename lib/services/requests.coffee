@@ -5,7 +5,7 @@ DomainService    = require './_svc'
 RatesSvc         = require './rates'
 SettingsSvc      = require './settings'
 MarketingTagsSvc = require './marketingtags'
-
+expertPick       = require '../mix/expertForSuggestion'
 
 module.exports = class RequestsService extends DomainService
 
@@ -54,7 +54,12 @@ module.exports = class RequestsService extends DomainService
           r = Data.select r, 'associated'
         else if Roles.isRequestOwner @usr, r
           @_addViewEvent r, "customer view"
-        else if !Roles.isAdmin @usr
+        else if Roles.isAdmin @usr
+          r = r
+        else if @usr?
+          @_addViewEvent r, "unassigned view"
+          r = Data.select r, 'associated'
+        else
           @_addViewEvent r, "anon view"
           r = Data.select r, 'public'
         @rates.addRequestSuggestedRates r
@@ -68,6 +73,7 @@ module.exports = class RequestsService extends DomainService
     if evtName is "expert view"
       up.suggested = request.suggested
       sug = _.find request.suggested, (s) => _.idsEqual s.expert.userId, @usr._id
+      sug.expertStatus = 'opened' if sug.expertStatus == 'waiting'
       sug.events.push @newEvent "viewed"
     @model.findByIdAndUpdate request._id, up, ->
 
@@ -126,6 +132,7 @@ module.exports = class RequestsService extends DomainService
           data.status = "waiting"
           evts.push @newEvent "suggested #{s.expert.username}"
 
+          s.matchedBy = { userId: @usr._id, initials: Roles.getAdminInitials @usr.googleId }
           s.expertStatus = "waiting"
           s.events = [ @newEvent "first contacted" ]
 
@@ -152,6 +159,19 @@ module.exports = class RequestsService extends DomainService
         @mTagsSvc.copyToOrders id, r.marketingTags, r.owner, ->
 
       cb e, r
+
+
+  addSelfSuggestion: (id, expertReview, cb) =>
+    @getById id, (e, request) =>
+      {status,suggested,events} = request
+      eR = expertReview
+      eR.expert.paymentMethod = type: 'paypal', info: { email: eR.payPalEmail }
+      eR.expert = expertPick eR.expert
+      suggested.push eR
+      eR.events = [ @newEvent "self suggested" ]
+      events.push @newEvent "self suggested #{eR.expert.username}"
+      status = 'review' if status == 'holding' || status == 'waiting'
+      @update id, {suggested,events,status}, cb
 
 
   updateSuggestionByExpert: (request, expertReview, cb) =>

@@ -5,12 +5,13 @@
     <span class="alignleft">
       <img src="/images/team/{{owner}}.png">
     </span>
-    <h2 class="entry-title">What'd you think of this request?</h2>
-    <p class="entry-author">{ {{owner}} }, <i>Your Account Manager</i></p>
+    <h2 class="entry-title">What do you think?</h2>
+    <p class="entry-author">{ {{owner}} }, <i>Your Matchmaker</i></p>
   </header>
 
   <div class="entry-content">
 
+{{!--
     <div class="control-group">
       <label class="control-label" for="expertRating"></label>
       <div class="controls">
@@ -28,10 +29,10 @@
       <label class="control-label" for="expertFeedback"></label>
       <div class="controls">
         <span class="charCount">0 chars</span>
-        <textarea style="margin-bottom:2px" name="expertFeedback" placeholder="Supply feedback to help us learn your preferences">{{ expertFeedback }}</textarea>
+        <textarea style="margin-bottom:2px" name="expertFeedback" placeholder="Supply feedback to help us learn your preferences">{expertFeedback}</textarea>
         <span class="note">This feedback is for us & won't be visible to the customer.</span>
       </div>
-    </div>
+    </div> --}}
 
     <h2 class="rate">Your rate is <b style="color:#CC523E"> ${{ expertRate }}</b>/hr </h2>
 
@@ -40,15 +41,11 @@
       <div class="controls">
         <select name="expertStatus">
           <option value="">... please select</option>
-          <option value="available">I'm available for this!</option>
-          <option value="abstained">This one's not for me.</option>
+          <option value="available">I'm available!</option>
+          <option value="abstained">Not my skill set</option>
+          <option value="busy">Yes, but I'm busy</option>
+          <option value="underpriced">Yes, but price is too low</option>
         </select>
-      </div>
-    </div>
-
-    <div class="control-group hideShowAvailable">
-      <div class="controls controls-agree">
-          <input type="checkbox" name="agree" data-error-style="inline" /> <span>I agree to my rate of <b>${{expertRate}}</b> per hour minus paypal charges on this request.</span>
       </div>
     </div>
 
@@ -73,6 +70,7 @@
     </div>
 
     <a href="#expertFeedback" class="button saveFeedback hideShowSave">Submit</a>
+    <span class="hideShowAvailable">Note your rate does not include transaction charges.</span>
 
     </div>
 

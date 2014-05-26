@@ -152,46 +152,52 @@ class exports.BookView extends BB.BadassView
 #     @
 
 
-
 class exports.ExpertReviewFormView extends BB.EnhancedFormView
   el: '#expertReviewForm'
   tmpl: require './templates/ExpertReviewForm'
-  viewData: ['expertRating', 'expertFeedback', 'expertStatus', 'expertComment',
-    'expertAvailability','payPalEmail']
+  viewData: [ 'expertStatus', 'expertComment',
+    'expertAvailability','payPalEmail'] # 'expertRating', 'expertFeedback',
   events:
     'click .saveFeedback': 'saveFeedback'
     'input textarea': 'enableSubmit'
   initialize: (args) ->
   render: ->
+    # $log 'render', @model.get('suggestedRate'), @request.attributes
     expertRate = @model.get('suggestedRate')[@request.get('pricing')].expert
     pp = @settings.paymentMethod('paypal')
     payPalEmail = if pp? then pp.info.email
     @$el.html @tmpl @model.extend({owner:@request.get('owner'),expertRate,payPalEmail})
     @elm('expertStatus').on 'change', @toggleFormElements
-    @enableCharCount 'expertFeedback'
+    # @enableCharCount 'expertFeedback'
     @setValsFromModel ['expertRating', 'expertStatus']
     @elm('expertStatus').trigger 'change'
-    @
+    conf = =>
+      if @elm('expertStatus').val() is 'available'
+        @$('.saveFeedback').html "I confirm $#{expertRate}/hr"
+    @$('.saveFeedback').hover conf, -> $(@).html 'Submit'
   toggleFormElements: =>
     @renderInputsValid()
-    expertStatus = @elm('expertStatus').val()
-    @$('.hideShowSave').toggle expertStatus != ''
+    status = @elm('expertStatus').val()
+    @$('.hideShowSave').toggle status != ''
     @$('.hideShowAvailable').hide()
-    if expertStatus is 'available'
+    if status is 'available'
       @elm('expertComment').attr 'placeholder', "Comment to the customer on why they should book you for this airpair."
-      if @elm('expertAvailability').val() is 'unavailable' then @elm('expertAvailability').val('')
+      if @elm('expertAvailability').val() is 'unavailable'
+        @elm('expertAvailability').val('')
+        @elm('expertComment').val('')
       @$('.hideShowAvailable').show()
-    else if expertStatus is 'abstained'
-      @elm('expertComment').attr 'placeholder', "Comment to the customer on why you don't want this airpair. E.g. Are you busy this week?"
+    else
       @elm('expertAvailability').val('unavailable').hide()
+      if status is 'abstained'
+        @elm('expertComment').attr 'placeholder', 'Comment on why you do not want this AirPair'
+      if status is 'busy'
+        @elm('expertComment').attr 'placeholder', 'Comment on when you will be free next'
+      if status is 'underpriced'
+        @elm('expertComment').attr 'placeholder', 'Comment on how much more you would like, e.g. "$30/hr more"'
   saveFeedback: (e) ->
     isAvailable = @elm('expertStatus').val() is 'available'
-    if isAvailable && ! @elm('agree').is(':checked')
-      # $log 'renderInputValid', @renderInputValid, @elm('agree').is(':checked')
-      alert 'You must agree to your hourly rate, to be available for this request'
-      # @renderInputValid @elm('agree'), 'You must agree to your hourly rate, to be available for this request'
-    else if isAvailable && @elm('payPalEmail').val().length < 4
-      # @renderInputValid @elm('payPalEmail'), 'You must supply your PayPal email address'
+    if isAvailable && @elm('payPalEmail').val().length < 4
+      @renderInputValid @elm('payPalEmail'), 'You must supply your PayPal email address'
       alert 'You must supply your PayPal email address'
     else
       # Disable submitBtn to prevent repeat clicks
@@ -201,7 +207,6 @@ class exports.ExpertReviewFormView extends BB.EnhancedFormView
   renderSuccess: (model, resp, options) =>
     @request.set model.attributes
   enableSubmit: (e) ->
-    # $log 'in'
     @$('.saveFeedback').html('Submit').prop 'disabled', false
 
 
@@ -223,10 +228,10 @@ class exports.ExpertReviewView extends BB.BadassView
     @reviewFormView = new exports.ExpertReviewFormView args
     @detailView = new exports.ExpertReviewDetailView args
     @listenTo @settings, 'change', => @render()
-  render: (editing) ->
+  render: (editing, selfReview) ->
     meExpert = @request.suggestion @session.id
-    if meExpert?
-      @editing = @model.get('expertFeedback') is undefined
+    if meExpert? || selfReview
+      @editing = @model.get('expertComment') is undefined
       @editing = editing if editing?
       @reviewFormView.render() if @editing
       @reviewFormView.$el.toggle @editing
@@ -332,14 +337,24 @@ class exports.RequestView extends BB.BadassView
     @expertReviewView = new exports.ExpertReviewView expArgs
     @listenTo @request, 'change', @render
   render: ->
+    requestId = @request.id
     @infoView.render()
     meExpert = @request.suggestion @session.id
     # $log 'rendered', meExpert, @request.attributes.suggested
-    if meExpert?
-      @expertReviewView.model.set _.extend(meExpert, { requestId: @request.id })
-      @expertReviewView.render()
-    else if @request.isCustomer @session
+    if @request.isCustomer @session
       @customerReviewView.render()
+    else if meExpert?
+      @expertReviewView.model.set _.extend(meExpert, { requestId } )
+      @expertReviewView.render()
+    else if @session.authenticated()
+      @expert.requestId = requestId
+      @expert.fetch success: (m,r) =>
+        if m.id?
+          sug = { expert: m.attributes, suggestedRate: m.attributes.suggestedRate, requestId }
+          @expertReviewView.model.set sug
+          @expertReviewView.render true, true
+        else
+          @anonView.render()
     else
       @anonView.render()
     @

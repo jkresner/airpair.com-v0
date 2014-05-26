@@ -21,7 +21,7 @@ Suggestion = new Schema
   suggestedRate:      Number     # can be altered by admin or expert
   customerRating:     Number
   customerFeedback:   String
-  matchedByUseId:     { type: ObjectId, ref: 'User' }
+  matchedBy:          {}
 
 
 Recording = new Schema
