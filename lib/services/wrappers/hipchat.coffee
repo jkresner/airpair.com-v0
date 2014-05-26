@@ -24,7 +24,7 @@ module.exports = class HipChatService
 
   addMember: (room_name, user_email, callback) =>
     @HC.add_member {room_name,user_email}, (e, r) =>
-      $log 'user_email', user_email, 'e', e, 'r', r
+      $log 'addMember', 'user_email', user_email, 'e', e, 'r', r
       callback e, r
 
 

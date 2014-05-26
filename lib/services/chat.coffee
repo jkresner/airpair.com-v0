@@ -22,6 +22,7 @@ module.exports = class ChatService extends DomainService
       if e? then return callback e
 
       $log 'room.created', r.id, e, r
+      $log 'adding','members', data.members.length, data.members
       async.each data.members,
         (m,cb) => @hc.addMember data.name, m.email, cb
         =>

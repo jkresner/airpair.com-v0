@@ -192,7 +192,7 @@ class exports.RoomMemberView extends BB.ModelSaveView
 
 
 class exports.RoomView extends BB.ModelSaveView
-  logging: on
+  # logging: on
   el: '#room'
   tmpl: require './templates/Room'
   events: ->
@@ -230,9 +230,9 @@ class exports.RoomView extends BB.ModelSaveView
     else
       customer.name = customer.fullName
       @members.reset []
-      @members.add email: "#{@request.get('owner')}@airpair.com", name: 'adm'
-      @members.add _.pick expert, 'email','name'
       @members.add _.pick customer, 'email','name'
+      @members.add _.pick expert, 'email','name'
+      @members.add email: "#{@request.get('owner')}@airpair.com", name: 'adm'
 
       name = "#{customer.firstName}+#{expert.firstName} {#{d.primaryTag}}"
       @$el.html @tmpl _.extend d, {@members,name,expert,customer}
