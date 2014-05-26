@@ -52,7 +52,7 @@ describe "Review: signed in expert", ->
     req = rv.request
     req.once 'sync', =>
 
-      expect( req.has 'budget' ).to.equal true
+      # expect( req.has 'budget' ).to.equal true
       expect( req.has 'suggested' ).to.equal true
 
       expect( rv.$('#expertReview').is(':empty') ).to.equal false
