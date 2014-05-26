@@ -12,7 +12,7 @@ exports.config =
 
   overrides:
     test:
-      paths:    watched: ['app','vendor', 'test','lib']
+      paths:    watched: ['app','vendor', 'test','lib','mail']
       plugins:  autoReload: enabled: false
       server:   { port: 4444, env: 'test' }
     prod:

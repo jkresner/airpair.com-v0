@@ -44,7 +44,7 @@ class RequestCallsApi extends require('./_api')
   # this sends back down only the changed call
   update: (req, res, next) =>
     # TODO also send 400 errors when google API has problems.
-    @svc.update req.user._id, req.params.requestId, req.body, (e, call) ->
+    @svc.update req.params.requestId, req.body, (e, call) ->
       if e && e.message.indexOf('Not enough hours') == 0
         errors = duration: e.message
         return res.send data: errors, 400

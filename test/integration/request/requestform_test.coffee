@@ -1,10 +1,10 @@
-M = require '/scripts/request/Models'
-C = require '/scripts/request/Collections'
-V = require '/scripts/request/Views'
+M = require '/scripts/ap/request/Models'
+C = require '/scripts/ap/request/Collections'
+V = require '/scripts/ap/request/Views'
 
 describe 'Request:Views RequestFormView =>', ->
 
-  before -> hlpr.setInitApp @, '/scripts/request/Router'
+  before -> hlpr.setInitApp @, '/scripts/ap/request/Router'
   afterEach -> hlpr.cleanTearDown @
   beforeEach ->
     hlpr.cleanSetup @, data.fixtures.request

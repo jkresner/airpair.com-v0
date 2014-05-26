@@ -1,12 +1,12 @@
-M = require '/scripts/review/Models'
-C = require '/scripts/review/Collections'
-V = require '/scripts/review/Views'
+M = require '/scripts/ap/review/Models'
+C = require '/scripts/ap/review/Collections'
+V = require '/scripts/ap/review/Views'
 
 
 describe "Review: signed in expert", ->
 
   before (done) ->
-    hlpr.setInitApp @, '/scripts/review/Router'
+    hlpr.setInitApp @, '/scripts/ap/review/Router'
     hlpr.setSession 'jk', =>
       $.post('/api/requests', data.requests[7]).done (r) =>
         @r = r

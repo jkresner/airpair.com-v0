@@ -1,4 +1,4 @@
-M = require '/scripts/request/Models'
+M = require '/scripts/ap/request/Models'
 
 describe 'Request:Model =>', ->
 

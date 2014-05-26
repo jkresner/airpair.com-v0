@@ -1,12 +1,12 @@
-M = require 'scripts/beexpert/Models'
-C = require 'scripts/beexpert/Collections'
-V = require 'scripts/beexpert/Views'
+M = require 'scripts/ap/beexpert/Models'
+C = require 'scripts/ap/beexpert/Collections'
+V = require 'scripts/ap/beexpert/Views'
 
 pageData = {}
 
 describe 'BeExpert:Views InfoFormView =>', ->
 
-  before -> hlpr.setInitApp @, '/scripts/beexpert/Router'
+  before -> hlpr.setInitApp @, '/scripts/ap/beexpert/Router'
   afterEach -> hlpr.cleanTearDown @
   beforeEach ->
     hlpr.cleanSetup @, data.fixtures.beexpert

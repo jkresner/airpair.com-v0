@@ -5,21 +5,18 @@ DomainService = require './_svc'
 module.exports = class TagsService extends DomainService
 
   model: require './../models/tag'
-  cmsModel: require './../models/tagCms'
 
   # search: (searchTerm, callback) ->
     # Poor implementation of search, should checkout mongo-text-search or elastic-search
     # @model.findOne { $or: [ { soId: searchTerm }, { ghId: searchTerm } ] }, callback
 
-  cms: (id, callback) ->
-    @cmsModel.findOne { _id: id }, callback
-
 
   create: (addMode, tag, callback) ->
-    # console.log 'create', 'addMode', addMode
+    # console.log 'create', 'addMode', addMode, tag
     if addMode is 'stackoverflow' then @getStackoverflowTag(tag, callback)
     else if addMode is 'github' then @getGithubRepo(tag, callback)
     else @model( tag ).save callback
+
 
   getStackoverflowTag: (tag, callback) =>
     encoded = encodeURIComponent tag.nameStackoverflow
@@ -39,7 +36,8 @@ module.exports = class TagsService extends DomainService
           short: d.tag_name
           soId: d.tag_name
           desc: d.excerpt
-        return @model.findOneAndUpdate soId: d.tag_name, update, { upsert: true }, callback
+
+        @model.findOneAndUpdate soId: d.tag_name, update, { upsert: true }, callback
 
 
   getGithubRepo: (tag, callback) =>

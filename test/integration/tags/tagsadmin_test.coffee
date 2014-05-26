@@ -1,6 +1,6 @@
-M = require '/scripts/tags/Models'
-C = require '/scripts/tags/Collections'
-V = require '/scripts/tags/Views'
+M = require '/scripts/adm/tags/Models'
+C = require '/scripts/adm/tags/Collections'
+V = require '/scripts/adm/tags/Views'
 
 seedTagData = (cb) ->
   $.get '/seeddata', (data) -> cb()
@@ -11,15 +11,15 @@ unseedTagData = (cb) ->
 describe "Tags: tag admin", ->
 
   before (done) ->
-    hlpr.setInitApp @, '/scripts/tags/Router'
+    hlpr.setInitApp @, '/scripts/adm/tags/Router'
     hlpr.setSession 'admin', ->
       seedTagData done
 
   beforeEach (done) ->
     window.location = "#"
     hlpr.cleanSetup @, data.fixtures.tags
-    initApp {}, done 
-  
+    initApp {}, done
+
   afterEach ->
     hlpr.cleanTearDown @
 
@@ -27,11 +27,11 @@ describe "Tags: tag admin", ->
     unseedTagData done
 
   it "can edit a tag as admin", (done) ->
-    
+
     v = @app.tagsView
     @app.tags.once 'sync', =>
 
-      m = v.collection.findWhere 
+      m = v.collection.findWhere
         name: 'c'
 
       # check the tag exists
@@ -66,7 +66,7 @@ describe "Tags: tag admin", ->
 
         # we don't want to save so and gh on form submit
         expect( m.get 'soId' ).to.not.equal test_stackid
-        expect( m.get 'ghId' ).to.not.equal test_githubid             
+        expect( m.get 'ghId' ).to.not.equal test_githubid
 
         done()
 

@@ -1,10 +1,10 @@
-Tags = require('/scripts/request/Collections').Tags
+Tags = require('/scripts/ap/request/Collections').Tags
 f    = data.fixtures
 
 storySteps = [
-  { app:'request', usr:'sirramongabriel', frag: '#', fixture: f.request, pageData: {} }
-  { app:'pipeline', usr:'admin', frag: '#', fixture: f.inbound, pageData: { experts: data.experts, tags: data.tags } }
-  { app:'review', usr:'sirramongabriel', frag: '#rId', fixture: f.review, pageData: {} }
+  { app:'ap/request', usr:'sirramongabriel', frag: '#', fixture: f.request, pageData: {} }
+  { app:'adm/pipeline', usr:'admin', frag: '#', fixture: f.inbound, pageData: { experts: data.experts, tags: data.tags } }
+  { app:'ap/review', usr:'sirramongabriel', frag: '#rId', fixture: f.review, pageData: {} }
 ]
 
 testNum = -1

@@ -10,7 +10,11 @@ class TagsApi extends require('./_api')
     app.delete  "/api/#{route}/:id", @loggedIn, @ap, @delete
 
 
-  create: (req) => svc.create req.body.addMode, req.body, @cbSend
+  create: (req, res, next) => @svc.create @data.addMode, @data, (e, r) =>
+    if e?
+      @tFE res, 'Tag import', 'name', e
+    else
+      @cSend(res, next)(e,r)
 
 
 module.exports = (app) -> new TagsApi app, 'tags'

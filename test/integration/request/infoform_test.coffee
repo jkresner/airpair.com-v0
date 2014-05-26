@@ -3,7 +3,7 @@ pageData = { session: data.users[0] }
 describe "Request: infoForm", ->
 
   before (done) ->
-    hlpr.setInitApp @, '/scripts/request/Router'
+    hlpr.setInitApp @, '/scripts/ap/request/Router'
     hlpr.setSession 'jk2', done
   beforeEach -> hlpr.cleanSetup @, data.fixtures.request
   afterEach -> hlpr.cleanTearDown @

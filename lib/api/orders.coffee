@@ -15,7 +15,7 @@ class OrdersApi extends require('./_api')
   getByRequestId: (req, res) => @svc.getByRequestId req.params.id, @cbSend
   getByMe: (req, res) => @svc.getByUserId req.user._id, @cbSend
 
-  create: (req, res) =>
+  create: (req, res, next) =>
     order = _.pick req.body, ['total','requestId']
     order.lineItems = []
     order.company =
@@ -45,15 +45,13 @@ class OrdersApi extends require('./_api')
       res.send r
 
 
-  update: (req, res) =>
-    if req.body.payoutOptions
-      opts = req.body.payoutOptions
-      delete req.body.payoutOptions
-      return @svc.payOut req.params.id, opts, req.body, cSend(res, next)
-    if req.body.swapExpert
-      {suggestion} = req.body.swapExpert
-      return @svc.swapExpert req.params.id, req.user, suggestion, cSend(res, next)
-    return res.send(400, 'updating orders not yet implemented')
+  update: (req) =>
+    if @data.payoutOptions
+      @svc.payOut req.params.id, @data.payoutOptions, @cbSend
+    else if @data.swapExpert
+      @svc.swapExpert req.params.id, @data.swapExpert.suggestion, @cbSend
+    else
+      res.send 400, 'updating orders not yet implemented'
 
 
 module.exports = (app) -> new OrdersApi app, 'orders'

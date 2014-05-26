@@ -1,11 +1,10 @@
-async            = require 'async'
-TagsSvc          = require '../services/tags'
+# async            = require 'async'
+# TagsSvc          = require '../services/tags'
 OrdersSvc        = require '../services/orders'
 ExpertsSvc       = require '../services/experts'
 CompanysSvc      = require '../services/companys'
-SettingsSvc      = require '../services/settings'
+# SettingsSvc      = require '../services/settings'
 RequestsSvc      = require '../services/requests'
-RequestCallsSvc  = require '../services/requestCalls'
 stripePK         = cfg.payment.stripe.publishedKey
 
 module.exports = class ViewDataService
@@ -53,6 +52,11 @@ module.exports = class ViewDataService
     new ExpertsSvc(@user).getByBookme id, code, (e, expert) =>
       cb e, -> { expert, stripePK }
 
+  history: (id, cb) ->
+    new RequestsSvc(@usr).getForHistory id, (e,requests) =>
+      new OrdersSvc(@usr).getForHistory id, (ee,orders) =>
+        cb ee, -> { orders, requests }
+
   bookme: (cb) ->
     githubToken = if @usr.github.token? then @usr.github.token.token else ''
     new ExpertsSvc(@usr).getByBookmeByUserId @usr._id, (e, expert) =>
@@ -74,6 +78,14 @@ module.exports = class ViewDataService
     new CompanysSvc(@usr).getAll (e, companys) =>
       cb e, -> { companys, stripePK }
 
+  paypalSuccess: (id, cb) ->
+    new OrdersSvc(@usr).markPaymentReceived id, {}, (e, order) =>
+      cb e, -> { order }
+
+  paypalCancel: (id, cb) ->
+    new OrdersSvc(@usr).getById id, (e, order) =>
+      cb e, -> { order }
+
   # stripeCharge: (orderId, token, callback) ->
   #   oSvc.markPaymentReceived orderId, usr, {}, (e, o) =>
   #     if e then return callback e
@@ -81,23 +93,4 @@ module.exports = class ViewDataService
   #       session: @session usr
   #       order: JSON.stringify null, o
   #       stripePK: cfg.payment.stripe.publishedKey
-
-  paypalSuccess: (orderId, cb) ->
-    oSvc.markPaymentReceived orderId, usr, {}, (e, o) =>
-      if e then return callback e
-      callback null,
-        session: @session usr
-        order: JSON.stringify o
-
-  paypalCancel: (orderId, cb) ->
-    oSvc.getById orderId, (e, o) =>
-      if e then return callback e
-      callback null,
-        session: @session usr
-        order: JSON.stringify o
-
-  history: (id, cb) ->
-    new RequestsSvc(@usr).getForHistory id, (e,requests) =>
-      new OrdersSvc(@usr).getForHistory id, (ee,orders) =>
-        cb ee, -> { orders, requests }
 

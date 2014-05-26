@@ -1,12 +1,12 @@
-M = require '/scripts/settings/Models'
-C = require '/scripts/settings/Collections'
-V = require '/scripts/settings/Views'
+M = require '/scripts/ap/settings/Models'
+C = require '/scripts/ap/settings/Collections'
+V = require '/scripts/ap/settings/Views'
 
 
 describe "Settings: stripe register", ->
 
   before (done) ->
-    hlpr.setInitApp @, '/scripts/settings/Router'
+    hlpr.setInitApp @, '/scripts/ap/settings/Router'
     hlpr.setSession 'jk', =>
     done()
 
@@ -18,7 +18,7 @@ describe "Settings: stripe register", ->
     hlpr.cleanTearDown @
 
   it 'can create a stripe customer with new settings object', (done) ->
-    
+
     initApp settings: {}, session: data.users[0], stripePK: 'pk_test_aj305u5jk2uN1hrDQWdH0eyl'
 
     psv = @app.paymentSettingsView
@@ -27,7 +27,7 @@ describe "Settings: stripe register", ->
     expect( psv.$('.setup').html() ).to.equal 'Setup billing info'
     expect( rv.$el.is(':visible') ).to.equal false
     psv.$('.setup').click()
-    router.navTo psv.$('.setup').attr('href') #not sure why had to do this        
+    router.navTo psv.$('.setup').attr('href') #not sure why had to do this
     expect( rv.$el.is(':visible') ).to.equal true
 
     rv.$('[data-stripe=number]').val("4242 4242 4242 4242")

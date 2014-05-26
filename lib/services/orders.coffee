@@ -161,8 +161,8 @@ module.exports = class OrdersService extends DomainService
           return winston.error 'trackPayment.@requestSvc.update.error' + e.stack
 
 
-  markPaymentReceived: (id, usr, paymentDetail, callback) ->
-    @model.findOne { _id: id }, (e, r) =>
+  markPaymentReceived: (id, paymentDetail, callback) ->
+    @getById id, (e, r) =>
       if e then return callback e
 
       if Roles.isOrderOwner(usr, r) || Roles.isAdmin(usr)
@@ -180,12 +180,15 @@ module.exports = class OrdersService extends DomainService
       else
         callback null, { e: 'update failed, does not belong to user' }
 
-  payOut: (id, payoutOptions, order, callback) ->
+
+  payOut: (id, payoutOptions, cb) ->
     if payoutOptions.type is 'paypalAdaptive'
-      return @payOutPayPalAdaptive id, callback
-    if payoutOptions.type is 'paypalSingle'
-      return @payOutPayPalSingle id, payoutOptions.lineItemId, callback
-    return callback new Error "Payout[#{payoutOptions.type}] not implemented"
+      @payOutPayPalAdaptive id, cb
+    else if payoutOptions.type is 'paypalSingle'
+      @payOutPayPalSingle id, payoutOptions.lineItemId, cb
+    else
+      callback new Error "Payout[#{payoutOptions.type}] not implemented"
+
 
   _successfulPayoutIds: (payouts) ->
     payouts.filter (p) ->
@@ -243,7 +246,7 @@ module.exports = class OrdersService extends DomainService
         @update id, ups, callback
 
   #
-  swapExpert: (id, usr, suggestion, callback) ->
+  swapExpert: (id, suggestion, callback) ->
     @model.findOne { _id: id }, (e, r) =>
       if e then return callback e
       if !r?

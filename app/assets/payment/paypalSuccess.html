@@ -39,7 +39,7 @@
   {{> siteFooter }}
 
   <script type="text/javascript">
-    var pageData = { order: {{{ order }}} };
+    var pageData = { {{JSON 'order'}} };
     document.getElementById('aRequestPage').href='/review/'+pageData.order.requestId;
   </script>
 </body>

@@ -1,12 +1,12 @@
-M = require '/scripts/review/Models'
-C = require '/scripts/review/Collections'
-V = require '/scripts/review/Views'
+M = require '/scripts/ap/review/Models'
+C = require '/scripts/ap/review/Collections'
+V = require '/scripts/ap/review/Views'
 
 
 describe "Review: book", ->
 
   before (done) ->
-    hlpr.setInitApp @, '/scripts/review/Router'
+    hlpr.setInitApp @, '/scripts/ap/review/Router'
     hlpr.setSession 'emilLee', =>
       $.post('/api/requests',data.requests[8]).done (r) =>
         $.get("/api/requests/#{r._id}").done (rr) => # so we get expert pricing form the service

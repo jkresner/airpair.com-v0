@@ -1,15 +1,15 @@
-Tags = require('/scripts/request/Collections').Tags
+Tags = require('/scripts/ap/request/Collections').Tags
 f    = data.fixtures
 
 request = _.clone(data.requests[10])  #Bruce Christie
 
 storySteps = [
-  { app:'settings/Router', usr:'bchristie', frag: '#', fixture: f.settings, pageData: { stripePK: 'pk_test_aj305u5jk2uN1hrDQWdH0eyl' } }
-  { app:'request/Router', usr:'bchristie', frag: '#', fixture: f.request, pageData: {} }
-  { app:'pipeline/Router', usr:'admin', frag: '#', fixture: f.inbound, pageData: { experts: data.experts, tags: data.tags } }
-  { app:'review/Router', usr:'bchristie', frag: '#rId', fixture: f.review, pageData: {} }
-  { app:'calls/RouterSchedule', usr: 'admin', frag: '#/schedule/rId', fixture: f.callSchedule, pageData: { request: request, orders: data.orders[2] } }
-  { app:'orders/Router', usr: 'admin', frag: '#', fixture: f.orders, pageData: {} }
+  { app:'ap/settings/Router', usr:'bchristie', frag: '#', fixture: f.settings, pageData: { stripePK: 'pk_test_aj305u5jk2uN1hrDQWdH0eyl' } }
+  { app:'ap/request/Router', usr:'bchristie', frag: '#', fixture: f.request, pageData: {} }
+  { app:'adm/pipeline/Router', usr:'admin', frag: '#', fixture: f.inbound, pageData: { experts: data.experts, tags: data.tags } }
+  { app:'ap/review/Router', usr:'bchristie', frag: '#rId', fixture: f.review, pageData: {} }
+  { app:'adm/calls/RouterSchedule', usr: 'admin', frag: '#/schedule/rId', fixture: f.callSchedule, pageData: { request: request, orders: data.orders[2] } }
+  { app:'adm/orders/Router', usr: 'admin', frag: '#', fixture: f.orders, pageData: {} }
 ]
 
 testNum = -1
@@ -35,10 +35,10 @@ describe "Stories: Bruce Christie", ->
     hlpr.cleanTearDown @
 
   it 'can create stripe settings', (done) ->
-    @timeout 10000
+    @timeout 5000
     psv = @app.paymentSettingsView
     rv = @app.stripeRegisterView
-
+    $log 'rv', rv.model
     rv.model.once 'sync', =>
 
       expect( rv.$el.is(':visible') ).to.equal false
@@ -88,7 +88,7 @@ describe "Stories: Bruce Christie", ->
       infoFormView.$('.save').click()
 
   it 'can suggest experts as admin', (done) ->
-    @timeout 10000
+    @timeout 5000
     rv = @app.requestView
 
     @app.requests.once 'sync', =>
@@ -141,7 +141,7 @@ describe "Stories: Bruce Christie", ->
       bv.$('.payStripe').click()
 
   it 'can schedule a call as admin', (done) ->
-    this.timeout 20000
+    this.timeout 10000
     {request, orders, callScheduleView} = @app
     v = callScheduleView
 
@@ -186,7 +186,7 @@ describe "Stories: Bruce Christie", ->
     v.$('.save').click()
 
   it "can pay out customer's experts individually as admin", (done) ->
-    this.timeout 20000
+    this.timeout 10000
     {orders, ordersView} = @app
 
     ###

@@ -4,6 +4,7 @@
   <title>Mocha Tests</title>
   <link rel="stylesheet" href="stylesheets/test.css" />
   <script src="/javascripts/vendor.js"></script>
+  <script src="/javascripts/ap.js"></script>
   <script src="/javascripts/adm.js"></script>
   <script src="javascripts/test-vendor.js"></script>
   <script src="javascripts/test-data.js"></script>
@@ -11,7 +12,7 @@
   <script>
     $(function() {
       grep = 'Pipeline:';
-      require('test/pipeline/initialize')(grep);
+      require('test/integration/initialize')(grep);
     });
   </script>
 </head>

@@ -1,7 +1,7 @@
-M  = require '/scripts/review/Models'
-C  = require '/scripts/review/Collections'
-V  = require '/scripts/review/Views'
-SV = require '/scripts/settings/Views'
+M  = require '/scripts/ap/review/Models'
+C  = require '/scripts/ap/review/Collections'
+V  = require '/scripts/ap/review/Views'
+SV = require '/scripts/ap/settings/Views'
 
 
 createStripeCustomerDetails = (callback) ->
@@ -24,7 +24,7 @@ describe "Review: book with stripe", ->
 
   before (done) ->
     @timeout(0)
-    hlpr.setInitApp @, '/scripts/review/Router'
+    hlpr.setInitApp @, '/scripts/ap/review/Router'
     hlpr.setSession 'janPetrovic', =>
       createStripeCustomerDetails =>
         $.post('/api/requests',data.requests[8]).done (r) =>

@@ -58,9 +58,6 @@ module.exports = class RequestsService extends DomainService
           @_addViewEvent r, "anon view"
           r = Data.select r, 'public'
         @rates.addRequestSuggestedRates r
-      else
-        r = {}
-
       cb e, r
 
 
