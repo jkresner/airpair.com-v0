@@ -7,12 +7,12 @@ RequestService    = require './requests'
 SettingsSvc       = require './settings'
 RatesSvc          = require './rates'
 calendar          = require './calendar'
-StripeSvc         = require '../services/wrappers/stripe'
-PaypalAdaptiveSvc = require '../services/wrappers/paypal-adaptive'
-sum               = require '../../app/scripts/shared/mix/sum'
-canSchedule       = require '../../app/scripts/shared/mix/canSchedule'
-unschedule        = require '../../app/scripts/shared/mix/unschedule'
-calcExpertCredit  = require '../../app/scripts/shared/mix/calcExpertCredit'
+StripeSvc         = require './wrappers/stripe'
+PaypalAdaptiveSvc = require './wrappers/paypal-adaptive'
+sum               = require '../mix/sum'
+canSchedule       = require '../mix/canSchedule'
+unschedule        = require '../mix/unschedule'
+calcExpertCredit  = require '../mix/calcExpertCredit'
 calcRedeemed      = calcExpertCredit.calcRedeemed
 
 
@@ -54,7 +54,7 @@ module.exports = class OrdersService extends DomainService
     # $log 'create._calculateProfitAndPayouts.payWith', payWith
 
     savePaymentResponse = (e, paymentResponse) =>
-      $log 'savePaymentResponse.e', e
+      # $log 'savePaymentResponse.e', e
       if e then return callback e
       order.payment = paymentResponse
 
@@ -76,8 +76,9 @@ module.exports = class OrdersService extends DomainService
       @paypalSvc.Pay order, savePaymentResponse
 
 
-  getForHistory: (id, callback) =>
-    @model.find userId: id, @historySelect, callback
+  getForHistory: (id, cb) =>
+    userId = if id? && Roles.isAdmin(@usr) then id else @usr._id
+    @searchMany {userId}, { fields: @historySelect }, cb
 
   historySelect:
     '_id': 1
@@ -160,8 +161,8 @@ module.exports = class OrdersService extends DomainService
           return winston.error 'trackPayment.@requestSvc.update.error' + e.stack
 
 
-  markPaymentReceived: (id, usr, paymentDetail, callback) ->
-    @model.findOne { _id: id }, (e, r) =>
+  markPaymentReceived: (id, paymentDetail, callback) ->
+    @getById id, (e, r) =>
       if e then return callback e
 
       if Roles.isOrderOwner(usr, r) || Roles.isAdmin(usr)
@@ -179,12 +180,15 @@ module.exports = class OrdersService extends DomainService
       else
         callback null, { e: 'update failed, does not belong to user' }
 
-  payOut: (id, payoutOptions, order, callback) ->
+
+  payOut: (id, payoutOptions, cb) ->
     if payoutOptions.type is 'paypalAdaptive'
-      return @payOutPayPalAdaptive id, callback
-    if payoutOptions.type is 'paypalSingle'
-      return @payOutPayPalSingle id, payoutOptions.lineItemId, callback
-    return callback new Error "Payout[#{payoutOptions.type}] not implemented"
+      @payOutPayPalAdaptive id, cb
+    else if payoutOptions.type is 'paypalSingle'
+      @payOutPayPalSingle id, payoutOptions.lineItemId, cb
+    else
+      callback new Error "Payout[#{payoutOptions.type}] not implemented"
+
 
   _successfulPayoutIds: (payouts) ->
     payouts.filter (p) ->
@@ -242,7 +246,7 @@ module.exports = class OrdersService extends DomainService
         @update id, ups, callback
 
   #
-  swapExpert: (id, usr, suggestion, callback) ->
+  swapExpert: (id, suggestion, callback) ->
     @model.findOne { _id: id }, (e, r) =>
       if e then return callback e
       if !r?
@@ -285,10 +289,8 @@ module.exports = class OrdersService extends DomainService
         callback null, status: 'deleted'
 
   # oldest orders first (smallest timestamp -> biggest timestamp)
-  getByRequestId: (requestId, callback) =>
-    query = requestId: requestId
-    sort = utc: 'asc'
-    @search(query).sort(sort).exec callback
+  getByRequestId: (requestId, cb) =>
+    @searchMany {requestId}, {options: $sort: { utc: 1 }}, cb
 
   ###
 
@@ -410,6 +412,7 @@ module.exports = class OrdersService extends DomainService
   # TODO batch update?
   _saveLineItems: (orders, callback) =>
     saveOrder = (order, cb) =>
-      update = $set: { lineItems: order.toJSON().lineItems }
+      # update = $set: { lineItems: order.toJSON().lineItems }
+      update = $set: { lineItems: order.lineItems }
       @model.findByIdAndUpdate order._id, update, cb
     async.map orders, saveOrder, callback

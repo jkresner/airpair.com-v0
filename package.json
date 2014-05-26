@@ -2,7 +2,7 @@
   "author": "Jonathon Kresner",
   "name": "airpair.com",
   "description": "site hosted at airpair.com",
-  "version": "0.5.1",
+  "version": "0.6.1",
   "homepage": "http://www.airpair.com/",
   "repository": {
     "type": "git",
@@ -26,6 +26,7 @@
     }
   },
   "dependencies": {
+    "colors": "0.6.2",
     "coffee-script": "1.6.3",
     "javascript-brunch": "> 1.0 < 1.5",
     "coffee-script-brunch": "> 1.0 < 1.5",
@@ -34,7 +35,7 @@
     "uglify-js-brunch": "> 1.0 < 1.5",
     "clean-css-brunch": "> 1.0 < 1.5",
     "brunch": "1.7.8",
-    "underscore": "1.4.4",
+    "underscore": "1.6.x",
     "async": "0.2.9",
     "express": "3.x",
     "express-validator": "~1.0.1",

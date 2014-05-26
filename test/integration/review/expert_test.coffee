@@ -1,12 +1,12 @@
-M = require '/scripts/review/Models'
-C = require '/scripts/review/Collections'
-V = require '/scripts/review/Views'
+M = require '/scripts/ap/review/Models'
+C = require '/scripts/ap/review/Collections'
+V = require '/scripts/ap/review/Views'
 
 
 describe "Review: signed in expert", ->
 
   before (done) ->
-    hlpr.setInitApp @, '/scripts/review/Router'
+    hlpr.setInitApp @, '/scripts/ap/review/Router'
     hlpr.setSession 'jk', =>
       $.post('/api/requests', data.requests[7]).done (r) =>
         @r = r
@@ -20,27 +20,28 @@ describe "Review: signed in expert", ->
     hlpr.cleanTearDown @
 
 
-  it "when reviewing as logged in user not assigned to request", (done) ->
-    hlpr.setSession 'bearMountain', ->
+  # it "when reviewing as logged in user not assigned to request", (done) ->
+  #   hlpr.setSession 'bearMountain', ->
 
-    initApp session: data.users[4] # Jeffrey Camealy (not expert)
-    rv = @app.requestView
+  #   initApp session: data.users[4] # Jeffrey Camealy (not expert)
+  #   rv = @app.requestView
 
-    rv.request.once 'sync', =>
-      m = rv.request
+  #   rv.request.once 'sync', =>
+  #     m = rv.request
+  #     $log 'rv.request', m.attributes
 
-      expect( m.has 'budget' ).to.equal false
-      expect( m.has 'suggested' ).to.equal false
-      expect( m.has 'events' ).to.equal false
-      expect( m.has 'owner' ).to.equal true
-      expect( m.get 'owner' ).to.equal 'mi'
+  #     expect( m.has 'budget' ).to.equal false
+  #     expect( m.has 'suggested' ).to.equal false
+  #     expect( m.has 'events' ).to.equal false
+  #     expect( m.has 'owner' ).to.equal true
+  #     expect( m.get 'owner' ).to.equal 'mi'
 
-      expect( rv.$('#expertReviewForm').is(':empty') ).to.equal true
-      expect( rv.$('#expertReviewDetail').is(':empty') ).to.equal true
-      expect( rv.$('#customerReview').is(':empty') ).to.equal true
-      expect( rv.$('#notExpertOrCustomer').is(':empty') ).to.equal false
-      expect( rv.$('a.claimRequest').is(':visible') ).to.equal true
-      done()
+  #     expect( rv.$('#expertReviewForm').is(':empty') ).to.equal true
+  #     expect( rv.$('#expertReviewDetail').is(':empty') ).to.equal true
+  #     expect( rv.$('#customerReview').is(':empty') ).to.equal true
+  #     expect( rv.$('#notExpertOrCustomer').is(':empty') ).to.equal false
+  #     expect( rv.$('a.claimRequest').is(':visible') ).to.equal true
+  #     done()
 
 
   it "show review form when reviewing as suggestedExpert for 1st time", (done) ->
@@ -81,22 +82,22 @@ describe "Review: signed in expert", ->
         fn.call @, args
         d = req.attributes.suggested[0]
         expect( true ).to.equal true
-        expect( d.expertRating ).to.equal 2
-        expect( d.expertFeedback ).to.equal 'this is an awesome test request this is an awesome test request'
+        # expect( d.expertRating ).to.equal 2
+        # expect( d.expertFeedback ).to.equal 'this is an awesome test request this is an awesome test request'
         expect( d.expertStatus ).to.equal 'available'
         expect( d.expertComment ).to.equal 'siiiiic testing'
         expect( d.expertAvailability ).to.equal 'anytime!'
 
         expect( v.reviewFormView.$el.is(':visible') ).to.equal false
         expect( v.detailView.$el.is(':visible') ).to.equal true
-        expect( v.detailView.$('.feedbackForAirpair').is(':visible') ).to.equal true
+        # expect( v.detailView.$('.feedbackForAirpair').is(':visible') ).to.equal true
 
         done()
 
       v.elm('agree').click()
       v.elm('payPalEmail').val 'expert02@airpair.com'
-      v.elm('expertRating').val 2
-      v.elm('expertFeedback').val 'this is an awesome test request this is an awesome test request'
+      # v.elm('expertRating').val 2
+      # v.elm('expertFeedback').val 'this is an awesome test request this is an awesome test request'
       v.elm('expertStatus').val('available').trigger 'change'
       v.elm('expertComment').val 'siiiiic testing'
       v.elm('expertAvailability').val 'anytime!'

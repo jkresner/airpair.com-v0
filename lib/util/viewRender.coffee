@@ -1,7 +1,5 @@
-viewData = new (require '../services/_viewdata')()
+ViewDataSvc = require '../services/_viewdata'
 
-# getProp(process, 'env.USER')
-# yields 'dtrejo'
 getProp = (obj, path) =>
   props = path.split '.'
   r = obj
@@ -19,19 +17,36 @@ module.exports =
     propList = propList || []
 
     (req, resp, next) ->
-      args = [ req.user ]
-      for prop in propList
-        args.push getProp(req, prop)
-      args.push (e, data) =>
-        if e then return next e
-        data.authenticated = req.isAuthenticated()
-        data.reqUrl = req.url
-        resp.render "#{fileName}.html", data
+
+      vdSvc = new ViewDataSvc req.user
 
       # convention we just rip out the path to get viewDataFunction
       fnName = fileName.replace('adm/', '').replace('payment/', '')
 
-      if viewData[fnName]?
-        return viewData[fnName].apply viewData, args
+      if !vdSvc[fnName]?
+        resp.render "#{fileName}.html"
+      else
+        args = []
 
-      resp.render "#{fileName}.html"
+        for prop in propList
+          args.push getProp req, prop
+
+        args.push (e, getViewData) =>
+          if e
+            if vdSvc.logging then $log 'viewData', fnName, 'e', e
+            next e
+          else
+            data =
+              isProd: cfg.isProd.toString()
+              session: vdSvc.session false
+              reqUrl: req.url
+
+            data = _.extend data, getViewData()
+
+            if vdSvc.logging then $log 'viewData', fnName, data
+            # $log 'data.session', data.session
+            # $log 'data.session.bitbucket', data.session.bitbucket
+            resp.render "#{fileName}.html", data
+
+        vdSvc[fnName].apply vdSvc, args
+

@@ -1,9 +1,9 @@
 {http,_,sinon,chai,expect,dbConnect,dbDestroy} = require '../test-lib-setup'
 {app, data}                                    = require '../test-app-setup'
 
-cloneDeep = require 'lodash.clonedeep'
+cloneDeep = require 'lodash.cloneDeep'
 ObjectId = require('mongoose').Types.ObjectId
-canSchedule = require '../../../app/scripts/shared/mix/canSchedule'
+canSchedule          = require './../../../lib/mix/canSchedule'
 
 svc = new (require '../../../lib/services/orders')()
 

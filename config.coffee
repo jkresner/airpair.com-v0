@@ -1,7 +1,7 @@
 exports.config =
 
   # do not build test directory in debug or release (only test)
-  paths:        watched: ['app','vendor']
+  paths:        watched: ['app','vendor','lib','mail']
 
   server:
     env:  'dev'
@@ -12,7 +12,7 @@ exports.config =
 
   overrides:
     test:
-      paths:    watched: ['app','vendor', 'test']
+      paths:    watched: ['app','vendor', 'test','lib','mail']
       plugins:  autoReload: enabled: false
       server:   { port: 4444, env: 'test' }
     prod:
@@ -23,8 +23,9 @@ exports.config =
   files:
     javascripts:
       joinTo:
-       'javascripts/app.js': /^app/
        'javascripts/vendor.js': /^vendor/
+       'javascripts/ap.js': /(scripts\/ap|scripts\/shared|scripts\/providers|lib\/mix)/
+       'javascripts/adm.js': /(scripts\/adm|scripts\/shared|scripts\/providers|lib\/mix)/
        'javascripts/providers.js': /^app\/scripts\/providers/
        'test/javascripts/test.js': /^test(\/|\\)(?=integration)/
        'test/javascripts/test-data.js': /^test(\/|\\)(?=data)/
@@ -39,6 +40,10 @@ exports.config =
           'vendor/scripts/backbone.js'
           'vendor/scripts/backbone.validation.js'
           'vendor/scripts/backbone.validation_bootstrap.js'
+          'vendor/scripts/backbone.badass.js',
+          'vendor/scripts/picker.js',
+          'vendor/scripts/picker.date.js',
+          'vendor/scripts/jquery.timepicker.js'
         ]
     stylesheets:
       joinTo:
@@ -51,7 +56,9 @@ exports.config =
         ]
         after: ['vendor/styles/helpers.css']
     templates:
-      joinTo: 'javascripts/app.js'
+      joinTo:
+       'javascripts/adm.js': /(^mail|scripts\/adm|scripts\/shared)/
+       'javascripts/ap.js': /(scripts\/ap|scripts\/shared)/
 
   coffeelint:
     pattern: /^app\/.*\.coffee$/

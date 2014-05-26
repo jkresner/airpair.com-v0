@@ -1,226 +1,207 @@
 async            = require 'async'
-DomainService    = require './_svc'
+Data             = require './requests.query'
 Roles            = require '../identity/roles'
-Order            = require '../models/order'
-User             = require '../models/user'
+DomainService    = require './_svc'
 RatesSvc         = require './rates'
 SettingsSvc      = require './settings'
 MarketingTagsSvc = require './marketingtags'
-
+expertPick       = require '../mix/expertForSuggestion'
 
 module.exports = class RequestsService extends DomainService
 
-  mailman: require '../mail/mailman'
-  model: require '../models/request'
-  rates: new RatesSvc()
-  settingsSvc: new SettingsSvc()
-  mTagsSvc: new MarketingTagsSvc()
+  # logging:on
 
-  publicView: (request) ->
-    r = _.pick request, ['_id','tags','company','brief','availability','owner']
-    r.company = _.pick r.company, ['about']
-    r.company.contacts = request.company.contacts.map (c) ->
-      _.pick c, ['pic']
-    r
+  mailman:      require '../mail/mailman'
+  model:        require '../models/request'
+  rates:        new RatesSvc()
+  settingsSvc:  new SettingsSvc()
+  mTagsSvc:     new MarketingTagsSvc()
 
-  associatedView: (request) ->
-    _.pick request, ['_id','tags','company','brief','availability','budget','pricing','suggested','owner']
+
+  getForHistory: (id, cb) =>
+    userId = if id? && Roles.isAdmin(@usr) then id else @usr._id
+    @searchMany {userId}, { fields: Data.view.history }, cb
+
+
+  getByCallId: (callId, cb) -> @searchOne { 'calls._id': callId }, {}, cb
+
+
+  """ Used for adm/inbound dashboard inactive """
+  getInactive: (cb) ->
+    @searchMany Data.query.inactive, { fields: Data.view.pipeline }, cb
+
+  # Show the previous account manager
+  _getPreviousOwner: (request, cb) =>
+    query = userId: request.userId, status: $nin: ['received']
+    @model.find query, 'owner': 1, (e, r) =>
+      if r && r[0] then request.prevOwner = r[0].owner
+      cb e, r
+
+  """ Used for adm/inbound dashboard list """
+  getActive: (cb) ->
+    @searchMany Data.query.active, { fields: Data.view.pipeline }, (e, requests) =>
+      if e? then return cb e
+      received = _.filter requests, (r) -> r.status == 'received' && !r.owner
+      async.each received, @_getPreviousOwner, (er) => cb er, requests
+
+
+  """ Get a request, shapes viewData by viewer + logs view events """
+  getByIdSmart: (id, cb) ->
+    @getById id, (e, r) =>
+      if r?
+        if Roles.isRequestExpert(@usr, r) && !Roles.isAdmin(@usr, r)
+          @_addViewEvent r, "expert view"
+          r = Data.select r, 'associated'
+        else if Roles.isRequestOwner @usr, r
+          @_addViewEvent r, "customer view"
+        else if Roles.isAdmin @usr
+          r = r
+        else if @usr?
+          @_addViewEvent r, "unassigned view"
+          r = Data.select r, 'associated'
+        else
+          @_addViewEvent r, "anon view"
+          r = Data.select r, 'public'
+        @rates.addRequestSuggestedRates r
+      cb e, r
+
 
   # log event when the request is viewed
-  addViewEvent: (request, usr, evtName) =>
-    evt = @newEvent usr, evtName
-    up = { events: _.clone(request.events) }
-    up.events.push evt
-    if evt.name is "expert view"
+  _addViewEvent: (request, evtName) =>
+    up = events: _.clone(request.events)
+    up.events.push @newEvent evtName
+    if evtName is "expert view"
       up.suggested = request.suggested
-      sug = _.find request.suggested, (s) -> _.idsEqual s.expert.userId, evt.by.id
-      sug.events.push @newEvent(usr, "viewed")
-    @model.findByIdAndUpdate request._id, up, (e, r) ->
-
-  create: (usr, request, callback) =>
-    request.userId = usr._id
-    request.events = [@newEvent(usr, "created")]
-    request.status = 'received'
-    new @model(request).save (e, r) =>
-      if e then $log 'request.create error:', e
-      if e then return callback e
-      @notifyAdmins(r, usr)
-      callback null, r
-
-  createBookme: (usr, request, callback) =>
-    request.userId = usr._id
-    request.events = [@newEvent(usr, "created")]
-    request.status = 'pending'
-    $log 'r1', request.suggested[0]
-    d = { availability: [], expertStatus: 'waiting' }
-    _.extend request.suggested[0], d
-    new @model(request).save (e, r) =>
-      $log 'r2', r.suggested[0].suggestedRate
-      if e then $log 'request.create error:', e
-      if e then return callback e
-      @notifyAdmins(r, usr)
-      callback null, r
+      sug = _.find request.suggested, (s) => _.idsEqual s.expert.userId, @usr._id
+      sug.expertStatus = 'opened' if sug.expertStatus == 'waiting'
+      sug.events.push @newEvent "viewed"
+    @model.findByIdAndUpdate request._id, up, ->
 
 
-  getByIdSmart: (id, usr, callback) =>
-    @model.findOne({ _id: id }).lean().exec (e, r) =>
-      if e then return callback e
-      request = null
 
-      if r?
-        if Roles.isAdmin usr
-          request = r
-          r.base = @rates.base
-        else if Roles.isRequestExpert usr, r
-          @addViewEvent r, usr, "expert view"
-          request = @associatedView r
-        else if Roles.isRequestOwner usr, r
-          @addViewEvent r, usr, "customer view"
-          request = r
-        else
-          @addViewEvent r, usr, "anon view"
-          request = @publicView r
+  """ Create a request by get help flow """
+  create: (request, cb) =>
+    defaults =
+      userId: @usr._id
+      events: [@newEvent "created"]
+      status: 'received'
+    super _.extend(request, defaults), (e, r) =>
+      if r? then @mailman.admNewRequest r
+      cb e, r
 
+
+
+
+  """ Create a request by book direct flow """
+  createBookme: (request, cb) =>
+    defaults =
+      userId: @usr._id
+      events: [@newEvent "created"]
+      status: 'pending'
+
+    # not 100% sure why we're doing this..
+    _.extend request.suggested[0], { availability: [], expertStatus: 'waiting' }
+
+    new @model( _.extend(request, defaults) ).save (e,r) =>
+      if e && @logging then $log 'svc.create', o, e
+      if r? then @mailman.admNewRequest r
+      cb e, r
+
+
+  """ Log events when certain updates occur """
+  updateSmart: (id, data, cb) ->
+    {status,owner} = data
+    @getById id, (e, r) =>
+      evts = []
+
+      # stop users updating other users requests (need a better solution!)
+      if !(Roles.isAdmin(@usr, r) || Roles.isRequestOwner(@usr, r))
+        return @unauthorized 'Request update', callback
+
+      if status is "holding" && (!owner?||owner=='')
+        evts.push @newEvent "sent received mail"
+        data.owner = Roles.getAdminInitials @usr.google.id
+
+      else if r.status != status
+        evts.push @newEvent status
+
+      # add a new suggestion
+      for s in data.suggested
+
+        if !s.events?
+          data.status = "waiting"
+          evts.push @newEvent "suggested #{s.expert.username}"
+
+          s.matchedBy = { userId: @usr._id, initials: Roles.getAdminInitials @usr.googleId }
+          s.expertStatus = "waiting"
+          s.events = [ @newEvent "first contacted" ]
+
+      # log removing a suggestion
+      if r.suggested?
         for s in r.suggested
-          s.suggestedRate = @rates.calcSuggestedRates r, s.expert
+          if !_.find(data.suggested, (sug) -> _.idsEqual sug._id, s._id)?
+            evts.push @newEvent "removed suggested #{s.expert.username}"
 
-      callback null, request
+      if evts.length is 0
+        evts.push @newEvent "updated"
 
-  update: (id, data, callback) =>
-    @model.findByIdAndUpdate(id, data).lean().exec (e, r) =>
-      if e then return callback e
-      @_setRatesForRequest r
+      data.events.push.apply data.events, evts
 
-      @mTagsSvc.copyToOrders id, r.marketingTags, r.owner, (err, numChanged) =>
-        if err then return callback err
-        callback null, r
-
-  _setRatesForRequest: (request) ->
-    for suggested in request.suggested
-      suggested.suggestedRate =
-        @rates.calcSuggestedRates request, suggested.expert
-    request.base = @rates.base
+      @update id, data, cb
 
 
-  historySelect:
-    '_id': 1
-    'company.name': 1
-    'company.contacts': { $slice: [0, 1] }
-    'company.contacts.email': 1
-    'company.contacts.fullName': 1
-    'company.contacts.pic': 1
-    'status': 1
-    'owner': 1
-    'suggested.expert._id': 1
-    'suggested.expert.name': 1
-    'suggested.expert.pic': 1
-    'calls': 1
-    'userId': 1
+  """ Always return suggested rates and keep orders in sync """
+  update: (id, data, cb) =>
+    super id, data, (e, r) =>
+      if !e?
+        @rates.addRequestSuggestedRates r
+
+        @mTagsSvc.copyToOrders id, r.marketingTags, r.owner, ->
+
+      cb e, r
 
 
-  getForHistory: (id, callback) =>
-    @model.find userId: id, @historySelect, callback
-
-  inboundSelect:
-    '_id': 1
-    'company.name': 1
-    'company.contacts': { $slice: [0, 1] }
-    'company.contacts.email': 1
-    'company.contacts.fullName': 1
-    'company.contacts.pic': 1
-    'status': 1
-    'owner': 1
-    'calls.status': 1
-    'suggested.expertStatus': 1
-    'suggested.expert.pic': 1
-    'tags.short': 1
-    'calls.recordings.type': 1
-    'userId': 1
+  addSelfSuggestion: (id, expertReview, cb) =>
+    @getById id, (e, request) =>
+      {status,suggested,events} = request
+      eR = expertReview
+      eR.expert.paymentMethod = type: 'paypal', info: { email: eR.payPalEmail }
+      eR.expert = expertPick eR.expert
+      suggested.push eR
+      eR.events = [ @newEvent "self suggested" ]
+      events.push @newEvent "self suggested #{eR.expert.username}"
+      status = 'review' if status == 'holding' || status == 'waiting'
+      @update id, {suggested,events,status}, cb
 
 
-
-  # Used for adm/inbound dashboard list
-  getActive: (callback) ->
-    query = status: $in: ['received','incomplete','waiting','review','scheduling','scheduled','holding','consumed','deferred','pending']
-    @model.find(query, @inboundSelect).lean().exec (e, requests) =>
-      if e then return callback e
-      if !requests then requests = {}
-
-      receivedList = _.filter requests, (r) ->
-        r.status == 'received' && !r.owner
-      async.each receivedList, iterator, (err) =>
-        if err then return callback err
-        callback null, requests
-
-    iterator = (receivedReq, cb) =>
-      query =
-        userId: receivedReq.userId
-        status: $nin: ['received']
-      @model.find query, 'owner': 1, (e, prevRequests) =>
-        if e then return cb e
-        if prevRequests && prevRequests[0]
-          receivedReq.prevOwner = prevRequests[0].owner
-        cb()
-
-  # Used for history
-  getInactive: (callback) ->
-    @model.find({}, @inboundSelect)
-      .where('status').in(['canceled', 'completed'])
-      .exec (e, r) ->
-        if e then return callback e
-        r = {} if r is null
-        callback null, r
-
-  getByCallId: (callId, callback) ->
-    query = { 'calls._id': callId }
-    @model.findOne(query)
-      .exec (e, request) ->
-        if e then return callback e
-        if !request then request = {}
-        callback null, request
-
-  updateSuggestionByExpert: (request, usr, expertReview, callback) =>
+  updateSuggestionByExpert: (request, expertReview, cb) =>
     # TODO, add some validation!!
     # if expertReview.agree
     # @settingsSvc.addPayPalSettings usr._id, expertReview.payPalEmail, (e, r) =>
       # if e then $log 'save.settings error:', e, r
 
-    $log 'expertReview', expertReview?, usr._id
-    ups = expertReview
+    # $log 'expertReview', expertReview?, @usr._id
+    eR = expertReview
     data = { suggested: request.suggested, events: request.events }
-    sug = _.find request.suggested, (s) -> _.idsEqual s.expert.userId, usr._id
-    sug.events.push @newEvent(usr, "expert updated")
-    sug.expertRating = ups.expertRating
-    sug.expertFeedback = ups.expertFeedback
-    sug.expertComment = ups.expertComment
-    sug.expertStatus = ups.expertStatus
-    sug.expertAvailability = ups.expertAvailability
-    sug.expert.paymentMethod =
-      type: 'paypal', info: { email: expertReview.payPalEmail }
-    data.events.push @newEvent(usr, "expert reviewed", ups)
+    data.events.push @newEvent "expert reviewed", eR
+    sug = _.find request.suggested, (s) => _.idsEqual s.expert.userId, @usr._id
+    sug.events.push @newEvent "expert updated"
+    sug.expertRating = eR.expertRating
+    sug.expertFeedback = eR.expertFeedback
+    sug.expertComment = eR.expertComment
+    sug.expertStatus = eR.expertStatus
+    sug.expertAvailability = eR.expertAvailability
+    sug.expert.paymentMethod = type: 'paypal', info: { email: eR.payPalEmail }
 
     if request.status == 'pending'
       if sug.expertStatus == 'available' then data.status = 'pending'
       if sug.expertStatus == 'abstained'
-        data.canceledDetail = ups.expertComment + ups.expertFeedback
+        data.canceledDetail = eR.expertComment + eR.expertFeedback
         data.status = 'canceled'
     # Thinking here is we still want to use the request with another experts so
     # maybe setting to 'canceled' is not the right thing to do ...
 
-    @update request._id, data, (e, updatedRequest) =>
-      if e then return callback e
-      @mailman.importantRequestEvent "expert reviewed #{ups.expertStatus}", usr, updatedRequest
-      callback null, updatedRequest
-
-  notifyAdmins: (model, usr) ->
-    fullName = usr.name
-    if model.company? then fullName = model.company.contacts[0].fullName
-
-    tags = model.tags.map((o) -> o.short).join(' ')
-    @mailman.sendEmailToAdmins
-      templateName: "admNewRequest"
-      subject: "New airpair request: #{fullName} #{model.budget}$"
-      request: model
-      tags: tags
-      (e) ->
-        if e then $log 'notifyAdmins error', e
+    @update request._id, data, (e, r) =>
+      if !e
+        @mailman.importantRequestEvent "expert reviewed #{eR.expertStatus}", @usr, r
+      cb e, r

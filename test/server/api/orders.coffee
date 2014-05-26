@@ -31,7 +31,6 @@ describe "REST api orders", ->
     bchristieReq = data.requests[10]
 
     createReq bchristieReq, (e, req) =>
-      if e then return done e
       order.requestId = req._id
       http(app).post('/api/orders/')
         .set('Accept', 'application/json')

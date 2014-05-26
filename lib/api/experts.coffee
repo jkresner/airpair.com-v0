@@ -1,44 +1,17 @@
-CRUDApi    = require './_crud'
-ExpertsSvc = require './../services/experts'
-authz      = require './../identity/authz'
-admin      = authz.Admin isApi: true
-loggedIn   = authz.LoggedIn isApi: true
-Roles      = authz.Roles
-cSend      = require '../util/csend'
 
-class ExpertApi extends CRUDApi
+class ExpertApi extends require('./_api')
 
-  model: require './../models/expert'
-  svc: new ExpertsSvc()
+  Svc: require './../services/experts'
 
-  constructor: (app, route) ->
-    app.get  "/api/#{route}", admin, @list
-    super app, route
+  routes: (app, route) ->
+    app.get  "/api/#{route}", @admin, @ap, @list
+    app.get  "/api/#{route}/:id", @loggedIn, @ap, @detail
+    app.get  "/api/#{route}/request/:id", @loggedIn, @ap, @detailOnRequest
+    app.post "/api/#{route}", @loggedIn, @ap, @create
+    app.put  "/api/#{route}/:id", @admin, @ap, @update
 
-  list: (req, res, next) =>
-    @svc.getAll cSend(res, next)
 
-  detail: (req, res, next) =>
-
-    search = '_id': req.params.id
-
-    if req.params.id is 'me'
-      search = userId: req.user._id
-
-    @model.findOne search, (e, r) =>
-      if r? then return res.send r
-      else
-        search = email: req.user.google._json.email
-        $log 'detail req.user by email', search
-        @model.findOne search, (e, r) =>
-          if e then return next e
-          r = {} if r is null
-          res.send r
-
-  update: (req, res, next) =>
-    d = _.clone req.body
-    if d.bookMe? && d.bookMe.enabled then d.bookMe.urlSlug = d.bookMe.urlSlug.toLowerCase()
-    @svc.update d._id, d, cSend(res, next)
+  detailOnRequest: (req) => @svc.detailOnRequest req.params.id, @cbSend
 
 
 module.exports = (app) -> new ExpertApi app, 'experts'

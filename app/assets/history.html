@@ -66,14 +66,14 @@
     window.useOlark = true;
 
     function initApp() {
-      var pageData = { session: {{{ session }}}, orders: {{{ orders }}}, requests: {{{ requests }}}, isAdmin: {{{ isAdmin }}} };
-      Router = require('/scripts/history/Router');
+      var pageData = { {{JSON 'session'}}, {{JSON 'orders'}}, {{JSON 'requests'}}, isAdmin: {{isAdmin }} };
+      Router = require('/scripts/ap/history/Router');
       window.router = new Router(pageData);
     }
 
   </script>
 
   <script src="/javascripts/vendor.js" defer></script>
-  <script src="/javascripts/app.js" defer onload="initApp()"></script>
+  <script src="/javascripts/ap.js" defer onload="initApp()"></script>
 
 </html>

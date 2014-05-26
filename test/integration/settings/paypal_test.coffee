@@ -1,6 +1,6 @@
-M = require '/scripts/settings/Models'
-C = require '/scripts/settings/Collections'
-V = require '/scripts/settings/Views'
+M = require '/scripts/ap/settings/Models'
+C = require '/scripts/ap/settings/Collections'
+V = require '/scripts/ap/settings/Views'
 
 
 describe "Settings: paypal", ->
@@ -26,7 +26,7 @@ describe "Settings: paypal", ->
       expect(psv.model.get('paymentMethods').length).to.equal 0
 
       psv.elm('paypalEmail').val 'emlee@paypal.com'
-    
+
       psv.model.once 'sync', =>
 
         paymentMethods = psv.model.get('paymentMethods')

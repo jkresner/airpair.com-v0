@@ -15,7 +15,6 @@ describe "REST api requests", ->
   it "should get first request", (done) ->
     passportMock.setSession 'admin'
     createReq data.requests[1], (e, req) =>
-      if e then return done e
       http(app).get('/api/requests')
         .end (err, res) =>
           d = res.body[0]
@@ -35,7 +34,6 @@ describe "REST api requests", ->
     passportMock.setSession 'admin'
     errors = isServer: true, msg: "Update failed", data: { canceledDetail: "Must supply canceled reason" }
     createReq data.requests[3], (e, up) =>
-      if e then return done e
       up.status = "canceled"
       http(app).put("/api/requests/#{up._id}")
         .send(up)
@@ -47,7 +45,7 @@ describe "REST api requests", ->
   it "should add canceled event if status changed to canceled", (done) ->
     passportMock.setSession 'admin'
     createReq data.requests[3], (e, up) =>
-      if e then return done e
+      expect( up.status ).to.equal 'received'
       up.status = "canceled"
       up.canceledDetail = "testing babay"
       http(app).put("/api/requests/#{up._id}")
@@ -65,7 +63,6 @@ describe "REST api requests", ->
     passportMock.setSession 'admin'
     errors = isServer: true, msg: "Update failed", data: { incompleteDetail: "Must supply incomplete reason" }
     createReq data.requests[3], (e, up) =>
-      if e then return done e
       up.status = "incomplete"
       http(app).put("/api/requests/#{up._id}")
         .send(up)
@@ -77,7 +74,7 @@ describe "REST api requests", ->
   it "should add incomplete event if status changed to incomplete", (done) ->
     passportMock.setSession 'admin'
     createReq data.requests[3], (e, up) =>
-      if e then return done e
+      expect( up.status ).to.equal 'received'
       up.status = "incomplete"
       up.incompleteDetail = "testing babay"
       http(app).put("/api/requests/#{up._id}")
@@ -93,7 +90,6 @@ describe "REST api requests", ->
   it "should add suggested event & update status to waiting when expert suggested by admin", (done) ->
     passportMock.setSession 'admin'
     createReq data.requests[3], (e, up) =>
-      if e then return done e
       suggestion = data.requests[4].suggested[0]
       up.suggested = [ suggestion ]
       http(app).put("/api/requests/#{up._id}")
@@ -119,7 +115,6 @@ describe "REST api requests", ->
   it "should add multiple suggested event", (done) ->
     passportMock.setSession 'admin'
     createReq data.requests[3], (e, up) =>
-      if e then return done e
       sug1 = data.requests[4].suggested[1]
       sug2 = data.requests[4].suggested[2]
       up.suggested = [ sug1, sug2 ]
@@ -161,7 +156,6 @@ describe "REST api requests", ->
   it "should add updated event if details updated by customer", (done) ->
     passportMock.setSession 'jk'
     createReq data.requests[3], (e, up) =>
-      if e then return done e
       up.brief = 'updating brief'
       http(app).put("/api/requests/#{up._id}")
         .send(up)
@@ -178,7 +172,6 @@ describe "REST api requests", ->
   it "should add viewed event if viewed by customer", (done) ->
     passportMock.setSession 'jk'
     createReq data.requests[3], (e, up) =>
-      if e then return done e
       http(app).get("/api/requests/#{up._id}") .end () ->
         http(app).get("/api/requests/#{up._id}").end () ->
           passportMock.setSession 'admin'
@@ -203,7 +196,6 @@ describe "REST api requests", ->
     req.suggested[0].events = [{}]
 
     createReq req, (e, up) =>
-      if e then return done e
       http(app).get("/api/requests/#{up._id}").end () ->
         http(app).get("/api/requests/#{up._id}").end () ->
 
@@ -230,7 +222,6 @@ describe "REST api requests", ->
     req.suggested[0].events = [{}]
 
     createReq req, (e, up) =>
-      if e then return done e
       ups = expertStatus: 'abstained', expertFeedback: 'not for me', expertRating: 1, expertComment: 'good luck', expertAvailability: 'I can do tonight', payPalEmail: 'test@testpp.com'
       passportMock.setSession 'jk'
       http(app).put("/api/requests/#{up._id}/suggestion")
@@ -261,7 +252,6 @@ describe "REST api requests", ->
     req = data.requests[5]
 
     createReq req, (e, up) =>
-      if e then return done e
       passportMock.setSession 'jk'
 
       ups = data.requests[6].nothanks

@@ -36,11 +36,11 @@
     window.useUserVoice = true;
     function initApp() {
       var pageData = {};
-      Router = require('/scripts/request/Router');
+      Router = require('/scripts/ap/request/Router');
       window.router = new Router(pageData);
     }
   </script>
   <script src="/javascripts/vendor.js" defer></script>
-  <script src="/javascripts/app.js" defer onload="initApp()"></script>
+  <script src="/javascripts/ap.js" defer onload="initApp()"></script>
 
 </html>

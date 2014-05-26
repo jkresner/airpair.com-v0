@@ -58,12 +58,12 @@
 
   <script type="text/javascript">
     function initApp() {
-      var pageData = { stripePK: '{{{stripePK}}}' }
-      Router = require('/scripts/settings/Router');
+      var pageData = { {{JSON 'session'}}, stripePK: '{{{stripePK}}}' }
+      Router = require('/scripts/ap/settings/Router');
       window.router = new Router(pageData);
     }
   </script>
   <script src="/javascripts/vendor.js" defer></script>
-  <script src="/javascripts/app.js" defer onload="initApp()"></script>
+  <script src="/javascripts/ap.js" defer onload="initApp()"></script>
 
 </html>

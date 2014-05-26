@@ -15,3 +15,4 @@ module.exports =
           name = matches[1]
           template = fs.readFileSync(partialsDir + '/' + filename, 'utf8')
           hbs.registerPartial(name, template)
+

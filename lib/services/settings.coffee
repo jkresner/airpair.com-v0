@@ -7,8 +7,11 @@ module.exports = class SettingsService extends DomainService
   model: require './../models/settings'
 
 
-  getByUserId: (userId, callback) =>
-    @searchOne { userId }, callback
+  getByUserId: (userId, cb) =>
+    @searchOne { userId }, {}, (e,r) ->
+      r = {} if !r? # if first time we're creating settings record
+      cb e, r
+
 
 
   _save: (data, callback) =>

@@ -1,9 +1,6 @@
 exports                        = {}
-BB                             = require './../../lib/BB'
+BB                             = require 'BB'
 M                              = require './Models'
-exports.TagsInputView          = require('./../tags/Views').TagsInputView
-exports.MarketingTagsInputView =
-  require('../marketingtags/Views').MarketingTagsInputView
 
 Handlebars.registerPartial "DevLinks", require('./templates/DevLinks')
 
@@ -28,36 +25,6 @@ Handlebars.registerHelper 'markdown', (text) ->
   new Handlebars.SafeString result
 
 
-class exports.AvailabiltyInputView extends BB.BadassView
-  # logging: on
-  el: '#availabilityInput'
-  tmpl: require './templates/AvailabilityInput'
-  events:
-    'click .rm': 'deselect'
-  initialize: (args) ->
-    @$el.append @tmpl @model.toJSON()
-    @listenTo @model, 'change:availability', @render
-    @$timeselect = @$('.datetimepicker')
-    @$timeselect.datetimepicker( minuteStep: 30, autoclose: true )
-    @$timeselect.on 'dateChanged', @select
-    @$timeselect.on 'blur', => @$timeselect.val ''   # so no value off focus
-  render: ->
-    @$('div').html ''
-    if @model.get('availability')?
-      @$('div').append(d) for d in @model.get 'availability'
-    @
-  select: (e) =>
-    # $log 'addAvailability', e
-    # comes back from the datetimepicker event handler
-    # !! todo, check for duplicates
-    @model.toggleAvailability e.date
-  deselect: (e) =>
-    e.preventDefault()
-    toRemove = $(e.currentTarget).data 'val'
-    @model.toggleAvailability toRemove
-  getViewData: ->
-    if !@model.get('availability')? then undefined else @model.get 'availability'
-
 
 class exports.ExpertView extends BB.BadassView
   tmpl: require './templates/Expert'
@@ -73,6 +40,101 @@ class exports.ExpertView extends BB.BadassView
 ##
 #############################################################################
 
+class exports.TagNewForm extends BB.ModelSaveView
+  el: '#tagNewForm'
+  tmpl: require './templates/TagNewForm'
+  viewData: ['nameStackoverflow','nameGithub']
+  events:
+    'click .save-so': (e) -> @saveWithMode e, 'stackoverflow'
+    'click .save-gh': (e) -> @saveWithMode e, 'github'
+    'click .cancel': (e) -> @collection.trigger 'sync'; false
+  initialize: (args) ->
+    @model = new M.Tag()
+    @selected = args.selected
+    @$el.html @tmpl()
+    @$stackName = @elm("nameStackoverflow")
+    @listenTo @$stackName, 'change', => @renderInputsValid()
+  saveWithMode: (e, mode) ->
+    @model.clear()
+    @model.set addMode: mode
+    @save e
+    false
+  renderSuccess: (model, response, options) =>
+    @$('input').val ''
+    @selected.toggleTag model.toJSON()
+    @collection.add model
+    @collection.trigger 'sync'  # causes the tag form to go away
+  renderError: (model, response, options) =>
+    @renderInputInvalid @$stackName, 'failed to add tag... is that a valid stackoverflow tag?'
+
+
+class exports.TagsInputView extends BB.HasBootstrapErrorStateView
+  el: '#tagsInput'
+  tmpl: require './templates/TagInput'
+  tmplAutoResult:  require './templates/TagAutocompleteResult'
+  events:
+    'click .rmTag': 'deselect'
+    'click .new': 'newTag'
+  initialize: (args) ->
+    @$el.append @tmpl @model.toJSON()
+    @newForm = new exports.TagNewForm selected: @model, collection: @collection
+    @listenTo @collection, 'sync', @initTypehead
+    @listenTo @model, 'change:_id', -> @$auto.val '' # clears it across requests
+    @listenTo @model, 'change:tags', @render
+    @$auto = @$('.autocomplete').on 'input', =>
+      @renderInputValid @$('.autocomplete')
+      @renderInputValid @elm('newStackoverflow')
+  render: ->
+    @$('.error-message').remove() # in case we had an error fire first
+    @$('.selected').html ''
+    if @model.get('tags')?
+      @$('.selected').append(@tagHtml(t)) for t in @model.get('tags')
+    @
+  tagHtml: (t) ->
+    "<span class='label label-tag'>#{t.short} <a href='#{t._id}' title='#{t.name}' class='rmTag'>x</a></span>"
+  initTypehead: ->
+    # $log 'initTypehead'#, @collection.toJSON()
+    @newForm.$el.hide()
+    @cleanTypehead().val('').show()
+    @$auto.typeahead(
+      header: '<header>Tags in our database</header>'
+      noresultsHtml: 'No results... <a href="#" class="new"><b>add one</b></a>'
+      name: 'collection' + new Date().getTime()
+      valueKey: 'short'
+      template: @tmplAutoResult
+      local: @collection.toJSON()
+    ).on('typeahead:selected', @select)
+    #@$auto.on 'blur', => @$auto.val ''   # makes it so no value off focus
+    @
+  select: (e, data) =>
+    if e? then e.preventDefault()
+    @model.toggleTag data
+    @$auto.val ''
+  deselect: (e) =>
+    e.preventDefault()
+    _id = $(e.currentTarget).attr 'href'
+    # $log 'deselect', _id, @collection.models.length, @collection.models
+    match = _.find @collection.models, (m) -> m.get('_id') == _id
+    # $log 'deselect.', match
+    @model.toggleTag match.toJSON()
+  newTag: (e) =>
+    @cleanTypehead().hide()
+    @newForm.$el.show()
+    @newForm.$('input').val @$('.autocomplete').val()
+  cleanTypehead: ->
+    @$auto.typeahead('destroy').off 'typeahead:selected'
+  getViewData: ->
+    if !@model.get('tags')? then undefined else @model.get 'tags'
+
+#############################################################################
+##
+#############################################################################
+
+class exports.MarketingTagsInputView extends require('./MarketingTagsInputView')
+
+#############################################################################
+##
+#############################################################################
 
 class exports.StripeRegisterView extends BB.BadassView
   el: '#stripeRegister'

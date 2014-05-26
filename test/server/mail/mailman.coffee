@@ -2,7 +2,7 @@
 {data}          = require '../test-app-setup'
 
 mailman         = require '../../../lib/mail/mailman'
-util            = require '../../../app/scripts/util'
+{tagsString}    = require '../../../lib/mix/tags'
 
 describe "mailman", ->
   # @testNum = 0
@@ -41,7 +41,7 @@ describe "mailman", ->
       requestId: "TESTID"
       customerName: request.company.contacts[0].fullName
       tags: request.tags
-      tagsString: util.tagsString(request.tags)
+      tagsString: tagsString request.tags
       suggested: request.suggested
 
     o.templateName = 'importantRequestEvent'

@@ -1,34 +1,20 @@
-TagsSvc  = require './../services/tags'
-authz    = require './../identity/authz'
-loggedIn = authz.LoggedIn isApi:true
-cSend    = require '../util/csend'
 
-class TagsApi
+class TagsApi extends require('./_api')
 
-  svc: new TagsSvc()
+  Svc: require './../services/tags'
 
-  constructor: (app, route) ->
-    app.get     "/api/#{route}", loggedIn, @list
-    #app.get     "/api/#{route}/:id", loggedIn, @detail
-    app.post    "/api/#{route}", loggedIn, @create
-    app.put     "/api/#{route}/:id", loggedIn, @update
-    app.delete  "/api/#{route}/:id", loggedIn, @delete
+  routes: (app, route) ->
+    app.get     "/api/#{route}", @loggedIn, @ap, @list
+    app.post    "/api/#{route}", @loggedIn, @ap, @create
+    app.put     "/api/#{route}/:id", @loggedIn, @ap, @update
+    app.delete  "/api/#{route}/:id", @loggedIn, @ap, @delete
 
-  create: (req, res, next) =>
-    @svc.create req.body.addMode, req.body, (e, r) ->
-      if e
-        res.send 400, { errors: { message: e.message } }
-      else
-        res.send r
 
-  update: (req, res, next) =>
-    @svc.update req.params.id, req.body, cSend(res, next)
-
-  delete: (req, res, next) =>
-    @svc.delete req.params.id, cSend(res, next)
-
-  list: (req, res, next) =>
-    @svc.getAll cSend(res, next)
+  create: (req, res, next) => @svc.create @data.addMode, @data, (e, r) =>
+    if e?
+      @tFE res, 'Tag import', 'name', e
+    else
+      @cSend(res, next)(e,r)
 
 
 module.exports = (app) -> new TagsApi app, 'tags'

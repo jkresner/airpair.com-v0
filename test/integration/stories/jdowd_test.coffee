@@ -1,20 +1,20 @@
-Tags = require('/scripts/request/Collections').Tags
+Tags = require('/scripts/ap/request/Collections').Tags
 f    = data.fixtures
 
 request = _.clone(data.requests[13]) # John Dowd
 
 storySteps = [
-  { app:'settings/Router', usr:'jdowd', frag: '#', fixture: f.settings, pageData: { stripePK: 'pk_test_aj305u5jk2uN1hrDQWdH0eyl' } }
-  { app:'request/Router', usr:'jdowd', frag: '#', fixture: f.request, pageData: {} }
-  { app:'pipeline/Router', usr:'admin', frag: '#', fixture: f.inbound, pageData: { experts: data.experts, tags: data.tags } }
-  { app:'review/Router', usr:'jdowd', frag: '#rId', fixture: f.review, pageData: {} }
-  { app:'calls/RouterSchedule', usr: 'admin', frag: '#/schedule/rId', fixture: f.callSchedule, pageData: { request: request } }
-  { app:'calls/RouterSchedule', usr: 'admin', frag: '#/schedule/rId', fixture: f.callSchedule, pageData: { request: request } }
-  { app:'calls/RouterSchedule', usr: 'admin', frag: '#/schedule/rId', fixture: f.callSchedule, pageData: { request: request } }
-  { app:'calls/RouterSchedule', usr: 'admin', frag: '#/schedule/rId', fixture: f.callSchedule, pageData: { request: request } }
+  { app:'ap/settings/Router', usr:'jdowd', frag: '#', fixture: f.settings, pageData: { stripePK: 'pk_test_aj305u5jk2uN1hrDQWdH0eyl' } }
+  { app:'ap/request/Router', usr:'jdowd', frag: '#', fixture: f.request, pageData: {} }
+  { app:'adm/pipeline/Router', usr:'admin', frag: '#', fixture: f.inbound, pageData: { experts: data.experts, tags: data.tags } }
+  { app:'ap/review/Router', usr:'jdowd', frag: '#rId', fixture: f.review, pageData: {} }
+  { app:'adm/calls/RouterSchedule', usr: 'admin', frag: '#/schedule/rId', fixture: f.callSchedule, pageData: { request: request } }
+  { app:'adm/calls/RouterSchedule', usr: 'admin', frag: '#/schedule/rId', fixture: f.callSchedule, pageData: { request: request } }
+  { app:'adm/calls/RouterSchedule', usr: 'admin', frag: '#/schedule/rId', fixture: f.callSchedule, pageData: { request: request } }
+  { app:'adm/calls/RouterSchedule', usr: 'admin', frag: '#/schedule/rId', fixture: f.callSchedule, pageData: { request: request } }
   # note: these two have a callId set as @rId
-  { app:'calls/RouterEdit', usr: 'admin', frag: '#', fixture: f.callEdit, pageData: { request: request } }
-  { app:'calls/RouterEdit', usr: 'admin', frag: '#', fixture: f.callEdit, pageData: { request: request } }
+  { app:'adm/calls/RouterEdit', usr: 'admin', frag: '#', fixture: f.callEdit, pageData: { request: request } }
+  { app:'adm/calls/RouterEdit', usr: 'admin', frag: '#', fixture: f.callEdit, pageData: { request: request } }
 ]
 
 testNum = -1
@@ -177,72 +177,59 @@ describe "Stories: John Dowd", ->
     scheduleCall(@app, call, 1, done)
 
   it 'can schedule fourth and last 2 hour call as admin', (done) ->
-    @timeout 20000
+    @timeout 10000
     call = request.calls[3]
     scheduleCall(@app, call, 2, done)
 
-  it 'can edit fourth call down to 1 hour as admin', (done) ->
-    @timeout 20000
-    v = @app.callEditView
-    v.renderSuccess = -> # disable the redirect after save
-    call = request.calls[3] # original calls
-    $.ajax("/_viewdata/callEdit/#{callId}")
-    .fail (__, ___, errorThrown) =>
-      done(errorThrown)
-    .done (data) =>
-      @app.request.set data.request, reset: true
-      @app.orders.set data.orders, reset: true
-      test()
-    test = =>
-      router.navTo "#/edit/#{callId}"
-      setTimeout onEditPage, 100
-    onEditPage = =>
-      # assert all the fields match what is currently in the call
-      date = moment(call.datetime).format(dateFormat)
-      time = moment(call.datetime).format(timeFormat)
-      expect(v.elm('duration').val()).to.equal '2'
-      expect(v.elm('date').val()).to.equal date
-      expect(v.elm('time').val()).to.equal time
-      # expect(v.elm('type').val()).to.equal call.type
+  # it 'can edit fourth call down to 1 hour as admin', (done) ->
+  #   @timeout 10000
+  #   v = @app.callEditView
+  #   v.renderSuccess = -> # disable the redirect after save
+  #   call = request.calls[3] # original calls
+  #   test = =>
+  #     router.navTo "#/edit/#{callId}"
+  #     setTimeout onEditPage, 100
+  #   onEditPage = =>
+  #     # assert all the fields match what is currently in the call
+  #     date = moment(call.datetime).format(dateFormat)
+  #     time = moment(call.datetime).format(timeFormat)
+  #     expect(v.elm('duration').val()).to.equal '2'
+  #     expect(v.elm('date').val()).to.equal date
+  #     expect(v.elm('time').val()).to.equal time
+  #     # expect(v.elm('type').val()).to.equal call.type
 
-      # change to duration 1
-      v.elm('duration').val('1')
-      # change the date to now
-      @now = new Date()
-      v.elm('date').val(moment(@now).format(dateFormat))
-      v.elm('time').val(moment(@now).format(timeFormat))
+  #     # change to duration 1
+  #     v.elm('duration').val('1')
+  #     # change the date to now
+  #     @now = new Date()
+  #     v.elm('date').val(moment(@now).format(dateFormat))
+  #     v.elm('time').val(moment(@now).format(timeFormat))
 
-      v.$('.save').click()
-      @app.requestCall.once 'sync', onSync
-    onSync = =>
-      saved = @app.requestCall.toJSON()
-      expect(saved.duration).to.equal 1
-      # TODO figure out why this doesnt pass
-      # expect(saved.datetime).to.equal @now.toJSON()
-      done()
+  #     v.$('.save').click()
+  #     @app.requestCall.once 'sync', onSync
+  #   onSync = =>
+  #     saved = @app.requestCall.toJSON()
+  #     expect(saved.duration).to.equal 1
+  #     # TODO figure out why this doesnt pass
+  #     # expect(saved.datetime).to.equal @now.toJSON()
+  #     done()
 
-  it 'can edit fourth call back to 2 hours as admin', (done) ->
-    @timeout 20000
-    v = @app.callEditView
-    v.renderSuccess = -> # disable the redirect after save
-    $.ajax("/_viewdata/callEdit/#{callId}")
-    .fail (__, ___, errorThrown) =>
-      done(errorThrown)
-    .done (data) =>
-      @app.request.set data.request, reset: true
-      @app.orders.set data.orders, reset: true
-      test()
-    test = =>
-      router.navTo "#/edit/#{callId}"
-      setTimeout onEditPage, 100
-    onEditPage = =>
-      expect(v.elm('duration').val()).to.equal '1'
+  # it 'can edit fourth call back to 2 hours as admin', (done) ->
+  #   @timeout 10000
+  #   v = @app.callEditView
+  #   v.renderSuccess = -> # disable the redirect after save
 
-      v.elm('duration').val('2')
+  #   test = =>
+  #     router.navTo "#/edit/#{callId}"
+  #     setTimeout onEditPage, 100
+  #   onEditPage = =>
+  #     expect(v.elm('duration').val()).to.equal '1'
 
-      v.$('.save').click()
-      @app.requestCall.once 'sync', onSync
-    onSync = =>
-      saved = @app.requestCall.toJSON()
-      expect(saved.duration).to.equal 2
-      done()
+  #     v.elm('duration').val('2')
+
+  #     v.$('.save').click()
+  #     @app.requestCall.once 'sync', onSync
+  #   onSync = =>
+  #     saved = @app.requestCall.toJSON()
+  #     expect(saved.duration).to.equal 2
+  #     done()

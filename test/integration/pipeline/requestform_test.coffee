@@ -1,6 +1,6 @@
-M = require '/scripts/pipeline/Models'
-C = require '/scripts/pipeline/Collections'
-V = require '/scripts/pipeline/Views'
+M = require '/scripts/adm/pipeline/Models'
+C = require '/scripts/adm/pipeline/Collections'
+V = require '/scripts/adm/pipeline/Views'
 
 rI = -1
 cloneReq = (id) ->
@@ -17,7 +17,7 @@ requests = [
 describe "Pipeline: RequestView", ->
 
   before (done) ->
-    hlpr.setInitApp @, '/scripts/pipeline/Router'
+    hlpr.setInitApp @, '/scripts/adm/pipeline/Router'
     hlpr.setSession 'admin', done
   afterEach -> hlpr.cleanTearDown @
   beforeEach (done) ->

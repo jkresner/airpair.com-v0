@@ -1,34 +1,19 @@
-CRUDApi   = require './_crud'
-OrdersSvc = require './../services/orders'
-authz     = require './../identity/authz'
-loggedIn  = authz.LoggedIn isApi: true
-admin     = authz.Admin isApi: true
-Roles     = authz.Roles
-cSend     = require '../util/csend'
+
+class OrdersApi extends require('./_api')
+
+  Svc: require './../services/orders'
+
+  routes: (app, route) ->
+    app.post    "/api/#{route}", @loggedIn, @ap, @create
+    app.get     "/api/admin/#{route}", @admin, @ap, @list
+    app.get     "/api/#{route}/request/:id", @admin, @ap, @getByRequestId
+    app.get     "/api/#{route}/me", @loggedIn, @ap, @getByMe
+    app.put     "/api/#{route}/:id", @admin, @ap, @update
+    app.delete  "/api/#{route}/:id", @admin, @ap, @delete
 
 
-class OrdersApi
-
-  svc: new OrdersSvc()
-
-  constructor: (app, route) ->
-    app.post    "/api/#{route}", loggedIn, @create
-    app.get     "/api/admin/#{route}", admin, @adminList
-    app.get     "/api/#{route}/request/:id", admin, @getByRequestId
-    app.get     "/api/#{route}/me", loggedIn, @getByMe
-    app.put     "/api/#{route}/:id", admin, @update
-    app.delete  "/api/#{route}/:id", admin, @delete
-
-  adminList: (req, res, next) =>
-    @svc.getAll cSend(res, next)
-
-  getByRequestId: (req, res, next) =>
-    @svc.getByRequestId req.params.id, cSend(res, next)
-
-  getByMe: (req, res, next) =>
-    meId = req.user._id
-    meId = '51f7026666a6f999a465f4b0'
-    @svc.getByUserId meId, cSend(res, next)
+  getByRequestId: (req, res) => @svc.getByRequestId req.params.id, @cbSend
+  getByMe: (req, res) => @svc.getByUserId req.user._id, @cbSend
 
   create: (req, res, next) =>
     order = _.pick req.body, ['total','requestId']
@@ -60,19 +45,13 @@ class OrdersApi
       res.send r
 
 
-  update: (req, res, next) =>
-    if req.body.payoutOptions
-      opts = req.body.payoutOptions
-      delete req.body.payoutOptions
-      return @svc.payOut req.params.id, opts, req.body, cSend(res, next)
-    if req.body.swapExpert
-      {suggestion} = req.body.swapExpert
-      return @svc.swapExpert req.params.id, req.user, suggestion, cSend(res, next)
-    return res.send(400, 'updating orders not yet implemented')
-
-
-  delete: (req, res, next) =>
-    @svc.delete req.params.id, cSend(res, next)
+  update: (req) =>
+    if @data.payoutOptions
+      @svc.payOut req.params.id, @data.payoutOptions, @cbSend
+    else if @data.swapExpert
+      @svc.swapExpert req.params.id, @data.swapExpert.suggestion, @cbSend
+    else
+      res.send 400, 'updating orders not yet implemented'
 
 
 module.exports = (app) -> new OrdersApi app, 'orders'

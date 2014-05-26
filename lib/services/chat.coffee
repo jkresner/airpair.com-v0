@@ -22,6 +22,7 @@ module.exports = class ChatService extends DomainService
       if e? then return callback e
 
       $log 'room.created', r.id, e, r
+      $log 'adding','members', data.members.length, data.members
       async.each data.members,
         (m,cb) => @hc.addMember data.name, m.email, cb
         =>
@@ -61,9 +62,12 @@ module.exports = class ChatService extends DomainService
   #     new @model({ admin, customerUId, expertUId }).save callback
 
 
-  getUsersByEmail: (emails, callback) ->
-    @hc.getUsers emails, callback
+  # getUsersByEmail: (emails, callback) ->
+  #   @hc.getUsers emails, callback
 
 
   getUser: (email, name, callback) ->
-    @hc.getUserByEmailOrName email, name, callback
+    @hc.getUserByEmailOrName email, name, (e, user) ->
+      # note we swallow the error as it just means there's no user
+      if !user? then user = {}
+      callback null, user

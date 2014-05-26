@@ -1,27 +1,19 @@
-authz       = require './../identity/authz'
-loggedIn    = authz.LoggedIn isApi:true
-admin       = authz.Admin isApi: true
-SettingsSvc = require './../services/settings'
-cSend       = require '../util/csend'
-
-class SettingsApi
-
-  svc: new SettingsSvc()
-
-  constructor: (app, route) ->
-    app.get     "/api/#{route}", loggedIn, @detail
-    app.post    "/api/#{route}", loggedIn, @create
-    app.put     "/api/#{route}", loggedIn, @update
+Api         = require './_api'
 
 
-  detail: (req, res, next) =>
-    @svc.getByUserId req.user._id, cSend(res, next)
+class SettingsApi extends Api
 
-  create: (req, res, next) =>
-    @svc.create req.user._id, req.body, cSend(res, next)
+  Svc: require './../services/settings'
 
-  update: (req, res, next) =>
-    @svc.update req.body, cSend(res, next)
+  routes: (app, route) ->
+    app.get     "/api/#{route}", @loggedIn, @ap, @detail
+    app.post    "/api/#{route}", @loggedIn, @ap, @create
+    app.put     "/api/#{route}", @loggedIn, @ap, @update
+
+
+  detail: (req, res) => @svc.getByUserId req.user._id, @cbSend
+  create: (req, res) => @svc.create req.user._id, req.body, @cbSend
+  update: (req, res) => @svc.update req.body, @cbSend
 
 
 module.exports = (app) -> new SettingsApi app, 'settings'

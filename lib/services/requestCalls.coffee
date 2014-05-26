@@ -4,7 +4,7 @@ videos     = require './videos'
 {ObjectId} = require('mongoose').Types
 
 OrdersSvc  = new (require('./orders'))()
-RequestSvc = new (require './requests')()
+RequestSvc = new require './requests'
 
 Order   = new require '../models/order'
 Request = new require '../models/request'
@@ -46,23 +46,25 @@ module.exports = class RequestCallsService
         Request.findByIdAndUpdate requestId, ups, (err, modifiedRequest) =>
           callback null, { request: modifiedRequest, orders: orders }
 
-  expertReply: (userId, data, callback) =>
-    { callId, status } = data # stats (accept / decline)
-    # expert = something.userId
-    # adjust the order qtyRedeemedCallIds
+  # expertReply: (data, callback) =>
+  #   { callId, status } = data # stats (accept / decline)
+  #   # expert = something.userId
+  #   # adjust the order qtyRedeemedCallIds
 
-  customerFeedback: (userId, data, callback) =>
-    # adjust the order qtyRedeemedCallIds
+  # customerFeedback: (data, callback) =>
+  #   # adjust the order qtyRedeemedCallIds
 
-  expertFeedback: (userId, data, callback) =>
-    # adjust the order qtyRedeemedCallIds
+  # expertFeedback: (data, callback) =>
+  #   # adjust the order qtyRedeemedCallIds
 
-  updateCms: (userId, data, callback) =>
+  # updateCms: (data, callback) =>
 
   # TODO this is going to look way different once we start completing calls
   # when they have a youtube video. We'll be passing old & new orders around.
-  update: (userId, requestId, call, callback) =>
-    RequestSvc.getById(requestId).lean().exec (err, request) =>
+  update: (requestId, call, callback) =>
+    rSvc new RequestSvc @usr
+    $log 'rCall', 'r', requestId, call
+    rSvc.getById requestId, (err, request) =>
       oldCall = _.find request.calls, (c) -> _.idsEqual c._id, call._id
       if !oldCall then return callback new Error('no such call ' + call._id)
 
@@ -70,6 +72,7 @@ module.exports = class RequestCallsService
       @_updateOrders requestId, oldCall, call.duration, (err) =>
         if err then return callback err
 
+        $log 'rCall', 'update', request._id
         # pass in both old & new: it decides whether updates are truly needed
         @calendar.patch oldCall, call, (err, eventData) =>
           if err then return callback err
@@ -79,7 +82,7 @@ module.exports = class RequestCallsService
           oldCall.duration = call.duration
 
           ups = { calls: request.calls }
-          RequestSvc.update requestId, ups, (err, newRequest) =>
+          rSvc.update requestId, ups, (err, newRequest) =>
             if err then return callback err
             newCall = _.find newRequest.calls, (c) -> _.idsEqual c._id, call._id
             callback null, newCall

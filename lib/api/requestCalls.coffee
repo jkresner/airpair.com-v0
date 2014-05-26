@@ -1,22 +1,18 @@
-authz                  = require './../identity/authz'
-admin                  = authz.Admin()
-loggedIn               = authz.LoggedIn isApi:true
-CallsSvc               = require './../services/requestCalls'
 formatValidationErrors = require '../util/formatValidationErrors'
-cSend                  = require '../util/csend'
 moment                 = require 'moment-timezone'
 
-class RequestCallsApi  # Always passes back a full request object
+# Always passes back a full request object
+class RequestCallsApi extends require('./_api')
 
-  svc: new CallsSvc()
+  Svc: require './../services/requestCalls'
 
-  constructor: (app, route) ->
-    app.get     "/api/#{route}/calls/:permalink", loggedIn, @detail
-    app.post    "/api/#{route}/:requestId/calls", admin, @validate, @create
-    app.put     "/api/#{route}/:requestId/calls/:callId", admin, @validate, @update
+  routes: (app, route) ->
+    app.get     "/api/#{route}/calls/:permalink", @loggedIn, @ap, @detail
+    app.post    "/api/#{route}/:requestId/calls", @admin, @validate, @ap, @create
+    app.put     "/api/#{route}/:requestId/calls/:callId", @admin, @validate, @ap, @update
 
-  detail: (req, res, next) =>
-    @svc.getByCallPermalink req.params.permalink, cSend(res, next)
+  detail: (req) =>
+    @svc.getByCallPermalink req.params.permalink, @cSend
 
   validate: (req, res, next) ->
     req.checkBody('duration', 'Invalid duration').notEmpty().isInt()
@@ -48,7 +44,7 @@ class RequestCallsApi  # Always passes back a full request object
   # this sends back down only the changed call
   update: (req, res, next) =>
     # TODO also send 400 errors when google API has problems.
-    @svc.update req.user._id, req.params.requestId, req.body, (e, call) ->
+    @svc.update req.params.requestId, req.body, (e, call) ->
       if e && e.message.indexOf('Not enough hours') == 0
         errors = duration: e.message
         return res.send data: errors, 400

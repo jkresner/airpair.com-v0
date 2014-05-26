@@ -1,164 +1,96 @@
-util             = require './../../app/scripts/util'
-async            = require 'async'
-RequestsSvc      = require './../services/requests'
-ExpertsSvc       = require './../services/experts'
-TagsSvc          = require './../services/tags'
-OrdersSvc        = require './../services/orders'
-SettingsSvc      = require './../services/settings'
-RequestCallsSvc  = require './../services/requestCalls'
-authz            = require './../identity/authz'
-Roles            = authz.Roles
-
-rSvc  = new RequestsSvc()
-eSvc  = new ExpertsSvc()
-tSvc  = new TagsSvc()
-oSvc  = new OrdersSvc()
-sSvc  = new SettingsSvc()
-rcSvc = new RequestCallsSvc()
+# async            = require 'async'
+# TagsSvc          = require '../services/tags'
+OrdersSvc        = require '../services/orders'
+ExpertsSvc       = require '../services/experts'
+CompanysSvc      = require '../services/companys'
+# SettingsSvc      = require '../services/settings'
+RequestsSvc      = require '../services/requests'
+stripePK         = cfg.payment.stripe.publishedKey
 
 module.exports = class ViewDataService
 
-  session: (user) ->
-    if user? && user.google?
-      u = _.clone user
+  logging: off
+
+  constructor: (user) ->
+    @usr = user
+
+  # session gets called from viewRender.render
+  session: (full) ->
+    if @usr? && @usr.google?
+      u = _.clone @usr
       if u.google then delete u.google.token
       if u.twitter then delete u.twitter.token
       if u.bitbucket then delete u.bitbucket.token
       if u.github then delete u.github.token
       if u.stack then delete u.stack.token
+      u.authenticated = true
+      if full
+        u
+      else
+        _.pick u, ['_id','google','googleId','authenticated']
     else
-      u = authenticated : false
+      authenticated : false
 
-    JSON.stringify u
+  settings: (cb) ->
+    cb null, -> { stripePK }
 
-  settings: (usr, callback) ->
-    callback null,
-      stripePK: cfg.payment.stripe.publishedKey
+  review: (id, cb) ->
+    new RequestsSvc(@usr).getByIdSmart id, (e, request) =>
+      cb e, -> { request }
 
-  stripeCheckout: (usr, order, callback) ->
-    {qty,unitPrice} = order
-    total = qty * unitPrice
-    pk = global.cfg.payment.stripe.publishedKey
-    sSvc.getByUserId usr._id, (e, r) =>
-      if e then return callback e
-      callback null, _.extend {total,qty,unitPrice,pk},
-        session:    @session usr
-        customerId: JSON.stringify r
+  callSchedule: (requestId, cb) ->
+    new RequestsSvc(@usr).getById requestId, (e, request) =>
+      new OrdersSvc(@usr).getByRequestId request._id, (ee, orders) =>
+        cb ee, -> { request, orders }
 
-  review: (usr, id, callback) ->
-    rSvc.getByIdSmart id, usr, (e, r) =>
-      if e then return callback e
-      callback null,
-        isProd:     cfg.isProd.toString()
-        session:    @session usr
-        request:    JSON.stringify r
-        tagsString: if r? then util.tagsString(r.tags) else 'Not found'
+  callEdit: (callId, cb) ->
+    new RequestsSvc(@usr).getByCallId callId, (e, request) =>
+      new OrdersSvc(@usr).getByRequestId request._id, (ee, orders) =>
+        cb ee, -> { request, orders }
 
-  callSchedule: (usr, requestId, callback) ->
-    tasks =
-      request: (cb) -> rSvc.getById requestId, cb
-      orders: (cb) -> oSvc.getByRequestId requestId, cb
+  book: (id, code, cb) ->
+    new ExpertsSvc(@user).getByBookme id, code, (e, expert) =>
+      cb e, -> { expert, stripePK }
 
-    async.parallel tasks, (e, results) =>
-      if e then return callback e
-      callback null,
-        request: JSON.stringify results.request
-        orders: JSON.stringify results.orders
+  history: (id, cb) ->
+    new RequestsSvc(@usr).getForHistory id, (e,requests) =>
+      new OrdersSvc(@usr).getForHistory id, (ee,orders) =>
+        cb ee, -> { orders, requests }
 
-  callEdit: (usr, callId, callback) ->
-    rSvc.getByCallId callId, (e, request) ->
-      if e then return callback e
-      oSvc.getByRequestId request._id, (e, orders) ->
-        if e then return callback e
-        callback null,
-          request: JSON.stringify request
-          orders: JSON.stringify orders
+  bookme: (cb) ->
+    githubToken = if @usr.github.token? then @usr.github.token.token else ''
+    new ExpertsSvc(@usr).getByBookmeByUserId @usr._id, (e, expert) =>
+      cb e, -> { expert, githubToken }
 
-  book: (usr, id, code, callback) ->
-    eSvc.getByBookme id, (e, r) =>
-      if code? && r._id?
-        r.bookMe.code = "invalid code"
-        for coupon in r.bookMe.coupons
-          if coupon.code == code
-            r.bookMe.code = code
-            r.bookMe.rate = coupon.rate
-      if r._id?
-        # delete r.bookMe.rake
-        delete r.bookMe.coupons
-      if e then return callback e
-      callback null,
-        isAnonymous:  !usr?
-        session:      @session usr
-        expert:       r
-        expertStr:    JSON.stringify r
-        stripePK:     cfg.payment.stripe.publishedKey
-        # settings:     srs    ## settings crashes app for some reason
+  pipeline: (cb) ->
+    new RequestsSvc(@usr).getActive (e, requests) =>
+      cb e, -> { requests }
 
-  bookme: (usr, callback) ->
-    token = if usr.github.token? then usr.github.token.token else ''
-    eSvc.getByBookmeByUserId usr._id, (e, r) =>
-      if e then return callback e
-      callback null,
-        githubToken:  token
-        session:      @session usr
-        expert:       r
-        expertStr:    JSON.stringify r
+  orders: (cb) ->
+    new OrdersSvc(@usr).getAll (e, orders) =>
+      cb e, -> { orders }
 
-  pipeline: (usr, callback) ->
-    rSvc.getActive (err, requests) =>
-      if err then return callback err
-      callback null,
-        session: @session usr
-        requests: JSON.stringify(requests)
+  experts: (cb) ->
+    new ExpertsSvc(@usr).getAll (e, experts) =>
+      cb e, -> { experts }
 
-  companys: (usr, callback) ->
-    eSvc.getAll (e, r) =>
-      callback null,
-        session: @session usr
-        experts: JSON.stringify r
-        stripePK: cfg.payment.stripe.publishedKey
+  companys: (cb) ->
+    new CompanysSvc(@usr).getAll (e, companys) =>
+      cb e, -> { companys, stripePK }
 
-  experts: (usr, callback) ->
-    eSvc.getAll (e, r) =>
-      callback null,
-        session: @session usr
-        experts: JSON.stringify r
+  paypalSuccess: (id, cb) ->
+    new OrdersSvc(@usr).markPaymentReceived id, {}, (e, order) =>
+      cb e, -> { order }
 
-  stripeCharge: (usr, orderId, token, callback) ->
-    oSvc.markPaymentReceived orderId, usr, {}, (e, o) =>
-      if e then return callback e
-      callback null,
-        session: @session usr
-        order: JSON.stringify null, o
-        stripePK: cfg.payment.stripe.publishedKey
+  paypalCancel: (id, cb) ->
+    new OrdersSvc(@usr).getById id, (e, order) =>
+      cb e, -> { order }
 
-  paypalSuccess: (usr, orderId, callback) ->
-    oSvc.markPaymentReceived orderId, usr, {}, (e, o) =>
-      if e then return callback e
-      callback null,
-        session: @session usr
-        order: JSON.stringify o
-
-  paypalCancel: (usr, orderId, callback) ->
-    oSvc.getById orderId, (e, o) =>
-      if e then return callback e
-      callback null,
-        session: @session usr
-        order: JSON.stringify o
-
-  history: (usr, id, callback) ->
-    custUserId = if id? && Roles.isAdmin(usr) then id else usr._id
-    rSvc.getForHistory custUserId, (e,r) =>
-      oSvc.getForHistory custUserId, (ee,o) =>
-        callback null,
-          session: @session usr
-          requests: JSON.stringify r
-          orders: JSON.stringify o
-          isAdmin: Roles.isAdmin(usr).toString()
-
-  orders: (usr, callback) ->
-    oSvc.getAll (ee,o) =>
-      callback null,
-        session: @session usr
-        orders: JSON.stringify o
+  # stripeCharge: (orderId, token, callback) ->
+  #   oSvc.markPaymentReceived orderId, usr, {}, (e, o) =>
+  #     if e then return callback e
+  #     callback null,
+  #       session: @session usr
+  #       order: JSON.stringify null, o
+  #       stripePK: cfg.payment.stripe.publishedKey
 

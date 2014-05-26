@@ -1,9 +1,7 @@
-DomainService = require './_svc'
-
 higherSplit = 0.6
 lowerSplit = 0.5
 
-module.exports = class RatesService extends DomainService
+module.exports = class RatesService
 
   base:
     opensource: 20
@@ -12,8 +10,14 @@ module.exports = class RatesService extends DomainService
 
 
   getRelativeBudget: (budget, requestPricing, pricing) ->
-    return budget - (@base[requestPricing]-@base[pricing])
+    budget - (@base[requestPricing]-@base[pricing])
 
+
+  addRequestSuggestedRates: (request) ->
+    if request.suggested
+      for s in request.suggested
+        s.suggestedRate = @calcSuggestedRates request, s.expert
+    request.base = @base
 
   # NOTE suggestedRate is the developers rate
   # not including airpair's margin

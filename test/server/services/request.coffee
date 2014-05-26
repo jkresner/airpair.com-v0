@@ -2,15 +2,13 @@
 {app, data}                                    = require './../test-app-setup'
 
 RequestsService = require('./../../../lib/services/requests')
-svc = new RequestsService()
+svc = new RequestsService(data.users[3])
 
 describe "RequestsService", ->
-  @testNum = 0
 
   before dbConnect
   after (done) -> dbDestroy @, done
   beforeEach () ->
-    @testNum++
 
   it "should send an email on notifyAdmins", (done) ->
     user = data.users[3]
@@ -21,9 +19,9 @@ describe "RequestsService", ->
 
     callback = (e) ->
       if e then return done e
-      expect(sendMailMock.calledWith(sinon.match.has("subject", "New airpair request: Roger Toor 90$"))).to.equal true
+      expect(sendMailMock.calledWith(sinon.match.has("subject", "New request: Roger Toor 90$"))).to.equal true
       expect(sendMailMock.calledOnce).to.equal true
       sendMailMock.restore()
       done()
 
-    svc.create(user, request, callback)
+    svc.create request, callback
