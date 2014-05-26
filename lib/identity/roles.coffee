@@ -4,7 +4,6 @@ adminIds = [
   '108148963133977375684' #TB gravatar: e307e229741052e17d027312a4fe86ca
   '110496794584456738170' #PG gravatar: 2b22b4cd4f65cbef1331cf07e82e6b27
   '103614010394533051287' #LT
-  '105922668830552511365' #DS
   '104421101970649173838' #AR
 ]
 
@@ -59,8 +58,8 @@ module.exports =
     initials[googleId]
 
   owner2name:
-    il: 'Igor'
     jk: 'Jonathon'
+    il: 'Igor'
     pg: 'Prateek'
     tb: 'Tyler'
     lt: 'Lissanthea'
