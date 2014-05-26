@@ -171,7 +171,10 @@ module.exports = class RequestsService extends DomainService
       eR.events = [ @newEvent "self suggested" ]
       events.push @newEvent "self suggested #{eR.expert.username}"
       status = 'review' if status == 'holding' || status == 'waiting'
-      @update id, {suggested,events,status}, cb
+      @update id, {suggested,events,status}, (ee, r) =>
+        if !e
+          @mailman.importantRequestEvent "expert self suggested", @usr, r
+        cb ee, r
 
 
   updateSuggestionByExpert: (request, expertReview, cb) =>
