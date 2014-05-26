@@ -40,12 +40,10 @@ module.exports =
               isProd: cfg.isProd.toString()
               session: vdSvc.session false
               reqUrl: req.url
-
             data = _.extend data, getViewData()
 
             if vdSvc.logging then $log 'viewData', fnName, data
-            # $log 'data.session', data.session
-            # $log 'data.session.bitbucket', data.session.bitbucket
+
             resp.render "#{fileName}.html", data
 
         vdSvc[fnName].apply vdSvc, args

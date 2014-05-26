@@ -161,20 +161,25 @@ class exports.ExpertReviewFormView extends BB.EnhancedFormView
     'click .saveFeedback': 'saveFeedback'
     'input textarea': 'enableSubmit'
   initialize: (args) ->
+    @listenTo @settings, 'change:paymentMethod', => @renderPayPalEmail()
   render: ->
     # $log 'render', @model.get('suggestedRate'), @request.attributes
     expertRate = @model.get('suggestedRate')[@request.get('pricing')].expert
-    pp = @settings.paymentMethod('paypal')
-    payPalEmail = if pp? then pp.info.email
-    @$el.html @tmpl @model.extend({owner:@request.get('owner'),expertRate,payPalEmail})
+    @$el.html @tmpl @model.extend({owner:@request.get('owner'),expertRate})
     @elm('expertStatus').on 'change', @toggleFormElements
     # @enableCharCount 'expertFeedback'
     @setValsFromModel ['expertRating', 'expertStatus']
+    @renderPayPalEmail()
     @elm('expertStatus').trigger 'change'
     conf = =>
       if @elm('expertStatus').val() is 'available'
         @$('.saveFeedback').html "I confirm $#{expertRate}/hr"
     @$('.saveFeedback').hover conf, -> $(@).html 'Submit'
+  renderPayPalEmail: ->
+    pp = @settings.paymentMethod('paypal')
+    payPalEmail = if pp? then pp.info.email
+    if payPalEmail?
+      @elm('payPalEmail').val payPalEmail
   toggleFormElements: =>
     @renderInputsValid()
     status = @elm('expertStatus').val()
