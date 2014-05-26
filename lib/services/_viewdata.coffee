@@ -32,35 +32,24 @@ module.exports = class ViewDataService
     else
       authenticated : false
 
+  settings: (cb) ->
+    cb null, -> { stripePK }
+
   review: (id, cb) ->
     new RequestsSvc(@usr).getByIdSmart id, (e, request) =>
       cb e, -> { request }
 
+  callSchedule: (requestId, cb) ->
+    new RequestsSvc(@usr).getById requestId, (e, request) =>
+      new OrdersSvc(@usr).getByRequestId request._id, (ee, orders) =>
+        cb ee, -> { request, orders }
 
-  settings: (callback) ->
-    callback null, { stripePK }
+  callEdit: (callId, cb) ->
+    new RequestsSvc(@usr).getByCallId callId, (e, request) =>
+      new OrdersSvc(@usr).getByRequestId request._id, (ee, orders) =>
+        cb ee, -> { request, orders }
 
-
-
-  callSchedule: (requestId, callback) ->
-    rSvc.getById requestId, (e, request) =>
-      oSvc.getByRequestId request._id, (e, orders) =>
-        if e then return callback e
-        callback null,
-          session:  @session usr
-          request:  JSON.stringify request
-          orders:   JSON.stringify orders
-
-  callEdit: (callId, callback) ->
-    rSvc.getByCallId callId, (e, request) =>
-      oSvc.getByRequestId request._id, (e, orders) =>
-        if e then return callback e
-        callback null,
-          session: @session usr
-          request: JSON.stringify request
-          orders: JSON.stringify orders
-
-  book: (id, code, callback) ->
+  book: (id, code, cb) ->
     eSvc.getByBookme id, (e, r) =>
       if code? && r._id?
         r.bookMe.code = "invalid code"
@@ -80,7 +69,7 @@ module.exports = class ViewDataService
         stripePK:     cfg.payment.stripe.publishedKey
         # settings:     srs    ## settings crashes app for some reason
 
-  bookme: (callback) ->
+  bookme: (cb) ->
     token = if usr.github.token? then usr.github.token.token else ''
     eSvc.getByBookmeByUserId usr._id, (e, r) =>
       if e then return callback e
@@ -114,21 +103,21 @@ module.exports = class ViewDataService
   #       order: JSON.stringify null, o
   #       stripePK: cfg.payment.stripe.publishedKey
 
-  paypalSuccess: (orderId, callback) ->
+  paypalSuccess: (orderId, cb) ->
     oSvc.markPaymentReceived orderId, usr, {}, (e, o) =>
       if e then return callback e
       callback null,
         session: @session usr
         order: JSON.stringify o
 
-  paypalCancel: (orderId, callback) ->
+  paypalCancel: (orderId, cb) ->
     oSvc.getById orderId, (e, o) =>
       if e then return callback e
       callback null,
         session: @session usr
         order: JSON.stringify o
 
-  history: (id, callback) ->
+  history: (id, cb) ->
     rSvc.getForHistory custUserId, (e,r) =>
       oSvc.getForHistory custUserId, (ee,o) =>
         callback null,

@@ -40,7 +40,10 @@ exports.config =
           'vendor/scripts/backbone.js'
           'vendor/scripts/backbone.validation.js'
           'vendor/scripts/backbone.validation_bootstrap.js'
-          'vendor/scripts/backbone.badass.js'
+          'vendor/scripts/backbone.badass.js',
+          'vendor/scripts/picker.js',
+          'vendor/scripts/picker.date.js',
+          'vendor/scripts/jquery.timepicker.js'
         ]
     stylesheets:
       joinTo:
