@@ -29,7 +29,7 @@ class Mailman
     )
 
   sendEmailToAdmins: (options, callback) ->
-    options.to = _.map roles.getAdminInitials(), (initials) -> "#{initials}@airpair.com"
+    options.to = roles.getAdminEmails()
     @sendEmail options, callback
 
 

@@ -52,6 +52,9 @@ module.exports =
         return true
     false
 
+  getAdminEmails: ->
+    _.map adminIds, (id) -> "#{initials[id]}@airpair.com"
+
   getAdminInitials: (googleId) ->
     initials[googleId]
 
