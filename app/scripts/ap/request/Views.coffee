@@ -1,7 +1,7 @@
 exports = {}
 BB      = require 'BB'
 M       = require './Models'
-SV      = require './../shared/Views'
+SV      = require '../../shared/Views'
 
 #############################################################################
 ##
@@ -33,7 +33,7 @@ class exports.WelcomeView extends BB.BadassView
 #############################################################################
 
 class exports.CompanyContactView extends BB.ModelSaveView
-  tmpl: require './../shared/templates/CompanyContactForm'
+  tmpl: require '../../shared/templates/CompanyContactForm'
   viewData: ['fullName','email','gmail','title','phone','userId',
                                 'pic', 'twitter','timezone']
   initialize: ->
@@ -47,7 +47,7 @@ class exports.CompanyContactView extends BB.ModelSaveView
 class exports.InfoFormView extends BB.EnhancedFormView
   el: '#info'
   tmplWrap: require './templates/CompanyForm'
-  tmpl: require './../shared/templates/CompanyForm'
+  tmpl: require '../../shared/templates/CompanyForm'
   events:
     'click .save': 'validatePrimaryContactAndSave'
     'click .individual': 'setToggleIndividual'

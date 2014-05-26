@@ -4,6 +4,11 @@ module.exports = class ExpertsService extends DomainService
 
   model: require './../models/expert'
 
+  # Used for adm/pipeline dashboard list
+  getAll: (cb) ->
+    @searchMany { rate: { $gt: 0 } }, { fields: @admSelect }, cb
+
+
   getById: (id, callback) =>
     query = if id is 'me' then userId: @usr._id else _id: id
 
@@ -12,18 +17,28 @@ module.exports = class ExpertsService extends DomainService
       @searchOne {email: @usr.google._json.email}, {}, callback
 
 
-  getByBookme: (urlSlug, callback) =>
+  getByBookme: (urlSlug, code, cb) =>
     urlSlug = urlSlug.toLowerCase()
-    @model.findOne({ 'bookMe.urlSlug': urlSlug, 'bookMe.enabled': true })
-      .lean().exec (e, r) =>
-        r = {} if !r || !r.bookMe || !r.bookMe.enabled
-        callback e, r
+    query = 'bookMe.urlSlug': urlSlug, 'bookMe.enabled': true
+    @searchOne query, {}, (e, r) ->
+      if !r || !r.bookMe || !r.bookMe.enabled then r = {}
+      else
+        if code?
+          r.bookMe.code = "invalid code"
+          for coupon in r.bookMe.coupons
+            if coupon.code == code
+              r.bookMe.code = code
+              r.bookMe.rate = coupon.rate
+        delete r.bookMe.rake  # don't show rake to customers
+        delete r.bookMe.coupons  # don't show coupons to customers
+      cb e, r
 
-  getByBookmeByUserId: (userId, callback) =>
-    @model.findOne({ userId: userId, 'bookMe.enabled': true })
-      .lean().exec (e, r) =>
-        r = {} if !r || !r.bookMe || !r.bookMe.enabled
-        callback e, r
+
+  # when an expert is looking at their own book me details
+  getByBookmeByUserId: (userId, cb) =>
+    @searchOne { userId: userId, 'bookMe.enabled': true }, {}, (e, r) =>
+      r = {} if !r || !r.bookMe || !r.bookMe.enabled
+      cb e, r
 
   admSelect:
     'userId': 1
@@ -46,14 +61,6 @@ module.exports = class ExpertsService extends DomainService
     'sideproject': 1
     'other': 1
 
-  # Used for adm/pipeline dashboard list
-  getAll: (callback) ->
-    query = rate: { $gt: 0 }
-    options = lean: true
-    @model.find query, @admSelect, options, (e, r) =>
-      if e then return callback e
-      if !r then r = []
-      callback null, r
 
   update: (id, data, cb) =>
     if data.bookMe? && data.bookMe.enabled

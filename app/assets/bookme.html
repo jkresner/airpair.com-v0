@@ -321,11 +321,11 @@ http://airpair.me/<usr></usr>
 </div>
 
 <script type="text/javascript">
-    var e = {{{expertStr}}}
-    var s = {{{session}}}
+    var d = { {{JSON 'expert'}}, {{JSON 'session'}} }
     var ghToken = '{{githubToken}}'
 
     $(function() {
+      e = d.expert;
       if (e._id) {
         $('.promote').show();
         $('usr').html(e.bookMe.urlSlug);

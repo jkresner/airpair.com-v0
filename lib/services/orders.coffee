@@ -76,7 +76,7 @@ module.exports = class OrdersService extends DomainService
       @paypalSvc.Pay order, savePaymentResponse
 
 
-  getForHistory: (id, callback) =>
+  getForHistory: (id, cb) =>
     userId = if id? && Roles.isAdmin(@usr) then id else @usr._id
     @searchMany {userId}, { fields: @historySelect }, cb
 

@@ -6,6 +6,6 @@ module.exports = class CompanysService extends DomainService
 
   getById: (id, cb) ->
 
-    query = if id is 'me' then 'contacts.userId': @user._id else _id: id
+    query = if id is 'me' then 'contacts.userId': @usr._id else _id: id
 
-    @svc.searchOne query, null, cb
+    @searchOne query, null, cb

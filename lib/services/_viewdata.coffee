@@ -50,34 +50,13 @@ module.exports = class ViewDataService
         cb ee, -> { request, orders }
 
   book: (id, code, cb) ->
-    eSvc.getByBookme id, (e, r) =>
-      if code? && r._id?
-        r.bookMe.code = "invalid code"
-        for coupon in r.bookMe.coupons
-          if coupon.code == code
-            r.bookMe.code = code
-            r.bookMe.rate = coupon.rate
-      if r._id?
-        # delete r.bookMe.rake
-        delete r.bookMe.coupons
-      if e then return callback e
-      callback null,
-        isAnonymous:  !usr?
-        session:      @session usr
-        expert:       r
-        expertStr:    JSON.stringify r
-        stripePK:     cfg.payment.stripe.publishedKey
-        # settings:     srs    ## settings crashes app for some reason
+    new ExpertsSvc(@user).getByBookme id, code, (e, expert) =>
+      cb e, -> { expert, stripePK }
 
   bookme: (cb) ->
-    token = if usr.github.token? then usr.github.token.token else ''
-    eSvc.getByBookmeByUserId usr._id, (e, r) =>
-      if e then return callback e
-      callback null,
-        githubToken:  token
-        session:      @session usr
-        expert:       r
-        expertStr:    JSON.stringify r
+    githubToken = if @usr.github.token? then @usr.github.token.token else ''
+    new ExpertsSvc(@usr).getByBookmeByUserId @usr._id, (e, expert) =>
+      cb e, -> { expert, githubToken }
 
   pipeline: (cb) ->
     new RequestsSvc(@usr).getActive (e, requests) =>
@@ -118,11 +97,7 @@ module.exports = class ViewDataService
         order: JSON.stringify o
 
   history: (id, cb) ->
-    rSvc.getForHistory custUserId, (e,r) =>
-      oSvc.getForHistory custUserId, (ee,o) =>
-        callback null,
-          session: @session usr
-          requests: JSON.stringify r
-          orders: JSON.stringify o
-          isAdmin: Roles.isAdmin(usr).toString()
+    new RequestsSvc(@usr).getForHistory id, (e,requests) =>
+      new OrdersSvc(@usr).getForHistory id, (ee,orders) =>
+        cb ee, -> { orders, requests }
 

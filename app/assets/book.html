@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width">
     <meta name="description" content="AirPair connects companies with expert developers for remote software consulting and pair programming. Hire the best of the best 1 hour at a time.">
-    <meta name="keywords" content="{{ tagsString }}">
+    <meta name="keywords" content="{{ expert.name }}">
     <meta property="og:title" content="AirPair Expert | {{ expert.name }}" />
     <meta property="og:type" content="airpair:expert" />
     <meta property="og:image" content="http://www.airpair.com/images/icons/icon48.png" />
@@ -68,7 +68,7 @@
     window.useOlark = true;
 
     function initApp() {
-      var pageData = { session: {{{ session }}}, expert: {{{ expertStr }}}, stripePK: '{{{stripePK }}}' };
+      var pageData = { {{JSON 'session'}}, {{JSON 'expert'}}, {{JSON 'stripePK'}} };
       Router = require('/scripts/ap/book/Router');
       window.router = new Router(pageData);
 

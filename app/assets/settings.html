@@ -58,7 +58,7 @@
 
   <script type="text/javascript">
     function initApp() {
-      var pageData = { stripePK: '{{{stripePK}}}' }
+      var pageData = { {{JSON 'session'}}, stripePK: '{{{stripePK}}}' }
       Router = require('/scripts/ap/settings/Router');
       window.router = new Router(pageData);
     }

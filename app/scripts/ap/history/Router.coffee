@@ -1,5 +1,4 @@
-S   = require '../shared/Routers'
-SC = require '../shared/Collections'
+S  = require '../../shared/Routers'
 C  = require './Collections'
 V  = require './Views'
 
