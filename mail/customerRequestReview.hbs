@@ -1,7 +1,10 @@
+{{#if availableSingle}}
 
+We got an expert - {{#each available}}{{expert.name}}{{/each}} - for your AirPair. Take a look:
+{{else}}
 
 We shortlisted a few experts for your AirPair. Take a look:
-
+{{/if}}
 https://www.airpair.com/review/{{ _id }}
 
 When you're ready, go ahead and click "Book hours" to choose who you'd like to AirPair with and how many hours you'd like. If you're using Chrome, you may need to "allow popups" (see attached).

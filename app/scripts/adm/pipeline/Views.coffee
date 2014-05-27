@@ -277,10 +277,14 @@ class CustomerMailTemplates
   tmplReview: require 'mail/customerRequestReview'
   tmplFollowup: require 'mail/customerRequestFollowup'
   constructor: (request, session) ->
+    session = session.toJSON()
     isOpensource = request.get('pricing') == 'opensource'
+    available = _.filter request.get('suggested'), (s) -> s.expertStatus == 'available'
+    availableSingle = available.length == 1
+    tagsString = request.tagsString()
     firstName = request.contact(0).fullName.split(' ')[0]
     request.contact(0).firstName = firstName
-    r = request.extendJSON tagsString: request.tagsString(), isOpensource: isOpensource, session: session.toJSON()
+    r = request.extendJSON { session, isOpensource, available, availableSingle, firstName, tagsString }
     if r.status == 'incomplete'
       @incomplete = encodeURIComponent @tmplIncomplete r
     else if r.status == 'pending'

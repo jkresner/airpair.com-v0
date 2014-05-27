@@ -52,11 +52,11 @@ describe "mailman", ->
     mailman.renderEmail o, 'importantRequestEvent', (e, rendered) ->
       if e then return done e
       rendered.Subject = o.subject
-      text = "Steve Mathews [expert updated] tdd request by Jonathon Kresner\n\nhttps://www.airpair.com/adm/pipeline/request/TESTID\n\n\n\n  Steve Mathews: waiting\n\n"
-      html = "Steve Mathews [expert updated] tdd request by Jonathon Kresner\n\n<p>https://www.airpair.com/adm/pipeline/request/TESTID</p>\n\n<p>\n\n  Steve Mathews: waiting<br />\n\n</p>\n"
+      text = "Steve Mathews [expert updated] {tdd} request by Jonathon Kresner\n\nhttps://www.airpair.com/adm/pipeline/request/TESTID\n\n\n\n  Steve Mathews: waiting\n\n"
+      html = "Steve Mathews [expert updated] {tdd} request by Jonathon Kresner\n\n<p>https://www.airpair.com/adm/pipeline/request/TESTID</p>\n\n<p>\n\n  Steve Mathews: waiting<br />\n\n</p>\n"
       expect(rendered.Text).to.equal text
       expect(rendered.Html).to.equal html
-      expect(rendered.Subject).to.equal '[mi] Steve Mathews [expert updated] tdd request by Jonathon Kresner'
+      expect(rendered.Subject).to.equal '[mi] Steve Mathews [expert updated] {tdd} request by Jonathon Kresner'
       done()
 
   it "should NOT send importantRequestEvent email if the request has no owner", ->
