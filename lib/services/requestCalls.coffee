@@ -62,7 +62,7 @@ module.exports = class RequestCallsService
   # TODO this is going to look way different once we start completing calls
   # when they have a youtube video. We'll be passing old & new orders around.
   update: (requestId, call, callback) =>
-    rSvc new RequestSvc @usr
+    rSvc = new RequestSvc @usr
     $log 'rCall', 'r', requestId, call
     rSvc.getById requestId, (err, request) =>
       oldCall = _.find request.calls, (c) -> _.idsEqual c._id, call._id

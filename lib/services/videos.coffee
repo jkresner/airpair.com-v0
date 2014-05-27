@@ -36,4 +36,4 @@ class VideosService
   # TODO write for use by the upcoming expert videos API
   # getByExpertId:
 
-module.exports = new VideosService()
+module.exports = VideosService
