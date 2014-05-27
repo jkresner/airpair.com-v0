@@ -130,7 +130,7 @@ module.exports = class RequestsService extends DomainService
       for s in data.suggested
 
         if !s.events?
-          data.status = "waiting"
+          data.status = "waiting" if data.status == "holding"
           evts.push @newEvent "suggested #{s.expert.username}"
 
           s.matchedBy = { userId: @usr._id, initials: Roles.getAdminInitials @usr.googleId }
