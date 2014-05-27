@@ -10,6 +10,10 @@ exports.config =
     base: '/'
     run: yes
 
+  plugins:
+    sass:
+      options:
+        includePaths: ['app/assets/css']
 
   sourceMaps: false
 
@@ -46,6 +50,7 @@ exports.config =
           'vendor/scripts/backbone.validation_bootstrap.js'
         ]
     stylesheets:
+      defaultExtension: 'scss'
       joinTo:
         'css/ap.css': /(css\/ap|css\/shared|css\/old)/
         'css/adm.css': /(css\/adm|css\/shared)/
@@ -67,7 +72,9 @@ exports.config =
           'app/css/shared/table.scss',
           'app/css/shared/tag.scss',
           'app/css/adm/base.scss',
-          'app/css/ap/base.scss'
+          'app/css/ap/base.scss',
+          'app/css/ap/snippets.scss',
+
         ]
         after: []
     templates:

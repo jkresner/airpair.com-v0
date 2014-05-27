@@ -16,29 +16,6 @@
   </head>
 <body id="home">
  <div class="site-container">
-  <nav class="nav-secondary">
-    <div class="wrap">
-     <ul id="menu-technologies" class="genesis-nav-menu">
-      <li class="menu-item"><a href="/category/android">Android</a></li>
-      <li class="menu-item"><a href="/angularjs">AngularJS</a></li>
-      <li class="menu-item"><a href="/backbone.js">Backbone.js</a></li>
-      <li class="menu-item"><a href="/c-plus-plus">C++</a></li>
-      <li class="menu-item"><a href="/devops">DevOps</a></li>
-      <li class="menu-item"><a href="/ember.js">Ember.js</a></li>
-      <li class="menu-item"><a href="/ios">iOS</a></li>
-      <li class="menu-item"><a href="/javascript">JS</a></li>
-      <li class="menu-item"><a href="/microsoft.net" title="Micorsoft .net, Asp .net, C#, VB .net">.Net</a></li>
-      <li class="menu-item"><a href="/node.js">Node.js</a></li>
-      <li class="menu-item"><a href="/php">PHP</a></li>
-      <li class="menu-item"><a href="/python">Python</a></li>
-      <li class="menu-item"><a href="/ruby-on-rails">Rails</a></li>
-      <li class="menu-item"><a href="/ruby">Ruby</a></li>
-      <li class="menu-item"><a href="/wordpress">WordPress</a></li>
-      <li class="menu-item"><a href="/technologies">More</a></li>
-    </ul>
-    </div>
-  </nav>
-
   <div class="head-wrap">
     <header class="site-header">
       <div class="wrap">
@@ -51,12 +28,24 @@
             <div class="widget-wrap">
               <nav class="nav-header">
                 <ul id="menu-services" class="menu genesis-nav-menu">
-                  <li class="menu-item"><a href="/experts">Experts</a></li>
-                  <li class="menu-item"><a href="/customers">Customers</a></li>
-                  <li class="menu-item pair-programming"><a href="/pair-programming">Pair Programming</a></li>
-                  <li class="menu-item code-review"><a href="/code-review">Code Review</a></li>
-                  <li class="menu-item training"><a href="/code-mentoring">Training</a></li>
-                  <li class="menu-item problem-solving"><a href="/problem-solving">Problem Solving</a></li>
+                  <li class="menu-item pair-programming" id="services"><a href="/pair-programming">Services</a>
+                    <ul class="nested-menu">
+                      <li><a href="">Pair Programming</a></li>
+                      <li><a href="">Code Review</a></li>
+                      <li><a href="">Training</a></li>
+                      <li><a href="">Problem Solving</a></li>
+                    </ul>
+                  </li>
+                  <li class="menu-item"><a href="/experts">Our Experts</a></li>
+                  <li class="menu-item"><a href="/customers">Our Clients</a>
+                    <ul class="nested-menu">
+                      <li><a href="">Enterprise</a></li>
+                      <li><a href="">Entreprenuers</a></li>
+                      <li><a href="">Small Business</a></li>
+                      <li><a href="">Individuals</a></li>
+                    </ul>
+                  </li>
+                  <li class="menu-item"><a href="/customers">Technologies</a>
                 </ul>
               </nav>
             </div>
@@ -64,97 +53,128 @@
         </aside>
       </div>
     </header>
+    <nav class="nav-secondary">
+      <div class="wrap">
+       <ul id="menu-technologies" class="genesis-nav-menu">
+        <li class="menu-item"><a href="/category/android">Android</a></li>
+        <li class="menu-item"><a href="/angularjs">AngularJS</a></li>
+        <li class="menu-item"><a href="/backbone.js">Backbone.js</a></li>
+        <li class="menu-item"><a href="/c-plus-plus">C++</a></li>
+        <li class="menu-item"><a href="/devops">DevOps</a></li>
+        <li class="menu-item"><a href="/ember.js">Ember.js</a></li>
+        <li class="menu-item"><a href="/ios">iOS</a></li>
+        <li class="menu-item"><a href="/javascript">JS</a></li>
+        <li class="menu-item"><a href="/microsoft.net" title="Micorsoft .net, Asp .net, C#, VB .net">.Net</a></li>
+        <li class="menu-item"><a href="/node.js">Node.js</a></li>
+        <li class="menu-item"><a href="/php">PHP</a></li>
+        <li class="menu-item"><a href="/python">Python</a></li>
+        <li class="menu-item"><a href="/ruby-on-rails">Rails</a></li>
+        <li class="menu-item"><a href="/ruby">Ruby</a></li>
+        <li class="menu-item"><a href="/wordpress">WordPress</a></li>
+      </ul>
+      </div>
+    </nav>
   </div>
-
+    <img src="/images/home/banner-home.jpg" alt="Remote Pair Programming" class="home-banner"/>
     <div id="fold" class="home-feature-bg">
       <div class="wrap">
 
         <div id="about">
 
-          <h1>The World's Best Software Experts</h1>
-          <p>At your finger tips</p>
-          <p class="about">On-demand through video chat & screen sharing</p>
+          <h1>The World's Best Software Experts At Your Fingertips</h1>
+          <p>Talk directly to the world’s leading software developers to get advice no matter where you are. We’ll pair you with the best-qualified expert for you within 24 hours.</p>
           <div class="cta-group">
             <a id="fold-action" class="trackCustomerLogin button large" href="/find-an-expert">Find an expert & video chat, NOW.</a>
-            <br />
-            <span class="already-a-member">Already a member? <a href="/login">Login now</a></span>
+            <p>Already a member? <a href="/login" class="login-now">Login now</a></p>
           </div>
-          <br />
-          <a id="tw-follow" href="https://twitter.com/airpair" class="twitter-follow-button" data-show-count="false" data-size="large" data-dnt="true">Follow @airpair</a>
 
         </div>
-        <img src="//i1.ytimg.com/vi/XzOj-cMNP1o/sddefault.jpg" alt="Remote Pair Programming" />
       </div>
     </div>
 
 
     <div id="customers" class="home-feature-bg-alt">
+      <h2 class="header-dark">Who AirPairs?</h2>
       <div class="wrap">
-        <h2>Who AirPairs?</h2>
-        <div class="home-feature-1">
-
-          <section class="widget widget_text">
-            <a href="/ember.js/training-on-demand">
-              <div class="widget-wrap">
-                <div class="textwidget">
-                  <span class="alignleft">
-                    <img src="//upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Intel-logo.svg/200px-Intel-logo.svg.png" style="width:120px" />
-                  </span>
-                  <h4>Enterprise</h4> Intel uses AirPair for On-demand Ember.js Training
-                  <button>Read case study</button>
-                </div>
+          <ul class="snippet snippet-full-width">
+            <li>
+              <div class="article-author">
+                <img src="images/avatars/ds.png" class="author-large" alt="author">
+                <h5 class="author-name">Nathan Ward</h5>
               </div>
-            </a>
-          </section>
-          <section class="widget widget_text">
-            <a href="/android/android-code-review">
-              <div class="widget-wrap">
-                <div class="textwidget">
-                  <span class="alignleft"><img src="//airpair-blog.s3.amazonaws.com/wp-content/uploads/2014/02/serps-trans.png" /></span>
-                  <h4>SMBs</h4> SERPs uses AirPair for Android Problem Solving
-                  <button>Read case study</button>
+              <article class="article-snippet">
+                <div class="snippet-content">
+                  <h2>Enterprises</h2>
+                  <p>“Only hours after I found AirPair and submitted a request, AirPair connected me with not just an Ember.js expert, but with Stefan Penner, the author of the exact open source library with which I was integrating. ”</p>
+                  <h6><i>Nathan Ward, Intel </i><a class="article-link"> Read Case Study</a></h6>
                 </div>
-              </div>
-            </a>
-          </section>
-        </div>
-        <div class="home-feature-2">
-          <section class="widget widget_text">
-            <a href="/ruby/ruby-problem-solving-for-sendwithus">
-              <div class="widget-wrap">
-                <div class="textwidget">
-                  <span class="alignleft"><img src="//airpair-blog.s3.amazonaws.com/wp-content/uploads/2014/02/sendwithus-logo.png" /></span>
-                  <h4>Startups</h4>SendWithus uses AirPair for Rails Debugging
-                  <button>Read case study</button>
+                <div class="snippet-logo">
+                  <img src="//upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Intel-logo.svg/200px-Intel-logo.svg.png" class="article-logo" alt="article logo">
                 </div>
+              </article>
+              <div class="line"></div>
+            </li>
+            <li>
+              <div class="article-author">
+                <img src="images/avatars/il.png" class="author-large" alt="author">
+                <h5 class="author-name">Matt Harris</h5>
               </div>
-            </a>
-          </section>
-          <section class="widget widget_text">
-            <a href="/node.js/node-js-code-review">
-              <div class="widget-wrap">
-                <div class="textwidget">
-                  <span class="alignleft"><img src="/images/logos/hipcamp.png" /></span><h4>Entrepreneurs</h4> HipCamp uses AirPair for Node.js Code Review
-                  <button>Read case study</button>
+              <article class="article-snippet">
+                <div class="snippet-content">
+                  <h2>Startups</h2>
+                  <p>“I booked an AirPair session for my developer. He confidently told me that he was happy with the result of the AirPair session and it helped him resolve what would have taken 5 hours in just one hour’s time."</p>
+                  <h6><i>Matt Harris, Send With Us </i><a class="article-link"> Read Case Study</a></h6>
                 </div>
+                <div class="snippet-logo">
+                  <img src="//airpair-blog.s3.amazonaws.com/wp-content/uploads/2014/02/sendwithus-logo.png" class="article-logo" alt="article logo">
+                </div>
+              </article>
+              <div class="line"></div>
+            </li>
+            <li>
+              <div class="article-author">
+                <img src="images/avatars/jk.png" class="author-large" alt="author">
+                <h5 class="author-name">Scott Krager</h5>
               </div>
-            </a>
-          </section>
-        </div>
+              <article class="article-snippet">
+                <div class="snippet-content">
+                  <h2>Small Businesses</h2>
+                  <p>“AirPair mentors have helped me get “unstuck” on two major coding roadblocks already, and saved me hours of frustration flailing around on Stack Overflow."</p>
+                  <h6><i>Scott Krager, SERPs.com </i><a class="article-link"> Read Case Study</a></h6>
+                </div>
+                <div class="snippet-logo">
+                  <img src="//airpair-blog.s3.amazonaws.com/wp-content/uploads/2014/02/serps-trans.png" class="article-logo" alt="article logo">
+                </div>
+              </article>
+              <div class="line"></div>
+            </li>
+            <li>
+              <div class="article-author">
+                <img src="images/avatars/tb.png" class="author-large" alt="author">
+                <h5 class="author-name">Alyssa Ravasio</h5>
+              </div>
+              <article class="article-snippet">
+                <div class="snippet-content">
+                  <h2>Individuals</h2>
+                  <p>I was bootstrapping Hipcamp from my personal savings and it was an incredibly difficult decision to fork over the money for that first Airpair session – but it honestly ended up being the best money I spent in those early, precarious months of Hipcamp’s birth.</p>
+                  <h6><i>Alyssa Ravasio, Hipcamp </i><a class="article-link"> Read Case Study</a></h6>
+                </div>
+                <div class="snippet-logo">
+                  <img src="//airpair-blog.s3.amazonaws.com/wp-content/uploads/2014/02/serps-trans.png" class="article-logo " class="article-logo" alt="article logo">
+                </div>
+              </article>
+              <div class="line"></div>
+            </li>
+          </ul>
       </div><!-- end .wrap -->
     </div>
 
 
-    <div id="experts" class="home-feature-bg-dark">
-
-      <div class="wrap">
-
+    <div id="experts" class="section-dark">
+      <h2 class="header-dark">What do AirPair Experts look like?</h2>
+      <div class="wrap">        
         <div class="content-sidebar-wrap">
-
-          <h2>What do AirPair Experts look like?</h2>
-
           <main class="content">
-
             <article class="portfolio ari-lerner">
               <a href="/angularjs/expert-training-author-ari-lerner">
                 <span style="background-size:140%;background-image:url('//airpair-blog.s3.amazonaws.com/wp-content/uploads/2013/09/angularjs.jpeg')"></span>

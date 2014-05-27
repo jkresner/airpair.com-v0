@@ -36,8 +36,11 @@
     window.useUserVoice = true;
     function initApp() {
       var pageData = {};
+      console.log('in', 'initApp');
       Router = require('/scripts/request/Router');
+      console.log('required', Router);
       window.router = new Router(pageData);
+      console.log('created router');      
     }
   </script>
   <script src="/javascripts/vendor.js" defer></script>
