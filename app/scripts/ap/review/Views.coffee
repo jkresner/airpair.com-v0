@@ -312,12 +312,26 @@ class exports.RequestInfoView extends BB.BadassView
     isIndividual = @request.get('company').name == 'Individual' ||
       @request.get('company').about.indexOf('Individual') == 0
 
+    status = @request.get('status')
+
+    reqStatus = 'in-progress'
+    if status is 'received' || status is 'holding' || status is 'waiting' || status is 'review'
+      reqStatus = 'open'
+    if status is 'scheduling' || status is 'scheduled'
+      reqStatus = 'already scheduled'
+    if status is 'canceled' || status is 'completed' || status is 'consumed'
+      reqStatus = 'closed'
+
     d =
+      createdDate: @request.createdDateString()
+      createdAgo: moment(@request.createdDate()).fromNow()
       isByIndividual: isIndividual
       isCustomer: @request.isCustomer @session
       meExpert: @request.suggestion @session.id
       total: @hrTotal()
       hasAvailableExpert: hasAvailableExperts
+      reqStatus: reqStatus
+
     d.associatedWithRequest = d.meExpert || d.isCustomer
 
     @$el.html @tmpl @request.extend(d)
