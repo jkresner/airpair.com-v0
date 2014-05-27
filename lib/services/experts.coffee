@@ -16,7 +16,9 @@ module.exports = class ExpertsService extends DomainService
 
     @searchOne query, {}, (e, r) =>
       if e? || r? then return callback e, r
-      @searchOne {email: @usr.google._json.email}, {}, callback
+      @searchOne {email: @usr.google._json.email}, {}, (ee,rr) =>
+        if !rr? then rr = {}
+        callback ee, rr
 
 
   detailOnRequest: (id, cb) =>
