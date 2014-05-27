@@ -48,7 +48,7 @@ if c.env is 'prod'
   c.analytics.mixpanel.id = '076cac7a822e2ca5422c38f8ab327d62'
   c.payment.stripe =
     publishedKey: 'pk_live_FEGruKDm6OZyagTHqhXWvV8G'
-    secretKey:    'sk_live_qSxo06x8iwaYuIIw1Bkx7hsz'
+    secretKey:    'sk_live_ei0Duv3MIp56TzPYPSK2XWWf'
   c.oauthHost = 'https://www.airpair.com' # note https
   c.google.calendar.account = 'team@airpair.com'
   c.google.calendar.params =
