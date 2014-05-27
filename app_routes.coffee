@@ -19,7 +19,7 @@ module.exports = (app) ->
 
   # pages
   app.get '/login', file 'login'
-  app.get '/be-an-expert*', file 'beexpert'
+  app.get '/be-an-expert*', render 'beexpert'
   app.get '/find-an-expert*', render 'request'
   app.get '/dashboard*', authd, render 'dashboard'
   app.get '/settings*', authd, render 'settings'

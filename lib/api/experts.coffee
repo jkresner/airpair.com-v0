@@ -8,7 +8,7 @@ class ExpertApi extends require('./_api')
     app.get  "/api/#{route}/:id", @loggedIn, @ap, @detail
     app.get  "/api/#{route}/request/:id", @loggedIn, @ap, @detailOnRequest
     app.post "/api/#{route}", @loggedIn, @ap, @create
-    app.put  "/api/#{route}/:id", @admin, @ap, @update
+    app.put  "/api/#{route}/:id", @loggedIn, @ap, @update
 
 
   detailOnRequest: (req) => @svc.detailOnRequest req.params.id, @cbSend

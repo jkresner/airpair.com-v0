@@ -34,6 +34,10 @@ module.exports = class ViewDataService
   settings: (cb) ->
     cb null, -> { stripePK }
 
+  beexpert: (cb) ->
+    session = @session true
+    cb null, -> { session }
+
   review: (id, cb) ->
     new RequestsSvc(@usr).getByIdSmart id, (e, request) =>
       cb e, -> { request }

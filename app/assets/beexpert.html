@@ -57,7 +57,7 @@
   <script type="text/javascript">
 
     function initApp() {
-      pageData = {};
+      pageData = { {{JSON 'session'}} };
       Router = require('/scripts/ap/beexpert/Router');
       window.router = new Router(pageData);
     }

@@ -9,7 +9,7 @@ class UserApi extends require('./_api')
 
   detail: (req, res) =>
     VDSvc = require('../services/_viewdata')
-    res.send new VDSvc(req.user).session()
+    res.send new VDSvc(req.user).session true
 
 
 module.exports = (app) -> new UserApi app, 'users'
