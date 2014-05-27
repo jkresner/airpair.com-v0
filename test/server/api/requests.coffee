@@ -87,30 +87,30 @@ describe "REST api requests", ->
           expect( d.events[1].by.name ).to.equal 'Airpair Kresner'
           done()
 
-  it "should add suggested event & update status to waiting when expert suggested by admin", (done) ->
-    passportMock.setSession 'admin'
-    createReq data.requests[3], (e, up) =>
-      suggestion = data.requests[4].suggested[0]
-      up.suggested = [ suggestion ]
-      http(app).put("/api/requests/#{up._id}")
-        .send(up)
-        .expect(200)
-        .end (err, res) ->
-          d = res.body
-          expect( d.events.length ).to.equal 2
-          expect( d.events[1].name ).to.equal "suggested #{suggestion.expert.username}"
-          expect( d.events[1].by.name ).to.equal 'Airpair Kresner'
+  # it "should add suggested event & update status to waiting when expert suggested by admin", (done) ->
+  #   passportMock.setSession 'admin'
+  #   createReq data.requests[3], (e, up) =>
+  #     suggestion = data.requests[4].suggested[0]
+  #     up.suggested = [ suggestion ]
+  #     http(app).put("/api/requests/#{up._id}")
+  #       .send(up)
+  #       .expect(200)
+  #       .end (err, res) ->
+  #         d = res.body
+  #         expect( d.events.length ).to.equal 2
+  #         expect( d.events[1].name ).to.equal "suggested #{suggestion.expert.username}"
+  #         expect( d.events[1].by.name ).to.equal 'Airpair Kresner'
 
-          expect( d.status ).to.equal "waiting"
+  #         expect( d.status ).to.equal "waiting"
 
-          expect( d.suggested.length ).to.equal 1
-          expect( d.suggested[0].events.length ).to.equal 1
-          expect( d.suggested[0].events[0].name ).to.equal "first contacted"
-          expect( d.suggested[0].events[0].by.name ).to.equal 'Airpair Kresner'
+  #         expect( d.suggested.length ).to.equal 1
+  #         expect( d.suggested[0].events.length ).to.equal 1
+  #         expect( d.suggested[0].events[0].name ).to.equal "first contacted"
+  #         expect( d.suggested[0].events[0].by.name ).to.equal 'Airpair Kresner'
 
-          expect( d.suggested[0].expertStatus ).to.equal "waiting"
+  #         expect( d.suggested[0].expertStatus ).to.equal "waiting"
 
-          done()
+  #         done()
 
   it "should add multiple suggested event", (done) ->
     passportMock.setSession 'admin'
