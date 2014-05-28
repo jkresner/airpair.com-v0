@@ -1,0 +1,14 @@
+body#admexperts {}
+body#admexperts table { width:100% }
+body#admexperts table#experts img { max-width:36px }
+body#admexperts table#experts td { font-size:11px;padding:4px 8px 0px 8px!important; }
+body#admexperts table#experts td.i a { display:inline-block;font-size:16px;padding-left:4px; }
+body#admexperts table#experts .label { font-weight:normal }
+body#admexperts #info { float:left;width:53%;border-right:solid 1px #d3d3d3;padding-right:20px;margin-right:20px }
+body#admexperts #info .links { float:right;line-height:10px;margin-bottom:20px; }
+body#admexperts #info img.pic { clear:right;float:right;max-width:80px;max-height:80px }
+body#admexperts fieldset .control-label { width:64px;font-weight:bold }
+body#admexperts fieldset .controls { margin-left:74px; }
+body#admexperts #bookme { float:right;width:540px; }
+body#admexperts .rb-group label { float:left;margin:5px 6px 0px 0px }
+body#admexperts .rb-group input { float:left;margin:9px 26px 0px 0px }

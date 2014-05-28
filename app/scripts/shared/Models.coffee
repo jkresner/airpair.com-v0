@@ -103,6 +103,11 @@ class exports.Request extends BB.SublistModel
         call.hasRecording = call.recordings? && call.recordings.length > 0
         c.push call
     c
+  roomName: (expertId, primaryTag) ->
+    customer = @contact 0
+    {expert} = _.find @get('suggested'), (s) -> s.expert._id == expertId
+    primaryTag = @get('tags')[0].short if !primaryTag?
+    "#{customer.firstName}+#{expert.firstName} {#{primaryTag}}"
 
 class exports.Expert extends BB.SublistModel
   urlRoot: '/api/experts'

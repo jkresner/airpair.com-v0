@@ -1,0 +1,155 @@
+@import 'variables';
+
+/* typography */
+
+body {
+  font-size: 18px;
+  line-height: 30px;
+  letter-spacing: 1px;
+}
+
+h1 {
+  font-weight: 300;
+  font-size: 42px;
+  letter-spacing: 1px;
+}
+
+h2 { 
+  font-size: 24px;
+  font-weight: bold;
+  line-height: 36px; 
+  margin: 0 0 10px 0;
+}
+
+h6 {
+  font-size: 13px;
+  color: 999999;
+  font-weight: normal;
+  margin: 15px 0 10px;
+}
+
+p {
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 26px;
+  color: #333333;
+  margin: 0 0 10px 0;
+
+}
+
+a {
+  transition: color 0.5s;
+}
+
+/* end typography */
+
+
+/* nav bar */
+
+.head-wrap { 
+background-image: url('/images/home/header-bg.jpg');
+background-color: rgba(255,255,255,0.5);
+background-size: 100%;
+height: 100px;
+box-shadow: $box-shadow;
+margin: 0 0 80px;
+border-bottom: solid 1px #808080;
+}
+
+.genesis-nav-menu {
+  margin-top: 7px;
+  li.menu-item {
+    padding-bottom: 30px !important;
+  }
+}
+
+.site-header .genesis-nav-menu a {
+  color: #1D1D1D;
+  font-size: 16px;
+  margin-left: 30px;
+}
+
+.site-header .genesis-nav-menu a:hover,.nav-secondary a:hover {
+  color: white;
+}
+
+.site-title a {
+  background: url('/images/logos/airpair.png') no-repeat;
+}
+
+ul.nested-menu {
+  text-align: left;
+  margin: 20px;
+  padding: 5px 0;
+  background: #ffffff;
+  width: 200px;
+  position: absolute;
+  display: none;
+  z-index: 7;
+  box-shadow: $box-shadow;
+  margin-top: 27px;
+
+  li {
+    padding: 0 20px;
+    transition: background 0.5s;
+  }
+
+  li:hover {
+    background: $primary-color;
+  }
+
+
+  li a {
+    color: #5d5d5d !important;
+    margin-left: 0 !important;
+    font-size: 13px !important;
+  }
+  li:hover > a {
+    color: white !important;
+  }
+}
+
+li:hover > ul.nested-menu {
+  display:block;
+}
+
+a:hover {
+	text-decoration: none;
+}
+
+ul {
+	list-style: none;
+	padding: 0;
+}
+
+/* end nav bar */
+
+
+/* epik overrides */
+.check-list li {
+  background-image: url(images/css/checkmark.png);
+}
+
+
+/* airpair customization */
+.site-title a {
+  background:url('/images/logos/airpair.png') no-repeat;
+  width:225px;
+  height:60px;
+  display:block;
+  margin-top: 5px;
+  background-size: 180px;
+}
+
+/* clearfix */
+ul:before, li:before, ul:after, li:after, .cf:before,
+.cf:after {
+  content:"";
+  display:table;
+}
+ul:after, li:after, .cf:after {
+  clear:both;
+}
+ul, li, .cf {
+  zoom:1;
+}

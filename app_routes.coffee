@@ -8,9 +8,9 @@ module.exports = (app) ->
   # login / auth routes
   require('./lib/auth/base')(app)
 
-  renderHome = (req, r, next) ->
-    if req.isAuthenticated() then next()
-    else r.sendfile "./public/home.html"
+  renderHome = (req, r, n) ->
+    if req.isAuthenticated() then n()
+    else render('home')(req, r, n)
 
   app.get '/', renderHome, render 'dashboard'
   app.get '/yc', file 'yc'
@@ -32,7 +32,6 @@ module.exports = (app) ->
   # admin pages
   app.get '/adm/tags*', authd, adm, render 'adm/tags'
   app.get '/adm/marketingtags', authd, adm, render 'adm/marketingtags'
-  app.get '/adm/csvs*', authd, adm, render 'adm/csvs'
   app.get '/adm/orders*', authd, adm, render 'adm/orders'
   app.get '/adm/companys*', authd, adm, render 'adm/companys'
   app.get '/adm/experts*', authd, adm, render 'adm/experts'

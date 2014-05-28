@@ -14,8 +14,7 @@ module.exports =
       resp.sendfile "./public/#{fileName}.html"
 
   render: (fileName, propList) ->
-    propList = propList || []
-
+    propList = [] if !propList?
     (req, resp, next) ->
 
       vdSvc = new ViewDataSvc req.user
@@ -47,4 +46,3 @@ module.exports =
             resp.render "#{fileName}.html", data
 
         vdSvc[fnName].apply vdSvc, args
-

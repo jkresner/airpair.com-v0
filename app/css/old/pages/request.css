@@ -1,0 +1,51 @@
+body#requestpage .site-inner { min-height:900px }
+body#requestpage nav.nav-header { display:none }
+body#requestpage article.entry { padding-bottom:0; }
+body#requestpage .entry-meta { text-transform:none; }
+body#requestpage .entry-author { font-weight:bold;color:#000000;text-transform:uppercase; }
+body#requestpage .entry-content { padding:20px 10px 10px 10px  }
+body#requestpage .entry-content p { margin-bottom:10px;padding:3px; }
+body#requestpage span.alignleft img { width:65px; }
+body#requestpage .signin { padding:30px 10px 70px 100px; }
+body#requestpage h4 { font-weight:400 }
+body#requestpage .pricing th { font-size:13px;border:solid 1px white }
+body#requestpage .pricing td { width:20%;font-size:10px;background:#d3d3d3;text-align:center;line-height:15px;border:solid 1px white;padding:5px 3px; }
+body#requestpage .pricing td div { font-size:14px;font-weight:bold }
+body#requestpage .pricing td em { display:block }
+body#requestpage .entry-footer p { margin:40px 0 10px 0; }
+body#requestpage .entry-footer em { margin:30px 5px 10px 5px;color:#999999 }
+body#requestpage .entry-footer em { margin:30px 5px 10px 5px;color:#999999 }
+body#requestpage .entry-footer .button { margin-top:10px;background-color: #CE5323;width:200px; }
+body#requestpage .entry-footer .button-gray { background-color:gray;width:180px; }
+body#requestpage .controls { margin-bottom:15px; }
+body#requestpage .muted { font-size:12px;font-style:italic;color:gray; }
+body#requestpage .individual { font-size:12px;margin-left:10px; }
+body#requestpage .noavatar { text-align:center;margin-top:10px;font-size:11px; }
+body#requestpage .pic-group { float:right;width:180px;padding:10px 40px 0 0px; }
+body#requestpage .pic-group img { height:144px }
+body#requestpage .pic-group .controls { margin-bottom:0; }
+body#requestpage .personal-info-group { float:left;width:440px; }
+body#requestpage #infoForm { padding:0px 25px 10px 25px }
+body#requestpage #companyInfo { width:640px;clear:both;border-top:solid 1px #d3d3d3;padding-top:20px;margin-top:80px; }
+body#requestpage #companyInfo input {  }
+body#requestpage #companyInfo textarea { width:100%;height:140px; }
+body#requestpage #requestForm { }
+body#requestpage #requestForm textarea { width:98%;height:140px; }
+body#requestpage #requestForm .error-message { clear:both;font-size:12px  }
+body#requestpage #requestForm .pricing-group { height:86px;margin:22px 0 0px 0 }
+body#requestpage #requestForm .pricing-group em { font-style:normal; }
+body#requestpage #requestForm .pricing-group em.selected { font-weight:bold;color:#CC523E; }
+body#requestpage .rb-group { margin:18px 8px 0 0;display:block;height:20px; }
+body#requestpage .rb-group label { float:left;margin-right:38px;color:gray; }
+body#requestpage .rb-group input { float:left;margin-top:7px;margin-right:4px;width:20px; }
+body#requestpage .rb-group .error-message { display:block; }
+body#requestpage #requestForm .availabilty { float:right;width:34%; }
+body#requestpage #requestForm .availabilty input { width:120px; }
+body#requestpage #requestForm #tagNewForm { display:none; }
+body#requestpage #requestForm #tagNewForm a { margin-left:5px; }
+body#requestpage #requestForm .stackoverflow { background: none; }
+body#requestpage #requestForm .stackoverflow input { width: 175px; }
+body#requestpage #requestForm .stackoverflow img { position: relative; top: -6px; border-radius: 4px; }
+body#requestpage #requestForm .budgetExplanation { float:right;margin-right:14px;display:none;padding-top:2px;font-size:14px; }
+body#requestpage #requestForm .budgetExplanation b { font-style:italic;color:#CC523E; }
+body#requestpage .ap-team p { padding:0 3px; }
