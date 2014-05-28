@@ -14,10 +14,10 @@ h1 {
   letter-spacing: 1px;
 }
 
-h2 { 
+h2 {
   font-size: 24px;
   font-weight: bold;
-  line-height: 36px; 
+  line-height: 36px;
   margin: 0 0 10px 0;
 }
 
@@ -46,9 +46,8 @@ a {
 
 /* nav bar */
 
-.head-wrap { 
-background-image: url('/images/home/header-bg.jpg');
-background-color: rgba(255,255,255,0.5);
+.head-wrap {
+background-color: rgba(255,255,255,0.75);
 background-size: 100%;
 height: 100px;
 box-shadow: $box-shadow;
