@@ -2,7 +2,7 @@
   "author": "Jonathon Kresner",
   "name": "airpair.com",
   "description": "site hosted at airpair.com",
-  "version": "0.6.2.1",
+  "version": "0.7.0",
   "homepage": "http://www.airpair.com/",
   "repository": {
     "type": "git",
