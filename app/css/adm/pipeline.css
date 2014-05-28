@@ -1,0 +1,112 @@
+body#pipeline #filters { float:right;display:block;padding:0px; }
+body#pipeline .table-events td { padding:0 }
+body#pipeline p {  margin:10px 5px 12px 5px }
+
+body#pipeline #requests a { display:block; }
+body#pipeline #requests a.edit { width:50px; }
+body#pipeline #requests img { max-width:32px;border-style:solid;border-width:1.5px;float:left;margin-right:5px;padding:1px; }
+body#pipeline #requests td { font-size:11px;line-height:15px }
+body#pipeline #requests img { width:32px;height:32px; }
+
+body#pipeline #tagNewForm { display:none; }
+body#pipeline #requests .r { width:110px; }
+body#pipeline #requests .o { width:90px; }
+body#pipeline #requests .c { width:220px; }
+body#pipeline #requests .t { width:380px; }
+body#pipeline #requests .t a { display:inline; }
+body#pipeline #requests .s { width:280px; }
+
+body#pipeline a.ok span { background-color:#5cb85c;margin:1px 0 0 -1px;font-weight:normal; }
+body#pipeline a.slow { color:#f0ad4e }
+body#pipeline a.slow span { background-color:#f0ad4e;margin:1px 0 0 -1px;font-weight:normal; }
+body#pipeline a.overdue { color:#F22222 }
+body#pipeline a.overdue span { background-color:#F22222;margin:1px 0 0 -1px;font-weight:normal; }
+
+body#pipeline #requests .label-tags { font-weight:normal;margin:2px 0; }
+body#pipeline #request textarea { width:98%;height:100px;font-size:11px; }
+body#pipeline #request legend {margin-bottom:2px;line-height:16px;background:black;padding:4px;color:white;font-size:15px;}
+body#pipeline #request .colA { width:49%;float:left }
+body#pipeline #request .colB { width:49%;float:right }
+body#pipeline #request #reqBudget { width:50px; }
+body#pipeline #request #reqPricing { width:140px; }
+body#pipeline #request .halfButtons .btn:first-child { width: 24px;margin-right:3px}
+body#pipeline #request .halfButtons .btn:last-child { width: 56px; }
+
+body#pipeline #farm {}
+body#pipeline #farm hr { margin:20px 0px;clear:both; }
+body#pipeline #farm .zocial { float:right;clear:left;margin-top:0px;padding:0 4px 0 0;font-size:10px }
+body#pipeline #farm input.url { font-size:11px;width:97%;height:16px;padding:3px 1px 3px 3px;border-radius:0 }
+body#pipeline #farm input { border-radius:0;float:left;width:28% }
+body#pipeline #farm textarea { font-size:10px;border-radius:0;padding:1px;float:left;width:68%;line-height:16px }
+body#pipeline #farm .twocol { overflow:auto;width: 100% }
+body#pipeline #farm .twocol .lcol { width:35%;float:left; }
+body#pipeline #farm .twocol .lcol input { width:100%; }
+body#pipeline #farm .twocol .rcol { width:58%;float:right;margin-right:34px; }
+body#pipeline #farm #coldMailBody { font-size:13px;color:#222;background-color:white;padding:10px;border-radius:5px; }
+body#pipeline #farm #coldMailBody a { color:#15c;text-decoration:underline; }
+body#pipeline #room pre { float:right;width:59%;font-size:10px;line-height:1.1; }
+body#pipeline #room div.new { width:65%;float:left; }
+body#pipeline #room div.existing { width:25%;float:right; }
+body#pipeline #room #members label.control-label { float:left;width:200px; }
+body#pipeline #room #members input { width:200px; }
+body#pipeline #room #members div.controls { clear:both; }
+
+
+body#pipeline #company-controls { font-weight:bold;margin-bottom:0 }
+body#pipeline dl { margin-bottom:6px }
+body#pipeline dt { padding:0px 0px 4px 4px;font-weight:normal }
+body#pipeline dd { padding:0px 0px 4px 4px; }
+body#pipeline #events { font-size:10px; }
+body#pipeline .contact { padding-top:10px }
+body#pipeline .contact div { float:left;width:40px;margin-right:20px;text-align:center; }
+body#pipeline .contact img { float:left;margin:4px 0px 8px 0px; }
+body#pipeline .contact table { font-weight:normal }
+body#pipeline .contact table th { width:80px; }
+body#pipeline .contact .email { width:100px;padding:1px 7px;text-align:left }
+body#pipeline #suggestions { margin-bottom:30px;}
+body#pipeline #suggestions .sortBy { display: inline-block; margin-left: 10px;}
+body#pipeline #suggestions .sortBy label { display: inline; margin-right: 10px;}
+body#pipeline #suggestions .sortBy input { vertical-align: baseline; margin-right: 5px;}
+body#pipeline #suggestions .nav-pills { padding-top:10px }
+body#pipeline .suggestion { float:left;margin:0px 3px 6px 0px;line-height:18px;font-size:10px;border:none }
+body#pipeline .suggestion .pic { width:40px;margin:2px;float:left; }
+body#pipeline .suggestion .deets { overflow:hidden;height:76px }
+body#pipeline .suggestion .fullName { font-size:9px;line-height:12px;max-height:24px;overflow:hidden; }
+body#pipeline .suggestion .links { width:50%;margin:0 4px 0px 0px;float:right; }
+body#pipeline .suggestion .tags { padding:1px 2px!important;clear:both;height:100px;overflow:hidden }
+body#pipeline .suggestion .label-tag { padding:0px 2px 1px 2px;font-size:9px;margin-bottom:1px }
+body#pipeline .suggestion .add { padding:0px 5px;width:32px;line-height:13px;margin:-21px 0 0 0;height:27px; }
+body#pipeline .suggestion a.em { width:28px;height:28px;margin:0;display:inline-block }
+body#pipeline .suggestion a.ap { width:28px;height:28px;margin:0;display:inline-block }
+body#pipeline .suggested { border-top:solid 0.5px #d3d3d3;margin:5px; }
+body#pipeline .suggested hr { margin:0; }
+body#pipeline .suggested .pic { width:40px;height:40px;margin:0;float:left; }
+body#pipeline .suggested .deets { background-color:#CC523E;color:white;font-size:11px;float:right;width:500px }
+body#pipeline .suggested .names { padding:0px 0 0 4px;float:left;overflow:hidden; }
+body#pipeline .suggested .links { margin:0 4px 0px 0px;height:20px; }
+body#pipeline .suggested .links a { float:left;margin-right:2px; }
+body#pipeline .suggested .links .icon { width:18px;height:18px;margin-right:2px;background-size:16px 16px;background-color:black;background-position:1px 1px }
+body#pipeline .suggested .links .zocial:before { font: 60%/1.5 zocial; }
+body#pipeline .suggested .links i { color:white;margin:-7px 0 0 2px;display:inline-block;font-style:none;padding:0; }
+body#pipeline .suggested .links i:hover { text-decoration:underline; }
+body#pipeline .suggested .tags { margin-top:-1px;padding:0px 2px;float:right;max-width:275px;max-height:40px;text-align:right;overflow:hidden; }
+body#pipeline .suggested .tags .label-tag { margin:-2px 1px 0 1px; }
+body#pipeline .suggested .label-tag { padding:0px 2px 1px 2px;font-size:9px;float-right }
+body#pipeline .suggested .email { float:right }
+body#pipeline .suggested .delete { float:right }
+body#pipeline .suggested .status { float:left;margin:2px 0px 6px 0px;width:90px; }
+body#pipeline .suggested .btn { margin:3px 0px 0 3px;padding:0px 7px;line-height:15px }
+body#pipeline .suggested .rate { height:30px;width:55px;float:left;margin:0;padding:4px 0;font-size:14px; }
+body#pipeline .suggested .rate em { display:block;color:gray;font-size:11px;font-style:normal; }
+body#pipeline .suggested p { clear:both;font-size:11px; }
+body#pipeline .suggested .btn-schedule { float:left;background-color:rgb(70, 136, 71) }
+body#pipeline .suggested .btn-room { float:left }
+body#pipeline .call { float:left;width:70px;margin:10px 5px 12px 5px;text-align:center; }
+body#pipeline .call img { height:70px; width:70px; }
+body#pipeline .call .dateTime { width:70px;font-size:10px;clear:both;display:block;background:#d3d3d3 }
+body#pipeline .call label { width:70px;font-size:10px;clear:both;display:block;margin-bottom:0;line-height:14px;background:#d3d3d3 }
+body#pipeline .call a:first-child span { display: none; }
+body#pipeline .call a:first-child:hover span { background-color: white;display: initial;opacity: 0.8; position: absolute; width: 70px; }
+body#pipeline .call .youtubeThumbnail { border-top: 1px solid yellow; }
+body#pipeline .call .btn-hangout { padding:15px 0;height:70px;background-color:black }
+body#pipeline .call .btn-hangout img { height:30px;width:72px; }

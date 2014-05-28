@@ -1,0 +1,18 @@
+.label-tag { padding:4px;background-color:#99923F;font-weight:normal;margin-bottom:4px }
+.label-status { padding:4px; }
+.label-received { background-color:#3A87AD }
+.label-incomplete { background-color:#b94a48 }
+.label-review { background-color:#468847 }
+.label-scheduled { background-color:#333333 }
+.label-complete { background-color:#999999 }
+.label-canceled { background-color:#999999 }
+
+.label-waiting { background-color:#3A87AD }
+.label-abstained { background-color:#b94a48 }
+.label-unwanted { background-color:#b94a48 }
+.label-available { background-color:#468847 }
+
+.border-waiting { border: 1px solid #3A87AD }
+.border-abstained { border: 1px solid #b94a48 }
+.border-unwanted { border: 1px solid #b94a48 }
+.border-available { border: 1px solid #468847 }

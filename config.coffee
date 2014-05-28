@@ -10,14 +10,23 @@ exports.config =
     base: '/'
     run: yes
 
+  plugins:
+    sass:
+      options:
+        includePaths: ['app/assets/css']
+
+  sourceMaps: false
+
+
   overrides:
+    dev:
+      sourceMaps: true
     test:
       paths:    watched: ['app','vendor', 'test','lib','mail']
       plugins:  autoReload: enabled: false
       server:   { port: 4444, env: 'test' }
     prod:
       optimize: true
-      sourceMaps: false
 
 
   files:
@@ -46,15 +55,33 @@ exports.config =
           'vendor/scripts/jquery.timepicker.js'
         ]
     stylesheets:
+      defaultExtension: 'scss'
       joinTo:
-        'stylesheets/app.css': /^(app|vendor)/
+        'css/ap.css': /(css\/ap|css\/shared|css\/old)/
+        'css/adm.css': /(css\/adm|css\/shared)/
         'test/stylesheets/test.css': /^test/
       order:
         before: [
-          'vendor/styles/normalize.css',
-          'vendor/styles/bootstrap.css'
+          'vendor/css/adm/normalize.css',
+          'vendor/css/adm/bootstrap.css',
+          'vendor/css/adm/bootstrap-responsive.css',
+          'vendor/css/ap/epik.css',
+          'vendor/css/shared/jquery.datepicker.css',
+          'vendor/css/shared/jquery.timepicker.css',
+          'vendor/css/shared/bootstrap-typeahead.css',
+          'app/css/shared/alert.scss',
+          'app/css/shared/base.scss',
+          'app/css/shared/form.scss',
+          'app/css/shared/icon.scss',
+          'app/css/shared/label.scss',
+          'app/css/shared/table.scss',
+          'app/css/shared/tag.scss',
+          'app/css/adm/base.scss',
+          'app/css/ap/base.scss',
+          'app/css/ap/snippets.scss',
+
         ]
-        after: ['vendor/styles/helpers.css']
+        after: []
     templates:
       joinTo:
        'javascripts/adm.js': /(^mail|scripts\/adm|scripts\/shared)/

@@ -1,0 +1,208 @@
+@import '../variables';
+
+/******************** banner *******************/
+ body#home { 
+
+  .site-container {
+    background: transparent;
+  }
+
+  .home-banner {
+    position: absolute;
+    top: 0;
+    z-index: -5;
+    min-width: 1700px;
+    left: 50%;
+    -webkit-transform: translate(-50%);
+  }
+
+  .home-feature-bg {
+    padding-bottom: 145px;
+  }
+
+  .nav-secondary {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.580px);
+    width: 100%;
+    padding: 20px 0;
+    margin-top: 580px;
+  }
+
+  .nav-secondary a {
+    color: #4d4d4d;
+  }
+
+  .nav-secondary a:hover {
+    color: white;
+  }
+
+  .nav-secondary li {
+    padding-bottom: 0px;
+  }
+
+  #fold .wrap { 
+    margin-bottom:30px; 
+    text-align: center; 
+    padding: 80px 0 0;
+  }
+
+  #fold h1 {
+    color: white;
+    opacity: 0.9;
+  }
+
+  #fold p {
+    width: 800px; 
+    margin: 0 auto;
+    margin-bottom: 40px; 
+    margin-top: 20px;
+    color: white;
+    opacity: 0.8;
+    letter-spacing: 1px;
+  }
+
+  #fold a.login-now {
+    color: white;
+    text-decoration: underline;
+  }
+
+  #fold a.login-now:hover {
+    color: #000000;
+  }
+
+  #fold a.button { background-color:$primary-color; opacity: 0.9; margin:30px 0 0 0; padding: 30px 50px;}
+  #fold .cta-group .already-a-member { float: right; font-size: 14px; }
+  #fold .cta-group .already-a-member a { color: $primary-color; }
+
+/******************** end banner *******************/
+
+/******************** customers *******************/
+
+  .section-dark { 
+    padding-bottom:30px;
+    background: #3f3f3f;
+  }
+
+  h2.header-dark {
+    padding: 25px 0;
+    width: 100%;
+    background: #323232;
+    border-top: solid 2px #3f3f3f;
+    color: #BFBBBB;
+    font-weight: 300;
+    text-align:center;
+
+  }
+
+
+
+
+  #customers span { width:140px;height:120px;margin-right:30px; }
+  #customers h4 { font-size:28px;margin:2px 0 18px 0; }
+  #customers section { box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);background: none repeat scroll 0 0 #F2F2F2; }
+  #customers a button { margin:0;padding:5px 12px;width:100%;font-size:0.875rem }
+  #customers a:hover button { background-color:$primary-color }
+  #customers div.head { float:right;width:40px;height:40px;margin:4px;border-radius:10px }
+  #experts { padding-bottom:40px; }
+  #experts main.content { width:100%; }
+  #experts article { width:200px;margin:0px 14px 40px 14px!important;overflow:hidden; }
+  #experts article div { padding:0 20px;position:relative;height:170px; }
+  #experts article span { background-position:center;background-color:white;opacity:0;width:200px;height:170px;display:block;position:absolute;background-repeat:no-repeat; }
+  #experts article:hover a { text-decoration:none!important; }
+  #experts article:hover span { opacity:1;transition:all 0.5s ease 0s; }
+  #experts article p { font-weight:300; }
+  #experts article h3 { color:black;margin:10px 0;font-size:1.125rem;line-height:24px; }
+  #experts article:hover h3 { color:$primary-color }
+  #experts article em { display:block;font-style:normal;font-weight:700 }
+  #experts article img { width:200px;height:200px  }
+  #experts article:hover img { opacity:0.25;transition:all 0.5s ease 0s; }
+  #experts article button { margin:0 0 20px 0;padding: 4px 12px;width:100%;font-size:0.875rem }
+  #experts article:hover button { background-color:$primary-color }
+  .trackExpertLogin { background-color:$primary-color;margin:20px auto;display:block;width:540px;text-align:center }
+  #cost { padding:20px; }
+  #cost .plan-col { width:20%; }
+  #cost .plan-col-popular { width:20%; }
+  #cost a:hover { color:black; }
+  #cost a:hover .plan-col { background:#D1F5B3; }
+  #cost a:hover .plan-col-popular { background:#D1F5B3; }
+  #cost .plan-button { background:none repeat scroll 0 0 #303236;border-radius:$border-radius-small; color:#FFFFFF;font-size:18px;font-weight:400;padding:6px 25px 8px; }
+  #cost a:hover .plan-button { background:$primary-color; }
+
+  #partners .button { background-color:$primary-color;margin:10px auto 20px auto;display:block;width:540px;text-align:center;margin-bottom:60px; }
+}
+
+@media (max-width:1140px) {
+  body#home #menu-technologies { display:none }
+  body#home aside.header-widget-area { width:720px!important; }
+  body#home #menu-services .problem-solving { display:none }
+  body#home #fold img { width:320px }
+  body#home #fold h1 { font-size:36px }
+  body#home #fold p { font-size:28px }
+  body#home #fold p.about { font-size:24px }
+  body#home .felienne-hermans { display:none; }
+}
+
+@media (max-width:1024px) {
+  body#home #fold h1 { font-size:32px }
+  body#home #fold img { width:280px }
+  body#home #fold-action { margin-left:0!important }
+  body#home aside.header-widget-area { width:580px!important;padding:5px 0 0 0; }
+  body#home #menu-services .code-review { display:none }
+  body#home #experts article { width:188px; }
+  body#home #experts article h3 { font-size:1rem }
+  body#home #experts article span { width:180px }
+}
+
+@media (max-width:880px) {
+  body#home aside.header-widget-area { width:480px!important; }
+  body#home .menu-services li { height:35px; }
+  body#home .menu-services a { font-size:15;font-weight:800 }
+  body#home #menu-services .training{ display:none }
+  body#home #fold img { display:none }
+  body#home #fold #about { float:none;width:100% }
+  body#home #fold h1 { font-size:40px;margin-top:0!important; }
+  body#home #fold p { font-size:32px }
+  body#home #fold p.about { font-size:28px }
+  body#home #fold iframe { display:none }
+}
+
+@media (max-width:760px) {
+  body#home aside.header-widget-area { display:none!important }
+}
+
+@media (max-width:640px) {
+  body#home .title-area { width:100%!important; }
+  body#home .site-title { width:200px;margin:auto; }
+  body#home #fold { text-align:center }
+  body#home #fold h1 { font-size:34px }
+  body#home #fold p { font-size:28px }
+  body#home #fold p.about { font-size:24px }
+  body#home #fold img { display:block;float:none;width:70%;margin:20px auto 10px auto!important; }
+  body#home #fold-action { width:100%!important;margin:30px 0 10px 0!important; }
+  body#home #experts-action { width:90%!important;margin:30px 15px 10px 15px!important; }
+  body#home #cost { display:none; }
+  body#home #experts article { width:200px;margin:28px!important }
+  body#home #experts article h3 { font-size:1rem }
+  body#home #experts article span { width:200px }
+}
+
+@media (max-width:320px) {
+  body#home #fold-action { padding-left:6px!important;padding-right:6px;font-size:14px; }
+  body#home #experts-action { padding-left:6px!important;padding-right:6px;font-size:14px; }
+  body#home #customers span.alignleft { width:100%;margin-right:0;text-align:center;height:inherit; }
+  body#home #customers img { margin:15px auto!important; }
+  body#home #customers button { margin-top:15px!important; }
+}
+
+
+/*************** clobbering epik stylesheet ***************/
+
+.home-feature-bg {
+  border: 0px;
+}
+
+.home-feature-bg-alt {
+background: #f2f2f2;
+}
+
+/*************** end clobbering epik stylesheet ***************/
