@@ -91,7 +91,7 @@ module.exports = class RatesService
     rake = expert.bookMe.rake
     rake = 10 if !rake?
     total = request.budget
-    $log 'bookme.calc', pricing, rake, total, weight, expert.bookMe
+    # $log 'bookme.calc', pricing, rake, total, weight, expert.bookMe
     r = bookMe: true
     r.opensource =
       total: total+weight.opensource

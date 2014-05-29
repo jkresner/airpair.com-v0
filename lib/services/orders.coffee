@@ -24,7 +24,6 @@ module.exports = class OrdersService extends DomainService
   rates: new RatesSvc()
 
   constructor: (user) ->
-    $log 'constructor', user
     @requestSvc = new RequestService user
     @settingsSvc = new SettingsSvc user
     super user
@@ -102,8 +101,6 @@ module.exports = class OrdersService extends DomainService
 
 
   confirmBookme: (request, expertReview, callback) ->
-    $log 'confirmBookme', @requestSvc.usr
-    $log 'confirmBookme', @requestSvc.usr._id
     @settingsSvc.getByUserId request.userId, (ee, settings) =>
       if ee then return callback ee
       pm = _.find settings.paymentMethods, (p) -> p.type == 'stripe'
@@ -121,7 +118,6 @@ module.exports = class OrdersService extends DomainService
           contacts: request.company.contacts
 
         # expertBookMe = { rake: 10 }
-        $log 'going to pick'
 
         toPick = ['_id','userId','name','username','rate','email','pic','paymentMethod']
         order.lineItems.push

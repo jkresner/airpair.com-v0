@@ -9,8 +9,8 @@ exports.Request = class Request extends Shared.Request
   getFarmData: ->
     hrRate: @get('budget') - @get('base')[@get('pricing')]
     month: new moment().format("MMM").toLowerCase()
-    term: encodeURIComponent @tagsString()
-    tagsString: @tagsString()
+    term: encodeURIComponent @tagsString(true)
+    tagsStr: @tagsString(true)
 
 
 exports.Order = Shared.Order
