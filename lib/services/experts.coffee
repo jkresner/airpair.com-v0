@@ -42,8 +42,10 @@ module.exports = class ExpertsService extends DomainService
             if coupon.code == code
               r.bookMe.code = code
               r.bookMe.rate = coupon.rate
-        delete r.bookMe.rake  # don't show rake to customers
         delete r.bookMe.coupons  # don't show coupons to customers
+        # turns out we need the rake for later in the flow... need to look at this
+        # for a nicer solution
+        # delete r.bookMe.rake  # don't show rake to customers
       cb e, r
 
 

@@ -7,7 +7,6 @@ class RequestApi extends Api
   # logging:on
 
   Svc: require './../services/requests'
-  oSvc: new OrdersSvc()
 
   routes: (app, route) ->
     app.get    "/api/#{route}", @loggedIn, @ap, @list
@@ -20,7 +19,6 @@ class RequestApi extends Api
     app.post   "/api/#{route}", @loggedIn, @ap, @create
     app.post   "/api/#{route}/book", @loggedIn, @ap, @createBookme
     app.delete "/api/#{route}/:id", @admin, @ap, @delete
-
 
   list: (req) => @svc.getByUserId req.user._id, @cbSend
   active: (req) => @svc.getActive @cbSend
@@ -44,7 +42,7 @@ class RequestApi extends Api
       if Roles.isRequestOwner(usr, r)
         next new Error 'Customer update suggestion not implemented'
       else if Roles.isRequestExpert(usr, r) && r.status == 'pending'
-        @oSvc.confirmBookme r, usr, @data, @cbSend
+        new OrdersSvc(@svc.usr).confirmBookme r, @data, @cbSend
       else if Roles.isRequestExpert(usr, r)
         @svc.updateSuggestionByExpert r, @data, @cbSend
       else if @data.expert._id? && !Roles.isRequestExpert(usr, r)

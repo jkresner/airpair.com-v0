@@ -52,11 +52,13 @@ module.exports = class RequestsService extends DomainService
         if Roles.isRequestExpert(@usr, r) && !Roles.isAdmin(@usr, r)
           @_addViewEvent r, "expert view"
           r = Data.select r, 'associated'
+          # $log 'expert view', r
           @rates.addRequestSuggestedRates r
         else if Roles.isRequestOwner @usr, r
           @_addViewEvent r, "customer view"
           @rates.addRequestSuggestedRates r, true
         else if Roles.isAdmin @usr
+          # $log 'admin view', r
           @rates.addRequestSuggestedRates r, true
         else if @usr?
           @_addViewEvent r, "unassigned view"
@@ -179,6 +181,8 @@ module.exports = class RequestsService extends DomainService
 
 
   updateSuggestionByExpert: (request, expertReview, cb) =>
+    $log 'updateSuggestionByExpert'
+    $log 'updateSuggestionByExpert', request._id, expertReview._id
     # TODO, add some validation!!
     # if expertReview.agree
     # @settingsSvc.addPayPalSettings usr._id, expertReview.payPalEmail, (e, r) =>
