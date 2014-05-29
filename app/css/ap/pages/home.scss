@@ -84,11 +84,10 @@
   }
 
   #fold-action:hover {
-    color: #FC5E38!important;
-    background-color: #000000!important;
+    background-color: #FC4126 !important;
   }
 
-  #fold a.button { background-color:$primary-color; opacity: 0.9; margin:30px 0 0 0; padding: 30px 50px;}
+  #fold a.button { background-color:$primary-color; opacity: 0.9; margin:30px 0 0 0; padding: 30px 50px; transition: all 0.5s;}
   #fold .cta-group .already-a-member { float: right; font-size: 14px; }
   #fold .cta-group .already-a-member a { color: $primary-color; }
 
@@ -128,8 +127,8 @@
   #experts article span { background-position:center;background-color:white;opacity:0;width:200px;height:170px;display:block;position:absolute;background-repeat:no-repeat; }
   #experts article:hover a { text-decoration:none!important; }
   #experts article:hover span { opacity:1;transition:all 0.5s ease 0s; }
-  #experts article p { font-weight:300; }
-  #experts article h3 { color:black;margin:10px 0;font-size:1.125rem;line-height:24px; }
+  #experts article p { font-weight:300; height: 75px;}
+  #experts article h3 { color:black;margin:10px 0;font-size:16px;line-height:24px; }
   #experts article:hover h3 { color:$primary-color }
   #experts article em { display:block;font-style:normal;font-weight:700 }
   #experts article img { width:200px;height:200px  }
@@ -141,10 +140,12 @@
   #cost .plan-col { width:20%; }
   #cost .plan-col-popular { width:20%; }
   #cost a:hover { color:black; }
-  #cost a:hover .plan-col { background:#D1F5B3; }
-  #cost a:hover .plan-col-popular { background:#D1F5B3; }
+  #cost a:hover .plan-col { background: #FFF5F2; }
+  #cost a:hover .plan-col-popular { background:#FFF5F2; }
   #cost .plan-button { background:none repeat scroll 0 0 #303236;border-radius:$border-radius-small; color:#FFFFFF;font-size:18px;font-weight:400;padding:6px 25px 8px; }
   #cost a:hover .plan-button { background:$primary-color; }
+  #cost .plan-list li:first-child { font-size: 15px;}
+
 
   #partners .button { background-color:$primary-color;margin:10px auto 20px auto;display:block;width:540px;text-align:center;margin-bottom:60px; }
 }
