@@ -14,7 +14,6 @@ tagsStringNobraces = (tags,limit) ->
       ts += " and #{t[i].name}" # and instead of & to fix urls
     else
       ts += " #{t[i].name}"
-  $log 'return no braces'
   ts
 
 
