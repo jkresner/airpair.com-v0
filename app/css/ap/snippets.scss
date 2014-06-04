@@ -3,7 +3,17 @@
 ul.snippet-full-width {
 	li {
 		margin-bottom: 20px;
+		cursor: pointer;
 	}
+
+	li:hover h2 {
+  	color: $primary-color;
+	}
+
+	h2 {
+		transition: all 0.5s;
+	}
+
 	.article-author {
 		float: left;
 		padding-top: 25px;
@@ -28,21 +38,23 @@ ul.snippet-full-width {
 		float: right;
 		background: #ffffff;
 		box-shadow: $box-shadow;
+		transition: all 1s;
 	}
 	.snippet-content {
 		width: 670px;
 		float: right;
-		padding: 25px 35px; 
+		padding: 25px 35px;
 		border-left: solid 1px #cccccc;
 	}
 	.snippet-logo {
 		text-align: center;
 		width: 190px;
-		height: 190px;
+  	height:100%
 	}
+	$value: 100%;
 	img.article-logo {
 		width: 120px;
-		margin-top: 33%;
+		margin: 33% auto;
 	}
 	a.article-link {
 		font-weight: bold;
