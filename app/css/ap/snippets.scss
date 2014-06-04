@@ -3,15 +3,15 @@
 ul.snippet-full-width {
 	li {
 		margin-bottom: 20px;
+		cursor: pointer;
 	}
 
-
-	li:hover div {
-  	background:black;
+	li:hover h2 {
+  	color: $primary-color;
 	}
 
-	li:hover p {
-  	color:white
+	h2 {
+		transition: all 0.5s;
 	}
 
 	.article-author {
@@ -38,6 +38,7 @@ ul.snippet-full-width {
 		float: right;
 		background: #ffffff;
 		box-shadow: $box-shadow;
+		transition: all 1s;
 	}
 	.snippet-content {
 		width: 670px;
@@ -50,6 +51,7 @@ ul.snippet-full-width {
 		width: 190px;
   	height:100%
 	}
+	$value: 100%;
 	img.article-logo {
 		width: 120px;
 		margin: 33% auto;
