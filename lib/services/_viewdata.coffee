@@ -74,6 +74,8 @@ module.exports = class ViewDataService
     new OrdersSvc(@usr).getAll (e, orders) =>
       cb e, -> { orders }
 
+  ordersang: (cb) -> @orders cb
+
   experts: (cb) ->
     new ExpertsSvc(@usr).getAll (e, experts) =>
       cb e, -> { experts }

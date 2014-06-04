@@ -33,6 +33,7 @@ exports.config =
     javascripts:
       joinTo:
        'javascripts/vendor.js': /^vendor/
+       'javascripts/cy.js': /(scripts\/angular|scripts\/cy)/
        'javascripts/ap.js': /(scripts\/ap|scripts\/shared|scripts\/providers|lib\/mix)/
        'javascripts/adm.js': /(scripts\/adm|scripts\/shared|scripts\/providers|lib\/mix)/
        'javascripts/providers.js': /^app\/scripts\/providers/
@@ -44,6 +45,7 @@ exports.config =
         # Files in `vendor` directories are compiled before other files
         # even if they aren't specified in order.
         before: [
+          'vendor/scripts/angular.js'
           'vendor/scripts/console-helper.js'
           'vendor/scripts/jquery.js'
           'vendor/scripts/lodash.js'
