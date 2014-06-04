@@ -84,11 +84,14 @@ module.exports = class RatesService
     nda: { opensource:-70, private:-50, nda:0 }
 
   calcSuggestedBookmeRates: (request, expert) ->
+    # $log 'calcSuggestedBookmeRates.in', expert
+    # $log 'calcSuggestedBookmeRates.in', request.pricing
     pricing = request.pricing
     weight = @weight[pricing]
     rake = expert.bookMe.rake
+    rake = 10 if !rake?
     total = request.budget
-    $log 'bookme.calc', pricing, rake, total, weight, expert.bookMe
+    # $log 'bookme.calc', pricing, rake, total, weight, expert.bookMe
     r = bookMe: true
     r.opensource =
       total: total+weight.opensource
@@ -99,7 +102,7 @@ module.exports = class RatesService
     r.nda =
       total: total+weight.nda
       expert: @_getExpertByRake total+weight.nda, rake
-    $log 'bookme.r', r
+    # $log 'bookme.r', r
     r
     # offline:
     #   total: customerRates.offline

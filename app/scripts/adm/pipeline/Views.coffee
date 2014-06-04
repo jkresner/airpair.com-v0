@@ -150,7 +150,7 @@ class exports.RequestFarmView extends BB.ModelSaveView
     encodedLnk = encodeURIComponent $input.val()
     $.ajax(url:"#{@bitlyUrl}/shorten?access_token=#{@accessToken}&longUrl=#{encodedLnk}").done (r) =>
       $input.val "http://airpa.ir/#{r.data.hash}"
-      tmplData = link: $input.val(), tagsString: @fd.tagsString, hrRate: @fd.hrRate
+      tmplData = link: $input.val(), tags: @fd.tagsStr, hrRate: @fd.hrRate
       if $input.attr('id') is 'farm-linkedin-group'
         @$('#linkedInJobPostMessage').html @tmplLinkedIn tmplData
       if $input.attr('id') is 'farm-tweet-airpair'

@@ -104,7 +104,7 @@ module.exports = class OrdersService extends DomainService
     @settingsSvc.getByUserId request.userId, (ee, settings) =>
       if ee then return callback ee
       pm = _.find settings.paymentMethods, (p) -> p.type == 'stripe'
-
+      $log 'settings', settings._id
       @requestSvc.updateSuggestionByExpert request, expertReview, (e, r) =>
         $log 'request updated', r.status, r.suggested
         if e then return callback e
@@ -117,7 +117,7 @@ module.exports = class OrdersService extends DomainService
           name: request.company.name
           contacts: request.company.contacts
 
-        expertBookMe = { rake: 10 }
+        # expertBookMe = { rake: 10 }
 
         toPick = ['_id','userId','name','username','rate','email','pic','paymentMethod']
         order.lineItems.push

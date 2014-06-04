@@ -87,7 +87,7 @@ class exports.Request extends BB.SublistModel
   sortedSuggestions: ->
     orderBy = available: 0, abstained: 1
     _.sortBy @get('suggested'), (s) -> orderBy[s.expertStatus] ? 10
-  tagsString: -> tagsString @get('tags')
+  tagsString: (nobraces) -> tagsString @get('tags'), null, nobraces
   threeTagsString: -> tagsString @get('tags'), 3
   isCustomer: (session) ->
     return false if !session.id?
