@@ -36,6 +36,7 @@ exports.config =
        'javascripts/ap.js': /(scripts\/ap|scripts\/shared|scripts\/providers|lib\/mix)/
        'javascripts/adm.js': /(scripts\/adm|scripts\/shared|scripts\/providers|lib\/mix)/
        'javascripts/providers.js': /^app\/scripts\/providers/
+       'javascripts/home.js': /providers\/(home|addjs|ga|mix|mixpanel|adroll)/
        'test/javascripts/test.js': /^test(\/|\\)(?=integration)/
        'test/javascripts/test-data.js': /^test(\/|\\)(?=data)/
        'test/javascripts/test-vendor.js': /^test(\/|\\)(?=vendor)/
