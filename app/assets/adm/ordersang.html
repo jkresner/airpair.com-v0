@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title>Orders | AirPair</title>
     <meta name="viewport" content="width=device-width">
-    <link rel="stylesheet" href="/css/adm.css">
+    <link rel="stylesheet" href="/css/adm-ang.css">
 </head>
 
 <body id="admorders" style="background: #fff" >
@@ -30,10 +30,8 @@
 
 
   <!-- PAGE -->
-  <!-- <h2>the view</h2> -->
   <div ng-view="ng-view" style="margin-top: 20px;" ></div>
-  <!-- <h2>end of the view</h2> -->
-  <!-- <ng-include src="'/adm/templates/orders.html'"></ng-include> -->
+
 
 
 </body>
@@ -41,10 +39,10 @@
   <script type="text/javascript">
     function initApp() {
       var pageData = { {{JSON 'session'}}, {{JSON 'orders'}} };
-      ap_ang = require('scripts/cy/orders')(pageData);
+      ap_ang = require('scripts/adm-ang/orders')(pageData);
     }
   </script>
-  <script src="/javascripts/cy.js" defer onload="initApp()"></script>
+  <script src="/javascripts/adm-ang.js" defer onload="initApp()"></script>
 
   <style>
     .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }

@@ -44,14 +44,33 @@ module.exports = (pageData) ->
 
 
     # Default date range from 6 weeks ago to today
-    $scope.dateStart = new Date(new Date().getTime() - 1000*60*60*24*7*6)
-    $scope.dateEnd = new Date()
-
+    $scope.dateRange = "6 weeks"
 
 
     $scope.isWithinDate = (order) ->
       orderDate = new Date(order.utc)
       return orderDate > $scope.dateStart && orderDate < $scope.dateEnd
+    
+    $scope.updateDateRange = (newRange) ->
+      console.log "newRange", newRange
+      date = new Date()
+
+      switch newRange
+        when "6 weeks"
+          $scope.dateStart = moment().subtract("weeks", 6).toDate()
+          $scope.dateEnd = date
+        when "month"
+          $scope.dateStart = moment().startOf("month").toDate()
+          $scope.dateEnd = date
+        when "week"
+          $scope.dateStart = moment().startOf("week").toDate()
+          $scope.dateEnd = date
+        when "day"
+          $scope.dateStart = moment().startOf("day").toDate()
+          $scope.dateEnd = date
+
+
+    
     
 
     $scope.updateOrderList = () ->
@@ -96,6 +115,7 @@ module.exports = (pageData) ->
     # Watch date selector
     $scope.$watch "dateStart", () -> $scope.updateOrderList()
     $scope.$watch "dateEnd", () -> $scope.updateOrderList()
+    $scope.$watch "dateRange", (newRange) -> $scope.updateDateRange(newRange)
 
 
     

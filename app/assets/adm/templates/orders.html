@@ -5,67 +5,59 @@
 
   <div class="container">
 
-      <!-- FILTERS -->
-
-<!--       <div id="filters">
-        
-        <span id="marketingTagsInput"></span>
-
-        <div id="timefilter" class="btn-group btn-group-xs">
-          <button type="button" class="btn btn-default" ng-click="showMonth(7)" >All</button>
-          <button type="button" class="btn btn-default" ng-click="showMonth(7)" >Tod</button>
-          <button type="button" class="btn btn-default" ng-click="showMonth(7)" >Wk</button>
-          <button type="button" class="btn btn-default" ng-click="showMonth(7)" >Mth</button>
-          <button type="button" class="btn btn-default" ng-click="showMonth(7)" >Aug</button>
-          <button type="button" class="btn btn-default" ng-click="showMonth(8)" >Sep</button>
-          <button type="button" class="btn btn-default" ng-click="showMonth(9)" >Oct</button>
-          <button type="button" class="btn btn-default" ng-click="showMonth(10)" >Nov</button>
-          <button type="button" class="btn btn-default" ng-click="showMonth(11)" >Dec</button>
-          <button type="button" class="btn btn-default" ng-click="showMonth(0)" >Jan</button>
-          <button type="button" class="btn btn-default" ng-click="showMonth(1)" >Feb</button>
-          <button type="button" class="btn btn-default" ng-click="showMonth(2)" >Mar</button>
-          <button type="button" class="btn btn-default" ng-click="showMonth(3)" >Apr</button>
-          <button type="button" class="btn btn-default" ng-click="showMonth(4)" >May</button>
-        </div>
-      </div>
- -->
-      <!-- Date range -->
 
     <div class="row">
 
-      <div class="span4">
-        <h1 style="font-weight: 200;" >Orders</h1>
+      
+      <div class="col-sm-4">
+        <h1 class="text-light">Orders</h1>
       </div>
       
-      <div class="span8" style="padding-top: 20px;  ">
-        <div class="input-prepend">
-          <span class="add-on" style="padding-left:10px;padding-right: 10px;" > Start </span>
-          <input class="" type="date" name="input" ng-model="dateStart" placeholder="yyyy-MM-dd" min="2013-01-01" max="" />
-        </div>        
-      <!-- </div> -->
+      
+      <!-- Date range -->
 
-      <!-- <div class="span4"> -->
-        <div class="input-prepend">
-          <span class="add-on" style="padding-left:10px;padding-right: 10px;" > End </span>
-          <input class="" type="date" name="input" ng-model="dateEnd" placeholder="yyyy-MM-dd" min="2013-01-01" max="" />
+      <div class="col-sm-8">
+        <div class="row">
+          <div class="col-sm-6">
+
+            <div class="input-group">
+              <span class="input-group-addon">Start</span>
+              <input class="form-control" type="date" name="input" ng-model="dateStart" placeholder="yyyy-MM-dd" min="2013-01-01" max="" />
+            </div>
+
+            <div class="input-group m-t-half">
+              <span class="input-group-addon">End</span>
+              <input class="form-control" type="date" name="input" ng-model="dateEnd" placeholder="yyyy-MM-dd" min="2013-01-01" max="" />
+            </div>
+
+
+          </div>
+
+          <div class="col-sm-6">
+
+
+            <div class="btn-group">
+                <label class="btn btn-primary" ng-model="dateRange" btn-radio="'day'">Day</label>
+                <label class="btn btn-primary" ng-model="dateRange" btn-radio="'week'">Week</label>
+                <label class="btn btn-primary" ng-model="dateRange" btn-radio="'month'">Month</label>
+                <label class="btn btn-primary" ng-model="dateRange" btn-radio="'6 weeks'">Six Weeks</label>
+            </div>
+
+          </div>
+
+
         </div>
+        <div class="row">
+          <div class="col-sm-12">
 
-        <div class="btn-group" style="margin-bottom: 10px;" >
-          <button class="btn">Last Month</button>
-          <button class="btn dropdown-toggle" data-toggle="dropdown" ng-click="dateDrop = !dateDrop" ng-init="dateDrop = false">
-            <span class="caret"></span>
-          </button>
-          <ul class="dropdown-menu" ng-class="{show: dateDrop}">
-            <li><a href="">Today</a></li>
-            <li><a href="">Last Week</a></li>
-            <li><a href="">Last Month</a></li>
-            <li><a href="">Last 6 Months</a></li>
-          </ul>
+          
+
+
+          </div>
+
         </div>
-
-
-
       </div>
+
 
     </div>
 
@@ -95,7 +87,7 @@
           </tr>
 
 
-          <tr id="rowsSummary">
+          <tr id="" class="success">
             <th id="totalRevenue">${{summary.totalRevenue}}</th>
             <th id="orderCount">1 - {{summary.orderCount}}</th>
             <th id="customerCount">{{summary.customerCount}}</th>
@@ -144,11 +136,11 @@
             </td>
             
             <!-- Request -->
-            <td class="info">
+            <td class="">
                 <span class="label label-owner label-{{order.owner}}">{{order.owner}}</span> 
                 <a href="/adm/pipeline/request/{{order.requestId}}" target="_blank" data-id="{{order.requestId}}">{{order.requestId}}</a>
                 <br>
-                <span ng-repeat="tag in order.marketingTags" class="marketingtag" ng-class="tag.type">{{tag.name}} </span> 
+                <span ng-repeat="tag in order.marketingTags" class="marketingtag label" ng-class="tag.type">{{tag.name}} </span> 
             </td>
 
             <!-- Pay -->

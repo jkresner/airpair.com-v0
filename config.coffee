@@ -33,7 +33,7 @@ exports.config =
     javascripts:
       joinTo:
        'javascripts/vendor.js': /^vendor/
-       'javascripts/cy.js': /(scripts\/angular|lodash|scripts\/cy|lib\/mix)/
+       'javascripts/adm-ang.js': /(scripts\/angular|lodash|moment-2.6|scripts\/adm-ang|lib\/mix)/
        'javascripts/ap.js': /(scripts\/ap|scripts\/shared|scripts\/providers|lib\/mix)/
        'javascripts/adm.js': /(scripts\/adm|scripts\/shared|scripts\/providers|lib\/mix)/
        'javascripts/providers.js': /^app\/scripts\/providers/
@@ -61,7 +61,8 @@ exports.config =
       defaultExtension: 'scss'
       joinTo:
         'css/ap.css': /(css\/ap|css\/shared|css\/old)/
-        'css/adm.css': /(css\/adm|css\/shared)/
+        'css/adm.css': /(app\/css\/adm|vendor\/css\/adm-bb|css\/shared)/
+        'css/adm-ang.css': /(app\/css\/adm|vendor\/css\/adm-ang|css\/shared)/
         'test/stylesheets/test.css': /^test/
       order:
         before: [
