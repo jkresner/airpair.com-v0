@@ -1,0 +1,217 @@
+
+
+
+  <!-- PAGE -->
+
+  <div class="container">
+
+      <!-- FILTERS -->
+
+<!--       <div id="filters">
+        
+        <span id="marketingTagsInput"></span>
+
+        <div id="timefilter" class="btn-group btn-group-xs">
+          <button type="button" class="btn btn-default" ng-click="showMonth(7)" >All</button>
+          <button type="button" class="btn btn-default" ng-click="showMonth(7)" >Tod</button>
+          <button type="button" class="btn btn-default" ng-click="showMonth(7)" >Wk</button>
+          <button type="button" class="btn btn-default" ng-click="showMonth(7)" >Mth</button>
+          <button type="button" class="btn btn-default" ng-click="showMonth(7)" >Aug</button>
+          <button type="button" class="btn btn-default" ng-click="showMonth(8)" >Sep</button>
+          <button type="button" class="btn btn-default" ng-click="showMonth(9)" >Oct</button>
+          <button type="button" class="btn btn-default" ng-click="showMonth(10)" >Nov</button>
+          <button type="button" class="btn btn-default" ng-click="showMonth(11)" >Dec</button>
+          <button type="button" class="btn btn-default" ng-click="showMonth(0)" >Jan</button>
+          <button type="button" class="btn btn-default" ng-click="showMonth(1)" >Feb</button>
+          <button type="button" class="btn btn-default" ng-click="showMonth(2)" >Mar</button>
+          <button type="button" class="btn btn-default" ng-click="showMonth(3)" >Apr</button>
+          <button type="button" class="btn btn-default" ng-click="showMonth(4)" >May</button>
+        </div>
+      </div>
+ -->
+      <!-- Date range -->
+
+    <div class="row">
+
+      <div class="span4">
+        <h1 style="font-weight: 200;" >Orders</h1>
+      </div>
+      
+      <div class="span8" style="padding-top: 20px;  ">
+        <div class="input-prepend">
+          <span class="add-on" style="padding-left:10px;padding-right: 10px;" > Start </span>
+          <input class="" type="date" name="input" ng-model="dateStart" placeholder="yyyy-MM-dd" min="2013-01-01" max="" />
+        </div>        
+      <!-- </div> -->
+
+      <!-- <div class="span4"> -->
+        <div class="input-prepend">
+          <span class="add-on" style="padding-left:10px;padding-right: 10px;" > End </span>
+          <input class="" type="date" name="input" ng-model="dateEnd" placeholder="yyyy-MM-dd" min="2013-01-01" max="" />
+        </div>
+
+        <div class="btn-group" style="margin-bottom: 10px;" >
+          <button class="btn">Last Month</button>
+          <button class="btn dropdown-toggle" data-toggle="dropdown" ng-click="dateDrop = !dateDrop" ng-init="dateDrop = false">
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" ng-class="{show: dateDrop}">
+            <li><a href="">Today</a></li>
+            <li><a href="">Last Week</a></li>
+            <li><a href="">Last Month</a></li>
+            <li><a href="">Last 6 Months</a></li>
+          </ul>
+        </div>
+
+
+
+      </div>
+
+    </div>
+
+    <hr>  
+
+
+    <div id="list">
+
+
+
+
+
+
+      <!-- TABLE -->
+
+      <table id="orders" class="table table-striped">
+        <thead>
+
+          <tr>
+            <th style="width:30px">Total</th>
+            <th>Order #</th>
+            <th>By</th>
+            <th>Request</th>
+            <th style="width:35px">Pay</th>
+            <th>Hours</th>
+            <th style="width:24px">Profit</th>
+          </tr>
+
+
+          <tr id="rowsSummary">
+            <th id="totalRevenue">${{summary.totalRevenue}}</th>
+            <th id="orderCount">1 - {{summary.orderCount}}</th>
+            <th id="customerCount">{{summary.customerCount}}</th>
+            <th id="requestCount">{{summary.requestCount}}</th>
+            <th>&nbsp;</th> 
+            <th id="hourCount">
+              <!-- hours redeemed / hours completed / hours total | unique experts -->
+              {{summary.totalRedeemed}} / {{summary.totalCompleted}} / {{summary.totalHours}} | {{summary.expertCount }}
+            </th>
+            <th id="totalProfit">${{summary.totalProfit}}</th>
+          </tr>
+
+        </thead>
+        <tbody>
+          <tr ng-repeat="order in visibleOrders | orderBy : 'utc' : true" class="order" ng-show="isWithinDate(order)">
+            
+            <!-- Total -->
+            <td class="total">
+              ${{order.total}}
+            </td>
+            
+            <!-- Order Number -->
+            <td>
+                <span>
+                  <a href="/adm/ang/orders/edit/{{order._id}}" ng-click="" class="selectOrder">
+                    <img src="/images/css/{{order.paymentType}}-favicon.ico" class="favicon"> 
+                    {{order.utc | date:"MMM d yyyy"}}
+                  </a>
+                </span>
+                <br>
+                <b ng-class="order.paymentStatus">{{order.paymentStatus}}</b>
+                <!-- TODO: errors -->
+            </td>
+            
+            <!-- User -->
+            <td>
+                <img ng-show="order.company.contacts[0].pic" ng-src="{{order.company.contacts[0].pic}}" style="float:left;margin:5px">
+                <img ng-hide="order.company.contacts[0].pic" src="/images/avatars/default.jpg" style="float:left;margin:5px" />
+
+                <div style="float:left">
+                  <a href="mailto:{{order.company.contacts[0].email}}" target="_blank">
+                    {{order.company.contacts[0].fullName}}
+                  </a><br>
+                  {{order.company.name}}
+                </div>
+            </td>
+            
+            <!-- Request -->
+            <td class="info">
+                <span class="label label-owner label-{{order.owner}}">{{order.owner}}</span> 
+                <a href="/adm/pipeline/request/{{order.requestId}}" target="_blank" data-id="{{order.requestId}}">{{order.requestId}}</a>
+                <br>
+                <span ng-repeat="tag in order.marketingTags" class="marketingtag" ng-class="tag.type">{{tag.name}} </span> 
+            </td>
+
+            <!-- Pay -->
+            <td>
+              
+              <b ng-if="order.paymentStatus == 'paidout'" ng-repeat="item in order.lineItems" class="paidout" data-id="{{ item._id }}">paid</b>
+              
+              <!-- not paid out -->
+              <div ng-if="order.paymentStatus != 'paidout'">
+
+                <div ng-if="order.paymentType == 'paypal' && paymentStatus == 'received'">
+                  <!-- TODO: if payout options? -->
+                  <!-- <b>payout</b> -->
+                  <!-- else -->
+                  <a class="payOutPayPalAdaptive " href="#">payout</a>
+                </div>
+
+              </div>
+
+            </td>
+
+
+            <!-- Hours -->
+            <td>
+              <div ng-repeat="item in order.lineItems">
+                <!-- scheduled/completed/total  -->
+                {{item.redeemed}} / {{item.completed}} / {{item.total}}
+
+                <!-- TODO: check right numbers -->
+                <img class="expertPic" ng-src="{{item.suggestion.expert.pic}}"> 
+                {{item.suggestion.expert.name}}
+
+                <br>
+              </div>
+            </td>
+
+
+            <!-- Profit -->
+            <td>
+                ${{order.profit}}
+            </td>
+
+
+          </tr>
+        </tbody>
+      </table>
+
+
+
+
+
+    </div> <!-- #list --> 
+
+    <div id="edit">
+      <div class="form-actions admin-nav">
+        <div class="controls">
+          <a href="#list" class="btn">Back</a>
+          <a href="#" class="btn btn-inverse request" target="_blank">Request</a>
+          <!-- <a href="#" class="btn btn-primary save">Save</a>
+          <a href="#" class="btn btn-warning refund">Refund</a> -->
+        </div>
+      </div>
+      <div id="order"></div>
+    </div> <!-- #edit --> 
+
+  </div> <!-- .container --> 

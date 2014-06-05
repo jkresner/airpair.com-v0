@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" ng-app='AirpairAdmin'>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -8,86 +8,46 @@
     <link rel="stylesheet" href="/css/adm.css">
 </head>
 
-<body id="admorders">
+<body id="admorders" style="background: #fff" >
+
+
+  <!-- NAVBAR -->
 
   <nav>
-    <div>
-      <a href="/"></a>
+    <div class="container">
+      <a href="/" style="background-size: 31px;margin-top: -2px;" ></a>
       <ul>
-        <li>[<a href="/adm/pipeline">Pipeline</a>]</li>
-        <li>[<a href="#inactive">Inactive</a>]</li>
-        <li>[<a href="/adm/orders">Orders</a>]</li>
-        <li>[<a href="/adm/tags">Tags</a>]</li>
-        <li>[<a href="/adm/marketingtags">Marketing</a>]</li>
-        <li>[<a href="/adm/experts">Experts</a>]</li>
-        <li>[<a href="/adm/companys">Companys</a>]</li>
+        <li><a href="/adm/pipeline">Pipeline</a></li>
+        <li><a href="#inactive">Inactive</a></li>
+        <li><a href="/adm/orders">Orders</a></li>
+        <li><a href="/adm/tags">Tags</a></li>
+        <li><a href="/adm/marketingtags">Marketing</a></li>
+        <li><a href="/adm/experts">Experts</a></li>
+        <li><a href="/adm/companys">Companys</a></li>
       </ul>
     </div>
   </nav>
 
-  <div id="list" class="route">
 
-    <div id="filters">
-      <span id="marketingTagsInput"></span>
+  <!-- PAGE -->
+  <!-- <h2>the view</h2> -->
+  <div ng-view="ng-view" style="margin-top: 20px;" ></div>
+  <!-- <h2>end of the view</h2> -->
+  <!-- <ng-include src="'/adm/templates/orders.html'"></ng-include> -->
 
-      <div id="timefilter" class="btn-group btn-group-xs">
-        <button type="button" class="btn btn-default">All</button>
-        <button type="button" class="btn btn-default">Tod</button>
-        <button type="button" class="btn btn-default">Wk</button>
-        <button type="button" class="btn btn-default btn-warning">Mth</button>
-        <button type="button" class="btn btn-default" data-month="7">Aug</button>
-        <button type="button" class="btn btn-default" data-month="8">Sep</button>
-        <button type="button" class="btn btn-default" data-month="9">Oct</button>
-        <button type="button" class="btn btn-default" data-month="10">Nov</button>
-        <button type="button" class="btn btn-default" data-month="11">Dec</button>
-        <button type="button" class="btn btn-default" data-month="0">Jan</button>
-        <button type="button" class="btn btn-default" data-month="1">Feb</button>
-        <button type="button" class="btn btn-default" data-month="2">Mar</button>
-        <button type="button" class="btn btn-default" data-month="3">Apr</button>
-        <button type="button" class="btn btn-default" data-month="4">May</button>
-        <!--<button type="button" class="btn btn-default" data-month="5">Jun</button>-->
-      </div>
-    </div>
-
-    <table id="orders" class="table table-striped">
-      <thead>
-        <tr>
-          <th style="width:30px">Total</th>
-          <th>Order #</th>
-          <th>By</th>
-          <th>Request</th>
-          <th style="width:35px">Pay</th>
-          <th>Hours</th>
-          <th style="width:24px">Profit</th>
-        </tr>
-        <tr id="rowsSummary"></tr>
-      </thead>
-      <tbody></tbody>
-    </table>
-  </div>
-
-  <div id="edit" class="route">
-    <div class="form-actions admin-nav">
-      <div class="controls">
-        <a href="#list" class="btn">Back</a>
-        <a href="#" class="btn btn-inverse request" target="_blank">Request</a>
-        <!-- <a href="#" class="btn btn-primary save">Save</a>
-        <a href="#" class="btn btn-warning refund">Refund</a> -->
-      </div>
-    </div>
-    <div id="order"></div>
-  </div>
 
 </body>
 
   <script type="text/javascript">
     function initApp() {
       var pageData = { {{JSON 'session'}}, {{JSON 'orders'}} };
-      Cy = require('scripts/cy/orders');
-      console.log('Cy',Cy);
-      Cy();
+      ap_ang = require('scripts/cy/orders')(pageData);
     }
   </script>
   <script src="/javascripts/cy.js" defer onload="initApp()"></script>
+
+  <style>
+    .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
+  </style>
 
 </html>

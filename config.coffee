@@ -33,7 +33,7 @@ exports.config =
     javascripts:
       joinTo:
        'javascripts/vendor.js': /^vendor/
-       'javascripts/cy.js': /(scripts\/angular|scripts\/cy)/
+       'javascripts/cy.js': /(scripts\/angular|lodash|scripts\/cy|lib\/mix)/
        'javascripts/ap.js': /(scripts\/ap|scripts\/shared|scripts\/providers|lib\/mix)/
        'javascripts/adm.js': /(scripts\/adm|scripts\/shared|scripts\/providers|lib\/mix)/
        'javascripts/providers.js': /^app\/scripts\/providers/
