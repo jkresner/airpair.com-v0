@@ -61,6 +61,11 @@
 /*  Spacing
 ~-----------------------------------------*/
 
+.flush { margin: 0; padding: 0;}
+.flush-top { margin-top: 0; padding-top: 0;}
+.flush-bottom { margin-bottom: 0; padding-bottom: 0;}
+
+
 .m-t-half {  margin-top:    10px; }
 .m-t-1    {  margin-top:    20px; }
 .m-t-2    {  margin-top:    40px; }

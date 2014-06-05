@@ -4,36 +4,41 @@
   <!-- PAGE -->
 
   <div class="container">
-
-
     <div class="row">
 
       
-      <div class="col-sm-4">
-        <h1 class="text-light">Orders</h1>
+      <div class="col-sm-3">
+        <h1 class="text-light">
+          Orders
+        </h1>
+        <h3 class="flush-top">
+          <small class="text-muted">
+            {{dateStart | date:"MMM d, yyyy"}} – {{dateEnd | date:"MMM d, yyyy"}}
+          </small>
+        </h3>
       </div>
       
       
       <!-- Date range -->
 
-      <div class="col-sm-8">
+      <div class="col-sm-9 m-t-1">
         <div class="row">
-          <div class="col-sm-6">
+          <div class="col-sm-5">
 
             <div class="input-group">
               <span class="input-group-addon">Start</span>
-              <input class="form-control" type="date" name="input" ng-model="dateStart" placeholder="yyyy-MM-dd" min="2013-01-01" max="" />
+              <input class="form-control" type="date" name="input" ng-model="dateStart" placeholder="yyyy-MM-dd" min="2013-01-01" max="" required/>
             </div>
 
             <div class="input-group m-t-half">
               <span class="input-group-addon">End</span>
-              <input class="form-control" type="date" name="input" ng-model="dateEnd" placeholder="yyyy-MM-dd" min="2013-01-01" max="" />
+              <input class="form-control" type="date" name="input" ng-model="dateEnd" placeholder="yyyy-MM-dd" min="2013-01-01" max="" required/>
             </div>
 
 
           </div>
 
-          <div class="col-sm-6">
+          <div class="col-sm-7">
 
 
             <div class="btn-group">
@@ -43,17 +48,16 @@
                 <label class="btn btn-primary" ng-model="dateRange" btn-radio="'6 weeks'">Six Weeks</label>
             </div>
 
+            
+            <br>
+            
+            <div class="btn-group m-t-half">
+                <label ng-repeat="month in months" class="btn btn-default" ng-click="setDateRange(month)" ng-class="{active: getDateStr() == month.str}">{{month.str}}</label>
+            </div>
+
+
           </div>
 
-
-        </div>
-        <div class="row">
-          <div class="col-sm-12">
-
-          
-
-
-          </div>
 
         </div>
       </div>
@@ -61,7 +65,14 @@
 
     </div>
 
-    <hr>  
+  </div>
+
+  <hr>  
+
+  <div class="container">
+
+
+
 
 
     <div id="list">
@@ -194,16 +205,5 @@
 
     </div> <!-- #list --> 
 
-    <div id="edit">
-      <div class="form-actions admin-nav">
-        <div class="controls">
-          <a href="#list" class="btn">Back</a>
-          <a href="#" class="btn btn-inverse request" target="_blank">Request</a>
-          <!-- <a href="#" class="btn btn-primary save">Save</a>
-          <a href="#" class="btn btn-warning refund">Refund</a> -->
-        </div>
-      </div>
-      <div id="order"></div>
-    </div> <!-- #edit --> 
 
   </div> <!-- .container --> 

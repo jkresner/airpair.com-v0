@@ -43,7 +43,19 @@ module.exports = (pageData) ->
         _.extend li, expertCredit
 
 
-    # Default date range from 6 weeks ago to today
+    # Get past 6 months
+    $scope.months = []
+
+    cur = moment(new Date())
+    for num in [1..8]
+      $scope.months.push
+        str: cur.format("MMM")
+        start: cur.startOf("month").clone().toDate()
+        end: cur.endOf("month").clone().toDate()
+      cur = cur.subtract('months', 1)
+
+
+    # Set default date range to 6 weeks
     $scope.dateRange = "6 weeks"
 
 
@@ -52,36 +64,41 @@ module.exports = (pageData) ->
       return orderDate > $scope.dateStart && orderDate < $scope.dateEnd
     
     $scope.updateDateRange = (newRange) ->
-      console.log "newRange", newRange
       date = new Date()
+      if _.isString(newRange)
+        switch newRange
+          when "6 weeks"
+            $scope.dateStart = moment().subtract("weeks", 6).toDate()
+            $scope.dateEnd = date
+          when "month"
+            $scope.dateStart = moment().startOf("month").toDate()
+            $scope.dateEnd = date
+          when "week"
+            $scope.dateStart = moment().startOf("week").toDate()
+            $scope.dateEnd = date
+          when "day"
+            $scope.dateStart = moment().startOf("day").toDate()
+            $scope.dateEnd = date
+      if _.isObject(newRange)
+        $scope.dateStart = newRange.start
+        $scope.dateEnd = newRange.end
 
-      switch newRange
-        when "6 weeks"
-          $scope.dateStart = moment().subtract("weeks", 6).toDate()
-          $scope.dateEnd = date
-        when "month"
-          $scope.dateStart = moment().startOf("month").toDate()
-          $scope.dateEnd = date
-        when "week"
-          $scope.dateStart = moment().startOf("week").toDate()
-          $scope.dateEnd = date
-        when "day"
-          $scope.dateStart = moment().startOf("day").toDate()
-          $scope.dateEnd = date
+
+    $scope.setDateRange = (range) ->
+      $scope.dateRange = range
+
+    $scope.getDateStr = () ->
+      if _.isString($scope.dateRange) then $scope.dateRange
+      else if _.isObject($scope.dateRange) then $scope.dateRange.str
 
 
     
-    
-
     $scope.updateOrderList = () ->
       $scope.visibleOrders = []      
       for order in allOrders
         if $scope.isWithinDate(order)
           $scope.visibleOrders.push order
-
       $scope.calcSummary()
-      # console.log "visibleOrders", $scope.visibleOrders
-
       
     $scope.calcSummary = () ->
       $scope.summary = 
@@ -112,7 +129,7 @@ module.exports = (pageData) ->
       $scope.summary.expertCount = _.uniq($scope.summary.experts).length
 
 
-    # Watch date selector
+    # Watch date updates
     $scope.$watch "dateStart", () -> $scope.updateOrderList()
     $scope.$watch "dateEnd", () -> $scope.updateOrderList()
     $scope.$watch "dateRange", (newRange) -> $scope.updateDateRange(newRange)
