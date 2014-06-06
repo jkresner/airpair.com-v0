@@ -46,8 +46,13 @@
                 <label class="btn btn-primary" ng-model="dateRange" btn-radio="'week'">Week</label>
                 <label class="btn btn-primary" ng-model="dateRange" btn-radio="'month'">Month</label>
                 <label class="btn btn-primary" ng-model="dateRange" btn-radio="'6 weeks'">Six Weeks</label>
+                <label class="btn btn-primary" ng-model="dateRange" btn-radio="'all'">All</label>
             </div>
-
+            
+            <button type="button" class="btn m-l-half" ng-click="toggleReport()" ng-class="{'btn-default': !reportVisible, 'btn-success': reportVisible}">
+              <span ng-show="!reportVisible">Show Report</span>
+              <span ng-show="reportVisible">Hide Report</span>
+            </button>
             
             <br>
             
@@ -69,38 +74,98 @@
 
   <hr>  
 
-  <div class="container">
+
+
+  <div ng-show="reportVisible">
+    <div class="container">
+      <h2 class="text-light m-b-1">
+        Month to Month Report
+      </h2>
 
 
 
+      <table class="table" ng-repeat="year in report">
+        
 
+        <thead>
+          <th>{{year.$yearName}}</th>
+          <th>Gross</th>
+          <th>Margin</th>
+          <th>Revenue</th>
+          <th>Avg/Hr</th>
+          <th>Hours</th>
+          <th>Cust Total</th>
+        </thead>
+
+        <tr ng-repeat="month in year | orderBy : 'monthNum'">
+          <td>{{month.monthName}}</td>
+          <td>{{month.gross | currency}}</td>
+          <td>{{month.margin * 100 | number : 2}}%</td>
+          <td>{{month.revenue | currency}}</td>
+          <td>{{month.revPerHour | currency}}</td>
+          <td>{{month.hrsSold}} hrs</td>
+          <td>{{month.customerTotal}}</td>
+        </tr>
+      </table>
+
+
+      <table class="table">
+        <thead>
+          <th>Total Gross</th>
+          <th>Avg Margin</th>
+          <th>Total Revenue</th>
+          <th>Avg Rev/Hr</th>
+          <th>Avg Hr/Cust</th>
+          <th>Total Hrs</th>
+          <th>Cust Total</th>
+          <th>LTV</th>
+        </thead>
+
+        <tr class="success">
+          <!-- <td>{{getMonth($index)}}</td> -->
+          <td>{{reportTotals.gross | currency}}</td>
+          <td>{{reportTotals.margin * 100 | number : 2}}%</td>
+          <td>{{reportTotals.revenue | currency}}</td>
+          <td>{{reportTotals.revPerHour | currency}}</td>
+          <td>{{reportTotals.hrPerCust | number : 2}} hrs</td>
+          <td>{{reportTotals.hrsSold}} hrs</td>
+          <td>{{reportTotals.customerTotal}}</td>
+          <td>{{reportTotals.ltv | currency}}</td>
+        </tr>
+      </table>
+
+    </div>
+
+    <!-- <hr> -->
+  </div>
+
+
+
+ 
+
+
+
+  <!-- ORDERS -->
+  <div class="container" ng-hide="reportVisible">
 
     <div id="list">
-
-
-
-
-
-
-      <!-- TABLE -->
-
       <table id="orders" class="table table-striped">
         <thead>
 
           <tr>
-            <th style="width:30px">Total</th>
-            <th>Order #</th>
-            <th>By</th>
+            <th style="width:30px">Revenue</th>
+            <th>Orders</th>
+            <th>Customers</th>
             <th>Request</th>
             <th style="width:35px">Pay</th>
             <th>Hours</th>
-            <th style="width:24px">Profit</th>
+            <th style="width:24px">Gross</th>
           </tr>
 
 
           <tr id="" class="success">
             <th id="totalRevenue">${{summary.totalRevenue}}</th>
-            <th id="orderCount">1 - {{summary.orderCount}}</th>
+            <th id="orderCount">{{summary.orderCount}}</th>
             <th id="customerCount">{{summary.customerCount}}</th>
             <th id="requestCount">{{summary.requestCount}}</th>
             <th>&nbsp;</th> 
@@ -198,11 +263,6 @@
           </tr>
         </tbody>
       </table>
-
-
-
-
-
     </div> <!-- #list --> 
 
 

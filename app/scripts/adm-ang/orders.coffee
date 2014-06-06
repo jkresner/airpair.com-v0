@@ -35,6 +35,8 @@ module.exports = (pageData) ->
     
     allOrders = pageData.orders
 
+    firstOrderDate = new Date(allOrders[0].utc)
+
     # Iterate through orders
     for order in allOrders
       order.lineItems = order.lineItems.map (li) ->
@@ -57,6 +59,9 @@ module.exports = (pageData) ->
 
     # Set default date range to 6 weeks
     $scope.dateRange = "6 weeks"
+    
+    
+
 
 
     $scope.isWithinDate = (order) ->
@@ -67,6 +72,9 @@ module.exports = (pageData) ->
       date = new Date()
       if _.isString(newRange)
         switch newRange
+          when "all"
+            $scope.dateStart = firstOrderDate
+            $scope.dateEnd = date
           when "6 weeks"
             $scope.dateStart = moment().subtract("weeks", 6).toDate()
             $scope.dateEnd = date
@@ -134,6 +142,108 @@ module.exports = (pageData) ->
     $scope.$watch "dateEnd", () -> $scope.updateOrderList()
     $scope.$watch "dateRange", (newRange) -> $scope.updateDateRange(newRange)
 
+
+
+
+
+    # Month to Month report
+    #----------------------------------------------    
+
+
+    $scope.reportVisible = false
+    $scope.report = {}
+
+    $scope.toggleReport = () ->
+      if $scope.reportVisible then return $scope.reportVisible = false
+      else
+        
+        # Generate Report Data
+        report = {}
+        reportTotals = 
+          customerTotal: 0
+          hrsSold: 0
+          numMonths: 0
+          revPerHour: 0
+          revenue: 0
+          gross: 0
+          margin: 0
+
+        for order in allOrders
+          year = moment(order.utc).year()
+          month = moment(order.utc).month()
+            
+          if not report[year] then report[year] = {}
+          if not report[year][month] then report[year][month] = 
+            revenue: 0
+            gross: 0
+            hrsSold: 0
+            orders: []
+
+           
+          m = report[year][month]
+          
+          report[year].$yearName = moment(new Date(year, month, 1)).format("YYYY")
+          m.monthName = moment(new Date(year, month, 1)).format("MMM")
+          m.monthNum = month
+          
+          m.orders.push order
+         
+          m.revenue += order.total
+          m.gross += order.profit
+
+          
+          for item in order.lineItems
+            m.hrsSold += calcTotal [item]
+
+        _.each report, (year) ->
+          _.each year, (month) ->
+              console.log "month", month
+              if _.isString month then return 
+              month.customerTotal = _.uniq(_.pluck month.orders, 'userId').length
+              month.hrPerCust = month.hrsSold/month.customerTotal
+              month.revPerHour = month.revenue/month.hrsSold
+              month.margin = month.gross/month.revenue
+              
+              
+              reportTotals.numMonths++
+              reportTotals.customerTotal += month.customerTotal
+              reportTotals.hrsSold += month.hrsSold
+              reportTotals.revPerHour += month.revPerHour
+              reportTotals.revenue += month.revenue
+              reportTotals.gross += month.gross
+              reportTotals.margin += month.margin
+
+              
+              
+        reportTotals.revPerHour = reportTotals.revPerHour/reportTotals.numMonths
+        reportTotals.margin = reportTotals.margin/reportTotals.numMonths
+        reportTotals.hrPerCust = reportTotals.hrsSold/reportTotals.customerTotal
+        reportTotals.ltv = reportTotals.margin*reportTotals.revPerHour*reportTotals.hrPerCust
+
+            
+
+        # Update Scope
+        $scope.report = report
+        $scope.reportTotals = reportTotals
+
+        console.log "$scope.report", $scope.report, $scope.reportTotals
+        $scope.reportVisible = true
+
+
+      $scope.getYear = (index) ->
+        if index is 0
+          return "2013"
+        if index is 1 
+          return "2014"
+      
+      $scope.getMonth = (index) ->
+        date = new Date(2014, index, 1)
+        month = moment(date).format("MMM")
+      
+      
+    
+    
+    # $scope.toggleReport()
 
     
 
