@@ -75,52 +75,52 @@
   <hr>
 
   <div ng-show="reportVisible">
-    <div class="container">
-      <h2 class="text-light m-b-1">
+    <div class="container mth-mth">
+      <h6 class="text-light m-b-1">
         Month on Month
-      </h2>
+      </h6>
 
 
-      <table class="table table-numbers">
+      <table class="table">
 
         <thead>
-          <th class="mth">Mth</th>
+          <th class="mth first">Mth</th>
           <th class="gro">Gross</th>
           <th class="mar">Margin</th>
           <th class="rev">Revenue</th>
           <th class="avh">Avg/Hr</th>
           <th class="hrs">Hours</th>
           <th class="hrc">Hr/Cust</th>
-          <th class="cus">Customers</th>
+          <th class="mth last">Customers</th>
         </thead>
 
-        <tr ng-repeat="month in report">
-          <td>{{month.monthName}}</td>
-          <td>{{month.gross }}</td>
-          <td class="o">{{month.margin * 100 | number : 1}}%</td>
-          <td>{{month.revenue | number : 0}}</td>
-          <td class="o">${{month.revPerHour | number : 0}}</td>
-          <td>{{month.hrsSold}}</td>
-          <td class="o">{{month.hrPerCust | number : 1}}</td>
-          <td>{{month.customerTotal}}</td>
+        <tr ng-repeat="r in report" class="{{r.css}}">
+          <td class="m">{{r.monthName}}</td>
+          <td ng-bind-html="r.gross | number : 0 | pFormat : r.pgross"></td>
+          <td class="o" ng-bind-html="r.margin | percent | pFormat : r.pmargin"></td>
+          <td ng-bind-html="r.revenue | number : 0 | pFormat : r.prevenue"></td>
+          <td ng-bind-html="r.revPerHour | number : 0 | dollar | pFormat : r.prevPerHour" class="o">$</td>
+          <td ng-bind-html="r.hrsSold | pFormat: r.phrsSold"></td>
+          <td class="o" ng-bind-html="r.hrPerCust | number : 1 | pFormat: r.phrPerCust"></td>
+          <td ng-bind-html="r.customerTotal | pFormat: r.pcustomerTotal"></td>
         </tr>
       </table>
 
 
       <table class="table">
         <thead>
+          <th class="first">LTV</th>
           <th>Total Gross</th>
           <th>Avg Margin</th>
           <th>Total Revenue</th>
           <th>Avg Rev/Hr</th>
           <th>Avg Hr/Cust</th>
           <th>Total Hrs</th>
-          <th>Cust Total</th>
-          <th>LTV</th>
+          <th class="last">Cust Total</th>
         </thead>
 
         <tr class="success">
-          <!-- <td>{{getMonth($index)}}</td> -->
+          <td>{{reportTotals.ltv | currency}}</td>
           <td>{{reportTotals.gross | currency}}</td>
           <td>{{reportTotals.margin * 100 | number : 2}}%</td>
           <td>{{reportTotals.revenue | currency}}</td>
@@ -128,7 +128,6 @@
           <td>{{reportTotals.hrPerCust | number : 2}} hrs</td>
           <td>{{reportTotals.hrsSold}} hrs</td>
           <td>{{reportTotals.customerTotal}}</td>
-          <td>{{reportTotals.ltv | currency}}</td>
         </tr>
       </table>
 

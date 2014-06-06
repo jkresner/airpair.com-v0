@@ -12,13 +12,16 @@ body#admorders {
   #order .form { float:left;width:39%; }
   #order pre { float:right;width:59%;font-size:10px;line-height:1.1; }
 
-  .table-numbers {
-    th { text-align:right }
-    th.mth { width:20px; }
-    td { text-align:right }
+  .mth-mth {
+    tr.change td { padding:4px;font-size:11px }
+    th { text-align:right; }
+    th.first { width:30px; }
+    th.last { width:14% }
+    td { text-align:right;padding:6px }
     td.o { color:orange }
-    td.g { color:green; }
-    td.r { color:red; }
+    td.m { color:gray }
+    td div.g { color:green;margin-right:6px }
+    td div.r { color:red;margin-right:6px }
   }
 }
 

@@ -27,7 +27,22 @@ module.exports = (pageData) ->
   ).
 
 
+  filter('pFormat', ($sce) ->
+    (input, ratio) ->
+      if ratio
+        formatCss = if ratio > 0 then "g" else "r"
+        $sce.trustAsHtml "<div class='#{formatCss}'>#{Math.round(ratio*100)}%</div>"
+      else
+        $sce.trustAsHtml "<div>#{input}</div>"
+  ).
 
+  filter('dollar', ->
+    (input) -> "$#{input}"
+  ).
+
+  filter('percent', ->
+    (input) -> "#{Math.round(input*100)}%"
+  ).
 
   # CONTROLLER –  Orders
 
@@ -199,6 +214,7 @@ module.exports = (pageData) ->
         for item in order.lineItems
           m.hrsSold += calcTotal [item]
 
+      last = null
       # _.each report, (year) ->
       _.each report, (month) ->
         # console.log "month", month.monthName
@@ -216,7 +232,22 @@ module.exports = (pageData) ->
         reportTotals.gross += month.gross
         reportTotals.margin += month.margin
 
+
+        if last?
+          scopereport.push
+            css: 'change'
+            monthIdx: "#{last.monthIdx}c#{month.monthIdx}"
+            pcustomerTotal: (month.customerTotal-last.customerTotal)/last.customerTotal
+            phrPerCust: (month.hrPerCust-last.hrPerCust)/last.hrPerCust
+            phrsSold: (month.hrsSold-last.hrsSold)/last.hrsSold
+            prevPerHour: (month.revPerHour-last.revPerHour)/last.revPerHour
+            prevenue: (month.revenue-last.revenue)/last.revenue
+            pgross: (month.gross-last.gross)/last.gross
+            pmargin: (month.margin-last.margin)/last.margin
+
         scopereport.push month
+
+        last = month
 
 
       reportTotals.revPerHour = reportTotals.revPerHour/reportTotals.numMonths
@@ -226,10 +257,11 @@ module.exports = (pageData) ->
 
 
       # Update Scope
-      $scope.report = _.sortBy scopereport, (m) -> -1 * m.monthIdx
+      $scope.report = _.sortBy(scopereport, (m) -> m.monthIdx).reverse()
       $scope.reportTotals = reportTotals
 
-      console.log "$scope.report", $scope.report, $scope.reportTotals
+      console.log "order", _.pluck $scope.report, 'monthIdx'
+      # console.log "$scope.report", $scope.report, $scope.reportTotals
       $scope.reportVisible = true
 
 
@@ -242,8 +274,6 @@ module.exports = (pageData) ->
       $scope.getMonth = (index) ->
         date = new Date(2014, index, 1)
         month = moment(date).format("MMM")
-
-
 
 
     # $scope.toggleReport()
