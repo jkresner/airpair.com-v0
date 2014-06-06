@@ -6,7 +6,7 @@
   <div class="container">
     <div class="row">
 
-      
+
       <div class="col-sm-3">
         <h1 class="text-light">
           Orders
@@ -17,8 +17,8 @@
           </small>
         </h3>
       </div>
-      
-      
+
+
       <!-- Date range -->
 
       <div class="col-sm-9 m-t-1">
@@ -48,14 +48,14 @@
                 <label class="btn btn-primary" ng-model="dateRange" btn-radio="'6 weeks'">Six Weeks</label>
                 <label class="btn btn-primary" ng-model="dateRange" btn-radio="'all'">All</label>
             </div>
-            
+
             <button type="button" class="btn m-l-half" ng-click="toggleReport()" ng-class="{'btn-default': !reportVisible, 'btn-success': reportVisible}">
               <span ng-show="!reportVisible">Show Report</span>
               <span ng-show="reportVisible">Hide Report</span>
             </button>
-            
+
             <br>
-            
+
             <div class="btn-group m-t-half">
                 <label ng-repeat="month in months" class="btn btn-default" ng-click="setDateRange(month)" ng-class="{active: getDateStr() == month.str}">{{month.str}}</label>
             </div>
@@ -72,38 +72,36 @@
 
   </div>
 
-  <hr>  
-
-
+  <hr>
 
   <div ng-show="reportVisible">
     <div class="container">
       <h2 class="text-light m-b-1">
-        Month to Month Report
+        Month on Month
       </h2>
 
 
-
-      <table class="table" ng-repeat="year in report">
-        
+      <table class="table table-numbers">
 
         <thead>
-          <th>{{year.$yearName}}</th>
-          <th>Gross</th>
-          <th>Margin</th>
-          <th>Revenue</th>
-          <th>Avg/Hr</th>
-          <th>Hours</th>
-          <th>Cust Total</th>
+          <th class="mth">Mth</th>
+          <th class="gro">Gross</th>
+          <th class="mar">Margin</th>
+          <th class="rev">Revenue</th>
+          <th class="avh">Avg/Hr</th>
+          <th class="hrs">Hours</th>
+          <th class="hrc">Hr/Cust</th>
+          <th class="cus">Customers</th>
         </thead>
 
-        <tr ng-repeat="month in year | orderBy : 'monthNum'">
+        <tr ng-repeat="month in report">
           <td>{{month.monthName}}</td>
-          <td>{{month.gross | currency}}</td>
-          <td>{{month.margin * 100 | number : 2}}%</td>
-          <td>{{month.revenue | currency}}</td>
-          <td>{{month.revPerHour | currency}}</td>
-          <td>{{month.hrsSold}} hrs</td>
+          <td>{{month.gross }}</td>
+          <td class="o">{{month.margin * 100 | number : 1}}%</td>
+          <td>{{month.revenue | number : 0}}</td>
+          <td class="o">${{month.revPerHour | number : 0}}</td>
+          <td>{{month.hrsSold}}</td>
+          <td class="o">{{month.hrPerCust | number : 1}}</td>
           <td>{{month.customerTotal}}</td>
         </tr>
       </table>
@@ -141,7 +139,7 @@
 
 
 
- 
+
 
 
 
@@ -168,7 +166,7 @@
             <th id="orderCount">{{summary.orderCount}}</th>
             <th id="customerCount">{{summary.customerCount}}</th>
             <th id="requestCount">{{summary.requestCount}}</th>
-            <th>&nbsp;</th> 
+            <th>&nbsp;</th>
             <th id="hourCount">
               <!-- hours redeemed / hours completed / hours total | unique experts -->
               {{summary.totalRedeemed}} / {{summary.totalCompleted}} / {{summary.totalHours}} | {{summary.expertCount }}
@@ -179,17 +177,17 @@
         </thead>
         <tbody>
           <tr ng-repeat="order in visibleOrders | orderBy : 'utc' : true" class="order" ng-show="isWithinDate(order)">
-            
+
             <!-- Total -->
             <td class="total">
               ${{order.total}}
             </td>
-            
+
             <!-- Order Number -->
             <td>
                 <span>
                   <a href="/adm/ang/orders/edit/{{order._id}}" ng-click="" class="selectOrder">
-                    <img src="/images/css/{{order.paymentType}}-favicon.ico" class="favicon"> 
+                    <img src="/images/css/{{order.paymentType}}-favicon.ico" class="favicon">
                     {{order.utc | date:"MMM d yyyy"}}
                   </a>
                 </span>
@@ -197,7 +195,7 @@
                 <b ng-class="order.paymentStatus">{{order.paymentStatus}}</b>
                 <!-- TODO: errors -->
             </td>
-            
+
             <!-- User -->
             <td>
                 <img ng-show="order.company.contacts[0].pic" ng-src="{{order.company.contacts[0].pic}}" style="float:left;margin:5px">
@@ -210,20 +208,20 @@
                   {{order.company.name}}
                 </div>
             </td>
-            
+
             <!-- Request -->
             <td class="">
-                <span class="label label-owner label-{{order.owner}}">{{order.owner}}</span> 
+                <span class="label label-owner label-{{order.owner}}">{{order.owner}}</span>
                 <a href="/adm/pipeline/request/{{order.requestId}}" target="_blank" data-id="{{order.requestId}}">{{order.requestId}}</a>
                 <br>
-                <span ng-repeat="tag in order.marketingTags" class="marketingtag label" ng-class="tag.type">{{tag.name}} </span> 
+                <span ng-repeat="tag in order.marketingTags" class="marketingtag label" ng-class="tag.type">{{tag.name}} </span>
             </td>
 
             <!-- Pay -->
             <td>
-              
+
               <b ng-if="order.paymentStatus == 'paidout'" ng-repeat="item in order.lineItems" class="paidout" data-id="{{ item._id }}">paid</b>
-              
+
               <!-- not paid out -->
               <div ng-if="order.paymentStatus != 'paidout'">
 
@@ -246,7 +244,7 @@
                 {{item.redeemed}} / {{item.completed}} / {{item.total}}
 
                 <!-- TODO: check right numbers -->
-                <img class="expertPic" ng-src="{{item.suggestion.expert.pic}}"> 
+                <img class="expertPic" ng-src="{{item.suggestion.expert.pic}}">
                 {{item.suggestion.expert.name}}
 
                 <br>
@@ -263,7 +261,7 @@
           </tr>
         </tbody>
       </table>
-    </div> <!-- #list --> 
+    </div> <!-- #list -->
 
 
-  </div> <!-- .container --> 
+  </div> <!-- .container -->

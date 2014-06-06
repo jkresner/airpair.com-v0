@@ -8,7 +8,7 @@ calcExpertCredit = require 'lib/mix/calcExpertCredit'
 module.exports = (pageData) ->
 
 
-  
+
   # Create new app
   angular.module("AirpairAdmin", ["ngRoute", "ui.bootstrap"]).
 
@@ -30,9 +30,9 @@ module.exports = (pageData) ->
 
 
   # CONTROLLER –  Orders
-  
+
   controller "OrdersCtrl", ["$scope", "$location", ($scope, $location) ->
-    
+
     allOrders = pageData.orders
 
     firstOrderDate = new Date(allOrders[0].utc)
@@ -59,15 +59,15 @@ module.exports = (pageData) ->
 
     # Set default date range to 6 weeks
     $scope.dateRange = "6 weeks"
-    
-    
+
+
 
 
 
     $scope.isWithinDate = (order) ->
       orderDate = new Date(order.utc)
       return orderDate > $scope.dateStart && orderDate < $scope.dateEnd
-    
+
     $scope.updateDateRange = (newRange) ->
       date = new Date()
       if _.isString(newRange)
@@ -100,23 +100,23 @@ module.exports = (pageData) ->
       else if _.isObject($scope.dateRange) then $scope.dateRange.str
 
 
-    
+
     $scope.updateOrderList = () ->
-      $scope.visibleOrders = []      
+      $scope.visibleOrders = []
       for order in allOrders
         if $scope.isWithinDate(order)
           $scope.visibleOrders.push order
       $scope.calcSummary()
-      
+
     $scope.calcSummary = () ->
-      $scope.summary = 
+      $scope.summary =
         totalRevenue: 0
         orderCount: 0
         customerCount: 0
-        requestCount: 0 
+        requestCount: 0
         totalRedeemed: 0
         totalCompleted: 0
-        totalHours: 0 
+        totalHours: 0
         expertCount: 0
         totalProfit: 0
         experts: []
@@ -131,7 +131,7 @@ module.exports = (pageData) ->
             $scope.summary.totalHours += calcTotal [item]
             $scope.summary.experts.push item.suggestion.expert._id
 
-      $scope.summary.orderCount = $scope.visibleOrders.length      
+      $scope.summary.orderCount = $scope.visibleOrders.length
       $scope.summary.customerCount = _.uniq(_.pluck $scope.visibleOrders, 'userId').length
       $scope.summary.requestCount = _.uniq(_.pluck $scope.visibleOrders, 'requestId').length
       $scope.summary.expertCount = _.uniq($scope.summary.experts).length
@@ -147,7 +147,7 @@ module.exports = (pageData) ->
 
 
     # Month to Month report
-    #----------------------------------------------    
+    #----------------------------------------------
 
 
     $scope.reportVisible = false
@@ -155,106 +155,109 @@ module.exports = (pageData) ->
 
     $scope.toggleReport = () ->
       if $scope.reportVisible then return $scope.reportVisible = false
-      else
-        
-        # Generate Report Data
-        report = {}
-        reportTotals = 
-          customerTotal: 0
-          hrsSold: 0
-          numMonths: 0
-          revPerHour: 0
-          revenue: 0
-          gross: 0
-          margin: 0
 
-        for order in allOrders
-          year = moment(order.utc).year()
-          month = moment(order.utc).month()
-            
-          if not report[year] then report[year] = {}
-          if not report[year][month] then report[year][month] = 
+      # Generate Report Data
+      scopereport = []
+      report = {}
+      reportTotals =
+        customerTotal: 0
+        hrsSold: 0
+        numMonths: 0
+        revPerHour: 0
+        revenue: 0
+        gross: 0
+        margin: 0
+
+      for order in allOrders
+        # year = moment(order.utc).year()
+        # month = moment(order.utc).month()
+        # yearmonth = moment(new Date(year, month, 1))
+        monthName = moment(order.utc).format("MMM")
+        monthIdx = moment(order.utc).format("YYMM")
+
+        # if not report[year] then report[year] = {}
+        if not report[monthIdx]
+          report[monthIdx] =
             revenue: 0
             gross: 0
             hrsSold: 0
             orders: []
+            monthIdx: monthIdx
+            monthName: monthName
+            # monthName:  moment(new Date(year, month, 1)).format("MMM")
+            # monthNum: month
 
-           
-          m = report[year][month]
-          
-          report[year].$yearName = moment(new Date(year, month, 1)).format("YYYY")
-          m.monthName = moment(new Date(year, month, 1)).format("MMM")
-          m.monthNum = month
-          
-          m.orders.push order
-         
-          m.revenue += order.total
-          m.gross += order.profit
+        m = report[monthIdx]
 
-          
-          for item in order.lineItems
-            m.hrsSold += calcTotal [item]
+        # report[year].$yearName = moment(new Date(year, month, 1)).format("YYYY")
 
-        _.each report, (year) ->
-          _.each year, (month) ->
-              console.log "month", month
-              if _.isString month then return 
-              month.customerTotal = _.uniq(_.pluck month.orders, 'userId').length
-              month.hrPerCust = month.hrsSold/month.customerTotal
-              month.revPerHour = month.revenue/month.hrsSold
-              month.margin = month.gross/month.revenue
-              
-              
-              reportTotals.numMonths++
-              reportTotals.customerTotal += month.customerTotal
-              reportTotals.hrsSold += month.hrsSold
-              reportTotals.revPerHour += month.revPerHour
-              reportTotals.revenue += month.revenue
-              reportTotals.gross += month.gross
-              reportTotals.margin += month.margin
+        m.orders.push order
 
-              
-              
-        reportTotals.revPerHour = reportTotals.revPerHour/reportTotals.numMonths
-        reportTotals.margin = reportTotals.margin/reportTotals.numMonths
-        reportTotals.hrPerCust = reportTotals.hrsSold/reportTotals.customerTotal
-        reportTotals.ltv = reportTotals.margin*reportTotals.revPerHour*reportTotals.hrPerCust
+        m.revenue += order.total
+        m.gross += order.profit
 
-            
+        for item in order.lineItems
+          m.hrsSold += calcTotal [item]
 
-        # Update Scope
-        $scope.report = report
-        $scope.reportTotals = reportTotals
+      # _.each report, (year) ->
+      _.each report, (month) ->
+        # console.log "month", month.monthName
 
-        console.log "$scope.report", $scope.report, $scope.reportTotals
-        $scope.reportVisible = true
+        month.customerTotal = _.uniq(_.pluck month.orders, 'userId').length
+        month.hrPerCust = month.hrsSold/month.customerTotal
+        month.revPerHour = month.revenue/month.hrsSold
+        month.margin = month.gross/month.revenue
+
+        reportTotals.numMonths++
+        reportTotals.customerTotal += month.customerTotal
+        reportTotals.hrsSold += month.hrsSold
+        reportTotals.revPerHour += month.revPerHour
+        reportTotals.revenue += month.revenue
+        reportTotals.gross += month.gross
+        reportTotals.margin += month.margin
+
+        scopereport.push month
 
 
-      $scope.getYear = (index) ->
-        if index is 0
-          return "2013"
-        if index is 1 
-          return "2014"
-      
+      reportTotals.revPerHour = reportTotals.revPerHour/reportTotals.numMonths
+      reportTotals.margin = reportTotals.margin/reportTotals.numMonths
+      reportTotals.hrPerCust = reportTotals.hrsSold/reportTotals.customerTotal
+      reportTotals.ltv = reportTotals.margin*reportTotals.revPerHour*reportTotals.hrPerCust
+
+
+      # Update Scope
+      $scope.report = _.sortBy scopereport, (m) -> -1 * m.monthIdx
+      $scope.reportTotals = reportTotals
+
+      console.log "$scope.report", $scope.report, $scope.reportTotals
+      $scope.reportVisible = true
+
+
+      # $scope.getYear = (index) ->
+      #   if index is 0
+      #     return "2013"
+      #   if index is 1
+      #     return "2014"
+
       $scope.getMonth = (index) ->
         date = new Date(2014, index, 1)
         month = moment(date).format("MMM")
-      
-      
-    
-    
+
+
+
+
     # $scope.toggleReport()
 
-    
 
 
 
-    
+
+
 
 
 
   ]
 
-      
 
-      
+
+
