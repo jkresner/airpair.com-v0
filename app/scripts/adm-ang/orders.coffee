@@ -54,10 +54,40 @@ module.exports = (pageData) ->
 
 
 
+  # Airpair Data Service
+  #----------------------------------------------
+  factory('apData', () ->
+    
+    apData = 
+      orders: 
+        data: pageData.orders
+        get: () ->
+          @data
+        calcCredits: () ->
+          console.log "calcCredits"
+          for order in @data
+            order.lineItems = order.lineItems.map (li) ->
+              expertCredit = calcExpertCredit [order], li.suggestion.expert._id
+              li.incomplete = expertCredit.total is 0 or expertCredit.completed < expertCredit.total
+              _.extend li, expertCredit
+        
+
+    apData.orders.calcCredits()
+
+    return apData
+  ).
+
+
+
+
+
+
 
 
   # CONTROLLERS
   #----------------------------------------------
+
+
 
   # Nav Controller
   controller("NavCtrl", ["$scope", "$location", ($scope, $location) ->
@@ -68,21 +98,15 @@ module.exports = (pageData) ->
   ]).
 
 
+
+
   # Orders Controller
 
-  controller("OrdersCtrl", ["$scope", "$location", ($scope, $location) ->
+  controller("OrdersCtrl", ["$scope", "$location", "apData", ($scope, $location, apData) ->
 
-    allOrders = pageData.orders
+    allOrders = apData.orders.get()
 
     firstOrderDate = new Date(allOrders[0].utc)
-
-    # Iterate through orders
-    for order in allOrders
-      order.lineItems = order.lineItems.map (li) ->
-        expertCredit = calcExpertCredit [order], li.suggestion.expert._id
-        li.incomplete = expertCredit.total is 0 or expertCredit.completed < expertCredit.total
-        _.extend li, expertCredit
-
 
     # Get past 6 months
     $scope.months = []
@@ -303,13 +327,15 @@ module.exports = (pageData) ->
 
 
 
+
+
+
   # Order metrics controller
 
-  controller("MetricsCtrl", ["$scope", "$location", ($scope, $location) ->
+  controller("MetricsCtrl", ["$scope", "$location", "apData", ($scope, $location, apData) ->
+    console.log "metrics data", apData.orders.get()
 
-    console.log "METRICS YO"
-
-
+    
 
   ])
 
