@@ -29,8 +29,17 @@
   </nav>
 
 
+
+  <!-- Sub Nav -->
+
+
+  <ul class="nav nav-tabs" ng-controller="NavCtrl">
+    <li ng-class="navClass('browse')" style="margin-left: -50px;" ><a href="/adm/ang/orders">Browse</a></li>
+    <li ng-class="navClass('metrics')" ><a href="/adm/ang/orders/metrics">Metrics</a></li>
+  </ul>
+
   <!-- PAGE -->
-  <div ng-view="ng-view" style="margin-top: 20px;" ></div>
+  <div ng-view="ng-view" style="margin-top: 20px;"></div>
 
 
 

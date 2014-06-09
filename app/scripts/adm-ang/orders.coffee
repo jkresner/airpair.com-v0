@@ -21,11 +21,18 @@ module.exports = (pageData) ->
     $locationProvider.html5Mode true
 
     $routeProvider.
-      when('/adm/ang/orders',           {controller: 'OrdersCtrl',  templateUrl: "/adm/templates/orders.html"}).
+      when('/adm/ang/orders/metrics',   {controller: 'MetricsCtrl',  templateUrl: "/adm/templates/orders_metrics.html"}).
       when('/adm/ang/orders/edit/:id',  {controller: 'OrdersCtrl',  templateUrl: "/adm/templates/orders_edit.html"}).
+      when('/adm/ang/orders',           {controller: 'OrdersCtrl',  templateUrl: "/adm/templates/orders.html"}).
       otherwise({redirectTo: '/'})
   ).
 
+
+
+
+  # Filters
+
+  # TODO: use angular's built-in filters
 
   filter('pFormat', ($sce) ->
     (input, ratio) ->
@@ -36,6 +43,7 @@ module.exports = (pageData) ->
         $sce.trustAsHtml "<div>#{input}</div>"
   ).
 
+
   filter('dollar', ->
     (input) -> "$#{input}"
   ).
@@ -44,9 +52,25 @@ module.exports = (pageData) ->
     (input) -> "#{Math.round(input*100)}%"
   ).
 
-  # CONTROLLER –  Orders
 
-  controller "OrdersCtrl", ["$scope", "$location", ($scope, $location) ->
+
+
+
+  # CONTROLLERS
+  #----------------------------------------------
+
+  # Nav Controller
+  controller("NavCtrl", ["$scope", "$location", ($scope, $location) ->
+    # A function to add class to nav items
+    $scope.navClass = (page) ->
+      currentRoute = $location.path().substring(16) or "browse"
+      if page is currentRoute then "active" else ""
+  ]).
+
+
+  # Orders Controller
+
+  controller("OrdersCtrl", ["$scope", "$location", ($scope, $location) ->
 
     allOrders = pageData.orders
 
@@ -275,18 +299,21 @@ module.exports = (pageData) ->
         date = new Date(2014, index, 1)
         month = moment(date).format("MMM")
 
-
-    # $scope.toggleReport()
-
+  ]).
 
 
 
+  # Order metrics controller
+
+  controller("MetricsCtrl", ["$scope", "$location", ($scope, $location) ->
+
+    console.log "METRICS YO"
 
 
 
+  ])
 
 
-  ]
 
 
 
