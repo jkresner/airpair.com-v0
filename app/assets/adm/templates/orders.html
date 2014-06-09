@@ -35,6 +35,7 @@
               <input class="form-control" type="date" name="input" ng-model="dateEnd" placeholder="yyyy-MM-dd" min="2013-01-01" max="" required/>
             </div>
 
+            <input ng-model="orderSearch" type="text" class="form-control m-t-half" placeholder="Search orders in range">
 
           </div>
 
@@ -49,16 +50,18 @@
                 <label class="btn btn-primary" ng-model="dateRange" btn-radio="'all'">All</label>
             </div>
 
-            <button type="button" class="btn m-l-half" ng-click="toggleReport()" ng-class="{'btn-default': !reportVisible, 'btn-success': reportVisible}">
-              <span ng-show="!reportVisible">Show Report</span>
-              <span ng-show="reportVisible">Hide Report</span>
-            </button>
 
             <br>
 
             <div class="btn-group m-t-half">
                 <label ng-repeat="month in months" class="btn btn-default" ng-click="setDateRange(month)" ng-class="{active: getDateStr() == month.str}">{{month.str}}</label>
             </div>
+
+            <button type="button" class="btn m-t-half" ng-click="toggleReport()" ng-class="{'btn-default': !reportVisible, 'btn-success': reportVisible}">
+              <span ng-show="!reportVisible">Show Report</span>
+              <span ng-show="reportVisible">Hide Report</span>
+            </button>
+
 
 
           </div>
@@ -175,7 +178,7 @@
 
         </thead>
         <tbody>
-          <tr ng-repeat="order in visibleOrders | orderBy : 'utc' : true" class="order" ng-show="isWithinDate(order)">
+          <tr ng-repeat="order in visibleOrders | orderBy : 'utc' : true | filter:orderSearch:false" class="order" ng-show="isWithinDate(order)">
 
             <!-- Total -->
             <td class="total">
