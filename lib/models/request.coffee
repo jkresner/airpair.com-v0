@@ -4,10 +4,37 @@ Schema   = mongoose.Schema
 {ObjectId, Mixed} = Schema.Types
 
 
-VALID_CALL_TYPES = ['opensource', 'private', 'nda', 'subscription', 'offline']
+"""
+Request status
 
+  received      : requires review by airpair
+  incomplete    : more detail required
+  holding       : waiting for go ahead by customer
+  waiting       : no experts available yet
+  pending       : [bookme] customer put in request and expert has to confirm
+  review        : customer must review & choose one or more experts
+  scheduling    : call needs to be scheduled
+  scheduled     : one or more calls already scheduled
+  consumed      : feedback on all calls collected, but lead still warm for up-sell
+  complete      : transaction final and time to archive
+  canceled      : company has canceled the request
+  deferred      : customer indicated they need more time
 
-eStatus = ['waiting','opened','available','abstained','busy','underpriced','chosen','released']
+  ** after a user saves info from incomplete state, request goes back into received
+
+Suggestion expertStatus
+
+  waiting       : waiting to hear from the expert
+  opened        : expert has looked at request but not replied
+  busy          : expert cannot do it within 72 hours, but wants to do it after
+  abstained     : expert does not want the call
+  underpriced   : expert is available but wants more money
+  available     : expert wants the call
+  chosen        : customer has booked the expert
+  released      : expert wasn't booked within 72 hours
+"""
+
+eStatus = ['waiting','opened','busy','abstained','underpriced','available','chosen','released']
 
 
 Suggestion = new Schema
@@ -27,6 +54,10 @@ Suggestion = new Schema
 Recording = new Schema
   type: { required: true, type: String }
   data: { required: true, type: Mixed } # YouTube's API response
+
+
+
+VALID_CALL_TYPES = ['opensource', 'private', 'nda', 'subscription', 'offline']
 
 
 Call = new Schema
@@ -54,34 +85,6 @@ Call = new Schema
   # cmsStatus:        { request: true, type: String, default: 'nocontent' }  # nocontent, pending, incomplete, approved
   # cmsPermalink:     { required: true, type: ObjectId, unique: true, sparse: true } # index for quick search
   # airpairRating:    { type: Number }  # How we sort session by awesomeness
-
-
-"""
-Request status
-
-  received      : requires review by airpair
-  incomplete    : more detail required
-  holding       : waiting for go ahead by customer
-  waiting       : no experts available yet
-  pending       : [bookme] customer put in request and expert has to confirm
-  review        : customer must review & choose one or more experts
-  scheduling    : call needs to be scheduled
-  scheduled     : one or more calls already scheduled
-  consumed      : feedback on all calls collected, but lead still warm for up-sell
-  complete      : transaction final and time to archive
-  canceled      : company has canceled the request
-  deferred      : customer indicated they need more time
-
-  ** after a user saves info from incomplete state, request goes back into received
-
-Suggestion expertStatus
-
-  waiting       : waiting to hear from the expert
-  abstained     : expert does not want the call
-  available     : expert wants the call
-  unwanted      : customer does not want the expert
-  booked        : customer has booked the expert
-"""
 
 
 RequestSchema = new Schema
