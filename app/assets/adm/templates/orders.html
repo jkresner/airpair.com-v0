@@ -13,6 +13,7 @@
         </h1>
         <h3 class="flush-top">
           <small class="text-muted">
+            <div ng-show="orderSearch">Searching "{{orderSearch}}" in</div>
             {{dateStart | date:"MMM d, yyyy"}} – {{dateEnd | date:"MMM d, yyyy"}}
           </small>
         </h3>
