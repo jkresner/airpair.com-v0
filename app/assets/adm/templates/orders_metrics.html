@@ -1,19 +1,51 @@
 
 
 
-  <!-- PAGE -->
-
-  <div class="container">
-
-    <!-- <h2 class="text-light">Metrics</h2> -->
 
 
 
 
-    
+  <table class="table table-hover">
 
+    <thead>
+      <th>Date</th>
+      <th>Name</th>
+      <th>Total</th>
+      <th class="text-info">Ad</th>
+      <th class="text-info">Affiliate</th>
+      <th class="text-info">Direct</th>
+      <th class="text-info">Newsletter</th>
+      <th class="text-info">Incubator</th>
+      <th class="text-info">Press</th>
+      <th class="text-info">Product</th>
+      <th class="text-info">SEO</th>
+      <th class="text-info">Social</th>
+      <th class="text-info">WoM</th>
+      <th class="text-info">AoA</th>
+      <th class="text-info">Untracked</th>
+      <th class="text-success">Campaigns</th>
+    </thead>
 
-    
+    <tr ng-repeat="order in metrics">
+      <td class="text-muted">{{order.utc | date:"MMM d yyyy"}}</td>
+      <td>{{order.name}}</td>
+      <td>${{order.total}}</td>
 
-
-  </div> <!-- .container --> 
+      <td class="text-info">{{order.tags.ad.total | number: 0}}</td>
+      <td class="text-info">{{order.tags.affiliate.total | number: 0}}</td>
+      <td class="text-info">{{order.tags.direct.total | number: 0}}</td>
+      <td class="text-info"><span ng-show="order.tags.newsletter-airpair.total">{{order.tags.newsletter-airpair.total | number: 0}}</span></td>
+      <td class="text-info">{{order.tags.incubator.total | number: 0}}</td>
+      <td class="text-info">{{order.tags.press.total | number: 0}}</td>
+      <td class="text-info">{{order.tags.product.total | number: 0}}</td>
+      <td class="text-info">{{order.tags.seo.total | number: 0}}</td>
+      <td class="text-info">{{order.tags.social.total | number: 0}}</td>
+      <td class="text-info">{{order.tags.wordofmouth.total | number: 0}}</td>
+      <td class="text-info"><!-- AoA? --></td>
+      <td class="text-info">{{order.tags.untracked.total | number: 0}}</td>
+      <td>
+        <span ng-repeat="tag in order.campaigns" class="label label-success">{{tag}}</span>
+      </td>
+      
+    </tr>
+  </table>

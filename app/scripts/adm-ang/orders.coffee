@@ -54,11 +54,14 @@ module.exports = (pageData) ->
 
 
 
+
+
   # Airpair Data Service
   #----------------------------------------------
+
   factory('apData', () ->
     
-    apData = 
+    window.apData = 
       orders: 
         data: pageData.orders
         get: () ->
@@ -70,7 +73,44 @@ module.exports = (pageData) ->
               expertCredit = calcExpertCredit [order], li.suggestion.expert._id
               li.incomplete = expertCredit.total is 0 or expertCredit.completed < expertCredit.total
               _.extend li, expertCredit
+
+        getMetrics: () ->
+          if @metrics then return @metrics else @metrics = []
+
+          for order in apData.orders.data
+            metric = 
+              utc: order.utc
+              name: order.company.contacts[0].fullName
+              tags: {}
+              total: order.total
+              campaigns: []
+            
+            _.each order.marketingTags, (tag) ->
+              console.log tag.group, tag
+              if tag.type is "channel" or tag.type is "campaign"
+                metric.tags[tag.group] = tag
+                metric.tags[tag.group].total = metric.total/order.marketingTags.length 
+
+                if tag.type is "campaign"
+                  metric.campaigns.push(tag.name)
+
+
+            
+            @metrics.push metric
+
+
+          _(@metrics).reverse()
+
+
+
+          return @metrics
+
+            
+
+
+
         
+
 
     apData.orders.calcCredits()
 
@@ -333,9 +373,15 @@ module.exports = (pageData) ->
   # Order metrics controller
 
   controller("MetricsCtrl", ["$scope", "$location", "apData", ($scope, $location, apData) ->
-    console.log "metrics data", apData.orders.get()
 
-    
+    $scope.metrics = apData.orders.getMetrics()
+
+    console.log "metrics", $scope.metrics
+
+
+
+
+
 
   ])
 
