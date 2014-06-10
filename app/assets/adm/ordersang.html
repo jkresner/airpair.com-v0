@@ -8,42 +8,36 @@
     <link rel="stylesheet" href="/css/adm-ang.css">
 </head>
 
-<body id="admorders" style="background: #fff" >
+<body>
 
 
   <!-- NAVBAR -->
-
-  <nav style="background-color: rgb(31, 31, 31);;" >
+  <nav class="navbar navbar-inverse navbar-static-top" role="navigation" ng-controller="NavCtrl">
     <div class="container">
-      <a href="/" style="background-size: 31px;margin-top: -2px;" ></a>
-      <ul>
-        <li><a href="/adm/pipeline">Pipeline</a></li>
-        <li><a href="#inactive">Inactive</a></li>
-        <li><a href="/adm/orders">Orders</a></li>
-        <li><a href="/adm/tags">Tags</a></li>
-        <li><a href="/adm/marketingtags">Marketing</a></li>
-        <li><a href="/adm/experts">Experts</a></li>
+      <a class="navbar-brand" href="/adm"><img src="/images/icons/icon48.png" alt="" style="position: relative; top: -11px; width: 43px;" ></a>
+      <ul class="nav navbar-nav navbar-right">
         <li><a href="/adm/companys">Companys</a></li>
+        <li><a href="/adm/experts">Experts</a></li>
+        <li><a href="/adm/marketingtags">Marketing</a></li>
+        <li><a href="/adm/tags">Tags</a></li>
+        <li  ng-class="navClass('browse')"><a href="/adm/ang/orders" style="padding-right: 8px; padding-left: 8px;">Orders</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="padding-left: 6px; padding-right: 7px;" ><b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li><a href="#">Mth on Mth</a></li>
+            <li><a href="/adm/ang/orders/metrics">Channels</a></li>
+          </ul>
+        </li>
+        <li><a href="/adm/pipeline">Pipeline</a></li>
       </ul>
     </div>
   </nav>
 
 
-
-  <!-- Sub Nav -->
-
-
-  <ul class="nav nav-tabs" ng-controller="NavCtrl">
-    <li ng-class="navClass('browse')" style="margin-left: -50px;" ><a href="/adm/ang/orders">Browse</a></li>
-    <li ng-class="navClass('metrics')" ><a href="/adm/ang/orders/metrics">Metrics</a></li>
-  </ul>
-
   <!-- PAGE -->
   <div ng-view="ng-view" style="margin-top: 20px;"></div>
 
 
-
-</body>
 
   <script type="text/javascript">
     function initApp() {
@@ -57,4 +51,6 @@
     .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
   </style>
 
+
+</body>
 </html>

@@ -62,7 +62,7 @@ exports.config =
       joinTo:
         'css/ap.css': /(css\/ap|css\/shared|css\/old)/
         'css/adm.css': /(app\/css\/adm|vendor\/css\/adm-bb|css\/shared)/
-        'css/adm-ang.css': /(app\/css\/adm|vendor\/css\/adm-ang|css\/shared)/
+        'css/adm-ang.css': /(vendor\/css\/adm-ang)/
         'test/stylesheets/test.css': /^test/
       order:
         before: [
