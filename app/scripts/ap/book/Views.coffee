@@ -10,7 +10,6 @@ RV      = require '../../ap/request/Views'
 
 
 class exports.WelcomeView extends BB.BadassView
-  logging: on
   el: '#welcome'
   tmpl: require './templates/Welcome'
   initialize: ->
@@ -108,7 +107,9 @@ class exports.InfoFormView extends RV.InfoFormView
     addjs.trackEvent @e.category, @e.name, @elm('fullName').val(), @timer.timeSpent()
     addjs.providers.mp.setPeopleProps isCustomer : 'Y'
     router.navTo 'thanks'
-    @request.save 'company', @company.attributes
+    @request.urlRoot = '/api/requests'
+    @request.save 'company', model.attributes
+    $('#info').hide()
 
 class exports.ExpertView extends BB.BadassView
   el: '#expert'
