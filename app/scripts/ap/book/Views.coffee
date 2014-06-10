@@ -2,7 +2,7 @@ exports = {}
 BB      = require 'BB'
 M       = require './Models'
 SV      = require '../../shared/Views'
-
+RV      = require '../../ap/request/Views'
 
 #############################################################################
 ##
@@ -37,7 +37,6 @@ class exports.StripeRegisterView extends SV.StripeRegisterView
   successAction: =>
     $('#card').hide()
     @$el.remove()
-
 
 class exports.RequestView extends BB.ModelSaveView
   el: '#request'
@@ -92,10 +91,24 @@ class exports.RequestView extends BB.ModelSaveView
   renderSuccess: (model, response, options) =>
     addjs.providers.mp.incrementPeopleProp "requestCount"
     addjs.trackEvent 'book', @e.name, @model.contact(0).fullName
-    router.navTo 'thanks'
+    if @company.get('name')?
+      router.navTo 'thanks'
+    else
+      $('#detail').hide()
+      $('#info').show()
   getBudget: ->
     parseInt(@expert.get('bookMe').rate) + @model[@$("[name='pricing']:checked").val()]
 
+
+class exports.InfoFormView extends RV.InfoFormView
+  tmplWrap: require './templates/InfoForm'
+  renderSuccess: (model, response, options) =>
+    if @isReturnCustomer
+      @e.name = "customerInfoRepeat"
+    addjs.trackEvent @e.category, @e.name, @elm('fullName').val(), @timer.timeSpent()
+    addjs.providers.mp.setPeopleProps isCustomer : 'Y'
+    router.navTo 'thanks'
+    @request.save 'company', @company.attributes
 
 class exports.ExpertView extends BB.BadassView
   el: '#expert'
