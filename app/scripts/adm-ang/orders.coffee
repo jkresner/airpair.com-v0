@@ -68,7 +68,6 @@ module.exports = (pageData) ->
         get: () ->
           @data
         calcCredits: () ->
-          console.log "calcCredits"
           for order in @data
             order.lineItems = order.lineItems.map (li) ->
               expertCredit = calcExpertCredit [order], li.suggestion.expert._id
@@ -234,6 +233,9 @@ module.exports = (pageData) ->
       for order in allOrders
         if $scope.isWithinDate(order)
           $scope.visibleOrders.push order
+      if $scope.orderSearch
+        $scope.visibleOrders = $filter('filter')($scope.visibleOrders, $scope.orderSearch)
+
       $scope.calcSummary()
 
     $scope.calcSummary = () ->
@@ -265,11 +267,14 @@ module.exports = (pageData) ->
       $scope.summary.expertCount = _.uniq($scope.summary.experts).length
 
 
+    
     $scope.search = (text) ->
-      return if not text
-      $scope.dateRange = ''
-      $scope.visibleOrders = $filter('filter')(allOrders, text)
-      $scope.calcSummary()
+      if not text
+        $scope.updateOrderList()
+      else 
+        $scope.dateRange = 'all'
+        $scope.visibleOrders = $filter('filter')(allOrders, text)
+        $scope.calcSummary()
 
 
     # Watch date updates
@@ -280,12 +285,6 @@ module.exports = (pageData) ->
     # Search updates
     $scope.$watch "orderSearch", (text) -> $scope.search(text)
 
-
-
-    $scope.monthTotalItems = 175
-    $scope.monthCurrentPage = 3
-    $scope.monthMaxSize = 6
-    $scope.monthNumPages = 18
 
 
 
@@ -355,7 +354,6 @@ module.exports = (pageData) ->
       last = null
       # _.each report, (year) ->
       _.each report, (month) ->
-        # console.log "month", month.monthName
 
         month.customerTotal = _.uniq(_.pluck month.orders, 'userId').length
         month.hrPerCust = month.hrsSold/month.customerTotal
