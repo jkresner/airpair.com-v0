@@ -34,7 +34,13 @@
 
               <div id="welcome"></div>
 
-              <article id="stripeRegister" class="post type-post format-standard entry"></article>
+              <div id="card" style="display:none">
+                <div class="left-container">
+                  <p><span>Let's get started!</span> Before I accept your request, we need payment info. AirPair removes the hassles with paying consultants. You only need to enter your card once, and from them on we can just focus on code.</p>
+                </div>
+                <h1 class="how-header">Add payment method</h1>
+                <article id="stripeRegister" class="post type-post format-standard entry"></article>
+              </div>
 
               <div id="request"></div>
 
@@ -60,6 +66,15 @@
 
   </div>
 
+  <style type="text/css">
+    .left-container { padding:20px; }
+    .left-container p { font-size:20;margin-bottom:6px }
+    #stripeRegister header { display:none }
+    .control-group { margin-bottom:10px;clear:both; }
+    .control-label { margin-bottom:10px;margin-left:2px; }
+    .controls { padding-top:5px;clear:both }
+    #stripeRegister img { padding-bottom:20px; }
+  </style>
   {{> siteFooter }}
 
 </body>

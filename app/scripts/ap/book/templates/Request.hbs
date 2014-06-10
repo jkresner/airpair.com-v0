@@ -1,13 +1,12 @@
 
   <main class="content">
-    <h1 class="entry-title" itemprop="headline">Request to AirPair with {{expertFirstName}}</h1>
+    <h1 class="entry-title" itemprop="headline">What do you need?</h1>
+    <div class="left-container">
+    <p><span>Tell me how I can help</span>. You only get charged when I confirm I can help. If I don't have enough detail on your requirements, I may say no. If you want to pair sooner than I'm available, AirPair will recommend an alternative.</p>
+  </div>
+
+    <h1 class="how-header">Details</h1>
     <article class="post type-post format-standard entry">
-      <header class="entry-header">
-
-        <p class="entry-meta"><time>Before AirPairing, {{expertFirstName}} will review your request and confirm he can help.</time></p>
-      </header>
-
-
       <div class="entry-content" style="padding:0px 20px">
 
         <div class="alert alert-error">
@@ -18,7 +17,7 @@
         <div class="control-group" style="clear:both">
           <label class="control-label">What do you want help with?</label>
           <div class="controls controls-brief">
-            <textarea id="reqBrief" name="brief" placeholder="{{expertFirstName}} may decline your request if there isn't enough detail..." style="height:110px"></textarea>
+            <textarea id="reqBrief" name="brief" placeholder="Enter as much detail as possible." style="height:110px"></textarea>
           </div>
         </div>
 
@@ -34,8 +33,15 @@
           </select>
         </div>
 
+        <div class="control-group">
+          <label class="control-label" for="availabilityInput">What's your timezone & urgency?</label>
+          <div class="controls controls-availability">
+            <textarea id="availability" name="availability" placeholder="E.g. 'San Francisco (PST). I am flexible any time in the next week.'" style="height:70px">{{ availability }}</textarea>
+          </div>
+        </div>
+
         <div class="control-group pricing-group">
-          <label class="control-label">Want to 'open source' your session recordings? </label>
+          <label class="control-label">Want to 'open source' our session recordings? </label>
           <div class="pricing rb-group controls">
             <input type="radio" id="pricingOpensource" name="pricing" value="opensource" />
             <label for="pricingOpensource" class="pricingOpensource">Yes <em class="opensource">$<span></span>/hr discount</em> </label>
@@ -49,17 +55,10 @@
 
         </div>
 
-        <div class="control-group">
-          <label class="control-label" for="availabilityInput">What's your timezone & urgency?</label>
-          <div class="controls controls-availability">
-            <textarea id="availability" name="availability" placeholder="E.g. 'San Francisco (PST). I am flexible any time in the next week.'" style="height:70px">{{ availability }}</textarea>
-          </div>
-        </div>
-
       </div>
 
 
-      <div style="clear:both;height:40px"></div>
+      <div style="clear:both;height:20px"></div>
       <footer class="entry-footer">
         <div class="form-actions">
           <a href="save" class="save button large" style="background-color:#CE5323">Choose # of hours to continue</a>

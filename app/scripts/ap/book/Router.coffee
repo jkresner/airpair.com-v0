@@ -37,7 +37,7 @@ module.exports = class Router extends S.AirpairSessionRouter
           Stripe.setPublishableKey pageData.stripePK
 
       d.company.fetch success: (m, opts, resp) =>
-        m.populateFromGoogle d.session
+        m.populateFromGoogle @app.session
 
     @setOrFetch d.expert, expert
 
