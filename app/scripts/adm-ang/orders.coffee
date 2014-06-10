@@ -73,42 +73,65 @@ module.exports = (pageData) ->
               expertCredit = calcExpertCredit [order], li.suggestion.expert._id
               li.incomplete = expertCredit.total is 0 or expertCredit.completed < expertCredit.total
               _.extend li, expertCredit
+        
+        getMetrics: (start, end) ->
+          if not @metrics
+            @metrics = []
+            for order in apData.orders.data
+              metric = 
+                utc: order.utc
+                name: order.company.contacts[0].fullName
+                tags: {}
+                total: order.total
+                campaigns: []
+                requestId: order.requestId
+              _.each order.marketingTags, (tag) ->
+                if tag.type is "channel" or tag.type is "campaign"
+                  metric.tags[tag.group] = tag
+                  metric.tags[tag.group].total = metric.total/order.marketingTags.length 
+                  if tag.type is "campaign"
+                    metric.campaigns.push(tag.name)
+              @metrics.push metric
+            _(@metrics).reverse()
+          
+          if start and end
+            @metricsFiltered = []
+            for order in @metrics
+              date = new Date(order.utc)
+              if date >= start and date <= end
+                @metricsFiltered.push order
+            return orders: @metricsFiltered, summary: @getMetricsSummary(@metricsFiltered)
+          
+          else 
+            return orders: @metrics, summary: @getMetricsSummary(@metrics)
 
-        getMetrics: () ->
-          if @metrics then return @metrics else @metrics = []
+        getMetricsSummary: (metrics) ->
+          summary = 
+            numOrders: metrics.length 
+            revenueTotal: 0
+            tags: {}
 
-          for order in apData.orders.data
-            metric = 
-              utc: order.utc
-              name: order.company.contacts[0].fullName
-              tags: {}
-              total: order.total
-              campaigns: []
+          for order in metrics
+            summary.revenueTotal += order.total
+            _.each order.tags, (tag) ->
+              if not summary.tags[tag.group]
+                summary.tags[tag.group] = 
+                 count: 0
+                 revenue: 0
+              summary.tags[tag.group].count++ 
+              summary.tags[tag.group].revenue += tag.total
+
+          @metricsSummary = summary
+
+              
             
-            _.each order.marketingTags, (tag) ->
-              console.log tag.group, tag
-              if tag.type is "channel" or tag.type is "campaign"
-                metric.tags[tag.group] = tag
-                metric.tags[tag.group].total = metric.total/order.marketingTags.length 
-
-                if tag.type is "campaign"
-                  metric.campaigns.push(tag.name)
-
-
-            
-            @metrics.push metric
-
-
-          _(@metrics).reverse()
-
-
-
-          return @metrics
-
             
 
 
 
+
+        
+        
         
 
 
@@ -374,9 +397,15 @@ module.exports = (pageData) ->
 
   controller("MetricsCtrl", ["$scope", "$location", "apData", ($scope, $location, apData) ->
 
-    $scope.metrics = apData.orders.getMetrics()
+    $scope.dateStart = moment().startOf("week").subtract("w", 2).toDate()
+    $scope.dateEnd = moment().endOf('week').toDate()
 
-    console.log "metrics", $scope.metrics
+
+    $scope.metrics = apData.orders.getMetrics($scope.dateStart, $scope.dateEnd)
+
+    # Watch date updates
+    $scope.$watch "dateStart", () -> $scope.metrics = apData.orders.getMetrics($scope.dateStart, $scope.dateEnd)
+    $scope.$watch "dateEnd", () -> $scope.metrics = apData.orders.getMetrics($scope.dateStart, $scope.dateEnd)
 
 
 
