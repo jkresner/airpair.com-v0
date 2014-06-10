@@ -112,7 +112,7 @@
 
         </thead>
         <tbody>
-          <tr ng-repeat="order in visibleOrders | orderBy : 'utc' : true | limitTo:30" class="order">
+          <tr ng-repeat="order in visibleOrders | orderBy : 'utc' : true | limitTo:orderViewLimit" class="order">
 
             <!-- Total -->
             <td class="total">

@@ -165,7 +165,7 @@ module.exports = (pageData) ->
 
   # Orders Controller
 
-  controller("OrdersCtrl", ["$scope", "$location", "$filter", "apData", ($scope, $location, $filter, apData) ->
+  controller("OrdersCtrl", ["$scope", "$location", "$filter", "$window", "apData", ($scope, $location, $filter, $window, apData) ->
 
     allOrders = apData.orders.get()
     firstOrderDate = new Date(allOrders[0].utc)
@@ -230,6 +230,7 @@ module.exports = (pageData) ->
 
     $scope.updateOrderList = () ->
       $scope.visibleOrders = []
+      $scope.orderViewLimit = 40
       for order in allOrders
         if $scope.isWithinDate(order)
           $scope.visibleOrders.push order
@@ -286,6 +287,11 @@ module.exports = (pageData) ->
     $scope.$watch "orderSearch", (text) -> $scope.search(text)
 
 
+    angular.element($window).bind "scroll", (e) ->
+      if $window.scrollY > 600
+        if $scope.orderViewLimit isnt allOrders.length
+          $scope.orderViewLimit = allOrders.length
+          $scope.$apply() if not $scope.$$phase
 
 
   ]).
