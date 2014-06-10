@@ -21,9 +21,10 @@ module.exports = (pageData) ->
     $locationProvider.html5Mode true
 
     $routeProvider.
-      when('/adm/ang/orders/metrics',   {controller: 'MetricsCtrl',  templateUrl: "/adm/templates/orders_metrics.html"}).
-      when('/adm/ang/orders/edit/:id',  {controller: 'OrdersCtrl',  templateUrl: "/adm/templates/orders_edit.html"}).
-      when('/adm/ang/orders',           {controller: 'OrdersCtrl',  templateUrl: "/adm/templates/orders.html"}).
+      when('/adm/ang/orders/growth',    {controller: 'GrowthCtrl',   templateUrl: "/adm/templates/orders_growth.html"}).
+      when('/adm/ang/orders/channels',  {controller: 'ChannelsCtrl', templateUrl: "/adm/templates/orders_channels.html"}).
+      when('/adm/ang/orders/edit/:id',  {controller: 'OrdersCtrl',   templateUrl: "/adm/templates/orders_edit.html"}).
+      when('/adm/ang/orders',           {controller: 'OrdersCtrl',   templateUrl: "/adm/templates/orders.html"}).
       otherwise({redirectTo: '/'})
   ).
 
@@ -270,18 +271,24 @@ module.exports = (pageData) ->
 
 
 
+  ]).
 
 
+
+
+
+
+  # Monthly and weekly growth controller
+
+  controller("GrowthCtrl", ["$scope", "$location", "apData", ($scope, $location, apData) ->
+
+    allOrders = apData.orders.get()
+
+    
     # Month to Month report
-    #----------------------------------------------
-
-
-    $scope.reportVisible = false
+    
     $scope.report = {}
-
-    $scope.toggleReport = () ->
-      if $scope.reportVisible then return $scope.reportVisible = false
-
+    $scope.generateM2M = () ->
       # Generate Report Data
       scopereport = []
       report = {}
@@ -371,31 +378,20 @@ module.exports = (pageData) ->
       $scope.report = _.sortBy(scopereport, (m) -> m.monthIdx).reverse()
       $scope.reportTotals = reportTotals
 
-      console.log "order", _.pluck $scope.report, 'monthIdx'
-      # console.log "$scope.report", $scope.report, $scope.reportTotals
-      $scope.reportVisible = true
+
+    $scope.getMonth = (index) ->
+      date = new Date(2014, index, 1)
+      month = moment(date).format("MMM")
 
 
-      # $scope.getYear = (index) ->
-      #   if index is 0
-      #     return "2013"
-      #   if index is 1
-      #     return "2014"
-
-      $scope.getMonth = (index) ->
-        date = new Date(2014, index, 1)
-        month = moment(date).format("MMM")
+    $scope.generateM2M()
 
   ]).
 
 
-
-
-
-
   # Order metrics controller
 
-  controller("MetricsCtrl", ["$scope", "$location", "apData", ($scope, $location, apData) ->
+  controller("ChannelsCtrl", ["$scope", "$location", "apData", ($scope, $location, apData) ->
 
     $scope.dateStart = moment().startOf("week").subtract("w", 2).toDate()
     $scope.dateEnd = moment().endOf('week').toDate()
