@@ -8,66 +8,67 @@
 
 
       <div class="col-sm-3">
-        <h1 class="text-light">
+<!--         <h3 class="text-light flush-top">
           Orders
-        </h1>
-        <h3 class="flush-top">
-          <small class="text-muted">
-            <div ng-hide="dateRange">Searching "{{orderSearch}}"</div>
-            <div ng-show="dateRange">{{dateStart | date:"MMM d, yyyy"}} – {{dateEnd | date:"MMM d, yyyy"}}</div>
+          <small class="text-muted" style="font-size: 13px;">
+            <span ng-hide="dateRange || orderSearch.length < 3">Searching "{{orderSearch}}"</span>
+            <span ng-show="dateRange">{{dateStart | date:"MMM d, yyyy"}} – {{dateEnd | date:"MMM d, yyyy"}}</span>
           </small>
         </h3>
+ -->        
+        <input ng-model="orderSearch" type="text" class="form-control input-sm" placeholder="Search all orders">
       </div>
 
 
       <!-- Date range -->
 
-      <div class="col-sm-9 m-t-1">
+      <div class="col-sm-5">
         <div class="row">
-          <div class="col-sm-5">
-
-            <div class="input-group">
+          <div class="col-sm-6">
+            <div class="input-group input-group-sm">
               <span class="input-group-addon">Start</span>
-              <input class="form-control" type="date" name="input" ng-model="dateStart" placeholder="yyyy-MM-dd" min="2013-01-01" max="" required/>
+              <input class="form-control input-sm" type="date" name="input" ng-model="dateStart" placeholder="yyyy-MM-dd" min="2013-01-01" max="" required/>
             </div>
 
-            <div class="input-group m-t-half">
+          </div>
+          <div class="col-sm-6">
+            <div class="input-group input-group-sm">
+              <input class="form-control input-sm" type="date" name="input" ng-model="dateEnd" placeholder="yyyy-MM-dd" min="2013-01-01" max="" required/>
               <span class="input-group-addon">End</span>
-              <input class="form-control" type="date" name="input" ng-model="dateEnd" placeholder="yyyy-MM-dd" min="2013-01-01" max="" required/>
             </div>
-
-            <input ng-model="orderSearch" type="text" class="form-control m-t-half" placeholder="Search orders in range">
-
           </div>
-
-          <div class="col-sm-7">
-
-
-            <div class="btn-group">
-                <label class="btn btn-primary" ng-model="dateRange" btn-radio="'day'">Day</label>
-                <label class="btn btn-primary" ng-model="dateRange" btn-radio="'week'">Week</label>
-                <label class="btn btn-primary" ng-model="dateRange" btn-radio="'month'">Month</label>
-                <label class="btn btn-primary" ng-model="dateRange" btn-radio="'6 weeks'">Six Weeks</label>
-                <label class="btn btn-primary" ng-model="dateRange" btn-radio="'all'">All</label>
-            </div>
-
-
-            <br>
-
-            <div class="btn-group m-t-half">
-                <label ng-repeat="month in months" class="btn btn-default" ng-click="setDateRange(month)" ng-class="{active: getDateStr() == month.str}">{{month.str}}</label>
-            </div>
-
-
-
-          </div>
-
-
         </div>
+        
+
+
+
+
       </div>
 
+      <div class="col-sm-4 text-right">
+        <div class="btn-group">
+            <label class="btn btn-primary btn-sm" ng-model="dateRange" btn-radio="'day'">Day</label>
+            <label class="btn btn-primary btn-sm" ng-model="dateRange" btn-radio="'week'">Week</label>
+            <label class="btn btn-primary btn-sm" ng-model="dateRange" btn-radio="'month'">Month</label>
+            <label class="btn btn-primary btn-sm" ng-model="dateRange" btn-radio="'6 weeks'">Six Weeks</label>
+            <label class="btn btn-primary btn-sm" ng-model="dateRange" btn-radio="'all'">All</label>
+        </div>
+        <div class="btn btn-default btn-sm" ng-model="showTimeline" btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0">More <b class="caret"></b></div>
+      </div>
 
     </div>
+
+    <div ng-show="showTimeline" class="text-right">
+      <div class="btn-group m-t-half">
+          <label ng-repeat="month in months" class="btn btn-success btn-sm" ng-click="setDateRange(month)" ng-class="{active: getDateStr() == month.str}">{{month.str}}</label>
+      </div>
+
+      <div class="btn-group m-t-half">
+          <label ng-repeat="year in years" class="btn btn-info btn-sm" ng-click="setDateRange(year)" ng-class="{active: getDateStr() == year.str}">{{year.str}}</label>
+      </div>
+
+    </div>
+
 
   </div>
 
@@ -111,7 +112,7 @@
 
         </thead>
         <tbody>
-          <tr ng-repeat="order in visibleOrders | orderBy : 'utc' : true" class="order">
+          <tr ng-repeat="order in visibleOrders | orderBy : 'utc' : true | limitTo:30" class="order">
 
             <!-- Total -->
             <td class="total">

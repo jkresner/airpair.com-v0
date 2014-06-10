@@ -170,16 +170,26 @@ module.exports = (pageData) ->
 
     allOrders = apData.orders.get()
     firstOrderDate = new Date(allOrders[0].utc)
+    firstMonth = moment(firstOrderDate).subtract('M', 1)
 
-    # Get past 6 months
+    # Get past months
     $scope.months = []
     cur = moment(new Date())
-    for num in [1..8]
+    while cur.isAfter(firstMonth)
       $scope.months.push
-        str: cur.format("MMM")
+        str: cur.format("MMM YY")
         start: cur.startOf("month").clone().toDate()
         end: cur.endOf("month").clone().toDate()
       cur = cur.subtract('months', 1)
+    # Get past years
+    $scope.years = []
+    curYear = moment(new Date()).startOf("year")
+    while curYear.isAfter(firstMonth)
+      $scope.years.push
+        str: curYear.format("YYYY")
+        start: curYear.startOf("year").clone().toDate()
+        end: curYear.endOf("year").clone().toDate()
+      curYear = curYear.subtract('y', 1)
 
     # Set default date range to 6 weeks
     $scope.dateRange = "6 weeks"
@@ -257,10 +267,9 @@ module.exports = (pageData) ->
 
     $scope.search = (text) ->
       return if not text
-      if text.length > 2
-        $scope.dateRange = ''
-        $scope.visibleOrders = $filter('filter')(allOrders, text)
-        $scope.calcSummary()
+      $scope.dateRange = ''
+      $scope.visibleOrders = $filter('filter')(allOrders, text)
+      $scope.calcSummary()
 
 
     # Watch date updates
@@ -270,6 +279,13 @@ module.exports = (pageData) ->
     
     # Search updates
     $scope.$watch "orderSearch", (text) -> $scope.search(text)
+
+
+
+    $scope.monthTotalItems = 175
+    $scope.monthCurrentPage = 3
+    $scope.monthMaxSize = 6
+    $scope.monthNumPages = 18
 
 
 
