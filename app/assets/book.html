@@ -28,8 +28,6 @@
     <div class="site-inner">
       <div class="wrap">
 
-        <div id="info" style="display:none"></div>
-
         <div id="detail" class="route" style="display:none">
           <div class="content-sidebar-wrap">
             <main class="content">
@@ -37,14 +35,17 @@
               <div id="welcome"></div>
 
               <div id="card" style="display:none">
+                <h1>Straight to business</h1>
                 <div class="left-container">
-                  <p><span>Let's get started!</span> Before I accept your request, we need payment info. AirPair removes the hassles with paying consultants. You only need to enter your card once, and from them on we can just focus on code.</p>
+                  <p><span>Let's get started!</span> AirPair removes normal hassles with paying consultants. Enter your card once, and from then on we just focus on code. AirPair will and track services rendered automatically via it's calendar.</p>
                 </div>
                 <h1 class="how-header">Add payment method</h1>
                 <article id="stripeRegister" class="post type-post format-standard entry"></article>
               </div>
 
               <div id="request"></div>
+
+              <div id="info" style="display:none"></div>
 
             </main>
             <aside class="sidebar sidebar-primary widget-area">
@@ -71,11 +72,13 @@
   <style type="text/css">
     .left-container { padding:20px; }
     .left-container p { font-size:20;margin-bottom:6px }
+    #stripeRegister { padding-top:0; }
     #stripeRegister header { display:none }
+    #stripeRegister footer { margin-top:0!important; }
+    #stripeRegister img { padding-bottom:10px; }
     .control-group { margin-bottom:10px;clear:both; }
     .control-label { margin-bottom:10px;margin-left:2px; }
     .controls { padding-top:5px;clear:both }
-    #stripeRegister img { padding-bottom:20px; }
     #info img { display:none; }
     #info .button { background-color:#CE5323 }
     #infoForm { padding:0px 25px 10px 25px }

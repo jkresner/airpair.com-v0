@@ -93,8 +93,9 @@ class exports.RequestView extends BB.ModelSaveView
     if @company.get('name')?
       router.navTo 'thanks'
     else
-      $('#detail').hide()
+      $('.detail').hide()
       $('#info').show()
+      router.app.expertView.renderHalf()
   getBudget: ->
     parseInt(@expert.get('bookMe').rate) + @model[@$("[name='pricing']:checked").val()]
 
@@ -111,6 +112,7 @@ class exports.InfoFormView extends RV.InfoFormView
     @request.save 'company', model.attributes
     $('#info').hide()
 
+
 class exports.ExpertView extends BB.BadassView
   el: '#expert'
   tmpl: require './templates/Expert'
@@ -118,8 +120,9 @@ class exports.ExpertView extends BB.BadassView
     @listenTo @model, 'change', @render
   render: ->
     rate = parseInt(@model.get('bookMe').rate) + @request.private
-    localUrl = window.location.pathname+window.location.search
-    @$el.html @tmpl @model.extend { publicRate: rate, authenticated: @session.id?, localUrl: localUrl }
+    @$el.html @tmpl @model.extend { publicRate: rate, authenticated: @session.id? }
+  renderHalf: ->
+    $('.booking-stats').hide()
 
 
 

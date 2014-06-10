@@ -1,6 +1,6 @@
 
 <h1><span class="highlight-color">
-    {{#if authenticated}}{{name}}{{else}}Book a session{{/if}}
+    {{name}}
 </span></h1>
 <article class="entry">
   <span class="alignleft" style="width:308px">
@@ -8,9 +8,7 @@
   </span>
 
 
-  {{#if authenticated}}<div style="clear:both;height:10px"></div>{{else}}
-    <a id="bookme-login" class="trackBookLogin button large" href="/auth/google?return_to={{localUrl}}">Request {{name}}</a>
-  {{/if}}
+  <div style="clear:both;height:10px"></div>
 
   <ul class="booking-stats clearfix">
     <li>
