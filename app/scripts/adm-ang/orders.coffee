@@ -166,15 +166,13 @@ module.exports = (pageData) ->
 
   # Orders Controller
 
-  controller("OrdersCtrl", ["$scope", "$location", "apData", ($scope, $location, apData) ->
+  controller("OrdersCtrl", ["$scope", "$location", "$filter", "apData", ($scope, $location, $filter, apData) ->
 
     allOrders = apData.orders.get()
-
     firstOrderDate = new Date(allOrders[0].utc)
 
     # Get past 6 months
     $scope.months = []
-
     cur = moment(new Date())
     for num in [1..8]
       $scope.months.push
@@ -183,19 +181,15 @@ module.exports = (pageData) ->
         end: cur.endOf("month").clone().toDate()
       cur = cur.subtract('months', 1)
 
-
     # Set default date range to 6 weeks
     $scope.dateRange = "6 weeks"
-
-
-
-
 
     $scope.isWithinDate = (order) ->
       orderDate = new Date(order.utc)
       return orderDate > $scope.dateStart && orderDate < $scope.dateEnd
 
     $scope.updateDateRange = (newRange) ->
+      return if not newRange
       date = new Date()
       if _.isString(newRange)
         switch newRange
@@ -218,15 +212,12 @@ module.exports = (pageData) ->
         $scope.dateStart = newRange.start
         $scope.dateEnd = newRange.end
 
-
     $scope.setDateRange = (range) ->
       $scope.dateRange = range
 
     $scope.getDateStr = () ->
       if _.isString($scope.dateRange) then $scope.dateRange
       else if _.isObject($scope.dateRange) then $scope.dateRange.str
-
-
 
     $scope.updateOrderList = () ->
       $scope.visibleOrders = []
@@ -264,14 +255,27 @@ module.exports = (pageData) ->
       $scope.summary.expertCount = _.uniq($scope.summary.experts).length
 
 
+    $scope.search = (text) ->
+      return if not text
+      if text.length > 2
+        $scope.dateRange = ''
+        $scope.visibleOrders = $filter('filter')(allOrders, text)
+        $scope.calcSummary()
+
+
     # Watch date updates
     $scope.$watch "dateStart", () -> $scope.updateOrderList()
     $scope.$watch "dateEnd", () -> $scope.updateOrderList()
     $scope.$watch "dateRange", (newRange) -> $scope.updateDateRange(newRange)
+    
+    # Search updates
+    $scope.$watch "orderSearch", (text) -> $scope.search(text)
 
 
 
   ]).
+
+
 
 
 
@@ -286,7 +290,7 @@ module.exports = (pageData) ->
 
     
     # Month to Month report
-    
+
     $scope.report = {}
     $scope.generateM2M = () ->
       # Generate Report Data
@@ -387,6 +391,12 @@ module.exports = (pageData) ->
     $scope.generateM2M()
 
   ]).
+
+
+
+
+
+
 
 
   # Order metrics controller

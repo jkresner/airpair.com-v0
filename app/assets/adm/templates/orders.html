@@ -13,8 +13,8 @@
         </h1>
         <h3 class="flush-top">
           <small class="text-muted">
-            <div ng-show="orderSearch">Searching "{{orderSearch}}" in</div>
-            {{dateStart | date:"MMM d, yyyy"}} – {{dateEnd | date:"MMM d, yyyy"}}
+            <div ng-hide="dateRange">Searching "{{orderSearch}}"</div>
+            <div ng-show="dateRange">{{dateStart | date:"MMM d, yyyy"}} – {{dateEnd | date:"MMM d, yyyy"}}</div>
           </small>
         </h3>
       </div>
@@ -111,7 +111,7 @@
 
         </thead>
         <tbody>
-          <tr ng-repeat="order in visibleOrders | orderBy : 'utc' : true | filter:orderSearch:false" class="order" ng-show="isWithinDate(order)">
+          <tr ng-repeat="order in visibleOrders | orderBy : 'utc' : true" class="order">
 
             <!-- Total -->
             <td class="total">
