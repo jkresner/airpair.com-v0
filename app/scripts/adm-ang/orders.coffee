@@ -106,8 +106,8 @@ module.exports = (pageData) ->
         
         
         getM2M: () ->
-          scopereport = []
-          report = {}
+          report = []
+          months = {}
           reportTotals =
             customerTotal: 0
             hrsSold: 0
@@ -117,41 +117,33 @@ module.exports = (pageData) ->
             gross: 0
             margin: 0
 
+
+          # Groups orders by month. Calculate revenue, gross, and hrs sold. 
           for order in @data
-            # year = moment(order.utc).year()
-            # month = moment(order.utc).month()
-            # yearmonth = moment(new Date(year, month, 1))
             monthName = moment(order.utc).format("MMM")
             monthIdx = moment(order.utc).format("YYMM")
 
-            # if not report[year] then report[year] = {}
-            if not report[monthIdx]
-              report[monthIdx] =
+            if not months[monthIdx]
+              months[monthIdx] =
                 revenue: 0
                 gross: 0
                 hrsSold: 0
                 orders: []
                 monthIdx: monthIdx
                 monthName: monthName
-                # monthName:  moment(new Date(year, month, 1)).format("MMM")
-                # monthNum: month
 
-            m = report[monthIdx]
+            month = months[monthIdx]
+            month.orders.push order
+            month.revenue += order.total
+            month.gross += order.profit
+            month.hrsSold += calcTotal [item] for item in order.lineItems
+              
 
-            # report[year].$yearName = moment(new Date(year, month, 1)).format("YYYY")
 
-            m.orders.push order
+          # Calc more monthly stats. Get month to month differences.  
+          prevMonth = null
 
-            m.revenue += order.total
-            m.gross += order.profit
-
-            for item in order.lineItems
-              m.hrsSold += calcTotal [item]
-
-          last = null
-          # _.each report, (year) ->
-          _.each report, (month) ->
-
+          _.each months, (month) ->
             month.customerTotal = _.uniq(_.pluck month.orders, 'userId').length
             month.hrPerCust = month.hrsSold/month.customerTotal
             month.revPerHour = month.revenue/month.hrsSold
@@ -165,31 +157,32 @@ module.exports = (pageData) ->
             reportTotals.gross += month.gross
             reportTotals.margin += month.margin
 
-
-            if last?
-              scopereport.push
+            # Calc differences between months
+            if prevMonth?
+              report.push
                 css: 'change'
-                monthIdx: "#{last.monthIdx}c#{month.monthIdx}"
-                pcustomerTotal: (month.customerTotal-last.customerTotal)/last.customerTotal
-                phrPerCust: (month.hrPerCust-last.hrPerCust)/last.hrPerCust
-                phrsSold: (month.hrsSold-last.hrsSold)/last.hrsSold
-                prevPerHour: (month.revPerHour-last.revPerHour)/last.revPerHour
-                prevenue: (month.revenue-last.revenue)/last.revenue
-                pgross: (month.gross-last.gross)/last.gross
-                pmargin: (month.margin-last.margin)/last.margin
+                monthIdx: "#{prevMonth.monthIdx}c#{month.monthIdx}"
+                pcustomerTotal: (month.customerTotal-prevMonth.customerTotal)/prevMonth.customerTotal
+                phrPerCust: (month.hrPerCust-prevMonth.hrPerCust)/prevMonth.hrPerCust
+                phrsSold: (month.hrsSold-prevMonth.hrsSold)/prevMonth.hrsSold
+                prevPerHour: (month.revPerHour-prevMonth.revPerHour)/prevMonth.revPerHour
+                prevenue: (month.revenue-prevMonth.revenue)/prevMonth.revenue
+                pgross: (month.gross-prevMonth.gross)/prevMonth.gross
+                pmargin: (month.margin-prevMonth.margin)/prevMonth.margin
+            
+            report.push month
+            prevMonth = month
 
-            scopereport.push month
-
-            last = month
-
-
+          
+          # Final report totals
           reportTotals.revPerHour = reportTotals.revPerHour/reportTotals.numMonths
           reportTotals.margin = reportTotals.margin/reportTotals.numMonths
           reportTotals.hrPerCust = reportTotals.hrsSold/reportTotals.customerTotal
           reportTotals.ltv = reportTotals.margin*reportTotals.revPerHour*reportTotals.hrPerCust
           
+          # Sort report by month, reverese, and return
           return {
-            report: _.sortBy(scopereport, (m) -> m.monthIdx).reverse()
+            report: _.sortBy(report, (m) -> m.monthIdx).reverse()
             reportTotals: reportTotals
           }
 
