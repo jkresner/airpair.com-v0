@@ -14,7 +14,11 @@ mpInitCallback = function() {
     addjs.providers.mp.trackSession();
 
     jQuery('.trackBookLogin').click(function (e) {
-      addjs.trackClick(e,'auth/google?return_to='+window.location.pathname+window.location.search,addjs.events.customerBookLogin,getElmId(this));
+      return_to = $(this).attr('href');
+      if (return_to == "#") {
+        return_to = window.location.pathname+window.location.search;
+      }
+      addjs.trackClick(e,'auth/google?return_to='+return_to,addjs.events.customerBookLogin,getElmId(this));
     });
     jQuery('.trackLogin,.trackCustomerLogin').click(function (e) {
       addjs.trackClick(e,'auth/google?return_to=/find-an-expert',addjs.events.customerLogin,getElmId(this));
