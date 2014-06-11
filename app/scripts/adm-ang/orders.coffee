@@ -32,30 +32,6 @@ module.exports = (pageData) ->
 
 
 
-  # Filters
-
-  # TODO: use angular's built-in filters
-
-  filter('pFormat', ($sce) ->
-    (input, ratio) ->
-      if ratio
-        formatCss = if ratio > 0 then "g" else "r"
-        $sce.trustAsHtml "<div class='#{formatCss}'>#{Math.round(ratio*100)}%</div>"
-      else
-        $sce.trustAsHtml "<div>#{input}</div>"
-  ).
-
-
-  filter('dollar', ->
-    (input) -> "$#{input}"
-  ).
-
-  filter('percent', ->
-    (input) -> "#{Math.round(input*100)}%"
-  ).
-
-
-
 
 
   # Moment Service - For date logic
@@ -79,13 +55,11 @@ module.exports = (pageData) ->
           cur = cur.subtract('weeks', 1)
         return weeks
 
-      
-      
-
-
-    
-
   ).
+
+
+
+
 
   # Airpair Data Service
   #----------------------------------------------
@@ -246,11 +220,6 @@ module.exports = (pageData) ->
 
 
 
-        
-        
-        
-
-
     apData.orders.calcCredits()
 
     return apData
@@ -265,6 +234,7 @@ module.exports = (pageData) ->
 
   # CONTROLLERS
   #----------------------------------------------
+
 
 
 

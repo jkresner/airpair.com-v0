@@ -116,6 +116,10 @@ cite    { font-style: normal; }
 
 @include text-emphasis-variant('.text-danger', $state-danger-text);
 
+@include text-emphasis-variant('.text-orange', #F0AC47);
+
+@include text-emphasis-variant('.text-green', #008000);
+
 // Contextual backgrounds
 // For now we'll leave these alongside the text classes until v4 when we can
 // safely shift things around (per SemVer rules).
