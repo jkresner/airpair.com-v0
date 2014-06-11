@@ -21,10 +21,11 @@ module.exports = (pageData) ->
     $locationProvider.html5Mode true
 
     $routeProvider.
-      when('/adm/ang/orders/growth',    {controller: 'GrowthCtrl',   templateUrl: "/adm/templates/orders_growth.html"}).
-      when('/adm/ang/orders/channels',  {controller: 'ChannelsCtrl', templateUrl: "/adm/templates/orders_channels.html"}).
-      when('/adm/ang/orders/edit/:id',  {controller: 'OrdersCtrl',   templateUrl: "/adm/templates/orders_edit.html"}).
-      when('/adm/ang/orders',           {controller: 'OrdersCtrl',   templateUrl: "/adm/templates/orders.html"}).
+      when('/adm/ang/orders/growth',    { controller: 'GrowthCtrl',   templateUrl: "/adm/templates/orders_growth.html"}).
+      when('/adm/ang/orders/channels',  { controller: 'ChannelsCtrl', templateUrl: "/adm/templates/orders_channels.html"}).
+      when('/adm/ang/orders/weekly',    { controller: 'WeeklyCtrl',   templateUrl: "/adm/templates/orders_weekly.html"}).
+      when('/adm/ang/orders/edit/:id',  { controller: 'OrdersCtrl',   templateUrl: "/adm/templates/orders_edit.html"}).
+      when('/adm/ang/orders',           { controller: 'OrdersCtrl',   templateUrl: "/adm/templates/orders.html"}).
       otherwise({redirectTo: '/'})
   ).
 
@@ -57,6 +58,35 @@ module.exports = (pageData) ->
 
 
 
+  # Moment Service - For date logic
+  #----------------------------------------------
+
+  factory('$moment', () ->
+    $moment = 
+      getWeeks: (month) ->
+        if not month
+          month = moment().startOf 'month'
+        else 
+          month = month.startOf 'month'
+        weeks = []
+        cur = moment(new Date()).startOf("week")
+        start = month.subtract("days", 1)
+        while cur.isAfter(start)
+          weeks.push
+            str: cur.format("MMM D")
+            start: cur.clone().toDate()
+            end: cur.clone().endOf("week").toDate()
+          cur = cur.subtract('weeks', 1)
+        return weeks
+
+      
+      
+
+
+    
+
+  ).
+
   # Airpair Data Service
   #----------------------------------------------
 
@@ -74,7 +104,100 @@ module.exports = (pageData) ->
               li.incomplete = expertCredit.total is 0 or expertCredit.completed < expertCredit.total
               _.extend li, expertCredit
         
-        getMetrics: (start, end) ->
+        
+        getM2M: () ->
+          scopereport = []
+          report = {}
+          reportTotals =
+            customerTotal: 0
+            hrsSold: 0
+            numMonths: 0
+            revPerHour: 0
+            revenue: 0
+            gross: 0
+            margin: 0
+
+          for order in @data
+            # year = moment(order.utc).year()
+            # month = moment(order.utc).month()
+            # yearmonth = moment(new Date(year, month, 1))
+            monthName = moment(order.utc).format("MMM")
+            monthIdx = moment(order.utc).format("YYMM")
+
+            # if not report[year] then report[year] = {}
+            if not report[monthIdx]
+              report[monthIdx] =
+                revenue: 0
+                gross: 0
+                hrsSold: 0
+                orders: []
+                monthIdx: monthIdx
+                monthName: monthName
+                # monthName:  moment(new Date(year, month, 1)).format("MMM")
+                # monthNum: month
+
+            m = report[monthIdx]
+
+            # report[year].$yearName = moment(new Date(year, month, 1)).format("YYYY")
+
+            m.orders.push order
+
+            m.revenue += order.total
+            m.gross += order.profit
+
+            for item in order.lineItems
+              m.hrsSold += calcTotal [item]
+
+          last = null
+          # _.each report, (year) ->
+          _.each report, (month) ->
+
+            month.customerTotal = _.uniq(_.pluck month.orders, 'userId').length
+            month.hrPerCust = month.hrsSold/month.customerTotal
+            month.revPerHour = month.revenue/month.hrsSold
+            month.margin = month.gross/month.revenue
+
+            reportTotals.numMonths++
+            reportTotals.customerTotal += month.customerTotal
+            reportTotals.hrsSold += month.hrsSold
+            reportTotals.revPerHour += month.revPerHour
+            reportTotals.revenue += month.revenue
+            reportTotals.gross += month.gross
+            reportTotals.margin += month.margin
+
+
+            if last?
+              scopereport.push
+                css: 'change'
+                monthIdx: "#{last.monthIdx}c#{month.monthIdx}"
+                pcustomerTotal: (month.customerTotal-last.customerTotal)/last.customerTotal
+                phrPerCust: (month.hrPerCust-last.hrPerCust)/last.hrPerCust
+                phrsSold: (month.hrsSold-last.hrsSold)/last.hrsSold
+                prevPerHour: (month.revPerHour-last.revPerHour)/last.revPerHour
+                prevenue: (month.revenue-last.revenue)/last.revenue
+                pgross: (month.gross-last.gross)/last.gross
+                pmargin: (month.margin-last.margin)/last.margin
+
+            scopereport.push month
+
+            last = month
+
+
+          reportTotals.revPerHour = reportTotals.revPerHour/reportTotals.numMonths
+          reportTotals.margin = reportTotals.margin/reportTotals.numMonths
+          reportTotals.hrPerCust = reportTotals.hrsSold/reportTotals.customerTotal
+          reportTotals.ltv = reportTotals.margin*reportTotals.revPerHour*reportTotals.hrPerCust
+          
+          return {
+            report: _.sortBy(scopereport, (m) -> m.monthIdx).reverse()
+            reportTotals: reportTotals
+          }
+
+          
+        
+        
+
+        getChannelMetrics: (start, end) ->
           if not @metrics
             @metrics = []
             for order in apData.orders.data
@@ -100,12 +223,12 @@ module.exports = (pageData) ->
               date = new Date(order.utc)
               if date >= start and date <= end
                 @metricsFiltered.push order
-            return orders: @metricsFiltered, summary: @getMetricsSummary(@metricsFiltered)
+            return orders: @metricsFiltered, summary: @getChannelMetricsSummary(@metricsFiltered)
           
           else 
-            return orders: @metrics, summary: @getMetricsSummary(@metrics)
+            return orders: @metrics, summary: @getChannelMetricsSummary(@metrics)
 
-        getMetricsSummary: (metrics) ->
+        getChannelMetricsSummary: (metrics) ->
           summary = 
             numOrders: metrics.length 
             revenueTotal: 0
@@ -303,115 +426,21 @@ module.exports = (pageData) ->
 
 
 
-  # Monthly and weekly growth controller
+  # Monthly growth controller
 
   controller("GrowthCtrl", ["$scope", "$location", "apData", ($scope, $location, apData) ->
-
-    allOrders = apData.orders.get()
-
-    
-    # Month to Month report
-
-    $scope.report = {}
-    $scope.generateM2M = () ->
-      # Generate Report Data
-      scopereport = []
-      report = {}
-      reportTotals =
-        customerTotal: 0
-        hrsSold: 0
-        numMonths: 0
-        revPerHour: 0
-        revenue: 0
-        gross: 0
-        margin: 0
-
-      for order in allOrders
-        # year = moment(order.utc).year()
-        # month = moment(order.utc).month()
-        # yearmonth = moment(new Date(year, month, 1))
-        monthName = moment(order.utc).format("MMM")
-        monthIdx = moment(order.utc).format("YYMM")
-
-        # if not report[year] then report[year] = {}
-        if not report[monthIdx]
-          report[monthIdx] =
-            revenue: 0
-            gross: 0
-            hrsSold: 0
-            orders: []
-            monthIdx: monthIdx
-            monthName: monthName
-            # monthName:  moment(new Date(year, month, 1)).format("MMM")
-            # monthNum: month
-
-        m = report[monthIdx]
-
-        # report[year].$yearName = moment(new Date(year, month, 1)).format("YYYY")
-
-        m.orders.push order
-
-        m.revenue += order.total
-        m.gross += order.profit
-
-        for item in order.lineItems
-          m.hrsSold += calcTotal [item]
-
-      last = null
-      # _.each report, (year) ->
-      _.each report, (month) ->
-
-        month.customerTotal = _.uniq(_.pluck month.orders, 'userId').length
-        month.hrPerCust = month.hrsSold/month.customerTotal
-        month.revPerHour = month.revenue/month.hrsSold
-        month.margin = month.gross/month.revenue
-
-        reportTotals.numMonths++
-        reportTotals.customerTotal += month.customerTotal
-        reportTotals.hrsSold += month.hrsSold
-        reportTotals.revPerHour += month.revPerHour
-        reportTotals.revenue += month.revenue
-        reportTotals.gross += month.gross
-        reportTotals.margin += month.margin
-
-
-        if last?
-          scopereport.push
-            css: 'change'
-            monthIdx: "#{last.monthIdx}c#{month.monthIdx}"
-            pcustomerTotal: (month.customerTotal-last.customerTotal)/last.customerTotal
-            phrPerCust: (month.hrPerCust-last.hrPerCust)/last.hrPerCust
-            phrsSold: (month.hrsSold-last.hrsSold)/last.hrsSold
-            prevPerHour: (month.revPerHour-last.revPerHour)/last.revPerHour
-            prevenue: (month.revenue-last.revenue)/last.revenue
-            pgross: (month.gross-last.gross)/last.gross
-            pmargin: (month.margin-last.margin)/last.margin
-
-        scopereport.push month
-
-        last = month
-
-
-      reportTotals.revPerHour = reportTotals.revPerHour/reportTotals.numMonths
-      reportTotals.margin = reportTotals.margin/reportTotals.numMonths
-      reportTotals.hrPerCust = reportTotals.hrsSold/reportTotals.customerTotal
-      reportTotals.ltv = reportTotals.margin*reportTotals.revPerHour*reportTotals.hrPerCust
-
-
-      # Update Scope
-      $scope.report = _.sortBy(scopereport, (m) -> m.monthIdx).reverse()
-      $scope.reportTotals = reportTotals
-
 
     $scope.getMonth = (index) ->
       date = new Date(2014, index, 1)
       month = moment(date).format("MMM")
 
+    data = apData.orders.getM2M()
 
-    $scope.generateM2M()
+    $scope.report = data.report
+    $scope.reportTotals = data.reportTotals
+
 
   ]).
-
 
 
 
@@ -426,19 +455,49 @@ module.exports = (pageData) ->
     $scope.dateStart = moment().startOf("week").subtract("w", 2).toDate()
     $scope.dateEnd = moment().endOf('week').toDate()
 
-
-    $scope.metrics = apData.orders.getMetrics($scope.dateStart, $scope.dateEnd)
+    $scope.metrics = apData.orders.getChannelMetrics($scope.dateStart, $scope.dateEnd)
 
     # Watch date updates
-    $scope.$watch "dateStart", () -> $scope.metrics = apData.orders.getMetrics($scope.dateStart, $scope.dateEnd)
-    $scope.$watch "dateEnd", () -> $scope.metrics = apData.orders.getMetrics($scope.dateStart, $scope.dateEnd)
+    $scope.$watch "dateStart", () -> $scope.metrics = apData.orders.getChannelMetrics($scope.dateStart, $scope.dateEnd)
+    $scope.$watch "dateEnd", () -> $scope.metrics = apData.orders.getChannelMetrics($scope.dateStart, $scope.dateEnd)
+
+
+  ]).
 
 
 
+
+
+
+  # Weekly Summary controller
+
+  controller("WeeklyCtrl", ["$scope", "$location", "$moment", "apData", ($scope, $location, $moment, apData ) ->
+
+    # Get weeks in month
+    $scope.weeks = $moment.getWeeks()
+
+    # Get Metrics for each week
+    week.metrics = apData.orders.getChannelMetrics(week.start, week.end) for week in $scope.weeks
+
+    # Tabularize data
+    # $scope.weeksTable = []
+    # for week in $scope.weeks
+
+
+
+
+
+    console.log "weeks", $scope.weeks
 
 
 
   ])
+
+
+
+
+
+
 
 
 
