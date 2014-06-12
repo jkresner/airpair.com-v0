@@ -28,3 +28,16 @@ module.exports = class StripeService
         # $log "StripeResponse: ", payload, charge
         winston.log "StripResponse: ", charge
       callback null, charge
+
+
+  createAnonCharge: (charge, callback) ->
+    $log 'svc.createAnonCharge', charge
+    payload = card: charge.id, currency: "usd", amount: charge.amount
+
+    $log 'svc.createAnonCharge.payload', payload
+    stripe.charges.create payload, (err, charge) =>
+      if err then return callback err
+      if cfg.isProd
+        # $log "StripeResponse: ", payload, charge
+        winston.log "StripResponse: ", charge
+      callback null, charge

@@ -327,6 +327,14 @@
           </a>
         </article>
 
+
+        <article class="portfolio">
+          <a href="/book/bantik" target="_blank">
+            <span></span><header><img src="//secure.gravatar.com/avatar/4900754dfff6786e747438a703e0d791?s=200"></header>
+            <div><h3>Coraline Ehmke </h3><button>Book Coraline</button></div>
+          </a>
+        </article>
+
         <article class="portfolio">
           <a href="/book/ernie" target="_blank">
             <span></span><header><img src="//secure.gravatar.com/avatar/2274a7476f6d2ac7aedcdec0651d0542?s=200"></header>
@@ -345,6 +353,34 @@
           <a href="/book/jagthedrummer" target="_blank">
             <span></span><header><img src="//secure.gravatar.com/avatar/5eaea8f995055464a8a06dcabad0f151?s=200"></header>
             <div><h3>Jeremy Green</h3><button>Book Jeremy</button></div>
+          </a>
+        </article>
+
+        <article class="portfolio">
+          <a href="/book/adymo" target="_blank">
+            <span></span><header><img src="//secure.gravatar.com/avatar/990f1e2f3c6871d4305d3a316902b1bf?s=200"></header>
+            <div><h3>Alexander Dymo</h3><button>Book Alex</button></div>
+          </a>
+        </article>
+
+        <article class="portfolio">
+          <a href="/book/railsonmaui" target="_blank">
+            <span></span><header><img src="//secure.gravatar.com/avatar/134ceddfdac5709794fc23957211ebdb?s=200"></header>
+            <div><h3>Justin Gordon</h3><button>Book Justin</button></div>
+          </a>
+        </article>
+
+        <article class="portfolio">
+          <a href="/book/seanmarcia" target="_blank">
+            <span></span><header><img src="//secure.gravatar.com/avatar/0e20c5961a206d79ec041bd2f737582f?s=200"></header>
+            <div><h3>Sean Marcia</h3><button>Book Sean</button></div>
+          </a>
+        </article>
+
+        <article class="portfolio">
+          <a href="/book/keithpitt" target="_blank">
+            <span></span><header><img src="//secure.gravatar.com/avatar/e14f55d3f939977cecbf51b64ff6f861?s=200"></header>
+            <div><h3>Keith Pitt</h3><button>Book Keith</button></div>
           </a>
         </article>
 
@@ -451,7 +487,7 @@
     {
       window.useOlark = true;
       require('scripts/providers/all');
-      addjs.trackEvent('page','view', window.location.pathname, 'railspairing');
+      addjs.trackEvent('page','view', window.location.pathname, 'railsconsulting');
     }
 
     </script>
@@ -460,39 +496,50 @@
     <script src="//checkout.stripe.com/checkout.js"></script>
     <script>
       var handler = StripeCheckout.configure({
-        key: 'pk_live_FEGruKDm6OZyagTHqhXWvV8G',
+        key: 'pk_live_FEGruKDm6OZyagTHqhXWvV8G', //
         image: '/images/icons/icon120.png',
+        currency: 'usd',
         token: function(token, args) {
-          console.log('token back', token, args);
-          // Use the token to create the charge with a server-side script.
-          // You can access the token ID with `token.id`
+
+          addjs.trackEvent('package','customerPayment', token.email, window.location.pathname);
+          console.log('charged', token, args);
+          console.log($('#payment-form'));
+          token.name = chargeData.name;
+          token.amount = chargeData.amount;
+          token.description = chargeData.description;
+          $.post('/api/orders/package',token).done(function(e){
+            alert('Payment received we will contact you at '+token.email+' in the next hour');
+          });
         }
       });
 
       document.getElementById('sanity').addEventListener('click', function(e) {
-        handler.open({
+        window.chargeData = {
           name: 'AirPair Sanity Check',
           description: '6 Hours with 2 Silver Experts',
           amount: 120000
-        });
+        };
+        handler.open(window.chargeData);
         e.preventDefault();
       });
 
       document.getElementById('accelerate').addEventListener('click', function(e) {
-        handler.open({
+        window.chargeData = {
           name: 'AirPair Accelerate',
           description: '10 Hours with up to 4 Silver Experts',
           amount: 200000
-        });
+        };
+        handler.open(window.chargeData);
         e.preventDefault();
       });
 
       document.getElementById('assimilate').addEventListener('click', function(e) {
-        handler.open({
+        window.chargeData = {
           name: 'AirPair Assimilate',
           description: '10 Hours with up to 4 Gold Experts',
           amount: 300000
-        });
+        };
+        handler.open(window.chargeData);
         e.preventDefault();
       });
     </script>

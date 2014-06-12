@@ -18,7 +18,7 @@ c.SES_SECRET_KEY = process.env.AP_SES_SECRET_KEY ? 'gah'
 
 c.payment =
   stripe:
-    publishedKey: 'pk_test_6pRNASCoBOKtIshFeQd4XMUh'
+    publishedKey: 'pk_test_aj305u5jk2uN1hrDQWdH0eyl'
     secretKey:    'sk_test_8WOe71OlRWPyB3rDRcnthSCc'
 
 c.google =
