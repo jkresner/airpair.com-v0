@@ -39,14 +39,18 @@ module.exports = (pageData) ->
 
   factory('$moment', () ->
     $moment = 
-      getWeeks: (month) ->
-        if not month
-          month = moment().startOf 'month'
-        else 
-          month = month.startOf 'month'
+      getWeeks: (start, end = moment().endOf('month')) ->
+        # if not month
+        #   month = moment().startOf 'month'
+        # else 
+        #   month = month.startOf 'month'
+        if not start
+          start = moment().startOf('month').subtract("days", 1)
+        else
+          start = start.startOf("week").subtract("days", 1)
+
         weeks = []
         cur = moment(new Date()).startOf("week")
-        start = month.subtract("days", 1)
         while cur.isAfter(start)
           weeks.push
             str: cur.format("MMM D")
@@ -64,7 +68,7 @@ module.exports = (pageData) ->
   # Airpair Data Service
   #----------------------------------------------
 
-  factory('apData', () ->
+  factory('apData', ($moment) ->
     
     window.apData = 
       orders: 
@@ -79,84 +83,96 @@ module.exports = (pageData) ->
               _.extend li, expertCredit
         
         
-        getM2M: () ->
+        getGrowth: (interval = 'monthly', start = moment(@data[0].utc), end = moment()) ->
+
+
+          periods = {}
+
+          # Group orders by period. Calculate revenue, gross, and hrs sold. 
+          for order in @data
+
+            if moment(order.utc).isAfter(start)
+                
+              if interval is "monthly"
+                intervalName = moment(order.utc).format("MMM")
+                intervalIdx = moment(order.utc).startOf('month').format("YYMM")
+              if interval is "weekly"
+                intervalName = moment(order.utc).format("MMM D")
+                intervalIdx = moment(order.utc).startOf('week').format("YYMMDD")
+
+              if not periods[intervalIdx]
+                periods[intervalIdx] =
+                  revenue: 0
+                  gross: 0
+                  hrsSold: 0
+                  orders: []
+                  intervalIdx: intervalIdx
+                  intervalName: intervalName
+
+              period = periods[intervalIdx]
+              period.orders.push order
+              period.revenue += order.total
+              period.gross += order.profit
+              period.hrsSold += calcTotal [item] for item in order.lineItems
+              
+
+
+
+          # Calc more stats. Get differences.  
           report = []
-          months = {}
+
           reportTotals =
             customerTotal: 0
             hrsSold: 0
-            numMonths: 0
+            numPeriods: 0
             revPerHour: 0
             revenue: 0
             gross: 0
             margin: 0
 
+          prevPeriod = null
 
-          # Groups orders by month. Calculate revenue, gross, and hrs sold. 
-          for order in @data
-            monthName = moment(order.utc).format("MMM")
-            monthIdx = moment(order.utc).format("YYMM")
+          _.each periods, (period) ->
+            period.customerTotal = _.uniq(_.pluck period.orders, 'userId').length
+            period.hrPerCust = period.hrsSold/period.customerTotal
+            period.revPerHour = period.revenue/period.hrsSold
+            period.margin = period.gross/period.revenue
 
-            if not months[monthIdx]
-              months[monthIdx] =
-                revenue: 0
-                gross: 0
-                hrsSold: 0
-                orders: []
-                monthIdx: monthIdx
-                monthName: monthName
+            reportTotals.numPeriods++
+            reportTotals.customerTotal += period.customerTotal
+            reportTotals.hrsSold += period.hrsSold
+            reportTotals.revPerHour += period.revPerHour
+            reportTotals.revenue += period.revenue
+            reportTotals.gross += period.gross
+            reportTotals.margin += period.margin
 
-            month = months[monthIdx]
-            month.orders.push order
-            month.revenue += order.total
-            month.gross += order.profit
-            month.hrsSold += calcTotal [item] for item in order.lineItems
-              
-
-
-          # Calc more monthly stats. Get month to month differences.  
-          prevMonth = null
-
-          _.each months, (month) ->
-            month.customerTotal = _.uniq(_.pluck month.orders, 'userId').length
-            month.hrPerCust = month.hrsSold/month.customerTotal
-            month.revPerHour = month.revenue/month.hrsSold
-            month.margin = month.gross/month.revenue
-
-            reportTotals.numMonths++
-            reportTotals.customerTotal += month.customerTotal
-            reportTotals.hrsSold += month.hrsSold
-            reportTotals.revPerHour += month.revPerHour
-            reportTotals.revenue += month.revenue
-            reportTotals.gross += month.gross
-            reportTotals.margin += month.margin
-
-            # Calc differences between months
-            if prevMonth?
+            # Calc differences between periods
+            if prevPeriod?
               report.push
                 css: 'change'
-                monthIdx: "#{prevMonth.monthIdx}c#{month.monthIdx}"
-                pcustomerTotal: (month.customerTotal-prevMonth.customerTotal)/prevMonth.customerTotal
-                phrPerCust: (month.hrPerCust-prevMonth.hrPerCust)/prevMonth.hrPerCust
-                phrsSold: (month.hrsSold-prevMonth.hrsSold)/prevMonth.hrsSold
-                prevPerHour: (month.revPerHour-prevMonth.revPerHour)/prevMonth.revPerHour
-                prevenue: (month.revenue-prevMonth.revenue)/prevMonth.revenue
-                pgross: (month.gross-prevMonth.gross)/prevMonth.gross
-                pmargin: (month.margin-prevMonth.margin)/prevMonth.margin
+                intervalIdx: "#{prevPeriod.intervalIdx}c#{period.intervalIdx}"
+                pcustomerTotal: (period.customerTotal-prevPeriod.customerTotal)/prevPeriod.customerTotal
+                phrPerCust: (period.hrPerCust-prevPeriod.hrPerCust)/prevPeriod.hrPerCust
+                phrsSold: (period.hrsSold-prevPeriod.hrsSold)/prevPeriod.hrsSold
+                prevPerHour: (period.revPerHour-prevPeriod.revPerHour)/prevPeriod.revPerHour
+                prevenue: (period.revenue-prevPeriod.revenue)/prevPeriod.revenue
+                pgross: (period.gross-prevPeriod.gross)/prevPeriod.gross
+                pmargin: (period.margin-prevPeriod.margin)/prevPeriod.margin
             
-            report.push month
-            prevMonth = month
+            report.push period
+            prevPeriod = period
 
           
           # Final report totals
-          reportTotals.revPerHour = reportTotals.revPerHour/reportTotals.numMonths
-          reportTotals.margin = reportTotals.margin/reportTotals.numMonths
+          reportTotals.revPerHour = reportTotals.revPerHour/reportTotals.numPeriods
+          reportTotals.margin = reportTotals.margin/reportTotals.numPeriods
           reportTotals.hrPerCust = reportTotals.hrsSold/reportTotals.customerTotal
           reportTotals.ltv = reportTotals.margin*reportTotals.revPerHour*reportTotals.hrPerCust
           
-          # Sort report by month, reverese, and return
+
+          # Sort, reverse, and return
           return {
-            report: _.sortBy(report, (m) -> m.monthIdx).reverse()
+            report: _.sortBy(report, (m) -> m.intervalIdx).reverse()
             reportTotals: reportTotals
           }
 
@@ -213,12 +229,33 @@ module.exports = (pageData) ->
 
           @metricsSummary = summary
 
+
+
+
+
+        getChannelGrowth: (start = moment(@data[0].utc), end = moment()) ->
+
+          weeks = $moment.getWeeks(moment().subtract("weeks", 4))
+
+          # Get Metrics for each week
+          prev = null
+          for week in weeks
+            week.metrics = @getChannelMetrics(week.start, week.end)
+            if prev
+              week.metricsPrev = prev.metrics.summary
+            prev = week
+
+          return weeks
+            
+
+
+
+          
+        
+        
               
             
-            
-
-
-
+      
 
     apData.orders.calcCredits()
 
@@ -397,10 +434,10 @@ module.exports = (pageData) ->
       date = new Date(2014, index, 1)
       month = moment(date).format("MMM")
 
-    data = apData.orders.getM2M()
+    month2month = apData.orders.getGrowth 'monthly'
 
-    $scope.report = data.report
-    $scope.reportTotals = data.reportTotals
+    $scope.report = month2month.report
+    $scope.reportTotals = month2month.reportTotals
 
 
   ]).
@@ -436,21 +473,17 @@ module.exports = (pageData) ->
 
   controller("WeeklyCtrl", ["$scope", "$location", "$moment", "apData", ($scope, $location, $moment, apData ) ->
 
-    # Get weeks in month
-    $scope.weeks = $moment.getWeeks()
-
-    # Get Metrics for each week
-    week.metrics = apData.orders.getChannelMetrics(week.start, week.end) for week in $scope.weeks
-
-    # Tabularize data
-    # $scope.weeksTable = []
-    # for week in $scope.weeks
+    # Overall Growth
+    week2week = apData.orders.getGrowth 'weekly', moment().startOf('month').subtract('weeks', 7)
+    $scope.report = week2week.report
+    $scope.reportTotals = week2week.reportTotals
 
 
 
+    # Channel Growth
+    $scope.channelGrowth = apData.orders.getChannelGrowth(moment().subtract('weeks', 7))
 
-
-    console.log "weeks", $scope.weeks
+    console.log "channelGrowth", $scope.channelGrowth
 
 
 

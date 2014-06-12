@@ -28,10 +28,10 @@
     <h4 class="text-light">Demand</h4>
 
           
-      <table class="table">
+      <table class="table growth">
 
         <thead>
-          <th class="mth first">Mth</th>
+          <th class="mth first">Week</th>
           <th class="gro">Gross</th>
           <th class="mar">Margin</th>
           <th class="rev">Revenue</th>
@@ -42,14 +42,36 @@
         </thead>
 
         <tr ng-repeat="r in report" class="{{r.css}}">
-          <td class="m">{{r.monthName}}</td>
-          <td ng-bind-html="r.gross | number : 0 | pFormat : r.pgross"></td>
-          <td class="o" ng-bind-html="r.margin | percent | pFormat : r.pmargin"></td>
-          <td ng-bind-html="r.revenue | number : 0 | pFormat : r.prevenue"></td>
-          <td ng-bind-html="r.revPerHour | number : 0 | dollar | pFormat : r.prevPerHour" class="o">$</td>
-          <td ng-bind-html="r.hrsSold | pFormat: r.phrsSold"></td>
-          <td class="o" ng-bind-html="r.hrPerCust | number : 1 | pFormat: r.phrPerCust"></td>
-          <td ng-bind-html="r.customerTotal | pFormat: r.pcustomerTotal"></td>
+          <td class="text-muted">{{r.intervalName}}</td>
+          <td>
+            <span ng-if="r.gross">{{r.gross | number:0}}</span>
+            <span ng-if="r.pgross" ng-class="{'text-danger': r.pgross < 0, 'text-success': r.pgross > 0}">{{r.pgross*100 | number:0}}%</span>
+          </td>
+          <td class="text-orange">
+            <span ng-if="r.margin">{{r.margin*100 | number:0}}%</span>
+            <span ng-if="r.pmargin" ng-class="{'text-danger': r.pmargin < 0, 'text-success': r.pmargin > 0}">{{r.pmargin*100 | number:0}}%
+            </span>
+          </td>
+          <td>
+            <span ng-if="r.revenue">{{r.revenue | number:0}}</span>
+            <span ng-if="r.prevenue" ng-class="{'text-danger': r.prevenue < 0, 'text-success': r.prevenue > 0}">{{r.prevenue*100 | number:0}}%</span>
+          </td>
+          <td class="text-orange">
+            <span ng-if="r.revPerHour">{{r.revPerHour | number:0}}</span>
+            <span ng-if="r.prevPerHour" ng-class="{'text-danger': r.prevPerHour < 0, 'text-success': r.prevPerHour > 0}">{{r.prevPerHour*100 | number:0}}%</span>
+          </td>
+          <td>
+            <span ng-if="r.hrsSold">{{r.hrsSold | number:0}}</span>
+            <span ng-if="r.phrsSold" ng-class="{'text-danger': r.phrsSold < 0, 'text-success': r.phrsSold > 0}">{{r.phrsSold*100 | number:0}}%</span>
+          </td>
+          <td class="o">
+            <span ng-if="r.hrPerCust">{{r.hrPerCust | number:1}}</span>
+            <span ng-if="r.phrPerCust" ng-class="{'text-danger': r.phrPerCust < 0, 'text-success': r.phrPerCust > 0}">{{r.phrPerCust*100 | number:0}}%</span>
+          </td>
+          <td>
+            <span ng-if="r.customerTotal">{{r.customerTotal | number:0}}</span>
+            <span ng-if="r.pcustomerTotal" ng-class="{'text-danger': r.pcustomerTotal < 0, 'text-success': r.pcustomerTotal > 0}">{{r.pcustomerTotal*100 | number:0}}%</span>
+          </td>
         </tr>
       </table>
 
@@ -83,133 +105,76 @@
 
 
 
+</div>
 
-    <h4 class="text-light m-t-3">Orders</h4>
+
+<hr>
+
+<div class="container m-b-3">
+
+  <h4 class="text-light m-t-1">Orders</h4>
   
   
 
   
 
-  <table class="table table-hover table-condensed"  ng-repeat="week in weeks">
+  <table class="table table-hover table-condensed growth"  Xng-repeat="week in weeks">
 
     <thead>
-      <th>{{week.str}}</th>
-      <th><span ng-class="{invisible: $index != 0}">Name</span></th>
-      <th><span ng-class="{invisible: $index != 0}">Total</span></th>
-      <th class="text-info"><span ng-class="{invisible: $index != 0}">Ad</span></th>
-      <th class="text-info"><span ng-class="{invisible: $index != 0}">Affiliate</span></th>
-      <th class="text-info"><span ng-class="{invisible: $index != 0}">Direct</span></th>
-      <th class="text-info"><span ng-class="{invisible: $index != 0}">Newsletter</span></th>
-      <th class="text-info"><span ng-class="{invisible: $index != 0}">Incubator</span></th>
-      <th class="text-info"><span ng-class="{invisible: $index != 0}">Press</span></th>
-      <th class="text-info"><span ng-class="{invisible: $index != 0}">Product</span></th>
-      <th class="text-info"><span ng-class="{invisible: $index != 0}">SEO</span></th>
-      <th class="text-info"><span ng-class="{invisible: $index != 0}">Social</span></th>
-      <th class="text-info"><span ng-class="{invisible: $index != 0}">WoM</span></th>
-      <th class="text-info"><span ng-class="{invisible: $index != 0}">AoA</span></th>
-      <th class="text-info"><span ng-class="{invisible: $index != 0}">Untracked</span></th>
-      <th class="text-success"><span ng-class="{invisible: $index != 0}">Campaigns</span></th>
+
+      <th>Week</th>
+      <th>Total</th>
+      <th class="text-info">Ad</th>
+      <th class="text-info">Affiliate</th>
+      <th class="text-info">Direct</th>
+      <th class="text-info">Newsletter</th>
+      <th class="text-info">Incubator</th>
+      <th class="text-info">Press</th>
+      <th class="text-info">Product</th>
+      <th class="text-info">SEO</th>
+      <th class="text-info">Social</th>
+      <th class="text-info">WoM</th>
+      <!-- <th class="text-info">AoA</th> -->
+      <th class="text-info">Untracked</th>
     </thead>
 
+    <tr class="row-small" ng-repeat-start="week in channelGrowth" ng-hide="$first">
 
-
-
-
-
-      <tr class="success">
-        <td></td>
-        <td> <strong>Count</strong></td>
-        <td>{{week.metrics.summary.numOrders}}</td>
-
-        <td class="text-info">{{week.metrics.summary.tags.ad.count | number: 0}}</td>
-        <td class="text-info">{{week.metrics.summary.tags.affiliate.count | number: 0}}</td>
-        <td class="text-info">{{week.metrics.summary.tags.direct.count | number: 0}}</td>
-        <td class="text-info"><span ng-show="week.metrics.summary.tags.newsletter-airpair.count">{{week.metrics.summary.tags.newsletter-airpair.count | number: 0}}</span></td>
-        <td class="text-info">{{week.metrics.summary.tags.incubator.count | number: 0}}</td>
-        <td class="text-info">{{week.metrics.summary.tags.press.count | number: 0}}</td>
-        <td class="text-info">{{week.metrics.summary.tags.product.count | number: 0}}</td>
-        <td class="text-info">{{week.metrics.summary.tags.seo.count | number: 0}}</td>
-        <td class="text-info">{{week.metrics.summary.tags.social.count | number: 0}}</td>
-        <td class="text-info">{{week.metrics.summary.tags.wordofmouth.count | number: 0}}</td>
-        <td class="text-info"><!-- AoA? --></td>
-        <td class="text-info">{{week.metrics.summary.tags.untracked.count | number: 0}}</td>
-
-        <td></td>
-      </tr>
+      <td></td>
+      <td ng-init="numOrdersDiff = ((week.metricsPrev.numOrders - week.metrics.summary.numOrders)/week.metricsPrev.numOrders)*100" ng-class="{'text-danger': numOrdersDiff < 0, 'text-success': numOrdersDiff > 0}">{{ ( numOrdersDiff | number:1 ) || 0}}%</td>
       
+      <td ng-init="adDiff = ((week.metricsPrev.tags.ad.count - week.metrics.summary.tags.ad.count)/week.metricsPrev.tags.ad.count)*100" ng-class="{'text-danger': adDiff < 0, 'text-success': adDiff > 0}">{{ ( adDiff | number:1 ) || 0}}%</td>
+      <td ng-init="affiliateDiff = ((week.metricsPrev.tags.affiliate.count - week.metrics.summary.tags.affiliate.count)/week.metricsPrev.tags.ad.count)*100" ng-class="{'text-danger': affiliateDiff < 0, 'text-success': affiliateDiff > 0}">{{ ( affiliateDiff | number:1 ) || 0}}%</td>
+      <td ng-init="directDiff = ((week.metricsPrev.tags.direct.count - week.metrics.summary.tags.direct.count)/week.metricsPrev.tags.direct.count)*100" ng-class="{'text-danger': directDiff < 0, 'text-success': directDiff > 0}">{{ ( directDiff | number:1 ) || 0}}%</td>
+      <td ng-init="newsletterAirpairDiff = ((week.metricsPrev.tags.newsletter-airpair.count - week.metrics.summary.tags.newsletter-airpair.count)/week.metricsPrev.tags.newsletter-airpair.count)*100" ng-class="{'text-danger': newsletterAirpairDiff < 0, 'text-success': newsletterAirpairDiff > 0}">{{ ( newsletterAirpairDiff | number:1 ) || 0}}%</td>
+      <td ng-init="incubatorDiff = ((week.metricsPrev.tags.incubator.count - week.metrics.summary.tags.incubator.count)/week.metricsPrev.tags.incubator.count)*100" ng-class="{'text-danger': incubatorDiff < 0, 'text-success': incubatorDiff > 0}">{{ ( incubatorDiff | number:1 ) || 0}}%</td>
+      <td ng-init="pressDiff = ((week.metricsPrev.tags.press.count - week.metrics.summary.tags.press.count)/week.metricsPrev.tags.press.count)*100" ng-class="{'text-danger': pressDiff < 0, 'text-success': pressDiff > 0}">{{ ( pressDiff | number:1 ) || 0}}%</td>
+      <td ng-init="productDiff = ((week.metricsPrev.tags.product.count - week.metrics.summary.tags.product.count)/week.metricsPrev.tags.product.count)*100" ng-class="{'text-danger': productDiff < 0, 'text-success': productDiff > 0}">{{ ( productDiff | number:1 ) || 0}}%</td>
+      <td ng-init="seoDiff = ((week.metricsPrev.tags.seo.count - week.metrics.summary.tags.seo.count)/week.metricsPrev.tags.seo.count)*100" ng-class="{'text-danger': seoDiff < 0, 'text-success': seoDiff > 0}">{{ ( seoDiff | number:1 ) || 0}}%</td>
+      <td ng-init="socialDiff = ((week.metricsPrev.tags.social.count - week.metrics.summary.tags.social.count)/week.metricsPrev.tags.social.count)*100" ng-class="{'text-danger': socialDiff < 0, 'text-success': socialDiff > 0}">{{ ( socialDiff | number:1 ) || 0}}%</td>
+      <td ng-init="wordofmouthDiff = ((week.metricsPrev.tags.wordofmouth.count - week.metrics.summary.tags.wordofmouth.count)/week.metricsPrev.tags.wordofmouth.count)*100" ng-class="{'text-danger': wordofmouthDiff < 0, 'text-success': wordofmouthDiff > 0}">{{ ( wordofmouthDiff | number:1 ) || 0}}%</td>
+      <td ng-init="untrackedDiff = ((week.metricsPrev.tags.untracked.count - week.metrics.summary.tags.untracked.count)/week.metricsPrev.tags.untracked.count)*100" ng-class="{'text-danger': untrackedDiff < 0, 'text-success': untrackedDiff > 0}">{{ ( untrackedDiff | number:1 ) || 0}}%</td>
+    </tr>
 
-    
+    <tr ng-repeat-end>
 
-
-
-
-
-      <tr class="active">
-        <td></td>
-        <td>Count % of Total</td>
-        <td></td>
-
-        <td class="text-info">{{(week.metrics.summary.tags.ad.count/week.metrics.summary.numOrders*100 | number:1) || 0 }}%</td>
-        <td class="text-info">{{(week.metrics.summary.tags.affiliate.count/week.metrics.summary.numOrders*100 | number:1) || 0 }}%</td>
-        <td class="text-info">{{(week.metrics.summary.tags.direct.count/week.metrics.summary.numOrders*100 | number:1) || 0 }}%</td>
-        <td class="text-info">{{(week.metrics.summary.tags.newsletter-airpair.count/week.metrics.summary.numOrders*100 | number:1) || 0 }}%</td>
-        <td class="text-info">{{(week.metrics.summary.tags.incubator.count/week.metrics.summary.numOrders*100 | number:1) || 0}}%</td>
-        <td class="text-info">{{(week.metrics.summary.tags.press.count/week.metrics.summary.numOrders*100 | number:1) || 0 }}%</td>
-        <td class="text-info">{{(week.metrics.summary.tags.product.count/week.metrics.summary.numOrders*100 | number:1) || 0 }}%</td>
-        <td class="text-info">{{(week.metrics.summary.tags.seo.count/week.metrics.summary.numOrders*100 | number:1) || 0 }}%</td>
-        <td class="text-info">{{(week.metrics.summary.tags.social.count/week.metrics.summary.numOrders*100 | number:1) || 0 }}%</td>
-        <td class="text-info">{{(week.metrics.summary.tags.wordofmouth.count/week.metrics.summary.numOrders*100 | number:1) || 0 }}%</td>
-        <td class="text-info"><!-- AoA? --></td>
-        <td class="text-info">{{(week.metrics.summary.tags.untracked.count/week.metrics.summary.numOrders*100 | number:1) || 0 }}%</td>
-
-        <td></td>
-      </tr>
-
-      <tr class="success">
-        <td></td>
-        <td> <strong>Revenue</strong></td>
-        <td>{{week.metrics.summary.revenueTotal | currency}}</td>
-
-        <td class="text-info">{{week.metrics.summary.tags.ad.revenue | currency}}</td>
-        <td class="text-info">{{week.metrics.summary.tags.affiliate.revenue | currency}}</td>
-        <td class="text-info">{{week.metrics.summary.tags.direct.revenue | currency}}</td>
-        <td class="text-info"><span ng-show="week.metrics.summary.tags.newsletter-airpair.revenue">{{week.metrics.summary.tags.newsletter-airpair.revenue | currency}}</span></td>
-        <td class="text-info">{{week.metrics.summary.tags.incubator.revenue | currency}}</td>
-        <td class="text-info">{{week.metrics.summary.tags.press.revenue | currency}}</td>
-        <td class="text-info">{{week.metrics.summary.tags.product.revenue | currency}}</td>
-        <td class="text-info">{{week.metrics.summary.tags.seo.revenue | currency}}</td>
-        <td class="text-info">{{week.metrics.summary.tags.social.revenue | currency}}</td>
-        <td class="text-info">{{week.metrics.summary.tags.wordofmouth.revenue | currency}}</td>
-        <td class="text-info"><!-- AoA? --></td>
-        <td class="text-info">{{week.metrics.summary.tags.untracked.revenue | currency}}</td>
-
-        <td></td>
-      </tr>
-
-
-      <tr class="active">
-        <td></td>
-        <td>Revenue % of Total</td>
-        <td></td>
-
-        <td class="text-info">{{(week.metrics.summary.tags.ad.revenue/week.metrics.summary.revenueTotal*100 | number:1) || 0}}%</td>
-        <td class="text-info">{{(week.metrics.summary.tags.affiliate.revenue/week.metrics.summary.revenueTotal*100 | number:1) || 0}}%</td>
-        <td class="text-info">{{(week.metrics.summary.tags.direct.revenue/week.metrics.summary.revenueTotal*100 | number:1) || 0}}%</td>
-        <td class="text-info">{{(week.metrics.summary.tags.newsletter-airpair.revenue/week.metrics.summary.revenueTotal*100 | number:1) || 0}}%</td>
-        <td class="text-info">{{(week.metrics.summary.tags.incubator.revenue/week.metrics.summary.revenueTotal*100 | number:1) || 0}}%</td>
-        <td class="text-info">{{(week.metrics.summary.tags.press.revenue/week.metrics.summary.revenueTotal*100 | number:1) || 0}}%</td>
-        <td class="text-info">{{(week.metrics.summary.tags.product.revenue/week.metrics.summary.revenueTotal*100 | number:1) || 0}}%</td>
-        <td class="text-info">{{(week.metrics.summary.tags.seo.revenue/week.metrics.summary.revenueTotal*100 | number:1) || 0}}%</td>
-        <td class="text-info">{{(week.metrics.summary.tags.social.revenue/week.metrics.summary.revenueTotal*100 | number:1) || 0}}%</td>
-        <td class="text-info">{{(week.metrics.summary.tags.wordofmouth.revenue/week.metrics.summary.revenueTotal*100 | number:1) || 0}}%</td>
-        <td class="text-info"><!-- AoA? --></td>
-        <td class="text-info">{{(week.metrics.summary.tags.untracked.revenue/week.metrics.summary.revenueTotal*100 | number:1) || 0}}%</td>
-
-        <td></td>
-      </tr>
+      <td class="text-muted">{{week.str}}</td>
+      <td>{{week.metrics.summary.numOrders}}</td>
+      <td class="text-info">{{(week.metrics.summary.tags.ad.count | number: 0) || 0}}</td>
+      <td class="text-info">{{(week.metrics.summary.tags.affiliate.count | number: 0) || 0}}</td>
+      <td class="text-info">{{(week.metrics.summary.tags.direct.count | number: 0) || 0}}</td>
+      <td class="text-info">{{(week.metrics.summary.tags.newsletter-airpair.count | number: 0) || 0}}</td>
+      <td class="text-info">{{(week.metrics.summary.tags.incubator.count | number: 0) || 0}}</td>
+      <td class="text-info">{{(week.metrics.summary.tags.press.count | number: 0) || 0}}</td>
+      <td class="text-info">{{(week.metrics.summary.tags.product.count | number: 0) || 0}}</td>
+      <td class="text-info">{{(week.metrics.summary.tags.seo.count | number: 0) || 0}}</td>
+      <td class="text-info">{{(week.metrics.summary.tags.social.count | number: 0) || 0}}</td>
+      <td class="text-info">{{(week.metrics.summary.tags.wordofmouth.count | number: 0) || 0}}</td>
+      <td class="text-info">{{(week.metrics.summary.tags.untracked.count | number: 0) || 0}}</td>
+    </tr>
 
 
 
   </table>
 
-  </div>
+</div>

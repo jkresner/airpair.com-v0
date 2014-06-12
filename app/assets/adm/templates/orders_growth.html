@@ -1,13 +1,13 @@
 
 
-<div id="mth-mth" class="container">
+<div class="container">
   
   <h3 class="text-light m-b-1">
     Month on Month
   </h3>
 
 
-  <table class="table">
+  <table class="table growth">
 
     <thead>
       <th class="mth first">Mth</th>
@@ -21,7 +21,7 @@
     </thead>
 
     <tr ng-repeat="r in report" class="{{r.css}}">
-      <td class="m">{{r.monthName}}</td>
+      <td class="text-muted">{{r.intervalName}}</td>
       <td>
         <span ng-if="r.gross">{{r.gross | number:0}}</span>
         <span ng-if="r.pgross" ng-class="{'text-danger': r.pgross < 0, 'text-success': r.pgross > 0}">{{r.pgross*100 | number:0}}%</span>

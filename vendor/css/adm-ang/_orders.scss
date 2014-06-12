@@ -45,15 +45,16 @@
 /*  Orders - Growth
 ~-----------------------------------------*/
 
-#mth-mth {
+.growth {
   tr.change td { padding:4px;font-size:11px }
   th { text-align:right; }
-  th.first { width:30px; }
-  th.last { width:14% }
+  th:first-child { width:70px; text-align: left;}
+  td:first-child { width:70px; text-align: left;}
+  th:last-child { width:14% }
   td { text-align:right;padding:6px }
-  td.o { color:orange }
-  td.m { color:gray }
-  td div.g { color:green;margin-right:6px }
-  td div.r { color:red;margin-right:6px }
 }
 
+
+.row-small {
+  font-size: 11px; 
+}
