@@ -82,7 +82,7 @@
       <section id="text-23" class="widget widget_text" style="margin-bottom:0">
         <div class="widget-wrap">
           <div class="textwidget">
-            <center><h4>Team Plans</h4></center>
+            <center><h2>Team Plans</h2></center>
 
 <div class="plans">
 
@@ -208,7 +208,7 @@
         </article>
 
 
-        <h2>Gold Experts by The Hour</h2>
+        <h2 style="clear:both">Gold Experts by The Hour</h2>
 
         <article class="portfolio">
           <a href="/book/cmaxw" target="_blank">
@@ -270,7 +270,7 @@
         </article>
 
 
-        <h2>Silver Experts by The Hour</h2>
+        <h2 style="clear:both">Silver Experts by The Hour</h2>
 
         <article class="portfolio">
           <a href="/book/camertron" target="_blank">
@@ -375,7 +375,7 @@
 
     body#home #experts { padding-bottom:40px; }
     body#home #experts main.content { width:100%; }
-    body#home #experts article { width:200px;margin:0px 14px 40px 14px!important;overflow:hidden; }
+    body#home #experts article { width:200px;margin:0px 14px 40px 14px;overflow:hidden; }
     body#home #experts article div { padding:0 16px;position:relative; }
     body#home #experts article span { background-position:center;background-color:white;opacity:0;width:200px;height:170px;display:block;position:absolute;background-repeat:no-repeat;background-size:40%;background-image:url('//airpair-blog.s3.amazonaws.com/wp-content/uploads/2013/09/ruby-on-rails.jpeg') }
     body#home #experts article:hover a { text-decoration:none!important; }
@@ -395,29 +395,22 @@
     body#home #cost .plan-col { width:33%; }
     body#home #cost .plan-col-popular { width:32%; }
     body#home #cost a:hover { color:black; }
+    body#home #cost a:hover .plan-button { background:#CE5323; }
     body#home #cost a:hover .plan-col { background:#FFF5F2; }
     body#home #cost a:hover .plan-col-popular { background:#FFF5F2; }
     body#home #cost .plan-button { background:none repeat scroll 0 0 #303236;border-radius:3px;color:#FFFFFF;font-size:18px;font-weight:400;padding:6px 30px 8px;max-width:230px;margin:auto;line-height:26px }
-    body#home #cost a:hover .plan-button { background:#CE5323; }
     .plan-pricing { margin:0;padding:0; }
-    .plan-col-wrap, .plan-col-popular-wrap {
-        padding: 20px 10px;
-    }
+    .plan-col-wrap, .plan-col-popular-wrap { padding: 20px 10px; }
 
     @media (max-width:1140px) {
       body#home #menu-technologies { display:none }
-      body#home aside.header-widget-area { width:720px!important; }
-      body#home #menu-services .problem-solving { display:none }
-    }
-
-    @media (max-width:1024px) {
-      body#home aside.header-widget-area { width:580px!important;padding:5px 0 0 0; }
-      body#home #experts article { width:188px; }
-      body#home #experts article h3 { font-size:1rem }
-      body#home #experts article span { width:180px }
+      body#home #experts article { float:none;display:inline-block; }
+      body#home #experts .content { text-align:center }
     }
 
     @media (max-width:920px) {
+      h2 { max-width:80%;font-size:24px!important;line-height:24px;margin-bottom:20px!important }
+      body#home #cost .plans { width:90%; }
       .customerQuote { float:none;width:80%;text-align:center;margin:auto; }
       .expertQuote { float:none;width:80%;text-align:center;margin:auto; }
       .customerQuote img { float:none;display:block;margin:auto }
@@ -426,19 +419,23 @@
       .expertQuote p { float:none;text-align:center;font-size:20px;width:100%; }
     }
 
-    @media (max-width:640px) {
+    @media (max-width:800px) {
       body#home .title-area { width:100%!important; }
       body#home .site-title { width:200px;margin:auto; }
-      body#home #experts article { width:200px;margin:28px!important }
-      body#home #experts article h3 { font-size:1rem }
-      body#home #experts article span { width:200px }
+      body#home #cost .plans { width:100%; }
+      body#home #cost .plan-col { width:100%; }
+      body#home #cost .plan-col-popular { width:100%; }
+    }
+
+    @media (max-width:500px) {
+      body#home #experts article { margin:0 auto 20px auto!important;margin-bottom:20px }
     }
 
   </style>
 
 
   <footer class="site-footer">
-    <div class="wrap"> <p>© airpair, Inc. · <a href="mailto:team@airpair.com">Email Us</a> · (800) 487-0668</div>
+    <div class="wrap"> <p>© airpair, Inc. · <a href="mailto:team@airpair.com">Email Us</a> · (800) 487-0668 · <a href="/privacy">Privacy Policy</a></div>
   </footer>
 
   </div>
