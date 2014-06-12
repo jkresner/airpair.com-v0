@@ -15,6 +15,7 @@ module.exports = (app) ->
   app.get '/', renderHome, render 'dashboard'
   app.get '/yc', file 'yc'
   app.get '/railsconf2014', file 'railsconf'
+  app.get '/rails/consulting', file 'railsconsulting'
   app.get '/book/me', authd, render 'bookme'
 
   # pages
