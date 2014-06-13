@@ -303,11 +303,17 @@ module.exports = (pageData) ->
           for week in weeks
             week.metrics = @getChannelMetrics(week.start, week.end)
             if prev
-              week.prevDiff = prev.metrics.summary
+              week.diffTags = {}
+              _.each prev.metrics.summary.tags, (tag, tagName) ->
+                if tagName is '' then return
+                newCount = week.metrics.summary.tags[tagName].count
+                oldCount = tag.count
+                week.diffTags[tagName] = {total:0, revenue: 0}
+                week.diffTags[tagName].count = if oldCount is 0 then (newCount-oldCount) else (newCount/oldCount)-1
             prev = week
 
           console.log "weeks", weeks
-          return weeks
+          return weeks.reverse()
             
 
 

@@ -130,50 +130,49 @@
       <th class="text-info">Newsletter</th>
       <th class="text-info">Incubator</th>
       <th class="text-info">Press</th>
-      <th class="text-info">Product</th>
       <th class="text-info">SEO</th>
       <th class="text-info">Social</th>
+      <th class="text-info">Stack Overflow</th>
       <th class="text-info">WoM</th>
-      <!-- <th class="text-info">AoA</th> -->
       <th class="text-info">Untracked</th>
     </thead>
 
-    <tr class="row-small" ng-repeat-start="week in channelGrowth" ng-hide="$first">
 
-      <td></td>
-      <td ng-init="numOrdersDiff = ((week.metricsPrev.numOrders - week.metrics.summary.numOrders)/week.metricsPrev.numOrders)*100" ng-class="{'text-danger': numOrdersDiff < 0, 'text-success': numOrdersDiff > 0}">{{ ( numOrdersDiff | number:1 ) || 0}}%</td>
-      
-      <td ng-init="adDiff = ((week.metricsPrev.tags.ad.count - week.metrics.summary.tags.ad.count)/week.metricsPrev.tags.ad.count)*100" ng-class="{'text-danger': adDiff < 0, 'text-success': adDiff > 0}">{{ ( adDiff | number:1 ) || 0}}%</td>
-      <td ng-init="affiliateDiff = ((week.metricsPrev.tags.affiliate.count - week.metrics.summary.tags.affiliate.count)/week.metricsPrev.tags.ad.count)*100" ng-class="{'text-danger': affiliateDiff < 0, 'text-success': affiliateDiff > 0}">{{ ( affiliateDiff | number:1 ) || 0}}%</td>
-      <td ng-init="directDiff = ((week.metricsPrev.tags.direct.count - week.metrics.summary.tags.direct.count)/week.metricsPrev.tags.direct.count)*100" ng-class="{'text-danger': directDiff < 0, 'text-success': directDiff > 0}">{{ ( directDiff | number:1 ) || 0}}%</td>
-      <td ng-init="newsletterAirpairDiff = ((week.metricsPrev.tags.newsletter-airpair.count - week.metrics.summary.tags.newsletter-airpair.count)/week.metricsPrev.tags.newsletter-airpair.count)*100" ng-class="{'text-danger': newsletterAirpairDiff < 0, 'text-success': newsletterAirpairDiff > 0}">{{ ( newsletterAirpairDiff | number:1 ) || 0}}%</td>
-      <td ng-init="incubatorDiff = ((week.metricsPrev.tags.incubator.count - week.metrics.summary.tags.incubator.count)/week.metricsPrev.tags.incubator.count)*100" ng-class="{'text-danger': incubatorDiff < 0, 'text-success': incubatorDiff > 0}">{{ ( incubatorDiff | number:1 ) || 0}}%</td>
-      <td ng-init="pressDiff = ((week.metricsPrev.tags.press.count - week.metrics.summary.tags.press.count)/week.metricsPrev.tags.press.count)*100" ng-class="{'text-danger': pressDiff < 0, 'text-success': pressDiff > 0}">{{ ( pressDiff | number:1 ) || 0}}%</td>
-      <td ng-init="productDiff = ((week.metricsPrev.tags.product.count - week.metrics.summary.tags.product.count)/week.metricsPrev.tags.product.count)*100" ng-class="{'text-danger': productDiff < 0, 'text-success': productDiff > 0}">{{ ( productDiff | number:1 ) || 0}}%</td>
-      <td ng-init="seoDiff = ((week.metricsPrev.tags.seo.count - week.metrics.summary.tags.seo.count)/week.metricsPrev.tags.seo.count)*100" ng-class="{'text-danger': seoDiff < 0, 'text-success': seoDiff > 0}">{{ ( seoDiff | number:1 ) || 0}}%</td>
-      <td ng-init="socialDiff = ((week.metricsPrev.tags.social.count - week.metrics.summary.tags.social.count)/week.metricsPrev.tags.social.count)*100" ng-class="{'text-danger': socialDiff < 0, 'text-success': socialDiff > 0}">{{ ( socialDiff | number:1 ) || 0}}%</td>
-      <td ng-init="wordofmouthDiff = ((week.metricsPrev.tags.wordofmouth.count - week.metrics.summary.tags.wordofmouth.count)/week.metricsPrev.tags.wordofmouth.count)*100" ng-class="{'text-danger': wordofmouthDiff < 0, 'text-success': wordofmouthDiff > 0}">{{ ( wordofmouthDiff | number:1 ) || 0}}%</td>
-      <td ng-init="untrackedDiff = ((week.metricsPrev.tags.untracked.count - week.metrics.summary.tags.untracked.count)/week.metricsPrev.tags.untracked.count)*100" ng-class="{'text-danger': untrackedDiff < 0, 'text-success': untrackedDiff > 0}">{{ ( untrackedDiff | number:1 ) || 0}}%</td>
-    </tr>
 
-    <tr ng-repeat-end>
+    <tr ng-repeat-start="week in channelGrowth">
 
       <td class="text-muted">{{week.str}}</td>
       <td>{{week.metrics.summary.numOrders}}</td>
-      <td class="text-info">{{(week.metrics.summary.tags.ad.count | number: 0) || 0}}</td>
-      <td class="text-info">{{(week.metrics.summary.tags.affiliate.count | number: 0) || 0}}</td>
-      <td class="text-info">{{(week.metrics.summary.tags.direct.count | number: 0) || 0}}</td>
-      <td class="text-info">{{(week.metrics.summary.tags.newsletter-airpair.count | number: 0) || 0}}</td>
-      <td class="text-info">{{(week.metrics.summary.tags.incubator.count | number: 0) || 0}}</td>
-      <td class="text-info">{{(week.metrics.summary.tags.press.count | number: 0) || 0}}</td>
-      <td class="text-info">{{(week.metrics.summary.tags.product.count | number: 0) || 0}}</td>
-      <td class="text-info">{{(week.metrics.summary.tags.seo.count | number: 0) || 0}}</td>
-      <td class="text-info">{{(week.metrics.summary.tags.social.count | number: 0) || 0}}</td>
-      <td class="text-info">{{(week.metrics.summary.tags.wordofmouth.count | number: 0) || 0}}</td>
-      <td class="text-info">{{(week.metrics.summary.tags.untracked.count | number: 0) || 0}}</td>
+      <td class="text-info">{{week.metrics.summary.tags.ad.count | number: 0}}</td>
+      <td class="text-info">{{week.metrics.summary.tags.affiliate.count | number: 0}}</td>
+      <td class="text-info">{{week.metrics.summary.tags.direct.count | number: 0}}</td>
+      <td class="text-info">{{week.metrics.summary.tags.newsletterairpair.count | number: 0}}</td>
+      <td class="text-info">{{week.metrics.summary.tags.incubator.count | number: 0}}</td>
+      <td class="text-info">{{week.metrics.summary.tags.press.count | number: 0}}</td>
+      <td class="text-info">{{week.metrics.summary.tags.seo.count | number: 0}}</td>
+      <td class="text-info">{{week.metrics.summary.tags.social.count | number: 0}}</td>
+      <td class="text-info">{{week.metrics.summary.tags.stackoverflowads.count | number: 0}}</td>
+      <td class="text-info">{{week.metrics.summary.tags.wordofmouth.count | number: 0}}</td>
+      <td class="text-info">{{week.metrics.summary.tags.untracked.count | number: 0}}</td>
     </tr>
 
+    <tr class="row-small" ng-repeat-end ng-show="week.diffTags">
 
+      <td></td>
+      <td></td>
+      <td ng-class="{'text-danger': week.diffTags.ad.count < 0, 'text-success': week.diffTags.ad.count > 0}">{{ week.diffTags.ad.count*100 | number:1}}%</td>
+      <td ng-class="{'text-danger': week.diffTags.affiliate.count < 0, 'text-success': week.diffTags.affiliate.count > 0}">{{ week.diffTags.affiliate.count*100 | number:1 }}%</td>
+      <td ng-class="{'text-danger': week.diffTags.direct.count < 0, 'text-success': week.diffTags.direct.count > 0}">{{ week.diffTags.direct.count*100 | number:1 }}%</td>
+      <td ng-class="{'text-danger': week.diffTags.newsletterairpair.count < 0, 'text-success': week.diffTags.newsletterairpair.count > 0}">{{ week.diffTags.newsletterairpair.count*100 | number:1 }}%</td>
+      <td ng-class="{'text-danger': week.diffTags.incubator.count < 0, 'text-success': week.diffTags.incubator.count > 0}">{{ week.diffTags.incubator.count*100 | number:1 }}%</td>
+      <td ng-class="{'text-danger': week.diffTags.press.count < 0, 'text-success': week.diffTags.press.count > 0}">{{ week.diffTags.press.count*100 | number:1 }}%</td>
+      <td ng-class="{'text-danger': week.diffTags.seo.count < 0, 'text-success': week.diffTags.seo.count > 0}">{{ week.diffTags.seo.count*100 | number:1 }}%</td>
+      <td ng-class="{'text-danger': week.diffTags.social.count < 0, 'text-success': week.diffTags.social.count > 0}">{{ week.diffTags.social.count*100 | number:1 }}%</td>
+      <td ng-class="{'text-danger': week.diffTags.stackoverflowads.count < 0, 'text-success': week.diffTags.stackoverflowads.count > 0}">{{ week.diffTags.stackoverflowads.count*100 | number:1 }}%</td>
+      <td ng-class="{'text-danger': week.diffTags.wordofmouth.count < 0, 'text-success': week.diffTags.wordofmouth.count > 0}">{{ week.diffTags.wordofmouth.count*100 | number:1 }}%</td>
+      <td ng-class="{'text-danger': week.diffTags.untracked.count < 0, 'text-success': week.diffTags.untracked.count > 0}">{{ week.diffTags.untracked.count*100 | number:1 }}%</td>
+
+    </tr>
 
   </table>
 
