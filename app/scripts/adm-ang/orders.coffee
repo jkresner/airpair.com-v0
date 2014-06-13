@@ -178,6 +178,31 @@ module.exports = (pageData) ->
           reportTotals.ltv = reportTotals.margin*reportTotals.revPerHour*reportTotals.hrPerCust
           
 
+          # Calc last week based on where we would have been 
+
+          finalWeek = report[report.length - 1]
+          finalDiff = report[report.length - 2]
+          prevWeek = report[report.length - 3]
+
+          wkStart = moment()
+          if wkStart.day() < 6
+            wkStart.startOf("week").subtract("d", 1).startOf("day")
+          else 
+            wkStart.endOf("week").startOf("day")
+
+          wkPercentage = (moment().unix()-wkStart.unix())/60/60/24/7
+
+          _.extend report[report.length - 2],
+            pcustomerTotal: (finalWeek.customerTotal-(prevWeek.customerTotal*wkPercentage))/(prevWeek.customerTotal*wkPercentage)
+            phrPerCust: (finalWeek.hrPerCust-(prevWeek.hrPerCust*wkPercentage))/(prevWeek.hrPerCust*wkPercentage)
+            phrsSold: (finalWeek.hrsSold-(prevWeek.hrsSold*wkPercentage))/(prevWeek.hrsSold*wkPercentage)
+            prevPerHour: (finalWeek.revPerHour-(prevWeek.revPerHour*wkPercentage))/(prevWeek.revPerHour*wkPercentage)
+            prevenue: (finalWeek.revenue-(prevWeek.revenue*wkPercentage))/(prevWeek.revenue*wkPercentage)
+            pgross: (finalWeek.gross-(prevWeek.gross*wkPercentage))/(prevWeek.gross*wkPercentage)
+            pmargin: (finalWeek.margin-(prevWeek.margin*wkPercentage))/(prevWeek.margin*wkPercentage)
+
+
+
           # Sort, reverse, and return
           return {
             report: _.sortBy(report, (m) -> m.intervalIdx).reverse()
