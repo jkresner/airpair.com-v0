@@ -97,8 +97,15 @@ module.exports = (pageData) ->
                 intervalName = moment(order.utc).format("MMM")
                 intervalIdx = moment(order.utc).startOf('month').format("YYMM")
               if interval is "weekly"
-                intervalName = moment(order.utc).format("MMM D")
-                intervalIdx = moment(order.utc).startOf('week').format("YYMMDD")
+                # Find start of staturday
+                time = moment(order.utc)
+                if time.day() < 6
+                  time.startOf("week").subtract("d", 1).startOf("day")
+                else 
+                  time.endOf("week").startOf("day")
+
+                intervalName = time.clone().add('days', 6).format("MMM D")
+                intervalIdx = time.format("YYMMDD")
 
               if not periods[intervalIdx]
                 periods[intervalIdx] =
@@ -117,6 +124,7 @@ module.exports = (pageData) ->
               
 
 
+          console.log "periods", periods
 
           # Calc more stats. Get differences.  
           report = []
