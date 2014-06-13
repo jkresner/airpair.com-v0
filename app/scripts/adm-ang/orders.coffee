@@ -40,10 +40,6 @@ module.exports = (pageData) ->
   factory('$moment', () ->
     window.$moment = 
       getWeeks: (start, end = moment().endOf('month')) ->
-        # if not month
-        #   month = moment().startOf 'month'
-        # else 
-        #   month = month.startOf 'month'
         if not start
           start = moment().startOf('month').subtract("days", 1)
         else
@@ -58,6 +54,39 @@ module.exports = (pageData) ->
             end: cur.clone().endOf("week").toDate()
           cur = cur.subtract('weeks', 1)
         return weeks
+
+      getWeeksByFriday: (start) ->
+
+        if not start
+          start = moment().startOf('month').subtract("days", 2)
+        else 
+          start.startOf('week').subtract("days", 2)
+
+        if start.day() < 6
+          start.startOf("week").subtract("d", 1).startOf("day")
+        else 
+          start.endOf("week").startOf("day")
+
+
+        weeks = []
+
+        cur = moment(new Date())
+        if cur.day() < 6
+          cur.startOf("week").subtract("d", 1).startOf("day")
+        else 
+          cur.endOf("week").startOf("day")
+
+
+        while cur.isAfter(start)
+          weeks.push
+            str: cur.clone().add('w', 1).subtract('d', 1).format("MMM D")
+            start: cur.toDate()
+            end: cur.clone().add('w', 1).toDate()
+          cur = cur.clone().subtract('w', 1)
+
+
+        return weeks
+
 
   ).
 
@@ -97,7 +126,7 @@ module.exports = (pageData) ->
                 intervalName = moment(order.utc).format("MMM")
                 intervalIdx = moment(order.utc).startOf('month').format("YYMM")
               if interval is "weekly"
-                # Find start of staturday
+                # Find start of saturday
                 time = moment(order.utc)
                 if time.day() < 6
                   time.startOf("week").subtract("d", 1).startOf("day")
@@ -215,7 +244,7 @@ module.exports = (pageData) ->
         getChannelMetrics: (start, end) ->
           if not @metrics
             @metrics = []
-            tags = []
+            # tags = []
             for order in apData.orders.data
               metric = 
                 utc: order.utc
@@ -243,14 +272,14 @@ module.exports = (pageData) ->
                   tagName = tag.group.replace('-', '')
                   if tag.name is "w-o-mouth"
                     tagName = "wordofmouth"
-                  tags.push tagName
+                  # tags.push tagName
                   metric.tags[tagName] = tag
                   metric.tags[tagName].total = metric.total/order.marketingTags.length 
                   if tag.type is "campaign"
                     metric.campaigns.push(tag.name)
               @metrics.push metric
-            tags = _.uniq(tags)
-            console.log "tags", tags
+            # tags = _.uniq(tags)
+
             _(@metrics).reverse()
 
           
@@ -260,7 +289,6 @@ module.exports = (pageData) ->
               date = new Date(order.utc)
               if date >= start and date <= end
                 @metricsFiltered.push order
-            console.log "@metricsFiltered", @metricsFiltered
             return orders: @metricsFiltered, summary: @getChannelMetricsSummary(@metricsFiltered)
           
           else 
@@ -296,7 +324,7 @@ module.exports = (pageData) ->
 
         getChannelGrowth: (start = moment(@data[0].utc), end = moment()) ->
 
-          weeks = $moment.getWeeks(moment().subtract("weeks", 4)).reverse()
+          weeks = $moment.getWeeksByFriday(moment().subtract("weeks", 4), moment(), 6).reverse()
 
           # Get Metrics for each week
           prev = null
@@ -308,11 +336,34 @@ module.exports = (pageData) ->
                 if tagName is '' then return
                 newCount = week.metrics.summary.tags[tagName].count
                 oldCount = tag.count
-                week.diffTags[tagName] = {total:0, revenue: 0}
-                week.diffTags[tagName].count = if oldCount is 0 then (newCount-oldCount) else (newCount/oldCount)-1
+                week.diffTags[tagName] = 
+                  count: if oldCount is 0 then (newCount-oldCount) else (newCount/oldCount)-1
             prev = week
 
-          console.log "weeks", weeks
+
+          # calc last week diff
+          finalWeek = weeks[weeks.length - 1]
+          prevWeek = weeks[weeks.length - 2]
+
+          # get percentage through week
+          wkStart = moment()
+          if wkStart.day() < 6
+            wkStart.startOf("week").subtract("d", 1).startOf("day")
+          else 
+            wkStart.endOf("week").startOf("day")
+          wkPercentage = (moment().unix()-wkStart.unix())/60/60/24/7
+
+          # Update final week diff
+          _.each finalWeek.metrics.summary.tags, (tag, tagName) ->
+            if tagName is '' then return
+
+            newCount = tag.count
+            oldCount = prevWeek.metrics.summary.tags[tagName].count*wkPercentage
+
+            finalWeek.diffTags[tagName] = 
+              count: if oldCount is 0 then (newCount-oldCount) else (newCount/oldCount)-1
+
+
           return weeks.reverse()
             
 
@@ -549,7 +600,7 @@ module.exports = (pageData) ->
     # Channel Growth
     $scope.channelGrowth = apData.orders.getChannelGrowth(moment().subtract('weeks', 7))
 
-    console.log "channelGrowth", $scope.channelGrowth
+    # console.log "channelGrowth", $scope.channelGrowth
 
 
 
