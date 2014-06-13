@@ -38,7 +38,7 @@ module.exports = (pageData) ->
   #----------------------------------------------
 
   factory('$moment', () ->
-    $moment = 
+    window.$moment = 
       getWeeks: (start, end = moment().endOf('month')) ->
         # if not month
         #   month = moment().startOf 'month'
@@ -124,7 +124,6 @@ module.exports = (pageData) ->
               
 
 
-          console.log "periods", periods
 
           # Calc more stats. Get differences.  
           report = []
@@ -192,7 +191,7 @@ module.exports = (pageData) ->
 
           wkPercentage = (moment().unix()-wkStart.unix())/60/60/24/7
 
-          _.extend report[report.length - 2],
+          _.extend finalDiff,
             pcustomerTotal: (finalWeek.customerTotal-(prevWeek.customerTotal*wkPercentage))/(prevWeek.customerTotal*wkPercentage)
             phrPerCust: (finalWeek.hrPerCust-(prevWeek.hrPerCust*wkPercentage))/(prevWeek.hrPerCust*wkPercentage)
             phrsSold: (finalWeek.hrsSold-(prevWeek.hrsSold*wkPercentage))/(prevWeek.hrsSold*wkPercentage)
@@ -216,6 +215,7 @@ module.exports = (pageData) ->
         getChannelMetrics: (start, end) ->
           if not @metrics
             @metrics = []
+            tags = []
             for order in apData.orders.data
               metric = 
                 utc: order.utc
@@ -224,14 +224,35 @@ module.exports = (pageData) ->
                 total: order.total
                 campaigns: []
                 requestId: order.requestId
+                tags:
+                  ad: {total:0, revenue: 0}
+                  affiliate: {total:0, revenue: 0}
+                  direct: {total:0, revenue: 0}
+                  incubator: {total:0, revenue: 0}
+                  newsletterairpair: {total:0, revenue: 0}
+                  press: {total:0, revenue: 0}
+                  # product: {total:0, revenue: 0}
+                  seo: {total:0, revenue: 0}
+                  social: {total:0, revenue: 0}
+                  wordofmouth: {total:0, revenue: 0}
+                  untracked: {total:0, revenue: 0}
+                  stackoverflowads: {total:0, revenue: 0}
+
               _.each order.marketingTags, (tag) ->
                 if tag.type is "channel" or tag.type is "campaign"
-                  metric.tags[tag.group] = tag
-                  metric.tags[tag.group].total = metric.total/order.marketingTags.length 
+                  tagName = tag.group.replace('-', '')
+                  if tag.name is "w-o-mouth"
+                    tagName = "wordofmouth"
+                  tags.push tagName
+                  metric.tags[tagName] = tag
+                  metric.tags[tagName].total = metric.total/order.marketingTags.length 
                   if tag.type is "campaign"
                     metric.campaigns.push(tag.name)
               @metrics.push metric
+            tags = _.uniq(tags)
+            console.log "tags", tags
             _(@metrics).reverse()
+
           
           if start and end
             @metricsFiltered = []
@@ -239,6 +260,7 @@ module.exports = (pageData) ->
               date = new Date(order.utc)
               if date >= start and date <= end
                 @metricsFiltered.push order
+            console.log "@metricsFiltered", @metricsFiltered
             return orders: @metricsFiltered, summary: @getChannelMetricsSummary(@metricsFiltered)
           
           else 
@@ -250,47 +272,52 @@ module.exports = (pageData) ->
             revenueTotal: 0
             tags: {}
 
+
           for order in metrics
             summary.revenueTotal += order.total
-            _.each order.tags, (tag) ->
-              if not summary.tags[tag.group]
-                summary.tags[tag.group] = 
+            _.each order.tags, (tag, key) ->
+              if not summary.tags[key]
+                summary.tags[key] = 
                  count: 0
                  revenue: 0
-              summary.tags[tag.group].count++ 
-              summary.tags[tag.group].revenue += tag.total
+              summary.tags[key].count++ if tag.name
+              summary.tags[key].revenue += tag.total
 
+          console.log "@metricsSummary", summary
           @metricsSummary = summary
 
 
 
 
+        # TODO: reverse weeks
+        # TODO: update getChannelMetrics
+        # TODO: generate diff
+        # TODO: update view
 
         getChannelGrowth: (start = moment(@data[0].utc), end = moment()) ->
 
-          weeks = $moment.getWeeks(moment().subtract("weeks", 4))
+          weeks = $moment.getWeeks(moment().subtract("weeks", 4)).reverse()
 
           # Get Metrics for each week
           prev = null
           for week in weeks
             week.metrics = @getChannelMetrics(week.start, week.end)
             if prev
-              week.metricsPrev = prev.metrics.summary
+              week.prevDiff = prev.metrics.summary
             prev = week
 
+          console.log "weeks", weeks
           return weeks
             
 
 
 
-          
-        
-        
-              
-            
+    
       
 
     apData.orders.calcCredits()
+
+
 
     return apData
   ).

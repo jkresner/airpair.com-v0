@@ -34,14 +34,15 @@
       <th class="text-info">Ad</th>
       <th class="text-info">Affiliate</th>
       <th class="text-info">Direct</th>
-      <th class="text-info">Newsletter</th>
       <th class="text-info">Incubator</th>
+      <th class="text-info">Newsletter</th>
       <th class="text-info">Press</th>
-      <th class="text-info">Product</th>
+      <!-- <th class="text-info">Product</th> -->
       <th class="text-info">SEO</th>
       <th class="text-info">Social</th>
+      <th class="text-info">Stack Overflow Ads</th>
       <th class="text-info">WoM</th>
-      <th class="text-info">AoA</th>
+      <!-- <th class="text-info">AoA</th> -->
       <th class="text-info">Untracked</th>
       <th class="text-success">Campaigns</th>
     </thead>
@@ -54,16 +55,14 @@
       <td class="text-info">{{metrics.summary.tags.ad.count | number: 0}}</td>
       <td class="text-info">{{metrics.summary.tags.affiliate.count | number: 0}}</td>
       <td class="text-info">{{metrics.summary.tags.direct.count | number: 0}}</td>
-      <td class="text-info"><span ng-show="metrics.summary.tags.newsletter-airpair.count">{{metrics.summary.tags.newsletter-airpair.count | number: 0}}</span></td>
       <td class="text-info">{{metrics.summary.tags.incubator.count | number: 0}}</td>
+      <td class="text-info">{{metrics.summary.tags.newsletterairpair.count | number: 0}}</td>
       <td class="text-info">{{metrics.summary.tags.press.count | number: 0}}</td>
-      <td class="text-info">{{metrics.summary.tags.product.count | number: 0}}</td>
       <td class="text-info">{{metrics.summary.tags.seo.count | number: 0}}</td>
       <td class="text-info">{{metrics.summary.tags.social.count | number: 0}}</td>
+      <td class="text-info">{{metrics.summary.tags.stackoverflowads.count | number: 0}}</td>
       <td class="text-info">{{metrics.summary.tags.wordofmouth.count | number: 0}}</td>
-      <td class="text-info"><!-- AoA? --></td>
       <td class="text-info">{{metrics.summary.tags.untracked.count | number: 0}}</td>
-
       <td></td>
     </tr>
     
@@ -75,16 +74,14 @@
       <td class="text-info">{{(metrics.summary.tags.ad.count/metrics.summary.numOrders*100 | number:1) || 0 }}%</td>
       <td class="text-info">{{(metrics.summary.tags.affiliate.count/metrics.summary.numOrders*100 | number:1) || 0 }}%</td>
       <td class="text-info">{{(metrics.summary.tags.direct.count/metrics.summary.numOrders*100 | number:1) || 0 }}%</td>
-      <td class="text-info">{{(metrics.summary.tags.newsletter-airpair.count/metrics.summary.numOrders*100 | number:1) || 0 }}%</td>
       <td class="text-info">{{(metrics.summary.tags.incubator.count/metrics.summary.numOrders*100 | number:1) || 0}}%</td>
+      <td class="text-info">{{(metrics.summary.tags.newsletterairpair.count/metrics.summary.numOrders*100 | number:1) || 0 }}%</td>
       <td class="text-info">{{(metrics.summary.tags.press.count/metrics.summary.numOrders*100 | number:1) || 0 }}%</td>
-      <td class="text-info">{{(metrics.summary.tags.product.count/metrics.summary.numOrders*100 | number:1) || 0 }}%</td>
       <td class="text-info">{{(metrics.summary.tags.seo.count/metrics.summary.numOrders*100 | number:1) || 0 }}%</td>
       <td class="text-info">{{(metrics.summary.tags.social.count/metrics.summary.numOrders*100 | number:1) || 0 }}%</td>
+      <td class="text-info">{{(metrics.summary.tags.stackoverflowads.count/metrics.summary.numOrders*100 | number:1) || 0 }}%</td>
       <td class="text-info">{{(metrics.summary.tags.wordofmouth.count/metrics.summary.numOrders*100 | number:1) || 0 }}%</td>
-      <td class="text-info"><!-- AoA? --></td>
       <td class="text-info">{{(metrics.summary.tags.untracked.count/metrics.summary.numOrders*100 | number:1) || 0 }}%</td>
-
       <td></td>
     </tr>
 
@@ -96,14 +93,13 @@
       <td class="text-info">{{metrics.summary.tags.ad.revenue | currency}}</td>
       <td class="text-info">{{metrics.summary.tags.affiliate.revenue | currency}}</td>
       <td class="text-info">{{metrics.summary.tags.direct.revenue | currency}}</td>
-      <td class="text-info"><span ng-show="metrics.summary.tags.newsletter-airpair.revenue">{{metrics.summary.tags.newsletter-airpair.revenue | currency}}</span></td>
       <td class="text-info">{{metrics.summary.tags.incubator.revenue | currency}}</td>
+      <td class="text-info">{{metrics.summary.tags.newsletterairpair.revenue | currency}}</td>
       <td class="text-info">{{metrics.summary.tags.press.revenue | currency}}</td>
-      <td class="text-info">{{metrics.summary.tags.product.revenue | currency}}</td>
       <td class="text-info">{{metrics.summary.tags.seo.revenue | currency}}</td>
       <td class="text-info">{{metrics.summary.tags.social.revenue | currency}}</td>
+      <td class="text-info">{{metrics.summary.tags.stackoverflowads.revenue | currency}}</td>
       <td class="text-info">{{metrics.summary.tags.wordofmouth.revenue | currency}}</td>
-      <td class="text-info"><!-- AoA? --></td>
       <td class="text-info">{{metrics.summary.tags.untracked.revenue | currency}}</td>
 
       <td></td>
@@ -118,14 +114,13 @@
       <td class="text-info">{{(metrics.summary.tags.ad.revenue/metrics.summary.revenueTotal*100 | number:1) || 0}}%</td>
       <td class="text-info">{{(metrics.summary.tags.affiliate.revenue/metrics.summary.revenueTotal*100 | number:1) || 0}}%</td>
       <td class="text-info">{{(metrics.summary.tags.direct.revenue/metrics.summary.revenueTotal*100 | number:1) || 0}}%</td>
-      <td class="text-info">{{(metrics.summary.tags.newsletter-airpair.revenue/metrics.summary.revenueTotal*100 | number:1) || 0}}%</td>
       <td class="text-info">{{(metrics.summary.tags.incubator.revenue/metrics.summary.revenueTotal*100 | number:1) || 0}}%</td>
+      <td class="text-info">{{(metrics.summary.tags.newsletterairpair.revenue/metrics.summary.revenueTotal*100 | number:1) || 0}}%</td>
       <td class="text-info">{{(metrics.summary.tags.press.revenue/metrics.summary.revenueTotal*100 | number:1) || 0}}%</td>
-      <td class="text-info">{{(metrics.summary.tags.product.revenue/metrics.summary.revenueTotal*100 | number:1) || 0}}%</td>
       <td class="text-info">{{(metrics.summary.tags.seo.revenue/metrics.summary.revenueTotal*100 | number:1) || 0}}%</td>
       <td class="text-info">{{(metrics.summary.tags.social.revenue/metrics.summary.revenueTotal*100 | number:1) || 0}}%</td>
+      <td class="text-info">{{(metrics.summary.tags.stackoverflowads.revenue/metrics.summary.revenueTotal*100 | number:1) || 0}}%</td>
       <td class="text-info">{{(metrics.summary.tags.wordofmouth.revenue/metrics.summary.revenueTotal*100 | number:1) || 0}}%</td>
-      <td class="text-info"><!-- AoA? --></td>
       <td class="text-info">{{(metrics.summary.tags.untracked.revenue/metrics.summary.revenueTotal*100 | number:1) || 0}}%</td>
 
       <td></td>
@@ -141,14 +136,13 @@
       <td class="text-info">{{order.tags.ad.total | number: 0}}</td>
       <td class="text-info">{{order.tags.affiliate.total | number: 0}}</td>
       <td class="text-info">{{order.tags.direct.total | number: 0}}</td>
-      <td class="text-info"><span ng-show="order.tags.newsletter-airpair.total">{{order.tags.newsletter-airpair.total | number: 0}}</span></td>
       <td class="text-info">{{order.tags.incubator.total | number: 0}}</td>
+      <td class="text-info">{{order.tags.newsletterairpair.total | number: 0}}</td>
       <td class="text-info">{{order.tags.press.total | number: 0}}</td>
-      <td class="text-info">{{order.tags.product.total | number: 0}}</td>
       <td class="text-info">{{order.tags.seo.total | number: 0}}</td>
       <td class="text-info">{{order.tags.social.total | number: 0}}</td>
+      <td class="text-info">{{order.tags.stackoverflowads.total | number: 0}}</td>
       <td class="text-info">{{order.tags.wordofmouth.total | number: 0}}</td>
-      <td class="text-info"><!-- AoA? --></td>
       <td class="text-info">{{order.tags.untracked.total | number: 0}}</td>
       <td>
         <span ng-repeat="tag in order.campaigns" class="label label-success">{{tag}}</span>
