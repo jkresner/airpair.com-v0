@@ -311,7 +311,7 @@ module.exports = (pageData) ->
               summary.tags[key].count++ if tag.name
               summary.tags[key].revenue += tag.total
 
-          console.log "@metricsSummary", summary
+          # console.log "@metricsSummary", summary
           @metricsSummary = summary
 
 
@@ -334,6 +334,10 @@ module.exports = (pageData) ->
               week.diffTags = {}
               _.each prev.metrics.summary.tags, (tag, tagName) ->
                 if tagName is '' then return
+                if not week.metrics.summary.tags[tagName] 
+                  week.metrics.summary.tags[tagName] = 
+                    count: 0
+
                 newCount = week.metrics.summary.tags[tagName].count
                 oldCount = tag.count
                 week.diffTags[tagName] = 
