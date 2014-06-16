@@ -66,23 +66,23 @@ exports.config =
         'test/stylesheets/test.css': /^test/
       order:
         before: [
-          'vendor/css/adm/normalize.css',
-          'vendor/css/adm/bootstrap.css',
-          'vendor/css/adm/bootstrap-responsive.css',
-          'vendor/css/ap/epik.css',
-          'vendor/css/shared/jquery.datepicker.css',
-          'vendor/css/shared/jquery.timepicker.css',
-          'vendor/css/shared/bootstrap-typeahead.css',
-          'app/css/shared/alert.scss',
-          'app/css/shared/base.scss',
-          'app/css/shared/form.scss',
-          'app/css/shared/icon.scss',
-          'app/css/shared/label.scss',
-          'app/css/shared/table.scss',
-          'app/css/shared/tag.scss',
-          'app/css/adm/base.scss',
-          'app/css/ap/base.scss',
-          'app/css/ap/snippets.scss',
+          'vendor/css/adm-bb/normalize.css'
+          'vendor/css/adm-bb/bootstrap.css'
+          'vendor/css/adm-bb/bootstrap-responsive.css'
+          'vendor/css/ap/epik.css'
+          'vendor/css/shared/jquery.datepicker.css'
+          'vendor/css/shared/jquery.timepicker.css'
+          'vendor/css/shared/bootstrap-typeahead.css'
+          'app/css/shared/alert.scss'
+          'app/css/shared/base.scss'
+          'app/css/shared/form.scss'
+          'app/css/shared/icon.scss'
+          'app/css/shared/label.scss'
+          'app/css/shared/table.scss'
+          'app/css/shared/tag.scss'
+          'app/css/adm/base.scss'
+          'app/css/ap/base.scss'
+          'app/css/ap/snippets.scss'
 
         ]
         after: []
