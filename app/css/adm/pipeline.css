@@ -80,6 +80,8 @@ body#pipeline .suggestion a.em { width:28px;height:28px;margin:0;display:inline-
 body#pipeline .suggestion a.ap { width:28px;height:28px;margin:0;display:inline-block }
 body#pipeline .suggested { border-top:solid 0.5px #d3d3d3;margin:5px; }
 body#pipeline .suggested hr { margin:0; }
+
+
 body#pipeline .suggested .pic { width:40px;height:40px;margin:0;float:left; }
 body#pipeline .suggested .deets { background-color:#CC523E;color:white;font-size:11px;float:right;width:500px }
 body#pipeline .suggested .names { padding:0px 0 0 4px;float:left;overflow:hidden; }
@@ -101,6 +103,21 @@ body#pipeline .suggested .rate em { display:block;color:gray;font-size:11px;font
 body#pipeline .suggested p { clear:both;font-size:11px; }
 body#pipeline .suggested .btn-schedule { float:left;background-color:rgb(70, 136, 71) }
 body#pipeline .suggested .btn-room { float:left }
+
+
+.expertMini { width:100px;border:solid 0.5px #d3d3d3;background-color:#E2E2E2;text-align:center }
+.expertMini hr { margin:0; }
+.expertMini .fullName { background-color:#CC523E;color:white;font-size:10px;padding:2px }
+.expertMini .username { display:block;font-size:10px;color:black;margin-top:4px }
+.expertMini .pic { width:80px;margin:8px; }
+.expertMini .links { margin:5px 0 5px 0; }
+.expertMini .links .icon { width:0.7em;height:0.7em;margin-right:-2px; }
+.expertMini .links .zocial:before { font: 40%/1.4 zocial; }
+.expertMini .tags { padding:8px;background:black; }
+.expertMini .label-tag { padding:0px 2px 1px 2px;font-size:9px; }
+
+
+
 body#pipeline .call { float:left;width:70px;margin:10px 5px 12px 5px;text-align:center; }
 body#pipeline .call img { height:70px; width:70px; }
 body#pipeline .call .dateTime { width:70px;font-size:10px;clear:both;display:block;background:#d3d3d3 }
