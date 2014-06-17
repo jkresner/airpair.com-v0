@@ -98,21 +98,21 @@
 
 
           <tr id="" class="success">
-            <th id="totalRevenue">${{summary.totalRevenue}}</th>
-            <th id="orderCount">{{summary.orderCount}}</th>
-            <th id="customerCount">{{summary.customerCount}}</th>
-            <th id="requestCount">{{summary.requestCount}}</th>
+            <th id="totalRevenue">${{visibleOrders.summary.totalRevenue}}</th>
+            <th id="orderCount">{{visibleOrders.summary.orderCount}}</th>
+            <th id="customerCount">{{visibleOrders.summary.customerCount}}</th>
+            <th id="requestCount">{{visibleOrders.summary.requestCount}}</th>
             <th>&nbsp;</th>
             <th id="hourCount">
               <!-- hours redeemed / hours completed / hours total | unique experts -->
-              {{summary.totalRedeemed}} / {{summary.totalCompleted}} / {{summary.totalHours}} | {{summary.expertCount }}
+              {{visibleOrders.summary.totalRedeemed}} / {{visibleOrders.summary.totalCompleted}} / {{visibleOrders.summary.totalHours}} | {{visibleOrders.summary.expertCount }}
             </th>
-            <th id="totalProfit">${{summary.totalProfit}}</th>
+            <th id="totalProfit">${{visibleOrders.summary.totalProfit}}</th>
           </tr>
 
         </thead>
         <tbody>
-          <tr ng-repeat="order in visibleOrders | orderBy : 'utc' : true | limitTo:orderViewLimit" class="order">
+          <tr ng-repeat="order in visibleOrders.orders | orderBy : 'utc' : true | limitTo:orderViewLimit" class="order">
 
             <!-- Total -->
             <td class="total">

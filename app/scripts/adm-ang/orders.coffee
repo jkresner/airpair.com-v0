@@ -118,13 +118,65 @@ module.exports = (pageData) ->
   # Airpair Data Service
   #----------------------------------------------
 
-  factory('apData', ($moment) ->
+  factory('apData', ($moment, $filter) ->
     
     apData = 
       orders: 
         data: pageData.orders
         get: () ->
           @data
+
+        filter: (start, end, searchText) ->
+          visibleOrders = []
+          for order in @data
+            if @isWithinDate(order, start, end)
+              visibleOrders.push order
+          if searchText
+            visibleOrders = $filter('filter')(visibleOrders, searchText)
+          return {
+            orders: visibleOrders
+            summary: @calcSummary(visibleOrders)
+          }
+          
+
+        isWithinDate: (order, start, end) ->
+          orderDate = new Date(order.utc)
+          return orderDate > start && orderDate < end
+
+        calcSummary: (orders) ->
+          summary =
+            totalRevenue: 0
+            orderCount: 0
+            customerCount: 0
+            requestCount: 0
+            totalRedeemed: 0
+            totalCompleted: 0
+            totalHours: 0
+            expertCount: 0
+            totalProfit: 0
+            experts: []
+          for order in orders
+            summary.totalRevenue += order.total
+            summary.totalProfit += order.profit
+            for item in order.lineItems
+              summary.totalRedeemed += calcRedeemed [item]
+              summary.totalCompleted += calcCompleted [item]
+              summary.totalHours += calcTotal [item]
+              summary.experts.push item.suggestion.expert._id
+          summary.orderCount = orders.length
+          summary.customerCount = _.uniq(_.pluck orders, 'userId').length
+          summary.requestCount = _.uniq(_.pluck orders, 'requestId').length
+          summary.expertCount = _.uniq(summary.experts).length
+
+          return summary
+            
+        
+        
+
+
+
+        
+
         calcCredits: () ->
           for order in @data
             order.lineItems = order.lineItems.map (li) ->
@@ -257,9 +309,6 @@ module.exports = (pageData) ->
             reportTotals: reportTotals
           }
 
-          
-        
-        
 
         getChannelMetrics: (start, end) ->
           if not @metrics
@@ -314,6 +363,7 @@ module.exports = (pageData) ->
           else 
             return orders: @metrics, summary: @getChannelMetricsSummary(@metrics)
 
+
         getChannelMetricsSummary: (metrics) ->
           summary = 
             numOrders: metrics.length 
@@ -333,8 +383,6 @@ module.exports = (pageData) ->
 
           # console.log "@metricsSummary", summary
           @metricsSummary = summary
-
-
 
 
         getChannelGrowth: (start = moment(@data[0].utc), end = moment()) ->
@@ -435,12 +483,9 @@ module.exports = (pageData) ->
     $scope.years = $moment.years firstMonth
     # Set default date range to 6 weeks
     $scope.dateRange = "6 weeks"
+    $scope.orderViewLimit = 40
 
-    isWithinDate = (order) ->
-      orderDate = new Date(order.utc)
-      return orderDate > $scope.dateStart && orderDate < $scope.dateEnd
-
-    $scope.updateDateRange = (newRange) ->
+    updateDateRange = (newRange) ->
       return if not newRange
       date = new Date()
       if _.isString(newRange)
@@ -464,71 +509,29 @@ module.exports = (pageData) ->
         $scope.dateStart = newRange.start
         $scope.dateEnd = newRange.end
 
-    $scope.setDateRange = (range) ->
-      $scope.dateRange = range
+    newSearch = true
+    updateOrderList = (searchText) ->
+      # Search all if new search is starting
+      if searchText and newSearch
+        $scope.dateRange = 'all'
+        newSearch = false
+      if not searchText then newSearch = true
+      $scope.visibleOrders = apData.orders.filter $scope.dateStart, $scope.dateEnd, $scope.orderSearch
+    
+
+    $scope.setDateRange = (range) -> $scope.dateRange = range
 
     $scope.getDateStr = () ->
       if _.isString($scope.dateRange) then $scope.dateRange
-      else if _.isObject($scope.dateRange) then $scope.dateRange.str
-
-    updateOrderList = () ->
-      $scope.visibleOrders = []
-      $scope.orderViewLimit = 40
-      for order in allOrders
-        if isWithinDate(order)
-          $scope.visibleOrders.push order
-      if $scope.orderSearch
-        $scope.visibleOrders = $filter('filter')($scope.visibleOrders, $scope.orderSearch)
-
-      $scope.calcSummary()
-
-    # TODO: move to apData
-    $scope.calcSummary = () ->
-      $scope.summary =
-        totalRevenue: 0
-        orderCount: 0
-        customerCount: 0
-        requestCount: 0
-        totalRedeemed: 0
-        totalCompleted: 0
-        totalHours: 0
-        expertCount: 0
-        totalProfit: 0
-        experts: []
-
-      for order in $scope.visibleOrders
-        if isWithinDate(order)
-          $scope.summary.totalRevenue += order.total
-          $scope.summary.totalProfit += order.profit
-          for item in order.lineItems
-            $scope.summary.totalRedeemed += calcRedeemed [item]
-            $scope.summary.totalCompleted += calcCompleted [item]
-            $scope.summary.totalHours += calcTotal [item]
-            $scope.summary.experts.push item.suggestion.expert._id
-
-      $scope.summary.orderCount = $scope.visibleOrders.length
-      $scope.summary.customerCount = _.uniq(_.pluck $scope.visibleOrders, 'userId').length
-      $scope.summary.requestCount = _.uniq(_.pluck $scope.visibleOrders, 'requestId').length
-      $scope.summary.expertCount = _.uniq($scope.summary.experts).length
-
-
-    
-    search = (text) ->
-      if not text
-        updateOrderList()
-      else 
-        $scope.dateRange = 'all'
-        $scope.visibleOrders = $filter('filter')(allOrders, text)
-        $scope.calcSummary()
-
+      else if _.isObject($scope.dateRange) then $scope.dateRange.str    
 
     # Watch date updates
+    $scope.$watch "dateRange", (newRange) -> updateDateRange(newRange)
     $scope.$watch "dateStart", () -> updateOrderList()
     $scope.$watch "dateEnd", () -> updateOrderList()
-    $scope.$watch "dateRange", (newRange) -> $scope.updateDateRange(newRange)
+    $scope.$watch "orderSearch", (searchText) -> updateOrderList(searchText)
     
-    # Search updates
-    $scope.$watch "orderSearch", (text) -> search(text)
+    
 
 
     angular.element($window).bind "scroll", (e) ->
@@ -601,12 +604,8 @@ module.exports = (pageData) ->
     $scope.reportTotals = week2week.reportTotals
 
 
-
     # Channel Growth
     $scope.channelGrowth = apData.orders.getChannelGrowth(moment().subtract('weeks', 7))
-
-    # console.log "channelGrowth", $scope.channelGrowth
-
 
 
   )
