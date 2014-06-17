@@ -8,7 +8,8 @@
 
 /* adm custom styles */
 
-body { background:none repeat scroll 0 0 #E2E2E2 }
+body { background:none repeat scroll 0 0 #fafafa } 
+// E2E2E2
 
 nav { height:40px;margin-bottom:12px;border-bottom:solid 1px #d3d3d3;background-color:black }
 nav > div { padding-top:6px;height:54px;width:1240px;margin:auto }
@@ -18,6 +19,8 @@ nav ul li { float:right;display:block;margin-left:10px }
 nav ul a { color:white;display:inline-block;padding:1px 5px }
 nav ul a:hover { color:#FFB878; }
 
+
+.navbar-static-top {margin-bottom: 20px;}
 
 /* adm base styles */
 .form-actions { margin-top:-13px;padding:15px 10px; }
@@ -42,6 +45,12 @@ nav ul a:hover { color:#FFB878; }
 .marketingtag a.delete { display: none; }
 
 nav a.zocial { padding:0; }
+
+nav .active a {
+color: #FFB878;
+}
+
+.expertPic { width:16px!important;height:16px!important }
 
 
 /* keep the delete button away from the other buttons */

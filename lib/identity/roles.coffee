@@ -5,6 +5,7 @@ adminIds = [
   '108148963133977375684' #TB gravatar: e307e229741052e17d027312a4fe86ca
   '103614010394533051287' #LT
   '104421101970649173838' #AR
+  '114831291174925522786' #SH
 ]
 
 
@@ -23,7 +24,7 @@ initials['112300854530824394263'] = 'mi'
 initials['102299765632981130643'] = 'er'
 initials['108148963133977375684'] = 'tb'
 initials['101062250088370367878'] = 'sp' # (Steve Purves)
-
+initials['114831291174925522786'] = 'sh' # (saidur hossain)
 initials['104421101970649173838'] = 'team' # (Alyssa Reese)
 
 module.exports =

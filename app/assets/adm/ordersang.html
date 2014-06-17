@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en" ng-app='AirpairAdmin'>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Orders | AirPair</title>
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="/css/adm-ang.css">
+</head>
+
+<body>
+
+
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-inverse navbar-static-top" role="navigation" ng-controller="NavCtrl">
+    <div class="container">
+      <a class="navbar-brand" href="/adm"><img src="/images/icons/icon48.png" alt="" style="position: relative; top: -8px; width: 37px;" ></a>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="/adm/companys" target="_self">Companys</a></li>
+        <li><a href="/adm/experts" target="_self">Experts</a></li>
+        <li><a href="/adm/marketingtags" target="_self">Marketing</a></li>
+        <li><a href="/adm/tags" target="_self">Tags</a></li>
+        <li class="active"><a href="/adm/orders" target="_self" style="padding-right: 8px; padding-left: 8px;">Orders</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="padding-left: 6px; padding-right: 7px;" ><b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li class="dropdown-header">Orders Old</li>
+            <li><a href="/adm/orders" target="_self">Orders</a></li>
+            <li><a href="/adm/orders/inactive" target="_self">Inactive</a></li>
+            <li class="divider"></li>
+            <li class="dropdown-header">Orders New</li>
+            <li ng-class="navClass('browse')"><a href="/adm/ang/orders">Orders</a></li>
+            <li ng-class="navClass('weekly')"><a href="/adm/ang/orders/weekly">Weekly</a></li>
+            <li ng-class="navClass('growth')"><a href="/adm/ang/orders/growth">Mth on Mth</a></li>
+            <li ng-class="navClass('channels')"><a href="/adm/ang/orders/channels">Channels</a></li>
+          </ul>
+        </li>
+        <li><a href="/adm/pipeline" target="_self">Pipeline</a></li>
+      </ul>
+    </div>
+  </nav>
+
+
+  <!-- PAGE -->
+  <div ng-view="ng-view" style="margin-top: 20px;"></div>
+
+
+
+  <script type="text/javascript">
+    function initApp() {
+      var pageData = { {{JSON 'session'}}, {{JSON 'orders'}} };
+      ap_ang = require('scripts/adm-ang/orders')(pageData);
+    }
+  </script>
+  <script src="/javascripts/adm-ang.js" defer onload="initApp()"></script>
+
+  <style>
+    .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
+  </style>
+
+
+</body>
+</html>

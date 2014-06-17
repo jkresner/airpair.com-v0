@@ -1,0 +1,179 @@
+
+
+
+<div class="container">
+  <div class="row">
+    
+    <div class="col-sm-4">
+      <h3 class="text-light">Weekly Report</h3>
+    </div>
+<!--     <div class="col-sm-4">
+      <small class="text-muted">Start</small>
+      <input class="form-control" type="date" name="input" ng-model="dateStart" placeholder="yyyy-MM-dd" min="2013-01-01" max="" required/>
+    </div>
+    <div class="col-sm-4">   
+      <small class="text-muted">End</small>   
+      <input class="form-control" type="date" name="input" ng-model="dateEnd" placeholder="yyyy-MM-dd" min="2013-01-01" max="" required/>
+    </div>
+
+ -->  </div>
+
+
+</div>
+
+<hr>
+
+  <div class="container">
+
+    <h4 class="text-light">Demand</h4>
+
+          
+      <table class="table growth">
+
+        <thead>
+          <th class="mth first">Week</th>
+          <th class="gro">Gross</th>
+          <th class="mar">Margin</th>
+          <th class="rev">Revenue</th>
+          <th class="avh">Avg/Hr</th>
+          <th class="hrs">Hours</th>
+          <th class="hrc">Hr/Cust</th>
+          <th class="mth last">Customers</th>
+        </thead>
+
+        <tr ng-repeat="r in report" class="{{r.css}}">
+          <td class="text-muted">{{r.intervalName}}</td>
+          <td>
+            <span ng-if="r.gross">{{r.gross | number:0}}</span>
+            <span ng-if="r.pgross" ng-class="{'text-danger': r.pgross < 0, 'text-success': r.pgross > 0}">{{r.pgross*100 | number:0}}%</span>
+          </td>
+          <td class="text-orange">
+            <span ng-if="r.margin">{{r.margin*100 | number:0}}%</span>
+            <span ng-if="r.pmargin" ng-class="{'text-danger': r.pmargin < 0, 'text-success': r.pmargin > 0}">{{r.pmargin*100 | number:0}}%
+            </span>
+          </td>
+          <td>
+            <span ng-if="r.revenue">{{r.revenue | number:0}}</span>
+            <span ng-if="r.prevenue" ng-class="{'text-danger': r.prevenue < 0, 'text-success': r.prevenue > 0}">{{r.prevenue*100 | number:0}}%</span>
+          </td>
+          <td class="text-orange">
+            <span ng-if="r.revPerHour">{{r.revPerHour | number:0}}</span>
+            <span ng-if="r.prevPerHour" ng-class="{'text-danger': r.prevPerHour < 0, 'text-success': r.prevPerHour > 0}">{{r.prevPerHour*100 | number:0}}%</span>
+          </td>
+          <td>
+            <span ng-if="r.hrsSold">{{r.hrsSold | number:0}}</span>
+            <span ng-if="r.phrsSold" ng-class="{'text-danger': r.phrsSold < 0, 'text-success': r.phrsSold > 0}">{{r.phrsSold*100 | number:0}}%</span>
+          </td>
+          <td class="o">
+            <span ng-if="r.hrPerCust">{{r.hrPerCust | number:1}}</span>
+            <span ng-if="r.phrPerCust" ng-class="{'text-danger': r.phrPerCust < 0, 'text-success': r.phrPerCust > 0}">{{r.phrPerCust*100 | number:0}}%</span>
+          </td>
+          <td>
+            <span ng-if="r.customerTotal">{{r.customerTotal | number:0}}</span>
+            <span ng-if="r.pcustomerTotal" ng-class="{'text-danger': r.pcustomerTotal < 0, 'text-success': r.pcustomerTotal > 0}">{{r.pcustomerTotal*100 | number:0}}%</span>
+          </td>
+        </tr>
+      </table>
+
+
+      <table class="table">
+        <thead>
+          <th class="first">LTV</th>
+          <th>Total Gross</th>
+          <th>Avg Margin</th>
+          <th>Total Revenue</th>
+          <th>Avg Rev/Hr</th>
+          <th>Avg Hr/Cust</th>
+          <th>Total Hrs</th>
+          <th class="last">Cust Total</th>
+        </thead>
+
+        <tr class="success">
+          <td>{{reportTotals.ltv | currency}}</td>
+          <td>{{reportTotals.gross | currency}}</td>
+          <td>{{reportTotals.margin * 100 | number : 2}}%</td>
+          <td>{{reportTotals.revenue | currency}}</td>
+          <td>{{reportTotals.revPerHour | currency}}</td>
+          <td>{{reportTotals.hrPerCust | number : 2}} hrs</td>
+          <td>{{reportTotals.hrsSold}} hrs</td>
+          <td>{{reportTotals.customerTotal}}</td>
+        </tr>
+      </table>
+
+
+
+
+
+
+</div>
+
+
+<hr>
+
+<div class="container m-b-3">
+
+  <h4 class="text-light m-t-1">Orders</h4>
+  
+  
+
+  
+
+  <table class="table table-hover table-condensed growth"  Xng-repeat="week in weeks">
+
+    <thead>
+
+      <th>Week</th>
+      <th>Total</th>
+      <th class="text-info">Ad</th>
+      <th class="text-info">Affiliate</th>
+      <th class="text-info">Direct</th>
+      <th class="text-info">Newsletter</th>
+      <th class="text-info">Incubator</th>
+      <th class="text-info">Press</th>
+      <th class="text-info">SEO</th>
+      <th class="text-info">Social</th>
+      <th class="text-info">Stack Overflow</th>
+      <th class="text-info">WoM</th>
+      <th class="text-info">Untracked</th>
+    </thead>
+
+
+
+    <tr ng-repeat-start="week in channelGrowth">
+
+      <td class="text-muted">{{week.str}}</td>
+      <td>{{week.metrics.summary.numOrders}}</td>
+      <td class="text-info">{{week.metrics.summary.tags.ad.count | number: 0}}</td>
+      <td class="text-info">{{week.metrics.summary.tags.affiliate.count | number: 0}}</td>
+      <td class="text-info">{{week.metrics.summary.tags.direct.count | number: 0}}</td>
+      <td class="text-info">{{week.metrics.summary.tags.newsletterairpair.count | number: 0}}</td>
+      <td class="text-info">{{week.metrics.summary.tags.incubator.count | number: 0}}</td>
+      <td class="text-info">{{week.metrics.summary.tags.press.count | number: 0}}</td>
+      <td class="text-info">{{week.metrics.summary.tags.seo.count | number: 0}}</td>
+      <td class="text-info">{{week.metrics.summary.tags.social.count | number: 0}}</td>
+      <td class="text-info">{{week.metrics.summary.tags.stackoverflowads.count | number: 0}}</td>
+      <td class="text-info">{{week.metrics.summary.tags.wordofmouth.count | number: 0}}</td>
+      <td class="text-info">{{week.metrics.summary.tags.untracked.count | number: 0}}</td>
+    </tr>
+
+    <tr class="row-small" ng-repeat-end ng-show="week.diffTags">
+
+      <td></td>
+      <td></td>
+      <td ng-class="{'text-danger': week.diffTags.ad.count < 0, 'text-success': week.diffTags.ad.count > 0}">{{ week.diffTags.ad.count*100 | number:1}}%</td>
+      <td ng-class="{'text-danger': week.diffTags.affiliate.count < 0, 'text-success': week.diffTags.affiliate.count > 0}">{{ week.diffTags.affiliate.count*100 | number:1 }}%</td>
+      <td ng-class="{'text-danger': week.diffTags.direct.count < 0, 'text-success': week.diffTags.direct.count > 0}">{{ week.diffTags.direct.count*100 | number:1 }}%</td>
+      <td ng-class="{'text-danger': week.diffTags.newsletterairpair.count < 0, 'text-success': week.diffTags.newsletterairpair.count > 0}">{{ week.diffTags.newsletterairpair.count*100 | number:1 }}%</td>
+      <td ng-class="{'text-danger': week.diffTags.incubator.count < 0, 'text-success': week.diffTags.incubator.count > 0}">{{ week.diffTags.incubator.count*100 | number:1 }}%</td>
+      <td ng-class="{'text-danger': week.diffTags.press.count < 0, 'text-success': week.diffTags.press.count > 0}">{{ week.diffTags.press.count*100 | number:1 }}%</td>
+      <td ng-class="{'text-danger': week.diffTags.seo.count < 0, 'text-success': week.diffTags.seo.count > 0}">{{ week.diffTags.seo.count*100 | number:1 }}%</td>
+      <td ng-class="{'text-danger': week.diffTags.social.count < 0, 'text-success': week.diffTags.social.count > 0}">{{ week.diffTags.social.count*100 | number:1 }}%</td>
+      <td ng-class="{'text-danger': week.diffTags.stackoverflowads.count < 0, 'text-success': week.diffTags.stackoverflowads.count > 0}">{{ week.diffTags.stackoverflowads.count*100 | number:1 }}%</td>
+      <td ng-class="{'text-danger': week.diffTags.wordofmouth.count < 0, 'text-success': week.diffTags.wordofmouth.count > 0}">{{ week.diffTags.wordofmouth.count*100 | number:1 }}%</td>
+      <td ng-class="{'text-danger': week.diffTags.untracked.count < 0, 'text-success': week.diffTags.untracked.count > 0}">{{ week.diffTags.untracked.count*100 | number:1 }}%</td>
+
+    </tr>
+
+  </table>
+
+</div>

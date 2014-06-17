@@ -33,6 +33,7 @@ exports.config =
     javascripts:
       joinTo:
        'javascripts/vendor.js': /^vendor/
+       'javascripts/adm-ang.js': /(scripts\/angular|lodash|moment-2.6|scripts\/adm-ang|lib\/mix)/
        'javascripts/ap.js': /(scripts\/ap|scripts\/shared|scripts\/providers|lib\/mix)/
        'javascripts/adm.js': /(scripts\/adm|scripts\/shared|scripts\/providers|lib\/mix)/
        'javascripts/providers.js': /^app\/scripts\/providers/
@@ -44,6 +45,7 @@ exports.config =
         # Files in `vendor` directories are compiled before other files
         # even if they aren't specified in order.
         before: [
+          'vendor/scripts/angular.js'
           'vendor/scripts/console-helper.js'
           'vendor/scripts/jquery.js'
           'vendor/scripts/lodash.js'
@@ -59,27 +61,28 @@ exports.config =
       defaultExtension: 'scss'
       joinTo:
         'css/ap.css': /(css\/ap|css\/shared|css\/old)/
-        'css/adm.css': /(css\/adm|css\/shared)/
+        'css/adm.css': /(app\/css\/adm|vendor\/css\/adm-bb|css\/shared)/
+        'css/adm-ang.css': /(vendor\/css\/adm-ang)/
         'test/stylesheets/test.css': /^test/
       order:
         before: [
-          'vendor/css/adm/normalize.css',
-          'vendor/css/adm/bootstrap.css',
-          'vendor/css/adm/bootstrap-responsive.css',
-          'vendor/css/ap/epik.css',
-          'vendor/css/shared/jquery.datepicker.css',
-          'vendor/css/shared/jquery.timepicker.css',
-          'vendor/css/shared/bootstrap-typeahead.css',
-          'app/css/shared/alert.scss',
-          'app/css/shared/base.scss',
-          'app/css/shared/form.scss',
-          'app/css/shared/icon.scss',
-          'app/css/shared/label.scss',
-          'app/css/shared/table.scss',
-          'app/css/shared/tag.scss',
-          'app/css/adm/base.scss',
-          'app/css/ap/base.scss',
-          'app/css/ap/snippets.scss',
+          'vendor/css/adm-bb/normalize.css'
+          'vendor/css/adm-bb/bootstrap.css'
+          'vendor/css/adm-bb/bootstrap-responsive.css'
+          'vendor/css/ap/epik.css'
+          'vendor/css/shared/jquery.datepicker.css'
+          'vendor/css/shared/jquery.timepicker.css'
+          'vendor/css/shared/bootstrap-typeahead.css'
+          'app/css/shared/alert.scss'
+          'app/css/shared/base.scss'
+          'app/css/shared/form.scss'
+          'app/css/shared/icon.scss'
+          'app/css/shared/label.scss'
+          'app/css/shared/table.scss'
+          'app/css/shared/tag.scss'
+          'app/css/adm/base.scss'
+          'app/css/ap/base.scss'
+          'app/css/ap/snippets.scss'
 
         ]
         after: []

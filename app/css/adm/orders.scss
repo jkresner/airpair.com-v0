@@ -1,0 +1,39 @@
+body#admorders {
+  .selectOrder { display:block;font-size:9px; }
+  .info { font-size:9px; }
+  .info .marketingtag { border: none; background-color: inherit; font-size:9px; margin: 0; padding: 0; font-weight: normal;}
+  .info .label-owner { font-size:9px; margin: 0; }
+  .total { font-weight:bold;text-align:right;padding-right:10px; }
+  th { font-size:12px; }
+  #rowsSummary th { font-size:10px;padding:2px 8px;color:black;background:#FAA732 }
+  td span { display:inline-block; }
+  .expertPic { width:16px!important;height:16px!important }
+  #timefilter { float:right;padding:10px 0px; }
+  #order .form { float:left;width:39%; }
+  #order pre { float:right;width:59%;font-size:10px;line-height:1.1; }
+
+  .mth-mth {
+    tr.change td { padding:4px;font-size:11px }
+    th { text-align:right; }
+    th.first { width:30px; }
+    th.last { width:14% }
+    td { text-align:right;padding:6px }
+    td.o { color:orange }
+    td.m { color:gray }
+    td div.g { color:green;margin-right:6px }
+    td div.r { color:red;margin-right:6px }
+  }
+}
+
+/* Orders table current referenced from adm/pipeline/request */
+#orders td { padding:2px 0px 2px 8px;font-size:12px; }
+#orders { margin-top:25px;clear:both; }
+#orders img { height: 32px;width: 32px }
+#orders img.favicon { height: 8px;width: 8px; }
+#orders th { padding:2px 6px; }
+#orders .pending { color:#b94a48; }
+#orders .received { color:#333333 }
+#orders .paidout { color:#468847; }
+#orders .incomplete { display: none; }
+
+

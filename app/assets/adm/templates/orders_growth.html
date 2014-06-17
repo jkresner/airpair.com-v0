@@ -1,0 +1,82 @@
+
+
+<div class="container">
+  
+  <h3 class="text-light m-b-1">
+    Month on Month
+  </h3>
+
+
+  <table class="table growth">
+
+    <thead>
+      <th class="mth first">Mth</th>
+      <th class="gro">Gross</th>
+      <th class="mar">Margin</th>
+      <th class="rev">Revenue</th>
+      <th class="avh">Avg/Hr</th>
+      <th class="hrs">Hours</th>
+      <th class="hrc">Hr/Cust</th>
+      <th class="mth last">Customers</th>
+    </thead>
+
+    <tr ng-repeat="r in report" class="{{r.css}}">
+      <td class="text-muted">{{r.intervalName}}</td>
+      <td>
+        <span ng-if="r.gross">{{r.gross | number:0}}</span>
+        <span ng-if="r.pgross" ng-class="{'text-danger': r.pgross < 0, 'text-success': r.pgross > 0}">{{r.pgross*100 | number:0}}%</span>
+      </td>
+      <td class="text-orange">
+        <span ng-if="r.margin">{{r.margin*100 | number:0}}%</span>
+        <span ng-if="r.pmargin" ng-class="{'text-danger': r.pmargin < 0, 'text-success': r.pmargin > 0}">{{r.pmargin*100 | number:0}}%
+        </span>
+      </td>
+      <td>
+        <span ng-if="r.revenue">{{r.revenue | number:0}}</span>
+        <span ng-if="r.prevenue" ng-class="{'text-danger': r.prevenue < 0, 'text-success': r.prevenue > 0}">{{r.prevenue*100 | number:0}}%</span>
+      </td>
+      <td class="text-orange">
+        <span ng-if="r.revPerHour">{{r.revPerHour | number:0}}</span>
+        <span ng-if="r.prevPerHour" ng-class="{'text-danger': r.prevPerHour < 0, 'text-success': r.prevPerHour > 0}">{{r.prevPerHour*100 | number:0}}%</span>
+      </td>
+      <td>
+        <span ng-if="r.hrsSold">{{r.hrsSold | number:0}}</span>
+        <span ng-if="r.phrsSold" ng-class="{'text-danger': r.phrsSold < 0, 'text-success': r.phrsSold > 0}">{{r.phrsSold*100 | number:0}}%</span>
+      </td>
+      <td class="o">
+        <span ng-if="r.hrPerCust">{{r.hrPerCust | number:1}}</span>
+        <span ng-if="r.phrPerCust" ng-class="{'text-danger': r.phrPerCust < 0, 'text-success': r.phrPerCust > 0}">{{r.phrPerCust*100 | number:0}}%</span>
+      </td>
+      <td>
+        <span ng-if="r.customerTotal">{{r.customerTotal | number:0}}</span>
+        <span ng-if="r.pcustomerTotal" ng-class="{'text-danger': r.pcustomerTotal < 0, 'text-success': r.pcustomerTotal > 0}">{{r.pcustomerTotal*100 | number:0}}%</span>
+      </td>
+    </tr>
+  </table>
+
+
+  <table class="table">
+    <thead>
+      <th class="first">LTV</th>
+      <th>Total Gross</th>
+      <th>Avg Margin</th>
+      <th>Total Revenue</th>
+      <th>Avg Rev/Hr</th>
+      <th>Avg Hr/Cust</th>
+      <th>Total Hrs</th>
+      <th class="last">Cust Total</th>
+    </thead>
+
+    <tr class="success">
+      <td>{{reportTotals.ltv | currency}}</td>
+      <td>{{reportTotals.gross | currency}}</td>
+      <td>{{reportTotals.margin * 100 | number : 2}}%</td>
+      <td>{{reportTotals.revenue | currency}}</td>
+      <td>{{reportTotals.revPerHour | currency}}</td>
+      <td>{{reportTotals.hrPerCust | number : 2}} hrs</td>
+      <td>{{reportTotals.hrsSold}} hrs</td>
+      <td>{{reportTotals.customerTotal}}</td>
+    </tr>
+  </table>
+
+</div>
