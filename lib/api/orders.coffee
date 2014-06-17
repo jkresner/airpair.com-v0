@@ -5,6 +5,7 @@ class OrdersApi extends require('./_api')
 
   routes: (app, route) ->
     app.post    "/api/#{route}", @loggedIn, @ap, @create
+    app.post    "/api/#{route}/package", @ap, @createAnonCharge
     app.get     "/api/admin/#{route}", @admin, @ap, @list
     app.get     "/api/#{route}/request/:id", @admin, @ap, @getByRequestId
     app.get     "/api/#{route}/me", @loggedIn, @ap, @getByMe
@@ -44,6 +45,8 @@ class OrdersApi extends require('./_api')
         res.status(400)
       res.send r
 
+  createAnonCharge: (req, res, next) =>
+    @svc.createAnonCharge req.body, @cbSend
 
   update: (req) =>
     if @data.payoutOptions

@@ -2,30 +2,14 @@ exports = {}
 BB      = require 'BB'
 M       = require './Models'
 SV      = require '../../shared/Views'
-
+RV      = require '../../ap/request/Views'
 
 #############################################################################
 ##
 #############################################################################
 
 
-class exports.StripeRegisterView extends SV.StripeRegisterView
-  email: ->
-    @session.get('google')._json.email
-  meta: ->
-    "Enter the card you want to use to pay #{@expert.get('name')}."
-  stripeCustomerSuccess: (model, resp, opts) =>
-    @model.unset 'stripeCreate'
-    name = @session.get('google').displayName
-    addjs.trackEvent 'book', 'customerSetStripeInfo', name
-    addjs.providers.mp.setPeopleProps paymentInfoSet: 'stripe'
-    @successAction()
-  successAction: =>
-    @$el.remove()
-
-
 class exports.WelcomeView extends BB.BadassView
-  logging: on
   el: '#welcome'
   tmpl: require './templates/Welcome'
   initialize: ->
@@ -33,6 +17,25 @@ class exports.WelcomeView extends BB.BadassView
   render: ->
     localUrl = window.location.pathname+window.location.search
     @$el.html @tmpl @model.extend { localUrl }
+
+
+class exports.StripeRegisterView extends SV.StripeRegisterView
+  email: ->
+    @session.get('google')._json.email
+  # meta: ->
+  #   "Enter the card you want to use to pay #{@expert.get('name')}."
+  render: ->
+    super()
+    $('#card').show()
+  stripeCustomerSuccess: (model, resp, opts) =>
+    @model.unset 'stripeCreate'
+    name = @session.get('google').displayName
+    addjs.trackEvent 'book', 'customerSetStripeInfo', name
+    addjs.providers.mp.setPeopleProps paymentInfoSet: 'stripe'
+    @successAction()
+  successAction: =>
+    $('#card').hide()
+    @$el.remove()
 
 class exports.RequestView extends BB.ModelSaveView
   el: '#request'
@@ -54,14 +57,10 @@ class exports.RequestView extends BB.ModelSaveView
 
       @$(".save").mouseover(=>
         hrs = parseInt @elm('hours').val()
-        @$('.save').html "We'll charge your card $#{@getBudget()*hrs} if #{fName} accepts"
+        @$('.save').html "You will be charged $#{@getBudget()*hrs} if #{fName} accepts"
       ).mouseout(=>
         @update()
       )
-
-      # <p></p>
-
-      # $log '@elm', @elm('hours')
   update: (e) =>
     hrs = parseInt @elm('hours').val()
     pricing = @$("[name='pricing']:checked").val()
@@ -91,21 +90,39 @@ class exports.RequestView extends BB.ModelSaveView
   renderSuccess: (model, response, options) =>
     addjs.providers.mp.incrementPeopleProp "requestCount"
     addjs.trackEvent 'book', @e.name, @model.contact(0).fullName
-    router.navTo 'thanks'
+    if @company.get('name')?
+      router.navTo 'thanks'
+    else
+      $('.detail').hide()
+      $('#info').show()
+      router.app.expertView.renderHalf()
   getBudget: ->
     parseInt(@expert.get('bookMe').rate) + @model[@$("[name='pricing']:checked").val()]
 
 
+class exports.InfoFormView extends RV.InfoFormView
+  tmplWrap: require './templates/InfoForm'
+  renderSuccess: (model, response, options) =>
+    if @isReturnCustomer
+      @e.name = "customerInfoRepeat"
+    addjs.trackEvent @e.category, @e.name, @elm('fullName').val(), @timer.timeSpent()
+    addjs.providers.mp.setPeopleProps isCustomer : 'Y'
+    router.navTo 'thanks'
+    @request.urlRoot = '/api/requests'
+    @request.save 'company', model.attributes
+    $('#info').hide()
+
+
 class exports.ExpertView extends BB.BadassView
-  logging: on
   el: '#expert'
   tmpl: require './templates/Expert'
   initialize: ->
     @listenTo @model, 'change', @render
   render: ->
     rate = parseInt(@model.get('bookMe').rate) + @request.private
-    localUrl = window.location.pathname+window.location.search
-    @$el.html @tmpl @model.extend { publicRate: rate, authenticated: @session.id?, localUrl: localUrl }
+    @$el.html @tmpl @model.extend { publicRate: rate, authenticated: @session.id? }
+  renderHalf: ->
+    $('.booking-stats').hide()
 
 
 

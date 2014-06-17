@@ -5,6 +5,8 @@ if true
   if !addjs?
     window.addjs = new AddJS providers: { ga: { logging: off }, mp: { logging: off } }
 
+  require("./cegg")()
+  require("./adroll")()
   require("./blog")()
   require("./mixpanel")()
   require("./ga")()
