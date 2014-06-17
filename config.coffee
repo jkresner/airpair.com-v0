@@ -82,6 +82,7 @@ exports.config =
           'app/css/shared/tag.scss'
           'app/css/adm/base.scss'
           'app/css/ap/base.scss'
+          'app/css/ap/ap.scss'
           'app/css/ap/snippets.scss'
 
         ]

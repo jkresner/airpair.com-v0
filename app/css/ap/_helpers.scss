@@ -9,6 +9,13 @@
 .clearfix:after { clear: both; }
 .clearfix { *zoom: 1; }
 
+
+@mixin clearfix {
+  *zoom: 1;
+  &:before, &:after { content: ""; display: table; }
+  &:after { clear: both; }
+}
+
 @media print {
   * { background: transparent !important; color: black !important; box-shadow:none !important; text-shadow: none !important; filter:none !important; -ms-filter: none !important; }
   a, a:visited { text-decoration: underline; }

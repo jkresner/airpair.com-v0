@@ -1,4 +1,3 @@
-@import 'variables';
 
 ul.snippet-full-width {
 	li {
@@ -7,7 +6,7 @@ ul.snippet-full-width {
 	}
 
 	li:hover h2 {
-  	color: $primary-color;
+  	color: $color-primary;
 	}
 
 	h2 {
@@ -58,7 +57,7 @@ ul.snippet-full-width {
 	}
 	a.article-link {
 		font-weight: bold;
-		color: $primary-color;
+		color: $color-primary;
 		cursor: pointer;
 		font-size: 13px;
 		margin-left: 20px;
