@@ -38,7 +38,28 @@ module.exports = (pageData) ->
   #----------------------------------------------
 
   factory('$moment', () ->
-    window.$moment = 
+    $moment = 
+      months: (start) ->
+        months = []
+        cur = moment()
+        while cur.isAfter(start)
+          months.push
+            str: cur.format("MMM YY")
+            start: cur.clone().startOf("month").toDate()
+            end: cur.clone().endOf("month").toDate()
+          cur = cur.subtract('months', 1)
+        return months
+      years: (start) ->      
+        years = []
+        curYear = moment(new Date()).startOf("year")
+        while curYear.isAfter(start)
+          years.push
+            str: curYear.format("YYYY")
+            start: curYear.startOf("year").clone().toDate()
+            end: curYear.endOf("year").clone().toDate()
+          curYear = curYear.subtract('y', 1)
+        return years
+
       getWeeks: (start, end = moment().endOf('month')) ->
         if not start
           start = moment().startOf('month').subtract("days", 1)
@@ -99,7 +120,7 @@ module.exports = (pageData) ->
 
   factory('apData', ($moment) ->
     
-    window.apData = 
+    apData = 
       orders: 
         data: pageData.orders
         get: () ->
@@ -113,7 +134,6 @@ module.exports = (pageData) ->
         
         
         getGrowth: (interval = 'monthly', start = moment(@data[0].utc), end = moment()) ->
-
 
           periods = {}
 
@@ -317,11 +337,6 @@ module.exports = (pageData) ->
 
 
 
-        # TODO: reverse weeks
-        # TODO: update getChannelMetrics
-        # TODO: generate diff
-        # TODO: update view
-
         getChannelGrowth: (start = moment(@data[0].utc), end = moment()) ->
 
           weeks = $moment.getWeeksByFriday(moment().subtract("weeks", 4), moment(), 6).reverse()
@@ -397,47 +412,31 @@ module.exports = (pageData) ->
 
 
   # Nav Controller
-  controller("NavCtrl", ["$scope", "$location", ($scope, $location) ->
+  controller("NavCtrl", ($scope, $location) ->
     # A function to add class to nav items
     $scope.navClass = (page) ->
       currentRoute = $location.path().substring(16) or "browse"
       if page is currentRoute then "active" else ""
-  ]).
+  ).
 
 
 
 
   # Orders Controller
 
-  controller("OrdersCtrl", ["$scope", "$location", "$filter", "$window", "apData", ($scope, $location, $filter, $window, apData) ->
+  controller("OrdersCtrl", ($scope, $location, $filter, $window, $moment, apData) ->
 
     allOrders = apData.orders.get()
     firstOrderDate = new Date(allOrders[0].utc)
     firstMonth = moment(firstOrderDate).subtract('M', 1)
 
-    # Get past months
-    $scope.months = []
-    cur = moment(new Date())
-    while cur.isAfter(firstMonth)
-      $scope.months.push
-        str: cur.format("MMM YY")
-        start: cur.startOf("month").clone().toDate()
-        end: cur.endOf("month").clone().toDate()
-      cur = cur.subtract('months', 1)
-    # Get past years
-    $scope.years = []
-    curYear = moment(new Date()).startOf("year")
-    while curYear.isAfter(firstMonth)
-      $scope.years.push
-        str: curYear.format("YYYY")
-        start: curYear.startOf("year").clone().toDate()
-        end: curYear.endOf("year").clone().toDate()
-      curYear = curYear.subtract('y', 1)
-
+    # Get past months and years
+    $scope.months = $moment.months firstMonth
+    $scope.years = $moment.years firstMonth
     # Set default date range to 6 weeks
     $scope.dateRange = "6 weeks"
 
-    $scope.isWithinDate = (order) ->
+    isWithinDate = (order) ->
       orderDate = new Date(order.utc)
       return orderDate > $scope.dateStart && orderDate < $scope.dateEnd
 
@@ -472,17 +471,18 @@ module.exports = (pageData) ->
       if _.isString($scope.dateRange) then $scope.dateRange
       else if _.isObject($scope.dateRange) then $scope.dateRange.str
 
-    $scope.updateOrderList = () ->
+    updateOrderList = () ->
       $scope.visibleOrders = []
       $scope.orderViewLimit = 40
       for order in allOrders
-        if $scope.isWithinDate(order)
+        if isWithinDate(order)
           $scope.visibleOrders.push order
       if $scope.orderSearch
         $scope.visibleOrders = $filter('filter')($scope.visibleOrders, $scope.orderSearch)
 
       $scope.calcSummary()
 
+    # TODO: move to apData
     $scope.calcSummary = () ->
       $scope.summary =
         totalRevenue: 0
@@ -497,7 +497,7 @@ module.exports = (pageData) ->
         experts: []
 
       for order in $scope.visibleOrders
-        if $scope.isWithinDate(order)
+        if isWithinDate(order)
           $scope.summary.totalRevenue += order.total
           $scope.summary.totalProfit += order.profit
           for item in order.lineItems
@@ -513,9 +513,9 @@ module.exports = (pageData) ->
 
 
     
-    $scope.search = (text) ->
+    search = (text) ->
       if not text
-        $scope.updateOrderList()
+        updateOrderList()
       else 
         $scope.dateRange = 'all'
         $scope.visibleOrders = $filter('filter')(allOrders, text)
@@ -523,12 +523,12 @@ module.exports = (pageData) ->
 
 
     # Watch date updates
-    $scope.$watch "dateStart", () -> $scope.updateOrderList()
-    $scope.$watch "dateEnd", () -> $scope.updateOrderList()
+    $scope.$watch "dateStart", () -> updateOrderList()
+    $scope.$watch "dateEnd", () -> updateOrderList()
     $scope.$watch "dateRange", (newRange) -> $scope.updateDateRange(newRange)
     
     # Search updates
-    $scope.$watch "orderSearch", (text) -> $scope.search(text)
+    $scope.$watch "orderSearch", (text) -> search(text)
 
 
     angular.element($window).bind "scroll", (e) ->
@@ -538,7 +538,7 @@ module.exports = (pageData) ->
           $scope.$apply() if not $scope.$$phase
 
 
-  ]).
+  ).
 
 
 
@@ -549,7 +549,7 @@ module.exports = (pageData) ->
 
   # Monthly growth controller
 
-  controller("GrowthCtrl", ["$scope", "$location", "apData", ($scope, $location, apData) ->
+  controller("GrowthCtrl", ($scope, $location, apData) ->
 
     $scope.getMonth = (index) ->
       date = new Date(2014, index, 1)
@@ -561,7 +561,7 @@ module.exports = (pageData) ->
     $scope.reportTotals = month2month.reportTotals
 
 
-  ]).
+  ).
 
 
 
@@ -571,7 +571,8 @@ module.exports = (pageData) ->
 
   # Order metrics controller
 
-  controller("ChannelsCtrl", ["$scope", "$location", "apData", ($scope, $location, apData) ->
+  controller("ChannelsCtrl", ($scope, $location, apData) ->
+
 
     $scope.dateStart = moment().startOf("week").subtract("w", 2).toDate()
     $scope.dateEnd = moment().endOf('week').toDate()
@@ -583,7 +584,7 @@ module.exports = (pageData) ->
     $scope.$watch "dateEnd", () -> $scope.metrics = apData.orders.getChannelMetrics($scope.dateStart, $scope.dateEnd)
 
 
-  ]).
+  ).
 
 
 
@@ -592,7 +593,7 @@ module.exports = (pageData) ->
 
   # Weekly Summary controller
 
-  controller("WeeklyCtrl", ["$scope", "$location", "$moment", "apData", ($scope, $location, $moment, apData ) ->
+  controller("WeeklyCtrl", ($scope, $location, $moment, apData ) ->
 
     # Overall Growth
     week2week = apData.orders.getGrowth 'weekly', moment().startOf('month').subtract('weeks', 7)
@@ -608,7 +609,7 @@ module.exports = (pageData) ->
 
 
 
-  ])
+  )
 
 
 
