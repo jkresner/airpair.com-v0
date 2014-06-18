@@ -8,17 +8,8 @@
 
 /* adm custom styles */
 
-body { background:none repeat scroll 0 0 #fafafa } 
+body { background:none repeat scroll 0 0 #fafafa }
 // E2E2E2
-
-nav { height:40px;margin-bottom:12px;border-bottom:solid 1px #d3d3d3;background-color:black }
-nav > div { padding-top:6px;height:54px;width:1240px;margin:auto }
-nav > div > a { background: url('/images/icons/icon48.png') no-repeat;display:inline-block;float:left;width:50px;height:50px;margin-top:-10px }
-nav ul { color:#d3d3d3;float:right;margin:2px 0px 8px 8px;display:inline;font-size:16px }
-nav ul li { float:right;display:block;margin-left:10px }
-nav ul a { color:white;display:inline-block;padding:1px 5px }
-nav ul a:hover { color:#FFB878; }
-
 
 .navbar-static-top {margin-bottom: 20px;}
 
@@ -55,51 +46,6 @@ color: #FFB878;
 
 /* keep the delete button away from the other buttons */
 .controls a.btn-danger:last-child { float: right; }
-
-/*
-#schedulepage .expertPic { height: 60px; width: 60px;}
-#schedulepage .controls > a { vertical-align: text-bottom; }
-#schedulepage select[name="duration"] {
-  width: 90px;
-}
-#schedulepage input[name="date"] {
-  width: 110px;
-}
-#schedulepage select[name="time"] {
-  width: 80px;
-}
-#schedulepage .experts,
-#schedulepage .datetimeduration {
-  overflow: auto;
-  width: 100%
-}
-#schedulepage .datetimeduration .control-group { float: left; margin-right: 2em;}
-#schedulepage .experts label { margin:0; }
-#schedulepage .experts .expertMini { float:left;margin:10px 20px 0 0px  }
-#schedulepage .experts .hours { background-color:black;font-size:11px;color:white;height:40px; }
-#schedulepage .experts img { margin:6px auto; }
-#schedulepage .experts .selected .select { background-color: lightyellow }
-#schedulepage .experts .select { height:25px; }
-#schedulepage button:disabled {
-  background: darkgray;
-  border: solid 3px gray;
-}
-#schedulepage #videos .list > div {
-  display: inline-block;
-
-  background-color: lightyellow;
-  padding: 10px;
-  border-radius: 4px;
-  margin-right: 5px;
-  margin-bottom: 5px;
-  border: 1px solid grey;
-}
-#schedulepage #videos .list > div .delete {
-  visibility: hidden;
-}
-#schedulepage #videos .list > div:hover .delete {
-  visibility: visible;
-}*/
 
 /* feedback that the request is in progress */
 body#mtags button:disabled {

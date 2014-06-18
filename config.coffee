@@ -61,7 +61,7 @@ exports.config =
       defaultExtension: 'scss'
       joinTo:
         'css/ap.css': /(css\/ap|css\/shared)/
-        'css/adm.css': /(css\/adm|css\/shared)/
+        'css/adm.css': /(css\/adm\/|css\/shared)/
         'css/ap-old.css': /(css\/ap-old)/
         'css/adm-old.css': /(css\/adm-old|vendor\/css\/shared)/
         'test/stylesheets/test.css': /^test/

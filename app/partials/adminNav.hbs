@@ -1,4 +1,4 @@
-<div class="navbar navbar-inverse navbar-static-top">
+<div class="navbar navbar-inverse navbar-static-top navbar-old">
   <div class="navbar-inner">
     <div class="container">
       <a class="navbar-brand pull-left" href="/adm"></a>
@@ -26,3 +26,27 @@
     </div>
   </div>
 </div>
+
+<nav class="navbar navbar-inverse navbar-static-top navbar-ang" role="navigation" ng-controller="NavCtrl">
+  <div class="container">
+    <a class="navbar-brand" href="/adm"><img src="/images/icons/icon48.png" alt="" style="position: relative; top: -8px; width: 37px;" ></a>
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="/adm/companys" target="_self">Companys</a></li>
+      <li><a href="/adm/experts" target="_self">Experts</a></li>
+      <li><a href="/adm/marketingtags" target="_self">Marketing</a></li>
+      <li><a href="/adm/tags" target="_self">Tags</a></li>
+      <li class="active"><a href="/adm/orders" target="_self" style="padding-right: 8px; padding-left: 8px;">Orders</a></li>
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="padding-left: 6px; padding-right: 7px;" ><b class="caret"></b></a>
+        <ul class="dropdown-menu">
+          <li><a href="/adm/orders/inactive" target="_self">Inactive</a></li>
+          <li ng-class="navClass('browse')"><a href="/adm/ang/orders">Orders New</a></li>
+          <li ng-class="navClass('weekly')"><a href="/adm/ang/orders/weekly">Weekly</a></li>
+          <li ng-class="navClass('growth')"><a href="/adm/ang/orders/growth">Mth on Mth</a></li>
+          <li ng-class="navClass('channels')"><a href="/adm/ang/orders/channels">Channels</a></li>
+        </ul>
+      </li>
+      <li><a href="/adm/pipeline" target="_self">Pipeline</a></li>
+    </ul>
+  </div>
+</nav>

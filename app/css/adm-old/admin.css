@@ -192,6 +192,7 @@ a.hm-white { background:url('/images/icons/hm-white.png') }
 .marketingtag a.delete { display: none; }
 
 .route { max-width:1240px;margin:auto; }
+.navbar-ang { display:none }
 .navbar { height:52px; }
 .navbar-inner { min-height:36px; }
 .navbar-inner .container { width:1240px;margin:auto;height:16px; }
