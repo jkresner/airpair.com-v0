@@ -1,10 +1,6 @@
 <div class="form-actions admin-nav">
   <div class="controls">
     <a href="#" class="btn">List</a>
-    {{#if prev}}<a href="#request/{{ prev }}" class="btn">Prev</a>
-    {{else}}<button class="btn" disabled>Prev</button>{{/if}}
-    {{#if next}}<a href="#request/{{ next }}" class="btn">Next</a>
-    {{else}}<button class="btn" disabled>Next</button>{{/if}}
     <a href="/review/{{ _id }}" class="btn btn-inverse btn-review" target="_blank">Review</a>
     <a href="save" class="btn btn-primary save">Save</a>
     <a href="#farm/{{ _id }}" class="btn btn-success btn-farm">Farm</a>
