@@ -18,6 +18,20 @@
       .site-title em { display:none }
       li.login { display:none; }
     </style>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script type="text/javascript">
+      $(function(e){
+
+          $('.toggleLink').on('click', function(e){
+              $('.toggleLink').removeClass('selected');
+              $(this).addClass('selected');
+              $('.toggleSection').hide();
+              sectionName = $(this).data('section');
+              $('.'+sectionName).show(0);
+          })
+
+      });
+    </script>
 </head>
 
 <body id="book-new">
@@ -25,6 +39,107 @@
   <div class="site-container">
 
     {{> siteNav this }}
+
+<!--static code begin-->
+
+    <div class="site-inner">
+          <div class="wrap">
+            <aside class="sidebar sidebar-primary widget-area">
+              <section class="widget book featuredpost">
+                <div class="widget-wrap" id="expert">
+                  <ul class="toggle-header clearfix book-session">
+                    <li>Book an AirPair</li>
+                  </ul>
+                <article class="entry">
+                  <span class="alignleft" style="width:100%">
+                    <img src="https://secure.gravatar.com/avatar/780d02a99798886da48711d8104801a4?s=300" class="avatar user" style="margin-right:0">
+                  </span>
+                  <a id="bookme-login" class="trackBookLogin button large" href="/auth/google?return_to=/book/hackerpreneur">Book Jonathon Kresner</a>
+
+                  <ul class="booking-stats clearfix">
+                    <li>
+                      <h5><span class="highlight-color">hourly rate</span></h5>
+                      <h3><span class="highlight-color">$280 </span></h3>
+                    </li>
+                    <li>
+                      <h5>hours per week available</h5>
+                      <h3>2</h3>
+                    </li>
+                  </ul>
+
+                </article>
+                </div>
+              </section>
+            </aside>
+            <div id="detail" class="route" style="">
+              <div class="content-sidebar-wrap">
+                <main class="content">
+
+                  <div id="welcome">
+                    <article>
+                      <ul class="toggle-header clearfix">
+                        <li><a class="selected toggleLink" data-section='section1'>Jonathon Kresner</a></li>
+                        <li><a class="toggleLink" data-section='section3' id="full-bio">Full Bio</a></li>
+                        <li><a class="toggleLink" data-section='section2'>How AirPair Works</a></li>
+                      </ul>
+                      <div class="left-container section2 toggleSection">
+                        <p><span>Most of the world’s leading software experts are not available for hire. </span>With AirPair you can book them for one-on-one consultations to review your product, give you tips and best practices and help you problem solve through your biggest challenges.</p>
+                        <img src="/images/book/how-to-book.png" class="how-to-book" alt="how to book">
+                        <p><span>How to land an expert: </span>The more descriptive your request, the more likely to be approved so let us know what you need!</p>
+                      </div>
+
+                      <div class="left-container toggleSection section1 clearfix" style="display:block;">
+                        <p><span>Why I AirPair </span>"I like helping people think through their software products to make them leaner and more to the point. I code with javascript, backbone, node.js and mongo."</p>
+                        <section class="clearfix">
+                          <h4>profiles</h4>
+                          <span class="alignleft social-icons-large clearfix">
+                            <a href="//github.com/jkresner" target="_blank" class="github-large selected"></a>
+                            <a href="//stackoverflow.com/users/178211/jonathon-kresner" target="_blank" class="stackoverflow-large selected"></a>
+                            <a href="//bitbucket.org/hackerpreneur" target="_blank" class="bitbucket-large selected"></a>
+                            <a href="//linkedin.com/x/profile/sy5n2q8o2i49/d9YFKgZ7rY" target="_blank" class="linkedin-large selected"></a>
+                            <a href="//twitter.com/hackerpreneur" target="_blank" class="twitter-large selected"></a>
+                          </span>
+                        </section>
+                        <section class="clearfix">
+                          <h4>expertise</h4>
+                          <ul class="expertise clearfix alignleft">
+                            <li>node.js</li><li>Backbone.js</li><li>heroku</li><li>coffeescript</li><li>wordpress</li><li>ruby-on-rails</li>
+                          </ul>
+                        </section>
+                        <section class="clearfix">
+                          <h4>Watch an Airpair with Jonathon</h4>
+                          <iframe width="640" height="400" style="border:1px solid #e2e2e2;" src="//www.youtube.com/embed/HqXYorNWvjk" frameborder="0" allowfullscreen></iframe>
+                        </section>
+                      </div>
+
+                      <div class="left-container toggleSection section3 clearfix">
+                        <iframe width="740" height="1000" src="http://www.airpair.com/user-experience/ux-expert-alyssa-reese" frameborder="0" allowfullscreen></iframe>
+                      </div>
+
+                    </article>
+                  </div>
+
+                  <article id="stripeRegister" class="post type-post format-standard entry"></article>
+
+                  <div id="request"></div>
+
+                </main>
+              </div>
+            </div>
+
+            <div id="thanks" class="route"></div>
+
+            <div id="none" class="route" style="display:none">
+              <h2>Expert not found ...</h2>
+              <p>The expert you're looking for does not exist or not enabled the booking feature.</p>
+              <p>Don't worry, we've got <a href="/experts">hundreds of other amazing experts</a> for you.</p>
+            </div>
+
+          </div>
+        </div>
+    
+<!--static code end-->
+
 
     <div class="site-inner">
       <div class="wrap">
