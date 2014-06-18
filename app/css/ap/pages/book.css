@@ -62,7 +62,7 @@ img.how-to-book {
 	padding: 0;
 }
 
-.social-icons-large a {
+.social-icons-large * {
 	width: 46px;
 	height: 117px;
 	display: inline-block;
@@ -90,51 +90,51 @@ img.how-to-book {
 	margin-right: 0px;
 }
 
-a.github-large {
+.social-icons-large *.github-large {
 	background-image: url('../images/icons/social-github.png');
 }
 
-a.github-large.selected {
+.social-icons-large *.github-large.selected {
 	background-color: #3B3B3B;
 }
 
-a.twitter-large {
+.social-icons-large *.twitter-large {
 	background-image: url('../images/icons/social-twitter.png');
 }
 
-a.twitter-large.selected {
+.social-icons-large *.twitter-large.selected {
 	background-color: #00AFEA;
 }
 
-a.bitbucket-large {
+.social-icons-large *.bitbucket-large {
 	background-image: url('../images/icons/social-bitbucket.png');
 }
 
-a.bitbucket-large.selected {
+.social-icons-large *.bitbucket-large.selected {
 	background-color: #1A4F7E;
 }
 
-a.linkedin-large {
+.social-icons-large *.linkedin-large {
 	background-image: url('../images/icons/social-linkedin.png');
 }
 
-a.linkedin-large.selected {
+.social-icons-large *.linkedin-large.selected {
 	background-color: #0081AF;
 }
 
-a.stackoverflow-large {
+.social-icons-large *.stackoverflow-large {
 	background-image: url('../images/icons/social-stackoverflow.png');
 }
 
-a.stackoverflow-large.selected {
+.social-icons-large *.stackoverflow-large.selected {
 	background-color: #FFA43C;
 }
 
-a.home-large {
+.social-icons-large *.home-large {
 	background-image: url('../images/icons/social-home.png');
 }
 
-a.home-large.selected {
+.social-icons-large *.home-large.selected {
 	background-color: #25DBBF;
 }
 

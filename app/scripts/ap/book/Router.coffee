@@ -24,6 +24,7 @@ module.exports = class Router extends S.AirpairSessionRouter
 
     if expert._id?
       v =
+        infoFormView: new V.InfoFormView model: d.company, request: d.request
         expertView: new V.ExpertView model: d.expert, request: d.request, session: @app.session
         requestView: new V.RequestView model: d.request, settings: d.settings, expert: d.expert, company: d.company
 
@@ -37,7 +38,7 @@ module.exports = class Router extends S.AirpairSessionRouter
           Stripe.setPublishableKey pageData.stripePK
 
       d.company.fetch success: (m, opts, resp) =>
-        m.populateFromGoogle d.session
+        m.populateFromGoogle @app.session
 
     @setOrFetch d.expert, expert
 

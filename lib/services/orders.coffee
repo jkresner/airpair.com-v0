@@ -40,6 +40,10 @@ module.exports = class OrdersService extends DomainService
     order.profit = airpairMargin
     order
 
+  createAnonCharge: (charge, callback) ->
+    @stripSvc.createAnonCharge charge, callback
+
+
   create: (order, callback) ->
     order._id = new mongoose.Types.ObjectId;
     order.userId = @usr._id

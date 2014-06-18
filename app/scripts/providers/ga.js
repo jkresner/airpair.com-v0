@@ -8,6 +8,7 @@ module.exports = function()
     })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
     ga('create', 'UA-40569487-1', 'airpair.com');
+    ga('require', 'displayfeatures');
     ga('send', 'pageview');
   }
 }
