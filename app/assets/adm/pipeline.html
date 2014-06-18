@@ -5,40 +5,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title>Pipeline | AirPair</title>
     <meta name="viewport" content="width=device-width">
-    <link rel="stylesheet" href="/css/adm.css">
+    <link rel="stylesheet" href="/css/adm-old.css">
 </head>
 
 <body id="pipeline">
 
-  <!-- NAVBAR --> 
-  <div class="navbar navbar-inverse navbar-static-top">
-    <div class="navbar-inner">
-      <div class="container">
-        <a class="navbar-brand pull-left" href="/adm"><img src="/images/icons/icon48.png" alt="" style="position: relative; top: 2px; width: 35px;" ></a>
-        <ul class="nav pull-right">
-          <li><a href="/adm/companys">Companys</a></li>
-          <li><a href="/adm/experts">Experts</a></li>
-          <li><a href="/adm/marketingtags">Marketing</a></li>
-          <li><a href="/adm/tags">Tags</a></li>
-          <li><a href="/adm/orders" style="padding-right: 8px; padding-left: 8px;">Orders</a></li>
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="padding-left: 6px; padding-right: 7px;"><b class="caret"></b></a>
-            <ul class="dropdown-menu">
-              <li class="nav-header">Orders Old</li>
-              <li><a href="/adm/orders">Orders</a></li>
-              <li><a href="#inactive">Inactive</a></li>
-              <li class="divider"></li>
-              <li class="nav-header">Orders New</li>
-              <li><a href="/adm/ang/orders">Orders</a></li>
-              <li><a href="/adm/ang/orders/weekly">Weekly</a></li>
-              <li><a href="/adm/ang/orders/growth">Mth on Mth</a></li>
-              <li><a href="/adm/ang/orders/channels">Channels</a></li>
-            </ul>
-          </li>
-          <li class="active"><a href="/adm/pipeline">Pipeline</a></li>
-      </div>
-    </div>
-  </div> <!-- .navbar --> 
+  {{> adminNav }}
 
   <div id="list" class="route">
 

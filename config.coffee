@@ -33,9 +33,9 @@ exports.config =
     javascripts:
       joinTo:
        'javascripts/vendor.js': /^vendor/
-       'javascripts/adm-ang.js': /(scripts\/angular|lodash|moment-2.6|scripts\/adm-ang|lib\/mix)/
        'javascripts/ap.js': /(scripts\/ap|scripts\/shared|scripts\/providers|lib\/mix)/
        'javascripts/adm.js': /(scripts\/adm|scripts\/shared|scripts\/providers|lib\/mix)/
+       'javascripts/adm-ang.js': /(scripts\/angular|lodash|moment-2.6|scripts\/adm-ang|lib\/mix)/
        'javascripts/providers.js': /^app\/scripts\/providers/
        'javascripts/home.js': /providers\/(home|addjs|ga|mix|mixpanel|adroll)/
        'test/javascripts/test.js': /^test(\/|\\)(?=integration)/
@@ -60,9 +60,10 @@ exports.config =
     stylesheets:
       defaultExtension: 'scss'
       joinTo:
-        'css/ap.css': /(css\/ap|css\/shared|css\/old)/
-        'css/adm.css': /(app\/css\/adm|vendor\/css\/adm-bb|css\/shared)/
-        'css/adm-ang.css': /(vendor\/css\/adm-ang)/
+        'css/ap.css': /(css\/ap|css\/shared)/
+        'css/adm.css': /(css\/adm\/|css\/shared)/
+        'css/ap-old.css': /(css\/ap-old)/
+        'css/adm-old.css': /(css\/adm-old|vendor\/css\/shared)/
         'test/stylesheets/test.css': /^test/
       order:
         before: [

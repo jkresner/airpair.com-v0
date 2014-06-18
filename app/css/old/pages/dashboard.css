@@ -1,8 +1,0 @@
-body#dashboard { }
-body#dashboard .main {  }
-body#dashboard #requestslist { padding-top:20px;float:left;width:860px; }
-body#dashboard .requests .reqOptions { width:120px; }
-body#dashboard .requests a { padding:1px 5px;font-size:12px;float:right;margin-left:4px; }
-body#dashboard .requests img { width:24px;height:24px;padding:1px; }
-body#dashboard .rightCol { float:right;width:360px;padding:0px;min-height:700px;background:white;text-align:center; }
-body#dashboard .border-waiting { display:none; }

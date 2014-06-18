@@ -11,27 +11,13 @@
     <meta property="og:title" content="AirPair Expert | {{ expert.name }}" />
     <meta property="og:type" content="airpair:expert" />
     <meta property="og:image" content="http://www.airpair.com/images/icons/icon48.png" />
-    <link rel="stylesheet" href="/stylesheets/book.css" type="text/css" media="all" />
-    {{!> siteStyles }}
-    <link rel="stylesheet" href="/css/ap.css">
+    <link rel="stylesheet" href="/css/ap-old.css">
     <style type="text/css">
       .site-title em { display:none }
       li.login { display:none; }
     </style>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <script type="text/javascript">
-      $(function(e){
 
-          $('.toggleLink').on('click', function(e){
-              $('.toggleLink').removeClass('selected');
-              $(this).addClass('selected');
-              $('.toggleSection').hide();
-              sectionName = $(this).data('section');
-              $('.'+sectionName).show(0);
-          })
-
-      });
-    </script>
 </head>
 
 <body id="book-new">
@@ -42,7 +28,19 @@
 
 <!--static code begin-->
 
-    <div class="site-inner">
+<!--
+$(function(e){
+
+    //       $('.toggleLink').on('click', function(e){
+    //           $('.toggleLink').removeClass('selected');
+    //           $(this).addClass('selected');
+    //           $('.toggleSection').hide();
+    //           sectionName = $(this).data('section');
+    //           $('.'+sectionName).show(0);
+    //       })
+
+    //   });
+     <div class="site-inner">
           <div class="wrap">
             <aside class="sidebar sidebar-primary widget-area">
               <section class="widget book featuredpost">
@@ -136,8 +134,8 @@
             </div>
 
           </div>
-        </div>
-    
+        </div> -->
+
 <!--static code end-->
 
 
@@ -202,6 +200,257 @@
     #companyInfo input {  }
     #companyInfo textarea { width:100%;height:140px; }
   </style>
+  <style>
+body#book-new {
+  background: #f2f2f2;
+}
+
+body#book-new h1 {
+  font-weight: 100;
+  font-size: 28px;
+  color: #4c4c4c;
+  margin: 0;
+  padding: 15px 10px;
+  z-index: 500;
+  position: relative;
+  border-radius: 3px 3px 0 0;
+  letter-spacing: 1px;
+}
+
+body#book-new h1.how-header {
+  padding-left: 20px;
+  border: 3px solid #e6e6e6;
+  font-size: 16px;
+  text-transform: uppercase;
+}
+
+body#book-new a {
+  color: #ce5323;
+}
+
+body#book-new #welcome {
+  margin-bottom:0px;
+}
+
+.left-container {
+  border-radius: 0 0 3px 3px;
+  border: 3px solid #e6e6e6;
+  padding: 40px;
+  background: white;
+  margin: 0 0 40px 0;
+}
+
+.left-container p {
+  font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 21px;
+  color: #333333;
+}
+
+.left-container p span {
+  font-weight: bold;
+  color: #ce5323;
+}
+
+img.how-to-book {
+  margin: 75px 0;
+}
+
+#stripeRegister {
+  display: none;
+}
+
+/**************************** profiles ****************************/
+
+.profiles {
+  padding: 0;
+}
+
+.social-icons-large * {
+  width: 46px;
+  height: 117px;
+  display: inline-block;
+  float: left;
+  background-color: #f2f2f2;
+  margin-right: 6px;
+  background-position: center;
+  background-size: 94px;
+  background-repeat: no-repeat;
+}
+
+.social-icons-large a.selected {
+  background-color: #ce5323;
+}
+
+.social-icons-large a.selected:hover {
+  background-color: #ce5323;
+}
+
+.social-icons-large a:first-child {
+  margin-right: 8px;
+}
+
+.social-icons-large a:last-child {
+  margin-right: 0px;
+}
+
+.social-icons-large *.github-large {
+  background-image: url('../images/icons/gh-white.png');
+}
+
+.social-icons-large *.github-large.selected {
+  background-color: #3B3B3B;
+}
+
+.social-icons-large *.twitter-large {
+  background-image: url('../images/icons/tw-white.png');
+}
+
+.social-icons-large *.twitter-large.selected {
+  background-color: #00AFEA;
+}
+
+.social-icons-large *.bitbucket-large {
+  background-image: url('../images/icons/bb-white.png');
+}
+
+.social-icons-large *.bitbucket-large.selected {
+  background-color: #1A4F7E;
+}
+
+.social-icons-large *.linkedin-large {
+  background-image: url('../images/icons/in-white.png');
+}
+
+.social-icons-large *.linkedin-large.selected {
+  background-color: #0081AF;
+}
+
+.social-icons-large *.stackoverflow-large {
+  background-image: url('../images/icons/so-white.png');
+}
+
+.social-icons-large *.stackoverflow-large.selected {
+  background-color: #FFA43C;
+}
+
+.social-icons-large *.home-large {
+  background-image: url('../images/icons/hm-white.png');
+}
+
+.social-icons-large *.home-large.selected {
+  background-color: #25DBBF;
+}
+
+body#book-new #stripeRegister { margin-bottom:300px;display:none; }
+body#book-new #stripeRegister h1 { margin-left:13‹‹0px }
+body#book-new #stripeRegister #payment-form img { float:right;width:66px;height:auto;margin-bottom:0px; }
+body#book-new #stripeRegister #payment-form footer { margin-top:30px; }
+body#book-new #stripeRegister #payment-form .form-actions { display:block; }
+body#book-new #stripeRegister #payment-form .mm { width:60px; }
+body#book-new #stripeRegister #payment-form .yyyy { width:70px; }
+body#book-new #stripeRegister #payment-form button { background-color:#CE5323;color:#FFFFFF;font-size:18px;line-height:24px;margin:0;padding:16px 32px;text-align:center;width:100%; }
+
+
+/**************************** profiles end ****************************/
+
+
+/**************************** sidebar ****************************/
+
+.book .entry {
+  padding: 20px;
+  background: white;
+  border: 3px solid #e6e6e6;
+  padding-bottom: 100px;
+  border-radius: 3px;
+  box-shadow: none !important;
+}
+
+.book .entry h5 {
+  text-transform: uppercase;
+  color: #4c4c4c;
+  font-weight: normal;
+  font-size: 13px;
+  letter-spacing: 1px;
+  float: left;
+  margin: 0;
+  margin-top: 10px;
+
+}
+
+.book .entry h4 {
+  color: #4c4c4c;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-size: 16px;
+  margin: 40px 0 20px 5px;
+  float: left;
+  width: 100%;
+  font-weight: normal;
+}
+
+a#bookme-login {
+  background: #CE5323;
+  margin: 20px 0;
+  letter-spacing: 1px;
+}
+
+img.avatar.user {
+  width: 314px;
+}
+
+.social-icons {
+  width: 100%;
+  float: left;
+}
+
+.social-icons a {
+  float: left;
+}
+
+.social-icons a:first-child {
+  margin-left: 0;
+}
+
+ul.booking-stats li {
+  width: 100%;
+  background: #f2f2f2;
+  float: left;
+  padding: 20px;
+  margin-bottom: 3px;
+}
+
+ul.booking-stats li h3 {
+  float: right;
+  margin: 0;
+}
+
+span.highlight-color {
+  color:  #CE5323;
+}
+
+ul.expertise li {
+  float: left;
+  background: #CE5323;
+  padding: 5px 15px;
+  border-radius: 3px;
+  margin-right: 10px;
+  color: white;
+  font-weight: normal;
+}
+
+.pricing-group { height:86px;margin:22px 0 0px 0 }
+.pricing-group em { font-style:normal; }
+.pricing-group em.selected { font-weight:bold;color:#CC523E; }
+.rb-group { margin:18px 8px 0 0;display:block;height:20px; }
+.rb-group label { float:left;margin-right:38px;color:gray; }
+.rb-group input { float:left;margin-top:7px;margin-right:4px;width:20px; }
+.rb-group .error-message { display:block; }
+
+
+/**************************** end sidebar ****************************/
+
+  </style>
+
   {{> siteFooter }}
 
 </body>
