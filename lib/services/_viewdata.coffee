@@ -38,6 +38,9 @@ module.exports = class ViewDataService
     session = @session true
     cb null, -> { session }
 
+  dashboard: (cb) ->
+    cb null, -> { }
+
   review: (id, cb) ->
     new RequestsSvc(@usr).getByIdSmart id, (e, request) =>
       cb e, -> { request }

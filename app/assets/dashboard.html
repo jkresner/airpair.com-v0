@@ -5,38 +5,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title>airpair, dashboard</title>
     <meta name="viewport" content="width=device-width">
-    <link rel="stylesheet" href="/stylesheets/app.css">
+    <link rel="stylesheet" href="/css/ap-old.css">
 </head>
 
 <body id="dashboardpage">
 
-  <nav>
-    <div>
-      <a class="logo" href="/" title="Pair programming, code review, architecture advice & more..."></a>
+  <div class="site-container">
 
-      <div class="navbar">
+  {{> siteNav this }}
 
-        <div class="contactus">
-          | (800) 487-0668
-        </div>
-
-        <div class="navbar-inner">
-          <ul class="nav">
-            <li class="active"><a href="/dashboard">Dashboard</a></li>
-            <li class="divider-vertical"></li>
-            <li><a href="/find-an-expert">New request</a></li>
-            <li class="divider-vertical"></li>
-            <li><a href="/be-an-expert">Expert profile</a></li>
-            <li class="divider-vertical"></li>
-            <li><a href="/settings">Settings</a></li>
-            <li class="divider-vertical"></li>
-            <li><a href="/logout">Logout</a></li>
-          </ul>
-        </div>
-      </div>
-
-    </div>
-  </nav>
+    <div class="site-inner">
+      <div class="wrap">
 
   <div id="requests" class="route">
     <div id="requestslist"></div>
@@ -54,7 +33,13 @@
 
     </div>
 
+      </div>  </div>
+
   </div>
+  </div>
+
+  <style> td img { width:40px; } </style>
+
 
 </body>
 
