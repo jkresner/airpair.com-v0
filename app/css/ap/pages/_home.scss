@@ -1,4 +1,76 @@
-@import '../variables';
+
+
+.home-hero {
+  background: url("/images/home/banner-home.jpg");
+  background-size: 100%;
+  margin-top: -100px;
+  @include clearfix();
+  .hero-content {
+    margin-bottom:30px;
+    text-align: center;
+    padding: 220px 0 50px;
+    h1 {
+      color: white;
+      opacity: 0.9;
+    }
+    p {
+      width: 800px;
+      margin: 0 auto;
+      margin-bottom: 26px;
+      margin-top: 20px;
+      color: white;
+      opacity: 0.8;
+      letter-spacing: 1px;
+    }
+    a.login-now {
+      color: white;
+      text-decoration: underline;
+    }
+    a.login-now:hover {
+      color: #000000;
+    }
+    a.button { 
+      background-color:$color-primary; 
+      opacity: 0.9; 
+      margin:30px 0 0 0; 
+      padding: 30px 50px; 
+      transition: all 0.5s;
+      box-shadow: 0 1px 1px rgba(0,0,0,.2);
+      &:hover {
+        background-color: #E2522F;
+      }
+    }
+    .cta-group .already-a-member { 
+      float: right; 
+      font-size: 14px; 
+      a {
+        color: $color-primary; 
+      }
+    }
+  }
+  .nav-technologies {
+    background: rgba(255, 255, 255, 0.6);
+    margin-bottom: 20px;
+    ul {
+      li {
+        float: left;
+        a {
+          display: inline-block;
+          padding: 17px 28px 18px 0;
+          color: #555;
+          font-size: 13px;
+          font-weight: bold;
+          &:hover {
+            color: $color-primary;
+          }
+        }
+      }
+    }
+  }
+}
+
+
+
 
 /******************** banner *******************/
  body#home {
@@ -7,29 +79,29 @@
     background: transparent;
   }
 
-  .home-feature-bg {
-    padding-bottom: 145px;
-  }
+  // .home-feature-bg {
+  //   padding-bottom: 145px;
+  // }
 
-  .nav-secondary {
-    position: absolute;
-    background: rgba(255, 255, 255, 0.65);
-    width: 100%;
-    padding: 14px 0;
-    margin-top: 548px;
-  }
+  // .nav-secondary {
+  //   position: absolute;
+  //   background: rgba(255, 255, 255, 0.65);
+  //   width: 100%;
+  //   padding: 14px 0;
+  //   margin-top: 548px;
+  // }
 
-  .nav-secondary li {
-    padding-bottom: 16px !important;
-  }
+  // .nav-secondary li {
+  //   padding-bottom: 16px !important;
+  // }
 
-  .nav-secondary a {
-    color: #4d4d4d;
-  }
+  // .nav-secondary a {
+  //   color: #4d4d4d;
+  // }
 
-  .nav-secondary a:hover {
-    color: white;
-  }
+  // .nav-secondary a:hover {
+  //   color: white;
+  // }
 
   #banner-image {
     width: 100%;
@@ -44,43 +116,43 @@
     min-width: 1375px;
   }
 
-  #fold .wrap {
-    margin-bottom:30px;
-    text-align: center;
-    padding: 60px 0 0;
-  }
+  // #fold .wrap {
+  //   margin-bottom:30px;
+  //   text-align: center;
+  //   padding: 60px 0 0;
+  // }
 
-  #fold h1 {
-    color: white;
-    opacity: 0.9;
-  }
+  // #fold h1 {
+  //   color: white;
+  //   opacity: 0.9;
+  // }
 
-  #fold p {
-    width: 800px;
-    margin: 0 auto;
-    margin-bottom: 26px;
-    margin-top: 20px;
-    color: white;
-    opacity: 0.8;
-    letter-spacing: 1px;
-  }
+  // #fold p {
+  //   width: 800px;
+  //   margin: 0 auto;
+  //   margin-bottom: 26px;
+  //   margin-top: 20px;
+  //   color: white;
+  //   opacity: 0.8;
+  //   letter-spacing: 1px;
+  // }
 
-  #fold a.login-now {
-    color: white;
-    text-decoration: underline;
-  }
+  // #fold a.login-now {
+  //   color: white;
+  //   text-decoration: underline;
+  // }
 
-  #fold a.login-now:hover {
-    color: #000000;
-  }
+  // #fold a.login-now:hover {
+  //   color: #000000;
+  // }
 
-  #fold-action:hover {
-    background-color: #FC4126 !important;
-  }
+  // #fold-action:hover {
+  //   background-color: #FC4126 !important;
+  // }
 
-  #fold a.button { background-color:$primary-color; opacity: 0.9; margin:30px 0 0 0; padding: 30px 50px; transition: all 0.5s;}
-  #fold .cta-group .already-a-member { float: right; font-size: 14px; }
-  #fold .cta-group .already-a-member a { color: $primary-color; }
+  // #fold a.button { background-color:$color-primary; opacity: 0.9; margin:30px 0 0 0; padding: 30px 50px; transition: all 0.5s;}
+  // #fold .cta-group .already-a-member { float: right; font-size: 14px; }
+  // #fold .cta-group .already-a-member a { color: $color-primary; }
 
 /******************** end banner *******************/
 
@@ -109,7 +181,7 @@
   #customers h4 { font-size:28px;margin:2px 0 18px 0; }
   #customers section { box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);background: none repeat scroll 0 0 #F2F2F2; }
   #customers a button { margin:0;padding:5px 12px;width:100%;font-size:0.875rem }
-  #customers a:hover button { background-color:$primary-color }
+  #customers a:hover button { background-color:$color-primary }
   #customers div.head { float:right;width:40px;height:40px;margin:4px;border-radius:10px }
   #experts { padding-bottom:40px; }
   #experts main.content { width:100%; }
@@ -120,13 +192,13 @@
   #experts article:hover span { opacity:1;transition:all 0.5s ease 0s; }
   #experts article p { font-weight:300; height: 75px;}
   #experts article h3 { color:black;margin:10px 0;font-size:16px;line-height:24px; }
-  #experts article:hover h3 { color:$primary-color }
+  #experts article:hover h3 { color:$color-primary }
   #experts article em { display:block;font-style:normal;font-weight:700 }
   #experts article img { width:200px;height:200px  }
   #experts article:hover img { opacity:0.25;transition:all 0.5s ease 0s; }
   #experts article button { margin:0 0 20px 0;padding: 4px 12px;width:100%;font-size:0.875rem }
-  #experts article:hover button { background-color:$primary-color }
-  .trackExpertLogin { background-color:$primary-color;margin:20px auto;display:block;width:540px;text-align:center }
+  #experts article:hover button { background-color:$color-primary }
+  .trackExpertLogin { background-color:$color-primary;margin:20px auto;display:block;width:540px;text-align:center }
   #cost { padding:20px; }
   #cost .plan-col { width:20%; }
   #cost .plan-col-popular { width:20%; }
@@ -134,11 +206,11 @@
   #cost a:hover .plan-col { background: #FFF5F2; }
   #cost a:hover .plan-col-popular { background:#FFF5F2; }
   #cost .plan-button { background:none repeat scroll 0 0 #303236;border-radius:$border-radius-small; color:#FFFFFF;font-size:18px;font-weight:400;padding:6px 25px 8px; }
-  #cost a:hover .plan-button { background:$primary-color; }
+  #cost a:hover .plan-button { background:$color-primary; }
   #cost .plan-list li:first-child { font-size: 15px;}
 
 
-  #partners .button { background-color:$primary-color;margin:10px auto 20px auto;display:block;width:540px;text-align:center;margin-bottom:60px; }
+  #partners .button { background-color:$color-primary;margin:10px auto 20px auto;display:block;width:540px;text-align:center;margin-bottom:60px; }
 }
 
 @media (max-width:1140px) {
