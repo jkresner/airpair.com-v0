@@ -1,8 +1,8 @@
 body#admexperts {}
 body#admexperts table { width:100% }
 body#admexperts table#experts img { max-width:36px }
-body#admexperts table#experts td { font-size:11px;padding:4px 8px 0px 8px!important; }
-body#admexperts table#experts td.i a { display:inline-block;font-size:16px;padding-left:4px; }
+body#admexperts table#experts td { font-size:12px;padding:4px 8px 0px 8px!important; }
+body#admexperts table#experts td.i a { display:inline-block;font-size:12px;padding-left:4px; }
 body#admexperts table#experts .label { font-weight:normal }
 body#admexperts #info { float:left;width:53%;border-right:solid 1px #d3d3d3;padding-right:20px;margin-right:20px }
 body#admexperts #info .links { float:right;line-height:10px;margin-bottom:20px; }
