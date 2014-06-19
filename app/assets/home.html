@@ -19,69 +19,56 @@
 
     <nav class="navbar navbar-default navbar-static-top" role="navigation">
       <div class="container">
-        <div class="navbar-header">        
-          <a class="navbar-brand-img" href="#">
+        <div class="navbar-header">
+          <a class="navbar-brand-img" href="/">
             <img src="/images/logos/airpair.png" alt="" width="140px" style="width: 140px;" >
           </a>
-          <i class="inline-block" style="margin-top: 16px;margin-left: 20px;" >The worlds best software experts - At your ﬁngertips</i>
-
+          <i class="inline-block" style="margin-top:16px;margin-left:20px;">Better, faster, cheaper consulting. Pay by the hour.</i>
         </div>
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="#">Ruby on Rails</a></li>
-<!--           <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Ruby on Rails <b class="caret"></b></a>
-            
-            <ul class="dropdown-menu">
-              <li><a href="#">Action</a></li>
-              <li><a href="#">Another action</a></li>
-              <li><a href="#">Something else here</a></li>
-              <li class="divider"></li>
-              <li><a href="#">Separated link</a></li>
-            </ul>
-          </li>
- -->        </ul>
-      </div><!-- /.container-fluid -->
+          <li><a href="/auth/google">Login</a></li>
+        </ul>
+      </div>
     </nav>
 
 
     <!-- HERO -->
     <div class="hero behind-nav">
       <div class="container hero-content text-bright">
-        <h1>Live Rails Help from Thousands of Experts</h1>
-        <h3 class="m-b-3">Available to pair program using video chat and screen sharing.</h3>
+        <h1>The Worlds BEST Software Experts</h1>
+        <h3 class="m-b-3" style="font-weight:200">At your finger tips through video chat and screen sharing.</h3>
       </div>
       <div class="bg-white p-b-3">
         <div class="container">
-          
+
           <div class="row">
             <div class="col-xs-4 col-xs-offset-1 text-center">
               <div class="img-overlap three">
                 <img src="/images/avatars/of.png" alt="" class="img-circle img-border">
+                <img src="//secure.gravatar.com/avatar/4900754dfff6786e747438a703e0d791?s=200" alt="" class="img-circle img-border">
                 <img src="/images/avatars/rb.png" alt="" class="img-circle img-border">
-                <img src="/images/avatars/ag.jpeg" alt="" class="img-circle img-border">
               </div>
-              <div class="hero-cta-text">              
-                <h3>Airpair Rails Experts</h3>
-                <h5>We have Assembled the World’s Best Rails Team</h5>
+              <div class="hero-cta-text">
+                <h3>AirPair Experts</h3>
+                <h5>The Highest Quality Collection of Software Experts ever assembled in one place.</h5>
               </div>
-              <a href="#" class="btn btn-lg btn-primary btn-block m-t-1">GET THE PERFECT EXPERT FOR YOU</a>
-              <p class="m-t-1 block">We’ll help you ﬁnd the right expert for your 
-    project and needs.</p>
+              <a id="fold-find" href="/find-an-expert" class="trackCustomerLogin btn btn-lg btn-primary btn-block m-t-1">GET THE PERFECT EXPERT - Starts at $60/hr</a>
+              <p class="m-t-1 block">We’ll help you find the right expert for your needs.</p>
             </div>
             <div class="col-xs-4 col-xs-offset-2 text-center">
               <div class="img-overlap">
-                <img src="/images/avatars/yk.jpeg" alt="" class="img-circle img-border">
+                <img src="//avatars2.githubusercontent.com/u/131395?s=260" alt="" class="img-circle img-border">
               </div>
-              
+
               <div class="hero-cta-text">
-                
-                <h3>                
+
+                <h3>
                   <small class="text-upper text-xs">Featured Expert</small><br>
-                  Yehuda Katz</h3>
-                <h5>Rails Core Contributor</h5>          
+                  Daniel Roseman</h3>
+                <h5>Django #1 Top Answerer on Stackoverflow</h5>
               </div>
-              <a href="#" class="btn btn-lg btn-primary btn-block m-t-1">BOOK YEHUDA</a>
-              <p class="m-t-1 block">“Let’s discuss how to improve your Rails app.”</p>
+              <a id="fold-book" href="/book/danielroseman?code=home  " class="btn btn-lg btn-primary btn-block m-t-1">BOOK DANIEL - $160/hr</a>
+              <p class="m-t-1 block">“Let’s discuss how to improve your Python app.”</p>
             </div>
           </div>
         </div>
@@ -110,12 +97,12 @@
           <div class="col-xs-3"><img src="/images/icons/icon32.png" alt="" width="22"> Improve your code quality</div>
         </div>
       </div>
- 
+
 
       <div id="how-it-works" class="container">
         <div class="row">
           <div class="col-xs-10 col-xs-offset-1 bg-primary m-t-3 m-b-3 p-t-2">
-          
+
             <h2 class="text-center">How it works</h2>
             <div class="row m-t-1">
               <div class="col-xs-4 text-center">
@@ -125,7 +112,7 @@
                 <p>Tell Us What You Need</p>
               </div>
               <div class="col-xs-4 text-center">
-                <div class="figure p-t-1">                
+                <div class="figure p-t-1">
                   <div class="img-overlap three">
                     <img src="/images/avatars/of.png" alt="" class="img-circle img-border">
                     <img src="/images/avatars/rb.png" alt="" class="img-circle img-border">
@@ -155,7 +142,7 @@
                 <p>We’ll Match You with 3 Experts</p>
               </div>
               <div class="col-xs-4 text-center">
-                <div class="figure">                
+                <div class="figure">
                   <img src="/images/pages/marketing/how-2.png" alt="">
                 </div>
                 <p>You’ll Choose One and Start a Video Call</p>
@@ -164,7 +151,7 @@
 
             <div class="row m-b-3 m-t-2">
               <div class="col-xs-4 col-xs-offset-4">
-                <a href="" class="btn btn-default btn-lg btn-block">Find and Expert</a>
+                <a id="how-find" href="/find-an-expert" class="trackCustomerLogin btn btn-default btn-lg btn-block">Find and Expert</a>
               </div>
 
             </div>
@@ -172,7 +159,7 @@
         </div>
       </div>
 
-    
+      <style> #how-find:hover { color:white; } </style>
 
 
     </div>
@@ -180,14 +167,15 @@
 
   </body>
 
+<script src="//cdn.optimizely.com/js/280598780.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
 <script type="text/javascript">
 
 function initPage()
 {
-window.useOlark = true;
-require('scripts/providers/home');
-addjs.trackEvent('page','view', window.location.pathname, 'homepage');
+  window.useOlark = true;
+  require('scripts/providers/home');
+  addjs.trackEvent('page','view', window.location.pathname, 'homepage');
 }
 
 </script>
