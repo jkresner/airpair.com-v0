@@ -12,6 +12,8 @@ module.exports = (app) ->
     if req.isAuthenticated() then n()
     else render('home')(req, r, n)
 
+  app.get '/l/*', render 'home'
+
   app.get '/', renderHome, render 'dashboard'
   app.get '/yc', file 'yc'
   app.get '/railsconf2014', file 'railsconf'
