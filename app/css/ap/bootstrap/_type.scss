@@ -89,6 +89,24 @@ cite    { font-style: normal; }
 .text-center         { text-align: center; }
 .text-justify        { text-align: justify; }
 
+// Styling
+.text-light { font-weight: 200; }
+.text-bold { font-weight: bold; }
+.text-normal { font-weight: normal; }
+
+.text-upper { text-transform: uppercase; }
+
+.text-bright {color: #fff;}
+
+.text-xs {font-size: 12px;}
+.text-lg {font-size: 20px;}
+.text-xl {font-size: 28px;}
+
+
+// Rendering
+.text-smooth{
+  -webkit-font-smoothing: antialiased;
+}
 
 // Contextual colors
 .text-muted {
