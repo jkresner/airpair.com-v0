@@ -16,7 +16,7 @@ module.exports = (pageData) ->
 
 
   # Configs
-  config(($routeProvider, $locationProvider) ->
+  config(['$routeProvider', '$locationProvider', ($routeProvider, $locationProvider) ->
 
     $locationProvider.html5Mode true
 
@@ -27,7 +27,7 @@ module.exports = (pageData) ->
       when('/adm/ang/orders/edit/:id',  { controller: 'OrdersCtrl',   templateUrl: "/adm/templates/orders_edit.html"}).
       when('/adm/ang/orders',           { controller: 'OrdersCtrl',   templateUrl: "/adm/templates/orders.html"}).
       otherwise({redirectTo: '/'})
-  ).
+  ]).
 
 
 
@@ -118,7 +118,7 @@ module.exports = (pageData) ->
   # Airpair Data Service
   #----------------------------------------------
 
-  factory('apData', ($moment, $filter) ->
+  factory('apData', ['$moment', '$filter', ($moment, $filter) ->
     
     apData = 
       orders: 
@@ -444,7 +444,7 @@ module.exports = (pageData) ->
 
 
     return apData
-  ).
+  ]).
 
 
 
@@ -460,19 +460,19 @@ module.exports = (pageData) ->
 
 
   # Nav Controller
-  controller("NavCtrl", ($scope, $location) ->
+  controller("NavCtrl", [ '$scope', '$location', ($scope, $location) ->
     # A function to add class to nav items
     $scope.navClass = (page) ->
       currentRoute = $location.path().substring(16) or "browse"
       if page is currentRoute then "active" else ""
-  ).
+  ]).
 
 
 
 
   # Orders Controller
 
-  controller("OrdersCtrl", ($scope, $location, $filter, $window, $moment, apData) ->
+  controller("OrdersCtrl", [ '$scope', '$location', '$filter', '$window', '$moment', 'apData', ($scope, $location, $filter, $window, $moment, apData) ->
 
     allOrders = apData.orders.get()
     firstOrderDate = new Date(allOrders[0].utc)
@@ -541,7 +541,7 @@ module.exports = (pageData) ->
           $scope.$apply() if not $scope.$$phase
 
 
-  ).
+  ]).
 
 
 
@@ -552,7 +552,7 @@ module.exports = (pageData) ->
 
   # Monthly growth controller
 
-  controller("GrowthCtrl", ($scope, $location, apData) ->
+  controller("GrowthCtrl", ['$scope', '$location', 'apData', ($scope, $location, apData) ->
 
     $scope.getMonth = (index) ->
       date = new Date(2014, index, 1)
@@ -564,7 +564,7 @@ module.exports = (pageData) ->
     $scope.reportTotals = month2month.reportTotals
 
 
-  ).
+  ]).
 
 
 
@@ -574,7 +574,7 @@ module.exports = (pageData) ->
 
   # Order metrics controller
 
-  controller("ChannelsCtrl", ($scope, $location, apData) ->
+  controller("ChannelsCtrl", ['$scope', '$location', 'apData', ($scope, $location, apData) ->
 
 
     $scope.dateStart = moment().startOf("week").subtract("w", 2).toDate()
@@ -587,7 +587,7 @@ module.exports = (pageData) ->
     $scope.$watch "dateEnd", () -> $scope.metrics = apData.orders.getChannelMetrics($scope.dateStart, $scope.dateEnd)
 
 
-  ).
+  ]).
 
 
 
@@ -596,7 +596,7 @@ module.exports = (pageData) ->
 
   # Weekly Summary controller
 
-  controller("WeeklyCtrl", ($scope, $location, $moment, apData ) ->
+  controller("WeeklyCtrl", ['$scope', '$location', '$moment', 'apData', ($scope, $location, $moment, apData ) ->
 
     # Overall Growth
     week2week = apData.orders.getGrowth 'weekly', moment().startOf('month').subtract('weeks', 7)
@@ -608,7 +608,7 @@ module.exports = (pageData) ->
     $scope.channelGrowth = apData.orders.getChannelGrowth(moment().subtract('weeks', 7))
 
 
-  )
+  ])
 
 
 
