@@ -100,6 +100,7 @@ module.exports = class ViewDataService
       feature = name:'Amir Rajan', me: 'amirrajan', claim: 'ASP .net AirPair Expert' if id is 'asp.net'
       feature = name:'Steve Purves', me: 'stevejpurves', claim: 'C++ AirPair Expert' if id is 'c++'
       feature = name:'John Feminella', me: 'john-feminella', claim: 'C# Top Answerer' if id is 'c#'
+      feature = name:'Marko Topolnik', me: 'marko', claim: 'Java Top Answerer' if id is 'java'
       cb e, -> { tag, feature }
 
 
