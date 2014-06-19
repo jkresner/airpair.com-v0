@@ -88,9 +88,19 @@ module.exports = class ViewDataService
       cb e, -> { companys, stripePK }
 
   so10: (id, cb) ->
+    id = 'c++' if id is 'c%2b%2b'
+    id = 'c#' if id is 'c%23'
     new TagsSvc(@usr).getBySoId id, (e, tag) =>
-      $log 'so10', tag
-      cb e, -> { tag }
+      feature = name:'Yehuda Katz', me: 'wycats', claim: 'Rails Core Team Member'
+      feature = name:'Ran Nachmany', me: 'rannachmany', claim: 'Android Google Developer Expert' if id is 'android'
+      feature = name:'Matias Niemelä', me: 'matsko', claim: 'AngularJS Core Team' if id is 'angularjs'
+      feature = name:'Phil Sturgeon', me: 'philsturgeon', claim: 'PHP Top Answerer' if id is 'php'
+      feature = name:'Tim Caswell', me: 'creationix', claim: 'Early Node.js Contributor' if id is 'node.js'
+      feature = name:'Wain Glaister', me: 'wain', claim: 'iOS Top Answerer' if id is 'ios'
+      feature = name:'Amir Rajan', me: 'amirrajan', claim: 'ASP .net AirPair Expert' if id is 'asp.net'
+      feature = name:'Steve Purves', me: 'stevejpurves', claim: 'C++ AirPair Expert' if id is 'c++'
+      feature = name:'John Feminella', me: 'john-feminella', claim: 'C# Top Answerer' if id is 'c#'
+      cb e, -> { tag, feature }
 
 
   paypalSuccess: (id, cb) ->

@@ -15,9 +15,9 @@
     <nav class="navbar navbar-default navbar-static-top" role="navigation" style="height:62px">
       <div class="container">
         <div class="navbar-header">
-          <a class="navbar-brand-img" href="#">
-            <img src="/images/logos/airpair.png" alt="" width="140px">
-          </a>
+
+            <img src="/images/logos/airpair.png" alt="" style="margin-top:5px">
+
         </div>
       </div><!-- /.container-fluid -->
     </nav>
@@ -48,18 +48,18 @@
             </div>
             <div class="col-xs-4 col-xs-offset-2 text-center">
               <div class="img-overlap">
-                <img src="/images/avatars/yk.jpeg" alt="" class="img-circle img-border">
+                <img src="/images/landing/so10/{{feature.me}}.png" alt="" class="img-circle img-border" style="width:160px">
               </div>
 
               <div class="hero-cta-text">
 
                 <h3>
                   <small class="text-upper text-xs">Featured Expert</small><br>
-                  Yehuda Katz</h3>
-                <h5>Rails Core Contributor</h5>
+                  {{feature.name}}</h3>
+                <h5>{{feature.claim}}</h5>
               </div>
-              <a id="book-fold" href="/book/yehuda?code=home" class="btn btn-lg btn-primary btn-block m-t-1">BOOK YEHUDA</a>
-              <p class="m-t-1 block">“Let’s discuss how to improve your Rails app.”</p>
+              <a id="book-fold" href="/book/{{feature.me}}?code=home" class="btn btn-lg btn-primary btn-block m-t-1">BOOK {{feature.name}}</a>
+              <p class="m-t-1 block">“Let’s discuss how to improve your {{tag.name}} app.”</p>
             </div>
           </div>
         </div>

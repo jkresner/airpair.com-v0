@@ -8,9 +8,7 @@ module.exports = class TagsService extends DomainService
 
   model: require './../models/tag'
 
-  getBySoId: (id, cb) ->
-    $log 'getBySoId', id, @searchOne
-    @searchOne { soId: id }, {}, cb
+  getBySoId: (id, cb) -> @searchOne { soId: id }, {}, cb
 
   create: (addMode, tag, callback) ->
     # console.log 'create', 'addMode', addMode, tag
