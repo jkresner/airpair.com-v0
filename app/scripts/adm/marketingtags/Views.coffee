@@ -33,15 +33,20 @@ class exports.MarketingTagForm extends BB.ModelSaveView
   viewData: ['group', 'type', 'name', '_id']
   tmpl: require './templates/MarketingTagForm'
   events:
+    'change [name="type"]': @renderGroup
     'click .save': (e) ->
       $(e.currentTarget).attr('disabled', true)
       @save(e)
   initialize: ->
     @listenTo @model, 'change', @render
-    @$el.html @tmpl {}
+    @render()
   render: ->
     @$el.html @tmpl @model.toJSON()
+    @renderGroup()
+    @elm('type').change @renderGroup
     @
+  renderGroup: =>
+    @$('#control-group').toggle @elm('type').val() is 'channel'
   renderSuccess: =>
     @$('.save').attr('disabled', false)
     @$('.alert-success').fadeIn(800).fadeOut(5000)

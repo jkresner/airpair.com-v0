@@ -1,41 +1,4 @@
-body {
-    background: none repeat scroll 0 0 #f5f5f5;
-}
-
-.alert {display: none}
-
-fieldset {
-    border: 0 none;
-    margin: 0;
-    padding: 0;
-}
-
-[class^="icon-"],
-[class*=" icon-"] {
-  background-image: url("/images/css/glyphicons-halflings.png");
-}
-
-/* White icons with optional class, or on hover/focus/active states of certain elements */
-
-.icon-white,
-.nav-pills > .active > a > [class^="icon-"],
-.nav-pills > .active > a > [class*=" icon-"],
-.nav-list > .active > a > [class^="icon-"],
-.nav-list > .active > a > [class*=" icon-"],
-.navbar-inverse .nav > .active > a > [class^="icon-"],
-.navbar-inverse .nav > .active > a > [class*=" icon-"],
-.dropdown-menu > li > a:hover > [class^="icon-"],
-.dropdown-menu > li > a:focus > [class^="icon-"],
-.dropdown-menu > li > a:hover > [class*=" icon-"],
-.dropdown-menu > li > a:focus > [class*=" icon-"],
-.dropdown-menu > .active > a > [class^="icon-"],
-.dropdown-menu > .active > a > [class*=" icon-"],
-.dropdown-submenu:hover > a > [class^="icon-"],
-.dropdown-submenu:focus > a > [class^="icon-"],
-.dropdown-submenu:hover > a > [class*=" icon-"],
-.dropdown-submenu:focus > a > [class*=" icon-"] {
-  background-image: url("/images/css/glyphicons-halflings-white.png");
-}
+.route { max-width:1240px;margin:auto; }
 
 .label-owner { margin:10px 10px 10px 0;min-width:20px;text-align:center;font-weight:normal; }
 .label-jk { background-color: #FFB878; }
@@ -51,84 +14,23 @@ fieldset {
     margin-bottom: 4px;
     padding: 4px;
 }
-.label-status {
-    padding: 4px;
-}
-.label-received {
-    background-color: #3A87AD;
-}
-.label-incomplete {
-    background-color: #B94A48;
-}
-.label-review {
-    background-color: #468847;
-}
-.label-scheduled {
-    background-color: #333333;
-}
-.label-complete {
-    background-color: #999999;
-}
-.label-canceled {
-    background-color: #999999;
-}
-.label-waiting {
-    background-color: #3A87AD;
-}
-.label-abstained {
-    background-color: #B94A48;
-}
-.label-unwanted {
-    background-color: #B94A48;
-}
-.label-available {
-    background-color: #468847;
-}
-.border-waiting {
-    border: 1px solid #3A87AD;
-}
-.border-abstained {
-    border: 1px solid #B94A48;
-}
-.border-unwanted {
-    border: 1px solid #B94A48;
-}
-.border-available {
-    border: 1px solid #468847;
-}
-.rating {
-    font-weight: 700;
-}
-.rating .label {
-    font-weight: 400;
-    padding: 1px 4px !important;
-}
-.label-1 {
-    background-color: #B94A48;
-}
-.label-2 {
-    background-color: #999999;
-}
-.label-3 {
-    background-color: #3A87AD;
-}
-.label-4 {
-    background-color: #333333;
-}
-.label-5 {
-    background-color: #468847;
-}
-.marketingTagsInput { float:left;padding:8px 0px 12px 0px; }
-.marketingTagsInput .selected { display: inline; }
-.marketingTagsInput .tt-hint,
-.marketingTagsInput .tt-query { width: 150px; }
-.marketingTagsInput .marketingtag { vertical-align: top; margin: 0; margin-top: 1px; }
-.marketingtag { border: 1px solid rgba(0, 0, 0, 0.25);font-size: 14px;font-weight: bold;margin: 3px 3px 0px 0px;padding: 6px 10px; text-shadow: none; }
-.marketingtag.channel { color: #b94a48; background-color: #f2dede; }
-.marketingtag.campaign { color: #c09853; background-color: #fcf8e3; }
-.marketingtag.usage { color: #3a87ad; background-color: #d9edf7; }
-.marketingtag a.delete { display: none; }
-
+.label-status { padding: 4px; }
+.label-received { background-color: #3A87AD; }
+.label-incomplete { background-color: #B94A48; }
+.label-review { background-color: #468847; }
+.label-scheduled { background-color: #333333; }
+.label-complete { background-color: #999999; }
+.label-canceled { background-color: #999999; }
+.label-waiting { background-color: #3A87AD }
+.label-abstained { background-color: #B94A48 }
+.label-unwanted { background-color: #B94A48 }
+.label-available { background-color: #468847 }
+.border-waiting { border: 1px solid #3A87AD }
+.border-abstained { border: 1px solid #B94A48 }
+.border-unwanted { border: 1px solid #B94A48; }
+.border-available { border: 1px solid #468847; }
+.rating { font-weight: 700; }
+.rating .label { font-weight: 400; padding: 1px 4px !important; }
 
 a.mp { width:32px;height:32px;background:url('/images/icons/mp.png');display:inline-block }
 a.em { width:32px;height:32px;background:url('/images/icons/em.png');display:inline-block }
@@ -156,192 +58,9 @@ a.hm-white { background:url('/images/icons/hm-white.png') }
   margin:1px;
 }
 
-.marketingTagsInput { float:left;padding:8px 0px 12px 0px; }
-.marketingTagsInput .selected {
-  display: inline;
-}
-.marketingTagsInput .tt-hint,
-.marketingTagsInput .tt-query {
-  width: 150px;
-}
-.marketingTagsInput .marketingtag {
-  vertical-align: top;
-  margin: 0;
-  margin-top: 1px;
-}
-.marketingtag {
-  border: 1px solid rgba(0, 0, 0, 0.25);
-  font-size: 14px;
-  font-weight: bold;
-  margin: 3px 3px 0px 0px;
-  padding: 6px 10px;
-  text-shadow: none;
-}
-.marketingtag.channel {
-  color: #b94a48;
-  background-color: #f2dede;
-}
-.marketingtag.campaign {
-  color: #c09853;
-  background-color: #fcf8e3;
-}
-.marketingtag.usage {
-  color: #3a87ad;
-  background-color: #d9edf7;
-}
-.marketingtag a.delete { display: none; }
-
-.route { max-width:1240px;margin:auto; }
-.navbar-ang { display:none }
-.navbar { height:52px; }
-.navbar-inner { min-height:36px; }
-.navbar-inner .container { width:1240px;margin:auto;height:16px; }
-.navbar-inner .container ul { }
-.navbar-inner .container li { line-height:16px; }
-.navbar-inner .container li a { display:inline-block!important; }
-.navbar-brand { background:url('/images/icons/icon48.png');background-size:100%;position:absolute;top:1px;width:42px;height:42px }
-.droplink { margin:0!important;padding-right:12px!important }
-.dropdown-toggle { margin-left:-5px; }
-.dropdown-toggle:hover { color:orange; }
-.dropdown-menu a { width:70% }
 
 .admin-nav { margin-top:-15px;padding:15px 10px;background-color:white;border:none; }
 .admin-nav .controls { margin-left:5px!important; }
 
 /* keep the delete button away from the other buttons */
 .controls a.btn-danger:last-child { float: right; }
-
-body#admorders {}
-body#admorders .selectOrder { display:block;font-size:9px; }
-body#admorders .info { font-size:9px; }
-body#admorders .info .marketingtag { border: none; background-color: inherit; font-size:9px; margin: 0; padding: 0; font-weight: normal;}
-body#admorders .info .label-owner { font-size:9px; margin: 0;}
-body#admorders .total { font-weight:bold;text-align:right;padding-right:10px; }
-body#admorders th { font-size:12px; }
-body#admorders #rowsSummary th { font-size:10px;padding:2px 8px; }
-#orders td { padding:2px 0px 2px 8px;font-size:12px; }
-body#admorders td span { display:inline-block; }
-#orders .expertPic { width:16px!important;height:16px!important }
-body#admorders #timefilter { float:right;padding:10px 0px; }
-#orders { margin-top:25px;clear:both; }
-#orders img { height: 32px;width: 32px }
-#orders img.favicon { height: 8px;width: 8px; }
-#orders th { padding:2px 6px; }
-body#admorders #rowsSummary th { color:black;background:#FAA732 }
-#orders .pending { color:#b94a48; }
-#orders .received { color:#333333 }
-#orders .paidout { color:#468847; }
-#orders .incomplete { display: none; }
-body#admorders #order .form { float:left;width:39%; }
-body#admorders #order pre { float:right;width:59%;font-size:10px;line-height:1.1; }
-
-#tagsInput header, .controls-tags header {
-    border-bottom: 1px dashed #D3D3D3;
-    color: #808080;
-    font-size: 11px;
-    font-style: italic;
-    padding: 0 0 5px 5px;
-}
-#tagsInput .autocomplete, .controls-tags .autocomplete {
-    width: 240px;
-}
-#tagsInput span, .controls-tags span {
-    clear: both;
-}
-#tagsInput p, .controls-tags p {
-    font-size: 11px;
-    height: 20px;
-    margin: 0;
-    overflow: hidden;
-}
-#tagsInput h3, .controls-tags h3 {
-}
-#tagsInput .selected, .controls-tags .selected {
-    border-radius: 5px;
-    margin: 10px auto;
-}
-#tagsInput .label {
-    border: 1px solid #7F761C;
-    font-size: 14px;
-    font-weight: 700;
-    margin: 3px 3px 0 0;
-    padding: 6px 10px;
-}
-#tagsInput .label a {
-    color: #FFC0CB;
-    margin-left: 5px;
-}
-#tagsInput .tt-dropdown-menu, .controls-tags .tt-dropdown-menu {
-    width: 260px;
-}
-#tagsInput .tt-suggestions, .controls-tags .tt-suggestions {
-    padding: 5px;
-    text-align: center;
-}
-#tagsInput .tt-suggestions .label, .controls-tags .tt-suggestions .label {
-    margin: 0;
-    padding: 3px 8px;
-}
-
-#schedulepage .expertPic { height: 60px; width: 60px;}
-#schedulepage .controls > a { vertical-align: text-bottom; }
-#schedulepage select[name="duration"] {
-  width: 90px;
-}
-#schedulepage input[name="date"] {
-  width: 110px;
-}
-#schedulepage select[name="time"] {
-  width: 80px;
-}
-#schedulepage .experts,
-#schedulepage .datetimeduration {
-  overflow: auto;
-  width: 100%
-}
-#schedulepage .datetimeduration .control-group { float: left; margin-right: 2em;}
-#schedulepage .experts label { margin:0; }
-#schedulepage .experts .expertMini { float:left;margin:10px 20px 0 0px  }
-#schedulepage .experts .hours { background-color:black;font-size:11px;color:white;height:40px; }
-#schedulepage .experts img { margin:6px auto; }
-#schedulepage .experts .selected .select { background-color: lightyellow }
-#schedulepage .experts .select { height:25px; }
-/* feedback that the request is in progress */
-#schedulepage button:disabled {
-  background: darkgray;
-  border: solid 3px gray;
-}
-#schedulepage #videos .list > div {
-  display: inline-block;
-
-  background-color: lightyellow;
-  padding: 10px;
-  border-radius: 4px;
-  margin-right: 5px;
-  margin-bottom: 5px;
-  border: 1px solid grey;
-}
-#schedulepage #videos .list > div .delete {
-  visibility: hidden;
-}
-#schedulepage #videos .list > div:hover .delete {
-  visibility: visible;
-}
-
-/* feedback that the request is in progress */
-#admmarketingtagspage button:disabled {
-  background: darkgray;
-  border: solid 3px gray;
-}
-
-nav div { padding-top:6px;height:54px;width:1240px;margin:auto;border-bottom:solid 1px white; }
-nav div > a { float:left; }
-nav img { display:inline-block;width:180px;padding:3px 12px; }
-nav h3 { display:inline-block;color:#999999;padding:16px 6px }
-nav ul { float:right;margin:10px 0px 8px 8px;display:inline; }
-nav ul li { float:right;display:block;margin-left:5px }
-
-#admcompanyspage .unshare { color:red; }
-#admcompanyspage #stripeRegister p { display:none; }
-#admcompanyspage .cardSharers { float:left;width:30% }
-#admcompanyspage .cardDetail { float:right;width:65% }

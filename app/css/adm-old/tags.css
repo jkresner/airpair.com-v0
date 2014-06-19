@@ -1,0 +1,48 @@
+
+#tagsInput header, .controls-tags header {
+    border-bottom: 1px dashed #D3D3D3;
+    color: #808080;
+    font-size: 11px;
+    font-style: italic;
+    padding: 0 0 5px 5px;
+}
+#tagsInput .autocomplete, .controls-tags .autocomplete {
+    width: 240px;
+}
+#tagsInput span, .controls-tags span {
+    clear: both;
+}
+#tagsInput p, .controls-tags p {
+    font-size: 11px;
+    height: 20px;
+    margin: 0;
+    overflow: hidden;
+}
+#tagsInput h3, .controls-tags h3 {
+}
+#tagsInput .selected, .controls-tags .selected {
+    border-radius: 5px;
+    margin: 10px auto;
+}
+#tagsInput .label {
+    border: 1px solid #7F761C;
+    font-size: 14px;
+    font-weight: 700;
+    margin: 3px 3px 0 0;
+    padding: 6px 10px;
+}
+#tagsInput .label a {
+    color: #FFC0CB;
+    margin-left: 5px;
+}
+#tagsInput .tt-dropdown-menu, .controls-tags .tt-dropdown-menu {
+    width: 260px;
+}
+#tagsInput .tt-suggestions, .controls-tags .tt-suggestions {
+    padding: 5px;
+    text-align: center;
+}
+#tagsInput .tt-suggestions .label, .controls-tags .tt-suggestions .label {
+    margin: 0;
+    padding: 3px 8px;
+}

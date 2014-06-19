@@ -1,0 +1,46 @@
+
+#schedulepage .expertPic { height: 60px; width: 60px;}
+#schedulepage .controls > a { vertical-align: text-bottom; }
+#schedulepage select[name="duration"] {
+  width: 90px;
+}
+#schedulepage input[name="date"] {
+  width: 110px;
+}
+#schedulepage select[name="time"] {
+  width: 80px;
+}
+#schedulepage .experts,
+#schedulepage .datetimeduration {
+  overflow: auto;
+  width: 100%
+}
+#schedulepage .datetimeduration .control-group { float: left; margin-right: 2em;}
+#schedulepage .experts label { margin:0; }
+#schedulepage .experts .expertMini { float:left;margin:10px 20px 0 0px  }
+#schedulepage .experts .hours { background-color:black;font-size:11px;color:white;height:40px; }
+#schedulepage .experts img { margin:6px auto; }
+#schedulepage .experts .selected .select { background-color: lightyellow }
+#schedulepage .experts .select { height:25px; }
+/* feedback that the request is in progress */
+#schedulepage button:disabled {
+  background: darkgray;
+  border: solid 3px gray;
+}
+#schedulepage #videos .list > div {
+  display: inline-block;
+
+  background-color: lightyellow;
+  padding: 10px;
+  border-radius: 4px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  border: 1px solid grey;
+}
+#schedulepage #videos .list > div .delete {
+  visibility: hidden;
+}
+#schedulepage #videos .list > div:hover .delete {
+  visibility: visible;
+}
+

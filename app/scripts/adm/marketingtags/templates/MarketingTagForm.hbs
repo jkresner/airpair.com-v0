@@ -1,6 +1,4 @@
 {{#if _id}}
-<br>
-<p><a href="">save a new marketing tag instead</a></p>
 <h3>Edit a marketing tag</h3>
 <div class="control-group">
   <label class="control-label" for="_id"><strong>_id</strong></label>
@@ -13,46 +11,45 @@
 {{/if}}
 
 <div class="control-group">
-  <label class="control-label" for="name"><strong>name</strong>
-    e.g. twitter. (must be unique)</label>
-  <div class="controls">
-    <input name="name" type="text" class="input-medium" placeholder="name"
-      value="{{name}}">
-  </div>
-</div>
-<div class="control-group">
-  <label class="control-label" for="type"><strong>type</strong></label>
+  <label class="control-label" for="type"><strong>Type</strong></label>
   <div class="controls">
     <select name="type" class="input-medium">
       <option value="channel" {{#is type 'channel'}}selected{{/is}}>channel</option>
       <option value="campaign" {{#is type 'campaign'}}selected{{/is}}>campaign</option>
       <option value="usage" {{#is type 'usage'}}selected{{/is}}>usage</option>
+      <option value="customer" {{#is type 'customer'}}selected{{/is}}>customer</option>
     </select>
   </div>
 </div>
-<div class="control-group">
-  <label class="control-label" for="group"><strong>group</strong></label>
+
+<div id="control-group" class="control-group">
+  <label class="control-label" for="group"><strong>Channel group</strong></label>
   <div class="controls">
     <select name="group" class="input-medium">
       <option value="" selected></option>
       <optgroup label="Channels">
         <option {{#is group "ad"}}selected{{/is}}>ad</option>
         <option {{#is group "affiliate"}}selected{{/is}}>affiliate</option>
-        <option {{#is group "direct"}}selected{{/is}}>direct</option>
+        <option {{#is group "outbound"}}selected{{/is}}>outbound</option>
         <option {{#is group "newsletter"}}selected{{/is}}>newsletter</option>
-        <option {{#is group "incubator"}}selected{{/is}}>incubator</option>
+        <option {{#is group "portfolio"}}selected{{/is}}>portfolio</option>
         <option {{#is group "press"}}selected{{/is}}>press</option>
         <option {{#is group "seo"}}selected{{/is}}>seo</option>
         <option {{#is group "social"}}selected{{/is}}>social</option>
         <option {{#is group "wordofmouth"}}selected{{/is}}>wordofmouth</option>
+        <option {{#is group "aoa"}}selected{{/is}}>aoa</option>
         <option {{#is group "untracked"}}selected{{/is}}>untracked</option>
       </optgroup>
-      <optgroup label="Campaign">
-        <option {{#is group "newsletter-airpair"}}selected{{/is}}>newsletter-airpair</option>
-        <option {{#is group "newsletter-3rdparty"}}selected{{/is}}>newsletter-3rdparty</option>
-        <option {{#is group "stackoverflow-ads"}}selected{{/is}}>stackoverflow-ads</option>
-      </optgroup>
     </select>
+  </div>
+</div>
+
+<div class="control-group">
+  <label class="control-label" for="name"><strong>Name</strong>
+    e.g. twitter. (must be unique)</label>
+  <div class="controls">
+    <input name="name" type="text" class="input-medium" placeholder="name"
+      value="{{name}}">
   </div>
 </div>
 
@@ -65,5 +62,8 @@
   <h4>Error</h4>
 </div>
 <div class="form-actions">
-  <a href="#" class="save button">{{#if _id}}Save Edits{{else}}Save New{{/if}}</a>
+  <a href="#" class="save button btn">{{#if _id}}Save Edits{{else}}Save New{{/if}}</a>
+
+  {{#if _id}}<a href="" class="btn btn-inverse">New tag</a></p>{{/if}}
+
 </div>

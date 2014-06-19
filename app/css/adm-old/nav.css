@@ -1,0 +1,12 @@
+.navbar-ang { display:none }
+.navbar { height:52px; }
+.navbar-inner { min-height:36px; }
+.navbar-inner .container { width:1240px;margin:auto;height:16px; }
+.navbar-inner .container ul { }
+.navbar-inner .container li { line-height:16px; }
+.navbar-inner .container li a { display:inline-block!important; }
+.navbar-brand { background:url('/images/icons/icon48.png');background-size:100%;position:absolute;top:1px;width:42px;height:42px }
+.droplink { margin:0!important;padding-right:12px!important }
+.dropdown-toggle { margin-left:-5px; }
+.dropdown-toggle:hover { color:orange; }
+.dropdown-menu a { width:70% }
