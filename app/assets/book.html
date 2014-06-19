@@ -459,12 +459,16 @@ ul.expertise li {
     window.useOlark = true;
 
     function initApp() {
+      originalLocation = window.location.toString();
+
       var pageData = { {{JSON 'session'}}, {{JSON 'expert'}}, {{JSON 'stripePK'}} };
+
       Router = require('/scripts/ap/book/Router');
       window.router = new Router(pageData);
 
       if (window.addjs) {
-        addjs.trackEvent('page','view', window.location.pathname, {book:'{{ expert.name }}'});
+        console.log('window.location.addjs', originalLocation);
+        addjs.trackEvent('page','view', originalLocation, {book:'{{ expert.name }}'});
       }
     }
 
