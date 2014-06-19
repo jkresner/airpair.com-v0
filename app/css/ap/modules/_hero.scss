@@ -1,0 +1,75 @@
+
+.hero {
+  background: url("/images/home/banner-home.jpg");
+  background-size: 100%;
+  &.behind-nav {
+    margin-top: -100px;
+    .hero-content {
+      padding: 160px 0 50px;
+    }
+  }
+  @include clearfix();
+  .hero-content {
+    margin-bottom:30px;
+    text-align: center;
+    padding: 50px 0;
+
+    h1 {
+      color: white;
+      // opacity: 0.9;
+    }
+    p {
+      width: 800px;
+      margin: 0 auto;
+      margin-bottom: 26px;
+      margin-top: 20px;
+      color: white;
+      // opacity: 0.8;
+      letter-spacing: 1px;
+    }
+    a.login-now {
+      color: white;
+      text-decoration: underline;
+    }
+    a.login-now:hover {
+      color: #000000;
+    }
+    a.button { 
+      background-color:$brand-primary; 
+      opacity: 0.9; 
+      margin:30px 0 0 0; 
+      padding: 30px 50px; 
+      transition: all 0.5s;
+      box-shadow: 0 1px 1px rgba(0,0,0,.2);
+      &:hover {
+        background-color: #E2522F;
+      }
+    }
+    .cta-group .already-a-member { 
+      float: right; 
+      font-size: 14px; 
+      a {
+        color: $brand-primary; 
+      }
+    }
+  }
+  .nav-technologies {
+    background: rgba(255, 255, 255, 0.6);
+    margin-bottom: 20px;
+    ul {
+      li {
+        float: left;
+        a {
+          display: inline-block;
+          padding: 17px 28px 18px 0;
+          color: #555;
+          font-size: 13px;
+          font-weight: bold;
+          &:hover {
+            color: $brand-primary;
+          }
+        }
+      }
+    }
+  }
+}

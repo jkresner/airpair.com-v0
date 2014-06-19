@@ -12,6 +12,7 @@ h1, h2, h3, h4, h5, h6,
   font-weight: $headings-font-weight;
   line-height: $headings-line-height;
   color: $headings-color;
+  -webkit-font-smoothing: antialiased;
 
   small,
   .small {
@@ -57,6 +58,7 @@ h6, .h6 { font-size: $font-size-h6; }
 
 p {
   margin: 0 0 ($line-height-computed / 2);
+  -webkit-font-smoothing: antialiased;
 }
 
 .lead {
@@ -88,19 +90,6 @@ cite    { font-style: normal; }
 .text-justify        { text-align: justify; }
 
 
-// Weight and style
-.text-light { font-weight: 200; }
-.text-bold { font-weight: bold; }
-.text-normal { font-weight: normal; }
-.text-upper { text-transform: uppercase; }
-
-
-
-// Rendering
-.text-smooth{
-  -webkit-font-smoothing: antialiased;
-}
-
 // Contextual colors
 .text-muted {
   color: $text-muted;
@@ -116,9 +105,6 @@ cite    { font-style: normal; }
 
 @include text-emphasis-variant('.text-danger', $state-danger-text);
 
-@include text-emphasis-variant('.text-orange', #F0AC47);
-
-@include text-emphasis-variant('.text-green', #008000);
 
 // Contextual backgrounds
 // For now we'll leave these alongside the text classes until v4 when we can

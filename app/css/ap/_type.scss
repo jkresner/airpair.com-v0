@@ -1,49 +1,19 @@
-body {
-  font-size: 18px;
-  line-height: 30px;
-  letter-spacing: 1px;
+// Weight and style
+// .text-lighter { font-weight: 100; }
+.text-light { font-weight: 200; }
+.text-bold { font-weight: bold; }
+.text-normal { font-weight: normal; }
+.text-upper { text-transform: uppercase; }
+
+
+.text-bright {color: #fff;}
+
+.text-xs {font-size: 12px;}
+.text-lg {font-size: 20px;}
+.text-xl {font-size: 28px;}
+
+
+// Rendering
+.text-smooth{
+  -webkit-font-smoothing: antialiased;
 }
-
-h1 {
-  font-weight: 300;
-  font-size: 42px;
-  letter-spacing: 1px;
-}
-
-h2 {
-  font-size: 21px;
-  font-weight: bold;
-  line-height: 36px;
-  margin: 0 0 10px 0;
-}
-
-h6 {
-  font-size: 13px;
-  color: 999999;
-  font-weight: normal;
-  margin: 15px 0 10px;
-}
-
-p {
-  font-weight: normal;
-  font-size: 16px;
-  line-height: 26px;
-  color: #333333;
-  margin: 0 0 10px 0;
-
-}
-
-a {
-  transition: color 0.5s;
-}
-
-
-a:hover {
-  text-decoration: none;
-}
-
-ul {
-  list-style: none;
-  padding: 0;
-}
-

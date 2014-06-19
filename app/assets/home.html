@@ -9,416 +9,174 @@
     <meta name="keywords" content="Software Expert, Onine Code Review, Remote Pair Programming, Software Training">
     <meta name="description" content="Connect with and book Software Developers 1 hour at a time.">
     <link rel="canonical" href="http://www.airpair.com/" />
-    <link rel="stylesheet" href="/css/ap-old.css">
+    <link rel="stylesheet" href="/css/ap.css">
     <link rel="publisher" href="//plus.google.com/105075583437166504731/"/>
     <link rel='stylesheet' type='text/css' href='//fonts.googleapis.com/css?family=Open+Sans:400,300,600' >
   </head>
 <body id="home">
 
-  <div class="site-container">
 
-    <!-- NAVBAR -->
-    <div class="head-wrap">
-      {{> publicNav }}
-    </div>
+
+    <nav class="navbar navbar-default navbar-static-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">        
+          <a class="navbar-brand-img" href="#">
+            <img src="/images/logos/airpair.png" alt="" width="140px" style="width: 140px;" >
+          </a>
+          <i class="inline-block" style="margin-top: 16px;margin-left: 20px;" >The worlds best software experts - At your ﬁngertips</i>
+
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="#">Ruby on Rails</a></li>
+<!--           <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Ruby on Rails <b class="caret"></b></a>
+            
+            <ul class="dropdown-menu">
+              <li><a href="#">Action</a></li>
+              <li><a href="#">Another action</a></li>
+              <li><a href="#">Something else here</a></li>
+              <li class="divider"></li>
+              <li><a href="#">Separated link</a></li>
+            </ul>
+          </li>
+ -->        </ul>
+      </div><!-- /.container-fluid -->
+    </nav>
+
 
     <!-- HERO -->
-    <div class="home-hero">
-      <div class="wrap hero-content">
-        <h1>The World's Best Software Experts At Your Fingertips</h1>
-        <p>Talk directly with leading software developers to get advice no matter where you are. We’ll pair you with the best-qualified expert for you within 24 hours.</p>
-        <div class="cta-group">
-          <a id="fold-action" class="trackCustomerLogin button large" href="/find-an-expert">Find an expert & video chat, NOW.</a>
-          <p>Already a member? <a href="http://www.airpair.com/auth/google" class="login-now">Login now</a></p>
+    <div class="hero behind-nav">
+      <div class="container hero-content text-bright">
+        <h1>Live Rails Help from Thousands of Experts</h1>
+        <h3 class="m-b-3">Available to pair program using video chat and screen sharing.</h3>
+      </div>
+      <div class="bg-white p-b-3">
+        <div class="container">
+          
+          <div class="row">
+            <div class="col-xs-4 col-xs-offset-1 text-center">
+              <div class="img-overlap three">
+                <img src="/images/avatars/of.png" alt="" class="img-circle img-border">
+                <img src="/images/avatars/rb.png" alt="" class="img-circle img-border">
+                <img src="/images/avatars/ag.jpeg" alt="" class="img-circle img-border">
+              </div>
+              <div class="hero-cta-text">              
+                <h3>Airpair Rails Experts</h3>
+                <h5>We have Assembled the World’s Best Rails Team</h5>
+              </div>
+              <a href="#" class="btn btn-lg btn-primary btn-block m-t-1">GET THE PERFECT EXPERT FOR YOU</a>
+              <p class="m-t-1 block">We’ll help you ﬁnd the right expert for your 
+    project and needs.</p>
+            </div>
+            <div class="col-xs-4 col-xs-offset-2 text-center">
+              <div class="img-overlap">
+                <img src="/images/avatars/yk.jpeg" alt="" class="img-circle img-border">
+              </div>
+              
+              <div class="hero-cta-text">
+                
+                <h3>                
+                  <small class="text-upper text-xs">Featured Expert</small><br>
+                  Yehuda Katz</h3>
+                <h5>Rails Core Contributor</h5>          
+              </div>
+              <a href="#" class="btn btn-lg btn-primary btn-block m-t-1">BOOK YEHUDA</a>
+              <p class="m-t-1 block">“Let’s discuss how to improve your Rails app.”</p>
+            </div>
+          </div>
         </div>
       </div>
-      {{> techNav }}
-    </div>
 
-    <div id="customers" class="home-feature-bg-alt">
-      <h2 class="header-dark">Who AirPairs?</h2>
-      <div class="wrap">
-          <ul class="snippet snippet-full-width">
-            <li>
-              <div class="article-author">
-                <img src="//avatars0.githubusercontent.com/u/175123?s=260" class="author-large" alt="author">
-                <h5 class="author-name">Nathan Ward</h5>
-              </div>
-              <article class="article-snippet">
-                <div class="snippet-content">
-                  <h2>Enterprises</h2>
-                  <p>“Only hours after I found AirPair and submitted a request, AirPair connected me with not just an Ember.js expert, but with Stefan Penner, the author of the exact open source library with which I was integrating. ”</p>
-                  <h6><i>Nathan Ward, Intel </i><a href="/ember.js/training-on-demand" class="article-link"> Read Case Study</a></h6>
-                </div>
-                <div class="snippet-logo">
-                  <img src="//upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Intel-logo.svg/200px-Intel-logo.svg.png" class="article-logo" alt="article logo">
-                </div>
-              </article>
-              <div class="line"></div>
-            </li>
-            <li>
-              <div class="article-author">
-                <img src="//avatars2.githubusercontent.com/u/522045?s=260" class="author-large" alt="author">
-                <h5 class="author-name">Matt Harris</h5>
-              </div>
-              <article class="article-snippet">
-                <div class="snippet-content">
-                  <h2>Startups</h2>
-                  <p>“I booked an AirPair session for my developer. He confidently told me that he was happy with the result of the AirPair session and it helped him resolve what would have taken 5 hours in just one hour’s time."</p>
-                  <h6><i>Matt Harris, SendWithUs </i><a href="/ruby/ruby-problem-solving-for-sendwithus" class="article-link"> Read Case Study</a></h6>
-                </div>
-                <div class="snippet-logo">
-                  <img src="//airpair-blog.s3.amazonaws.com/wp-content/uploads/2014/02/sendwithus-logo.png" class="article-logo" alt="article logo">
-                </div>
-              </article>
-              <div class="line"></div>
-            </li>
-            <li>
-              <div class="article-author">
-                <img src="//0.gravatar.com/avatar/2a1aef501e3ef0516765994f3e41609f?s=200" class="author-large" alt="author">
-                <h5 class="author-name">Josh Baylin</h5>
-              </div>
-              <article class="article-snippet">
-                <div class="snippet-content">
-                  <h2>Entrepreneurs</h2>
-                  <p>"AirPair has become our iPhone – an on-demand source of software development hat tricks that include expert experience, on-demand services, best practices and many more!</p>
-                  <h6><i>Josh Baylin, Velocity Kick </i><a href="/code-mentoring/airpairs-been-turing-into-my-iphone" class="article-link"> Read Case Study</a></h6>
-                </div>
-                <div class="snippet-logo">
-                  <img src="//airpair-blog.s3.amazonaws.com/wp-content/uploads/2014/04/velocity-kick-logo.png" class="article-logo " class="article-logo" alt="article logo">
-                </div>
-              </article>
-              <div class="line"></div>
-            </li>
-          </ul>
-      </div><!-- end .wrap -->
+      <div class="container text-center text-bright text-light m-t-half m-b-half pos-r">
+        We’re so conﬁdent in our experts that If you’re not happy after the ﬁrst hour, we’ll give you your money back.
+        <img class="gaurantee" src="/images/pages/marketing/100.gif" alt="" width="130">
+      </div>
     </div>
 
 
-    <div id="experts" class="section-dark">
-      <h2 class="header-dark">What do AirPair Experts look like?</h2>
-      <div class="wrap">
-        <div class="content-sidebar-wrap">
-          <main class="content">
 
 
-            <article class="portfolio">
-              <a href="/book/cmaxw" target="_blank">
-                <span style="background-size:40%;background-image:url('//airpair-blog.s3.amazonaws.com/wp-content/uploads/2013/09/ruby-on-rails.jpeg')"></span>
-                <header>
-                  <img src="//0.gravatar.com/avatar/b249f348e11fbc90a07456ce5b033d32?s=200">
-                </header>
-                <div>
-                  <h3>Charles Wood</h3><p><em>Ruby Rouges</em>Podcast Host</p><button>Book hours</button>
-                </div>
-              </a>
-            </article>
-
-            <article class="portfolio">
-              <a href="/book/tomdale" target="_blank">
-                <span style="background-size:90%;background-image:url('//airpair-blog.s3.amazonaws.com/wp-content/uploads/2014/04/ember-js-airpair-technology.png')"></span>
-                <header>
-                  <img src="//0.gravatar.com/avatar/9bf3a766e037b9d5a4da0a6f9d0f4f68?s=200">
-                </header>
-                <div>
-                  <h3>Tom Dale</h3><p><em>Ember.js</em>Co-creator</p><button>Book hours</button>
-                </div>
-              </a>
-            </article>
-
-            <article class="portfolio felienne-hermans">
-              <a href="/excel/expert-training-professor-felienne-hermans">
-                <span style="background-size:50%;background-image:url('//datanitro.com/assets/img/excel.png')"></span>
-                <header>
-                  <img src="//0.gravatar.com/avatar/f524745bb9975ba777b5c4a9922eb614?s=200">
-                </header>
-                <div>
-                  <h3>Felienne Hermans</h3><p><em>Excel</em>Spreadsheet Professor</p><button>Read More</button>
-                </div>
-              </a>
-            </article>
-
-            <article class="portfolio">
-              <a href="/book/wycats" target="_blank">
-                <span style="background-size:40%;background-image:url('//airpair-blog.s3.amazonaws.com/wp-content/uploads/2013/09/ruby-on-rails.jpeg')"></span>
-                <header>
-                  <img src="//1.gravatar.com/avatar/428167a3ec72235ba971162924492609?s=200">
-                </header>
-                <div>
-                  <h3>Yehuda Katz</h3><p><em>Ruby on Rails</em>Co-creator</p><button>Book hours</button>
-                </div>
-              </a>
-            </article>
-
-            <article class="portfolio">
-              <a href="/book/sarahmei" target="_blank">
-                <span style="background-size:40%;background-image:url('//airpair-blog.s3.amazonaws.com/wp-content/uploads/2013/09/ruby-on-rails.jpeg')"></span>
-                <header>
-                  <img src="//0.gravatar.com/avatar/92497f51734ed56687928d5fd68d870a?s=200">
-                </header>
-                <div>
-                  <h3>Sarah Mei</h3><p><em>RailsConf</em>Keynote Speaker</p><button>Book hours</button>
-                </div>
-              </a>
-            </article>
-
-            <article class="portfolio">
-              <a href="/book/joem" target="_blank">
-                <span style="background-size:40%;background-image:url('//airpair-blog.s3.amazonaws.com/wp-content/uploads/2013/09/ruby-on-rails.jpeg')"></span>
-                  <img src="//secure.gravatar.com/avatar/d5fa38c6dc1cd61b01397e11b30425d7?s=200">
-                </header>
-                <div>
-                  <h3>Joe Moore</h3><p><em>Pair Programming</em>Oracle</p><button>Book hours</button>
-                </div>
-              </a>
-            </article>
+    <!-- HOW IT WORKS -->
 
 
+    <div class="bg-slate text-bright m-t-2 clearfix">
 
-            <article class="portfolio ari-lerner">
-              <a href="/angularjs/expert-training-author-ari-lerner">
-                <span style="background-size:140%;background-image:url('//airpair-blog.s3.amazonaws.com/wp-content/uploads/2013/09/angularjs.jpeg')"></span>
-                <header>
-                  <img src="//airpair-blog.s3.amazonaws.com/wp-content/uploads/2014/01/ari-227x200.jpeg">
-                </header>
-                <div>
-                  <h3>Ari Lerner</h3><p><em>AngularJS</em>Book Author</p><button>Read More</button>
-                </div>
-              </a>
-            </article>
-            <article class="portfolio domenic-denicola">
-              <a href="/node.js/expert-training-domenic-denicola">
-                <span style="background-size:90%;background-image:url('//airpair-blog.s3.amazonaws.com/wp-content/uploads/2013/09/node.js.png')"></span>
-                <header>
-                  <img src="//0.gravatar.com/avatar/c6d819207a3010b39d13e1f59f2c0029?s=200">
-                </header>
-                <div>
-                  <h3>Domenic Denicola</h3><p><em>Node.JS</em>NPM Core Contributor</p><button>Read More</button>
-                </div>
-              </a>
-            </article>
-
-            <article class="portfolio ryan-bigg">
-              <a href="/rails/expert-multi-tenancy-author-ryan-bigg">
-                 <span style="background-size:40%;background-image:url('//airpair-blog.s3.amazonaws.com/wp-content/uploads/2013/09/ruby-on-rails.jpeg')"></span>
-                <header>
-                  <img src="//0.gravatar.com/avatar/9a2a53db8e9b4476038c94a64b32833f?s=200">
-                </header>
-                <div>
-                  <h3>Ryan Bigg</h3><p><em>Ruby on Rails</em>Book Author</p><button>Read More</button>
-                </div>
-              </a>
-            </article>
-
-            <article class="portfolio daniel-roseman">
-              <a href="/python/django-expert-daniel-roseman">
-                <span style="background-size:90%;background-image:url('//airpair-blog.s3.amazonaws.com/wp-content/uploads/2013/09/python.jpeg')"></span>
-                <header>
-                  <img src="//1.gravatar.com/avatar/0f4cefeedec5163556751d61625eedd0?s=200">
-                </header>
-                <div>
-                  <h3>Daniel Roseman</h3><p><em>Python</em>Django #1 Answerer</p><button>Read More</button>
-                </div>
-              </a>
-            </article>
-
-
-          </main>
+      <div class="container">
+        <h2 class="text-light text-center m-t-4">AirPair has Something to Oﬀer for Everyone</h2>
+        <!-- <hr> -->
+        <div class="row m-t-1">
+          <div class="col-xs-3 col-xs-offset-2"><img src="/images/icons/icon32.png" alt="" width="22"> Save time with live debugging help</div>
+          <div class="col-xs-3"><img src="/images/icons/icon32.png" alt="" width="22"> Learn expert best practices </div>
+          <div class="col-xs-3"><img src="/images/icons/icon32.png" alt="" width="22"> Improve your code quality</div>
         </div>
-
       </div>
+ 
 
-      <a id="experts-action" class="trackExpertLogin button large" href="/be-an-expert">Apply to be an Expert</a>
-
-    </div>
-
-<div id="cost" class="home-feature-bg-alt">
-  <div class="wrap">
-    <div class="home-feature-14">
-      <section id="text-23" class="widget widget_text">
-        <div class="widget-wrap">
-          <div class="textwidget">
-            <center><h4>How much does it cost?</h4></center>
-
-<div class="plans">
-
-<a href="/find-an-expert">
-  <div class="plan-col">
-    <div class="plan-col-wrap">
-      <div class="plan-head"><h4>Beginner</h4></div>
-      <div class="plan-pricing">
-        <span class="plan-price"><sup>$</sup>60</span><span class="monthly">/hr</span>
-      </div>
-      <ul class="plan-list">
-        <li>Access <strong>15%</strong> of Experts</li>
-        <li>Solve any beginner challenge</li>
-      </ul>
-      <div class="plan-button">Book Hours</div>
-    </div>
-  </div>
-</a>
-
-<a href="/find-an-expert">
-  <div class="plan-col-popular">
-    <div class="plan-col-wrap">
-      <div class="plan-head"><h4>Best practices</h4></div>
-      <div class="plan-pricing">
-        <span class="plan-price"><sup>$</sup>90</span><span class="monthly">/hr</span>
-      </div>
-      <ul class="plan-list">
-        <li>Access <strong>40%</strong> of Experts</li>
-        <li>Embrace best practices</li>
-      </ul>
-      <div class="plan-button">Book Hours</div>
-    </div>
-  </div>
-</a>
-
-<a href="/find-an-expert">
-  <div class="plan-col">
-    <div class="plan-col-wrap">
-      <div class="plan-head"><h4>Expert</h4></div>
-      <div class="plan-pricing">
-        <span class="plan-price"><sup>$</sup>130</span><span class="monthly">/hr</span>
-      </div>
-      <ul class="plan-list">
-        <li>Access <strong>60%</strong> of Experts</li>
-        <li>Write code like an expert</li>
-      </ul>
-      <div class="plan-button">Book Hours</div>
-    </div>
-  </div>
-</a>
-
-<a href="/find-an-expert">
-  <div class="plan-col-popular">
-    <div class="plan-col-wrap">
-      <div class="plan-head"><h4>World class</h4></div>
-      <div class="plan-pricing">
-        <span class="plan-price"><sup>$</sup>200</span><span class="monthly">/hr</span>
-      </div>
-      <ul class="plan-list">
-        <li>Access <strong>90%</strong> of Experts</li>
-        <li>Access world class talent</li>
-      </ul>
-      <div class="plan-button">Book Hours</div>
-    </div>
-  </div>
-</a>
-
-<a href="/find-an-expert">
-  <div class="plan-col">
-    <div class="plan-col-wrap">
-      <div class="plan-head"><h4>Industry leaders</h4></div>
-      <div class="plan-pricing">
-        <span class="plan-price"><sup>$</sup>300</span><span class="monthly">/hr</span>
-      </div>
-      <ul class="plan-list">
-        <li>Access <strong>100%</strong> of Experts</li>
-        <li>Leverage industry leaders</li>
-      </ul>
-      <div class="plan-button">Book Hours</div>
-    </div>
-  </div>
-</a>
-
-</div>
-</div>
-</div>
-</section><br /><br />
-</div>
-</div>
-</div>
-
-
-<div id="partners" class="welcome home-feature-bg-dark">
-  <div class="wrap">
-    <div class="welcome-features" style="padding-bottom:40px">
-
-      <h1 style="margin-bottom:60px">Supported Technology Partners</h1>
-
-      <div class="welcome-feature-1">
-        <section class="widget widget_text" id="text-6">
-          <div class="widget-wrap">
-            <div class="textwidget">
-              <a href="/keen-io"><img src="/images/pages/home/keeniow.png" style="width:300px;margin-top:7px;padding-right:30px"></a>
-            </div>
-          </div>
-        </section>
-      </div>
-
-      <div class="welcome-feature-2">
-        <section class="widget widget_text" id="text-7">
-          <div class="widget-wrap">
-            <div class="textwidget">
-              <a href="/twilio"><img src="/images/pages/home/twiliow.png" style="width:280px"></a>
-            </div>
-          </div>
-        </section>
-      </div>
-
-      <div class="welcome-feature-3">
-        <section class="widget widget_text" id="text-8">
-          <div class="widget-wrap">
-            <div class="textwidget">
-              <a href="/stripe"><img src="/images/pages/home/stripew.png" style="width:200px;margin-top:12px;padding-right:15px"></a>
-            </div>
-          </div>
-        </section>
-      </div>
-
-      <div style="clear:both;height:20px"></div>
-
-      <div class="welcome-feature-1">
-        <section class="widget widget_text" id="text-6">
-          <div class="widget-wrap">
-            <div class="textwidget">
-              <a href="/sendgrid"><img src="/images/pages/home/sendgridw.png" style="width:260px;margin:5px 0 0 -30px"></a>
-            </div>
-          </div>
-        </section>
-      </div>
-
-      <div class="welcome-feature-2">
-        <section class="widget widget_text" id="text-7">
-          <div class="widget-wrap">
-            <div class="textwidget">
-              <a href="/balanced-payments"><img src="/images/pages/home/balancedw.png" style="width:280px;margin:22px 0 0 5px;"></a>
+      <div id="how-it-works" class="container">
+        <div class="row">
+          <div class="col-xs-10 col-xs-offset-1 bg-primary m-t-3 m-b-3 p-t-2">
+          
+            <h2 class="text-center">How it works</h2>
+            <div class="row m-t-1">
+              <div class="col-xs-4 text-center">
+                <div class="figure">
+                  <img src="/images/pages/marketing/how-1.png" alt="">
+                </div>
+                <p>Tell Us What You Need</p>
+              </div>
+              <div class="col-xs-4 text-center">
+                <div class="figure p-t-1">                
+                  <div class="img-overlap three">
+                    <img src="/images/avatars/of.png" alt="" class="img-circle img-border">
+                    <img src="/images/avatars/rb.png" alt="" class="img-circle img-border">
+                    <img src="/images/avatars/ag.jpeg" alt="" class="img-circle img-border">
+                  </div>
+                  <svg class="arrow arrow-right" width="161px" height="114px" viewBox="0 0 161 114" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+                      <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+                          <g id="Artboard-3" sketch:type="MSArtboardGroup" transform="translate(78.000000, -13.000000)">
+                              <g id="arrow" sketch:type="MSLayerGroup" transform="translate(22.000000, 14.000000)">
+                                  <path d="M0.332,7.036 L49.568,7.036" id="Stroke-1" stroke="#E4E5E1" stroke-width="3" sketch:type="MSShapeGroup"></path>
+                                  <path d="M47.38,14.516 L60.332,7.037 L47.38,-0.443 L47.38,14.516" id="Fill-2" fill="#E4E5E1" sketch:type="MSShapeGroup"></path>
+                              </g>
+                          </g>
+                      </g>
+                  </svg>
+                  <svg class="arrow arrow-left" width="161px" height="114px" viewBox="0 0 161 114" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+                      <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+                          <g id="Artboard-3" sketch:type="MSArtboardGroup" transform="translate(78.000000, -13.000000)">
+                              <g id="arrow" sketch:type="MSLayerGroup" transform="translate(22.000000, 14.000000)">
+                                  <path d="M0.332,7.036 L49.568,7.036" id="Stroke-1" stroke="#E4E5E1" stroke-width="3" sketch:type="MSShapeGroup"></path>
+                                  <path d="M47.38,14.516 L60.332,7.037 L47.38,-0.443 L47.38,14.516" id="Fill-2" fill="#E4E5E1" sketch:type="MSShapeGroup"></path>
+                              </g>
+                          </g>
+                      </g>
+                  </svg>
+                </div>
+                <p>We’ll Match You with 3 Experts</p>
+              </div>
+              <div class="col-xs-4 text-center">
+                <div class="figure">                
+                  <img src="/images/pages/marketing/how-2.png" alt="">
+                </div>
+                <p>You’ll Choose One and Start a Video Call</p>
+              </div>
             </div>
 
-          </div>
-        </section>
-      </div>
+            <div class="row m-b-3 m-t-2">
+              <div class="col-xs-4 col-xs-offset-4">
+                <a href="" class="btn btn-default btn-lg btn-block">Find and Expert</a>
+              </div>
 
-      <div class="welcome-feature-3">
-        <section class="widget widget_text" id="text-8">
-          <div class="widget-wrap">
-            <div class="textwidget">
-              <a href="/evernote"><img src="/images/pages/home/evernotew.png" style="width:240px;margin:12px 10px 10px 10px"></a>
             </div>
-
           </div>
-        </section>
+        </div>
       </div>
+
+    
 
 
     </div>
 
-
-      <a id="all-partners" class="button large" href="/partners">See all partners</a>
-
-  </div>
-</div>
-
-
-
-  <footer class="site-footer">
-    <div class="wrap"> <p>© airpair, Inc. · <a href="mailto:team@airpair.com">Email Us</a> · (800) 487-0668 · <a href="/privacy">Privacy Policy</a></div>
-  </footer>
-
-  </div>
-
-  </div>
 
   </body>
 

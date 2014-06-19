@@ -1,24 +1,214 @@
 
-/*  Main Airpair CSS
+
+/*  Airpair 
+~-----------------------------------------*/
+@import "vars";
+
+
+
+
+
+/*  Framework
 ~-----------------------------------------*/
 
-// Vars
-@import "variables";
+// Core variables and mixins
+@import "bootstrap/variables";
+@import "bootstrap/mixins";
 
-// Framework
-@import "helpers";
+// Reset
+@import "bootstrap/normalize";
+@import "bootstrap/print";
 
+// Core CSS
+@import "bootstrap/scaffolding";
+@import "bootstrap/type";
 @import "type";
-@import "nav";
+@import "bootstrap/code";
+@import "bootstrap/grid";
+@import "bootstrap/tables";
+@import "bootstrap/forms";
+@import "bootstrap/buttons";
+
+// Components
+@import "bootstrap/component-animations";
+// @import "bootstrap/glyphicons";
+@import "bootstrap/dropdowns";
+@import "bootstrap/button-groups";
+@import "bootstrap/input-groups";
+@import "bootstrap/navs";
+@import "bootstrap/navbar";
+// @import "bootstrap/breadcrumbs";
+// @import "bootstrap/pagination";
+// @import "bootstrap/pager";
+@import "bootstrap/labels";
+@import "bootstrap/badges";
+// @import "bootstrap/jumbotron";
+@import "bootstrap/thumbnails";
+@import "bootstrap/alerts";
+// @import "bootstrap/progress-bars";
+// @import "bootstrap/media";
+// @import "bootstrap/list-group";
+// @import "bootstrap/panels";
+// @import "bootstrap/wells";
+@import "bootstrap/close";
+
+// Components w/ JavaScript
+// @import "bootstrap/modals";
+// @import "bootstrap/tooltip";
+// @import "bootstrap/popovers";
+// @import "bootstrap/carousel";
+
+// Utility classes
+@import "bootstrap/utilities";
+@import "utilities";
+@import "bootstrap/responsive-utilities";
 
 
-@import "base";
-@import "snippets";
 
-// Pages Specific
-// @import "pages/home";
-// @import "pages/airpairme-buttons";
-@import "pages/book";
-// @import "pages/railsconf";
+
+/*  Modules
+~-----------------------------------------*/
+@import "modules/hero";
+
+
+
+.container {
+  // @include container-fixed();
+
+  @media (min-width: $screen-sm-min) {
+    // width: $container-sm;
+    width: 1170px !important;
+
+  }
+  @media (min-width: $screen-md-min) {
+    // width: $container-md;
+    width: 1170px !important;
+  }
+  @media (min-width: $screen-lg-min) {
+    // width: $container-lg;
+    width: 1170px !important;
+  }
+}
+
+
+
+.img-overlap {
+  position: relative;
+  height: 150px;
+  img {
+    position: absolute;
+    width: 150px;
+    margin-left: -75px;
+  }
+  &.three {
+    img:nth-child(1) {
+      margin-left: -180px;
+    }
+    img:nth-child(2) {
+      margin-left: -75px;
+      z-index: 3;
+    }
+    img:nth-child(3) {
+      margin-left: 32px;
+    }
+  }
+
+}
+
+
+
+.hover-item {
+  position: relative;
+  &:hover .hover-show {
+    display: block;
+    opacity: 1;
+  }
+  .hover-show {
+    @include transition(opacity .2s ease-in);
+    // display: none;
+    opacity: 0;
+    background:rgba(255,255,255,.9);
+    position: absolute;
+    font-size: 16px;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+}
+
+
+.price-columns {
+  & > div:nth-child(even) {
+    background: #F8F8F8;
+  }
+  &.five {
+    & > div {
+      width: 20%;
+      float: left;
+      padding: 0 20px 10px;
+      text-align: center;
+      border: 1px solid #EEE;
+    }
+  }
+  .price {
+    font-size: 50px;
+  }
+}
+
+
+
+/*  Pages
+~-----------------------------------------*/
+// @import "pages/marketing";
+
+
+.hero .img-overlap {
+  margin-top: -60px;
+}
+.hero-cta-text {
+  height: 87px;
+}
+
+#how-it-works {
+  .img-overlap {
+    img {
+      width: 90px;
+    }
+    img:nth-child(1) {
+      margin-left: -114px;
+    }
+    img:nth-child(2) {
+      margin-left: -45px;
+      z-index: 3;
+    }
+    img:nth-child(3) {
+      margin-left: 24px;
+    }
+
+  }
+
+  .figure {
+    height: 150px;
+    position: relative;
+    .arrow {
+      position: absolute;
+      top: 58px
+    }
+    .arrow-right {
+      right: -59px;
+    }
+    .arrow-left {
+      left: -168px;
+    }
+  }
+}
+
+.gaurantee {
+  position: absolute;
+  top: -52px;
+  left: 0;
+  width: 130px;
+}
 
 
