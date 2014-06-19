@@ -1,5 +1,5 @@
 # async            = require 'async'
-# TagsSvc          = require '../services/tags'
+TagsSvc          = require '../services/tags'
 OrdersSvc        = require '../services/orders'
 ExpertsSvc       = require '../services/experts'
 CompanysSvc      = require '../services/companys'
@@ -87,6 +87,12 @@ module.exports = class ViewDataService
     new CompanysSvc(@usr).getAll (e, companys) =>
       cb e, -> { companys, stripePK }
 
+  so10: (id, cb) ->
+    new TagsSvc(@usr).getBySoId id, (e, tag) =>
+      $log 'so10', tag
+      cb e, -> { tag }
+
+
   paypalSuccess: (id, cb) ->
     new OrdersSvc(@usr).markPaymentReceived id, {}, (e, order) =>
       cb e, -> { order }
@@ -95,11 +101,4 @@ module.exports = class ViewDataService
     new OrdersSvc(@usr).getById id, (e, order) =>
       cb e, -> { order }
 
-  # stripeCharge: (orderId, token, callback) ->
-  #   oSvc.markPaymentReceived orderId, usr, {}, (e, o) =>
-  #     if e then return callback e
-  #     callback null,
-  #       session: @session usr
-  #       order: JSON.stringify null, o
-  #       stripePK: cfg.payment.stripe.publishedKey
 

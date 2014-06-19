@@ -12,7 +12,7 @@ module.exports = (app) ->
     if req.isAuthenticated() then n()
     else render('home')(req, r, n)
 
-  app.get '/so10/*', render 'home'
+  app.get '/so10/:id', render 'landing/so10', ['params.id']
 
   app.get '/', renderHome, render 'dashboard'
   app.get '/yc', file 'yc'
@@ -59,11 +59,6 @@ module.exports = (app) ->
 
   app.get '/paypal/success/:id', authd, render 'payment/paypalSuccess', ['params.id']
   app.get '/paypal/cancel/:id', authd, render 'payment/paypalCancel', ['params.id']
-
-  # todo, get agreements
-  # app.get '/TOS', (req, r)-> file r, 'legal'
-  # app.get '/privacy', (req, r)-> file r, 'legal'
-  # app.get '/support', (req, r)-> file r, 'login'
 
   # dev stuff
   # app.get '/error-test', (req, r)-> throw new Error('my silly error')

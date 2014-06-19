@@ -20,7 +20,7 @@ module.exports =
       vdSvc = new ViewDataSvc req.user
 
       # convention we just rip out the path to get viewDataFunction
-      fnName = fileName.replace('adm/', '').replace('payment/', '')
+      fnName = fileName.replace('adm/', '').replace('payment/', '').replace('landing/', '')
 
       if !vdSvc[fnName]?
         resp.render "#{fileName}.html"
