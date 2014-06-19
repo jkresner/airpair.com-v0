@@ -4,12 +4,11 @@ DomainService = require './_svc'
 
 module.exports = class TagsService extends DomainService
 
+  logging: on
+
   model: require './../models/tag'
 
-  # search: (searchTerm, callback) ->
-    # Poor implementation of search, should checkout mongo-text-search or elastic-search
-    # @model.findOne { $or: [ { soId: searchTerm }, { ghId: searchTerm } ] }, callback
-
+  getBySoId: (id, cb) -> @searchOne { soId: id }, {}, cb
 
   create: (addMode, tag, callback) ->
     # console.log 'create', 'addMode', addMode, tag
