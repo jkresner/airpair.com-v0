@@ -28,7 +28,7 @@
   "dependencies": {
     "async": "0.2.9",
     "awssum-amazon-ses": "1.x.x",
-    "brunch": "1.7.13",
+    "brunch": "1.7.14",
     "clean-css-brunch": "> 1.0 < 1.5",
     "colors": "0.6.2",
     "coffee-script": "1.6.3",
