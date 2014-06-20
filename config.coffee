@@ -61,7 +61,6 @@ exports.config =
       defaultExtension: 'scss'
       joinTo:
         'css/ap.css': /(css\/ap\/)/
-        # 'css/ap.css': /(css\/ap|css\/shared)/
         'css/adm.css': /(css\/adm\/|css\/shared)/
         'css/ap-old.css': /(css\/ap-old)/
         'css/adm-old.css': /(css\/adm-old|vendor\/css\/shared)/
@@ -83,9 +82,6 @@ exports.config =
           'app/css/shared/table.scss'
           'app/css/shared/tag.scss'
           'app/css/adm/base.scss'
-          'app/css/ap/base.scss'
-          'app/css/ap/ap.scss'
-          'app/css/ap/snippets.scss'
 
         ]
         after: []
