@@ -15,7 +15,7 @@ class RequestApi extends Api
     app.get    "/api/admin/#{route}/inactive", @admin, @ap, @inactive
     app.put    "/api/#{route}/:id", @loggedIn, @ap, @update
     app.put    "/api/#{route}/:id/suggestion", @loggedIn, @ap, @updateSuggestion
-    app.post    "/api/#{route}/:id/suggestion", @loggedIn, @ap, @addSelfSuggestion
+    app.post   "/api/#{route}/:id/suggestion", @loggedIn, @ap, @addSelfSuggestion
     app.post   "/api/#{route}", @loggedIn, @ap, @create
     app.post   "/api/#{route}/book", @loggedIn, @ap, @createBookme
     app.delete "/api/#{route}/:id", @admin, @ap, @delete
