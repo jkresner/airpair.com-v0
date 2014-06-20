@@ -172,7 +172,7 @@
 
 .navbar-brand-img {
   float: left;
-  padding-top: 5px;
+  padding-top: 10px;
   font-size: $font-size-large;
   line-height: $line-height-computed;
   height: $navbar-height;
@@ -638,3 +638,15 @@
   }
 
 }
+
+
+// Brand Slogan
+.brand-slogan {
+  margin-top: 21px;
+  margin-left: 20px;
+  font-style: italic;
+  display: inline-block;
+}
+
+
+

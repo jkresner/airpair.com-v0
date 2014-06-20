@@ -12,21 +12,22 @@
   </head>
   <body>
 
-    <nav class="navbar navbar-default navbar-static-top" role="navigation" style="height:62px">
+    <nav class="navbar navbar-default navbar-static-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
-
-            <img src="/images/logos/airpair.png" alt="" style="margin-top:5px">
-
+            <div class="navbar-brand-img">
+              <img src="/images/logos/airpair.png" alt="" width="140px">
+            </div>
         </div>
       </div><!-- /.container-fluid -->
     </nav>
 
     <!-- HERO -->
-    <div class="hero behind-nav">
+    <div class="hero behind-nav hero-landing-top">
       <div class="container hero-content text-bright">
-        <h1>Live {{tag.name}} Help from Thousands of Experts</h1>
-        <h3 class="m-b-3" style="font-weight:200">Available to pair program live using video chat and screen sharing.</h3>
+        <h1 class="text-thin">Live {{tag.name}} Help from Thousands of Experts</h1>
+        <hr class="grad white">
+        <h3 class="m-b-3 text-thin">Available to pair program live using video chat and screen sharing.</h3>
       </div>
       <div class="bg-white p-b-3">
         <div class="container">
@@ -39,8 +40,13 @@
                 <img src="/images/avatars/ag.jpeg" alt="" class="img-circle img-border">
               </div>
               <div class="hero-cta-text">
-                <h3>Airpair {{tag.name}} Experts</h3>
-                <h5>We have Assembled the World’s Best {{tag.name}} Team</h5>
+
+                <h3>
+                  <small class="text-upper text-xs"></small><br>
+                  Airpair {{tag.name}} Experts
+                </h3>
+                <h5 class="text-muted">We have Assembled the World’s Best {{tag.name}} Team</h5>
+                <hr class="grad gray">
               </div>
               <a id="find-fold" href="/find-an-expert" class="trackCustomerLogin btn btn-lg btn-primary btn-block m-t-1">GET THE PERFECT EXPERT FOR YOU</a>
               <p class="m-t-1 block">We’ll help you ﬁnd the right expert for your
@@ -56,7 +62,8 @@
                 <h3>
                   <small class="text-upper text-xs">Featured Expert</small><br>
                   {{feature.name}}</h3>
-                <h5>{{feature.claim}}</h5>
+                <h5 class="text-muted">{{feature.claim}}</h5>
+                <hr class="grad gray">
               </div>
               <a id="book-fold" href="/book/{{feature.me}}?code=home" class="btn btn-lg btn-primary btn-block m-t-1">BOOK {{feature.name}}</a>
               <p class="m-t-1 block">“Let’s discuss how to improve your {{tag.name}} app.”</p>
@@ -65,8 +72,8 @@
         </div>
       </div>
 
-      <div class="container text-center text-bright text-light m-t-half m-b-half pos-r">
-        We’re so conﬁdent in our experts that If you’re not happy after the ﬁrst hour, we’ll give you your money back.
+      <div class="container text-center text-bright text-thin m-t-half m-b-half pos-r">
+        We’re so conﬁdent in our experts that if you’re not happy after the ﬁrst hour, we’ll give you your money back.
         <img class="gaurantee" src="/images/pages/marketing/100.gif" alt="" width="130">
       </div>
     </div>
@@ -80,8 +87,8 @@
     <div class="bg-slate text-bright m-t-2 clearfix">
 
       <div class="container">
-        <h2 class="text-light text-center m-t-4">AirPair has Something to Oﬀer for Everyone</h2>
-        <!-- <hr> -->
+        <h2 class="text-thin text-center m-t-5">AirPair has Something to Oﬀer for Everyone</h2>
+        <hr class="grad gray">
         <div class="row m-t-1">
           <div class="col-xs-3 col-xs-offset-2"><img src="/images/icons/icon32.png" alt="" width="22"> Save time with live debugging help</div>
           <div class="col-xs-3"><img src="/images/icons/icon32.png" alt="" width="22"> Learn expert best practices </div>
@@ -142,7 +149,7 @@
 
             <div class="row m-b-3 m-t-2">
               <div class="col-xs-4 col-xs-offset-4">
-                <a id="find-how" href="/find-an-expert" class="trackCustomerLogin btn btn-default btn-lg btn-block">Find and Expert</a>
+                <a id="find-how" href="/find-an-expert" class="trackCustomerLogin btn btn-default btn-lg btn-block">Find an Expert</a>
               </div>
 
             </div>
@@ -161,7 +168,7 @@
     <!-- EXPERTS
 
     <div class="container p-t-4 p-b-4">
-      <h2 class="text-light text-center">Our Rails Experts Are Global Industry Leaders</h2>
+      <h2 class="text-thin text-center">Our Rails Experts Are Global Industry Leaders</h2>
       <hr>
 
         <div class="row m-t-2">
@@ -283,7 +290,7 @@
             <img src="/images/pages/marketing/tc.png" alt="" class="img-circle" width="110px">
           </div>
           <div class="col-xs-10">
-            <div class="text-xl text-light m-t-half">
+            <div class="text-xl text-thin m-t-half">
               “One of the things that distinguishes AirPair is its focus on building a premium service with high-quality mentors.”
             </div>
           </div>
@@ -297,16 +304,22 @@
 
     <div class="bg-gray">
       <div class="container p-t-4 p-b-4">
-        <h2 class="text-light text-center">Happy Customers</h2>
-        <hr>
+        <h2 class="text-thin text-center">Happy Customers</h2>
+        <hr class="grad gray m-b-2">
 
         <div class="row">
           <div class="col-xs-10 col-xs-offset-1">
             <div class="row">
               <div class="col-xs-7">
+                
                 <div class="row m-t-1">
                   <div class="col-xs-4 text-center">
-                    <img src="//avatars0.githubusercontent.com/u/175123?s=220" alt="" class="img-circle" />
+                    <div class="avatar-logo">
+                      <img src="//avatars0.githubusercontent.com/u/175123?s=220" alt="" class="img-circle" width="130px"/>
+                      <div class="logo">
+                        <img src="/images/pages/marketing/intel.png" alt="">
+                      </div>
+                    </div>
                   </div>
                   <div class="col-xs-8 p-t-1">
                     "AirPair helped us quickly optimize Intel’s next generation cloud orchestration front-end by connection us in a few hours with Stefan Penner, the creator of the library we were using."
@@ -315,9 +328,15 @@
                     </small>
                   </div>
                 </div>
+
                 <div class="row m-t-2">
                   <div class="col-xs-4 text-center">
-                    <img src="//s.gravatar.com/avatar/7123cd4cd0d1ba323bfd7463cdb98edd?s=220" class="img-circle" />
+                    <div class="avatar-logo">
+                      <img src="//s.gravatar.com/avatar/7123cd4cd0d1ba323bfd7463cdb98edd?s=220" alt="" class="img-circle" width="130px"/>
+<!--                       <div class="logo">
+                        <img src="/images/pages/marketing/intel.png" alt="">
+                      </div> -->
+                     </div>
                   </div>
                   <div class="col-xs-8 p-t-1">
                     "When we get stuck in a coding quagmire, AirPair has never failed
@@ -329,8 +348,9 @@
                     </small>
                   </div>
                 </div>
+
               </div>
-              <div class="col-xs-5 text-center p-t-1">
+              <div class="col-xs-5 text-center p-t-2">
                 <img src="/images/pages/marketing/customers.png" alt="">
                 <p class="m-t-2">Ready to see how AirPairing can help you?</p>
                 <a id="find-customers" href="/find-an-expert" class="trackCustomerLogin btn btn-lg btn-primary btn-block">Book a {{tag.name}} expert</a>
@@ -346,8 +366,8 @@
     <!-- PRICE -->
 
     <div class="container p-t-4 p-b-4">
-      <h2 class="text-light text-center m-b-2">How Much Does It Cost?</h2>
-      <!-- <hr>       -->
+      <h2 class="text-thin text-center">How Much Does It Cost?</h2>
+      <hr class="grad gray m-b-2">
       <div class="row m-b-2">
         <div class="col-xs-10 col-xs-offset-1">
           <div class="price-columns five">
@@ -361,29 +381,29 @@
             <div>
               <div class="text-muted text-upper m-t-1 m-b-1">Best Practices</div>
               <span class="price">$90</span><small>/hr</small>
-              <p class="m-t-1">Access <strong>15%</strong> of experts</p>
-              <p>Solve any beginner challenge</p>
+              <p class="m-t-1">Access <strong>40%</strong> of experts</p>
+              <p>Embrace best practices</p>
               <!-- <a href="" class="btn btn-slate btn-block"> Book Hours</a> -->
             </div>
             <div>
               <div class="text-muted text-upper m-t-1 m-b-1">Expert</div>
               <span class="price">$130</span><small>/hr</small>
-              <p class="m-t-1">Access <strong>15%</strong> of experts</p>
-              <p>Solve any beginner challenge</p>
+              <p class="m-t-1">Access <strong>60%</strong> of experts</p>
+              <p>We code like an expert</p>
               <!-- <a href="" class="btn btn-slate btn-block"> Book Hours</a> -->
             </div>
             <div>
               <div class="text-muted text-upper m-t-1 m-b-1">World Class</div>
               <span class="price">$200</span><small>/hr</small>
-              <p class="m-t-1">Access <strong>15%</strong> of experts</p>
-              <p>Solve any beginner challenge</p>
+              <p class="m-t-1">Access <strong>90%</strong> of experts</p>
+              <p>Access world class talent</p>
               <!-- <a href="" class="btn btn-slate btn-block"> Book Hours</a> -->
             </div>
             <div>
               <div class="text-muted text-upper m-t-1 m-b-1">Industry Leaders</div>
               <span class="price">$300</span><small>/hr</small>
-              <p class="m-t-1">Access <strong>15%</strong> of experts</p>
-              <p>Solve any beginner challenge</p>
+              <p class="m-t-1">Access <strong>100%</strong> of experts</p>
+              <p>Leverage industry leaders</p>
               <!-- <a href="" class="btn btn-slate btn-block"> Book Hours</a> -->
             </div>
 
@@ -399,7 +419,7 @@
 
     <div class="hero ">
       <div class="container p-t-4 p-b-4">
-        <h2 class="text-light text-bright text-center">We’d Love to Hear From You</h2>
+        <h2 class="text-thin text-bright text-center">We’d Love to Hear From You</h2>
         <div class="row m-t-2">
           <div class="col-xs-10 col-xs-offset-1 bg-white">
               <div class="row">
