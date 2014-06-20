@@ -38,7 +38,7 @@ module.exports = (pageData) ->
   #----------------------------------------------
 
   factory('$moment', () ->
-    $moment = 
+    $moment =
       months: (start) ->
         months = []
         cur = moment()
@@ -49,7 +49,7 @@ module.exports = (pageData) ->
             end: cur.clone().endOf("month").toDate()
           cur = cur.subtract('months', 1)
         return months
-      years: (start) ->      
+      years: (start) ->
         years = []
         curYear = moment(new Date()).startOf("year")
         while curYear.isAfter(start)
@@ -80,12 +80,12 @@ module.exports = (pageData) ->
 
         if not start
           start = moment().startOf('month').subtract("days", 2)
-        else 
+        else
           start.startOf('week').subtract("days", 2)
 
         if start.day() < 6
           start.startOf("week").subtract("d", 1).startOf("day")
-        else 
+        else
           start.endOf("week").startOf("day")
 
 
@@ -94,7 +94,7 @@ module.exports = (pageData) ->
         cur = moment(new Date())
         if cur.day() < 6
           cur.startOf("week").subtract("d", 1).startOf("day")
-        else 
+        else
           cur.endOf("week").startOf("day")
 
 
@@ -119,9 +119,9 @@ module.exports = (pageData) ->
   #----------------------------------------------
 
   factory('apData', ['$moment', '$filter', ($moment, $filter) ->
-    
-    apData = 
-      orders: 
+
+    apData =
+      orders:
         data: pageData.orders
         get: () ->
           @data
@@ -137,7 +137,7 @@ module.exports = (pageData) ->
             orders: visibleOrders
             summary: @calcSummary(visibleOrders)
           }
-          
+
 
         isWithinDate: (order, start, end) ->
           orderDate = new Date(order.utc)
@@ -169,13 +169,13 @@ module.exports = (pageData) ->
           summary.expertCount = _.uniq(summary.experts).length
 
           return summary
-            
-        
-        
 
 
 
-        
+
+
+
+
 
         calcCredits: () ->
           for order in @data
@@ -183,17 +183,17 @@ module.exports = (pageData) ->
               expertCredit = calcExpertCredit [order], li.suggestion.expert._id
               li.incomplete = expertCredit.total is 0 or expertCredit.completed < expertCredit.total
               _.extend li, expertCredit
-        
-        
+
+
         getGrowth: (interval = 'monthly', start = moment(@data[0].utc), end = moment()) ->
 
           periods = {}
 
-          # Group orders by period. Calculate revenue, gross, and hrs sold. 
+          # Group orders by period. Calculate revenue, gross, and hrs sold.
           for order in @data
 
             if moment(order.utc).isAfter(start)
-                
+
               if interval is "monthly"
                 intervalName = moment(order.utc).format("MMM")
                 intervalIdx = moment(order.utc).startOf('month').format("YYMM")
@@ -202,7 +202,7 @@ module.exports = (pageData) ->
                 time = moment(order.utc)
                 if time.day() < 6
                   time.startOf("week").subtract("d", 1).startOf("day")
-                else 
+                else
                   time.endOf("week").startOf("day")
 
                 intervalName = time.clone().add('days', 6).format("MMM D")
@@ -222,11 +222,11 @@ module.exports = (pageData) ->
               period.revenue += order.total
               period.gross += order.profit
               period.hrsSold += calcTotal [item] for item in order.lineItems
-              
 
 
 
-          # Calc more stats. Get differences.  
+
+          # Calc more stats. Get differences.
           report = []
 
           reportTotals =
@@ -266,19 +266,19 @@ module.exports = (pageData) ->
                 prevenue: (period.revenue-prevPeriod.revenue)/prevPeriod.revenue
                 pgross: (period.gross-prevPeriod.gross)/prevPeriod.gross
                 pmargin: (period.margin-prevPeriod.margin)/prevPeriod.margin
-            
+
             report.push period
             prevPeriod = period
 
-          
+
           # Final report totals
           reportTotals.revPerHour = reportTotals.revPerHour/reportTotals.numPeriods
           reportTotals.margin = reportTotals.margin/reportTotals.numPeriods
           reportTotals.hrPerCust = reportTotals.hrsSold/reportTotals.customerTotal
           reportTotals.ltv = reportTotals.margin*reportTotals.revPerHour*reportTotals.hrPerCust
-          
 
-          # Calc last week based on where we would have been 
+
+          # Calc last week based on where we would have been
 
           finalWeek = report[report.length - 1]
           finalDiff = report[report.length - 2]
@@ -287,7 +287,7 @@ module.exports = (pageData) ->
           wkStart = moment()
           if wkStart.day() < 6
             wkStart.startOf("week").subtract("d", 1).startOf("day")
-          else 
+          else
             wkStart.endOf("week").startOf("day")
 
           wkPercentage = (moment().unix()-wkStart.unix())/60/60/24/7
@@ -315,7 +315,7 @@ module.exports = (pageData) ->
             @metrics = []
             # tags = []
             for order in apData.orders.data
-              metric = 
+              metric =
                 utc: order.utc
                 name: order.company.contacts[0].fullName
                 tags: {}
@@ -334,24 +334,25 @@ module.exports = (pageData) ->
                   social: {total:0, revenue: 0}
                   wordofmouth: {total:0, revenue: 0}
                   untracked: {total:0, revenue: 0}
-                  stackoverflowads: {total:0, revenue: 0}
+                  # stackoverflowads: {total:0, revenue: 0}
 
               _.each order.marketingTags, (tag) ->
-                if tag.type is "channel" or tag.type is "campaign"
-                  tagName = tag.group.replace('-', '')
+                channelTags = _.where order.marketingTags, { type: "channel" }
+                tagName = tag.group.replace('-', '')
+                if tag.type is "channel"
                   if tag.name is "w-o-mouth"
                     tagName = "wordofmouth"
                   # tags.push tagName
                   metric.tags[tagName] = tag
-                  metric.tags[tagName].total = metric.total/order.marketingTags.length 
-                  if tag.type is "campaign"
-                    metric.campaigns.push(tag.name)
+                  metric.tags[tagName].total = metric.total/channelTags.length
+                if tag.type is "campaign"
+                  metric.campaigns.push(tag.name)
               @metrics.push metric
             # tags = _.uniq(tags)
 
             _(@metrics).reverse()
 
-          
+
           if start and end
             @metricsFiltered = []
             for order in @metrics
@@ -359,14 +360,14 @@ module.exports = (pageData) ->
               if date >= start and date <= end
                 @metricsFiltered.push order
             return orders: @metricsFiltered, summary: @getChannelMetricsSummary(@metricsFiltered)
-          
-          else 
+
+          else
             return orders: @metrics, summary: @getChannelMetricsSummary(@metrics)
 
 
         getChannelMetricsSummary: (metrics) ->
-          summary = 
-            numOrders: metrics.length 
+          summary =
+            numOrders: metrics.length
             revenueTotal: 0
             tags: {}
 
@@ -375,7 +376,7 @@ module.exports = (pageData) ->
             summary.revenueTotal += order.total
             _.each order.tags, (tag, key) ->
               if not summary.tags[key]
-                summary.tags[key] = 
+                summary.tags[key] =
                  count: 0
                  revenue: 0
               summary.tags[key].count++ if tag.name
@@ -397,13 +398,13 @@ module.exports = (pageData) ->
               week.diffTags = {}
               _.each prev.metrics.summary.tags, (tag, tagName) ->
                 if tagName is '' then return
-                if not week.metrics.summary.tags[tagName] 
-                  week.metrics.summary.tags[tagName] = 
+                if not week.metrics.summary.tags[tagName]
+                  week.metrics.summary.tags[tagName] =
                     count: 0
 
                 newCount = week.metrics.summary.tags[tagName].count
                 oldCount = tag.count
-                week.diffTags[tagName] = 
+                week.diffTags[tagName] =
                   count: if oldCount is 0 then (newCount-oldCount) else (newCount/oldCount)-1
             prev = week
 
@@ -416,7 +417,7 @@ module.exports = (pageData) ->
           wkStart = moment()
           if wkStart.day() < 6
             wkStart.startOf("week").subtract("d", 1).startOf("day")
-          else 
+          else
             wkStart.endOf("week").startOf("day")
           wkPercentage = (moment().unix()-wkStart.unix())/60/60/24/7
 
@@ -427,17 +428,17 @@ module.exports = (pageData) ->
             newCount = tag.count
             oldCount = prevWeek.metrics.summary.tags[tagName].count*wkPercentage
 
-            finalWeek.diffTags[tagName] = 
+            finalWeek.diffTags[tagName] =
               count: if oldCount is 0 then (newCount-oldCount) else (newCount/oldCount)-1
 
 
           return weeks.reverse()
-            
 
 
 
-    
-      
+
+
+
 
     apData.orders.calcCredits()
 
@@ -517,21 +518,21 @@ module.exports = (pageData) ->
         newSearch = false
       if not searchText then newSearch = true
       $scope.visibleOrders = apData.orders.filter $scope.dateStart, $scope.dateEnd, $scope.orderSearch
-    
+
 
     $scope.setDateRange = (range) -> $scope.dateRange = range
 
     $scope.getDateStr = () ->
       if _.isString($scope.dateRange) then $scope.dateRange
-      else if _.isObject($scope.dateRange) then $scope.dateRange.str    
+      else if _.isObject($scope.dateRange) then $scope.dateRange.str
 
     # Watch date updates
     $scope.$watch "dateRange", (newRange) -> updateDateRange(newRange)
     $scope.$watch "dateStart", () -> updateOrderList()
     $scope.$watch "dateEnd", () -> updateOrderList()
     $scope.$watch "orderSearch", (searchText) -> updateOrderList(searchText)
-    
-    
+
+
 
 
     angular.element($window).bind "scroll", (e) ->
