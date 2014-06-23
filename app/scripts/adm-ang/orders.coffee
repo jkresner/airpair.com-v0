@@ -174,9 +174,6 @@ module.exports = (pageData) ->
 
 
 
-
-
-
         calcCredits: () ->
           for order in @data
             order.lineItems = order.lineItems.map (li) ->
@@ -190,40 +187,36 @@ module.exports = (pageData) ->
           periods = {}
 
           # Group orders by period. Calculate revenue, gross, and hrs sold.
-          for order in @data
+          for order in _.sortBy(@data, (o) -> moment(o.utc))
 
-            if moment(order.utc).isAfter(start)
+            if interval is "monthly"
+              intervalName = moment(order.utc).format("MMM")
+              intervalIdx = moment(order.utc).startOf('month').format("YYMM")
+            if interval is "weekly"
+              # Find start of saturday
+              time = moment(order.utc)
+              if time.day() < 6
+                time.startOf("week").subtract("d", 1).startOf("day")
+              else
+                time.endOf("week").startOf("day")
 
-              if interval is "monthly"
-                intervalName = moment(order.utc).format("MMM")
-                intervalIdx = moment(order.utc).startOf('month').format("YYMM")
-              if interval is "weekly"
-                # Find start of saturday
-                time = moment(order.utc)
-                if time.day() < 6
-                  time.startOf("week").subtract("d", 1).startOf("day")
-                else
-                  time.endOf("week").startOf("day")
+              intervalName = time.clone().add('days', 6).format("MMM D")
+              intervalIdx = time.format("YYMMDD")
 
-                intervalName = time.clone().add('days', 6).format("MMM D")
-                intervalIdx = time.format("YYMMDD")
+            if not periods[intervalIdx]
+              periods[intervalIdx] =
+                revenue: 0
+                gross: 0
+                hrsSold: 0
+                orders: []
+                intervalIdx: intervalIdx
+                intervalName: intervalName
 
-              if not periods[intervalIdx]
-                periods[intervalIdx] =
-                  revenue: 0
-                  gross: 0
-                  hrsSold: 0
-                  orders: []
-                  intervalIdx: intervalIdx
-                  intervalName: intervalName
-
-              period = periods[intervalIdx]
-              period.orders.push order
-              period.revenue += order.total
-              period.gross += order.profit
-              period.hrsSold += calcTotal [item] for item in order.lineItems
-
-
+            period = periods[intervalIdx]
+            period.orders.push order
+            period.revenue += order.total
+            period.gross += order.profit
+            period.hrsSold += calcTotal [item] for item in order.lineItems
 
 
           # Calc more stats. Get differences.
