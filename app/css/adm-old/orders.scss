@@ -23,6 +23,8 @@ body#admorders {
     td div.g { color:green;margin-right:6px }
     td div.r { color:red;margin-right:6px }
   }
+
+  .marketingtag a.delete { display: none; }
 }
 
 /* Orders table current referenced from adm/pipeline/request */

@@ -7,7 +7,7 @@
 .marketingtag.channel { color: #b94a48; background-color: #f2dede; }
 .marketingtag.campaign { color: #c09853; background-color: #fcf8e3; }
 .marketingtag.usage { color: #3a87ad; background-color: #d9edf7; }
-.marketingtag a.delete { display: none; }
+.marketingtag a.delete { font-weight:normal }
 
 
 /* feedback that the request is in progress */
@@ -33,4 +33,6 @@ body#mtags {
     background:#d3d3d3;
     padding:20px;
   }
+
+  .marketingtag a.delete { display: none; }
 }
