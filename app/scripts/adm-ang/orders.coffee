@@ -21,7 +21,7 @@ module.exports = (pageData) ->
     $locationProvider.html5Mode true
 
     $routeProvider.
-      when('/adm/ang/orders/growth',    { controller: 'GrowthCtrl',   templateUrl: "/adm/templates/orders_growth.html"}, resolve: {title: () -> document.title = "Growth" }).
+      when('/adm/ang/orders/growth',    { controller: 'GrowthCtrl',   templateUrl: "/adm/templates/orders_growth.html", resolve: {title: () -> document.title = "Monthly" }}).
       when('/adm/ang/orders/channels',  { controller: 'ChannelsCtrl', templateUrl: "/adm/templates/orders_channels.html", resolve: {title: () -> document.title = "Channels" }}).
       when('/adm/ang/orders/weekly',    { controller: 'WeeklyCtrl',   templateUrl: "/adm/templates/orders_weekly.html", resolve: {title: () -> document.title = "Weekly" }}).
       when('/adm/ang/orders/edit/:id',  { controller: 'OrdersCtrl',   templateUrl: "/adm/templates/orders_edit.html", resolve: {title: () -> document.title = "Edit" }}).
@@ -182,13 +182,16 @@ module.exports = (pageData) ->
               _.extend li, expertCredit
 
 
-        getGrowth: (interval = 'monthly', start = moment(@data[0].utc), end = moment()) ->
+        getGrowth: (interval = 'monthly') ->
 
           periods = {}
 
-          # Group orders by period. Calculate revenue, gross, and hrs sold.
-          for order in _.sortBy(@data, (o) -> moment(o.utc))
+          dataSorted = _.sortBy(@data, (o) -> moment(o.utc))
 
+          # Group orders by period. Calculate revenue, gross, and hrs sold.
+          for order in dataSorted
+
+            # Get Index
             if interval is "monthly"
               intervalName = moment(order.utc).format("MMM")
               intervalIdx = moment(order.utc).startOf('month').format("YYMM")
@@ -199,10 +202,10 @@ module.exports = (pageData) ->
                 time.startOf("week").subtract("d", 1).startOf("day")
               else
                 time.endOf("week").startOf("day")
-
               intervalName = time.clone().add('days', 6).format("MMM D")
               intervalIdx = time.format("YYMMDD")
 
+            # Add to period
             if not periods[intervalIdx]
               periods[intervalIdx] =
                 revenue: 0
@@ -219,7 +222,10 @@ module.exports = (pageData) ->
             period.hrsSold += calcTotal [item] for item in order.lineItems
 
 
-          # Calc more stats. Get differences.
+
+
+          # Calc more stats. Get differences. 
+
           report = []
 
           reportTotals =
@@ -234,7 +240,6 @@ module.exports = (pageData) ->
           prevPeriod = null
 
           _.each periods, (period) ->
-            console.log 'period', period.intervalIdx, period
 
             period.customerTotal = _.uniq(_.pluck period.orders, 'userId').length
             period.hrPerCust = period.hrsSold/period.customerTotal
@@ -273,11 +278,12 @@ module.exports = (pageData) ->
           reportTotals.ltv = reportTotals.margin*reportTotals.revPerHour*reportTotals.hrPerCust
 
 
-          # Calc last week based on where we would have been
+          
+          # FINAL DIFFERENCE
+
+          # Calc final Week Diff
 
           if interval is "weekly"
-
-            console.log "LAST WEEK"
 
             # Get current week index
             time = moment()
@@ -285,28 +291,14 @@ module.exports = (pageData) ->
               time.startOf("week").subtract("d", 1).startOf("day")
             else
               time.endOf("week").startOf("day")
-
-            curWeekIdx = time.format("YYMMDD")
-
-
+            curWeekIdx = time.format("YYMMDD")            
             finalWeek = report[report.length - 1]
 
-            console.log "curWeekIdx", curWeekIdx
-            console.log "finalWeek", finalWeek.intervalIdx
-
-
-            # curWeekIdx = "140614" # test
-
+            # If last week
             if curWeekIdx is finalWeek.intervalIdx
-
-              # console.log "last week math"
 
               finalDiff = report[report.length - 2]
               prevWeek = report[report.length - 3]
-
-              # console.log "finalDiff", finalDiff
-              # console.log "prevWeek", prevWeek
-
 
               # Get week percentage
               wkStart = moment()
@@ -326,6 +318,8 @@ module.exports = (pageData) ->
 
 
 
+          # Calc final Month Diff
+
           if interval is "monthly"
 
             finalMonth = report[report.length - 1]
@@ -342,7 +336,7 @@ module.exports = (pageData) ->
               prevenue: (finalMonth.revenue / (prevMonth.revenue*monthPercentage)) - 1
               pgross: (finalMonth.gross/(prevMonth.gross*monthPercentage)) - 1
 
-          console.log 'report', report.length
+
 
           # Sort, reverse, and return
           return {
@@ -391,7 +385,7 @@ module.exports = (pageData) ->
               @metrics.push metric
             # tags = _.uniq(tags)
 
-            _(@metrics).reverse()
+            _(@metrics).sortBy(@data, (o) -> moment(o.utc)).reverse()
 
 
           if start and end
@@ -625,7 +619,12 @@ module.exports = (pageData) ->
     $scope.dateStart = moment().startOf("week").subtract("w", 2).toDate()
     $scope.dateEnd = moment().endOf('week').toDate()
 
-    $scope.metrics = apData.orders.getChannelMetrics($scope.dateStart, $scope.dateEnd)
+    $scope.metrics = _.shuffle apData.orders.getChannelMetrics($scope.dateStart, $scope.dateEnd)
+
+    # $scope.metrics = _.shuffle $scope.metrics
+    
+    console.log "$scope.metrics", $scope.metrics
+
 
     # Watch date updates
     $scope.$watch "dateStart", () -> $scope.metrics = apData.orders.getChannelMetrics($scope.dateStart, $scope.dateEnd)
