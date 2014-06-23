@@ -659,10 +659,25 @@ module.exports = (pageData) ->
 
   controller("WeeklyCtrl", ['$scope', '$location', '$moment', 'apData', ($scope, $location, $moment, apData ) ->
 
+
+
     # Overall Growth
-    week2week = apData.orders.getGrowth 'weekly', moment().startOf('month')
-    $scope.report = week2week.report
-    $scope.reportTotals = week2week.reportTotals
+
+    $scope.dateStart = moment().startOf('month').toDate()
+    $scope.dateEnd = moment().toDate()
+    
+    $scope.$watch "dateStart", () -> updateRange()
+    $scope.$watch "dateEnd", () -> updateRange()
+
+    updateRange = () ->
+      week2week = apData.orders.getGrowth 'weekly', moment($scope.dateStart), moment($scope.dateEnd)
+      $scope.report = week2week.report
+      $scope.reportTotals = week2week.reportTotals
+    
+    
+
+
+    
 
 
     # Channel Growth
