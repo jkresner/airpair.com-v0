@@ -132,7 +132,7 @@
       <th class="text-info">Press</th>
       <th class="text-info">SEO</th>
       <th class="text-info">Social</th>
-      <th class="text-info">Stack Overflow</th>
+      <!-- <th class="text-info">Stack Overflow</th> -->
       <th class="text-info">WoM</th>
       <th class="text-info">Untracked</th>
     </thead>
@@ -151,7 +151,7 @@
       <td class="text-info">{{week.metrics.summary.tags.press.count | number: 0}}</td>
       <td class="text-info">{{week.metrics.summary.tags.seo.count | number: 0}}</td>
       <td class="text-info">{{week.metrics.summary.tags.social.count | number: 0}}</td>
-      <td class="text-info">{{week.metrics.summary.tags.stackoverflowads.count | number: 0}}</td>
+      <!-- <td class="text-info">{{week.metrics.summary.tags.stackoverflowads.count | number: 0}}</td> -->
       <td class="text-info">{{week.metrics.summary.tags.wordofmouth.count | number: 0}}</td>
       <td class="text-info">{{week.metrics.summary.tags.untracked.count | number: 0}}</td>
     </tr>
@@ -168,7 +168,7 @@
       <td ng-class="{'text-danger': week.diffTags.press.count < 0, 'text-success': week.diffTags.press.count > 0}">{{ week.diffTags.press.count*100 | number:1 }}%</td>
       <td ng-class="{'text-danger': week.diffTags.seo.count < 0, 'text-success': week.diffTags.seo.count > 0}">{{ week.diffTags.seo.count*100 | number:1 }}%</td>
       <td ng-class="{'text-danger': week.diffTags.social.count < 0, 'text-success': week.diffTags.social.count > 0}">{{ week.diffTags.social.count*100 | number:1 }}%</td>
-      <td ng-class="{'text-danger': week.diffTags.stackoverflowads.count < 0, 'text-success': week.diffTags.stackoverflowads.count > 0}">{{ week.diffTags.stackoverflowads.count*100 | number:1 }}%</td>
+      <!-- <td ng-class="{'text-danger': week.diffTags.stackoverflowads.count < 0, 'text-success': week.diffTags.stackoverflowads.count > 0}">{{ week.diffTags.stackoverflowads.count*100 | number:1 }}%</td> -->
       <td ng-class="{'text-danger': week.diffTags.wordofmouth.count < 0, 'text-success': week.diffTags.wordofmouth.count > 0}">{{ week.diffTags.wordofmouth.count*100 | number:1 }}%</td>
       <td ng-class="{'text-danger': week.diffTags.untracked.count < 0, 'text-success': week.diffTags.untracked.count > 0}">{{ week.diffTags.untracked.count*100 | number:1 }}%</td>
 
