@@ -241,6 +241,8 @@ module.exports = (pageData) ->
           prevPeriod = null
 
           _.each periods, (period) ->
+            console.log 'period', period.intervalIdx, period
+
             period.customerTotal = _.uniq(_.pluck period.orders, 'userId').length
             period.hrPerCust = period.hrsSold/period.customerTotal
             period.revPerHour = period.revenue/period.hrsSold
@@ -303,9 +305,9 @@ module.exports = (pageData) ->
             # curWeekIdx = "140614" # test
 
             if curWeekIdx is finalWeek.intervalIdx
-              
+
               # console.log "last week math"
-              
+
               finalDiff = report[report.length - 2]
               prevWeek = report[report.length - 3]
 
@@ -337,7 +339,7 @@ module.exports = (pageData) ->
             finalDiff = report[report.length - 2]
             prevMonth = report[report.length - 3]
 
-            monthPercentage = (moment().unix()-moment().startOf('month').unix()) / (moment().endOf('month').unix()-moment().startOf('month').unix()) 
+            monthPercentage = (moment().unix()-moment().startOf('month').unix()) / (moment().endOf('month').unix()-moment().startOf('month').unix())
             console.log "monthPercentage", monthPercentage
 
             _.extend finalDiff,
@@ -347,7 +349,7 @@ module.exports = (pageData) ->
               prevenue: (finalMonth.revenue / (prevMonth.revenue*monthPercentage)) - 1
               pgross: (finalMonth.gross/(prevMonth.gross*monthPercentage)) - 1
 
-
+          console.log 'report', report.length
 
           # Sort, reverse, and return
           return {
