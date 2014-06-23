@@ -32,6 +32,10 @@ body#pipeline #request #reqPricing { width:140px; }
 body#pipeline #request .halfButtons .btn:first-child { width: 24px;margin-right:3px}
 body#pipeline #request .halfButtons .btn:last-child { width: 56px; }
 
+body#pipeline #marketingTagsInfo { padding:10px 0 }
+body#pipeline #marketingTagsInfo .twitter-typeahead { float:left;margin-right:2px; }
+body#pipeline #marketingTagsInfo .marketingtag { margin:1px 0px 0 3px; }
+
 body#pipeline #farm {}
 body#pipeline #farm hr { margin:20px 0px;clear:both; }
 body#pipeline #farm .zocial { float:right;clear:left;margin-top:0px;padding:0 4px 0 0;font-size:10px }

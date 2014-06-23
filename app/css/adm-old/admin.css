@@ -1,5 +1,7 @@
 .route { max-width:1240px;margin:auto; }
 
+a.delete { color:red; }
+
 .label-owner { margin:10px 10px 10px 0;min-width:20px;text-align:center;font-weight:normal; }
 .label-jk { background-color: #FFB878; }
 .label-tb { background-color: #9A9CFF; }

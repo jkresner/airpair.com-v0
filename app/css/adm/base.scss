@@ -16,25 +16,6 @@ body { background:none repeat scroll 0 0 #fafafa }
 /* adm base styles */
 .form-actions { margin-top:-13px;padding:15px 10px; }
 
-.label-owner { margin:10px 10px 10px 0;min-width:20px;text-align:center;font-weight:normal; }
-.label-jk { background-color: #FFB878; }
-.label-tb { background-color: #9A9CFF; }
-.label-il { background-color: #7AE7BF; }
-.label-pg { background-color: #51B749; }
-.label-ds { background-color: #FF887C; }
-.label-prev { background-color: #FF0000; }
-
-.marketingTagsInput { float:left;padding:8px 0px 12px 0px; }
-.marketingTagsInput .selected { display: inline; }
-.marketingTagsInput .tt-hint,
-.marketingTagsInput .tt-query { width: 150px; }
-.marketingTagsInput .marketingtag { vertical-align: top; margin: 0; margin-top: 1px; }
-.marketingtag { border: 1px solid rgba(0, 0, 0, 0.25);font-size: 14px;font-weight: bold;margin: 3px 3px 0px 0px;padding: 6px 10px; text-shadow: none; }
-.marketingtag.channel { color: #b94a48; background-color: #f2dede; }
-.marketingtag.campaign { color: #c09853; background-color: #fcf8e3; }
-.marketingtag.usage { color: #3a87ad; background-color: #d9edf7; }
-.marketingtag a.delete { display: none; }
-
 nav a.zocial { padding:0; }
 
 nav .active a {
@@ -52,3 +33,36 @@ body#mtags button:disabled {
   background: darkgray;
   border: solid 3px gray;
 }
+
+
+/*  Admin Styles
+~-----------------------------------------*/
+
+.label-owner { margin:10px 10px 10px 0;min-width:20px;text-align:center;font-weight:normal; }
+.label-jk { background-color: #FFB878; }
+.label-tb { background-color: #9A9CFF; }
+.label-il { background-color: #7AE7BF; }
+.label-pg { background-color: #51B749; }
+.label-ds { background-color: #FF887C; }
+.label-prev { background-color: #FF0000; }
+
+.marketingTagsInput { float:left;padding:8px 0px 12px 0px; }
+.marketingTagsInput .selected { display: inline; }
+.marketingTagsInput .tt-hint,
+.marketingTagsInput .tt-query { width: 150px; }
+.marketingTagsInput .marketingtag { vertical-align: top; margin: 0; margin-top: 1px; }
+.marketingtag { border: 1px solid rgba(0, 0, 0, 0.25);font-size: 14px;font-weight: bold;margin: 3px 3px 0px 0px;padding: 6px 10px; text-shadow: none; }
+.marketingtag.channel { color: #b94a48; background-color: #f2dede; }
+.marketingtag.campaign { color: #c09853; background-color: #fcf8e3; }
+.marketingtag.usage { color: #3a87ad; background-color: #d9edf7; }
+
+@import "nav";
+@import "pages/orders";
+
+
+
+
+
+
+
+
