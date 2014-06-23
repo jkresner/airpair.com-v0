@@ -7,16 +7,41 @@
   </h3>
 
 
+  <table class="table">
+    <thead>
+      <th class="first">LTV</th>
+      <th>Profit</th>
+      <th>Margin</th>
+      <th>Revenue</th>
+      <th>Rev/Hr</th>
+      <th>Hrs</th>
+      <th>Hr/Cust</th>
+      <th class="last">Customers</th>
+    </thead>
+
+    <tr class="success">
+      <td>{{reportTotals.ltv | currency}}</td>
+      <td>{{reportTotals.gross | number : 0}}</td>
+      <td class="text-orange">{{reportTotals.margin * 100 | number : 2}}%</td>
+      <td>{{reportTotals.revenue | number : 0}}</td>
+      <td class="text-orange">{{reportTotals.revPerHour | currency}}</td>
+      <td>{{reportTotals.hrsSold}} hr</td>
+      <td class="text-orange">{{reportTotals.hrPerCust | number : 2}} hrs</td>
+      <td>{{reportTotals.customerTotal}}</td>
+    </tr>
+  </table>
+
+
   <table class="table growth">
 
     <thead>
       <th class="mth first">Mth</th>
       <th class="gro">Profit</th>
-      <th class="mar">Margin</th>
+      <th class="mar text-muted">Margin</th>
       <th class="rev">Revenue</th>
-      <th class="avh">Avg/Hr</th>
+      <th class="avh text-muted">Rev/Hr</th>
       <th class="hrs">Hours</th>
-      <th class="hrc">Hr/Cust</th>
+      <th class="hrc text-muted">Hr/Cust</th>
       <th class="mth last">Customers</th>
     </thead>
 
@@ -55,28 +80,5 @@
   </table>
 
 
-  <table class="table">
-    <thead>
-      <th class="first">LTV</th>
-      <th>Total Gross</th>
-      <th>Avg Margin</th>
-      <th>Total Revenue</th>
-      <th>Avg Rev/Hr</th>
-      <th>Avg Hr/Cust</th>
-      <th>Total Hrs</th>
-      <th class="last">Cust Total</th>
-    </thead>
-
-    <tr class="success">
-      <td>{{reportTotals.ltv | currency}}</td>
-      <td>{{reportTotals.gross | currency}}</td>
-      <td>{{reportTotals.margin * 100 | number : 2}}%</td>
-      <td>{{reportTotals.revenue | currency}}</td>
-      <td>{{reportTotals.revPerHour | currency}}</td>
-      <td>{{reportTotals.hrPerCust | number : 2}} hrs</td>
-      <td>{{reportTotals.hrsSold}} hrs</td>
-      <td>{{reportTotals.customerTotal}}</td>
-    </tr>
-  </table>
 
 </div>

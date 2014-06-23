@@ -27,6 +27,29 @@
 
     <h4 class="text-thin">Demand</h4>
 
+      <table class="table">
+        <thead>
+          <th class="first">LTV</th>
+          <th>Total Gross</th>
+          <th>Avg Margin</th>
+          <th>Total Revenue</th>
+          <th>Avg Rev/Hr</th>
+          <th>Avg Hr/Cust</th>
+          <th>Total Hrs</th>
+          <th class="last">Cust Total</th>
+        </thead>
+
+        <tr class="success">
+          <td>{{reportTotals.ltv | currency}}</td>
+          <td>{{reportTotals.gross | number : 0}}</td>
+          <td>{{reportTotals.margin * 100 | number : 2}}%</td>
+          <td>{{reportTotals.revenue | currency}}</td>
+          <td>{{reportTotals.revPerHour | currency}}</td>
+          <td>{{reportTotals.hrPerCust | number : 2}} hrs</td>
+          <td>{{reportTotals.hrsSold}} hrs</td>
+          <td>{{reportTotals.customerTotal}}</td>
+        </tr>
+      </table>
 
       <table class="table growth">
 
@@ -76,29 +99,7 @@
       </table>
 
 
-      <table class="table">
-        <thead>
-          <th class="first">LTV</th>
-          <th>Total Gross</th>
-          <th>Avg Margin</th>
-          <th>Total Revenue</th>
-          <th>Avg Rev/Hr</th>
-          <th>Avg Hr/Cust</th>
-          <th>Total Hrs</th>
-          <th class="last">Cust Total</th>
-        </thead>
 
-        <tr class="success">
-          <td>{{reportTotals.ltv | currency}}</td>
-          <td>{{reportTotals.gross | currency}}</td>
-          <td>{{reportTotals.margin * 100 | number : 2}}%</td>
-          <td>{{reportTotals.revenue | currency}}</td>
-          <td>{{reportTotals.revPerHour | currency}}</td>
-          <td>{{reportTotals.hrPerCust | number : 2}} hrs</td>
-          <td>{{reportTotals.hrsSold}} hrs</td>
-          <td>{{reportTotals.customerTotal}}</td>
-        </tr>
-      </table>
 
 
 

@@ -182,44 +182,54 @@ module.exports = (pageData) ->
               _.extend li, expertCredit
 
 
-        getGrowth: (interval = 'monthly') ->
+        getGrowth: (interval = 'monthly', start = moment(@data[0].utc).subtract("d", 1), end = moment()) ->
 
           periods = {}
 
-          dataSorted = _.sortBy(@data, (o) -> moment(o.utc))
+          # dataSorted = _.sortBy(@data, (o) -> moment(o.utc))
+
+          # ordersFilter = 
+
+          filteredOrders = []
 
           # Group orders by period. Calculate revenue, gross, and hrs sold.
-          for order in dataSorted
+          for order in @data
 
-            # Get Index
-            if interval is "monthly"
-              intervalName = moment(order.utc).format("MMM")
-              intervalIdx = moment(order.utc).startOf('month').format("YYMM")
-            if interval is "weekly"
-              # Find start of saturday
-              time = moment(order.utc)
-              if time.day() < 6
-                time.startOf("week").subtract("d", 1).startOf("day")
-              else
-                time.endOf("week").startOf("day")
-              intervalName = time.clone().add('days', 6).format("MMM D")
-              intervalIdx = time.format("YYMMDD")
+            if moment(order.utc).isAfter(start) and moment(order.utc).isBefore(end)
+              # console.log "order", order
 
-            # Add to period
-            if not periods[intervalIdx]
-              periods[intervalIdx] =
-                revenue: 0
-                gross: 0
-                hrsSold: 0
-                orders: []
-                intervalIdx: intervalIdx
-                intervalName: intervalName
+              # if order.paymentStatus is "received" or order.paymentStatus is "paidout"
 
-            period = periods[intervalIdx]
-            period.orders.push order
-            period.revenue += order.total
-            period.gross += order.profit
-            period.hrsSold += calcTotal [item] for item in order.lineItems
+              # Get Index
+              if interval is "monthly"
+                intervalName = moment(order.utc).format("MMM")
+                intervalIdx = moment(order.utc).startOf('month').format("YYMM")
+              if interval is "weekly"
+                # Find start of saturday
+                time = moment(order.utc)
+                if time.day() < 6
+                  time.startOf("week").subtract("d", 1).startOf("day")
+                else
+                  time.endOf("week").startOf("day")
+                intervalName = time.clone().add('days', 6).format("MMM D")
+                intervalIdx = time.format("YYMMDD")
+
+              # Add to period
+              if not periods[intervalIdx]
+                periods[intervalIdx] =
+                  revenue: 0
+                  gross: 0
+                  hrsSold: 0
+                  orders: []
+                  intervalIdx: intervalIdx
+                  intervalName: intervalName
+
+              period = periods[intervalIdx]
+              period.orders.push order
+              period.revenue += order.total
+              period.gross += order.profit
+              period.hrsSold += calcTotal [item] for item in order.lineItems
+              filteredOrders.push order
 
 
 
@@ -247,7 +257,7 @@ module.exports = (pageData) ->
             period.margin = period.gross/period.revenue
 
             reportTotals.numPeriods++
-            reportTotals.customerTotal += period.customerTotal
+            # reportTotals.customerTotal += period.customerTotal
             reportTotals.hrsSold += period.hrsSold
             reportTotals.revPerHour += period.revPerHour
             reportTotals.revenue += period.revenue
@@ -272,8 +282,11 @@ module.exports = (pageData) ->
 
 
           # Final report totals
-          reportTotals.revPerHour = reportTotals.revPerHour/reportTotals.numPeriods
-          reportTotals.margin = reportTotals.margin/reportTotals.numPeriods
+          reportTotals.customerTotal = _.uniq(_.pluck filteredOrders, 'userId').length
+          reportTotals.revPerHour = reportTotals.revenue/reportTotals.hrsSold
+          # reportTotals.revPerHour = reportTotals.revPerHour/reportTotals.numPeriods
+          # $113.71
+          reportTotals.margin = reportTotals.gross/reportTotals.revenue
           reportTotals.hrPerCust = reportTotals.hrsSold/reportTotals.customerTotal
           reportTotals.ltv = reportTotals.margin*reportTotals.revPerHour*reportTotals.hrPerCust
 
@@ -385,7 +398,7 @@ module.exports = (pageData) ->
               @metrics.push metric
             # tags = _.uniq(tags)
 
-            _(@metrics).sortBy(@data, (o) -> moment(o.utc)).reverse()
+            _(@metrics).reverse()
 
 
           if start and end
@@ -475,6 +488,8 @@ module.exports = (pageData) ->
 
 
 
+
+    apData.orders.data = _.sortBy(apData.orders.data, (o) -> moment(o.utc))
     apData.orders.calcCredits()
 
     console.log "apData", apData
@@ -512,7 +527,7 @@ module.exports = (pageData) ->
   controller("OrdersCtrl", [ '$scope', '$location', '$filter', '$window', '$moment', 'apData', ($scope, $location, $filter, $window, $moment, apData) ->
 
     allOrders = apData.orders.get()
-    firstOrderDate = new Date(allOrders[0].utc)
+    firstOrderDate = moment(allOrders[0].utc).subtract('d', 1)
     firstMonth = moment(firstOrderDate).subtract('M', 1)
 
     # Get past months and years
@@ -528,7 +543,7 @@ module.exports = (pageData) ->
       if _.isString(newRange)
         switch newRange
           when "all"
-            $scope.dateStart = firstOrderDate
+            $scope.dateStart = firstOrderDate.toDate()
             $scope.dateEnd = date
           when "6 weeks"
             $scope.dateStart = moment().subtract("weeks", 6).toDate()
@@ -548,6 +563,8 @@ module.exports = (pageData) ->
 
     newSearch = true
     updateOrderList = (searchText) ->
+      console.log "updateOrderList"
+      $scope.orderViewLimit = 40
       # Search all if new search is starting
       if searchText and newSearch
         $scope.dateRange = 'all'
@@ -643,7 +660,7 @@ module.exports = (pageData) ->
   controller("WeeklyCtrl", ['$scope', '$location', '$moment', 'apData', ($scope, $location, $moment, apData ) ->
 
     # Overall Growth
-    week2week = apData.orders.getGrowth 'weekly', moment().startOf('month').subtract('weeks', 7)
+    week2week = apData.orders.getGrowth 'weekly', moment().startOf('month')
     $scope.report = week2week.report
     $scope.reportTotals = week2week.reportTotals
 
