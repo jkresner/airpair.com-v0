@@ -3,7 +3,7 @@
 
 <div class="container">
   <div class="row">
-    
+
     <div class="col-sm-4">
       <h3 class="text-thin">Weekly Report</h3>
     </div>
@@ -11,8 +11,8 @@
       <small class="text-muted">Start</small>
       <input class="form-control" type="date" name="input" ng-model="dateStart" placeholder="yyyy-MM-dd" min="2013-01-01" max="" required/>
     </div>
-    <div class="col-sm-4">   
-      <small class="text-muted">End</small>   
+    <div class="col-sm-4">
+      <small class="text-muted">End</small>
       <input class="form-control" type="date" name="input" ng-model="dateEnd" placeholder="yyyy-MM-dd" min="2013-01-01" max="" required/>
     </div>
 
@@ -27,12 +27,12 @@
 
     <h4 class="text-thin">Demand</h4>
 
-          
+
       <table class="table growth">
 
         <thead>
           <th class="mth first">Week</th>
-          <th class="gro">Gross</th>
+          <th class="gro">Profit</th>
           <th class="mar">Margin</th>
           <th class="rev">Revenue</th>
           <th class="avh">Avg/Hr</th>
@@ -113,10 +113,10 @@
 <div class="container m-b-3">
 
   <h4 class="text-thin m-t-1">Orders</h4>
-  
-  
 
-  
+
+
+
 
   <table class="table table-hover table-condensed growth"  Xng-repeat="week in weeks">
 
