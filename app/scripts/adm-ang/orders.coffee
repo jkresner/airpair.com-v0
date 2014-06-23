@@ -120,7 +120,7 @@ module.exports = (pageData) ->
 
   factory('apData', ['$moment', '$filter', ($moment, $filter) ->
 
-    apData =
+    window.apData =
       orders:
         data: pageData.orders
         get: () ->
@@ -488,6 +488,7 @@ module.exports = (pageData) ->
 
     apData.orders.calcCredits()
 
+    console.log "apData", apData
 
 
     return apData
