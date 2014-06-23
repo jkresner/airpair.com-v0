@@ -280,26 +280,60 @@ module.exports = (pageData) ->
 
           # Calc last week based on where we would have been
 
-          finalWeek = report[report.length - 1]
-          finalDiff = report[report.length - 2]
-          prevWeek = report[report.length - 3]
+          if interval is "weekly"
 
-          wkStart = moment()
-          if wkStart.day() < 6
-            wkStart.startOf("week").subtract("d", 1).startOf("day")
-          else
-            wkStart.endOf("week").startOf("day")
+            console.log "LAST WEEK"
 
-          wkPercentage = (moment().unix()-wkStart.unix())/60/60/24/7
+            finalWeek = report[report.length - 1]
+            finalDiff = report[report.length - 2]
+            prevWeek = report[report.length - 3]
 
-          _.extend finalDiff,
-            pcustomerTotal: (finalWeek.customerTotal-(prevWeek.customerTotal*wkPercentage))/(prevWeek.customerTotal*wkPercentage)
-            phrPerCust: (finalWeek.hrPerCust-(prevWeek.hrPerCust*wkPercentage))/(prevWeek.hrPerCust*wkPercentage)
-            phrsSold: (finalWeek.hrsSold-(prevWeek.hrsSold*wkPercentage))/(prevWeek.hrsSold*wkPercentage)
-            prevPerHour: (finalWeek.revPerHour-(prevWeek.revPerHour*wkPercentage))/(prevWeek.revPerHour*wkPercentage)
-            prevenue: (finalWeek.revenue-(prevWeek.revenue*wkPercentage))/(prevWeek.revenue*wkPercentage)
-            pgross: (finalWeek.gross-(prevWeek.gross*wkPercentage))/(prevWeek.gross*wkPercentage)
-            pmargin: (finalWeek.margin-(prevWeek.margin*wkPercentage))/(prevWeek.margin*wkPercentage)
+
+
+            wkStart = moment()
+            if wkStart.day() < 6
+              wkStart.startOf("week").subtract("d", 1).startOf("day")
+            else
+              wkStart.endOf("week").startOf("day")
+
+            wkPercentage = (moment().unix()-wkStart.unix())/60/60/24/7
+            console.log "wkPercentage", wkPercentage
+
+            _.extend finalDiff,
+              pcustomerTotal: (finalWeek.customerTotal-(prevWeek.customerTotal*wkPercentage))/(prevWeek.customerTotal*wkPercentage)
+              phrPerCust: (finalWeek.hrPerCust-(prevWeek.hrPerCust*wkPercentage))/(prevWeek.hrPerCust*wkPercentage)
+              phrsSold: (finalWeek.hrsSold-(prevWeek.hrsSold*wkPercentage))/(prevWeek.hrsSold*wkPercentage)
+              prevPerHour: (finalWeek.revPerHour-(prevWeek.revPerHour*wkPercentage))/(prevWeek.revPerHour*wkPercentage)
+              prevenue: (finalWeek.revenue-(prevWeek.revenue*wkPercentage))/(prevWeek.revenue*wkPercentage)
+              pgross: (finalWeek.gross-(prevWeek.gross*wkPercentage))/(prevWeek.gross*wkPercentage)
+              pmargin: (finalWeek.margin-(prevWeek.margin*wkPercentage))/(prevWeek.margin*wkPercentage)
+
+
+          if interval is "monthly"
+
+            console.log "LAST MONTH"
+
+            finalMonth = report[report.length - 1]
+            finalDiff = report[report.length - 2]
+            prevMonth = report[report.length - 3]
+
+            # console.log "finalMonth", finalMonth
+            # console.log "finalDiff", finalDiff
+            # console.log "prevMonth", prevMonth
+
+            # monthStart = moment().startOf("month")
+
+            monthPercentage = (moment().unix()-moment().startOf('month').unix()) / (moment().endOf('month').unix()-moment().startOf('month').unix()) 
+            console.log "monthPercentage", monthPercentage
+
+            _.extend finalDiff,
+              pcustomerTotal: (finalMonth.customerTotal / (prevMonth.customerTotal*monthPercentage)) - 1
+              # phrPerCust: (finalMonth.hrPerCust-(prevMonth.hrPerCust*monthPercentage))/(prevMonth.hrPerCust*monthPercentage)
+              phrsSold: (finalMonth.hrsSold / (prevMonth.hrsSold*monthPercentage)) - 1
+              # prevPerHour: (finalMonth.revPerHour-(prevMonth.revPerHour*monthPercentage))/(prevMonth.revPerHour*monthPercentage)
+              prevenue: (finalMonth.revenue / (prevMonth.revenue*monthPercentage)) - 1
+              pgross: (finalMonth.gross/(prevMonth.gross*monthPercentage)) - 1
+              # pmargin: (finalMonth.margin-(prevMonth.margin*monthPercentage))/(prevMonth.margin*monthPercentage)
 
 
 
@@ -560,6 +594,8 @@ module.exports = (pageData) ->
       month = moment(date).format("MMM")
 
     month2month = apData.orders.getGrowth 'monthly'
+
+    console.log "month2month", month2month
 
     $scope.report = month2month.report
     $scope.reportTotals = month2month.reportTotals

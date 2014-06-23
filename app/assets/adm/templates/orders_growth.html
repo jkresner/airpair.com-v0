@@ -43,7 +43,7 @@
         <span ng-if="r.hrsSold">{{r.hrsSold | number:0}}</span>
         <span ng-if="r.phrsSold" ng-class="{'text-danger': r.phrsSold < 0, 'text-success': r.phrsSold > 0}">{{r.phrsSold*100 | number:0}}%</span>
       </td>
-      <td class="o">
+      <td class="text-orange">
         <span ng-if="r.hrPerCust">{{r.hrPerCust | number:1}}</span>
         <span ng-if="r.phrPerCust" ng-class="{'text-danger': r.phrPerCust < 0, 'text-success': r.phrPerCust > 0}">{{r.phrPerCust*100 | number:0}}%</span>
       </td>
