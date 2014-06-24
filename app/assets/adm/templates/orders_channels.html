@@ -133,7 +133,7 @@
 
 
 
-    <tr ng-repeat="order in metrics.orders">
+    <tr ng-repeat="order in metrics.orders | orderBy : 'utc':true">
       <td class="text-muted">{{order.utc | date:"MM d"}}</td>
       <td><a href="/adm/pipeline/request/{{order.requestId}}" target="blank">{{order.name}}</a></td>
       <td><b>{{order.total}}</b></td>
