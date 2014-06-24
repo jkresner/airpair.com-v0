@@ -42,7 +42,7 @@ module.exports = (app) ->
   app.get '/adm/experts*', authd, adm, render 'adm/experts'
   app.get '/adm/pipeline*', authd, adm, render 'adm/pipeline'
 
-  app.get '/schedule/:id/edit/:callId', authd, mm, render 'schedule', ['params.id','params.callId']
+  app.get '/schedule/:id/*', authd, mm, render 'schedule', ['params.id']
   app.get '/schedule/:id', authd, mm, render 'schedule', ['params.id']
 
   # api

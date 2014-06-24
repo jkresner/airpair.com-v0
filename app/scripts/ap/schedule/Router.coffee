@@ -11,7 +11,6 @@ module.exports = class Router extends S.AirpairSessionRouter
 
   routes:
     ':requestId/edit/:callId': 'edit'
-    ':requestId/edit/:callId': 'edit'
     ':requestId': 'schedule'
 
   appConstructor: (pageData, callback) ->
@@ -19,6 +18,8 @@ module.exports = class Router extends S.AirpairSessionRouter
     d =
       request: new M.Request _id: requestId
       requestCall: new M.RequestCall()
+      video: new M.Video()
+      videos: new C.Videos()
       orders: new C.Orders()
     d.requestCall.requestId = requestId
     d.orders.requestId = requestId
@@ -26,11 +27,7 @@ module.exports = class Router extends S.AirpairSessionRouter
     v =
       callsView: new V.CallsView model: d.request
       scheduleView: new V.ScheduleView
-        model: d.requestCall, request: d.request, collection: d.orders
-      # videosView: new V.VideosView
-        # model: d.video, collection: d.videos, requestCall: d.requestCall,
-      # callEditView: new V.CallEditView
-        # model: d.requestCall, request: d.request, collection: d.orders, videos: d.videos
+        model: d.requestCall, request: d.request, collection: d.orders, video: d.video, videos: d.videos
 
     @setOrFetch d.request, pageData.request
     @resetOrFetch d.orders, pageData.orders
@@ -42,7 +39,10 @@ module.exports = class Router extends S.AirpairSessionRouter
     if match
       @app.requestCall.set('expertId', match[1])
 
-  edit: (callId) ->
+  edit: (requestId, callId) ->
+    # $log 'edit', callId
     # populate requestCall with existing data from the request
     selectedCall = _.find @app.request.get('calls'), (c) -> c._id == callId
-    @app.requestCall.set selectedCall
+    @app.requestCall.silentReset(selectedCall).trigger('change:id')
+    @app.video.silentReset()
+    @app.videos.reset @app.requestCall.get('recordings')

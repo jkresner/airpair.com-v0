@@ -63,7 +63,7 @@ module.exports = class RequestCallsService
   # when they have a youtube video. We'll be passing old & new orders around.
   update: (requestId, call, callback) =>
     rSvc = new RequestSvc @usr
-    $log 'rCall', 'r', requestId, call
+    # $log 'rCall', 'r', requestId, call
     rSvc.getById requestId, (err, request) =>
       oldCall = _.find request.calls, (c) -> _.idsEqual c._id, call._id
       if !oldCall then return callback new Error('no such call ' + call._id)

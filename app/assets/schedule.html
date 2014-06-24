@@ -12,11 +12,28 @@
 
   {{> adminNav }}
 
-  <div id="schedule" class="route"></div>
+  <div class="form-actions admin-nav">
+    <a class="btn" href="/adm/pipeline/request/{{request._id}}">Back</a>
+  </div>
+  <div id="schedule" class="route" style="padding-top:10px">
+    <div class="available"></div>
 
-  <div id="calls"></div>
+  </div>
+
+  <div id="calls">
+    <legend>Scheduled</legend>
+    <div id="scheduled">
+
+    </div>
+  </div>
 
 </body>
+  <style>
+    .admin-nav { width:1240px;margin:auto;margin-top:-15px }
+    #calls { width:1240px;margin:auto; }
+    .call { float:left;width:100px;margin-right:10px; }
+    .call img { display:block; }
+  </style>
 
   <script type="text/javascript">
     function initApp() {

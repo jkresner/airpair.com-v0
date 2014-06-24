@@ -1,50 +1,9 @@
-<div class="form-actions admin-nav">
-  <a class="btn" href="/adm/pipeline/request/{{requestId}}">Back</a>
-</div>
+<fieldset style="padding:20px 0 0 0">
 
-<fieldset style="padding:0px 20px">
-  <div class="experts">
-  {{#each available}}
-    {{#with expert}}
+  {{#expert}}
 
-    <label for="expertId{{_id}}">
-      <div class="expertMini suggestion {{#selected}}selected{{/selected}}" >
-        <div class="deets">
-          <div class="fullName">
-            {{name}}
-          </div>
-          <hr>
-          <img src="{{pic}}" alt="{{name}}" draggable="false" class="expertPic">
-        </div>
-
-        <div class="hours">
-            {{#each credit.byTypeArray}}
-              {{balance}} {{inflect balance "hr" "hrs"}}
-              {{type}}
-              <br>
-            {{/each}}
-        </div>
-
-        <div class="select">
-          <input id="expertId{{_id}}" type="radio" value="{{_id}}" name="expertId" {{#selected}}checked{{/selected}} />
-        </div>
-      </div>
-    </label>
-
-    {{/with}}
-  {{else}}
-    <p><code>Can't schedule any more calls:</code> all hours have been scheduled
-      for available experts</p>
-    <p>Ask the customer to book more hours?</p>
-  {{/each}}
-  </div>
-
-  <hr />
-
-  {{#selectedExpert}}
-
-    <div style="float:left;width:8%;margin-right:5px;font-size:10px">
-      <img src="{{pic}}" alt="{{name}}" draggable="false" class="expertPic">
+    <div style="float:left;width:8%;margin-right:25px">
+      <img src="{{pic}}?s=100" alt="{{name}}" draggable="false">
 
       <span class="muted" style="clear:both;display:block;margin-top:5px">{{name}}</span>
     </div>
@@ -63,7 +22,7 @@
             {{/each}}
           </select>
           <select name="duration" style="width:96px">
-            {{#each selectOptions }}
+            {{#each durationOptions }}
               <option value="{{this}}" {{#is ../../duration this}}selected{{/is}}>
                 {{this}} {{inflect this "hr" "hrs"}}
               </option>
@@ -109,23 +68,32 @@
 
     </div>
 
-    <div style="float:left;width:26%;border-left:solid 1px #d3d3d3;padding-left:25px">
-      <div class="control-group">
-        <label class="control-label" for="duration">Notes</label>
-        <div class="controls">
-          <textarea style="height:154px;width:90%" class="input-xxlarge">{{../notes}}</textarea>
-        </div>
+  {{/expert}}
+
+  {{#if _id}}
+
+  <div style="float:left;width:26%;border-left:solid 1px #d3d3d3;padding-left:25px">
+    <div class="control-group">
+      <label class="control-label" for="duration">Notes</label>
+      <div class="controls">
+        <textarea style="height:154px;width:90%" class="input-xxlarge">{{../notes}}</textarea>
       </div>
-
     </div>
 
-    <div style="float:left;width:26%;border-left:solid 1px #d3d3d3;padding-left:25px">
-        hey
+  </div>
 
+  <div class="videos" style="float:left;width:26%;border-left:solid 1px #d3d3d3;padding-left:25px">
+    <div class="control-group">
+      <label class="control-label" for="type">Youtube ID's</label>
+      <div class="controls">
+        <input name="youtube" class="youtube" type="text" placeholder="Youtube URL or ID">
+      </div>
     </div>
 
+    <div class="videolist"></div>
+  </div>
 
-  {{/selectedExpert}}
+  {{/if}}
 
   <div class="alert alert-error">
     <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -136,5 +104,9 @@
 </fieldset>
 
 <div class="form-actions" style="background:white">
+  {{#if _id}}
+  <button class="save button btn-large btn-warning" style="width:160px">Update</button>
+  {{else}}
   <button class="save button btn-large btn-primary" style="width:160px">Schedule</button>
+  {{/if}}
 </div>

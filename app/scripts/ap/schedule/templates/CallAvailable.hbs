@@ -1,0 +1,39 @@
+<div class="experts">
+{{#each available}}
+  {{#with expert}}
+
+  <label for="expertId{{_id}}">
+    <div class="expertMini suggestion {{#selected}}selected{{/selected}}" >
+      <div class="deets">
+        <div class="fullName">
+          {{name}}
+        </div>
+        <hr>
+        <img src="{{pic}}" alt="{{name}}" draggable="false" class="expertPic">
+      </div>
+
+      <div class="hours">
+          {{#each credit.byTypeArray}}
+            {{balance}} {{inflect balance "hr" "hrs"}}
+            {{type}}
+            <br>
+          {{/each}}
+      </div>
+
+      <div class="select">
+        <input id="expertId{{_id}}" type="radio" value="{{_id}}" name="expertId" {{#selected}}checked{{/selected}} />
+      </div>
+    </div>
+  </label>
+
+  {{/with}}
+{{else}}
+  <p><code>Can't schedule any more calls:</code> all hours have been scheduled
+    for available experts</p>
+  <p>Ask the customer to book more hours?</p>
+{{/each}}
+
+  <div style="clear:both"></div>
+  <hr style="clear:both" />
+
+</div>

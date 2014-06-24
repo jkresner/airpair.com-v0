@@ -47,6 +47,7 @@ module.exports = class ViewDataService
 
   schedule: (requestId, cb) ->
     new RequestsSvc(@usr).getById requestId, (e, request) =>
+      if !request? then return cb e, -> {}
       new OrdersSvc(@usr).getByRequestId request._id, (ee, orders) =>
         cb ee, -> { request, orders }
 

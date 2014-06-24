@@ -7,6 +7,7 @@ calcExpertCredit = require 'lib/mix/calcExpertCredit'
 parseYoutubeId   = require 'lib/mix/parseYoutubeId'
 unschedule       = require 'lib/mix/unschedule'
 storage          = require('../../shared/util').storage
+objectId2Date    = require 'lib/mix/objectId2Date'
 
 dateFormat = "DD MMM YYYY"
 pickadateOptions = format: "dd mmm yyyy"
@@ -15,219 +16,175 @@ timepickerOptions = timeFormat: 'H:i'
 
 class exports.CallsView extends BB.BadassView
   el: '#calls'
-  # logging: on
-  tmplCall: require './templates/RequestCall'
-  tmpl: require './templates/RequestCalls'
+  tmpl: require './templates/CallRow'
+  events:
+    'click .edit': 'routeEdit'
   initialize: ->
     require('/scripts/providers/gapi')()
     @listenTo @model, 'change:calls', @render
   render: =>
-    $log 'RequestCallsView.render', gapi?
-    if !gapi? then return setTimeout @render, 1000
-    d = @model.toJSON()
-    d.calls = d.calls.sort (a, b) -> a.datetime.localeCompare(b.datetime)
-    d.calls = d.calls.map (call) =>
-      call.expert = @model.suggestion(call.expertId).expert
-      call
-    @$el.html @tmpl d
-    for c in d.calls
-      @$('#scheduled').append @tmplCall c
-      if $("##{c._id}").length > 0
-        hData =
-          topic: @model.roomName c.expert._id
-          render: 'createhangout'
-          hangout_type: 'onair'
-          invites: [{id:c.expert.email,invite_type:'EMAIL'},{'id':@model.contact(0).gmail,invite_type:'EMAIL'}]
-          initial_apps: [{'app_id' : '140030887085', 'app_type' : 'LOCAL_APP' }]
-          widget_size: 72
-        # $log 'hData', hData
-        gapi.hangout.render "#{c._id}", hData
-
+    # $log 'RequestCallsView.render', gapi?
+    if @model.get('calls').length == 0
+      @$('#scheduled').html 'No calls scheduled'
+    else
+      if !gapi? then return setTimeout @render, 1000
+      d = @model.toJSON()
+      d.calls = d.calls.sort (a, b) -> a.datetime.localeCompare(b.datetime)
+      @$('#scheduled').html('')
+      for c in d.calls
+        c.requestId = @model.id
+        c.expert = @model.suggestion(c.expertId).expert
+        @$('#scheduled').append @tmpl c
+        @renderHangoutBtn(c) if $("##{c._id}").length > 0
+  renderHangoutBtn: (c) =>
+    hData =
+      topic: @model.roomName c.expert._id
+      render: 'createhangout'
+      hangout_type: 'onair'
+      invites: [{id:c.expert.email,invite_type:'EMAIL'},{'id':@model.contact(0).gmail,invite_type:'EMAIL'}]
+      initial_apps: [{'app_id' : '140030887085', 'app_type' : 'LOCAL_APP' }]
+      widget_size: 72
+    # $log 'hData', hData
+    gapi.hangout.render "#{c._id}", hData
+  routeEdit: (e) =>
+    cId = $(e.target).data('id')
+    router.navTo "#{@model.id}/edit/#{cId}"
+    false
 
 
 class exports.ScheduleView extends BB.ModelSaveView
   # async: off
   el: '#schedule'
-  tmpl: require './templates/CallSchedule'
+  tmpl: require './templates/Call'
+  tmplA: require './templates/CallAvailable'
+  tmplR: require './templates/Recording'
   viewData: ['duration', 'date', 'time', 'type']
   events:
     'click input:radio': (e) ->
       @model.set 'expertId', @$(e.target).val()
+    'change [name=type]': ->
       @model.set 'type', @elm('type').val()
-    'blur [name=type]': -> @model.set 'type', @elm('type').val()
-    'change [name=duration]': ->
-      @model.set 'duration', parseInt(@elm('duration').val(), 10), silent: true
-    'blur [name=date]': -> @model.set 'date', @elm('date').val(), silent: true
-    'blur [name=time]': -> @model.set 'time', @elm('time').val(), silent: true
+      @render()
     'change [name=inviteOwner]': ->
       storage 'inviteOwner', @elm('inviteOwner').is(':checked')
     'change [name=sendNotifications]': ->
       sendNotifications = @elm('sendNotifications').is(':checked')
       @model.set('sendNotifications', sendNotifications, silent: true)
+    'input [name=youtube]': 'fetchYoutube'
+    'click .deleteyoutube': 'deleteYoutube'
     'click .save': (e) ->
-      $(e.target).attr('disabled', true)
-      @save(e)
+      $(e.target).attr 'disabled', true
+      @save e
   initialize: ->
-    @listenTo @request, 'change', @render
-    @listenTo @collection, 'reset', @render
-    @listenTo @model, 'change', @render
+    @listenTo @model, 'change:id', @render
+    @listenTo @collection, 'reset sync', @render
+    @listenTo @videos, 'reset remove', @renderRecordings
   render: ->
-    orders = @collection.toJSON()
-    selectedExpert = null
-    suggested = @request.get('suggested') || []
-    suggested = suggested
-      .map (suggestion) =>
-        expert = suggestion.expert
-        expert.credit = calcExpertCredit orders, expert._id
-        expert.credit.byTypeArray = _.values(expert.credit.byType)
-        suggestion
+    return if @collection.length == 0 || @request.get('suggested').length == 0
+    if !@model.id?
+      @renderAvailable()
+    if @model.get('expertId')?
+      d =
+        expert: @request.suggestion(@model.get('expertId')).expert
+        requestId: @request.id
+        owner: @request.get('owner')
+        inviteOwner: storage('inviteOwner') == 'true'
 
-      # expert is available, you can only purchase hours for someone available
-      .filter (suggestion) =>
-        suggestion.expert.credit.balance > 0
+      if ! @model.has 'type'
+        for ta in d.expert.credit.byTypeArray
+          if ta.balance > 0
+            @model.set 'type', ta.type
 
-      .map (suggestion, __, filtered) =>
-        # selects the first expert by default when there's only one
-        if filtered.length == 1
-          @model.set 'expertId', suggestion.expert._id
+      if @model.id?
+        orders = unschedule _.cloneDeep(@collection.toJSON()), @model.id
+        d.time = moment(@model.get('datetime')).format('HH:mm')
+        d.date = moment(@model.get('datetime')).format(dateFormat)
+        d.expert.credit = calcExpertCredit orders, @model.get('expertId')
+        d.expert.credit.byTypeArray = _.values(d.expert.credit.byType)
+        balance = d.expert.credit.byType[@model.get('type')].balance
+        d.expert.durationOptions = _.range(1, balance + 1)
+      else
+        # $log 'mode', @model.get('expertId'), d.expert.credit
+        byType = d.expert.credit.byType[@mget('type')] || {}
+        balance = byType.balance || 0
+        d.expert.durationOptions = _.range(1, balance + 1)
+        @model.set 'date', moment().format(dateFormat)  # default to today
 
-        if @mget('expertId') == suggestion.expert._id
-          suggestion.expert.selected = suggestion.expert
-          selectedExpert = suggestion.expert
-          if !@mget 'type'
-            @model.set 'type', suggestion.expert.credit.byTypeArray[0].type
-        else suggestion.expert.selected = undefined
-        suggestion
-
-    if selectedExpert
-      byType = selectedExpert.credit.byType[@mget('type')] || {}
-      balance = byType.balance || 0
-      selectedExpert.selectOptions = _.range(1, balance + 1)
-
-    if !@mget 'date' # default to today
-      today = moment().format(dateFormat)
-      @model.set 'date', today
-
-    d =
-      available: suggested
-      selectedExpert: selectedExpert
-      requestId: requestId = @request.get('_id')
-      owner: @request.get('owner')
-      inviteOwner: storage('inviteOwner') == 'true'
-
-    @$('.datepicker').stop()
-    @$('.timepicker').timepicker('remove')
-    @$el.html @tmpl @model.extendJSON d
-    @$('.datepicker').pickadate(pickadateOptions)
-    @$('.timepicker').timepicker(timepickerOptions)
+      @$('.datepicker').stop()
+      @$('.timepicker').timepicker('remove')
+      # $log 'rendering', d
+      @$el.html @tmpl @model.extendJSON d
+      @$('.datepicker').pickadate(pickadateOptions)
+      @$('.timepicker').timepicker(timepickerOptions)
     @
-  getViewData: ->
-    d = @getValsFromInputs @viewData
-    d.inviteOwner = @elm('inviteOwner').is(':checked')
-    d.sendNotifications = @elm('sendNotifications').is(':checked')
-    d
-  renderSuccess: (model, response, options) =>
-    window.location = "/adm/pipeline/request/#{@request.get('_id')}"
-  renderError: (model, response, options) ->
-    @$('.save').attr('disabled', false)
-    super model, response, options
+  renderAvailable: ->
+    orders = @collection.toJSON()
+    available = []
+    for s in @request.get('suggested')
+      expert = s.expert
+      expert.credit = calcExpertCredit orders, expert._id
+      expert.credit.byTypeArray = _.values(expert.credit.byType)
 
-# this view is very similar to TagsInputView & MarketingTagsInputView
-# it is it's own component, and doesn't care much about the parent view.
-class exports.VideosView extends BB.ModelSaveView
-  el: '#videos'
-  tmplForm: require './templates/VideoForm'
-  tmpl: require './templates/VideoList'
-  events:
-    'click .fetch': 'fetch'
-    'click .delete': 'delete'
-  initialize: ->
-    @requestCall.once 'change:recordings', =>
-      @collection.set @requestCall.get('recordings')
-    @listenTo @collection, 'reset add remove', @render
-    @$el.html @tmplForm()
-  render: ->
-    recordings = @collection.toJSON().map (r) ->
+      if s.expert.credit.balance > 0
+        available.push s
+
+    if available.length == 1
+      @model.set 'expertId', available[0].expert._id
+      @$('.available').hide()
+    # $log 'available', available.length
+    @$('.available').html @tmplA {available}
+    @
+  renderRecordings: ->
+    @$('.videolist').html('')
+    for r in @videos.toJSON()
       details = r.data.liveStreamingDetails
       start = moment(details.actualStartTime)
       end = moment(details.actualEndTime)
       len = moment.duration(end.diff(start))
       details.actualLength = len.hours() + 'h ' + len.minutes() + 'm'
-      r
-    @$('.list').html @tmpl { recordings }
-    @
-  fetch: (e) ->
-    e.preventDefault()
-    @renderInputsValid()
-    input = @elm('youtube')
-    youtubeId = parseYoutubeId(input.val())
-    if !youtubeId then return
-    $(e.target).attr('disabled', true)
-    input.val(youtubeId)
-    @model.youtubeId = youtubeId
-    @model.fetch { success: @renderSuccess, error: @renderError }
-  renderSuccess: (model, response, options) =>
-    @$('.fetch').attr('disabled', false)
-    @elm('youtube').val('')
-    recording = { data: @model.toJSON(), type: 'youtube' }
-    existing = @collection.getByYoutubeId(recording.data.id)
-    if existing then return existing.set recording
-    @collection.add recording
-  renderError: (model, response, options) =>
-    @$('.fetch').attr('disabled', false)
-    super model, response, options
-  delete: (e) ->
-    youtubeId = $(e.target).data('id')
-    recording = @collection.getByYoutubeId(youtubeId)
-    @collection.remove recording
-
-class exports.CallEditView extends BB.ModelSaveView
-  async: off
-  el: '#edit'
-  tmpl: require './templates/CallEdit'
-  viewData: ['duration', 'date', 'time', 'type', 'notes']
-  events:
-    'click .save': (e) ->
-      $(e.target).attr('disabled', true)
-      @save(e)
-  initialize: ->
-    # orders and request are already set by the time the router sets the model
-    @listenTo @model, 'change', @render
-  render: ->
-    call = @model.toJSON()
-    expert = @request.suggestion(call.expertId).expert
-    orders = @collection.toJSON()
-    orders = unschedule orders, call._id
-
-    # TODO include the .zone() function so it will be PST everywhere
-    call.time = moment(call.datetime).format('HH:mm')
-    call.date = moment(call.datetime).format(dateFormat)
-
-    # TODO open source / private / nda dropdown
-    expert.credit = calcExpertCredit orders, call.expertId
-    # expert.credit.byTypeArray = _.values(expert.credit.byType)
-
-    # hours dropdown
-    balance = expert.credit.byType[call.type].balance
-    expert.selectOptions = _.range(1, balance + 1)
-
-    # TODO call.status
-    d = _.extend call, { expert, requestId: @request.id }
-    @$('.datepicker').stop()
-    @$('.timepicker').timepicker('remove')
-    @$('#callEdit').html @tmpl d
-    @$('.datepicker').pickadate(pickadateOptions)
-    @$('.timepicker').timepicker(timepickerOptions)
+      @$('.videolist').append @tmplR r
     @
   getViewData: ->
     d = @getValsFromInputs @viewData
+    d.duration = parseInt d.duration
+    d.inviteOwner = @elm('inviteOwner').is(':checked')
     d.sendNotifications = @elm('sendNotifications').is(':checked')
     d.recordings = @videos.toJSON()
+    $log 'getViewData', d
     d
   renderSuccess: (model, response, options) =>
-    window.location = "/adm/pipeline/request/#{@request.get('_id')}"
+    existing = _.find @request.get('calls'), (c) -> c._id == model.id
+    if existing
+      calls = _.without @request.get('calls'), existing
+      calls.push model.attributes
+      @request.set { calls }
+      @$('.save').attr('disabled', false)
+    else
+      @request.silentReset model.attributes
+      $log '@request', @request.get 'calls'
+      call = _.max model.get('calls'), (c) -> objectId2Date(c._id)
+      @model.silentReset call
+      @collection.fetch()
+      $log '@model', @model.attributes
+      $log '@request', @request.get 'calls'
+    @request.trigger 'change:calls'
   renderError: (model, response, options) ->
     @$('.save').attr('disabled', false)
     super model, response, options
+  fetchYoutube: (e) ->
+    youtubeId = parseYoutubeId(@elm('youtube').val())
+    if youtubeId? && youtubeId != ''
+      @elm('youtube').val('')
+      @video.youtubeId = youtubeId
+      @video.fetch success: (model) =>
+        $log 'vid', model.toJSON()
+        @videos.updateAndReset data: model.toJSON(), type: 'youtube'
+        @save()
+  deleteYoutube: (e) ->
+    youtubeId = $(e.target).data('id')
+    recording = @videos.getByYoutubeId(youtubeId)
+    @videos.remove recording
+    @save()
+
 
 module.exports = exports
