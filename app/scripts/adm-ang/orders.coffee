@@ -566,6 +566,7 @@ module.exports = (pageData) ->
       console.log "updateOrderList"
       $scope.orderViewLimit = 40
       # Search all if new search is starting
+      return if not $scope.dateStart or not $scope.dateEnd
       if searchText and newSearch
         $scope.dateRange = 'all'
         newSearch = false
@@ -636,16 +637,15 @@ module.exports = (pageData) ->
     $scope.dateStart = moment().startOf("week").subtract("w", 2).toDate()
     $scope.dateEnd = moment().endOf('week').toDate()
 
-    $scope.metrics = _.shuffle apData.orders.getChannelMetrics($scope.dateStart, $scope.dateEnd)
+    $scope.metrics = apData.orders.getChannelMetrics($scope.dateStart, $scope.dateEnd)
 
-    # $scope.metrics = _.shuffle $scope.metrics
-    
-    console.log "$scope.metrics", $scope.metrics
-
+    updateRange = ->
+      return if not $scope.dateStart or not $scope.dateEnd
+      $scope.metrics = apData.orders.getChannelMetrics($scope.dateStart, $scope.dateEnd)
 
     # Watch date updates
-    $scope.$watch "dateStart", () -> $scope.metrics = apData.orders.getChannelMetrics($scope.dateStart, $scope.dateEnd)
-    $scope.$watch "dateEnd", () -> $scope.metrics = apData.orders.getChannelMetrics($scope.dateStart, $scope.dateEnd)
+    $scope.$watch "dateStart", () -> updateRange()
+    $scope.$watch "dateEnd", () -> updateRange()
 
 
   ]).
@@ -670,6 +670,7 @@ module.exports = (pageData) ->
     $scope.$watch "dateEnd", () -> updateRange()
 
     updateRange = () ->
+      return if not $scope.dateStart or not $scope.dateEnd
       week2week = apData.orders.getGrowth 'weekly', moment($scope.dateStart), moment($scope.dateEnd)
       $scope.report = week2week.report
       $scope.reportTotals = week2week.reportTotals
