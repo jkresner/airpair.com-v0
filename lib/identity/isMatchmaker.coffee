@@ -11,7 +11,7 @@ module.exports = (options) ->
 
   (req, res, next) ->
 
-    if ! roles.isAdmin req.user
+    if ! roles.isMatchmaker req.user
       if options.isApi
         return res.send 403, {}
       else
