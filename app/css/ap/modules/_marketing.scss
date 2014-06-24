@@ -1,4 +1,31 @@
 
+%link {
+  &:hover {
+    color: $brand-primary;
+  }
+}
+
+
+
+// Nav Public
+
+.navbar-default{
+  .nav-public {
+    margin-left: 40px;
+
+    & > li > a {
+      color: #353535;
+      @extend %link;
+    }
+  }
+  
+}
+
+
+
+
+
+
 
 .img-overlap {
   position: relative;
@@ -25,7 +52,7 @@
 
 
 
-.hover-item {
+.user-badge {
   position: relative;
   &:hover .hover-show {
     display: block;
@@ -36,18 +63,24 @@
     opacity: 0;
     background:rgba(255,255,255,.9);
     position: absolute;
-    font-size: 16px;
+    font-size: 15px;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
+    height: 100%;
   }
 }
+
+
 
 
 .price-columns {
   & > div:nth-child(even) {
     background: #F8F8F8;
+  }
+  & > div:nth-child(odd) {
+    background: #FFF;
   }
   &.five {
     & > div {
@@ -62,6 +95,8 @@
     font-size: 50px;
   }
 }
+
+
 
 
 
@@ -101,8 +136,6 @@
 
 
 
-
-
 .avatar-logo {
   position: relative;
   &:hover {
@@ -136,8 +169,6 @@
 
 
 
-
-
 // Horizontal Dividers
 
 hr {
@@ -153,6 +184,77 @@ hr {
     }
   }
 }
+
+
+
+
+
+
+
+// Testimonials
+
+.testimonial-list {
+  @extend .center-block;
+  width: 680px;
+  padding: 40px 0;
+  .testimonial {
+    border-bottom: 1px solid #eee;
+    padding: 30px 0;
+    &:first-child {
+      padding-top: 0;
+    } 
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+}
+.testimonial {
+  padding-bottom: 20px;
+  .avatar-logo {
+    margin-top: 15px;
+  }
+}
+
+
+
+
+
+
+.bg-img-glass {
+  @include clearfix();
+  position: relative;
+  overflow: hidden;
+  background:#000;
+  .bg {
+    opacity: .8;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    width: 100%;
+    @media (max-width: 1200px) {
+      width: 1200px;
+    }
+
+  }
+
+  .bg-white {
+    position: relative;
+    background: rgba(255,255,255,.9);
+    border-top: 7px solid $brand-primary;
+    margin: 90px auto;
+    width: 680px;
+    padding: 40px;
+    text-align: center;
+    p {
+      line-height: 25px;
+    }
+  }
+}
+
+
+
+
 
 
 

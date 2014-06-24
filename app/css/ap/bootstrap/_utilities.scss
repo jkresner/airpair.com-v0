@@ -76,6 +76,10 @@
 .bg-slate {background:$brand-slate;}
 .bg-primary {background:$brand-primary;}
 
+.bg-img {
+  background-size: 100%;
+}
+
 .m-t-half {  margin-top:    10px; }
 .m-t-1    {  margin-top:    20px; }
 .m-t-2    {  margin-top:    40px; }
