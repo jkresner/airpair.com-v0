@@ -8,13 +8,13 @@ storySteps = [
   { app:'ap/request/Router', usr:'jdowd', frag: '#', fixture: f.request, pageData: {} }
   { app:'adm/pipeline/Router', usr:'admin', frag: '#', fixture: f.inbound, pageData: { experts: data.experts, tags: data.tags } }
   { app:'ap/review/Router', usr:'jdowd', frag: '#rId', fixture: f.review, pageData: {} }
-  { app:'adm/calls/RouterSchedule', usr: 'admin', frag: '#/schedule/rId', fixture: f.callSchedule, pageData: { request: request } }
-  { app:'adm/calls/RouterSchedule', usr: 'admin', frag: '#/schedule/rId', fixture: f.callSchedule, pageData: { request: request } }
-  { app:'adm/calls/RouterSchedule', usr: 'admin', frag: '#/schedule/rId', fixture: f.callSchedule, pageData: { request: request } }
-  { app:'adm/calls/RouterSchedule', usr: 'admin', frag: '#/schedule/rId', fixture: f.callSchedule, pageData: { request: request } }
+  { app:'ap/schedule/Router', usr: 'admin', frag: '#/schedule/rId', fixture: f.callSchedule, pageData: { request: request } }
+  { app:'ap/schedule/Router', usr: 'admin', frag: '#/schedule/rId', fixture: f.callSchedule, pageData: { request: request } }
+  { app:'ap/schedule/Router', usr: 'admin', frag: '#/schedule/rId', fixture: f.callSchedule, pageData: { request: request } }
+  { app:'ap/schedule/Router', usr: 'admin', frag: '#/schedule/rId', fixture: f.callSchedule, pageData: { request: request } }
   # note: these two have a callId set as @rId
-  { app:'adm/calls/RouterEdit', usr: 'admin', frag: '#', fixture: f.callEdit, pageData: { request: request } }
-  { app:'adm/calls/RouterEdit', usr: 'admin', frag: '#', fixture: f.callEdit, pageData: { request: request } }
+  { app:'ap/schedule/Router', usr: 'admin', frag: '#', fixture: f.callEdit, pageData: { request: request } }
+  { app:'ap/schedule/Router', usr: 'admin', frag: '#', fixture: f.callEdit, pageData: { request: request } }
 ]
 
 testNum = -1
@@ -142,9 +142,9 @@ describe "Stories: John Dowd", ->
 
   callId = null
   scheduleCall = (app, call, duration, done) =>
-    {requestCall, orders, callScheduleView} = app
+    {requestCall, orders, scheduleView} = app
     orders.once 'sync', =>
-      v = callScheduleView
+      v = scheduleView
       delete call._id
       call.date = moment(call.datetime).format(dateFormat)
       call.time = moment(call.datetime).format(timeFormat)

@@ -8,7 +8,7 @@ storySteps = [
   { app:'ap/request/Router', usr:'bchristie', frag: '#', fixture: f.request, pageData: {} }
   { app:'adm/pipeline/Router', usr:'admin', frag: '#', fixture: f.inbound, pageData: { experts: data.experts, tags: data.tags } }
   { app:'ap/review/Router', usr:'bchristie', frag: '#rId', fixture: f.review, pageData: {} }
-  { app:'adm/calls/RouterSchedule', usr: 'admin', frag: '#/schedule/rId', fixture: f.callSchedule, pageData: { request: request, orders: data.orders[2] } }
+  { app:'ap/schedule/Router', usr: 'admin', frag: '#/schedule/rId', fixture: f.callSchedule, pageData: { request: request, orders: data.orders[2] } }
   { app:'adm/orders/Router', usr: 'admin', frag: '#', fixture: f.orders, pageData: {} }
 ]
 
@@ -142,14 +142,14 @@ describe "Stories: Bruce Christie", ->
 
   it 'can schedule a call as admin', (done) ->
     this.timeout 10000
-    {request, orders, callScheduleView} = @app
-    v = callScheduleView
+    {request, orders, scheduleView} = @app
+    v = scheduleView
 
-    radios = v.$('input:radio')
-    expect(radios.length).to.equal 1 # shouldnt show other expert b/c no hours
+    # radios = v.$('input:radio')
+    # expect(radios.length).to.equal 1 # shouldnt show other expert b/c no hours
 
     # paul should be selected by default, b/c he's the only expert.
-    radios.first().click()
+    # radios.first().click()
 
     type = v.elm('type')
     expect(type.length).to.equal 1
@@ -162,8 +162,8 @@ describe "Stories: Bruce Christie", ->
     duration.val(2)
     expect(duration.val()).to.equal '2'
 
-    date = v.elm('date')
-    expect(moment().format("DD MMM YYYY")).to.equal date.val()
+    # date = v.elm('date')
+    # expect(moment().format("DD MMM YYYY")).to.equal date.val()
 
     expectedTime = '16:30'
     v.elm('time').val('16:30')
@@ -186,7 +186,7 @@ describe "Stories: Bruce Christie", ->
     v.$('.save').click()
 
   it "can pay out customer's experts individually as admin", (done) ->
-    this.timeout 10000
+    this.timeout 12000
     {orders, ordersView} = @app
 
     ###
