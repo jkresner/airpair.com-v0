@@ -54,6 +54,7 @@ describe "Stories: Emil Lee", ->
         requestFormView.$('#pricingOpensource').click()
         requestFormView.$('#budget1').click()
         requestFormView.elm('availability').val('New York. Available after business hours on weekdays, any time weekends.')
+        @app.request.set({owner:'jk'},{silent:true})
 
         @app.request.once 'sync', =>
           @rId = @app.request.id

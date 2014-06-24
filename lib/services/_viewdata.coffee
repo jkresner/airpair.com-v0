@@ -45,13 +45,9 @@ module.exports = class ViewDataService
     new RequestsSvc(@usr).getByIdSmart id, (e, request) =>
       cb e, -> { request }
 
-  callSchedule: (requestId, cb) ->
+  schedule: (requestId, cb) ->
     new RequestsSvc(@usr).getById requestId, (e, request) =>
-      new OrdersSvc(@usr).getByRequestId request._id, (ee, orders) =>
-        cb ee, -> { request, orders }
-
-  callEdit: (callId, cb) ->
-    new RequestsSvc(@usr).getByCallId callId, (e, request) =>
+      if !request? then return cb e, -> {}
       new OrdersSvc(@usr).getByRequestId request._id, (ee, orders) =>
         cb ee, -> { request, orders }
 

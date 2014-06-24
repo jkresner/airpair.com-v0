@@ -1,0 +1,112 @@
+<fieldset style="padding:20px 0 0 0">
+
+  {{#expert}}
+
+    <div style="float:left;width:8%;margin-right:25px">
+      <img src="{{pic}}?s=100" alt="{{name}}" draggable="false">
+
+      <span class="muted" style="clear:both;display:block;margin-top:5px">{{name}}</span>
+    </div>
+
+
+    <div style="float:left;width:26%;border-left:solid 1px #d3d3d3;padding-left:25px">
+
+      <div class="control-group">
+        <label class="control-label" for="type">Call</label>
+        <div class="controls">
+          <select name="type" style="width:130px">
+            {{#each credit.byTypeArray}}
+            <option value="{{type}}" {{#is ../../type type}}selected{{/is}}>
+              {{type}}
+            </option>
+            {{/each}}
+          </select>
+          <select name="duration" style="width:96px">
+            {{#each durationOptions }}
+              <option value="{{this}}" {{#is ../../duration this}}selected{{/is}}>
+                {{this}} {{inflect this "hr" "hrs"}}
+              </option>
+            {{else}}
+              <option disabled>0 hours available for this expert</option>
+            {{/each}}
+          </select>
+        </div>
+      </div>
+
+      <div class="datetimeduration">
+        <div class="control-group">
+          <label class="control-label" for="date">Time</label>
+          <div class="controls">
+            <select name="timezone" style="width:62px;margin-top:-10px;display:inline-block">
+              <option value="PST" selected>PST</option>
+            </select>
+            <input name="time" type="text" class="timepicker input-mini"
+              value="{{../time}}" placeholder="Pick time" style="width:50px">
+            <input name="date" type="text" class="datepicker input-medium"
+              value="{{../date}}" placeholder="pick a date" style="width:80px">
+          </div>
+        </div>
+      </div> <!-- end .datetimeduration -->
+      <div class="control-group">
+        <div class="controls">
+          <label class="control-label">
+            <input name="sendNotifications" type="checkbox"
+            {{#if ../sendNotifications}}checked{{/if}}>
+            Send Notification Email
+          </label>
+        </div>
+      </div>
+      <div class="control-group">
+        <div class="controls">
+          <label class="control-label">
+            <input name="inviteOwner" type="checkbox"
+              {{#if ../inviteOwner}}checked{{/if}}>
+              Include {{../owner}}@airpair.com on event
+          </label>
+        </div>
+      </div>
+
+    </div>
+
+  {{/expert}}
+
+  {{#if _id}}
+
+  <div style="float:left;width:26%;border-left:solid 1px #d3d3d3;padding-left:25px">
+    <div class="control-group">
+      <label class="control-label" for="duration">Notes</label>
+      <div class="controls">
+        <textarea style="height:154px;width:90%" class="input-xxlarge">{{../notes}}</textarea>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="videos" style="float:left;width:26%;border-left:solid 1px #d3d3d3;padding-left:25px">
+    <div class="control-group">
+      <label class="control-label" for="type">Youtube ID's</label>
+      <div class="controls">
+        <input name="youtube" class="youtube" type="text" placeholder="Youtube URL or ID">
+      </div>
+    </div>
+
+    <div class="videolist"></div>
+  </div>
+
+  {{/if}}
+
+  <div class="alert alert-error">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <h4>Error</h4>
+  </div>
+
+
+</fieldset>
+
+<div class="form-actions" style="background:white">
+  {{#if _id}}
+  <button class="save button btn-large btn-warning" style="width:160px">Update</button>
+  {{else}}
+  <button class="save button btn-large btn-primary" style="width:160px">Schedule</button>
+  {{/if}}
+</div>

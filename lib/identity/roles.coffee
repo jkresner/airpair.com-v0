@@ -11,6 +11,8 @@ adminIds = [
 
 matchmakerIds = [
   '101062250088370367878' #SP
+  '106265737415043894759' #MF
+  '112631395549975740914' #RP
 ]
 
 
@@ -26,6 +28,9 @@ initials['108148963133977375684'] = 'tb'
 initials['101062250088370367878'] = 'sp' # (Steve Purves)
 initials['114831291174925522786'] = 'sh' # (saidur hossain)
 initials['104421101970649173838'] = 'team' # (Alyssa Reese)
+initials['106265737415043894759'] = 'mf' # (Martin Feckie)
+initials['112631395549975740914'] = 'rp' # (Ramon Porter)
+
 
 module.exports =
 
@@ -35,7 +40,8 @@ module.exports =
 
   isMatchmaker: (user) ->
     return false if !user?
-    _.contains adminIds, user.googleId
+    return true if _.contains adminIds, user.googleId
+    _.contains matchmakerIds, user.googleId
 
   isRequestOwner: (user, request) ->
     return false if !user?

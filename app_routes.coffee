@@ -1,6 +1,7 @@
 authz            = require './lib/identity/authz'
 authd            = authz.LoggedIn()
 adm              = authz.Admin()
+mm               = authz.Matchmaker()
 { file, render } = require './lib/util/viewRender'
 
 module.exports = (app) ->
@@ -40,8 +41,9 @@ module.exports = (app) ->
   app.get '/adm/companys*', authd, adm, render 'adm/companys'
   app.get '/adm/experts*', authd, adm, render 'adm/experts'
   app.get '/adm/pipeline*', authd, adm, render 'adm/pipeline'
-  app.get '/adm/call/schedule/:id*', authd, adm, render 'adm/callSchedule', ['params.id']
-  app.get '/adm/call/edit/:id*', authd, adm, render 'adm/callEdit', ['params.id']
+
+  app.get '/schedule/:id/*', authd, mm, render 'schedule', ['params.id']
+  app.get '/schedule/:id', authd, mm, render 'schedule', ['params.id']
 
   # api
   require('./lib/api/users')(app)

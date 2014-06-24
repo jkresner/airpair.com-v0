@@ -181,8 +181,7 @@ module.exports = class RequestsService extends DomainService
 
 
   updateSuggestionByExpert: (request, expertReview, cb) =>
-    $log 'updateSuggestionByExpert'
-    $log 'updateSuggestionByExpert', request._id, expertReview._id
+    # $log 'updateSuggestionByExpert', request._id, expertReview._id
     # TODO, add some validation!!
     # if expertReview.agree
     # @settingsSvc.addPayPalSettings usr._id, expertReview.payPalEmail, (e, r) =>

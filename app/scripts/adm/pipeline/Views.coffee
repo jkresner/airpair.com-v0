@@ -475,7 +475,7 @@ class exports.RequestSuggestedView extends BB.BadassView
   remove: (e) ->
     suggestionId = $(e.currentTarget).data 'id'
     toRemove = _.find @model.get('suggested'), (d) -> d._id == suggestionId
-    $log 'suggestRemove', suggestionId, toRemove
+    # $log 'suggestRemove', suggestionId, toRemove
     @model.set 'suggested', _.without( @model.get('suggested'), toRemove )
     @parentView.save e
 
@@ -505,11 +505,12 @@ class exports.RequestCallsView extends BB.BadassView
     require('/scripts/providers/gapi')()
     @listenTo @model, 'change:calls', @render
   render: =>
-    $log 'RequestCallsView.render', gapi?
+    # $log 'RequestCallsView.render', gapi?
     if !gapi? then return setTimeout @render, 1000
     d = @model.toJSON()
     d.calls = d.calls.sort (a, b) -> a.datetime.localeCompare(b.datetime)
     d.calls = d.calls.map (call) =>
+      call.requestId = @model.id
       call.expert = @model.suggestion(call.expertId).expert
       call
     @$el.html @tmpl d

@@ -1,8 +1,8 @@
 <div class="call">
-  <a href="/schedule/{{requestId}}/edit/{{_id}}" title="edit call information">
-    <span>edit</span>
-    <img src="{{expert.pic}}" alt="{{expert.name}}">
+  <a href="#{{_id}}" class="edit" title="edit call information" data-id="{{_id}}">
+    edit
   </a>
+  <img src="{{expert.pic}}?s=100" alt="{{expert.name}}">
 
   <a href="{{gcal.htmlLink}}" class="dateTime" title="view on google calendar" target="_blank">
     {{{callDateTime datetime}}}
