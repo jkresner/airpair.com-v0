@@ -1,0 +1,28 @@
+<div class="call">
+  <a href="/adm/call/edit/{{_id}}" title="edit call information">
+    <span>edit</span>
+    <img src="{{expert.pic}}" alt="{{expert.name}}">
+  </a>
+
+  <a href="{{gcal.htmlLink}}" class="dateTime" title="view on google calendar" target="_blank">
+    {{{callDateTime datetime}}}
+  </a>
+
+  <label>{{type}}</label>
+  <label class="duration">
+    {{duration}} {{inflect duration "hour" "hours"}}
+  </label>
+
+  <!-- <span class="label label-{{status}}">{{status}}</span> -->
+  {{#if recordings}}
+    {{#each recordings}}
+    <a href="http://youtu.be/{{data.id}}" target="_blank">
+      <img src="{{data.snippet.thumbnails.default.url}}"
+        class="youtubeThumbnail" alt="youtube thumbnail">
+    </a>
+    {{/each}}
+  {{else}}
+    <div class="g-hangout" id="{{_id}}"></div>
+    {{!-- <img src="/images/css/hangout.png" /></a> --}}
+  {{/if}}
+</div>

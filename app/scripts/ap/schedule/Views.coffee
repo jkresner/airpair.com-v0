@@ -9,14 +9,45 @@ unschedule       = require 'lib/mix/unschedule'
 storage          = require('../../shared/util').storage
 
 dateFormat = "DD MMM YYYY"
-pickadateOptions =
-  format: "dd mmm yyyy"
-timepickerOptions =
-  timeFormat: 'H:i'
+pickadateOptions = format: "dd mmm yyyy"
+timepickerOptions = timeFormat: 'H:i'
 
-class exports.CallScheduleView extends BB.ModelSaveView
-  async: off
-  el: '#scheduleForm'
+
+class exports.CallsView extends BB.BadassView
+  el: '#calls'
+  # logging: on
+  tmplCall: require './templates/RequestCall'
+  tmpl: require './templates/RequestCalls'
+  initialize: ->
+    require('/scripts/providers/gapi')()
+    @listenTo @model, 'change:calls', @render
+  render: =>
+    $log 'RequestCallsView.render', gapi?
+    if !gapi? then return setTimeout @render, 1000
+    d = @model.toJSON()
+    d.calls = d.calls.sort (a, b) -> a.datetime.localeCompare(b.datetime)
+    d.calls = d.calls.map (call) =>
+      call.expert = @model.suggestion(call.expertId).expert
+      call
+    @$el.html @tmpl d
+    for c in d.calls
+      @$('#scheduled').append @tmplCall c
+      if $("##{c._id}").length > 0
+        hData =
+          topic: @model.roomName c.expert._id
+          render: 'createhangout'
+          hangout_type: 'onair'
+          invites: [{id:c.expert.email,invite_type:'EMAIL'},{'id':@model.contact(0).gmail,invite_type:'EMAIL'}]
+          initial_apps: [{'app_id' : '140030887085', 'app_type' : 'LOCAL_APP' }]
+          widget_size: 72
+        # $log 'hData', hData
+        gapi.hangout.render "#{c._id}", hData
+
+
+
+class exports.ScheduleView extends BB.ModelSaveView
+  # async: off
+  el: '#schedule'
   tmpl: require './templates/CallSchedule'
   viewData: ['duration', 'date', 'time', 'type']
   events:
@@ -40,7 +71,6 @@ class exports.CallScheduleView extends BB.ModelSaveView
     @listenTo @request, 'change', @render
     @listenTo @collection, 'reset', @render
     @listenTo @model, 'change', @render
-
   render: ->
     orders = @collection.toJSON()
     selectedExpert = null
