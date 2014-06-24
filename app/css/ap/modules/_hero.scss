@@ -1,7 +1,10 @@
 
 .hero {
   background: url("/images/home/banner-home.jpg");
-  background-size: 100%;
+  background-size: cover;
+  @media (max-width: 1200px) {
+    background-size: 1200px;
+  }
   &.behind-nav {
     margin-top: -100px;
     .hero-content {
@@ -13,10 +16,8 @@
     margin-bottom:30px;
     text-align: center;
     padding: 50px 0;
-
     h1 {
       color: white;
-      // opacity: 0.9;
     }
     h3 {
       
@@ -29,6 +30,13 @@
       color: white;
       // opacity: 0.8;
       letter-spacing: 1px;
+      a {
+        text-decoration: underline;
+        color: #fff;
+        &:hover {
+          // color: $brand-primary;
+        }
+      }
     }
     a.login-now {
       color: white;
@@ -64,7 +72,7 @@
         float: left;
         a {
           display: inline-block;
-          padding: 17px 28px 18px 0;
+          padding: 20px 25px 20px 0;
           color: #555;
           font-size: 13px;
           font-weight: bold;

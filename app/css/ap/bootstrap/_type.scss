@@ -96,7 +96,9 @@ cite    { font-style: normal; }
 
 .text-upper { text-transform: uppercase; }
 
-.text-bright {color: #fff;}
+.text-bright {
+  color: #fff;
+}
 
 .text-xs {font-size: 12px;}
 .text-lg {font-size: 20px;}
@@ -150,6 +152,16 @@ cite    { font-style: normal; }
   padding-bottom: (($line-height-computed / 2) - 1);
   margin: ($line-height-computed * 2) 0 $line-height-computed;
   border-bottom: 1px solid $page-header-border-color;
+}
+
+
+
+
+.header-grad {
+  @include gradient-horizontal(rgba(0,0,0,.5), rgba(0,0,0,0), 0%, 50%);
+  color: #fff;
+  padding: 8px 0;
+  font-size: 17px;
 }
 
 

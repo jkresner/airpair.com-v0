@@ -65,8 +65,61 @@
 
 
 
+footer {
+  background: #222;
+  text-align: center;
+  color: #7A7A7A;
+  padding: 25px 0;
+  a {
+    color: #fff;
+  }
+}
+
+
+
+.columns-five {
+  @include clearfix;
+  .column {
+    width: 20%;
+    float: left;
+    padding: 0 15px;
+    &:first-child {padding-left:0;}
+    &:last-child {padding-right:0;}
+  }
+}
 
 
 
 
+// .user-badge {
+//   background: #fafafa;
+//   .user-photo {
+//     height: 200px;
+//     overflow: hidden;
+//     img {
+//       width: 100%;
+//     }
+//   }
+//   .user-info {
+//     padding: 15px;
+//     .name {
+//       font-weight: bold;
+//       margin-bottom: 10px;
+//     }
+//     .tech {
+//       font-weight: bold;
+//       color: $gray-light;
+//     }
+//     .title {
+//       color: $gray-light;
+//     }
+//   }
+// }
+
+
+
+
+
+/*  Pages
+~-----------------------------------------*/
 
