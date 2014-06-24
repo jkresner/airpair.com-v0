@@ -150,7 +150,7 @@ class exports.ScheduleView extends BB.ModelSaveView
     d.inviteOwner = @elm('inviteOwner').is(':checked')
     d.sendNotifications = @elm('sendNotifications').is(':checked')
     d.recordings = @videos.toJSON()
-    $log 'getViewData', d
+    # $log 'getViewData', d
     d
   renderSuccess: (model, response, options) =>
     existing = _.find @request.get('calls'), (c) -> c._id == model.id
@@ -161,12 +161,9 @@ class exports.ScheduleView extends BB.ModelSaveView
       @$('.save').attr('disabled', false)
     else
       @request.silentReset model.attributes
-      $log '@request', @request.get 'calls'
       call = _.max model.get('calls'), (c) -> objectId2Date(c._id)
       @model.silentReset call
       @collection.fetch()
-      $log '@model', @model.attributes
-      $log '@request', @request.get 'calls'
     @request.trigger 'change:calls'
   renderError: (model, response, options) ->
     @$('.save').attr('disabled', false)
@@ -177,7 +174,7 @@ class exports.ScheduleView extends BB.ModelSaveView
       @elm('youtube').val('')
       @video.youtubeId = youtubeId
       @video.fetch success: (model) =>
-        $log 'vid', model.toJSON()
+        # $log 'vid', model.toJSON()
         @videos.updateAndReset data: model.toJSON(), type: 'youtube'
         @save()
   deleteYoutube: (e) ->
