@@ -1,17 +1,21 @@
 
 .hero {
-  background: url("/images/pages/home/banner-home.jpg");
+  @include clearfix();
+  background: url("/images/pages/home/banner-home.jpg") 0 -38px;
   background-size: cover;
+  
   @media (max-width: 1200px) {
     background-size: 1200px;
   }
+  
   &.behind-nav {
     margin-top: -100px;
     .hero-content {
       padding: 160px 0 50px;
     }
   }
-  @include clearfix();
+  
+
   .hero-content {
     margin-bottom:30px;
     text-align: center;
@@ -28,14 +32,10 @@
       margin-bottom: 26px;
       margin-top: 20px;
       color: white;
-      // opacity: 0.8;
       letter-spacing: 1px;
       a {
         text-decoration: underline;
         color: #fff;
-        &:hover {
-          // color: $brand-primary;
-        }
       }
     }
     a.login-now {
@@ -64,9 +64,18 @@
       }
     }
   }
+
+
+  .gaurantee {
+    position: absolute;
+    top: -52px;
+    left: 0;
+    width: 130px;
+  }
+
+
   .nav-technologies {
     background: rgba(255, 255, 255, 0.6);
-    margin-bottom: 20px;
     ul {
       li {
         float: left;
@@ -83,26 +92,21 @@
       }
     }
   }
+
+
+
 }
 
 
+
+
+// Hero on Marketing Landing Pages
 
 .hero .img-overlap {
   margin-top: -60px;
 }
 
-
 .hero-cta-text {
   height: 100px;
-}
-
-
-.hero-landing-top {
-  .gaurantee {
-    position: absolute;
-    top: -52px;
-    left: 0;
-    width: 130px;
-  }
 }
 

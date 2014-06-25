@@ -220,7 +220,7 @@ hr {
 
 
 
-.bg-img-glass {
+.bg-img-box {
   @include clearfix();
   position: relative;
   overflow: hidden;
@@ -234,6 +234,9 @@ hr {
     width: 100%;
     @media (max-width: 1200px) {
       width: 1200px;
+    }
+    &.bg-desk {
+      top: -270px;
     }
 
   }

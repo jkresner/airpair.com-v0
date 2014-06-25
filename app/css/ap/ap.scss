@@ -72,6 +72,10 @@ footer {
   padding: 25px 0;
   a {
     color: #fff;
+    &:hover {
+      color: #fff;
+      text-decoration: underline;
+    }
   }
 }
 
@@ -88,33 +92,6 @@ footer {
   }
 }
 
-
-
-
-// .user-badge {
-//   background: #fafafa;
-//   .user-photo {
-//     height: 200px;
-//     overflow: hidden;
-//     img {
-//       width: 100%;
-//     }
-//   }
-//   .user-info {
-//     padding: 15px;
-//     .name {
-//       font-weight: bold;
-//       margin-bottom: 10px;
-//     }
-//     .tech {
-//       font-weight: bold;
-//       color: $gray-light;
-//     }
-//     .title {
-//       color: $gray-light;
-//     }
-//   }
-// }
 
 
 
