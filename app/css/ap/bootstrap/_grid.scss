@@ -27,8 +27,10 @@
 
 
 .page-wide-only {
-  .container {
-    width: $container-lg !important;
+  @media (max-width: $screen-sm-max) {
+    .container {
+      width: $container-md !important;
+    }
   }
 }
 
