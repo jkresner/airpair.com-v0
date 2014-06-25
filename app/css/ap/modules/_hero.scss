@@ -4,22 +4,39 @@
   background: url("/images/pages/home/banner-home.jpg") 0 -38px;
   background-size: cover;
   
-  @media (max-width: 1200px) {
+  @media (max-width: 1200) {
     background-size: 1200px;
   }
   
   &.behind-nav {
     margin-top: -100px;
     .hero-content {
-      padding: 160px 0 50px;
+      padding-top: 160px;
+      padding-bottom: 50px;
     }
   }
   
 
+  @media (max-width: $screen-xs) {
+
+  &.behind-nav {
+    .hero-content {
+      padding-top: 120px;
+    }
+  }
+    h1 {
+      font-size: 29px;
+    }
+
+  }
+
+
+
   .hero-content {
     margin-bottom:30px;
     text-align: center;
-    padding: 50px 0;
+    padding-right: 20px;
+    padding-left: 20px;
     h1 {
       color: white;
     }
@@ -27,7 +44,7 @@
 
     }
     p {
-      width: 800px;
+      // width: 800px;
       margin: 0 auto;
       margin-bottom: 26px;
       margin-top: 20px;
@@ -63,6 +80,8 @@
         color: $brand-primary;
       }
     }
+
+    // .btn-primary {}
   }
 
 
@@ -76,7 +95,11 @@
 
   .nav-technologies {
     background: rgba(255, 255, 255, 0.6);
+    height: 58px;
+    overflow-y: hidden;
+    overflow-x: scroll;
     ul {
+      width: 1150px;
       li {
         float: left;
         a {

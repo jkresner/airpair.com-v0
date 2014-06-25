@@ -63,7 +63,49 @@
 
 
 
+// Temp Mobile Navbar
 
+@media (max-width: $grid-float-breakpoint-max){
+  .navbar-default {
+    .navbar-header {
+      float: left;
+    }
+    .navbar-brand-img img{
+      width: 100px;
+      padding-top: 4px;
+    }
+    .nav-public{
+      float: left;
+      margin-left: 10px;
+    }
+    .navbar-right {
+      float: right;
+    }
+  }
+
+}
+
+%link {
+  &:hover {
+    color: $brand-primary;
+  }
+}
+
+.navbar-default{
+  .nav-public {
+    margin-left: 40px;
+
+    & > li > a {
+      color: #353535;
+      @extend %link;
+    }
+  }
+  
+}
+
+
+
+// Footer
 
 footer {
   background: #222;
@@ -81,14 +123,26 @@ footer {
 
 
 
+// Custom 5 column grid
+
 .columns-five {
   @include clearfix;
   .column {
-    width: 20%;
-    float: left;
-    padding: 0 15px;
     // &:first-child {padding-left:0;}
     // &:last-child {padding-right:0;}
+    // @include center-block();
+    margin: 0 auto 30px;
+    @media (min-width: $screen-xs-min) {
+      width: auto;
+      // margin: 0 auto 30px;
+    }
+    @media (min-width: $screen-sm-min) {
+      margin: 0;
+      padding: 0 15px;
+      float: left;
+      width: 20%;
+    }
+
   }
 }
 
