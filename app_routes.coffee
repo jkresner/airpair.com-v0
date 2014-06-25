@@ -14,6 +14,7 @@ module.exports = (app) ->
     else render('home')(req, r, n)
 
   app.get '/so10/:id', render 'landing/so10', ['params.id']
+  app.get '/so11/:id', render 'landing/so11', ['params.id']
 
   app.get '/', renderHome, render 'dashboard'
   app.get '/yc', file 'yc'

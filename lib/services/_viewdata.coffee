@@ -99,6 +99,7 @@ module.exports = class ViewDataService
       feature = name:'Marko Topolnik', me: 'marko', claim: 'Java Top Answerer' if id is 'java'
       cb e, -> { tag, feature }
 
+  so11: (id, cb) -> @so10 id, cb
 
   paypalSuccess: (id, cb) ->
     new OrdersSvc(@usr).markPaymentReceived id, {}, (e, order) =>
