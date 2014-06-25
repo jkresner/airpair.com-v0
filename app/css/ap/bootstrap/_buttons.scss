@@ -49,6 +49,11 @@
     @include opacity(.65);
     @include box-shadow(none);
   }
+  @media (max-width: $screen-sm-min) {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
 }
 
 

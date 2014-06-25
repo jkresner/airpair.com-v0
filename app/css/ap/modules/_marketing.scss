@@ -1,25 +1,5 @@
 
-%link {
-  &:hover {
-    color: $brand-primary;
-  }
-}
 
-
-
-// Nav Public
-
-.navbar-default{
-  .nav-public {
-    margin-left: 40px;
-
-    & > li > a {
-      color: #353535;
-      @extend %link;
-    }
-  }
-  
-}
 
 
 
@@ -53,22 +33,28 @@
 
 
 .user-badge {
-  position: relative;
-  &:hover .hover-show {
-    display: block;
-    opacity: 1;
+  .user-info {
+    position: relative;  
+    &:hover .hover-show {
+      display: block;
+      opacity: 1;
+    }
+    .hover-show {
+      @include transition(opacity .2s ease-in);
+      opacity: 0;
+      background:rgba(255,255,255,.9);
+      position: absolute;
+      font-size: 15px;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 100%;
+    }
   }
-  .hover-show {
-    @include transition(opacity .2s ease-in);
-    opacity: 0;
-    background:rgba(255,255,255,.9);
-    position: absolute;
-    font-size: 15px;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: 100%;
+  @media (max-width: $screen-xs-max) {
+    width: 280px;
+    margin: 0 auto;
   }
 }
 
@@ -91,9 +77,35 @@
       border: 1px solid #EEE;
     }
   }
+
+  .tier-name {
+    @extend .text-muted;
+    @extend .text-upper;
+    margin: 20px 0;
+    font-size: 12px;
+
+  }
   .price {
     font-size: 50px;
   }
+
+  @media (max-width: $screen-xs-max) {
+    &.five > div {
+      float: none;
+      width: 270px;
+      margin: 0 auto;
+    }
+  }
+  @media (min-width: $screen-sm-min) {
+    .price {font-size: 40px;}
+    p {font-size: 12px;}
+  }
+  @media (min-width: $screen-md-min) {
+    .tier-name {font-size: 14px;}
+    .price {font-size: 40px;}
+    p {font-size: inherit;}
+  }
+
 }
 
 
@@ -195,8 +207,14 @@ hr {
 
 .testimonial-list {
   @extend .center-block;
-  width: 680px;
   padding: 40px 0;
+
+  // @media (min-width: $screen-sm-min) {
+    // width: $container-sm;
+  // }
+  @media (min-width: $screen-md-min) {
+    width: 680px;
+  }
   .testimonial {
     border-bottom: 1px solid #eee;
     padding: 30px 0;
@@ -211,7 +229,7 @@ hr {
 .testimonial {
   padding-bottom: 20px;
   .avatar-logo {
-    margin-top: 15px;
+    margin: 15px auto 0;
   }
 }
 
@@ -245,13 +263,21 @@ hr {
     position: relative;
     background: rgba(255,255,255,.9);
     border-top: 7px solid $brand-primary;
-    margin: 90px auto;
-    width: 680px;
-    padding: 40px;
+    margin: 90px 10px;
+    // width: 680px;
+    padding: 15px;
     text-align: center;
     p {
       line-height: 25px;
+      font-size: 14px;
     }
+    @media (min-width: $screen-md-min) {
+      width: 680px;
+      margin: 90px auto;
+      padding: 40px;
+      p {font-size: inherit;}
+    }
+
   }
 }
 
