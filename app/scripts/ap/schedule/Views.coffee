@@ -38,7 +38,7 @@ class exports.CallsView extends BB.BadassView
         @renderHangoutBtn(c) if $("##{c._id}").length > 0
   renderHangoutBtn: (c) =>
     hData =
-      topic: @model.roomName c.expert._id
+      topic: @model.roomName(c.expert._id) + ' ' + c.expert.email + ' ' + @model.contact(0).gmail
       render: 'createhangout'
       hangout_type: 'onair'
       invites: [{id:c.expert.email,invite_type:'EMAIL'},{'id':@model.contact(0).gmail,invite_type:'EMAIL'}]
