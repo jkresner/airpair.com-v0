@@ -9,6 +9,7 @@ class Api
 
   constructor: (app, route) ->
     @admin    = authz.Admin isApi: true
+    @mm       = authz.Matchmaker isApi: true
     @loggedIn = authz.LoggedIn isApi: true
     @routes app, route
 

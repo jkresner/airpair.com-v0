@@ -8,8 +8,8 @@ class RequestCallsApi extends require('./_api')
 
   routes: (app, route) ->
     app.get     "/api/#{route}/calls/:permalink", @loggedIn, @ap, @detail
-    app.post    "/api/#{route}/:requestId/calls", @admin, @validate, @ap, @create
-    app.put     "/api/#{route}/:requestId/calls/:callId", @admin, @validate, @ap, @update
+    app.post    "/api/#{route}/:requestId/calls", @mm, @validate, @ap, @create
+    app.put     "/api/#{route}/:requestId/calls/:callId", @mm, @validate, @ap, @update
 
   detail: (req) =>
     @svc.getByCallPermalink req.params.permalink, @cSend
