@@ -62,6 +62,7 @@ class exports.ScheduleView extends BB.ModelSaveView
   events:
     'click input:radio': (e) ->
       @model.set 'expertId', @$(e.target).val()
+      @model.trigger 'change:id'
     'change [name=type]': ->
       @model.set 'type', @elm('type').val()
       @render()
