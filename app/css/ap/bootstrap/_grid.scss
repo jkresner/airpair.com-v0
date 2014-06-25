@@ -26,6 +26,13 @@
 }
 
 
+.page-wide-only {
+  .container {
+    width: $container-lg !important;
+  }
+}
+
+
 // Fluid container
 //
 // Utilizes the mixin meant for fixed width containers, but without any defined
