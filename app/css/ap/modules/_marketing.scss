@@ -33,28 +33,60 @@
 
 
 .user-badge {
-  .user-info {
-    position: relative;  
-    &:hover .hover-show {
+  @include clearfix();
+  &:hover {
+    .user-info .description {
       display: block;
       opacity: 1;
     }
-    .hover-show {
+    .btn {
+      color: #FFF;
+      background-color: $brand-primary;
+      border-color: $brand-primary - 20;
+    }
+  }
+  .user-info {
+    position: relative;  
+    .tech {
+      color: $gray-light;
+    }
+    .description {
       @include transition(opacity .2s ease-in);
       opacity: 0;
       background:rgba(255,255,255,.9);
       position: absolute;
-      font-size: 15px;
+      font-size: 12px;
       top: 0;
       left: 0;
       right: 0;
       bottom: 0;
       height: 100%;
+      color: #555;
+      text-decoration: none;
+      // @media (min-width: $screen-lg-min) {
+        // font-size: 14px;
+      // }
+      @media (max-width: $screen-xs-max) {
+        font-size: 14px;
+      }
+      
     }
   }
   @media (max-width: $screen-xs-max) {
     width: 280px;
     margin: 0 auto;
+  }
+}
+a.user-badge{
+  .user-info {
+    * {
+      color: initial;
+      text-decoration: none;
+    }
+  }
+  button {
+    margin-top: 20px;
+    text-decoration: none;
   }
 }
 
@@ -112,37 +144,74 @@
 
 
 
+// How it works section
 
-#how-it-works {
-  .img-overlap {
-    img {
-      width: 90px;
+
+.how-it-works {
+  .main-points {
+    @extend .list-inline;
+    width: 740px;
+    margin: 0 auto;
+    li {
+      float: left;
+      margin-right: 24px;
+      margin-bottom: 8px;
+      &:last-child {margin-right: 0;}
     }
-    img:nth-child(1) {
-      margin-left: -114px;
-    }
-    img:nth-child(2) {
-      margin-left: -45px;
-      z-index: 3;
-    }
-    img:nth-child(3) {
-      margin-left: 24px;
-    }
+
   }
-  .figure {
-    height: 150px;
-    position: relative;
-    .arrow {
-      position: absolute;
-      top: 58px
+  .diagram {
+    @extend .bg-primary;
+    margin: 40px auto 60px;
+    border-radius: 3px;
+    .img-overlap {
+      img {
+        width: 90px;
+      }
+      img:nth-child(1) {
+        margin-left: -114px;
+      }
+      img:nth-child(2) {
+        margin-left: -45px;
+        z-index: 3;
+      }
+      img:nth-child(3) {
+        margin-left: 24px;
+      }
     }
-    .arrow-right {
-      right: -59px;
+
+    .figure {
+      height: 150px;
+      position: relative;
+      .arrow {
+        position: absolute;
+        top: 50px;
+        @include scale(.8);
+        @media (max-width: $grid-float-breakpoint-max) {
+          display: none;
+        }
+      }
+      .arrow-right {
+        right: -77px;
+      }
+      .arrow-left {
+        left: -163px;
+      }
     }
-    .arrow-left {
-      left: -168px;
-    }
+
   }
+  @media (max-width: $grid-float-breakpoint-max) {
+    .diagram, .main-points {    
+      width: 360px;
+      margin-right: auto;
+      margin-left: auto;
+    }
+  }    
+  @media (max-width: $screen-xs) {
+    .diagram, .main-points {
+      width: 290px;
+    }
+  }    
 }
 
 

@@ -23,22 +23,34 @@
 
     <nav class="navbar navbar-default navbar-static-top" role="navigation">
       <div class="container">
-        <a class="navbar-brand-img" href="/">
-          <img src="/images/logos/airpair.png" alt="" width="140px">
-        </a>
-<!--         <div class="navbar-header">
-          <span class="brand-slogan">Better, faster, cheaper consulting. Pay by the hour.</i>
+        <div class="navbar-header">
+          <a class="navbar-brand-img" href="/">
+            <img src="/images/logos/airpair.png" alt="" width="140px">
+          </a>
+          <button type="button" class="navbar-toggle pull-right" data-toggle="collapse" data-target="#nav-mobile">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+
+          <!-- <span class="brand-slogan">Better, faster, cheaper consulting. Pay by the hour.</i> -->
         </div>
- -->        <ul class="nav navbar-nav nav-public">
-          <li><a href="">Experts</a></li>
-          <!-- <li><a href="">Pair Programming</a></li> -->
-          <!-- <li><a href="">Code Review</a></li> -->
-          <!-- <li><a href="">Software Training</a></li> -->
-          <!-- <li><a href="">Technologies</a></li> -->
-        </ul>
-        <ul class="nav navbar-nav navbar-right">
-          <li><a href="/auth/google">Login</a></li>
-        </ul>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="nav-mobile">
+          <ul class="nav navbar-nav">
+            <li><a href="/experts">Experts</a></li>
+          <li><a href="/pair-programming">Pair Programming</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="/auth/google">Login</a></li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+
+
+
+
       </div>
     </nav>
 
@@ -154,12 +166,82 @@
 
 
 
+    <!-- HOW IT WORKS -->
+
+    <div class="bg-slate text-bright m-t-2 how-it-works">
+      <div class="container">
+        <h2 class="text-thin text-center m-t-5">AirPair has Something to Oﬀer for Everyone</h2>
+        <hr class="grad gray">
+        <ul class="main-points">
+          <li><img src="/images/icons/icon32.png" alt="" width="22"> Save time with live debugging help</li>
+          <li><img src="/images/icons/icon32.png" alt="" width="22"> Learn expert best practices </li>
+          <li><img src="/images/icons/icon32.png" alt="" width="22"> Improve your code quality</li>
+        </ul>
+      </div>
+      <div class="diagram container">
+        <h2 class="text-center">How it works</h2>
+        <div class="row m-t-1">
+          <div class="col-sm-4 text-center">
+            <div class="figure">
+              <img src="/images/pages/marketing/how-1.png" alt="">
+            </div>
+            <p>Tell Us What You Need</p>
+          </div>
+          <div class="col-sm-4 text-center">
+            <div class="figure p-t-1">
+              <div class="img-overlap three">
+                <img src="/images/avatars/of.png" alt="" class="img-circle img-border">
+                <img src="/images/avatars/rb.png" alt="" class="img-circle img-border">
+                <img src="/images/avatars/ag.jpeg" alt="" class="img-circle img-border">
+              </div>
+              <svg class="arrow arrow-right" width="161px" height="114px" viewBox="0 0 161 114" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+                  <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+                      <g id="Artboard-3" sketch:type="MSArtboardGroup" transform="translate(78.000000, -13.000000)">
+                          <g id="arrow" sketch:type="MSLayerGroup" transform="translate(22.000000, 14.000000)">
+                              <path d="M0.332,7.036 L49.568,7.036" id="Stroke-1" stroke="#E4E5E1" stroke-width="3" sketch:type="MSShapeGroup"></path>
+                              <path d="M47.38,14.516 L60.332,7.037 L47.38,-0.443 L47.38,14.516" id="Fill-2" fill="#E4E5E1" sketch:type="MSShapeGroup"></path>
+                          </g>
+                      </g>
+                  </g>
+              </svg>
+              <svg class="arrow arrow-left" width="161px" height="114px" viewBox="0 0 161 114" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+                  <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+                      <g id="Artboard-3" sketch:type="MSArtboardGroup" transform="translate(78.000000, -13.000000)">
+                          <g id="arrow" sketch:type="MSLayerGroup" transform="translate(22.000000, 14.000000)">
+                              <path d="M0.332,7.036 L49.568,7.036" id="Stroke-1" stroke="#E4E5E1" stroke-width="3" sketch:type="MSShapeGroup"></path>
+                              <path d="M47.38,14.516 L60.332,7.037 L47.38,-0.443 L47.38,14.516" id="Fill-2" fill="#E4E5E1" sketch:type="MSShapeGroup"></path>
+                          </g>
+                      </g>
+                  </g>
+              </svg>
+            </div>
+            <p>We’ll Match You with 3 Experts</p>
+          </div>
+          <div class="col-sm-4 text-center">
+            <div class="figure">
+              <img src="/images/pages/marketing/how-2.png" alt="">
+            </div>
+            <p>You’ll Choose One and Start a Video Call</p>
+          </div>
+        </div>
+        <div class="row m-b-3 m-t-2">
+          <div class="col-sm-4 col-sm-offset-4">
+            <a id="find-how" href="/find-an-expert" class="trackCustomerLogin btn btn-default btn-lg btn-block">Find an Expert</a>
+          </div>
+        </div>
+      </div>
+
+    </div> <!-- .how-it-works --> 
+
+
+
+
 
 
     <!-- PHOTO -->
 
 
-    <div class="bg-img-box">
+<!--     <div class="bg-img-box">
       <img src="/images/pages/home/bg-desk.jpg" alt="" class="bg bg-desk">
       <div class="container">
         <div class="bg-white">
@@ -169,7 +251,7 @@
         </div>
       </div>
     </div>
-
+ -->
 
 
 
@@ -195,59 +277,78 @@
       <hr>
       <div class="columns-five m-t-2">
         <div class="column">
-          <div class="user-badge text-center">
+          <a class="user-badge text-center" href="/book/auser">
             <div class="user-info">
               <img src="//secure.gravatar.com/avatar/0ec7fe2c17900b71bd85ff63fc9d8a17?s=180" alt="" class="img-circle" width="50%">
-              <h4>Ari Lerner</h4>
-              <h5 class="text-muted">AngularJS</h5>
-              <h6>Book Author</h6>
+              <h4 class="name">Ari Lerner</h4>
+              <h5 class="tech">AngularJS</h5>
+              <h6 class="title">Book Author</h6>
+              <div class="description">
+                Ari is a co-author of The Rails 4 Way, Riding Rails with AngularJS and the Beginner’s Guide to AngularJS. Recently Ari has been training folks in AngularJS at Hack Reactor as a JavaScript teacher. Ari also publishes ng-newsletter.com...
+                <!--, a technical newsletter on expert Angular JS topics and help. -->
+              </div>
             </div>
-            <a href="/book/auser" class="btn btn-slate btn-block m-t-1">Book Ari</a>
-          </div>
+            <button class="btn btn-slate btn-block">Book Ari</button>
+          </a>
         </div>
         <div class="column">
-          <div class="user-badge text-center">
+          <a class="user-badge text-center" href="/book/domenic">
             <div class="user-info">
               <img src="//secure.gravatar.com/avatar/c6d819207a3010b39d13e1f59f2c0029?s=180" alt="" class="img-circle" width="50%">
-              <h4>Domenic Denicola</h4>
-              <h5 class="text-muted">Node.JS</h5>
-              <h6>NPM Core Contributor</h6>
+              <h4 class="name">Domenic Denicola</h4>
+              <h5 class="tech">Node.JS</h5>
+              <h6 class="title">NPM Core Contributor</h6>
+              <div class="description">
+                Domenic is highly active in the JavaScript community. He is famous for publishing over 30 npm modules and maintaining many open-source libraries. Domenic contributes to Node itself, and is a core contributor on the npm team.
+              </div>
             </div>
-            <a href="/book/domenic" class="btn btn-slate btn-block m-t-1">Book Domenic</a>
-          </div>
+            <button class="btn btn-slate btn-block">Book Domenic</button>
+          </a>
         </div>
         <div class="column">
-          <div class="user-badge text-center">
+          <a class="user-badge text-center" href="/book/ryanbigg">
             <div class="user-info">
               <img src="//secure.gravatar.com/avatar/9a2a53db8e9b4476038c94a64b32833f?s=180" alt="" class="img-circle" width="50%">
-              <h4>Ryan Bigg</h4>
-              <h5 class="text-muted">Ruby on Rails</h5>
-              <h6>Book Author</h6>
+              <h4 class="name">Ryan Bigg</h4>
+              <h5 class="tech">Ruby on Rails</h5>
+              <h6 class="title">Book Author</h6>
+              <div class="description">
+                Ryan has been working as a Rails expert for over 8 years. He is co-author of a book with Yehuda Katz and Steve Klabnik called Rails 4 in Action. In 2011 Ryan won a Ruby Hero Award for his contributions to Rails’ documentation. He is also all time...
+                <!-- top #3 answerer for Ruby on Rails on StackOverflow and full-time developer and Community Manager for Spree Commerce. -->
+              </div>
             </div>
-            <a href="/book/ryanbigg" class="btn btn-slate btn-block m-t-1">Book Ryan</a>
-          </div>
+            <button class="btn btn-slate btn-block">Book Domenic</button>
+          </a>
         </div>
         <div class="column">
-          <div class="user-badge text-center">
+          <a class="user-badge text-center" href="/book/danielroseman">
             <div class="user-info">
               <img src="https://secure.gravatar.com/avatar/0f4cefeedec5163556751d61625eedd0?s=180" alt="" class="img-circle" width="50%">
-              <h4>Daniel Roseman</h4>
-              <h5 class="text-muted">Python</h5>
-              <h6>Django #1 Answerer</h6>
+              <h4 class="name">Daniel Roseman</h4>
+              <h5 class="tech">Python</h5>
+              <h6 class="title">Django #1 Answerer</h6>
+              <div class="description">
+                Daniel has been developing websites in Django for eight years. He was worked as a web developer at Google and Global Radio, the UK’s biggest commercial radio company. He’s best known as the #1 Answerer for Django on StackOverflow...
+                <!-- , where he’s helped thousands of developers with their coding problems. -->
+              </div>
             </div>
-            <a href="/book/danielroseman" class="btn btn-slate btn-block m-t-1">Book Daniel</a>
-          </div>
+            <button class="btn btn-slate btn-block">Book Daniel</button>
+          </a>
         </div>
         <div class="column">
-          <div class="user-badge text-center">
+          <a class="user-badge text-center" href="/book/felienne">
             <div class="user-info">
               <img src="//secure.gravatar.com/avatar/f524745bb9975ba777b5c4a9922eb614?s=180" alt="" class="img-circle" width="50%">
-              <h4>Felienne Hermans</h4>
-              <h5 class="text-muted">Excel</h5>
-              <h6>Spreadsheet Professor</h6>
+              <h4 class="name">Felienne Hermans</h4>
+              <h5 class="tech">Excel</h5>
+              <h6 class="title">Spreadsheet Professor</h6>
+              <div class="description">
+                Felienne is an assistant professor at Delft University of Technology, where she researches the application of software engineering methods to spreadsheets. She writes for a number of academic publications and recently finished her PhD...
+                <!-- dissertation on spreadsheets. Felienne regularly speaks an an Excel Expert Trainer on her research about applying software development methodologies to building better spreadsheets. -->
+              </div>
             </div>
-            <a href="/book/felienne" class="btn btn-slate btn-block m-t-1">Book Felienne</a>
-          </div>
+            <button class="btn btn-slate btn-block">Book Felienne</button>
+          </a>
         </div>
       </div>
 
