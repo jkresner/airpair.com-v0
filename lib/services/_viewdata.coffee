@@ -88,6 +88,7 @@ module.exports = class ViewDataService
     id = 'c#' if id is 'c%23'
     new TagsSvc(@usr).getBySoId id, (e, tag) =>
       feature = name:'Yehuda Katz', me: 'wycats', claim: 'Rails Core Team Member'
+      feature = name:'Daniel Roseman', me: 'danielroseman', claim: 'Djano #1 Answerer' if id is 'django' || id is 'python'
       feature = name:'Ran Nachmany', me: 'rannachmany', claim: 'Android Google Developer Expert' if id is 'android'
       feature = name:'Matias Niemelä', me: 'matsko', claim: 'AngularJS Core Team' if id is 'angularjs'
       feature = name:'Phil Sturgeon', me: 'philsturgeon', claim: 'PHP Top Answerer' if id is 'php'
