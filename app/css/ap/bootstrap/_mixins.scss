@@ -148,6 +148,11 @@
 }
 
 // Transformations
+@mixin transform($all) {
+  -webkit-transform: $all;
+      -ms-transform: $all; // IE9 only
+          transform: $all;
+}
 @mixin rotate($degrees) {
   -webkit-transform: rotate($degrees);
       -ms-transform: rotate($degrees); // IE9 only

@@ -34,7 +34,9 @@
 
 .user-badge {
   @include clearfix();
+  text-decoration: none;
   &:hover {
+    text-decoration: none;
     .user-info .description {
       display: block;
       opacity: 1;
@@ -94,20 +96,19 @@ a.user-badge{
 
 
 .price-columns {
+  @include clearfix();
   & > div:nth-child(even) {
     background: #F8F8F8;
   }
   & > div:nth-child(odd) {
     background: #FFF;
   }
-  &.five {
-    & > div {
-      width: 20%;
-      float: left;
-      padding: 0 20px 10px;
-      text-align: center;
-      border: 1px solid #EEE;
-    }
+  .column {
+    float: left;
+    padding: 0 12px 10px;
+    text-align: center;
+    border: 1px solid #EEE;
+    width: 20%;
   }
 
   .tier-name {
@@ -121,21 +122,35 @@ a.user-badge{
     font-size: 50px;
   }
 
+  p {
+    font-weight: 300;
+  }
   @media (max-width: $screen-xs-max) {
-    &.five > div {
+    .column {
       float: none;
       width: 270px;
       margin: 0 auto;
+      height: auto;
     }
   }
   @media (min-width: $screen-sm-min) {
     .price {font-size: 40px;}
     p {font-size: 12px;}
+    .column {height: 240px;}
   }
   @media (min-width: $screen-md-min) {
     .tier-name {font-size: 14px;}
     .price {font-size: 40px;}
     p {font-size: inherit;}
+    .column {height: 260px;}
+    // .column {height: 230px;}
+  }
+
+  @media (min-width: $screen-lg-min) {
+    // .tier-name {font-size: 14px;}
+    // .price {font-size: 40px;}
+    // p {font-size: inherit;}
+    .column {height: 230px;}
   }
 
 }
@@ -162,7 +177,7 @@ a.user-badge{
   }
   .diagram {
     @extend .bg-primary;
-    margin: 40px auto 60px;
+    margin: 40px auto 100px;
     border-radius: 3px;
     .img-overlap {
       img {
@@ -217,14 +232,10 @@ a.user-badge{
 
 
 
+// Avatar img with a logo
+
 .avatar-logo {
   position: relative;
-  &:hover {
-    .logo {
-      @include scale(1.7);
-      background:rgba(255,255,255,.99);
-    }
-  }
   &, > img {
     height: 120px;
     width: 120px;
@@ -245,6 +256,46 @@ a.user-badge{
     }
   }
 }
+
+
+
+
+// Testimonials
+
+.testimonial-list {
+  @extend .center-block;
+  padding: 40px 0;
+
+  @media (min-width: $screen-md-min) {
+    width: 680px;
+  }
+  .testimonial {
+    border-bottom: 1px solid #eee;
+    padding: 30px 0;
+    &:hover {
+      .logo {
+        @include transform(scale(2.54) translate(-14px, -14px));
+        background:rgba(255,255,255,.9);
+      }
+    }
+    &:first-child {
+      padding-top: 0;
+    } 
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+}
+.testimonial {
+  padding-bottom: 20px;
+  .avatar-logo {
+    margin: 15px auto 0;
+  }
+}
+
+
+
+
 
 
 
@@ -270,37 +321,6 @@ hr {
 
 
 
-
-
-// Testimonials
-
-.testimonial-list {
-  @extend .center-block;
-  padding: 40px 0;
-
-  // @media (min-width: $screen-sm-min) {
-    // width: $container-sm;
-  // }
-  @media (min-width: $screen-md-min) {
-    width: 680px;
-  }
-  .testimonial {
-    border-bottom: 1px solid #eee;
-    padding: 30px 0;
-    &:first-child {
-      padding-top: 0;
-    } 
-    &:last-child {
-      border-bottom: none;
-    }
-  }
-}
-.testimonial {
-  padding-bottom: 20px;
-  .avatar-logo {
-    margin: 15px auto 0;
-  }
-}
 
 
 
