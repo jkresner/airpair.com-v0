@@ -19,18 +19,18 @@ matchmakerIds = [
 initials = {}
 initials['117132380360243205600'] = 'jk'
 initials['105314633561185226973'] = 'il'
-initials['103614010394533051287'] = 'lt'
 initials['110496794584456738170'] = 'pg'
-initials['105922668830552511365'] = 'ds'
-initials['112300854530824394263'] = 'mi'
-initials['102299765632981130643'] = 'er'
 initials['108148963133977375684'] = 'tb'
 initials['101062250088370367878'] = 'sp' # (Steve Purves)
-initials['114831291174925522786'] = 'sh' # (saidur hossain)
+initials['114831291174925522786'] = 'support' # (Saidur Hossain)
 initials['104421101970649173838'] = 'team' # (Alyssa Reese)
 initials['106265737415043894759'] = 'mf' # (Martin Feckie)
 initials['112631395549975740914'] = 'rp' # (Ramon Porter)
 
+initials['103614010394533051287'] = 'lt'
+initials['105922668830552511365'] = 'ds'
+initials['112300854530824394263'] = 'mi'
+initials['102299765632981130643'] = 'er'
 
 module.exports =
 
