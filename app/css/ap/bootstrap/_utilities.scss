@@ -71,10 +71,22 @@
 
 .pos-r {position: relative;}
 
-.bg-white {background:white;}
-.bg-gray {background:#fafafa;}
-.bg-slate {background:$brand-slate;}
-.bg-primary {background:$brand-primary;}
+.bg-white {
+  @include clearfix();
+  background:white;
+}
+.bg-gray {
+  @include clearfix();
+  background:#fafafa;
+}
+.bg-slate {
+  @include clearfix();
+  background:$brand-slate;
+}
+.bg-primary {
+  @include clearfix();
+  background:$brand-primary;
+}
 
 .bg-img {
   background-size: 100%;
