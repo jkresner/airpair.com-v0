@@ -17,11 +17,11 @@ module.exports = (app) ->
   app.get '/so11/:id', render 'landing/so11', ['params.id']
   app.get '/so12/:id', render 'landing/so12', ['params.id']
   app.get '/so13/:id', render 'landing/so13', ['params.id']
+  app.get '/railsconf2014', file 'landing/railsconf'
+  app.get '/rails/consulting', file 'landing/railsconsulting'
+  app.get '/googleio-special', file 'landing/googleio'
 
   app.get '/', renderHome, render 'dashboard'
-  app.get '/yc', file 'yc'
-  app.get '/railsconf2014', file 'railsconf'
-  app.get '/rails/consulting', file 'railsconsulting'
   app.get '/book/me', authd, render 'bookme'
 
   # pages
