@@ -63,9 +63,9 @@
       height: 100%;
       color: #555;
       text-decoration: none;
-      @media (min-width: $screen-md-min) {
-        font-size: 14px;
-      }
+      // @media (min-width: $screen-lg-min) {
+        // font-size: 14px;
+      // }
       @media (max-width: $screen-xs-max) {
         font-size: 14px;
       }
