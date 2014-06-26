@@ -422,6 +422,7 @@
       });
 
       document.getElementById('sanity').addEventListener('click', function(e) {
+        addjs.trackEvent('package','clickPackage', 'sanity', 'googleio');
         window.chargeData = {
           name: 'AirPair Sanity Check',
           description: '6 Hours with 2 Silver Experts',
@@ -432,6 +433,7 @@
       });
 
       document.getElementById('accelerate').addEventListener('click', function(e) {
+        addjs.trackEvent('package','clickPackage', 'accelerate', 'googleio');
         window.chargeData = {
           name: 'AirPair Accelerate',
           description: '10 Hours with up to 4 Silver Experts',
@@ -442,6 +444,7 @@
       });
 
       document.getElementById('assimilate').addEventListener('click', function(e) {
+        addjs.trackEvent('package','clickPackage', 'assimilate', 'googleio');
         window.chargeData = {
           name: 'AirPair Assimilate',
           description: '10 Hours with up to 4 Gold Experts',
