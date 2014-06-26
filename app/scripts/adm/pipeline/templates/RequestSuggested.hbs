@@ -48,7 +48,7 @@
       <a href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to={{expert.name}}%20%3c{{expert.email}}%3e&su=You've been chosen for AirPair {{requestId}} ({{threeTagsString}})&body={{mailTemplates.chosen}}" class="email btn btn-small btn-warning" target="_blank"><i class="icon-envelope icon-white"></i> chosen</a>
     {{/if}}
     {{#if mailTemplates.suggested }}
-      <a href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to={{expert.name}}%20%3c{{expert.email}}%3e&su={{tagsString}} AirPair?&body={{mailTemplates.suggested}}" class="email btn btn-small btn-warning" target="_blank"><i class="icon-envelope icon-white"></i> suggested</a>
+      <a href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to={{expert.name}}%20%3c{{expert.email}}%3e&su=${{ rates.expert }}/hr {{tagsString}} AirPair?&body={{mailTemplates.suggested}}" class="email btn btn-small btn-warning" target="_blank"><i class="icon-envelope icon-white"></i> suggested</a>
     {{/if}}
 
     <span class="status label label-{{expertStatus}}">{{ expertStatus }}
