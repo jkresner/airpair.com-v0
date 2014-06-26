@@ -100,6 +100,8 @@ module.exports = class ViewDataService
       cb e, -> { tag, feature }
 
   so11: (id, cb) -> @so10 id, cb
+  so12: (id, cb) -> @so10 id, cb
+  so13: (id, cb) -> @so10 id, cb
 
   paypalSuccess: (id, cb) ->
     new OrdersSvc(@usr).markPaymentReceived id, {}, (e, order) =>

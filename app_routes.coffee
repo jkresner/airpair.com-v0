@@ -15,6 +15,8 @@ module.exports = (app) ->
 
   app.get '/so10/:id', render 'landing/so10', ['params.id']
   app.get '/so11/:id', render 'landing/so11', ['params.id']
+  app.get '/so12/:id', render 'landing/so12', ['params.id']
+  app.get '/so13/:id', render 'landing/so13', ['params.id']
 
   app.get '/', renderHome, render 'dashboard'
   app.get '/yc', file 'yc'
