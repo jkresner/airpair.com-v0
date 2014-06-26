@@ -20,8 +20,8 @@ module.exports = (app) ->
   app.get '/railsconf2014', file 'landing/railsconf'
   app.get '/rails/consulting', file 'landing/railsconsulting'
   app.get '/googleio-specials', file 'landing/googleio'
-  app.get '/googleio-special', (req, res) ->
-    res.redirect '/googleio-specials?utm_source=direct&utm_medium=pamphlets&utm_term=googleio&utm_content=googleio&utm_campaign=goi14'
+  app.get '/googleio*', (req, res) ->
+    res.redirect 'https://www.airpair.com/googleio-specials?utm_source=direct&utm_medium=pamphlets&utm_term=googleio&utm_content=googleio&utm_campaign=goi14'
 
   app.get '/', renderHome, render 'dashboard'
   app.get '/book/me', authd, render 'bookme'
