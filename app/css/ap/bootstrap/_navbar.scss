@@ -57,6 +57,13 @@
   @include clearfix();
   -webkit-overflow-scrolling: touch;
 
+  // position: static;
+  // width: 100%;
+  // top: 66px;
+  @media (max-width: $grid-float-breakpoint) {
+    background: #FFF;
+  }
+
   &.in {
     overflow-y: auto;
   }

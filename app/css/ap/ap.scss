@@ -68,19 +68,20 @@
 @media (max-width: $grid-float-breakpoint-max){
   .navbar-default {
     .navbar-header {
-      float: left;
+      // float: left;
     }
     .navbar-brand-img img{
-      width: 100px;
+      // width: 100px;
       padding-top: 4px;
+      padding-left: 20px;
     }
-    .nav-public{
-      float: left;
-      margin-left: 10px;
-    }
-    .navbar-right {
-      float: right;
-    }
+    // .nav-public{
+    //   float: left;
+    //   margin-left: 10px;
+    // }
+    // .navbar-right {
+    //   float: right;
+    // }
   }
 
 }
@@ -137,6 +138,9 @@ footer {
       // margin: 0 auto 30px;
     }
     @media (min-width: $screen-sm-min) {
+      width: 50%;
+    }
+    @media (min-width: $screen-md-min) {
       margin: 0;
       padding: 0 15px;
       float: left;
