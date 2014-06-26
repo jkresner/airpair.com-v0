@@ -7,7 +7,12 @@
   @media (max-width: 1200) {
     background-size: 1200px;
   }
+  @media (max-width: $grid-float-breakpoint-max) {
+    background-size: 1033px;
+    background-position: -270px 0;
+  }
   
+
   &.behind-nav {
     margin-top: -100px;
     .hero-content {
@@ -19,11 +24,11 @@
 
   @media (max-width: $screen-xs) {
 
-  &.behind-nav {
-    .hero-content {
-      padding-top: 120px;
+    &.behind-nav {
+      .hero-content {
+        padding-top: 120px;
+      }
     }
-  }
     h1 {
       font-size: 29px;
     }
@@ -113,6 +118,7 @@
       }
     }
     @media (max-width: $screen-xs-max) {
+      display: none;
       .container {
         overflow: auto;
       }

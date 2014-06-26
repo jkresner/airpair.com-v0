@@ -94,7 +94,9 @@
 
 .navbar-default{
   .nav-public {
-    margin-left: 40px;
+    @media (min-width: $grid-float-breakpoint) {
+      margin-left: 15px;
+    }
 
     & > li > a {
       color: #353535;
