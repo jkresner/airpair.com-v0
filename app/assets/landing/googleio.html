@@ -133,7 +133,7 @@
 
         <article class="portfolio">
           <a href="/book/toddmotto">
-            <span></span>
+            <span class="angular"></span>
             <header>
               <img src="//secure.gravatar.com/avatar/b56bb22b3a4b83c6b534b4c114671380?s=300?s=200">
             </header>
@@ -145,7 +145,7 @@
 
         <article class="portfolio">
           <a href="/book/matsko" target="_blank">
-            <span style="background-size:140%;background-image:url('//airpair-blog.s3.amazonaws.com/wp-content/uploads/2013/09/angularjs.jpeg')"></span><header><img src="//0.gravatar.com/avatar/3c0ca2c60c5cc418c6b3dbed47b23b69?s=200"></header>
+            <span class="angular"></span><header><img src="//0.gravatar.com/avatar/3c0ca2c60c5cc418c6b3dbed47b23b69?s=200"></header>
             <div>
               <h3>Matias Niemelä</h3><p><em>AngularJS GDE</em>Core Team Member</p><button>Book Matias</button>
             </div>
@@ -162,22 +162,21 @@
         </article>
 
         <article class="portfolio">
-          <a href="/book/avdi" target="_blank">
-            <span></span><header><img src="//avatars2.githubusercontent.com/u/982?s=200"></header>
+          <a href="/book/urish" target="_blank">
+            <span class="angular"></span><header><img src="/images/pages/googleio/uri.jpg"></header>
             <div>
-              <h3>Avdi Grimm</h3><p><em>Ruby Tapas</em>Screen-caster</p><button>Book Avdi</button>
+              <h3>Uri Shaked</h3><p><em>AngularJS</em>GDE</p><button>Book Uri</button>
             </div>
           </a>
         </article>
 
         <article class="portfolio">
-          <a href="/book/tomdale" target="_blank">
-            <span style="background-size:90%;background-image:url('//airpair-blog.s3.amazonaws.com/wp-content/uploads/2014/04/ember-js-airpair-technology.png')"></span>
-            <header>
-              <img src="//0.gravatar.com/avatar/9bf3a766e037b9d5a4da0a6f9d0f4f68?s=200">
+          <a href="/book/rannachmany" target="_blank">
+            <span class="android"></span>
+            <header><img src="/images/pages/googleio/rannachmany.jpg"></
             </header>
             <div>
-              <h3>Tom Dale</h3><p><em>Ember.js</em>Co-creator</p><button>Book Tom</button>
+              <h3>Ran Nachmany</h3><p><em>Android</em>Android</p><button>Book Ran</button>
             </div>
           </a>
         </article>
@@ -198,13 +197,13 @@
         </article>
 
         <article class="portfolio">
-          <a href="/book/auser" target="_blank">
-            <span style="background-size:140%;background-image:url('//airpair-blog.s3.amazonaws.com/wp-content/uploads/2013/09/angularjs.jpeg')"></span>
+          <a href="/book/martonkodok" target="_blank">
+            <span class="android"></span>
             <header>
-              <img src="//airpair-blog.s3.amazonaws.com/wp-content/uploads/2014/01/ari-227x200.jpeg">
+              <img src="//0.gravatar.com/avatar/4a682874e7a4757dc02a9823e277e235?s=200">
             </header>
             <div>
-              <h3>Ari Lerner</h3><p><em>AngularJS</em>Ng-newsletter Creator</p><button>Request Ari</button>
+              <h3>Marton Kodok</h3><p><em>Android</em> Top Answerer</p><button>Request Marton</button>
             </div>
           </a>
         </article>
@@ -354,6 +353,9 @@
     body#home #experts article { width:200px;margin:0px 14px 40px 14px;overflow:hidden; }
     body#home #experts article div { padding:0 16px;position:relative; }
     body#home #experts article span { background-position:center;background-color:white;opacity:0;width:200px;height:170px;display:block;position:absolute;background-repeat:no-repeat;background-size:40%;background-image:url('//airpair-blog.s3.amazonaws.com/wp-content/uploads/2013/09/ruby-on-rails.jpeg') }
+    body#home #experts article span.android { background-size:90%;background-image:url('//airpair-blog.s3.amazonaws.com/wp-content/uploads/2013/09/android.jpeg') }
+    body#home #experts article span.angular { background-size:140%;background-image:url('//airpair-blog.s3.amazonaws.com/wp-content/uploads/2013/09/angularjs.jpeg') }
+
     body#home #experts article:hover a { text-decoration:none!important; }
     body#home #experts article:hover span { opacity:1;transition:all 0.5s ease 0s; }
     body#home #experts article p { font-weight:300; }
@@ -428,7 +430,7 @@
     {
       window.useOlark = true;
       require('scripts/providers/all');
-      addjs.trackEvent('page','view', window.location.pathname, 'railsconsulting');
+      addjs.trackEvent('page','view', window.location.pathname, 'googleio-specials');
     }
 
     </script>
