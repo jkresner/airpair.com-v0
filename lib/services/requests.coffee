@@ -51,9 +51,9 @@ module.exports = class RequestsService extends DomainService
       if r?
         if Roles.isRequestExpert(@usr, r) && !Roles.isAdmin(@usr, r)
           @_addViewEvent r, "expert view"
+          @rates.addRequestSuggestedRates r #important to get rates before strip query
           r = Data.select r, 'associated'
           # $log 'expert view', r
-          @rates.addRequestSuggestedRates r
         else if Roles.isRequestOwner @usr, r
           @_addViewEvent r, "customer view"
           @rates.addRequestSuggestedRates r, true
