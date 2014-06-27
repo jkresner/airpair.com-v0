@@ -24,9 +24,9 @@
     <nav class="navbar navbar-default navbar-static-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
-          <a class="navbar-brand-img" href="/">
+          <span class="navbar-brand-img">
             <img src="/images/logos/airpair.png" alt="" width="140px">
-          </a>
+          </span>
           <button type="button" class="navbar-toggle pull-right" data-toggle="collapse" data-target="#nav-mobile">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
@@ -39,12 +39,12 @@
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="nav-mobile">
-          <ul class="nav navbar-nav">
-            <li><a href="/experts">Experts</a></li>
+          <ul class="nav navbar-nav nav-public">
+            <li><a href="#experts" class="scroll">Experts</a></li>
           <li><a href="/pair-programming">Pair Programming</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="/auth/google">Login</a></li>
+            <!-- <li><a href="/auth/google">Login</a></li> -->
           </ul>
         </div><!-- /.navbar-collapse -->
 
@@ -64,7 +64,7 @@
       <div class="container hero-content text-bright animated fadeInDown">
         <div class="row">
           <div class="col-md-12">
-            <h1>Get face-to-face with the world's leading software developers</h1>
+            <h1>Video chat with the world's leading software developers</h1>
           </div>
           <div class="col-sm-8 col-sm-offset-2">
             <p>Talk directly with leading software developers to get advice no matter where you are. We’ll pair you with the best-qualified expert within 24 hours.</p>
@@ -74,7 +74,7 @@
           </div>
         </div>
         <!-- <h3 class="m-b-3 text-thin">At your finger tips through video chat and screen sharing.</h3> -->
-<!--         <p>Already a member? <a href="/auth/google">Login Now</a></p> -->
+        <p>Already a member? <a href="/auth/google">Login Now</a></p>
       </div>
 
       <nav class="nav-technologies">
@@ -224,8 +224,8 @@
             <p>You’ll Choose One and Start a Video Call</p>
           </div>
         </div>
-        <div class="row m-b-3 m-t-2">
-          <div class="col-sm-4 col-sm-offset-4">
+        <div class="row m-b-3 m-t-3">
+          <div class="col-sm-6 col-sm-offset-3">
             <a id="find-how" href="/find-an-expert" class="trackCustomerLogin btn btn-default btn-lg btn-block">Find an Expert</a>
           </div>
         </div>
@@ -272,8 +272,8 @@
 
 
 
-    <div class="container p-t-4 p-b-4">
-      <h2 class="text-thin text-center">What do Airpair Experts Look Like?</h2>
+    <div class="container p-b-4" id="experts">
+      <h2 class="text-thin text-center m-t-3">What do Airpair Experts Look Like?</h2>
       <hr>
       <div class="columns-five m-t-2">
         <div class="column">
@@ -356,7 +356,7 @@
 
 
       <div class="row">
-        <div class="col-sm-6 col-sm-offset-3 m-t-2">
+        <div class="col-sm-6 col-sm-offset-3 m-t-3">
           <a id="apply-expert" href="/be-an-expert" class="trackExpertLogin btn btn-lg btn-primary btn-block">Apply to be an Expert</a>
         </div>
       </div>
@@ -390,36 +390,36 @@
 
       <div class="row m-t-2 m-b-2">
         <div class="col-md-10 col-md-offset-1">
-          <div class="price-columns five">
-            <div>
+          <div class="price-columns">
+            <div class="column">
               <div class="tier-name">BEGINNER</div>
               <span class="price">$60</span><small>/hr</small>
               <p class="m-t-1">Access <strong>15%</strong> of experts</p>
               <p>Solve any beginner challenge</p>
               <!-- <a href="" class="btn btn-slate btn-block"> Book Hours</a> -->
             </div>
-            <div>
+            <div class="column">
               <div class="tier-name">Best Practices</div>
               <span class="price">$90</span><small>/hr</small>
               <p class="m-t-1">Access <strong>40%</strong> of experts</p>
               <p>Embrace best practices</p>
               <!-- <a href="" class="btn btn-slate btn-block"> Book Hours</a> -->
             </div>
-            <div>
+            <div class="column">
               <div class="tier-name">Expert</div>
               <span class="price">$130</span><small>/hr</small>
               <p class="m-t-1">Access <strong>60%</strong> of experts</p>
               <p>We code like an expert</p>
               <!-- <a href="" class="btn btn-slate btn-block"> Book Hours</a> -->
             </div>
-            <div>
+            <div class="column">
               <div class="tier-name">World Class</div>
               <span class="price">$200</span><small>/hr</small>
               <p class="m-t-1">Access <strong>90%</strong> of experts</p>
               <p>Access world class talent</p>
               <!-- <a href="" class="btn btn-slate btn-block"> Book Hours</a> -->
             </div>
-            <div>
+            <div class="column">
               <div class="tier-name">Industry Leaders</div>
               <span class="price">$300</span><small>/hr</small>
               <p class="m-t-1">Access <strong>100%</strong> of experts</p>
@@ -482,6 +482,16 @@ function initPage()
   require('scripts/providers/home');
   addjs.trackEvent('page','view', window.location.pathname, 'homepage');
 }
+
+  // Scroll to hash. Just add class "scroll"
+  $(function() {
+    $(".scroll").click(function(e){
+      e.preventDefault();
+      $("html,body").animate({
+        scrollTop:$(this.hash).offset().top
+      },500);
+    });
+  });
 
 </script>
 
