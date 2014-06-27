@@ -4,7 +4,7 @@ class VideosApi extends require('./_api')
   Svc: require '../services/videos'
 
   routes: (app, route) ->
-    app.get "/api/#{route}/youtube/:youtubeId", @admin, @ap, @fetchYouTube
+    app.get "/api/#{route}/youtube/:youtubeId", @mm, @ap, @fetchYouTube
 
 
   fetchYouTube: (req, res, next) =>
