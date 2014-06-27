@@ -58,9 +58,9 @@
           <td>{{reportTotals.gross | number : 0}}</td>
           <td class="text-orange">{{reportTotals.margin * 100 | number : 2}}%</td>
           <td>{{reportTotals.revenue | number : 0}}</td>
-          <td class="text-orange">{{reportTotals.revPerHour | currency}}</td>
-          <td>{{reportTotals.hrsSold}} hrs</td>
-          <td class="text-orange">{{reportTotals.hrPerCust | number : 2}} hr</td>
+          <td class="text-orange">{{reportTotals.revPerHour | number : 1}}</td>
+          <td>{{reportTotals.hrsSold}}</td>
+          <td class="text-orange">{{reportTotals.hrPerCust | number : 2}}</td>
           <td>{{reportTotals.customerTotal}}</td>
         </tr>
       </table>
@@ -69,6 +69,7 @@
 
         <thead>
           <th class="mth first">Week</th>
+          <th class="gro">Hrs on Air</th>
           <th class="gro">Profit</th>
           <th class="mar text-muted">Margin</th>
           <th class="rev">Revenue</th>
@@ -80,6 +81,7 @@
 
         <tr ng-repeat="r in report" class="{{r.css}}">
           <td class="text-muted">{{r.intervalName}}</td>
+          <td></td>
           <td>
             <span ng-if="r.gross">{{r.gross | number:0}}</span>
             <span ng-if="r.pgross" ng-class="{'text-danger': r.pgross < 0, 'text-success': r.pgross > 0}">{{r.pgross*100 | number:0}}%</span>

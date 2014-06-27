@@ -70,11 +70,11 @@
   <script type="text/javascript">
     function initApp() {
       var pageData = { {{JSON 'session'}}, {{JSON 'orders'}} };
-      Router = require('/scripts/adm/orders/Router');
+      Router = require('/scripts/adm-old/orders/Router');
       window.router = new Router(pageData);
     }
   </script>
   <script src="/javascripts/vendor.js" defer></script>
-  <script src="/javascripts/adm.js" defer onload="initApp()"></script>
+  <script src="/javascripts/adm-old.js" defer onload="initApp()"></script>
 
 </html>
