@@ -11,8 +11,8 @@ owner2colorIndex =
   '': 5  # yellow
   jk: 6  # orange
   '': 7  # turqoise
-  '': 8  # gray
-  '': 9  # bold blue
+  du: 8  # gray
+  of: 9  # bold blue
   pg: 10 # bold green
   '': 11 # bold red
 

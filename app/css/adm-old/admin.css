@@ -8,7 +8,9 @@ a.delete { color:red; }
 .label-il { background-color: #7AE7BF; }
 .label-pg { background-color: #51B749; }
 .label-ds { background-color: #FF887C; }
-.label-prev { background-color: #FF0000; }
+.label-of { background-color: #FF887C; }
+.label-du { background-color: #e1e1e1; }
+.label-prev { background-color: #5484ed; }
 
 .label-tag {
     background-color: #99923F;

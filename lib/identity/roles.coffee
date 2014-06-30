@@ -6,6 +6,8 @@ adminIds = [
   '103614010394533051287' #LT
   '104421101970649173838' #AR
   '114831291174925522786' #SH
+  '105976516028706632944' #OF gravatar: c5f6a1b002347ea69a0cba7e4c0da508
+  '116906489186772028226' #DU gravatar: e9b01bb34761b9927cf29753e8927010
 ]
 
 
@@ -20,13 +22,14 @@ initials = {}
 initials['117132380360243205600'] = 'jk'
 initials['105314633561185226973'] = 'il'
 initials['110496794584456738170'] = 'pg'
+initials['105976516028706632944'] = 'of'
+initials['116906489186772028226'] = 'du'
 initials['108148963133977375684'] = 'tb'
 initials['101062250088370367878'] = 'sp' # (Steve Purves)
 initials['114831291174925522786'] = 'support' # (Saidur Hossain)
 initials['104421101970649173838'] = 'team' # (Alyssa Reese)
 initials['106265737415043894759'] = 'mf' # (Martin Feckie)
 initials['112631395549975740914'] = 'rp' # (Ramon Porter)
-
 initials['103614010394533051287'] = 'lt'
 initials['105922668830552511365'] = 'ds'
 initials['112300854530824394263'] = 'mi'
@@ -68,6 +71,8 @@ module.exports =
     jk: 'Jonathon'
     il: 'Igor'
     pg: 'Prateek'
+    of: 'Obie'
+    du: 'Daniel'
     tb: 'Tyler'
     lt: 'Lissanthea'
     ds: 'Dilys'
