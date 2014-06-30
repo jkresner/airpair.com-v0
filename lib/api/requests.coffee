@@ -1,6 +1,7 @@
 Api           = require './_api'
 OrdersSvc     = require './../services/orders'
 Roles         = require '../identity/roles'
+moment        = require 'moment-timezone'
 
 class RequestApi extends Api
 
@@ -13,6 +14,8 @@ class RequestApi extends Api
     app.get    "/api/#{route}/:id", @ap, @detail
     app.get    "/api/admin/#{route}/active", @admin, @ap, @active
     app.get    "/api/admin/#{route}/inactive", @admin, @ap, @inactive
+    app.get    "/api/admin/#{route}/inactive", @admin, @ap, @inactive
+    app.get    "/api/admin/#{route}/:sddmmyy/:eddmmyy", @admin, @ap, @getByDates
     app.put    "/api/#{route}/:id", @loggedIn, @ap, @update
     app.put    "/api/#{route}/:id/suggestion", @loggedIn, @ap, @updateSuggestion
     app.post   "/api/#{route}/:id/suggestion", @loggedIn, @ap, @addSelfSuggestion
@@ -26,6 +29,11 @@ class RequestApi extends Api
   detail: (req) => @svc.getByIdSmart req.params.id, @cbSend
   createBookme: (req) => @svc.createBookme @data, @cbSend
   addSelfSuggestion: (req) => @svc.addSelfSuggestion req.params.id, @data, @cbSend
+
+  getByDates: (req) =>
+    start = moment req.params.sddmmyy, "YYYY-MM-DD"
+    end = moment req.params.eddmmyy, "YYYY-MM-DD"
+    @svc.getByDates start, end, @cbSend
 
   update: (req, res) =>
     if @data.status is "canceled" && !@data.canceledDetail

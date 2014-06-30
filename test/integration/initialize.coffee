@@ -43,7 +43,7 @@ module.exports = (grep) ->
     './review/book_test'
     # './review/bookStripe_test'
     # './settings/paypal_test'
-    './tags/tagsadmin_test'
+    # './tags/tagsadmin_test'
     './stories/emillee_test'
     './stories/ramon_test'
     './stories/bchristie_test'

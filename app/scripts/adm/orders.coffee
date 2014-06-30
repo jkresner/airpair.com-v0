@@ -120,6 +120,17 @@ module.exports = (pageData) ->
 
   factory('apData', ['$moment', '$filter', ($moment, $filter) ->
 
+    startDt = jQuery('[name="startdate"]').val();
+    startDt = '2014-06-01';
+    endDt = jQuery('[name="enddate"]').val();
+    endDt = '2014-06-30';
+    jQuery.get("/api/admin/requests/calls/#{startDt}/#{endDt}").success (data, status, headers, config) ->
+      console.log 'd', data.length, data
+
+    jQuery.get("/api/admin/requests/#{startDt}/#{endDt}").success (data, status, headers, config) ->
+      console.log 'd', data.length, data
+
+
     window.apData =
       orders:
         data: pageData.orders
@@ -127,6 +138,7 @@ module.exports = (pageData) ->
           @data
 
         filter: (start, end, searchText) ->
+
           visibleOrders = []
           for order in @data
             if @isWithinDate(order, start, end)
@@ -188,7 +200,7 @@ module.exports = (pageData) ->
 
           # dataSorted = _.sortBy(@data, (o) -> moment(o.utc))
 
-          # ordersFilter = 
+          # ordersFilter =
 
           filteredOrders = []
 
@@ -234,7 +246,7 @@ module.exports = (pageData) ->
 
 
 
-          # Calc more stats. Get differences. 
+          # Calc more stats. Get differences.
 
           report = []
 
@@ -291,7 +303,7 @@ module.exports = (pageData) ->
           reportTotals.ltv = reportTotals.margin*reportTotals.revPerHour*reportTotals.hrPerCust
 
 
-          
+
           # FINAL DIFFERENCE
 
           # Calc final Week Diff
@@ -304,7 +316,7 @@ module.exports = (pageData) ->
               time.startOf("week").subtract("d", 1).startOf("day")
             else
               time.endOf("week").startOf("day")
-            curWeekIdx = time.format("YYMMDD")            
+            curWeekIdx = time.format("YYMMDD")
             finalWeek = report[report.length - 1]
 
             # If last week
@@ -320,7 +332,7 @@ module.exports = (pageData) ->
               else
                 wkStart.endOf("week").startOf("day")
               wkPercentage = (moment().unix()-wkStart.unix())/60/60/24/7
-              console.log "wkPercentage", wkPercentage
+              # console.log "wkPercentage", wkPercentage
 
               _.extend finalDiff,
                 intervalName: "#{Math.floor(wkPercentage*100)}%"
@@ -665,7 +677,7 @@ module.exports = (pageData) ->
 
     $scope.dateStart = moment().startOf('month').toDate()
     $scope.dateEnd = moment().toDate()
-    
+
     $scope.$watch "dateStart", () -> updateRange()
     $scope.$watch "dateEnd", () -> updateRange()
 
@@ -674,11 +686,11 @@ module.exports = (pageData) ->
       week2week = apData.orders.getGrowth 'weekly', moment($scope.dateStart), moment($scope.dateEnd)
       $scope.report = week2week.report
       $scope.reportTotals = week2week.reportTotals
-    
-    
 
 
-    
+
+
+
 
 
     # Channel Growth

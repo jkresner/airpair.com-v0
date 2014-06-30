@@ -6,7 +6,7 @@ request = _.clone(data.requests[13]) # John Dowd
 storySteps = [
   { app:'ap/settings/Router', usr:'jdowd', frag: '#', fixture: f.settings, pageData: { stripePK: 'pk_test_aj305u5jk2uN1hrDQWdH0eyl' } }
   { app:'ap/request/Router', usr:'jdowd', frag: '#', fixture: f.request, pageData: {} }
-  { app:'adm/pipeline/Router', usr:'admin', frag: '#', fixture: f.inbound, pageData: { experts: data.experts, tags: data.tags } }
+  { app:'adm-old/pipeline/Router', usr:'admin', frag: '#', fixture: f.inbound, pageData: { experts: data.experts, tags: data.tags } }
   { app:'ap/review/Router', usr:'jdowd', frag: '#rId', fixture: f.review, pageData: {} }
   { app:'ap/schedule/Router', usr: 'admin', frag: '#/schedule/rId', fixture: f.callSchedule, pageData: { request: request } }
   { app:'ap/schedule/Router', usr: 'admin', frag: '#/schedule/rId', fixture: f.callSchedule, pageData: { request: request } }

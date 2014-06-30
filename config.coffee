@@ -34,8 +34,8 @@ exports.config =
       joinTo:
        'javascripts/vendor.js': /^vendor/
        'javascripts/ap.js': /(scripts\/ap|scripts\/shared|scripts\/providers|lib\/mix)/
-       'javascripts/adm.js': /(scripts\/adm|scripts\/shared|scripts\/providers|lib\/mix)/
-       'javascripts/adm-ang.js': /(scripts\/angular|lodash|moment-2.6|scripts\/adm-ang|lib\/mix)/
+       'javascripts/adm.js': /(scripts\/angular|lodash|moment-2.6|scripts\/adm\/|lib\/mix)/
+       'javascripts/adm-old.js': /(scripts\/adm-old|scripts\/shared|scripts\/providers|lib\/mix)/
        'javascripts/providers.js': /^app\/scripts\/providers/
        'javascripts/home.js': /providers\/(home|addjs|ga|mix|mixpanel|cegg|olark|adroll)|bootstrap3\/dropdown|bootstrap3\/collapse/
        'test/javascripts/test.js': /^test(\/|\\)(?=integration)/
@@ -87,7 +87,7 @@ exports.config =
         after: []
     templates:
       joinTo:
-       'javascripts/adm.js': /(^mail|scripts\/adm|scripts\/shared)/
+       'javascripts/adm-old.js': /(^mail|scripts\/adm-old|scripts\/shared)/
        'javascripts/ap.js': /(scripts\/ap|scripts\/shared)/
 
   coffeelint:

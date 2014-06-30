@@ -6,6 +6,7 @@ RatesSvc         = require './rates'
 SettingsSvc      = require './settings'
 MarketingTagsSvc = require './marketingtags'
 expertPick       = require '../mix/expertForSuggestion'
+objectIdWithTimestamp = require '../mix/objectIdWithTimestamp'
 
 module.exports = class RequestsService extends DomainService
 
@@ -43,6 +44,14 @@ module.exports = class RequestsService extends DomainService
       if e? then return cb e
       received = _.filter requests, (r) -> r.status == 'received' && !r.owner
       async.each received, @_getPreviousOwner, (er) => cb er, requests
+
+  """ Used for growth reports """
+  getByDates: (startUtc, endUtc, cb) =>
+    query = _id: { $gt: objectIdWithTimestamp(startUtc) }, _id: { $lt: objectIdWithTimestamp(endUtc) }
+    $log 'getByDates', query
+    @searchMany query, { fields: Data.view.pipeline },(e,r) =>
+      $log 'r', r
+      cb e, r
 
 
   """ Get a request, shapes viewData by viewer + logs view events """

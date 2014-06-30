@@ -8,11 +8,17 @@ class RequestCallsApi extends require('./_api')
 
   routes: (app, route) ->
     app.get     "/api/#{route}/calls/:permalink", @loggedIn, @ap, @detail
+    app.get     "/api/admin/#{route}/calls/:sddmmyy/:eddmmyy", @admin, @ap, @getOnAir
     app.post    "/api/#{route}/:requestId/calls", @mm, @validate, @ap, @create
     app.put     "/api/#{route}/:requestId/calls/:callId", @mm, @validate, @ap, @update
 
   detail: (req) =>
     @svc.getByCallPermalink req.params.permalink, @cSend
+
+  getOnAir: (req) =>
+    start = moment req.params.sddmmyy, "YYYY-MM-DD"
+    end = moment req.params.eddmmyy, "YYYY-MM-DD"
+    @svc.getOnAir start, end, @cbSend
 
   validate: (req, res, next) ->
     req.checkBody('duration', 'Invalid duration').notEmpty().isInt()
@@ -50,5 +56,6 @@ class RequestCallsApi extends require('./_api')
         return res.send data: errors, 400
       if e then return next e
       res.send call
+
 
 module.exports = (app) -> new RequestCallsApi app, 'requests'

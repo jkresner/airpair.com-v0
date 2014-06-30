@@ -31,11 +31,11 @@
   <script type="text/javascript">
     function initApp() {
       var pageData = { {{JSON 'session'}}, {{JSON 'experts'}} };
-      Router = require('/scripts/adm/experts/Router');
+      Router = require('/scripts/adm-old/experts/Router');
       window.router = new Router(pageData);
     }
   </script>
   <script src="/javascripts/vendor.js" defer></script>
-  <script src="/javascripts/adm.js" defer onload="initApp()"></script>
+  <script src="/javascripts/adm-old.js" defer onload="initApp()"></script>
 
 </html>
