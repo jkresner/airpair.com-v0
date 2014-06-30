@@ -1,6 +1,6 @@
-M = require '/scripts/adm/tags/Models'
-C = require '/scripts/adm/tags/Collections'
-V = require '/scripts/adm/tags/Views'
+M = require '/scripts/adm-old/tags/Models'
+C = require '/scripts/adm-old/tags/Collections'
+V = require '/scripts/adm-old/tags/Views'
 
 seedTagData = (cb) ->
   $.get '/seeddata', (data) -> cb()
