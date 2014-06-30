@@ -70,20 +70,35 @@
         <thead>
           <th class="mth first">Week</th>
           <th class="gro">Hrs on Air</th>
+          <th class="gro text-muted">(util)</th>
+          <th class="hrs">Hours Sold</th>
+          <th class="hrs text-muted">(profit/hr)</th>
           <th class="gro">Profit</th>
           <th class="mar text-muted">Margin</th>
           <th class="rev">Revenue</th>
-          <th class="avh text-muted">Rev/Hr</th>
-          <th class="hrs">Hours</th>
-          <th class="hrc text-muted">Hr/Cust</th>
-          <th class="mth last">Customers</th>
+          <th class="avh text-muted">rev/cust</th>
+          <th class="hrc text-muted">hr/cust</th>
+          <th class="mth">Customers</th>
+          <th class="text-left text-muted">Repeat</th>
+          <th class="">Orders</th>
+          <th class="text-muted">req/order</th>
+          <th class="">Requests</th>
         </thead>
 
         <tr ng-repeat="r in report" class="{{r.css}}">
           <td class="text-muted">{{r.intervalName}}</td>
           <td>
-              <span ng-if="r.gross">{{r.gross | number:0}}</span>
-              <span ng-if="r.pgross" ng-class="{'text-danger': r.pgross < 0, 'text-success': r.pgross > 0}">{{r.pgross*100 | number:0}}%</span>
+            <span ng-if="r.hrsOnAir" class="animated-fast fadeIn">{{r.hrsOnAir | number:0}}</span>
+          </td>
+          <td class="text-orange">
+            <span ng-if="r.hrsAirPerHrsSold" class="animated-fast fadeIn">{{r.hrsAirPerHrsSold*100 | number:0}}%</span>
+          </td>
+          <td>
+            <span ng-if="r.hrsSold">{{r.hrsSold | number:0}}</span>
+            <span ng-if="r.phrsSold" ng-class="{'text-danger': r.phrsSold < 0, 'text-success': r.phrsSold > 0}">{{r.phrsSold*100 | number:0}}%</span>
+          </td>
+          <td class="text-orange">
+            <span ng-if="r.profitPerHour">{{r.profitPerHour | number:0}}</span>
 
           </td>
           <td>
@@ -100,12 +115,10 @@
             <span ng-if="r.prevenue" ng-class="{'text-danger': r.prevenue < 0, 'text-success': r.prevenue > 0}">{{r.prevenue*100 | number:0}}%</span>
           </td>
           <td class="text-orange">
-            <span ng-if="r.revPerHour">{{r.revPerHour | number:0}}</span>
+            <span ng-if="r.revPerCust">{{r.revPerCust | number:0}}</span>
+<!--             <span ng-if="r.revPerHour">{{r.revPerHour | number:0}}</span>
             <span ng-if="r.prevPerHour" ng-class="{'text-danger': r.prevPerHour < 0, 'text-success': r.prevPerHour > 0}">{{r.prevPerHour*100 | number:0}}%</span>
-          </td>
-          <td>
-            <span ng-if="r.hrsSold">{{r.hrsSold | number:0}}</span>
-            <span ng-if="r.phrsSold" ng-class="{'text-danger': r.phrsSold < 0, 'text-success': r.phrsSold > 0}">{{r.phrsSold*100 | number:0}}%</span>
+ -->
           </td>
           <td class="text-orange">
             <span ng-if="r.hrPerCust">{{r.hrPerCust | number:1}}</span>
@@ -114,6 +127,19 @@
           <td>
             <span ng-if="r.customerTotal">{{r.customerTotal | number:0}}</span>
             <span ng-if="r.pcustomerTotal" ng-class="{'text-danger': r.pcustomerTotal < 0, 'text-success': r.pcustomerTotal > 0}">{{r.pcustomerTotal*100 | number:0}}%</span>
+          </td>
+          <td class="text-left">
+            <span ng-if="r.custReturningPercent">{{r.custReturningPercent*100 | number:0}}%</span>
+          </td>
+          <td>
+            <span ng-if="r.orders.length">{{r.orders.length | number:0}}</span>
+
+          </td>
+          <td class="text-orange">
+            <span ng-if="r.reqPerOrders" class="animated-fast fadeIn">{{r.reqPerOrders | number:0}}</span>
+          </td>
+          <td>
+            <span ng-if="r.requestsNum" class="animated-fast fadeIn">{{r.requestsNum | number:0}}</span>
           </td>
         </tr>
       </table>

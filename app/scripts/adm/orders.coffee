@@ -118,18 +118,7 @@ module.exports = (pageData) ->
   # Airpair Data Service
   #----------------------------------------------
 
-  factory('apData', ['$moment', '$filter', ($moment, $filter) ->
-
-    startDt = jQuery('[name="startdate"]').val();
-    startDt = '2014-06-01';
-    endDt = jQuery('[name="enddate"]').val();
-    endDt = '2014-06-30';
-    jQuery.get("/api/admin/requests/calls/#{startDt}/#{endDt}").success (data, status, headers, config) ->
-      console.log 'd', data.length, data
-
-    jQuery.get("/api/admin/requests/#{startDt}/#{endDt}").success (data, status, headers, config) ->
-      console.log 'd', data.length, data
-
+  factory('apData', ['$moment', '$filter', '$http', ($moment, $filter, $http) ->
 
     window.apData =
       orders:
@@ -194,28 +183,44 @@ module.exports = (pageData) ->
               _.extend li, expertCredit
 
 
+
+        
+        # Get unique customers before a specific date.
+
+        getCustomersBefore: (timeEnd) ->
+          orders = []
+          for order in @data
+            if moment(order.utc).isBefore(timeEnd)
+              orders.push order
+          unique = _.uniq(_.pluck orders, 'userId')
+          return unique
+
+
+        
+
+        # Get growth metrics
+
         getGrowth: (interval = 'monthly', start = moment(@data[0].utc).subtract("d", 1), end = moment()) ->
 
-          periods = {}
-
-          # dataSorted = _.sortBy(@data, (o) -> moment(o.utc))
-
-          # ordersFilter =
-
-          filteredOrders = []
+          
+          
 
           # Group orders by period. Calculate revenue, gross, and hrs sold.
+          
+          periods = {}
+          filteredOrders = []
+
           for order in @data
 
             if moment(order.utc).isAfter(start) and moment(order.utc).isBefore(end)
               # console.log "order", order
-
               # if order.paymentStatus is "received" or order.paymentStatus is "paidout"
 
               # Get Index
               if interval is "monthly"
                 intervalName = moment(order.utc).format("MMM")
                 intervalIdx = moment(order.utc).startOf('month').format("YYMM")
+                intervalStart = moment(order.utc).startOf('month')
               if interval is "weekly"
                 # Find start of saturday
                 time = moment(order.utc)
@@ -225,6 +230,7 @@ module.exports = (pageData) ->
                   time.endOf("week").startOf("day")
                 intervalName = time.clone().add('days', 6).format("MMM D")
                 intervalIdx = time.format("YYMMDD")
+                intervalStart = time
 
               # Add to period
               if not periods[intervalIdx]
@@ -235,6 +241,7 @@ module.exports = (pageData) ->
                   orders: []
                   intervalIdx: intervalIdx
                   intervalName: intervalName
+                  intervalStart: intervalStart
 
               period = periods[intervalIdx]
               period.orders.push order
@@ -246,7 +253,9 @@ module.exports = (pageData) ->
 
 
 
-          # Calc more stats. Get differences.
+
+
+          # Interate through each period. Calc more stats. Get differences.
 
           report = []
 
@@ -261,12 +270,21 @@ module.exports = (pageData) ->
 
           prevPeriod = null
 
-          _.each periods, (period) ->
+          _.each periods, (period) =>
 
-            period.customerTotal = _.uniq(_.pluck period.orders, 'userId').length
+            period.customers = _.uniq(_.pluck period.orders, 'userId')
+            period.customerTotal = period.customers.length
             period.hrPerCust = period.hrsSold/period.customerTotal
             period.revPerHour = period.revenue/period.hrsSold
             period.margin = period.gross/period.revenue
+            period.profitPerHour = period.gross/period.hrsSold
+            period.revPerCust = period.revenue/period.customerTotal
+            
+            period.custReturning = _.intersection(period.customers, @getCustomersBefore(period.intervalStart)).length
+
+            period.custReturningPercent = period.custReturning/period.customerTotal
+
+
 
             reportTotals.numPeriods++
             # reportTotals.customerTotal += period.customerTotal
@@ -303,6 +321,66 @@ module.exports = (pageData) ->
           reportTotals.ltv = reportTotals.margin*reportTotals.revPerHour*reportTotals.hrPerCust
 
 
+
+
+
+          ###
+            
+            for each period
+              find the end and add it. 
+              then get the requests for that period. 
+
+          ###
+
+          # for periods in report
+          _.each report, (period, index) ->
+            
+            # Add start and end dates in each interval
+            if period.intervalStart 
+              if report[index + 2]?
+                period.intervalEnd = report[index + 2].intervalStart
+              else 
+                period.intervalEnd = moment()
+
+              # diff = report[index + 1] if report[index + 1]?
+
+              # Get requests
+              start = period.intervalStart.format('YYYY-MM-DD')
+              end = period.intervalEnd.format('YYYY-MM-DD')
+
+              $http.get("/api/admin/requests/#{start}/#{end}").success (data, status, headers, config) ->
+                # console.log "requests #{period.intervalIdx}", data.length, data
+                period.requestsNum = data.length
+                period.reqPerOrders = period.requestsNum/period.orders.length
+
+              $http.get("/api/admin/requests/calls/#{start}/#{end}").success (data, status, headers, config) ->
+                console.log "CALLS #{period.intervalIdx}", data.length, data
+                
+                period.hrsOnAir = 0
+                _.each data, (item, i) -> period.hrsOnAir += item.duration
+                period.hrsAirPerHrsSold = period.hrsOnAir/period.hrsSold
+
+
+
+
+                
+                
+                
+
+
+                # if diff?
+                  # diff.reqPerOrders = 
+
+
+
+
+
+
+
+
+
+
+          
 
           # FINAL DIFFERENCE
 
@@ -362,6 +440,8 @@ module.exports = (pageData) ->
               pgross: (finalMonth.gross/(prevMonth.gross*monthPercentage)) - 1
 
 
+
+          console.log "REPORT", _.sortBy(report, (m) -> m.intervalIdx).reverse()
 
           # Sort, reverse, and return
           return {
@@ -672,14 +752,9 @@ module.exports = (pageData) ->
   controller("WeeklyCtrl", ['$scope', '$location', '$moment', 'apData', ($scope, $location, $moment, apData ) ->
 
 
-
     # Overall Growth
-
     $scope.dateStart = moment().startOf('month').toDate()
     $scope.dateEnd = moment().toDate()
-
-    $scope.$watch "dateStart", () -> updateRange()
-    $scope.$watch "dateEnd", () -> updateRange()
 
     updateRange = () ->
       return if not $scope.dateStart or not $scope.dateEnd
@@ -687,6 +762,13 @@ module.exports = (pageData) ->
       $scope.report = week2week.report
       $scope.reportTotals = week2week.reportTotals
 
+
+    # Watch date ranges
+    first = true
+    $scope.$watch "dateStart", () -> 
+      if first then return first = false
+      updateRange()
+    $scope.$watch "dateEnd", () -> updateRange()
 
 
 
