@@ -1,5 +1,6 @@
 async      = require 'async'
 calendar   = require './calendar'
+moment     = require 'moment-timezone'
 videos     = require './videos'
 {ObjectId} = require('mongoose').Types
 
@@ -9,7 +10,7 @@ RequestSvc = new require './requests'
 Order   = new require '../models/order'
 Request = new require '../models/request'
 
-module.exports = class RequestCallsService
+module.exports = class RequestCallsService extends require('./_svc')
 
   model: require './../models/request'
   calendar: calendar
@@ -20,6 +21,18 @@ module.exports = class RequestCallsService
     throw new Error 'not imp'
 
   getByExpertId: (expertId, callback) => throw new Error 'not imp'
+
+  getOnAir: (startUtc, endUtc, cb) =>
+    # $log 'svc.getOnAir', startUtc, endUtc
+    query = 'calls.datetime': {"$gte": startUtc, "$lt": endUtc}
+    @searchMany query, {fields:{'calls':1}}, (e,r) ->
+      calls = []
+      for c in _.flatten(_.pluck r, 'calls')
+        time = new moment(c.datetime)
+        if startUtc.isBefore(time) && time.isBefore(endUtc)
+          calls.push c
+      # $log c.datetime for c in calls
+      cb e, calls
 
   create: (userId, requestId, call, callback) =>
     call.status = 'pending'
