@@ -275,9 +275,9 @@ module.exports = (pageData) ->
             period.customers = _.uniq(_.pluck period.orders, 'userId')
             period.customerTotal = period.customers.length
             period.hrPerCust = period.hrsSold/period.customerTotal
+            period.profitPerHour = period.gross/period.hrsSold
             period.revPerHour = period.revenue/period.hrsSold
             period.margin = period.gross/period.revenue
-            period.profitPerHour = period.gross/period.hrsSold
             period.revPerCust = period.revenue/period.customerTotal
             
             period.custReturning = _.intersection(period.customers, @getCustomersBefore(period.intervalStart)).length
@@ -299,13 +299,18 @@ module.exports = (pageData) ->
               report.push
                 css: 'change'
                 intervalIdx: "#{prevPeriod.intervalIdx}c#{period.intervalIdx}"
-                pcustomerTotal: (period.customerTotal-prevPeriod.customerTotal)/prevPeriod.customerTotal
-                phrPerCust: (period.hrPerCust-prevPeriod.hrPerCust)/prevPeriod.hrPerCust
                 phrsSold: (period.hrsSold-prevPeriod.hrsSold)/prevPeriod.hrsSold
-                prevPerHour: (period.revPerHour-prevPeriod.revPerHour)/prevPeriod.revPerHour
-                prevenue: (period.revenue-prevPeriod.revenue)/prevPeriod.revenue
+                pprofitPerHour: (period.profitPerHour/prevPeriod.profitPerHour)-1
+                # profit/hr
+                # prevPerHour: (period.revPerHour-prevPeriod.revPerHour)/prevPeriod.revPerHour
                 pgross: (period.gross-prevPeriod.gross)/prevPeriod.gross
                 pmargin: (period.margin-prevPeriod.margin)/prevPeriod.margin
+                prevenue: (period.revenue-prevPeriod.revenue)/prevPeriod.revenue
+                prevPerCust: (period.revPerCust/prevPeriod.revPerCust)-1
+                phrPerCust: (period.revPerCust/prevPeriod.revPerCust)-1
+                pcustomerTotal: (period.customerTotal-prevPeriod.customerTotal)/prevPeriod.customerTotal
+                pcustReturningPercent: (period.custReturningPercent/prevPeriod.custReturningPercent)-1
+                porders: (period.orders.length/prevPeriod.orders.length)-1
 
             report.push period
             prevPeriod = period
@@ -324,15 +329,23 @@ module.exports = (pageData) ->
 
 
 
-          ###
-            
-            for each period
-              find the end and add it. 
-              then get the requests for that period. 
 
-          ###
+          # Make api calls to get requests and hrs on air
 
-          # for periods in report
+          callsLeft = (report.length+1)
+          calcDiffs = ->
+            if callsLeft > 1 then callsLeft-- else
+              console.log "GET DIFF"
+              for period, i in report
+                if period.intervalStart and report[i + 2]?
+                  diff = report[i + 1] 
+                  periodNext = report[i + 2] 
+                  diff.prequestsNum = (periodNext.requestsNum/period.requestsNum) - 1
+                  diff.preqPerOrders = (periodNext.reqPerOrders/period.reqPerOrders) - 1
+                  diff.phrsOnAir = (periodNext.hrsOnAir/period.hrsOnAir) - 1
+                  diff.phrsAirPerHrsSold = (periodNext.hrsAirPerHrsSold/period.hrsAirPerHrsSold) - 1
+              calcFinalDiff(report)
+
           _.each report, (period, index) ->
             
             # Add start and end dates in each interval
@@ -342,102 +355,95 @@ module.exports = (pageData) ->
               else 
                 period.intervalEnd = moment()
 
-              # diff = report[index + 1] if report[index + 1]?
-
-              # Get requests
               start = period.intervalStart.format('YYYY-MM-DD')
               end = period.intervalEnd.format('YYYY-MM-DD')
 
+              # Get requests
               $http.get("/api/admin/requests/#{start}/#{end}").success (data, status, headers, config) ->
-                # console.log "requests #{period.intervalIdx}", data.length, data
                 period.requestsNum = data.length
                 period.reqPerOrders = period.requestsNum/period.orders.length
+                calcDiffs()
 
+              # hrs on air
               $http.get("/api/admin/requests/calls/#{start}/#{end}").success (data, status, headers, config) ->
-                console.log "CALLS #{period.intervalIdx}", data.length, data
-                
                 period.hrsOnAir = 0
                 _.each data, (item, i) -> period.hrsOnAir += item.duration
                 period.hrsAirPerHrsSold = period.hrsOnAir/period.hrsSold
+                calcDiffs()
+
+
+
 
 
 
 
                 
-                
-                
 
-
-                # if diff?
-                  # diff.reqPerOrders = 
-
-
-
-
-
-
-
-
-
-
-          
-
-          # FINAL DIFFERENCE
 
           # Calc final Week Diff
 
-          if interval is "weekly"
+          calcFinalDiff = (report) ->
 
-            # Get current week index
-            time = moment()
-            if time.day() < 6
-              time.startOf("week").subtract("d", 1).startOf("day")
-            else
-              time.endOf("week").startOf("day")
-            curWeekIdx = time.format("YYMMDD")
-            finalWeek = report[report.length - 1]
+            if interval is "weekly"
 
-            # If last week
-            if curWeekIdx is finalWeek.intervalIdx
-
-              finalDiff = report[report.length - 2]
-              prevWeek = report[report.length - 3]
-
-              # Get week percentage
-              wkStart = moment()
-              if wkStart.day() < 6
-                wkStart.startOf("week").subtract("d", 1).startOf("day")
+              # Get current week index
+              # time = moment({y: 2014, M: 5, d: 23})
+              time = moment()
+              if time.day() < 6
+                time.startOf("week").subtract("d", 1).startOf("day")
               else
-                wkStart.endOf("week").startOf("day")
-              wkPercentage = (moment().unix()-wkStart.unix())/60/60/24/7
-              # console.log "wkPercentage", wkPercentage
+                time.endOf("week").startOf("day")
+              curWeekIdx = time.format("YYMMDD")
+              finalWeek = report[report.length - 1]
+
+              # console.log "weeks", curWeekIdx, finalWeek.intervalIdx
+
+              # If last week
+              if curWeekIdx is finalWeek.intervalIdx
+
+                finalDiff = report[report.length - 2]
+                prevWeek = report[report.length - 3]
+
+                # Get week percentage
+                wkStart = moment()
+                if wkStart.day() < 6
+                  wkStart.startOf("week").subtract("d", 1).startOf("day")
+                else
+                  wkStart.endOf("week").startOf("day")
+                wkPercentage = (moment().unix()-wkStart.unix())/60/60/24/7
+                console.log "wkPercentage", wkPercentage
+
+                _.extend finalDiff,
+                  intervalName: "#{Math.floor(wkPercentage*100)}%"
+                  pcustomerTotal: (finalWeek.customerTotal / (prevWeek.customerTotal*wkPercentage)) - 1
+                  phrsSold: (finalWeek.hrsSold / (prevWeek.hrsSold*wkPercentage)) - 1
+                  prevenue: (finalWeek.revenue / (prevWeek.revenue*wkPercentage)) - 1
+                  pgross: (finalWeek.gross / (prevWeek.gross*wkPercentage)) - 1
+
+
+            # Calc final Month Diff
+
+            if interval is "monthly"
+
+              finalMonth = report[report.length - 1]
+              finalDiff = report[report.length - 2]
+              prevMonth = report[report.length - 3]
+
+              monthPercentage = (moment().unix()-moment().startOf('month').unix()) / (moment().endOf('month').unix()-moment().startOf('month').unix())
+              console.log "monthPercentage", monthPercentage
 
               _.extend finalDiff,
-                intervalName: "#{Math.floor(wkPercentage*100)}%"
-                pcustomerTotal: (finalWeek.customerTotal / (prevWeek.customerTotal*wkPercentage)) - 1
-                phrsSold: (finalWeek.hrsSold / (prevWeek.hrsSold*wkPercentage)) - 1
-                prevenue: (finalWeek.revenue / (prevWeek.revenue*wkPercentage)) - 1
-                pgross: (finalWeek.gross / (prevWeek.gross*wkPercentage)) - 1
+                intervalName: "#{Math.floor(monthPercentage*100)}%"
+                pcustomerTotal: (finalMonth.customerTotal / (prevMonth.customerTotal*monthPercentage)) - 1
+                phrsSold: (finalMonth.hrsSold / (prevMonth.hrsSold*monthPercentage)) - 1
+                prevenue: (finalMonth.revenue / (prevMonth.revenue*monthPercentage)) - 1
+                pgross: (finalMonth.gross/(prevMonth.gross*monthPercentage)) - 1
 
 
 
-          # Calc final Month Diff
+          calcFinalDiff(report)
 
-          if interval is "monthly"
 
-            finalMonth = report[report.length - 1]
-            finalDiff = report[report.length - 2]
-            prevMonth = report[report.length - 3]
-
-            monthPercentage = (moment().unix()-moment().startOf('month').unix()) / (moment().endOf('month').unix()-moment().startOf('month').unix())
-            console.log "monthPercentage", monthPercentage
-
-            _.extend finalDiff,
-              intervalName: "#{Math.floor(monthPercentage*100)}%"
-              pcustomerTotal: (finalMonth.customerTotal / (prevMonth.customerTotal*monthPercentage)) - 1
-              phrsSold: (finalMonth.hrsSold / (prevMonth.hrsSold*monthPercentage)) - 1
-              prevenue: (finalMonth.revenue / (prevMonth.revenue*monthPercentage)) - 1
-              pgross: (finalMonth.gross/(prevMonth.gross*monthPercentage)) - 1
 
 
 
@@ -448,6 +454,9 @@ module.exports = (pageData) ->
             report: _.sortBy(report, (m) -> m.intervalIdx).reverse()
             reportTotals: reportTotals
           }
+
+
+
 
 
         getChannelMetrics: (start, end) ->
