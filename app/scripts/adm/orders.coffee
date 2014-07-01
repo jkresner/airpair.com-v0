@@ -202,7 +202,7 @@ module.exports = (pageData) ->
 
         getGrowth: (interval = 'monthly', start = moment(@data[0].utc).subtract("d", 1), end = moment()) ->
 
-          
+          console.log "getGrowth", start.toDate(), end.toDate()
           
 
           # Group orders by period. Calculate revenue, gross, and hrs sold.
@@ -253,6 +253,7 @@ module.exports = (pageData) ->
 
 
 
+          console.log "filteredOrders", filteredOrders
 
 
           # Interate through each period. Calc more stats. Get differences.
@@ -414,12 +415,19 @@ module.exports = (pageData) ->
               finalWeek = report[report.length - 1]
 
               # console.log "weeks", curWeekIdx, finalWeek.intervalIdx
+              console.log "report", report
 
               # If last week
-              if curWeekIdx is finalWeek.intervalIdx
+              if curWeekIdx is finalWeek.intervalIdx and report.length > 2
+                
 
                 finalDiff = report[report.length - 2]
                 prevWeek = report[report.length - 3]
+                
+                console.log "finalWeek", finalWeek
+                console.log "finalDiff", finalDiff
+                console.log "prevWeek", prevWeek
+
 
                 # Get week percentage
                 wkStart = moment()
@@ -779,7 +787,7 @@ module.exports = (pageData) ->
 
 
     # Overall Growth
-    $scope.dateStart = moment().startOf('month').toDate()
+    $scope.dateStart = moment().subtract('w', 4).toDate()
     $scope.dateEnd = moment().toDate()
 
     updateRange = () ->
