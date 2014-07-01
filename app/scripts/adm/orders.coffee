@@ -317,13 +317,30 @@ module.exports = (pageData) ->
 
 
           # Final report totals
-          reportTotals.customerTotal = _.uniq(_.pluck filteredOrders, 'userId').length
+          filteredUsers = _.uniq(_.pluck filteredOrders, 'userId')
+
+          reportTotals.customerTotal = filteredUsers.length
+          reportTotals.profitPerHour = reportTotals.gross/reportTotals.hrsSold
+          reportTotals.ordersNum = filteredOrders.length
           reportTotals.revPerHour = reportTotals.revenue/reportTotals.hrsSold
-          # reportTotals.revPerHour = reportTotals.revPerHour/reportTotals.numPeriods
-          # $113.71
           reportTotals.margin = reportTotals.gross/reportTotals.revenue
           reportTotals.hrPerCust = reportTotals.hrsSold/reportTotals.customerTotal
           reportTotals.ltv = reportTotals.margin*reportTotals.revPerHour*reportTotals.hrPerCust
+          reportTotals.revPerCust = reportTotals.revenue/reportTotals.customerTotal
+          reportTotals.custReturning = _.intersection(filteredUsers, @getCustomersBefore(start)).length
+          reportTotals.custReturningPercent = reportTotals.custReturning/reportTotals.customerTotal
+
+          # Get requests
+          startDate = start.format('YYYY-MM-DD')
+          endDate   = end.format('YYYY-MM-DD')
+          $http.get("/api/admin/requests/#{startDate}/#{endDate}").success (data, status, headers, config) ->
+            reportTotals.requestsNum = data.length
+            reportTotals.reqPerOrders = reportTotals.requestsNum/reportTotals.ordersNum
+          # Hrs on air
+          $http.get("/api/admin/requests/calls/#{startDate}/#{endDate}").success (data, status, headers, config) ->
+            reportTotals.hrsOnAir = 0
+            _.each data, (item, i) -> reportTotals.hrsOnAir += item.duration
+            reportTotals.hrsAirPerHrsSold = reportTotals.hrsOnAir/reportTotals.hrsSold
 
 
 
