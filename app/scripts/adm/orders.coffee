@@ -923,7 +923,7 @@ module.exports = (pageData) ->
 
     # Overall Growth
     $scope.dateStart = moment().subtract('w', 4).toDate()
-    $scope.dateEnd = moment().toDate()
+    $scope.dateEnd = moment().endOf('day').toDate()
 
     updateRange = () ->
       return if not $scope.dateStart or not $scope.dateEnd

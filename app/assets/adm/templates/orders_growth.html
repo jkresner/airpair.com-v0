@@ -69,7 +69,7 @@
           <td class="text-muted">{{r.intervalName}}</td>
           <td>
             <span ng-if="r.hrsOnAir" class="animated-fast fadeIn">{{r.hrsOnAir | number:0}}</span>
-            <span ng-if="r.phrsOnAir" ng-class="{'text-danger': r.phrsOnAir < 0, 'text-success': r.phrsOnAir > 0}">{{r.phrsOnAir*100 | number:0}}%</span>
+            <span ng-if="r.phrsOnAir != null" ng-class="{'text-danger': r.phrsOnAir < 0, 'text-success': r.phrsOnAir > 0}">{{(r.phrsOnAir*100 | number:0) || 0}}%</span>
           </td>
           <td class="text-orange">
             <span ng-if="r.hrsAirPerHrsSold" class="animated-fast fadeIn">{{r.hrsAirPerHrsSold*100 | number:0}}%</span>
