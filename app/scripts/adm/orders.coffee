@@ -303,6 +303,7 @@ module.exports = (pageData) ->
                   intervalName = moment(order.utc).format("MMM")
                   intervalIdx = moment(order.utc).startOf('month').format("YYMM")
                   intervalStart = moment(order.utc).startOf('month')
+                  intervalEnd = moment(order.utc).endOf('month')
                 
                 if interval is "weekly"
                   # Find start of saturday
