@@ -112,7 +112,7 @@ module.exports = class OrdersService extends DomainService
       @requestSvc.updateSuggestionByExpert request, expertReview, (e, r) =>
         $log 'request updated', r.status, r.suggested
         if e then return callback e
-        if r.status != 'available' then return callback e,r
+        if expertReview.expertStatus != 'available' then return callback e,r
 
         order = { requestId: request._id, paymentMethod: pm, lineItems: [] }
         order.total = request.hours * request.budget
