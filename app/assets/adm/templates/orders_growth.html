@@ -80,8 +80,8 @@
             <span ng-if="r.phrsSold" ng-class="{'text-danger': r.phrsSold < 0, 'text-success': r.phrsSold > 0}">{{r.phrsSold*100 | number:0}}%</span>
           </td>
           <td class="text-orange">
-            <span ng-if="r.profitPerHour">{{r.profitPerHour | number:0}}</span>
-            <span ng-if="r.pprofitPerHour" ng-class="{'text-danger': r.pprofitPerHour < 0, 'text-success': r.pprofitPerHour > 0}">{{r.pprofitPerHour*100 | number:0}}%</span>
+            <span ng-if="r.profitPerHour != null">{{r.profitPerHour | number:0}}</span>
+            <span ng-if="r.pprofitPerHour != null" ng-class="{'text-danger': r.pprofitPerHour < 0, 'text-success': r.pprofitPerHour > 0}">{{r.pprofitPerHour*100 | number:0}}%</span>
           </td>
           <td>
             <span ng-if="r.gross">{{r.gross | number:0}}</span>
@@ -111,8 +111,8 @@
             <span ng-if="r.pcustomerTotal" ng-class="{'text-danger': r.pcustomerTotal < 0, 'text-success': r.pcustomerTotal > 0}">{{r.pcustomerTotal*100 | number:0}}%</span>
           </td>
           <td class="text-left">
-            <span ng-if="r.custReturningPercent">{{r.custReturningPercent*100 | number:0}}%</span>
-            <span ng-if="r.pcustReturningPercent" ng-class="{'text-danger': r.pcustReturningPercent < 0, 'text-success': r.pcustReturningPercent > 0}">{{r.pcustReturningPercent*100 | number:0}}%</span>
+            <span ng-if="r.custReturningPercent != null">{{(r.custReturningPercent*100 | number:0) || 0}}%</span>
+            <span ng-if="r.pcustReturningPercent != null" ng-class="{'text-danger': r.pcustReturningPercent < 0, 'text-success': r.pcustReturningPercent > 0}">{{(r.pcustReturningPercent*100 | number:0) || 0}}%</span>
           </td>
           <td>
             <span ng-if="r.orders.length">{{r.orders.length | number:0}}</span>

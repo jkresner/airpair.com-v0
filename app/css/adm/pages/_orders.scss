@@ -53,8 +53,18 @@
   th { text-align:right; }
   th:first-child { width:70px; text-align: left;}
   td:first-child { width:70px; text-align: left;}
-  th:last-child { width:14% }
+  // th:last-child { width:14% }
   td { text-align:right;padding:6px }
+  th.text-muted {
+    opacity: 0;
+    -webkit-transition: opacity .15s linear;
+    transition: opacity .15s linear;
+
+    // @include transition();
+    &:hover {
+      opacity: 1;      
+    }
+  }
 }
 
 
