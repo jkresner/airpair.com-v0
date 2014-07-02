@@ -24,7 +24,7 @@ module.exports = class RequestCallsService extends require('./_svc')
 
   getOnAir: (startUtc, endUtc, cb) =>
     # $log 'svc.getOnAir', startUtc, endUtc
-    query = 'calls.datetime': {"$gte": startUtc, "$lt": endUtc}
+    query = 'calls' : { $elemMatch: 'datetime': {"$gte": startUtc, "$lt": endUtc}}
     @searchMany query, {fields:{'calls':1}}, (e,r) ->
       calls = []
       for c in _.flatten(_.pluck r, 'calls')

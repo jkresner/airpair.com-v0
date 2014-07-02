@@ -50,11 +50,32 @@
 
 .growth {
   tr.change td { padding:4px;font-size:11px }
-  th { text-align:right; }
-  th:first-child { width:70px; text-align: left;}
-  td:first-child { width:70px; text-align: left;}
-  th:last-child { width:14% }
-  td { text-align:right;padding:6px }
+  th { 
+    text-align:right; 
+    width: 9%;
+    &.text-left {text-align: left;}
+  }
+  th:first-child { 
+    width:70px; 
+    text-align: left;
+  }
+  // th:last-child { width:14% }
+  td { 
+    text-align:right;
+    padding:6px;
+    &.text-left {text-align: left;}
+  }
+  th.text-muted {
+    opacity: 0;
+    -webkit-transition: opacity .15s linear;
+    transition: opacity .15s linear;
+
+    // @include transition();
+    &:hover {
+      opacity: 1;      
+    }
+  }
+
 }
 
 
