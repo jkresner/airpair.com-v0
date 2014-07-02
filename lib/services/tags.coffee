@@ -11,7 +11,7 @@ module.exports = class TagsService extends DomainService
   getBySoId: (id, cb) -> @searchOne { soId: id }, {}, cb
 
   create: (addMode, tag, callback) ->
-    console.log 'create', 'addMode', addMode, tag
+    # console.log 'create', 'addMode', addMode, tag
     if addMode is 'stackoverflow' then @getStackoverflowTag(tag, callback)
     else if addMode is 'github' then @getGithubRepo(tag, callback)
     else @model( tag ).save callback
