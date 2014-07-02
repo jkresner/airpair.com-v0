@@ -8,6 +8,7 @@ MarketingTagsSvc = require './marketingtags'
 expertPick       = require '../mix/expertForSuggestion'
 objectIdWithTimestamp = require '../mix/objectIdWithTimestamp'
 
+
 module.exports = class RequestsService extends DomainService
 
   # logging:on
@@ -47,11 +48,19 @@ module.exports = class RequestsService extends DomainService
 
   """ Used for growth reports """
   getByDates: (startUtc, endUtc, cb) =>
-    query = _id: { $gt: objectIdWithTimestamp(startUtc) }, _id: { $lt: objectIdWithTimestamp(endUtc) }
+
+    query = 
+      _id: 
+        $gt: objectIdWithTimestamp(startUtc.toDate())
+        $lt: objectIdWithTimestamp(endUtc.toDate())
+
+
     $log 'getByDates', query
+
     @searchMany query, { fields: Data.view.pipeline },(e,r) =>
-      $log 'r', r
-      cb e, r
+      if e then console.log "ERROR", e else
+        $log 'RESULT: ', r.length
+        cb e, r
 
 
   """ Get a request, shapes viewData by viewer + logs view events """
