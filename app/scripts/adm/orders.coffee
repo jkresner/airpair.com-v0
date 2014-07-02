@@ -1,4 +1,5 @@
 calcExpertCredit = require 'lib/mix/calcExpertCredit'
+ObjectId2Date = require 'lib/mix/objectId2Date'
 
 {calcTotal, calcRedeemed, calcCompleted} = calcExpertCredit
 
@@ -200,285 +201,387 @@ module.exports = (pageData) ->
 
         # Get growth metrics
 
-        getGrowth: (interval = 'monthly', start = moment(@data[0].utc).subtract("d", 1), end = moment()) ->
+        getGrowthRequests: (callback = ->) ->
+            
+          console.log "getGrowthRequests()"
+
+          @growthStart = moment(@data[0].utc).subtract("d", 1)
+          @growthEnd = moment()
+
+          # if not @growthRequests or not @growthRequestCalls
+          startDate = @growthStart.format('YYYY-MM-DD')
+          endDate = @growthEnd.format('YYYY-MM-DD')
+          count = 0
+          api = {}
+          # Get requests
+          $http.get("/api/admin/requests/#{startDate}/#{endDate}").success (data, status, headers, config) =>
+            console.log "requests", data
+            @growthRequests = api.requests = data
+            count++
+            if count is 2 then callback(api)
+          # Hrs on air
+          $http.get("/api/admin/requests/calls/#{startDate}/#{endDate}").success (data, status, headers, config) =>
+            console.log "calls", data
+            @growthRequestCalls = api.calls = data
+            count++
+            if count is 2 then callback(api)
+          # else
+          #   callback(requests: @growthRequests, calls: @growthRequestCalls)
+
+
+        
+        filterGrowthRequests: (start, end, callback) ->
+          data = 
+            requests: @growthRequests
+            calls: @growthRequestCalls
+          # @getGrowthRequests (data) ->
+
+
+          filteredRequests = []
+          filteredCalls = []
+          
+          for val, i in data.requests
+            date = moment ObjectId2Date(val._id)
+            if date.isAfter start and date.isBefore end then filteredRequests.push val
+
+          for val, i in data.calls
+            date = moment val.datetime
+            if date.isAfter start and date.isBefore end then filteredCalls.push val              
+
+          callback {
+            requests: filteredRequests
+            calls: filteredCalls
+          }
+          
+            
+
+
+        getGrowth: (interval = 'monthly', start = moment(@data[0].utc).subtract("d", 1), end = moment(), callback) ->
 
           console.log "getGrowth", start.toDate(), end.toDate()
+
+          console.time("getGrowth")
+
+          @growthStart = start
+          @growthEnd = end
+
+
+          # Get API requests first
+          @getGrowthRequests =>
+            
+            console.log "starting getGrowth math"
           
+      
 
-          # Group orders by period. Calculate revenue, gross, and hrs sold.
-          
-          periods = {}
-          filteredOrders = []
+            # Group orders by period. Calculate revenue, gross, and hrs sold.
+            
+            periods = {}
+            filteredOrders = []
 
-          for order in @data
+            for order in @data
 
-            if moment(order.utc).isAfter(start) and moment(order.utc).isBefore(end)
-              # console.log "order", order
-              # if order.paymentStatus is "received" or order.paymentStatus is "paidout"
+              if moment(order.utc).isAfter(start) and moment(order.utc).isBefore(end)
+                # console.log "order", order
+                # if order.paymentStatus is "received" or order.paymentStatus is "paidout"
 
-              # Get Index
-              if interval is "monthly"
-                intervalName = moment(order.utc).format("MMM")
-                intervalIdx = moment(order.utc).startOf('month').format("YYMM")
-                intervalStart = moment(order.utc).startOf('month')
+                # Get Index
+                if interval is "monthly"
+                  intervalName = moment(order.utc).format("MMM")
+                  intervalIdx = moment(order.utc).startOf('month').format("YYMM")
+                  intervalStart = moment(order.utc).startOf('month')
+                if interval is "weekly"
+                  # Find start of saturday
+                  time = moment(order.utc)
+                  if time.day() < 6
+                    time.startOf("week").subtract("d", 1).startOf("day")
+                  else
+                    time.endOf("week").startOf("day")
+                  intervalName = time.clone().add('days', 6).format("MMM D")
+                  intervalIdx = time.format("YYMMDD")
+                  intervalStart = time
+
+                # Add to period
+                if not periods[intervalIdx]
+                  periods[intervalIdx] =
+                    revenue: 0
+                    gross: 0
+                    hrsSold: 0
+                    orders: []
+                    intervalIdx: intervalIdx
+                    intervalName: intervalName
+                    intervalStart: intervalStart
+
+                period = periods[intervalIdx]
+                period.orders.push order
+                period.revenue += order.total
+                period.gross += order.profit
+                period.hrsSold += calcTotal [item] for item in order.lineItems
+                filteredOrders.push order
+
+
+
+
+            console.log "filteredOrders", filteredOrders
+
+
+            # Interate through each period. Calc more stats. Get differences.
+
+            report = []
+
+            reportTotals =
+              customerTotal: 0
+              hrsSold: 0
+              numPeriods: 0
+              revPerHour: 0
+              revenue: 0
+              gross: 0
+              margin: 0
+
+            prevPeriod = null
+
+            _.each periods, (period) =>
+
+              period.customers = _.uniq(_.pluck period.orders, 'userId')
+              period.customerTotal = period.customers.length
+              period.hrPerCust = period.hrsSold/period.customerTotal
+              period.profitPerHour = period.gross/period.hrsSold
+              period.revPerHour = period.revenue/period.hrsSold
+              period.margin = period.gross/period.revenue
+              period.revPerCust = period.revenue/period.customerTotal
+              
+              period.custReturning = _.intersection(period.customers, @getCustomersBefore(period.intervalStart)).length
+
+              period.custReturningPercent = period.custReturning/period.customerTotal
+
+
+
+              reportTotals.numPeriods++
+              # reportTotals.customerTotal += period.customerTotal
+              reportTotals.hrsSold += period.hrsSold
+              reportTotals.revPerHour += period.revPerHour
+              reportTotals.revenue += period.revenue
+              reportTotals.gross += period.gross
+              reportTotals.margin += period.margin
+
+              # Calc differences between periods
+              if prevPeriod?
+                report.push
+                  css: 'change'
+                  intervalIdx: "#{prevPeriod.intervalIdx}c#{period.intervalIdx}"
+                  phrsSold: (period.hrsSold-prevPeriod.hrsSold)/prevPeriod.hrsSold
+                  pprofitPerHour: (period.profitPerHour/prevPeriod.profitPerHour)-1
+                  # profit/hr
+                  # prevPerHour: (period.revPerHour-prevPeriod.revPerHour)/prevPeriod.revPerHour
+                  pgross: (period.gross-prevPeriod.gross)/prevPeriod.gross
+                  pmargin: (period.margin-prevPeriod.margin)/prevPeriod.margin
+                  prevenue: (period.revenue-prevPeriod.revenue)/prevPeriod.revenue
+                  prevPerCust: (period.revPerCust/prevPeriod.revPerCust)-1
+                  phrPerCust: (period.revPerCust/prevPeriod.revPerCust)-1
+                  pcustomerTotal: (period.customerTotal-prevPeriod.customerTotal)/prevPeriod.customerTotal
+                  pcustReturningPercent: (period.custReturningPercent/prevPeriod.custReturningPercent)-1
+                  porders: (period.orders.length/prevPeriod.orders.length)-1
+
+              report.push period
+              prevPeriod = period
+
+
+            # Final report totals
+            filteredUsers = _.uniq(_.pluck filteredOrders, 'userId')
+
+            reportTotals.customerTotal = filteredUsers.length
+            reportTotals.profitPerHour = reportTotals.gross/reportTotals.hrsSold
+            reportTotals.ordersNum = filteredOrders.length
+            reportTotals.revPerHour = reportTotals.revenue/reportTotals.hrsSold
+            reportTotals.margin = reportTotals.gross/reportTotals.revenue
+            reportTotals.hrPerCust = reportTotals.hrsSold/reportTotals.customerTotal
+            reportTotals.ltv = reportTotals.margin*reportTotals.revPerHour*reportTotals.hrPerCust
+            reportTotals.revPerCust = reportTotals.revenue/reportTotals.customerTotal
+            reportTotals.custReturning = _.intersection(filteredUsers, @getCustomersBefore(start)).length
+            reportTotals.custReturningPercent = reportTotals.custReturning/reportTotals.customerTotal
+
+
+
+            # Get requests
+            # @getGrowthRequests (data) ->
+            @filterGrowthRequests start, end, (data) ->
+              reportTotals.requestsNum = data.requests.length
+              reportTotals.reqPerOrders = reportTotals.requestsNum/reportTotals.ordersNum
+
+              reportTotals.hrsOnAir = 0
+              _.each data.calls, (item, i) -> reportTotals.hrsOnAir += item.duration
+              reportTotals.hrsAirPerHrsSold = reportTotals.hrsOnAir/reportTotals.hrsSold
+
+            
+            
+
+
+            # startDate = start.format('YYYY-MM-DD')
+            # endDate   = end.format('YYYY-MM-DD')
+            # $http.get("/api/admin/requests/#{startDate}/#{endDate}").success (data, status, headers, config) ->
+            #   # console.log "requests", data
+            #   reportTotals.requestsNum = data.length
+            #   reportTotals.reqPerOrders = reportTotals.requestsNum/reportTotals.ordersNum
+            # # Hrs on air
+            # $http.get("/api/admin/requests/calls/#{startDate}/#{endDate}").success (data, status, headers, config) ->
+            #   # console.log "calls", data
+            #   reportTotals.hrsOnAir = 0
+            #   _.each data, (item, i) -> reportTotals.hrsOnAir += item.duration
+            #   reportTotals.hrsAirPerHrsSold = reportTotals.hrsOnAir/reportTotals.hrsSold
+
+
+
+
+
+
+            # Make api calls to get requests and hrs on air
+
+            callsLeft = (report.length+1)
+            calcDiffs = ->
+              if callsLeft > 1 then callsLeft-- else
+                console.log "GET DIFF"
+                for period, i in report
+                  if period.intervalStart and report[i + 2]?
+                    diff = report[i + 1] 
+                    periodNext = report[i + 2] 
+                    diff.prequestsNum = (periodNext.requestsNum/period.requestsNum) - 1
+                    diff.preqPerOrders = (periodNext.reqPerOrders/period.reqPerOrders) - 1
+                    diff.phrsOnAir = (periodNext.hrsOnAir/period.hrsOnAir) - 1
+                    diff.phrsAirPerHrsSold = (periodNext.hrsAirPerHrsSold/period.hrsAirPerHrsSold) - 1
+                calcFinalDiff(report)
+
+            _.each report, (period, index) =>
+              
+              # Add start and end dates in each interval
+              if period.intervalStart 
+                if report[index + 2]?
+                  period.intervalEnd = report[index + 2].intervalStart
+                else 
+                  period.intervalEnd = moment()
+
+                @filterGrowthRequests period.intervalStart, period.intervalEnd, (data) ->
+
+                  period.requestsNum = data.requests.length
+                  period.reqPerOrders = period.requestsNum/period.orders.length
+                  period.hrsOnAir = 0
+                  _.each data.calls, (item, i) -> period.hrsOnAir += item.duration
+                  period.hrsAirPerHrsSold = period.hrsOnAir/period.hrsSold
+                  
+                  calcDiffs()
+
+
+
+                # start = period.intervalStart.format('YYYY-MM-DD')
+                # end = period.intervalEnd.format('YYYY-MM-DD')
+                # # Get requests
+                # $http.get("/api/admin/requests/#{start}/#{end}").success (data, status, headers, config) ->
+                #   period.requestsNum = data.length
+                #   period.reqPerOrders = period.requestsNum/period.orders.length
+                #   calcDiffs()
+
+                # # hrs on air
+                # $http.get("/api/admin/requests/calls/#{start}/#{end}").success (data, status, headers, config) ->
+                #   period.hrsOnAir = 0
+                #   _.each data, (item, i) -> period.hrsOnAir += item.duration
+                #   period.hrsAirPerHrsSold = period.hrsOnAir/period.hrsSold
+                #   calcDiffs()
+
+
+
+
+
+
+
+                  
+
+
+            # Calc final Week Diff
+
+            calcFinalDiff = (report) ->
+
               if interval is "weekly"
-                # Find start of saturday
-                time = moment(order.utc)
+
+                # Get current week index
+                # time = moment({y: 2014, M: 5, d: 23})
+                time = moment()
                 if time.day() < 6
                   time.startOf("week").subtract("d", 1).startOf("day")
                 else
                   time.endOf("week").startOf("day")
-                intervalName = time.clone().add('days', 6).format("MMM D")
-                intervalIdx = time.format("YYMMDD")
-                intervalStart = time
+                curWeekIdx = time.format("YYMMDD")
+                finalWeek = report[report.length - 1]
 
-              # Add to period
-              if not periods[intervalIdx]
-                periods[intervalIdx] =
-                  revenue: 0
-                  gross: 0
-                  hrsSold: 0
-                  orders: []
-                  intervalIdx: intervalIdx
-                  intervalName: intervalName
-                  intervalStart: intervalStart
+                # console.log "weeks", curWeekIdx, finalWeek.intervalIdx
+                console.log "report", report
 
-              period = periods[intervalIdx]
-              period.orders.push order
-              period.revenue += order.total
-              period.gross += order.profit
-              period.hrsSold += calcTotal [item] for item in order.lineItems
-              filteredOrders.push order
+                # If last week
+                if curWeekIdx is finalWeek.intervalIdx and report.length > 2
+                  
+
+                  finalDiff = report[report.length - 2]
+                  prevWeek = report[report.length - 3]
+                  
+                  console.log "finalWeek", finalWeek
+                  console.log "finalDiff", finalDiff
+                  console.log "prevWeek", prevWeek
 
 
+                  # Get week percentage
+                  wkStart = moment()
+                  if wkStart.day() < 6
+                    wkStart.startOf("week").subtract("d", 1).startOf("day")
+                  else
+                    wkStart.endOf("week").startOf("day")
+                  wkPercentage = (moment().unix()-wkStart.unix())/60/60/24/7
+                  console.log "wkPercentage", wkPercentage
+
+                  _.extend finalDiff,
+                    intervalName: "#{Math.floor(wkPercentage*100)}%"
+                    pcustomerTotal: (finalWeek.customerTotal / (prevWeek.customerTotal*wkPercentage)) - 1
+                    phrsSold: (finalWeek.hrsSold / (prevWeek.hrsSold*wkPercentage)) - 1
+                    prevenue: (finalWeek.revenue / (prevWeek.revenue*wkPercentage)) - 1
+                    pgross: (finalWeek.gross / (prevWeek.gross*wkPercentage)) - 1
 
 
-          console.log "filteredOrders", filteredOrders
+              # Calc final Month Diff
 
+              if interval is "monthly"
 
-          # Interate through each period. Calc more stats. Get differences.
-
-          report = []
-
-          reportTotals =
-            customerTotal: 0
-            hrsSold: 0
-            numPeriods: 0
-            revPerHour: 0
-            revenue: 0
-            gross: 0
-            margin: 0
-
-          prevPeriod = null
-
-          _.each periods, (period) =>
-
-            period.customers = _.uniq(_.pluck period.orders, 'userId')
-            period.customerTotal = period.customers.length
-            period.hrPerCust = period.hrsSold/period.customerTotal
-            period.profitPerHour = period.gross/period.hrsSold
-            period.revPerHour = period.revenue/period.hrsSold
-            period.margin = period.gross/period.revenue
-            period.revPerCust = period.revenue/period.customerTotal
-            
-            period.custReturning = _.intersection(period.customers, @getCustomersBefore(period.intervalStart)).length
-
-            period.custReturningPercent = period.custReturning/period.customerTotal
-
-
-
-            reportTotals.numPeriods++
-            # reportTotals.customerTotal += period.customerTotal
-            reportTotals.hrsSold += period.hrsSold
-            reportTotals.revPerHour += period.revPerHour
-            reportTotals.revenue += period.revenue
-            reportTotals.gross += period.gross
-            reportTotals.margin += period.margin
-
-            # Calc differences between periods
-            if prevPeriod?
-              report.push
-                css: 'change'
-                intervalIdx: "#{prevPeriod.intervalIdx}c#{period.intervalIdx}"
-                phrsSold: (period.hrsSold-prevPeriod.hrsSold)/prevPeriod.hrsSold
-                pprofitPerHour: (period.profitPerHour/prevPeriod.profitPerHour)-1
-                # profit/hr
-                # prevPerHour: (period.revPerHour-prevPeriod.revPerHour)/prevPeriod.revPerHour
-                pgross: (period.gross-prevPeriod.gross)/prevPeriod.gross
-                pmargin: (period.margin-prevPeriod.margin)/prevPeriod.margin
-                prevenue: (period.revenue-prevPeriod.revenue)/prevPeriod.revenue
-                prevPerCust: (period.revPerCust/prevPeriod.revPerCust)-1
-                phrPerCust: (period.revPerCust/prevPeriod.revPerCust)-1
-                pcustomerTotal: (period.customerTotal-prevPeriod.customerTotal)/prevPeriod.customerTotal
-                pcustReturningPercent: (period.custReturningPercent/prevPeriod.custReturningPercent)-1
-                porders: (period.orders.length/prevPeriod.orders.length)-1
-
-            report.push period
-            prevPeriod = period
-
-
-          # Final report totals
-          filteredUsers = _.uniq(_.pluck filteredOrders, 'userId')
-
-          reportTotals.customerTotal = filteredUsers.length
-          reportTotals.profitPerHour = reportTotals.gross/reportTotals.hrsSold
-          reportTotals.ordersNum = filteredOrders.length
-          reportTotals.revPerHour = reportTotals.revenue/reportTotals.hrsSold
-          reportTotals.margin = reportTotals.gross/reportTotals.revenue
-          reportTotals.hrPerCust = reportTotals.hrsSold/reportTotals.customerTotal
-          reportTotals.ltv = reportTotals.margin*reportTotals.revPerHour*reportTotals.hrPerCust
-          reportTotals.revPerCust = reportTotals.revenue/reportTotals.customerTotal
-          reportTotals.custReturning = _.intersection(filteredUsers, @getCustomersBefore(start)).length
-          reportTotals.custReturningPercent = reportTotals.custReturning/reportTotals.customerTotal
-
-          # Get requests
-          startDate = start.format('YYYY-MM-DD')
-          endDate   = end.format('YYYY-MM-DD')
-          $http.get("/api/admin/requests/#{startDate}/#{endDate}").success (data, status, headers, config) ->
-            reportTotals.requestsNum = data.length
-            reportTotals.reqPerOrders = reportTotals.requestsNum/reportTotals.ordersNum
-          # Hrs on air
-          $http.get("/api/admin/requests/calls/#{startDate}/#{endDate}").success (data, status, headers, config) ->
-            reportTotals.hrsOnAir = 0
-            _.each data, (item, i) -> reportTotals.hrsOnAir += item.duration
-            reportTotals.hrsAirPerHrsSold = reportTotals.hrsOnAir/reportTotals.hrsSold
-
-
-
-
-
-
-          # Make api calls to get requests and hrs on air
-
-          callsLeft = (report.length+1)
-          calcDiffs = ->
-            if callsLeft > 1 then callsLeft-- else
-              console.log "GET DIFF"
-              for period, i in report
-                if period.intervalStart and report[i + 2]?
-                  diff = report[i + 1] 
-                  periodNext = report[i + 2] 
-                  diff.prequestsNum = (periodNext.requestsNum/period.requestsNum) - 1
-                  diff.preqPerOrders = (periodNext.reqPerOrders/period.reqPerOrders) - 1
-                  diff.phrsOnAir = (periodNext.hrsOnAir/period.hrsOnAir) - 1
-                  diff.phrsAirPerHrsSold = (periodNext.hrsAirPerHrsSold/period.hrsAirPerHrsSold) - 1
-              calcFinalDiff(report)
-
-          _.each report, (period, index) ->
-            
-            # Add start and end dates in each interval
-            if period.intervalStart 
-              if report[index + 2]?
-                period.intervalEnd = report[index + 2].intervalStart
-              else 
-                period.intervalEnd = moment()
-
-              start = period.intervalStart.format('YYYY-MM-DD')
-              end = period.intervalEnd.format('YYYY-MM-DD')
-
-              # Get requests
-              $http.get("/api/admin/requests/#{start}/#{end}").success (data, status, headers, config) ->
-                period.requestsNum = data.length
-                period.reqPerOrders = period.requestsNum/period.orders.length
-                calcDiffs()
-
-              # hrs on air
-              $http.get("/api/admin/requests/calls/#{start}/#{end}").success (data, status, headers, config) ->
-                period.hrsOnAir = 0
-                _.each data, (item, i) -> period.hrsOnAir += item.duration
-                period.hrsAirPerHrsSold = period.hrsOnAir/period.hrsSold
-                calcDiffs()
-
-
-
-
-
-
-
-                
-
-
-          # Calc final Week Diff
-
-          calcFinalDiff = (report) ->
-
-            if interval is "weekly"
-
-              # Get current week index
-              # time = moment({y: 2014, M: 5, d: 23})
-              time = moment()
-              if time.day() < 6
-                time.startOf("week").subtract("d", 1).startOf("day")
-              else
-                time.endOf("week").startOf("day")
-              curWeekIdx = time.format("YYMMDD")
-              finalWeek = report[report.length - 1]
-
-              # console.log "weeks", curWeekIdx, finalWeek.intervalIdx
-              console.log "report", report
-
-              # If last week
-              if curWeekIdx is finalWeek.intervalIdx and report.length > 2
-                
-
+                finalMonth = report[report.length - 1]
                 finalDiff = report[report.length - 2]
-                prevWeek = report[report.length - 3]
-                
-                console.log "finalWeek", finalWeek
-                console.log "finalDiff", finalDiff
-                console.log "prevWeek", prevWeek
+                prevMonth = report[report.length - 3]
 
-
-                # Get week percentage
-                wkStart = moment()
-                if wkStart.day() < 6
-                  wkStart.startOf("week").subtract("d", 1).startOf("day")
-                else
-                  wkStart.endOf("week").startOf("day")
-                wkPercentage = (moment().unix()-wkStart.unix())/60/60/24/7
-                console.log "wkPercentage", wkPercentage
+                monthPercentage = (moment().unix()-moment().startOf('month').unix()) / (moment().endOf('month').unix()-moment().startOf('month').unix())
+                console.log "monthPercentage", monthPercentage
 
                 _.extend finalDiff,
-                  intervalName: "#{Math.floor(wkPercentage*100)}%"
-                  pcustomerTotal: (finalWeek.customerTotal / (prevWeek.customerTotal*wkPercentage)) - 1
-                  phrsSold: (finalWeek.hrsSold / (prevWeek.hrsSold*wkPercentage)) - 1
-                  prevenue: (finalWeek.revenue / (prevWeek.revenue*wkPercentage)) - 1
-                  pgross: (finalWeek.gross / (prevWeek.gross*wkPercentage)) - 1
-
-
-            # Calc final Month Diff
-
-            if interval is "monthly"
-
-              finalMonth = report[report.length - 1]
-              finalDiff = report[report.length - 2]
-              prevMonth = report[report.length - 3]
-
-              monthPercentage = (moment().unix()-moment().startOf('month').unix()) / (moment().endOf('month').unix()-moment().startOf('month').unix())
-              console.log "monthPercentage", monthPercentage
-
-              _.extend finalDiff,
-                intervalName: "#{Math.floor(monthPercentage*100)}%"
-                pcustomerTotal: (finalMonth.customerTotal / (prevMonth.customerTotal*monthPercentage)) - 1
-                phrsSold: (finalMonth.hrsSold / (prevMonth.hrsSold*monthPercentage)) - 1
-                prevenue: (finalMonth.revenue / (prevMonth.revenue*monthPercentage)) - 1
-                pgross: (finalMonth.gross/(prevMonth.gross*monthPercentage)) - 1
+                  intervalName: "#{Math.floor(monthPercentage*100)}%"
+                  pcustomerTotal: (finalMonth.customerTotal / (prevMonth.customerTotal*monthPercentage)) - 1
+                  phrsSold: (finalMonth.hrsSold / (prevMonth.hrsSold*monthPercentage)) - 1
+                  prevenue: (finalMonth.revenue / (prevMonth.revenue*monthPercentage)) - 1
+                  pgross: (finalMonth.gross/(prevMonth.gross*monthPercentage)) - 1
 
 
 
-          calcFinalDiff(report)
+            calcFinalDiff(report)
 
 
 
 
 
-          console.log "REPORT", _.sortBy(report, (m) -> m.intervalIdx).reverse()
+            console.log "REPORT", _.sortBy(report, (m) -> m.intervalIdx).reverse()
 
-          # Sort, reverse, and return
-          return {
-            report: _.sortBy(report, (m) -> m.intervalIdx).reverse()
-            reportTotals: reportTotals
-          }
+            
+            # Sort, reverse, and return
+            callback {
+              report: _.sortBy(report, (m) -> m.intervalIdx).reverse()
+              reportTotals: reportTotals
+            }
+            console.timeEnd("getGrowth")
+                       
+            # return {
+            #   report: _.sortBy(report, (m) -> m.intervalIdx).reverse()
+            #   reportTotals: reportTotals
+            # }
 
 
 
@@ -792,9 +895,10 @@ module.exports = (pageData) ->
 
     updateRange = () ->
       return if not $scope.dateStart or not $scope.dateEnd
-      week2week = apData.orders.getGrowth 'weekly', moment($scope.dateStart), moment($scope.dateEnd)
-      $scope.report = week2week.report
-      $scope.reportTotals = week2week.reportTotals
+      apData.orders.getGrowth 'weekly', moment($scope.dateStart), moment($scope.dateEnd), (week2week) ->
+        $scope.report = week2week.report
+        $scope.reportTotals = week2week.reportTotals
+        $scope.$apply() if not $scope.$$phase
 
 
     # Watch date ranges
