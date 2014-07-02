@@ -11,7 +11,7 @@ module.exports = class TagsService extends DomainService
   getBySoId: (id, cb) -> @searchOne { soId: id }, {}, cb
 
   create: (addMode, tag, callback) ->
-    # console.log 'create', 'addMode', addMode, tag
+    console.log 'create', 'addMode', addMode, tag
     if addMode is 'stackoverflow' then @getStackoverflowTag(tag, callback)
     else if addMode is 'github' then @getGithubRepo(tag, callback)
     else @model( tag ).save callback
@@ -21,12 +21,13 @@ module.exports = class TagsService extends DomainService
     encoded = encodeURIComponent tag.nameStackoverflow
     request
       .get("http://api.stackexchange.com/tags/#{encoded}/wikis?site=stackoverflow")
+      .set('Accept', 'application/json')
       .end (res) =>
         error = new Error "tag #{tag.nameStackoverflow} not found"
-
         if !res.ok then return callback error
 
-        d = res.body.items[0]
+        # subscript for fucking invisible character
+        d = JSON.parse(res.text.substring(1)).items[0]
 
         if !d then return callback error
 
