@@ -146,6 +146,7 @@ module.exports = (pageData) ->
           return orderDate > start && orderDate < end
 
         calcSummary: (orders) ->
+          console.log "calcSummary"
           summary =
             totalRevenue: 0
             orderCount: 0
@@ -228,9 +229,14 @@ module.exports = (pageData) ->
                 orderDates: []
             customers[order.userId].orderDates.push order.utc
 
+
+          # Save for later
+          @customers = _.clone customers
+
           _.each customers, (cust, id) -> if cust.orderDates.length < 2 then delete customers[id] 
 
           # console.log "customers repeat", _.size(customers)
+
 
           console.timeEnd("calcRepeatCustomers")
 
@@ -362,7 +368,7 @@ module.exports = (pageData) ->
       
 
             # Group orders by period. Calculate revenue, gross, and hrs sold.
-            console.time("data - group periods")
+            console.time("data - 1 - group periods")
 
             periods = {}
             filteredOrders = []
@@ -411,12 +417,12 @@ module.exports = (pageData) ->
 
 
 
-            console.timeEnd("data - group periods")
+            console.timeEnd("data - 1 - group periods")
 
 
  
 
-            console.time("data - interate periods")
+            console.time("data - 2 - interate periods")
             # Interate through each period. Calc more stats. Get differences.
 
             report = []
@@ -503,6 +509,8 @@ module.exports = (pageData) ->
 
 
             # Final report totals
+
+            console.time("data - finals")
             filteredUsers = _.uniq(_.pluck filteredOrders, 'userId')
 
             reportTotals.customerTotal = filteredUsers.length
@@ -513,7 +521,7 @@ module.exports = (pageData) ->
             reportTotals.hrPerCust = reportTotals.hrsSold/reportTotals.customerTotal
             reportTotals.ltv = reportTotals.margin*reportTotals.revPerHour*reportTotals.hrPerCust
             reportTotals.revPerCust = reportTotals.revenue/reportTotals.customerTotal
-            reportTotals.custReturning = _.intersection(filteredUsers, @getCustomersBefore(start)).length
+            reportTotals.custReturning = @findRepeatCustomers(filteredUsers, start)
             reportTotals.custReturningPercent = reportTotals.custReturning/reportTotals.customerTotal
 
 
@@ -528,9 +536,9 @@ module.exports = (pageData) ->
             reportTotals.hrsOnAir = 0
             _.each @growthRequestCalls, (item, i) -> reportTotals.hrsOnAir += item.duration
             reportTotals.hrsAirPerHrsSold = reportTotals.hrsOnAir/reportTotals.hrsSold
-
+            console.timeEnd("data - finals")
             
-            console.timeEnd("data - interate periods")
+            console.timeEnd("data - 2 - interate periods")
 
 
 
@@ -578,7 +586,7 @@ module.exports = (pageData) ->
 
 
 
-            console.time("data - final diff")
+            console.time("data - 3 - final diff")
 
 
             # Calc final Week Diff
@@ -662,7 +670,7 @@ module.exports = (pageData) ->
 
 
 
-            console.timeEnd("data - final diff")
+            console.timeEnd("data - 3 - final diff")
 
 
             console.log "REPORT", _.sortBy(report, (m) -> m.intervalIdx).reverse()
