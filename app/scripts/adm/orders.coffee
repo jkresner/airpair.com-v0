@@ -951,10 +951,11 @@ module.exports = (pageData) ->
 
     # Watch date updates
     $scope.$watch "dateRange", (newRange) -> updateDateRange(newRange)
-    $scope.$watch "dateStart", () -> updateOrderList()
-    $scope.$watch "dateEnd", () -> updateOrderList()
-    $scope.$watch "orderSearch", (searchText) -> updateOrderList(searchText)
+    $scope.$watch "dateStart", (n, o) -> updateOrderList()
+    $scope.$watch "dateEnd", (n, o) -> if n isnt o then updateOrderList()
+    $scope.$watch "orderSearch", (searchText, o) -> if searchText isnt o then updateOrderList(searchText)
 
+    # updateOrderList()
 
 
 
@@ -1021,7 +1022,7 @@ module.exports = (pageData) ->
 
     # Watch date updates
     $scope.$watch "dateStart", () -> updateRange()
-    $scope.$watch "dateEnd", () -> updateRange()
+    $scope.$watch "dateEnd", (n, o) -> if n isnt o then updateRange()
 
 
   ]).
