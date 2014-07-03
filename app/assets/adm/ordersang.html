@@ -12,12 +12,6 @@
 
   {{> adminNav }}
 
-  <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-  <script>
-  $.noConflict();
-  // Code that uses other library's $ can follow here.
-  </script>
-
   <!-- PAGE -->
   <div ng-view="ng-view" style="margin-top: 20px;"></div>
 
@@ -27,7 +21,7 @@
       ap_ang = require('/scripts/adm/orders')(pageData);
     }
   </script>
-  <script src="/javascripts/adm.js" defer onload="initApp()"></script>
+  <script src="/javascripts/adm.js" defer></script> <!-- onload="initApp()" -->
 
   <style>
     .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
