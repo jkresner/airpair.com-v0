@@ -202,7 +202,7 @@ module.exports = (pageData) ->
         # Get growth metrics
 
         getGrowthRequests: (callback = ->) ->
-            
+          
 
           # @growthStart = moment(@data[0].utc).subtract("d", 1)
           # @growthEnd = moment()
@@ -274,29 +274,31 @@ module.exports = (pageData) ->
 
           console.log "#{start.format('YYYY-MM-DD')} – #{end.format('YYYY-MM-DD')}"
 
-          console.time("getGrowth")
+          console.time("Total getGrowth")
 
           @growthStart = start
           @growthEnd = end
 
 
           # Get API requests first
+          console.time("api calls")
           @getGrowthRequests =>
+            console.timeEnd("api calls")
             
             console.log "... api calls completed. Crunching data.."
           
+            console.time("dataCrunching")
       
 
             # Group orders by period. Calculate revenue, gross, and hrs sold.
-            
+            console.time("data - group")
+
             periods = {}
             filteredOrders = []
 
             for order in @data
 
               if moment(order.utc).isAfter(start) and moment(order.utc).isBefore(end)
-                # console.log "order", order
-                # if order.paymentStatus is "received" or order.paymentStatus is "paidout"
 
                 # Get Index
                 if interval is "monthly"
@@ -336,13 +338,14 @@ module.exports = (pageData) ->
                 period.hrsSold += calcTotal [item] for item in order.lineItems
                 filteredOrders.push order
 
-            # console.log "filteredOrders", filteredOrders
 
 
+            console.timeEnd("data - group")
 
 
+ 
 
-
+            console.time("data - interate periods")
             # Interate through each period. Calc more stats. Get differences.
 
             report = []
@@ -360,6 +363,7 @@ module.exports = (pageData) ->
 
             _.each periods, (period) =>
 
+              console.time("data - one period")
               period.customers = _.uniq(_.pluck period.orders, 'userId')
               period.customerTotal = period.customers.length
               period.hrPerCust = period.hrsSold/period.customerTotal
@@ -368,7 +372,10 @@ module.exports = (pageData) ->
               period.margin = period.gross/period.revenue
               period.revPerCust = period.revenue/period.customerTotal
               
+              console.time("data - repeat customers")
               period.custReturning = _.intersection(period.customers, @getCustomersBefore(period.intervalStart)).length
+              console.timeEnd("data - repeat customers")
+
               period.custReturningPercent = period.custReturning/period.customerTotal
 
 
@@ -419,6 +426,8 @@ module.exports = (pageData) ->
 
                 report.push period
                 prevPeriod = period
+                console.timeEnd("data - one period")
+
 
 
             # Final report totals
@@ -449,7 +458,7 @@ module.exports = (pageData) ->
             reportTotals.hrsAirPerHrsSold = reportTotals.hrsOnAir/reportTotals.hrsSold
 
             
-            
+            console.timeEnd("data - interate periods")
 
 
 
@@ -497,7 +506,7 @@ module.exports = (pageData) ->
 
 
 
-                  
+            console.time("data - final diff")
 
 
             # Calc final Week Diff
@@ -515,6 +524,8 @@ module.exports = (pageData) ->
                   time.endOf("week").startOf("day")
                 curWeekIdx = time.format("YYMMDD")
                 finalWeek = report[report.length - 1]
+
+                return if not finalWeek
 
                 # console.log "weeks", curWeekIdx, finalWeek.intervalIdx
                 # console.log "report", report
@@ -579,6 +590,7 @@ module.exports = (pageData) ->
 
 
 
+            console.timeEnd("data - final diff")
 
 
             console.log "REPORT", _.sortBy(report, (m) -> m.intervalIdx).reverse()
@@ -589,13 +601,11 @@ module.exports = (pageData) ->
               report: _.sortBy(report, (m) -> m.intervalIdx).reverse()
               reportTotals: reportTotals
             }
-            console.timeEnd("getGrowth")
+            console.timeEnd("dataCrunching")
+            
+            console.timeEnd("Total getGrowth")
             console.groupEnd()
                        
-            # return {
-            #   report: _.sortBy(report, (m) -> m.intervalIdx).reverse()
-            #   reportTotals: reportTotals
-            # }
 
 
 
@@ -682,9 +692,9 @@ module.exports = (pageData) ->
 
         getChannelGrowth: (start = moment(@data[0].utc), end = moment()) ->
 
-          # console.log "getChannelGrowth"
+          # console.log "getChannelGrowth", start.format('YYYY-MM-DD'), end.format('YYYY-MM-DD')
 
-          weeks = $moment.getWeeksByFriday(moment().subtract("weeks", 4), moment(), 6).reverse()
+          weeks = $moment.getWeeksByFriday(start, moment()).reverse()
 
           # console.log "weeks", weeks
 
@@ -722,16 +732,17 @@ module.exports = (pageData) ->
           # console.log "Updating final week.."
 
           # Update final week diff
-          _.each finalWeek.metrics.summary.tags, (tag, tagName) ->
-            if tagName is '' or not prevWeek.metrics.summary.tags[tagName] then return
+          if prevWeek
+            _.each finalWeek.metrics.summary.tags, (tag, tagName) ->
+              if tagName is '' or not prevWeek.metrics.summary.tags[tagName] then return
 
-            # console.log "prevWeek.metrics.summary.tags[tagName] = ", prevWeek.metrics.summary.tags[tagName]
+              # console.log "prevWeek.metrics.summary.tags[tagName] = ", prevWeek.metrics.summary.tags[tagName]
 
-            newCount = tag.count
-            oldCount = prevWeek.metrics.summary.tags[tagName].count*wkPercentage
+              newCount = tag.count
+              oldCount = prevWeek.metrics.summary.tags[tagName].count*wkPercentage
 
-            finalWeek.diffTags[tagName] =
-              count: if oldCount is 0 then (newCount-oldCount) else (newCount/oldCount)-1
+              finalWeek.diffTags[tagName] =
+                count: if oldCount is 0 then (newCount-oldCount) else (newCount/oldCount)-1
 
           # console.groupEnd()
           return weeks.reverse()
@@ -932,6 +943,9 @@ module.exports = (pageData) ->
         $scope.reportTotals = week2week.reportTotals
         $scope.$apply() if not $scope.$$phase
 
+      $scope.channelGrowth = apData.orders.getChannelGrowth(moment($scope.dateStart))
+
+
 
     # Watch date ranges
     first = true
@@ -943,10 +957,6 @@ module.exports = (pageData) ->
 
 
 
-
-
-    # Channel Growth
-    $scope.channelGrowth = apData.orders.getChannelGrowth(moment().subtract('weeks', 7))
 
 
   ])
