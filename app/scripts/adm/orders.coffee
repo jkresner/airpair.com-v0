@@ -484,6 +484,7 @@ module.exports = (pageData) ->
                   report.push
                     css: 'change'
                     intervalIdx: "#{prevPeriod.intervalIdx}c#{period.intervalIdx}"
+                    pltv: (period.ltv-prevPeriod.ltv)/prevPeriod.ltv
                     phrsSold: (period.hrsSold-prevPeriod.hrsSold)/prevPeriod.hrsSold
                     pprofitPerHour: (period.profitPerHour/prevPeriod.profitPerHour)-1
                     # profit/hr
@@ -843,8 +844,29 @@ module.exports = (pageData) ->
 
 
     return apData
+  
   ]).
 
+
+
+
+
+
+
+
+
+  # DIRECTIVES
+  #----------------------------------------------
+
+
+  directive('apTableGrowth', [() ->
+    restrict: "EA"
+    scope:
+      report: "="
+      reportTotals: "="
+      interval: "@"
+    templateUrl: "/adm/templates/orders_table_growth.html"
+  ]).
 
 
 
