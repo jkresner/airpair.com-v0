@@ -201,6 +201,63 @@ module.exports = (pageData) ->
 
         # Get growth metrics
 
+
+
+        # only users with more than one purchase
+        # repeatCustomer = { userId: '5ooo23423', orderDate: [] }
+        # repeatCustmer[userId] # orderDate[]
+
+        # O(1) X 2000 = O(N) + O(1)
+
+        # O(N) X M = O(N*N)
+
+        # if !repeatCustmer[userId]?
+
+
+
+        calcRepeatCustomers: ->
+          return @repeatCustomers if @repeatCustomers
+
+          console.time("calcRepeatCustomers")
+
+          customers = {}
+
+          for order in @data
+            if not customers[order.userId]
+              customers[order.userId] = 
+                orderDates: []
+            customers[order.userId].orderDates.push order.utc
+
+          _.each customers, (cust, id) -> if cust.orderDates.length < 2 then delete customers[id] 
+
+          # console.log "customers repeat", _.size(customers)
+
+          console.timeEnd("calcRepeatCustomers")
+
+          @repeatCustomers = customers
+
+
+
+        findRepeatCustomers: (customers, start) ->
+          
+          # console.log "findRepeatCustomers", customers.length
+          count = 0
+          for cust in customers
+            if @repeatCustomers[cust]
+              before = false
+              for date in @repeatCustomers[cust].orderDates
+                if moment(date).isBefore(start) then before = true
+              if before then count++
+
+          # console.timeEnd("findRepeatCustomers")
+
+          # console.log "count", count
+
+          return count
+        
+        
+
+
         getGrowthRequests: (callback = ->) ->
           
 
@@ -280,8 +337,22 @@ module.exports = (pageData) ->
           @growthEnd = end
 
 
+          @calcRepeatCustomers()
+
+
+
+
+
+
+
+
+
+
+
+
           # Get API requests first
           console.time("api calls")
+
           @getGrowthRequests =>
             console.timeEnd("api calls")
             
@@ -291,7 +362,7 @@ module.exports = (pageData) ->
       
 
             # Group orders by period. Calculate revenue, gross, and hrs sold.
-            console.time("data - group")
+            console.time("data - group periods")
 
             periods = {}
             filteredOrders = []
@@ -340,7 +411,7 @@ module.exports = (pageData) ->
 
 
 
-            console.timeEnd("data - group")
+            console.timeEnd("data - group periods")
 
 
  
@@ -373,7 +444,8 @@ module.exports = (pageData) ->
               period.revPerCust = period.revenue/period.customerTotal
               
               console.time("data - repeat customers")
-              period.custReturning = _.intersection(period.customers, @getCustomersBefore(period.intervalStart)).length
+              period.custReturning = @findRepeatCustomers(period.customers, period.intervalStart)
+              # period.custReturning = _.intersection(period.customers, @getCustomersBefore(period.intervalStart)).length
               console.timeEnd("data - repeat customers")
 
               period.custReturningPercent = period.custReturning/period.customerTotal
@@ -756,6 +828,7 @@ module.exports = (pageData) ->
 
     apData.orders.data = _.sortBy(apData.orders.data, (o) -> moment(o.utc))
     apData.orders.calcCredits()
+    # apData.orders.findRepeatCustomers()
 
     console.log "apData", apData
 
