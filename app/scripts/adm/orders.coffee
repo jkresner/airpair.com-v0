@@ -448,6 +448,7 @@ module.exports = (pageData) ->
               period.revPerHour = period.revenue/period.hrsSold
               period.margin = period.gross/period.revenue
               period.revPerCust = period.revenue/period.customerTotal
+              period.ltv = period.margin*period.revPerHour*period.hrPerCust
               
               console.time("data - repeat customers")
               period.custReturning = @findRepeatCustomers(period.customers, period.intervalStart)
@@ -461,7 +462,7 @@ module.exports = (pageData) ->
               @filterGrowthRequests period.intervalStart, period.intervalEnd, (data) ->   
 
                 period.requestsNum = data.requests.length
-                period.reqPerOrders = period.requestsNum/period.orders.length
+                period.ordersPerReq = period.orders.length/period.requestsNum
                 period.hrsOnAir = 0
                 _.each data.calls, (item, i) -> period.hrsOnAir += item.duration
 
@@ -486,7 +487,7 @@ module.exports = (pageData) ->
                     phrsSold: (period.hrsSold-prevPeriod.hrsSold)/prevPeriod.hrsSold
                     pprofitPerHour: (period.profitPerHour/prevPeriod.profitPerHour)-1
                     # profit/hr
-                    # prevPerHour: (period.revPerHour-prevPeriod.revPerHour)/prevPeriod.revPerHour
+                    prevPerHour: (period.revPerHour-prevPeriod.revPerHour)/prevPeriod.revPerHour
                     pgross: (period.gross-prevPeriod.gross)/prevPeriod.gross
                     pmargin: (period.margin-prevPeriod.margin)/prevPeriod.margin
                     prevenue: (period.revenue-prevPeriod.revenue)/prevPeriod.revenue
@@ -497,7 +498,7 @@ module.exports = (pageData) ->
                     porders: (period.orders.length/prevPeriod.orders.length)-1
 
                     prequestsNum: (period.requestsNum/prevPeriod.requestsNum) - 1
-                    preqPerOrders: (period.reqPerOrders/prevPeriod.reqPerOrders) - 1
+                    pordersPerReq: (period.ordersPerReq/prevPeriod.ordersPerReq) - 1
                     phrsOnAir: (period.hrsOnAir/prevPeriod.hrsOnAir) - 1
                     phrsAirPerHrsSold: (period.hrsAirPerHrsSold/prevPeriod.hrsAirPerHrsSold) - 1
 
@@ -531,7 +532,7 @@ module.exports = (pageData) ->
             # @filterGrowthRequests start, end, (data) =>
               # console.log "data.requests", data.requests
             reportTotals.requestsNum = @growthRequests.length
-            reportTotals.reqPerOrders = reportTotals.requestsNum/reportTotals.ordersNum
+            reportTotals.ordersPerReq = reportTotals.ordersNum/reportTotals.requestsNum
 
             reportTotals.hrsOnAir = 0
             _.each @growthRequestCalls, (item, i) -> reportTotals.hrsOnAir += item.duration
@@ -555,7 +556,7 @@ module.exports = (pageData) ->
             #         diff = report[i + 1] 
             #         periodNext = report[i + 2] 
             #         diff.prequestsNum = (periodNext.requestsNum/period.requestsNum) - 1
-            #         diff.preqPerOrders = (periodNext.reqPerOrders/period.reqPerOrders) - 1
+            #         diff.pordersPerReq = (periodNext.ordersPerReq/period.ordersPerReq) - 1
             #         diff.phrsOnAir = (periodNext.hrsOnAir/period.hrsOnAir) - 1
             #         diff.phrsAirPerHrsSold = (periodNext.hrsAirPerHrsSold/period.hrsAirPerHrsSold) - 1
             #     calcFinalDiff(report)
@@ -572,7 +573,7 @@ module.exports = (pageData) ->
             #     @filterGrowthRequests period.intervalStart, period.intervalEnd, (data) ->
 
             #       period.requestsNum = data.requests.length
-            #       period.reqPerOrders = period.requestsNum/period.orders.length
+            #       period.ordersPerReq = period.requestsNum/period.orders.length
             #       period.hrsOnAir = 0
             #       _.each data.calls, (item, i) -> period.hrsOnAir += item.duration
             #       period.hrsAirPerHrsSold = period.hrsOnAir/period.hrsSold
