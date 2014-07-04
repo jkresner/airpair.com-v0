@@ -18,10 +18,10 @@
   <script type="text/javascript">
     function initApp() {
       var pageData = { {{JSON 'session'}}, {{JSON 'orders'}} };
-      ap_ang = require('/scripts/adm/orders')(pageData);
+      ap_ang = require('scripts/adm/orders')(pageData);
     }
   </script>
-  <script src="/javascripts/adm.js" defer></script> <!-- onload="initApp()" -->
+  <script src="/javascripts/adm.js" defer onload="initApp()"></script>
 
   <style>
     .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
