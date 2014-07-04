@@ -9,19 +9,11 @@ module.exports = (app) ->
   # login / auth routes
   require('./lib/auth/base')(app)
 
+  require('./app_landing')(app, render)
+
   renderHome = (req, r, n) ->
     if req.isAuthenticated() then n()
     else render('home')(req, r, n)
-
-  app.get '/so10/:id', render 'landing/so10', ['params.id']
-  app.get '/so11/:id', render 'landing/so11', ['params.id']
-  app.get '/so12/:id', render 'landing/so12', ['params.id']
-  app.get '/so13/:id', render 'landing/so13', ['params.id']
-  app.get '/railsconf2014', file 'landing/railsconf'
-  app.get '/rails/consulting', file 'landing/railsconsulting'
-  app.get '/googleio-specials', file 'landing/googleio'
-  app.get '/googleio*', (req, res) ->
-    res.redirect 'https://www.airpair.com/googleio-specials?utm_source=direct&utm_medium=pamphlets&utm_term=googleio&utm_content=googleio&utm_campaign=goi14'
 
   app.get '/', renderHome, render 'dashboard'
   app.get '/book/me', authd, render 'bookme'

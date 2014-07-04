@@ -27,7 +27,8 @@ module.exports = class TagsService extends DomainService
         if !res.ok then return callback error
 
         # subscript for fucking invisible character
-        d = JSON.parse(res.text.substring(1)).items[0]
+        # d = JSON.parse(res.text.substring(1)).items[0]
+        d = res.body.items[0]
 
         if !d then return callback error
 
