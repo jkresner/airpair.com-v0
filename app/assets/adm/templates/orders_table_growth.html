@@ -1,35 +1,47 @@
 
-      <table class="table growth">
+      <style>
+        th { font-size:12px!important;padding-right:0!important;padding-left:0!important;border-bottom:1px solid #2E2E2E!important }
+        th.text-muted { font-size:10px!important;text-align:center!important }
+        td { padding-right:0!important;padding-left:0!important }
+        td.text-orange { text-align:center!important;font-size:12px;padding:10px 2px 0 38px!important }
+        .change td { padding-top:10px!important;padding-bottom:10px!important }
+        table .success td { border-top:1px solid #2E2E2E!important;background-color:#F8F8F8!important; }
+        table.double { border:none;width:100%;margin:-2px 0 0 2px }
+        table.double td { border:none!important;padding:0!important; }
+        table.double td.left { width:46%;text-align:right;padding-right:4px!important }
+        table.double td.middle { width:6%;text-align:center }
+        table.double td.right { width:46%;text-align:left;padding-left:5px!important }
+      </style>
+
+      <table class="table growth" style="text-align:center">
 
         <thead>
-          <th class="mth first">
-            <span ng-if="interval == 'weekly'">Week</span>  
-            <span ng-if="interval == 'monthly'">Month</span>  
-          </th>
-          <th class="">LTV</th>
-          <th class="gro">Profit</th>
-          <th class="mar text-muted">margin | (profit/hr)</th>
-          <!-- <th class="hrs text-muted"></th> -->
-          <th class="gro">Hr onAir</th>
-          <th class="gro text-muted">(util)</th>
-          <th class="hrs">Hr Sold</th>
-          <th class="text-muted">rev/hr</th>
-          <th class="rev">Revenue</th>
-          <th class="avh text-muted">rev/cust</th>
-          <th class="mth">Customer</th>
-          <th class="hrc text-muted">hr/cust | repeat</th>
-          <!-- <th class="text-left text-muted">Repeat</th> -->
-          <th class="">Order</th>
-          <th class="text-muted">order/req</th>
-          <th class="">Request</th>
+          <tr>
+            <th style="width:4%;text-align:left" class="mth first">
+              <span ng-if="interval == 'weekly'">Week</span>
+              <span ng-if="interval == 'monthly'">Month</span>
+            </th>
+            <th style="width:5%;padding-left:3px!important" class="text-muted">LTV</th>
+            <th style="width:5%" class="gro">Profit</th>
+            <th style="width:8%" class="mar text-muted">Margin | Profit/hr</th>
+            <th style="width:5%" class="gro">Hr onAir</th>
+            <th style="width:7%" class="gro text-muted">(util)</th>
+            <th style="width:4%" class="hrs">Hr Sold</th>
+            <th style="width:6%" class="text-muted">rev/hr</th>
+            <th style="width:6%" class="rev">Revenue</th>
+            <th style="width:7%" class="avh text-muted">rev/cust</th>
+            <th style="width:5%" class="mth">Customer</th>
+            <th style="width:8%" class="hrc text-muted">hr/cust | repeat</th>
+            <th style="width:4%" class="">Order</th>
+            <th style="width:7%" class="text-muted">Cnv req/ord</th>
+            <th style="width:5%;padding-right:4px!important" class="">Request</th>
+          </tr>
         </thead>
 
 
-
-
         <tr ng-repeat="r in report" class="{{r.css}}">
-          <td class="text-muted">{{r.intervalName}}</td>
-          <td class="text-orange">
+          <td class="text-muted" style="text-align:left;padding-left:3px!important">{{r.intervalName}}</td>
+          <td class="text-orange" style="padding-left:0px!important">
             <span ng-if="r.ltv">{{r.ltv | number:0}}</span>
             <span ng-if="r.pltv" ng-class="{'text-danger': r.pltv < 0, 'text-success': r.pltv > 0}">{{r.pltv*100 | number:0}}%</span>
           </td>
@@ -38,17 +50,20 @@
             <span ng-if="r.pgross" ng-class="{'text-danger': r.pgross < 0, 'text-success': r.pgross > 0}">{{r.pgross*100 | number:0}}%</span>
           </td>
           <td class="text-orange">
-            <span ng-if="r.margin">{{r.margin*100 | number:0}}%</span>
-            <span ng-if="r.pmargin" ng-class="{'text-danger': r.pmargin < 0, 'text-success': r.pmargin > 0}">{{r.pmargin*100 | number:0}}%</span>
-            <span class="text-muted">|</span> 
-            <span ng-if="r.profitPerHour">{{r.profitPerHour | number:0}}</span>
-            <span ng-if="r.pprofitPerHour != null" ng-class="{'text-danger': r.pprofitPerHour < 0, 'text-success': r.pprofitPerHour > 0}">{{(r.pprofitPerHour*100 | number:0) || 0}}%</span>
+            <table class="double">
+              <tr>
+                <td class="left"><span ng-if="r.margin">{{r.margin*100 | number:0}}%</span><span ng-if="r.pmargin" ng-class="{'text-danger': r.pmargin < 0, 'text-success': r.pmargin > 0}">{{r.pmargin*100 | number:0}}%</span></td>
+                <td class="middle"><span class="text-muted">|</span></td>
+                <td class="right"><span ng-if="r.profitPerHour">{{r.profitPerHour | number:0}}</span>
+            <span ng-if="r.pprofitPerHour != null" ng-class="{'text-danger': r.pprofitPerHour < 0, 'text-success': r.pprofitPerHour > 0}">{{(r.pprofitPerHour*100 | number:0) || 0}}%</span></td>
+              </tr>
+            </table>
           </td>
 <!--           <td class="text-orange">
             <span ng-if="r.profitPerHour">{{r.profitPerHour | number:0}}</span>
             <span ng-if="r.pprofitPerHour" ng-class="{'text-danger': r.pprofitPerHour < 0, 'text-success': r.pprofitPerHour > 0}">{{r.pprofitPerHour*100 | number:0}}%</span>
           </td>
- -->          
+ -->
           <td>
             <span ng-if="r.hrsOnAir" class="animated-fast fadeIn">{{r.hrsOnAir | number:0}}</span>
             <span ng-if="r.phrsOnAir != null" ng-class="{'text-danger': r.phrsOnAir < 0, 'text-success': r.phrsOnAir > 0}">{{(r.phrsOnAir*100 | number:0)|| 0}}%</span>
@@ -80,12 +95,14 @@
             <span ng-if="r.pcustomerTotal" ng-class="{'text-danger': r.pcustomerTotal < 0, 'text-success': r.pcustomerTotal > 0}">{{r.pcustomerTotal*100 | number:0}}%</span>
           </td>
           <td class="text-orange">
-            <span ng-if="r.hrPerCust">{{r.hrPerCust | number:1}}</span>
-            <span ng-if="r.phrPerCust" ng-class="{'text-danger': r.phrPerCust < 0, 'text-success': r.phrPerCust > 0}">{{r.phrPerCust*100 | number:0}}%</span>
-            <span class="text-muted">|</span> 
-            <span ng-if="r.custReturningPercent != null">{{(r.custReturningPercent*100 | number:0)|| 0}}%</span>
-            <span ng-if="r.pcustReturningPercent != null" ng-class="{'text-danger': r.pcustReturningPercent < 0, 'text-success': r.pcustReturningPercent > 0}">{{(r.pcustReturningPercent*100 | number:0) || 0}}%</span>
-
+            <table class="double">
+              <tr>
+                <td class="left"><span ng-if="r.hrPerCust">{{r.hrPerCust | number:1}}</span>
+            <span ng-if="r.phrPerCust" ng-class="{'text-danger': r.phrPerCust < 0, 'text-success': r.phrPerCust > 0}">{{r.phrPerCust*100 | number:0}}%</span></td>
+                <td class="middle"><span class="text-muted">|</span></td>
+                <td class="right"><span ng-if="r.custReturningPercent != null">{{(r.custReturningPercent*100 | number:0)|| 0}}%</span><span ng-if="r.pcustReturningPercent != null" ng-class="{'text-danger': r.pcustReturningPercent < 0, 'text-success': r.pcustReturningPercent > 0}">{{(r.pcustReturningPercent*100 | number:0) || 0}}%</span></td>
+              </tr>
+            </table>
           </td>
 <!--           <td class="text-left">
             <span ng-if="r.custReturningPercent">{{r.custReturningPercent*100 | number:0}}%</span>
@@ -101,7 +118,7 @@
             <span ng-if="r.ordersPerReq" class="animated-fast fadeIn">{{r.ordersPerReq*100 | number:0}}%</span>
             <span ng-if="r.pordersPerReq" ng-class="{'text-danger': r.pordersPerReq < 0, 'text-success': r.pordersPerReq > 0}">{{r.pordersPerReq*100 | number:0}}%</span>
           </td>
-          <td>
+          <td style="padding-right:4px!important">
             <span ng-if="r.requestsNum" class="animated-fast fadeIn">{{r.requestsNum | number:0}}</span>
             <span ng-if="r.prequestsNum" ng-class="{'text-danger': r.prequestsNum < 0, 'text-success': r.prequestsNum > 0}">{{r.prequestsNum*100 | number:0}}%</span>
           </td>
@@ -111,10 +128,16 @@
 
         <tr class="success">
           <td class="text-muted"> </td>
-          <td class="text-orange">{{reportTotals.ltv | currency}}</td>
+          <td class="text-orange" style="padding-left:0px!important">{{reportTotals.ltv | currency}}</td>
           <td>{{reportTotals.gross | number : 0}}</td>
-          <td class="text-orange">{{reportTotals.margin * 100 | number : 0}}% <span class="text-muted">|</span> {{reportTotals.profitPerHour | number : 0}}</td>
-          <!-- <td class="text-orange"></td> -->
+          <td class="text-orange">
+            <table class="double">
+              <tr>
+                <td class="left">{{reportTotals.margin * 100 | number : 0}}%</td>
+                <td class="middle"><span class="text-muted">|</span></td>
+                <td class="right">{{reportTotals.profitPerHour | number : 0}}</td>
+              </tr>
+            </table>
           <td class="">{{reportTotals.hrsOnAir | number : 0}}</td>
           <td class="text-orange ">{{reportTotals.hrsAirPerHrsSold*100 | number:0}}%</td>
           <td>{{reportTotals.hrsSold}}</td>
@@ -122,12 +145,18 @@
           <td>{{reportTotals.revenue | number : 0}}</td>
           <td class="text-orange">{{reportTotals.revPerCust | number : 0}}</td>
           <td>{{reportTotals.customerTotal}}</td>
-          <td class="text-orange">{{reportTotals.hrPerCust | number : 0}} <span class="text-muted">|</span>  {{reportTotals.custReturningPercent*100 | number:0}}%</td>
-          <!-- <td class="text-left">{{reportTotals.custReturningPercent*100 | number:0}}%</td> -->
+          <td class="text-orange">
+            <table class="double">
+              <tr>
+                <td class="left">{{reportTotals.hrPerCust | number : 0}}</td>
+                <td class="middle"><span class="text-muted">|</span></td>
+                <td class="right">{{reportTotals.custReturningPercent*100 | number:0}}%</td>
+              </tr>
+            </table>
           <td>{{reportTotals.ordersNum | number : 0}}</td>
           <td class="text-orange ">{{reportTotals.ordersPerReq*100 | number : 0}}%</td>
-          <td class="">{{reportTotals.requestsNum | number : 0}}</td>
-          
+          <td class="" style="text-align:right;padding-right:4px!important">{{reportTotals.requestsNum | number : 0}}</td>
+
 
         </tr>
 
