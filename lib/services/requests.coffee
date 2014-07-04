@@ -49,17 +49,14 @@ module.exports = class RequestsService extends DomainService
   """ Used for growth reports """
   getByDates: (startUtc, endUtc, cb) =>
 
-    query = 
-      _id: 
+    query =
+      _id:
         $gt: objectIdWithTimestamp(startUtc.toDate())
         $lt: objectIdWithTimestamp(endUtc.toDate())
 
-
-    $log 'getByDates', query
-
     @searchMany query, { fields: Data.view.pipeline },(e,r) =>
       if e then console.log "ERROR", e else
-        $log 'RESULT: ', r.length
+        # $log 'RESULT: ', r.length
         cb e, r
 
 
