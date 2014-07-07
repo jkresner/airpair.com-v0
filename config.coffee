@@ -32,7 +32,7 @@ exports.config =
   files:
     javascripts:
       joinTo:
-       'javascripts/vendor.js': /^vendor/
+       'javascripts/vendor.js': /^vendor\/scripts(\/|\\)(?!angular)/
        'javascripts/ap.js': /(scripts\/ap|scripts\/shared|scripts\/providers|lib\/mix)/
        'javascripts/adm.js': /(scripts\/angular|lodash|moment-2.6|scripts\/adm\/|lib\/mix)/
        'javascripts/adm-old.js': /(scripts\/adm-old|scripts\/shared|scripts\/providers|lib\/mix)/
