@@ -1,4 +1,5 @@
 # async            = require 'async'
+Data             = require './_viewdata.data'
 TagsSvc          = require '../services/tags'
 OrdersSvc        = require '../services/orders'
 ExpertsSvc       = require '../services/experts'
@@ -83,26 +84,35 @@ module.exports = class ViewDataService
     new CompanysSvc(@usr).getAll (e, companys) =>
       cb e, -> { companys, stripePK }
 
+  speakers: (cb) ->
+    cb null, -> { speakers: Data.speakers }
+
+
   so10: (id, cb) ->
     id = 'c++' if id is 'c%2b%2b'
     id = 'c#' if id is 'c%23'
     new TagsSvc(@usr).getBySoId id, (e, tag) =>
       feature = name:'Yehuda Katz', me: 'wycats', claim: 'Rails Core Team Member'
-      feature = name:'Daniel Roseman', me: 'danielroseman', claim: 'Djano #1 Answerer' if id is 'django' || id is 'python'
-      feature = name:'Ran Nachmany', me: 'rannachmany', claim: 'Android Google Developer Expert' if id is 'android'
-      feature = name:'Matias Niemelä', me: 'matsko', claim: 'AngularJS Core Team' if id is 'angularjs'
-      feature = name:'Phil Sturgeon', me: 'philsturgeon', claim: 'PHP Top Answerer' if id is 'php'
-      feature = name:'Tim Caswell', me: 'creationix', claim: 'Early Node.js Contributor' if id is 'node.js'
-      feature = name:'Wain Glaister', me: 'wain', claim: 'iOS Top Answerer' if id is 'ios'
-      feature = name:'Amir Rajan', me: 'amirrajan', claim: 'ASP .net AirPair Expert' if id is 'asp.net'
-      feature = name:'Steve Purves', me: 'stevejpurves', claim: 'C++ AirPair Expert' if id is 'c++'
-      feature = name:'John Feminella', me: 'john-feminella', claim: 'C# Top Answerer' if id is 'c#'
-      feature = name:'Marko Topolnik', me: 'marko', claim: 'Java Top Answerer' if id is 'java'
+      feature = Data.so10[id] if Data.so10[id]
       cb e, -> { tag, feature }
 
   so11: (id, cb) -> @so10 id, cb
   so12: (id, cb) -> @so10 id, cb
   so13: (id, cb) -> @so10 id, cb
+  so14: (id, cb) -> @so10 id, cb
+
+  so15: (id, cb) ->
+    id = 'c++' if id is 'c%2b%2b'
+    id = 'c#' if id is 'c%23'
+    new TagsSvc(@usr).getBySoId id, (e, tag) =>
+      feature = name:'Yehuda Katz', me: 'wycats', claim: 'Rails Core Team Member'
+      feature = Data.so15[id] if Data.so15[id]
+      cb e, -> { tag, feature }
+
+  so16: (id, cb) -> @so15 id, cb
+  so17: (id, cb) -> @so15 id, cb
+  so18: (id, cb) -> @so15 id, cb
+  so19: (id, cb) -> @so15 id, cb
 
   paypalSuccess: (id, cb) ->
     new OrdersSvc(@usr).markPaymentReceived id, {}, (e, order) =>

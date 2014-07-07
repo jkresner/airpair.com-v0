@@ -5,10 +5,10 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
+    <meta name="robots" content="noindex, nofollow">
     <meta name="HandheldFriendly" content="True">
     <meta name="MobileOptimized" content="320">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-
     <meta name="author" content="airpair, inc.">
     <meta name="keywords" content="Software Expert, Onine Code Review, Remote Pair Programming, Software Training">
     <meta name="description" content="Connect with and book Software Developers 1 hour at a time.">
@@ -104,6 +104,7 @@
 
     </div>
 
+{{#with speakers }}
 
     <div class="container p-b-4" id="experts">
       <h2 class="text-thin text-center m-t-3">Week 1 Speakers</h2>
@@ -319,29 +320,8 @@
 
 
 
-     <h2 class="text-thin text-center m-t-3">Week 3 Speakers</h2>
-    <hr>
-
-      <div class="columns-five m-t-2">
-        <div class="column">
-          <a class="user-badge text-center" href="/book/auser">
-            <div class="user-info">
-              <img src="//secure.gravatar.com/avatar/0ec7fe2c17900b71bd85ff63fc9d8a17?s=180" alt="" class="img-circle" width="50%">
-              <h4 class="name">Ari Lerner</h4>
-              <h5 class="tech">Robotics powering interfaces with AngularJS </h5>
-              <h6 class="title">{angularjs}</h6>
-              <div class="description">
-                Ari is a co-author of The Rails 4 Way, Riding Rails with AngularJS and the Beginner’s Guide to AngularJS. Recently Ari has been training folks in AngularJS at Hack Reactor as a JavaScript teacher. Ari also publishes ng-newsletter.com.
-              </div>
-            </div>
-            <button class="btn btn-slate btn-block">Thu, 21th Aug 07:00 GMT</button>
-          </a>
-          <div class="social-icons">
-              <!-- <a class="ap" href="/book/auser?code=airconf"></a><a class="gh" target="_blank" href="//github.com/auser"></a><span class="so"></span><span class="bb"></span><a class="in" href="//linkedin.com/x/profile/sy5n2q8o2i49/yALiIQrIUN" target="_blank"></a><a class="tw" target="_blank" href="//twitter.com/auser"></a> -->
-
-              <a class="ap" href="/book/auser?code=airconf"></a><a class="gh" target="_blank" href="//github.com/auser"></a><span class="so"></span><span class="bb"></span><span class="in"></span><span class="tw"></span>
-          </div>
-        </div>
+     <h2 class="text-thin text-center m-t-3">Week 3 Speakers</h2><hr />
+     <div class="columns-five m-t-2">
 
         <div class="column">
           <a class="user-badge text-center" href="/book/amirrajan">
@@ -400,34 +380,20 @@
           </a>
           <div class="social-icons">
               <!-- <a class="ap" href="/book/https://github.com/toddmotto?code=airconf"></a><a class="gh" target="_blank" href="//github.com/toddmotto"></a><span class="so"></span><span class="bb"></span></span><a class="in" href="//linkedin.com/x/profile/sy5n2q8o2i49/hw_opPXmqj" target="_blank"></a><a class="tw" target="_blank" href="//twitter.com/toddmotto"></a> -->
-              <a class="ap" href="/book/https://github.com/toddmotto?code=airconf"></a><span class="gh"></span><span class="so"></span><span class="bb"></span></span><span class="in"></span><a class="tw" target="_blank" href="//twitter.com/toddmotto"></a>
+              <a class="ap" href="/book/https://github.com/toddmotto?code=airconf"></a><span class="gh"></span><span class="so"></span><span class="bb"></span><span class="in"></span><a class="tw" target="_blank" href="//twitter.com/toddmotto"></a>
           </div>
         </div>
-      </div>
+    </div>
 
-    <h2 class="text-thin text-center m-t-3">Week 4 Speakers</h2>
-    <hr>
+
+    <h2 class="text-thin text-center m-t-3">Week 4 Speakers</h2><hr>
 
       <div class="columns-five m-t-2">
 
-        <div class="column">
-          <a class="user-badge text-center" href="/book/urish">
-            <div class="user-info">
-              <img src="//avatars3.githubusercontent.com/u/892318?s=180" alt="" class="img-circle" width="50%">
-              <h4 class="name">Uri Shaked</h4>
-              <h5 class="tech">Avoiding Common Pitfalls <br />in Angular.JS</h5>
-              <h6 class="title">{angularjs}</h6>
-              <div class="description">
-                Getting started with Angular? Google Developer Expert (GDE) Uri Shaked will take you through the common mistakes people make starting with beginner ending in advanced.
-              </div>
-            </div>
-            <button class="btn btn-slate btn-block">Tue, 26th Aug 07:00 GMT</button>
-          </a>
-          <div class="social-icons">
-              <!-- <a class="ap" href="/book/urish?code=airconf"></a><a class="gh" target="_blank" href="//github.com/urish"></a><a class="so" href="//stackoverflow.com/users/830623/urish" target="_blank"></a><span class="bb"></span><a class="in" href="//linkedin.com/x/profile/sy5n2q8o2i49/H_-Va_zs6e" target="_blank"></a><span class="tw"></span> -->
-              <a class="ap" href="/book/urish?code=airconf"></a><span class="gh"></span><span class="so"></span><span class="bb"></span><a class="in" href="//linkedin.com/x/profile/sy5n2q8o2i49/H_-Va_zs6e" target="_blank"></a><span class="tw"></span>
-          </div>
-        </div>
+        {{#with urish}}{{> speaker }}{{/with}}
+
+        {{#with 2upmedia}}{{> speaker }}{{/with}}
+
         <div class="column">
           <a class="user-badge text-center" href="/book/philsturgeon?code=home">
             <div class="user-info">
@@ -443,42 +409,14 @@
           </a>
         </div>
 
-        <div class="column">
-          <a class="user-badge text-center" href="/book/domenic">
-            <div class="user-info">
-              <img src="//secure.gravatar.com/avatar/c6d819207a3010b39d13e1f59f2c0029?s=180" alt="" class="img-circle" width="50%">
-              <h4 class="name">Domenic Denicola</h4>
-              <h5 class="tech">Node.JS</h5>
-              <h6 class="title">NPM Core Contributor</h6>
-              <div class="description">
-                Domenic is highly active in the JavaScript community. He is famous for publishing over 30 npm modules and maintaining many open-source libraries. Domenic contributes to Node itself, and is a core contributor on the npm team.
-              </div>
-            </div>
-            <button class="btn btn-slate btn-block">Book Domenic</button>
-          </a>
-        </div>
+
+        {{#with auser}}{{> speaker }}{{/with}}
+
       </div>
 
     </div>
 
-
-
-
-
-
-
-
-
-    <!-- PRICE -->
-
-
-
-    <!--
-    <div class="header-grad m-t-3">
-      <div class="container">
-        How Much Does it Cost?
-      </div>
-    </div> -->
+{{/with}}
 
 
   <div class="bg-gray">
@@ -541,8 +479,11 @@ function initPage()
     });
   });
 
-}
-
+  $('a.session').click(function (e) {
+    e.preventDefault();
+    alert("Page still under construction and we're still fleshing out the schedule :)");
+    false;
+  });
 
   // Scroll to hash. Just add class "scroll"
   $(function() {
@@ -553,6 +494,7 @@ function initPage()
       },500);
     });
   });
+}
 
 </script>
 
@@ -562,7 +504,7 @@ code { padding:0; }
 .testimonial { width:48%;padding:10px;border-bottom:none!important;vertical-align:top;padding-top:0px!important }
 .testimonial .col-sm-8 { height:280px; }
 .description { height:210px!important; }
-.description h6 { font-weight:bold }
+.description h6 { margin-top:0!important;padding-top:0!important;font-weight:bold }
 .btn-slate { font-weight:normal; }
 .btn-slate:hover { font-weight:bold; }
 .social-icons { padding-top:2px; }
@@ -570,6 +512,7 @@ code { padding:0; }
 .social-icons a:hover { border-bottom:solid 1px orange; }
 .social-icons span { width:32px;height:32px;display:inline-block;background-color:#d3d3d3;background-size:100%;background-position:center;margin-right:1px }
 .ap { background:url('/images/icons/ap-white.png') }
+.title span { display:inline-block;background:;color:white; }
 a.ap { background-color:#ce5323 }
 .gh { background:url('/images/icons/gh-white.png') }
 a.gh { background-color:#3b3b3b }
