@@ -78,11 +78,10 @@ module.exports = (pageData) ->
         return weeks
 
       getWeeksByFriday: (start) ->
+        console.log "getWeeksByFriday", start.toDate()
 
         if not start
           start = moment().startOf('month').subtract("days", 2)
-        else
-          start.startOf('week').subtract("days", 2)
 
         if start.day() < 6
           start.startOf("week").subtract("d", 1).startOf("day")
@@ -99,9 +98,9 @@ module.exports = (pageData) ->
           cur.endOf("week").startOf("day")
 
 
-        while cur.isAfter(start)
+        while cur.isAfter(start) or cur.isSame(start)
           weeks.push
-            str: cur.clone().add('w', 1).subtract('d', 1).format("MMM D")
+            str: cur.clone().add('w', 1).subtract('d', 1).format("MM DD")
             start: cur.toDate()
             end: cur.clone().add('w', 1).toDate()
           cur = cur.clone().subtract('w', 1)
@@ -778,7 +777,7 @@ module.exports = (pageData) ->
 
           weeks = $moment.getWeeksByFriday(start, moment()).reverse()
 
-          # console.log "weeks", weeks
+          console.log "weeks", weeks
 
           # Get Metrics for each week
           prev = null
