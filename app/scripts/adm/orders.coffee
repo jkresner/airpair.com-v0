@@ -773,11 +773,9 @@ module.exports = (pageData) ->
 
         getChannelGrowth: (start = moment(@data[0].utc), end = moment()) ->
 
-          # console.log "getChannelGrowth", start.format('YYYY-MM-DD'), end.format('YYYY-MM-DD')
 
           weeks = $moment.getWeeksByFriday(start, moment()).reverse()
 
-          console.log "weeks", weeks
 
           # Get Metrics for each week
           prev = null
@@ -798,6 +796,8 @@ module.exports = (pageData) ->
             prev = week
 
 
+
+          #FINAL DIFF
           # calc last week diff
           finalWeek = weeks[weeks.length - 1]
           prevWeek = weeks[weeks.length - 2]
@@ -810,23 +810,53 @@ module.exports = (pageData) ->
             wkStart.endOf("week").startOf("day")
           wkPercentage = (moment().unix()-wkStart.unix())/60/60/24/7
 
-          # console.log "Updating final week.."
-
           # Update final week diff
           if prevWeek
             _.each finalWeek.metrics.summary.tags, (tag, tagName) ->
               if tagName is '' or not prevWeek.metrics.summary.tags[tagName] then return
-
-              # console.log "prevWeek.metrics.summary.tags[tagName] = ", prevWeek.metrics.summary.tags[tagName]
-
               newCount = tag.count
               oldCount = prevWeek.metrics.summary.tags[tagName].count*wkPercentage
-
               finalWeek.diffTags[tagName] =
                 count: if oldCount is 0 then (newCount-oldCount) else (newCount/oldCount)-1
 
+
+
           # console.groupEnd()
           return weeks.reverse()
+
+
+
+
+
+        getChannelGrowthSummary: (weeks) ->
+
+          console.log "weeks", weeks
+          summary =
+            numOrders: 0
+            revenueTotal: 0
+            tags: {}
+
+          for week in weeks
+            summary.numOrders += week.metrics.summary.numOrders
+            summary.revenueTotal += week.metrics.summary.revenueTotal
+            _.each week.metrics.summary.tags, (tag, key) ->
+              console.log "tag", tag, key
+              if not summary.tags[key]
+                summary.tags[key] =
+                 count: 0
+                 revenue: 0
+              summary.tags[key].count += tag.count
+              summary.tags[key].revenue += tag.revenue
+
+          return summary
+
+
+
+
+
+
+
+
 
 
 
@@ -1048,6 +1078,10 @@ module.exports = (pageData) ->
         $scope.$apply() if not $scope.$$phase
 
       $scope.channelGrowth = apData.orders.getChannelGrowth(moment($scope.dateStart))
+
+      $scope.channelGrowthSummary = apData.orders.getChannelGrowthSummary($scope.channelGrowth)
+      console.log "channelGrowthSummary", $scope.channelGrowthSummary
+
 
 
 
