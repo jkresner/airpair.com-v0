@@ -1,3 +1,75 @@
+
+@import 'bs-vars';
+
+
+
+
+
+
+// Core variables and mixins
+
+@import "bootstrap/variables";
+
+@import "bootstrap/mixins";
+
+
+
+// Reset
+@import "bootstrap/normalize";
+@import "bootstrap/print";
+
+// Core CSS
+@import "bootstrap/scaffolding";
+@import "bootstrap/type";
+@import "bootstrap/code";
+@import "bootstrap/grid";
+@import "bootstrap/tables";
+@import "bootstrap/forms";
+@import "bootstrap/buttons";
+
+// Components
+@import "bootstrap/component-animations";
+// @import "bootstrap/glyphicons";
+@import "bootstrap/dropdowns";
+@import "bootstrap/button-groups";
+@import "bootstrap/input-groups";
+@import "bootstrap/navs";
+@import "bootstrap/navbar";
+// @import "bootstrap/breadcrumbs";
+// @import "bootstrap/pagination";
+// @import "bootstrap/pager";
+@import "bootstrap/labels";
+@import "bootstrap/badges";
+// @import "bootstrap/jumbotron";
+@import "bootstrap/thumbnails";
+@import "bootstrap/alerts";
+// @import "bootstrap/progress-bars";
+// @import "bootstrap/media";
+// @import "bootstrap/list-group";
+// @import "bootstrap/panels";
+// @import "bootstrap/wells";
+// @import "bootstrap/close";
+
+// Components w/ JavaScript
+// @import "bootstrap/modals";
+// @import "bootstrap/tooltip";
+// @import "bootstrap/popovers";
+// @import "bootstrap/carousel";
+
+// Utility classes
+@import "bootstrap/utilities";
+@import "bootstrap/responsive-utilities";
+
+
+
+
+
+
+
+
+
+
+
 /* adm base styles */
 
 /* bootstrap overrides */
@@ -8,7 +80,7 @@
 
 /* adm custom styles */
 
-body { background:none repeat scroll 0 0 #fafafa }
+// body { background:none repeat scroll 0 0 #fafafa }
 // E2E2E2
 
 .navbar-static-top {margin-bottom: 20px;}
@@ -51,13 +123,21 @@ body#mtags button:disabled {
 .marketingTagsInput .tt-hint,
 .marketingTagsInput .tt-query { width: 150px; }
 .marketingTagsInput .marketingtag { vertical-align: top; margin: 0; margin-top: 1px; }
-.marketingtag { border: 1px solid rgba(0, 0, 0, 0.25);font-size: 14px;font-weight: bold;margin: 3px 3px 0px 0px;padding: 6px 10px; text-shadow: none; }
+.marketingtag { border: 1px solid rgba(0, 0, 0, 0.25);font-weight: bold;margin: 3px 3px 0px 0px; text-shadow: none; }
 .marketingtag.channel { color: #b94a48; background-color: #f2dede; }
 .marketingtag.campaign { color: #c09853; background-color: #fcf8e3; }
 .marketingtag.usage { color: #3a87ad; background-color: #d9edf7; }
 
+
+
+
+
+
 @import "nav";
 @import "pages/orders";
+
+
+
 
 
 

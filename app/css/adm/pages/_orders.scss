@@ -149,6 +149,24 @@
 
 
 
+/*  Orders - Channels
+~-----------------------------------------*/
+.channels {
+  .row-summary {
+    .text-split {
+      display: inline-block;
+      width: 50%;
+      float: right;
+      // color: $brand-;
+      @extend .text-orange;
+    }
+  }
+
+}
+
+
+
+
 
 
 .row-small {

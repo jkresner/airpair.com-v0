@@ -234,7 +234,7 @@ module.exports = (pageData) ->
 
           _.each customers, (cust, id) -> if cust.orderDates.length < 2 then delete customers[id]
 
-          # console.log "customers repeat", _.size(customers)
+          console.log "customers repeat", _.size(customers)
 
 
           console.timeEnd("calcRepeatCustomers")
@@ -245,10 +245,13 @@ module.exports = (pageData) ->
 
         findRepeatCustomers: (customers, start) ->
 
-          # console.log "findRepeatCustomers", customers.length
+          # console.log "findRepeatCustomers", customers
           count = 0
           for cust in customers
+            # console.log "for ", cust
+
             if @repeatCustomers[cust]
+              console.log "Repeat", cust, @repeatCustomers[cust]
               before = false
               for date in @repeatCustomers[cust].orderDates
                 if moment(date).isBefore(start) then before = true
@@ -695,17 +698,22 @@ module.exports = (pageData) ->
         getChannelMetrics: (start, end) ->
           # console.log "getChannelMetrics"
           # console.log "dates = ", start, end
+          @calcRepeatCustomers()
+
+          @metrisRepeated = []
+
           if not @metrics
             @metrics = []
-            # tags = []
             for order in apData.orders.data
               metric =
                 utc: order.utc
                 name: order.company.contacts[0].fullName
+                userId: order.company.contacts[0]._id
                 tags: {}
                 total: order.total
                 campaigns: []
                 requestId: order.requestId
+                isRepeat: if @findRepeatCustomers([order.userId], order.utc) > 0 then true else false
                 tags:
                   ad: {total:0, revenue: 0}
                   affiliate: {total:0, revenue: 0}
@@ -720,6 +728,11 @@ module.exports = (pageData) ->
                   untracked: {total:0, revenue: 0}
                   # stackoverflowads: {total:0, revenue: 0}
 
+
+              # console.log "findRepeatCustomers ORDER", order
+              # console.log "findRepeatCustomers", @findRepeatCustomers([order.userId], order.utc)
+
+
               _.each order.marketingTags, (tag) ->
                 channelTags = _.where order.marketingTags, { type: "channel" }
                 tagName = tag.group.replace('-', '')
@@ -731,19 +744,42 @@ module.exports = (pageData) ->
                   metric.tags[tagName].total = metric.total/channelTags.length
                 if tag.type is "campaign"
                   metric.campaigns.push(tag.name)
+
+              @metrisRepeated.push metric if metric.isRepeat
               @metrics.push metric
             # tags = _.uniq(tags)
 
+
+            # console.log "@metrisRepeated", @metrisRepeated
+
+
+
+
+
+            _(@metrisRepeated).reverse()
             _(@metrics).reverse()
 
 
           if start and end
             @metricsFiltered = []
+            @metricsRepeatFiltered = []
             for order in @metrics
               date = new Date(order.utc)
               if date >= start and date <= end
                 @metricsFiltered.push order
-            return orders: @metricsFiltered, summary: @getChannelMetricsSummary(@metricsFiltered)
+            for order in @metrisRepeated
+              date = new Date(order.utc)
+              if date >= start and date <= end
+                @metricsRepeatFiltered.push order
+
+            data = {
+              orders: @metricsFiltered
+              summary: @getChannelMetricsSummary(@metricsFiltered)
+              repeatSummary: @getChannelMetricsSummary(@metricsRepeatFiltered)
+            }
+
+            console.log "CHANNEL METRICS", data
+            return data
 
           else
             return orders: @metrics, summary: @getChannelMetricsSummary(@metrics)
@@ -1043,7 +1079,7 @@ module.exports = (pageData) ->
     $scope.dateStart = moment().startOf("week").subtract("w", 2).toDate()
     $scope.dateEnd = moment().endOf('week').toDate()
 
-    $scope.metrics = apData.orders.getChannelMetrics($scope.dateStart, $scope.dateEnd)
+    # $scope.metrics = apData.orders.getChannelMetrics($scope.dateStart, $scope.dateEnd)
 
     updateRange = ->
       return if not $scope.dateStart or not $scope.dateEnd
