@@ -62,10 +62,10 @@ exports.insertOrUpdateUser = (req, done, providerName, profile) ->
   else
     search['_id'] = req.user._id
 
-  update['referrer'] = {}
-  for cookieName in ['landingPage', 'utm_source', 'utm_medium', 'utm_term', 'utm_content', 'utm_campaign']
-    if req.cookies[cookieName]
-      update['referrer'][cookieName] = req.cookies[cookieName]
+  # update['referrer'] = {}
+  # for cookieName in ['landingPage', 'utm_source', 'utm_medium', 'utm_term', 'utm_content', 'utm_campaign']
+  #   if req.cookies[cookieName]
+  #     update['referrer'][cookieName] = req.cookies[cookieName]
 
   saveUser = =>
     User.findOneAndUpdate search, update, { upsert: true }, (err, user) ->
