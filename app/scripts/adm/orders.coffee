@@ -1082,7 +1082,7 @@ module.exports = (pageData) ->
   controller("ChannelsCtrl", ['$scope', '$location', 'apData', ($scope, $location, apData) ->
 
 
-    $scope.dateStart = moment().startOf("week").subtract("w", 10).toDate()
+    $scope.dateStart = moment().startOf("week").subtract("w", 2).toDate()
     $scope.dateEnd = moment().endOf('week').toDate()
 
     # $scope.metrics = apData.orders.getChannelMetrics($scope.dateStart, $scope.dateEnd)
