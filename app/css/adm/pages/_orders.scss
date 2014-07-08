@@ -161,6 +161,12 @@
       @extend .text-orange;
     }
   }
+  .label {
+    font-weight: normal;
+    font-size: 80%;
+    letter-spacing: .04em;
+    padding: 0.1em 0.5em 0.2em;
+  }
 }
 
 

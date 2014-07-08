@@ -34,6 +34,11 @@ module.exports = (pageData) ->
 
 
 
+  filter('numFloor', () ->
+    (input) -> if typeof input is 'number' then Math.floor(input) else input
+  ).
+
+
 
   # Moment Service - For date logic
   #----------------------------------------------
@@ -251,7 +256,7 @@ module.exports = (pageData) ->
             # console.log "for ", cust
 
             if @repeatCustomers[cust]
-              console.log "Repeat", cust, @repeatCustomers[cust]
+              # console.log "Repeat", cust, @repeatCustomers[cust]
               before = false
               for date in @repeatCustomers[cust].orderDates
                 if moment(date).isBefore(start) then before = true
@@ -700,9 +705,9 @@ module.exports = (pageData) ->
           # console.log "dates = ", start, end
           @calcRepeatCustomers()
 
-          @metrisRepeated = []
 
           if not @metrics
+            @metricsRepeated = []
             @metrics = []
             for order in apData.orders.data
               metric =
@@ -745,18 +750,18 @@ module.exports = (pageData) ->
                 if tag.type is "campaign"
                   metric.campaigns.push(tag.name)
 
-              @metrisRepeated.push metric if metric.isRepeat
+              @metricsRepeated.push metric if metric.isRepeat
               @metrics.push metric
             # tags = _.uniq(tags)
 
 
-            # console.log "@metrisRepeated", @metrisRepeated
+            # console.log "@metricsRepeated", @metricsRepeated
 
 
 
 
 
-            _(@metrisRepeated).reverse()
+            _(@metricsRepeated).reverse()
             _(@metrics).reverse()
 
 
@@ -767,7 +772,7 @@ module.exports = (pageData) ->
               date = new Date(order.utc)
               if date >= start and date <= end
                 @metricsFiltered.push order
-            for order in @metrisRepeated
+            for order in @metricsRepeated
               date = new Date(order.utc)
               if date >= start and date <= end
                 @metricsRepeatFiltered.push order
@@ -776,6 +781,7 @@ module.exports = (pageData) ->
               orders: @metricsFiltered
               summary: @getChannelMetricsSummary(@metricsFiltered)
               repeatSummary: @getChannelMetricsSummary(@metricsRepeatFiltered)
+              metricsRepeated: @metricsRepeatFiltered
             }
 
             console.log "CHANNEL METRICS", data
@@ -1076,7 +1082,7 @@ module.exports = (pageData) ->
   controller("ChannelsCtrl", ['$scope', '$location', 'apData', ($scope, $location, apData) ->
 
 
-    $scope.dateStart = moment().startOf("week").subtract("w", 2).toDate()
+    $scope.dateStart = moment().startOf("week").subtract("w", 10).toDate()
     $scope.dateEnd = moment().endOf('week').toDate()
 
     # $scope.metrics = apData.orders.getChannelMetrics($scope.dateStart, $scope.dateEnd)
