@@ -34,6 +34,11 @@ module.exports = (pageData) ->
 
 
 
+  filter('numFloor', () ->
+    (input) -> if typeof input is 'number' then Math.floor(input) else input
+  ).
+
+
 
   # Moment Service - For date logic
   #----------------------------------------------
@@ -78,11 +83,10 @@ module.exports = (pageData) ->
         return weeks
 
       getWeeksByFriday: (start) ->
+        console.log "getWeeksByFriday", start.toDate()
 
         if not start
           start = moment().startOf('month').subtract("days", 2)
-        else
-          start.startOf('week').subtract("days", 2)
 
         if start.day() < 6
           start.startOf("week").subtract("d", 1).startOf("day")
@@ -99,9 +103,9 @@ module.exports = (pageData) ->
           cur.endOf("week").startOf("day")
 
 
-        while cur.isAfter(start)
+        while cur.isAfter(start) or cur.isSame(start)
           weeks.push
-            str: cur.clone().add('w', 1).subtract('d', 1).format("MMM D")
+            str: cur.clone().add('w', 1).subtract('d', 1).format("MM DD")
             start: cur.toDate()
             end: cur.clone().add('w', 1).toDate()
           cur = cur.clone().subtract('w', 1)
@@ -235,7 +239,7 @@ module.exports = (pageData) ->
 
           _.each customers, (cust, id) -> if cust.orderDates.length < 2 then delete customers[id]
 
-          # console.log "customers repeat", _.size(customers)
+          console.log "customers repeat", _.size(customers)
 
 
           console.timeEnd("calcRepeatCustomers")
@@ -246,10 +250,13 @@ module.exports = (pageData) ->
 
         findRepeatCustomers: (customers, start) ->
 
-          # console.log "findRepeatCustomers", customers.length
+          # console.log "findRepeatCustomers", customers
           count = 0
           for cust in customers
+            # console.log "for ", cust
+
             if @repeatCustomers[cust]
+              # console.log "Repeat", cust, @repeatCustomers[cust]
               before = false
               for date in @repeatCustomers[cust].orderDates
                 if moment(date).isBefore(start) then before = true
@@ -696,17 +703,22 @@ module.exports = (pageData) ->
         getChannelMetrics: (start, end) ->
           # console.log "getChannelMetrics"
           # console.log "dates = ", start, end
+          @calcRepeatCustomers()
+
+
           if not @metrics
+            @metricsRepeated = []
             @metrics = []
-            # tags = []
             for order in apData.orders.data
               metric =
                 utc: order.utc
                 name: order.company.contacts[0].fullName
+                userId: order.company.contacts[0]._id
                 tags: {}
                 total: order.total
                 campaigns: []
                 requestId: order.requestId
+                isRepeat: if @findRepeatCustomers([order.userId], order.utc) > 0 then true else false
                 tags:
                   ad: {total:0, revenue: 0}
                   affiliate: {total:0, revenue: 0}
@@ -721,6 +733,11 @@ module.exports = (pageData) ->
                   untracked: {total:0, revenue: 0}
                   # stackoverflowads: {total:0, revenue: 0}
 
+
+              # console.log "findRepeatCustomers ORDER", order
+              # console.log "findRepeatCustomers", @findRepeatCustomers([order.userId], order.utc)
+
+
               _.each order.marketingTags, (tag) ->
                 channelTags = _.where order.marketingTags, { type: "channel" }
                 tagName = tag.group.replace('-', '')
@@ -732,19 +749,43 @@ module.exports = (pageData) ->
                   metric.tags[tagName].total = metric.total/channelTags.length
                 if tag.type is "campaign"
                   metric.campaigns.push(tag.name)
+
+              @metricsRepeated.push metric if metric.isRepeat
               @metrics.push metric
             # tags = _.uniq(tags)
 
+
+            # console.log "@metricsRepeated", @metricsRepeated
+
+
+
+
+
+            _(@metricsRepeated).reverse()
             _(@metrics).reverse()
 
 
           if start and end
             @metricsFiltered = []
+            @metricsRepeatFiltered = []
             for order in @metrics
               date = new Date(order.utc)
               if date >= start and date <= end
                 @metricsFiltered.push order
-            return orders: @metricsFiltered, summary: @getChannelMetricsSummary(@metricsFiltered)
+            for order in @metricsRepeated
+              date = new Date(order.utc)
+              if date >= start and date <= end
+                @metricsRepeatFiltered.push order
+
+            data = {
+              orders: @metricsFiltered
+              summary: @getChannelMetricsSummary(@metricsFiltered)
+              repeatSummary: @getChannelMetricsSummary(@metricsRepeatFiltered)
+              metricsRepeated: @metricsRepeatFiltered
+            }
+
+            console.log "CHANNEL METRICS", data
+            return data
 
           else
             return orders: @metrics, summary: @getChannelMetricsSummary(@metrics)
@@ -774,11 +815,9 @@ module.exports = (pageData) ->
 
         getChannelGrowth: (start = moment(@data[0].utc), end = moment()) ->
 
-          # console.log "getChannelGrowth", start.format('YYYY-MM-DD'), end.format('YYYY-MM-DD')
 
           weeks = $moment.getWeeksByFriday(start, moment()).reverse()
 
-          # console.log "weeks", weeks
 
           # Get Metrics for each week
           prev = null
@@ -799,6 +838,8 @@ module.exports = (pageData) ->
             prev = week
 
 
+
+          #FINAL DIFF
           # calc last week diff
           finalWeek = weeks[weeks.length - 1]
           prevWeek = weeks[weeks.length - 2]
@@ -811,23 +852,53 @@ module.exports = (pageData) ->
             wkStart.endOf("week").startOf("day")
           wkPercentage = (moment().unix()-wkStart.unix())/60/60/24/7
 
-          # console.log "Updating final week.."
-
           # Update final week diff
           if prevWeek
             _.each finalWeek.metrics.summary.tags, (tag, tagName) ->
               if tagName is '' or not prevWeek.metrics.summary.tags[tagName] then return
-
-              # console.log "prevWeek.metrics.summary.tags[tagName] = ", prevWeek.metrics.summary.tags[tagName]
-
               newCount = tag.count
               oldCount = prevWeek.metrics.summary.tags[tagName].count*wkPercentage
-
               finalWeek.diffTags[tagName] =
                 count: if oldCount is 0 then (newCount-oldCount) else (newCount/oldCount)-1
 
+
+
           # console.groupEnd()
           return weeks.reverse()
+
+
+
+
+
+        getChannelGrowthSummary: (weeks) ->
+
+          console.log "weeks", weeks
+          summary =
+            numOrders: 0
+            revenueTotal: 0
+            tags: {}
+
+          for week in weeks
+            summary.numOrders += week.metrics.summary.numOrders
+            summary.revenueTotal += week.metrics.summary.revenueTotal
+            _.each week.metrics.summary.tags, (tag, key) ->
+              console.log "tag", tag, key
+              if not summary.tags[key]
+                summary.tags[key] =
+                 count: 0
+                 revenue: 0
+              summary.tags[key].count += tag.count
+              summary.tags[key].revenue += tag.revenue
+
+          return summary
+
+
+
+
+
+
+
+
 
 
 
@@ -1011,10 +1082,10 @@ module.exports = (pageData) ->
   controller("ChannelsCtrl", ['$scope', '$location', 'apData', ($scope, $location, apData) ->
 
 
-    $scope.dateStart = moment().startOf("week").subtract("w", 2).toDate()
+    $scope.dateStart = moment().startOf("week").subtract("w", 10).toDate()
     $scope.dateEnd = moment().endOf('week').toDate()
 
-    $scope.metrics = apData.orders.getChannelMetrics($scope.dateStart, $scope.dateEnd)
+    # $scope.metrics = apData.orders.getChannelMetrics($scope.dateStart, $scope.dateEnd)
 
     updateRange = ->
       return if not $scope.dateStart or not $scope.dateEnd
@@ -1049,6 +1120,10 @@ module.exports = (pageData) ->
         $scope.$apply() if not $scope.$$phase
 
       $scope.channelGrowth = apData.orders.getChannelGrowth(moment($scope.dateStart))
+
+      $scope.channelGrowthSummary = apData.orders.getChannelGrowthSummary($scope.channelGrowth)
+      console.log "channelGrowthSummary", $scope.channelGrowthSummary
+
 
 
 

@@ -1,10 +1,113 @@
 
 
+/*  Orders - Growth
+~-----------------------------------------*/
+
+.growth {
+  text-align: center;
+
+  th {
+    text-align:right;
+    width: 9%;
+    font-size:12px;
+    padding-right:0!important;
+    padding-left:0!important;
+    border-bottom:1px solid #2E2E2E!important;
+    &.text-left {text-align: left;}
+    &.text-muted {
+      opacity: 0;
+      -webkit-transition: opacity .15s linear;
+              transition: opacity .15s linear;
+      font-size:10px;
+      text-align:center;
+      &:hover {
+        opacity: 1;
+      }
+    }
+    &:first-child {
+      width:4%;
+      text-align:left
+    }
+    &.first {
+      padding-left:3px !important;
+    }
+    &.last {
+      padding-right:4px !important;
+    }
+  }
+
+  td {
+    text-align:right;
+    padding:6px;
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+    &.text-left {text-align: left;}
+    &.text-orange {
+      text-align:center;
+      font-size:12px;
+      padding:10px 2px 0 38px!important;
+    }
+  }
+
+  tr {
+    td:first-child {
+      text-align:left;
+      padding-left:3px !important;
+    }
+    td.first {
+      padding-left:0px !important;
+    }
+    td:last-child {
+      padding-right:4px !important;
+      text-align: right;
+    }
+    &.change td {
+      font-size:11px;
+      padding:10px 4px;
+    }
+    &.summary td {
+      border-top:1px solid #2E2E2E;
+      background-color:#F8F8F8;
+    }
+  }
+
+  table.double {
+    border:none;
+    width:100%;
+    margin:-2px 0 0 2px;
+    td {
+      border:none;
+      padding:0;
+    }
+    td.left {
+      width:46%;
+      text-align:right;
+      padding-right:4px!important
+    }
+    td.middle {
+      width:6%;
+      text-align:center
+    }
+    td.right {
+      width:46%;
+      text-align:left;
+      padding-left:5px!important
+    }
+  }
+
+}
+
+
+
+
+
+
+
+
 /*  Orders - View
 ~-----------------------------------------*/
 
 #orders {
-
   .marketingtag a.delete { display: none; }
 
   margin-top:5px;
@@ -40,45 +143,38 @@
   .received { color:#333333 }
   .paidout { color:#468847; }
   .incomplete { display: none; }
-
 }
 
 
 
-/*  Orders - Growth
+
+
+/*  Orders - Channels
 ~-----------------------------------------*/
-
-.growth {
-  tr.change td { padding:4px;font-size:11px }
-  th { 
-    text-align:right; 
-    width: 9%;
-    &.text-left {text-align: left;}
-  }
-  th:first-child { 
-    width:70px; 
-    text-align: left;
-  }
-  // th:last-child { width:14% }
-  td { 
-    text-align:right;
-    padding:6px;
-    &.text-left {text-align: left;}
-  }
-  th.text-muted {
-    opacity: 0;
-    -webkit-transition: opacity .15s linear;
-    transition: opacity .15s linear;
-
-    // @include transition();
-    &:hover {
-      opacity: 1;      
+.channels {
+  .row-summary {
+    .text-split {
+      display: inline-block;
+      width: 50%;
+      padding-left: 3px;
+      float: right;
+      @extend .text-orange;
     }
   }
-
+  .label {
+    font-weight: normal;
+    font-size: 80%;
+    letter-spacing: .04em;
+    padding: 0.1em 0.5em 0.2em;
+  }
 }
+
+
+
+
 
 
 .row-small {
   font-size: 11px;
+
 }
