@@ -2,9 +2,10 @@
   <a class="session user-badge text-center" href="#">
     <div class="user-info">
       <img src="//secure.gravatar.com/avatar/{{g}}?s=180" alt="{{n}}" class="img-circle" width="50%">
-      <h4 class="name">{{n}}</h4>
+      <h3 class="name">{{n}}</h3>
+      <h4>{{c}}</h4>
       <h5 class="tech">{{{t}}}</h5>
-      <h6 class="title">{{#each tags}}<span>{{this}}</span>{{/each}}</h6>
+      <h6 class="title">{{#each tags}}<span>{ {{this}} }</span> {{/each}}</h6>
       <div class="description">
         <h6>{{{t}}}</h6>
         {{{a}}}
