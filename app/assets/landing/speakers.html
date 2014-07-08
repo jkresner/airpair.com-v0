@@ -111,9 +111,9 @@
           </div>
           <div class="col-sm-8">
             <h4 class="text-bold">Can you still fake SEO?</h4>
-            Google gets smarter every year. At first you could hide elements with CSS and stuff what you wanted in meta tags. Now google is smart
-            enough to execute javascript to make sure there's no trickier. What else does google do that renders tactics useless and what can we do
-            to generate great content and great SEO with google's ever increasing intelligence.
+            Google gets smarter every year. At first you could hide elements with CSS and stuff what you wanted in meta tags. Now Google is smart
+            enough to execute javascript to make sure there's no trickery. Find out what else Google does that renders old SEO tactics useless and what can you do
+            to generate great SEO to combat Google's ever increasing intelligence.
             <small class="block m-t-1">
               <b>Igor Lebovic</b> &ndash; AirPair</b><span class="text-muted">, CMO</span>
             </small>
@@ -150,25 +150,7 @@
 
       <div class="columns-five m-t-2">
 
-        <div class="column">
-          <a class="user-badge text-center" href="/book/danielroseman">
-            <div class="user-info">
-              <img src="https://secure.gravatar.com/avatar/0f4cefeedec5163556751d61625eedd0?s=180" alt="Daniel Roseman" class="img-circle" width="50%">
-              <h4 class="name">Daniel Roseman</h4>
-              <h5 class="tech">What's New <br />in Django 1.7</h5>
-              <h6 class="title">{django}</h6>
-              <div class="description">
-                <h6>What's New in Django 1.7</h6>
-                All time Django #1 Answerer on stackoverflow - Daniel Roseman - will you taking you through the latest Django features in Django 1.7. Daniel will be covering advise on migration gotchas and finish off with a hint at 1.8.
-              </div>
-            </div>
-            <button class="btn btn-slate btn-block">Fri, 1st Aug 16:00 GMT</button>
-          </a>
-          <div class="social-icons">
-               <!-- target="_blank" href="//github.com/danielroseman" -->
-              <a class="ap" href="/book/danielroseman?code=airconf"></a><span class="gh"></span><a class="so" target="_blank" href="//stackoverflow.com/users/104349/daniel-roseman"></a><span class="bb"></span><span class="in"></span><span class="tw"></span>
-          </div>
-        </div>
+        {{#with danielroseman}}{{> speaker }}{{/with}}
 
         <div class="column">
           <a class="user-badge text-center" href="/book/wycats?code=home">
@@ -189,46 +171,9 @@
           </div>
         </div>
 
+        {{#with ryanbigg}}{{> speaker }}{{/with}}
 
-        <div class="column">
-          <a class="user-badge text-center" href="/book/ryanbigg">
-            <div class="user-info">
-              <img src="//secure.gravatar.com/avatar/9a2a53db8e9b4476038c94a64b32833f?s=180" alt="Ryan Bigg" class="img-circle" width="50%" />
-              <h4 class="name">Ryan Bigg</h4>
-              <h5 class="tech">Refactoring Big Features in Large Codebases</h5>
-              <h6 class="title">{rails} {spree}</h6>
-              <div class="description">
-                <h6>Refactoring Big Features in Large Codebases</h6>
-                Spree had a problem: the adjustments system was slow and difficult to understand. Over a period of some months, we refactored the code to be much faster and cleaner. The talk will cover the unique challenges that faced Spree and how we overcome them.
-              </div>
-            </div>
-            <button class="btn btn-slate btn-block">Mon, 4th Aug 22:00 GMT</button>
-          </a>
-          <div class="social-icons">
-              <!-- <a class="ap" href="/book/ryanbigg?code=airconf"></a><a class="gh" target="_blank" href="//github.com/radar"></a><a class="so" target="_blank" href="//stackoverflow.com/users/15245/ryan-bigg"></a><span class="bb"></span><span class="in"></span><a class="tw" target="_blank" href="//twitter.com/ryanbigg"></a> -->
-              <a class="ap" href="/book/ryanbigg?code=airconf"></a><span class="gh"></span><a class="so" target="_blank" href="//stackoverflow.com/users/15245/ryan-bigg"></a><span class="bb"></span><span class="in"></span><span class="tw"></span>
-          </div>
-        </div>
-
-        <div class="column">
-          <a class="user-badge text-center" href="/book/tomdale">
-            <div class="user-info">
-              <img src="//secure.gravatar.com/avatar/24659470071279a42020d5b87411598e?s=180" alt="" class="img-circle" width="50%">
-              <h4 class="name">Aaron Bedra</h4>
-              <h5 class="tech">Creating Dynamic Security Controls With Repsheet</h5>
-              <h6 class="title">{repsheet} {rails} {mod-security}</h6>
-              <div class="description">
-                <h6>Creating Dynamic Security Controls With Repsheet</h6>
-                Tom is one of the creators of Ember.js, and Co-founder at Tilde Inc. He spends his days working on the open source projects Tilde supports, and their first developer product, Skylight. He's a former Apple engineer who first gained expert front-end JavaScript skills working on MobileMe and iCloud.
-              </div>
-            </div>
-            <button class="btn btn-slate btn-block">Tue, 5th Aug 16:00 GMT</button>
-          </a>
-          <div class="social-icons">
-            <!-- <a class="ap" href="/book/abedra?code=airconf"></a><a class="gh" target="_blank" href="//github.com/abedra"></a><a class="so" target="_blank" href="//stackoverflow.com/users/676025/abedra"></a><span class="bb"></span><a class="in" target="_blank" href="//linkedin.com/x/profile/sy5n2q8o2i49/kUjMjzf6rD"></a><a class="tw" target="_blank" href="//twitter.com/abedra"></a> -->
-            <a class="ap" href="/book/abedra?code=airconf"></a><span class="gh"></span><span class="so"></span><span class="bb"></span><span class="in"></span><a class="tw" target="_blank" href="//twitter.com/abedra"></a>
-          </div>
-        </div>
+        {{#with abedra}}{{> speaker }}{{/with}}
 
 <!--         <div class="column">
           <a class="user-badge text-center" href="/book/rannachmany">
@@ -246,72 +191,16 @@
         </div>
 
  -->
-
-        <div class="column">
-          <a class="user-badge text-center" href="/book/alyssa">
-            <div class="user-info">
-              <img src="//secure.gravatar.com/avatar/98123d1387d7a27bc69933bfe5fc7967?s=180" alt="" class="img-circle" width="50%">
-              <h4 class="name">Alyssa Reese</h4>
-              <h5 class="tech">Much A Do About UX <br />(for Developers)</h5>
-              <h6 class="title">{ux}</h6>
-              <div class="description">
-                <h6>Much A Do About UX (for Developers)</h6>
-                Alyssa has worked on UI/UX designs for over 40 startup & enterprise companies through several agencies, including her own. Alyssa will be talking exploring many of the pitfalls ambitious developers can fall in when deciding to create UX on the fly.
-              </div>
-            </div>
-            <button class="btn btn-slate btn-block">Thu, 7th Aug 17:00 GMT</button>
-          </a>
-          <div class="social-icons">
-            <!-- <a class="ap" href="/book/alyssa?code=airconf"></a><a class="gh" target="_blank" href="//github.com/aareese"></a><span class="so"></span><span class="bb"></span><a class="in" target="_blank" href="//linkedin.com/x/profile/sy5n2q8o2i49/qAHRnNQSgn"></a><a class="tw" target="_blank" href="//twitter.com/aaReese"></a> -->
-            <a class="ap" href="/book/alyssa?code=airconf"></a><span class="gh"></span><span class="so"></span><span class="bb"></span><span class="in"></span><a class="tw" target="_blank" href="//twitter.com/aaReese"></a>
-          </div>
-        </div>
+        {{#with alyssa}}{{> speaker }}{{/with}}
       </div>
-
-
 
       <h2 class="text-thin text-center m-t-3">Week 2 Speakers</h2>
       <hr>
 
       <div class="columns-five m-t-2">
-        <div class="column">
-          <a class="user-badge text-center" href="/book/adymo">
-            <div class="user-info">
-              <img src="//secure.gravatar.com/avatar/990f1e2f3c6871d4305d3a316902b1bf?s=180" alt="Alexander Dymo" class="img-circle" width="50%">
-              <h4 class="name">Alexander Dymo</h4>
-              <h5 class="tech">Rails Performance <br /> Q & A</h5>
-              <h6 class="title">{rails}</h6>
-              <div class="description">
-                <h6>Rails Performance Q & A</h6>
-                Alexander is an entrepreneur, Y Combinator alum and Rails Performance Junky. He has 9 years of experience of Rails application development and performance optimization. In 2014 Alex has talked at conference and published various articles on the subject of Rails performance and is open for a 2 hour Q&A.
-              </div>
-            </div>
-            <button class="btn btn-slate btn-block">Tue 12th Aug 23:00 GMT</button>
-          </a>
-          <div class="social-icons">
-              <!-- <a class="ap" href="/book/adymo?code=airconf"></a><a class="gh" target="_blank" href="//github.com/adymo"></a><span class="so"></span><span class="bb"></span><a class="in" href="//linkedin.com/x/profile/sy5n2q8o2i49/1KB9BDtDYm" target="_blank"><a class="tw" target="_blank" href="//twitter.com/alexander_dymo"></a> -->
-              <a class="ap" href="/book/adymo?code=airconf"></a><span class="gh"></span><span class="so"></span><span class="bb"></span><a class="in" href="//linkedin.com/x/profile/sy5n2q8o2i49/1KB9BDtDYm" target="_blank"></a><span class="tw"></span>
-          </div>
-        </div>
+        {{#with adymo}}{{> speaker }}{{/with}}
 
-        <div class="column">
-          <a class="user-badge text-center" href="/book/matsko">
-            <div class="user-info">
-              <img src="//secure.gravatar.com/avatar/3c0ca2c60c5cc418c6b3dbed47b23b69?s=180" alt="Matias Niemelä" class="img-circle" width="50%">
-              <h4 class="name">Matias Niemelä</h4>
-              <h5 class="tech">Awesome Interfaces with AngularJS Animations</h5>
-              <h6 class="title">{anguarljs} {ng-animate}</h6>
-              <div class="description">
-                Author of ngAnimate Matias Niemelä will take you through the future of animation on the web.
-              </div>
-            </div>
-            <button class="btn btn-slate btn-block">Wed, 13th Aug 04:00 GMT</button>
-          </a>
-          <div class="social-icons">
-              <!-- <a class="ap" href="/book/matsko?code=airconf"></a><a class="gh" target="_blank" href="//github.com/matsko"></a><span class="so"></span><span class="bb"></span><span class="in"></span><a class="tw" target="_blank" href="//twitter.com/yearofmoo"></a> -->
-              <a class="ap" href="/book/matsko?code=airconf"></a><a class="gh" target="_blank" href="//github.com/matsko"></a><span class="so"></span><span class="bb"></span><span class="in"></span><span class="tw"></span>
-          </div>
-        </div>
+        {{#with matsko}}{{> speaker }}{{/with}}
 
         <div class="column">
           <a class="user-badge text-center" href="/book/felienne">
@@ -389,26 +278,7 @@
         </div>
 
 
-        <div class="column">
-          <a class="user-badge text-center" href="/book/basarat">
-            <div class="user-info">
-              <img src="//secure.gravatar.com/avatar/1400be56ff17549b926dd3260da4a494?s=180" alt="Basarat Ali" class="img-circle" width="50%">
-              <h4 class="name">Basarat Ali</h4>
-              <h5 class="tech"><code>this</code> & Prototypal Inheritance<br /> in JavaScript</h5>
-              <h6 class="title">{javascript}</h6>
-              <div class="description">
-                <h6><code>this</code> and Prototypal Inheritance<br /> in JavaScript</h6>
-                No part of JavaScript is more misunderstood than its Prototypal inheritance. This presentation explains the behavior and usefulness of <code>this</code> and continues on to simplify Prototypal inheritance for the masses.
-              </div>
-            </div>
-            <button class="btn btn-slate btn-block">Fri, 22th Aug 22:00 GMT</button>
-          </a>
-          <div class="social-icons">
-              <!-- <a class="ap" href="/book/basarat?code=airconf"></a><a class="gh" target="_blank" href="//github.com/basarat"></a><a class="so" href="//stackoverflow.com/users/390330/basarat" target="_blank"></a><a class="bb" href="//bitbucket.org/basarat" target="_blank"></a></span><a class="in" href="//linkedin.com/x/profile/sy5n2q8o2i49/8X2NT8JG8L" target="_blank"></a><a class="tw" target="_blank" href="//twitter.com/basarat"></a> -->
-              <a class="ap" href="/book/basarat?code=airconf"></a><span class="gh"></span><a class="so" href="//stackoverflow.com/users/390330/basarat" target="_blank"></a><span class="bb"></span><span class="in"></span><span class="tw"></span>
-          </div>
-        </div>
-
+        {{#with basarat}}{{> speaker }}{{/with}}
 
         <div class="column">
           <a class="user-badge text-center" href="/book/toddmotto">
@@ -440,7 +310,7 @@
 
         {{#with 2upmedia}}{{> speaker }}{{/with}}
 
-        <div class="column">
+<!--         <div class="column">
           <a class="user-badge text-center" href="/book/philsturgeon?code=home">
             <div class="user-info">
               <img src="//secure.gravatar.com/avatar/14df293d6c5cd6f05996dfc606a6a951?s=180" alt="" class="img-circle" width="50%">
@@ -453,9 +323,13 @@
             </div>
             <button class="btn btn-slate btn-block">Book Phil</button>
           </a>
-        </div>
+        </div> -->
+
+        {{#with joshowens}}{{> speaker }}{{/with}}
 
         {{#with auser}}{{> speaker }}{{/with}}
+
+        {{#with mariovisic}}{{> speaker }}{{/with}}
 
       </div>
 
