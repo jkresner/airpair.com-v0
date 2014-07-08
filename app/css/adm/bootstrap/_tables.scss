@@ -160,6 +160,7 @@ table {
 @include table-row-variant('info', $state-info-bg);
 @include table-row-variant('warning', $state-warning-bg);
 @include table-row-variant('danger', $state-danger-bg);
+@include table-row-variant('muted', #F8F8F8);
 
 
 // Responsive tables

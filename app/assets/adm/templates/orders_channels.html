@@ -30,127 +30,287 @@
 
 
 
-  <table class="table table-hover table-condensed">
+  <table class="table table-hover table-condensed channels">
 
     <thead>
-      <th>Date</th>
-      <th>Name</th>
-      <th>Total</th>
-      <th class="text-info" style="width:6%">Ad</th>
-      <th class="text-info" style="width:6%">Affiliate</th>
-      <th class="text-info" style="width:6%">Direct</th>
-      <th class="text-info" style="width:6%">Portfolio</th>
-      <th class="text-info" style="width:6%">Newsletter</th>
-      <th class="text-info" style="width:6%">Press</th>
+      <th style="width: 4%;" >Date</th>
+      <th style="width: 12%;" >Name</th>
+      <th style="width:8%">Total</th>
+      <th class="text-info" style="width:7%">Ad</th>
+      <th class="text-info" style="width:7%">Affiliate</th>
+      <th class="text-info" style="width:7%">Direct</th>
+      <th class="text-info" style="width:7%">Portfolio</th>
+      <th class="text-info" style="width:7%">Newsletter</th>
+      <th class="text-info" style="width:7%">Press</th>
       <!-- <th class="text-info">Product</th> -->
-      <th class="text-info" style="width:6%">SEO</th>
-      <th class="text-info" style="width:6%">Social</th>
+      <th class="text-info" style="width:7%">SEO</th>
+      <th class="text-info" style="width:7%">Social</th>
 <!--       <th class="text-info">Stack Overflow</th> -->
-      <th class="text-info" style="width:6%">WoM</th>
+      <th class="text-info" style="width:7%">WoM</th>
       <!-- <th class="text-info">AoA</th> -->
-      <th class="text-info" style="width:8%">Untracked</th>
-      <th class="text-success">Campaign</th>
+      <th class="text-info" style="width:7%">Untracked</th>
+      <th class="text-success" style="width:6%">Campaign</th>
     </thead>
 
-    <tr class="success">
+    <tr class="row-summary success">
       <td></td>
       <td> <strong>Count</strong></td>
-      <td>{{metrics.summary.numOrders}}</td>
+      <td>
+        {{metrics.summary.numOrders}}
+        <span class="text-split">{{metrics.repeatSummary.numOrders | numFloor}}</span></td>
 
-      <td class="text-info">{{metrics.summary.tags.ad.count | number: 0}}</td>
-      <td class="text-info">{{metrics.summary.tags.affiliate.count | number: 0}}</td>
-      <td class="text-info">{{metrics.summary.tags.direct.count | number: 0}}</td>
-      <td class="text-info">{{metrics.summary.tags.incubator.count | number: 0}}</td>
-      <td class="text-info">{{metrics.summary.tags.newsletterairpair.count | number: 0}}</td>
-      <td class="text-info">{{metrics.summary.tags.press.count | number: 0}}</td>
-      <td class="text-info">{{metrics.summary.tags.seo.count | number: 0}}</td>
-      <td class="text-info">{{metrics.summary.tags.social.count | number: 0}}</td>
-<!--       <td class="text-info">{{metrics.summary.tags.stackoverflowads.count | number: 0}}</td> -->
-      <td class="text-info">{{metrics.summary.tags.wordofmouth.count | number: 0}}</td>
-      <td class="text-info">{{metrics.summary.tags.untracked.count | number: 0}}</td>
+      <td class="text-info">
+        {{metrics.summary.tags.ad.count}}
+        <span class="text-split">{{metrics.repeatSummary.tags.ad.count | numFloor}}</span></td>
+      <td class="text-info">
+        {{metrics.summary.tags.affiliate.count}}
+        <span class="text-split">{{metrics.repeatSummary.tags.affiliate.count | numFloor}}</span>
+      </td>
+      <td class="text-info">
+        {{metrics.summary.tags.direct.count}}
+        <span class="text-split">{{metrics.repeatSummary.tags.direct.count | numFloor}}</span>
+      </td>
+      <td class="text-info">
+        {{metrics.summary.tags.incubator.count}}
+        <span class="text-split">{{metrics.repeatSummary.tags.incubator.count | numFloor}}</span>
+      </td>
+      <td class="text-info">
+        {{metrics.summary.tags.newsletterairpair.count}}
+        <span class="text-split">{{metrics.repeatSummary.tags.newsletterairpair.count | numFloor}}</span>
+      </td>
+      <td class="text-info">
+        {{metrics.summary.tags.press.count}}
+        <span class="text-split">{{metrics.repeatSummary.tags.press.count | numFloor}}</span>
+      </td>
+      <td class="text-info">
+        {{metrics.summary.tags.seo.count}}
+        <span class="text-split">{{metrics.repeatSummary.tags.seo.count | numFloor}}</span>
+      </td>
+      <td class="text-info">
+        {{metrics.summary.tags.social.count}}
+        <span class="text-split">{{metrics.repeatSummary.tags.social.count | numFloor}}</span>
+      </td>
+      <td class="text-info">
+        {{metrics.summary.tags.wordofmouth.count}}
+        <span class="text-split">{{metrics.repeatSummary.tags.wordofmouth.count | numFloor}}</span>
+      </td>
+      <td class="text-info">
+        {{metrics.summary.tags.untracked.count}}
+        <span class="text-split">{{metrics.repeatSummary.tags.untracked.count | numFloor}}</span>
+      </td>
       <td></td>
     </tr>
 
-    <tr class="active">
+
+    <tr class="row-summary active">
       <td></td>
-      <td>% of Total</td>
+      <td></td>
       <td></td>
 
-      <td class="text-info">{{(metrics.summary.tags.ad.count/metrics.summary.numOrders*100 | number:0) || 0 }}%</td>
-      <td class="text-info">{{(metrics.summary.tags.affiliate.count/metrics.summary.numOrders*100 | number:0) || 0 }}%</td>
-      <td class="text-info">{{(metrics.summary.tags.direct.count/metrics.summary.numOrders*100 | number:0) || 0 }}%</td>
-      <td class="text-info">{{(metrics.summary.tags.incubator.count/metrics.summary.numOrders*100 | number:0) || 0}}%</td>
-      <td class="text-info">{{(metrics.summary.tags.newsletterairpair.count/metrics.summary.numOrders*100 | number:0) || 0 }}%</td>
-      <td class="text-info">{{(metrics.summary.tags.press.count/metrics.summary.numOrders*100 | number:0) || 0 }}%</td>
-      <td class="text-info">{{(metrics.summary.tags.seo.count/metrics.summary.numOrders*100 | number:0) || 0 }}%</td>
-      <td class="text-info">{{(metrics.summary.tags.social.count/metrics.summary.numOrders*100 | number:0) || 0 }}%</td>
-      <!-- <td class="text-info">{{(metrics.summary.tags.stackoverflowads.count/metrics.summary.numOrders*100 | number:1) || 0 }}%</td> -->
-      <td class="text-info">{{(metrics.summary.tags.wordofmouth.count/metrics.summary.numOrders*100 | number:0) || 0 }}%</td>
-      <td class="text-info">{{(metrics.summary.tags.untracked.count/metrics.summary.numOrders*100 | number:0) || 0 }}%</td>
+      <td class="text-info">
+        {{(metrics.summary.tags.ad.count/metrics.summary.numOrders*100 | number:0) || 0 }}%
+        <span class="text-split">{{(metrics.repeatSummary.tags.ad.count/metrics.summary.numOrders*100 | number:0) || 0 }}%</span>
+      </td>
+      <td class="text-info">
+        {{(metrics.summary.tags.affiliate.count/metrics.summary.numOrders*100 | number:0) || 0 }}%
+        <span class="text-split">{{(metrics.repeatSummary.tags.affiliate.count/metrics.summary.numOrders*100 | number:0) || 0 }}%</span>
+      </td>
+      <td class="text-info">
+        {{(metrics.summary.tags.direct.count/metrics.summary.numOrders*100 | number:0) || 0 }}%
+        <span class="text-split">{{(metrics.repeatSummary.tags.direct.count/metrics.summary.numOrders*100 | number:0) || 0 }}%</span>
+      </td>
+      <td class="text-info">
+        {{(metrics.summary.tags.incubator.count/metrics.summary.numOrders*100 | number:0) || 0}}%
+        <span class="text-split">{{(metrics.repeatSummary.tags.incubator.count/metrics.summary.numOrders*100 | number:0) || 0}}%</span>
+      </td>
+      <td class="text-info">
+        {{(metrics.summary.tags.newsletterairpair.count/metrics.summary.numOrders*100 | number:0) || 0 }}%
+        <span class="text-split">{{(metrics.repeatSummary.tags.newsletterairpair.count/metrics.summary.numOrders*100 | number:0) || 0 }}%</span>
+      </td>
+      <td class="text-info">
+        {{(metrics.summary.tags.press.count/metrics.summary.numOrders*100 | number:0) || 0 }}%
+        <span class="text-split">{{(metrics.repeatSummary.tags.press.count/metrics.summary.numOrders*100 | number:0) || 0 }}%</span>
+      </td>
+      <td class="text-info">
+        {{(metrics.summary.tags.seo.count/metrics.summary.numOrders*100 | number:0) || 0 }}%
+        <span class="text-split">{{(metrics.repeatSummary.tags.seo.count/metrics.summary.numOrders*100 | number:0) || 0 }}%</span>
+      </td>
+      <td class="text-info">
+        {{(metrics.summary.tags.social.count/metrics.summary.numOrders*100 | number:0) || 0 }}%
+        <span class="text-split">{{(metrics.repeatSummary.tags.social.count/metrics.summary.numOrders*100 | number:0) || 0 }}%</span>
+      </td>
+      <td class="text-info">
+        {{(metrics.summary.tags.wordofmouth.count/metrics.summary.numOrders*100 | number:0) || 0 }}%
+        <span class="text-split">{{(metrics.repeatSummary.tags.wordofmouth.count/metrics.summary.numOrders*100 | number:0) || 0 }}%</span>
+      </td>
+      <td class="text-info">
+        {{(metrics.summary.tags.untracked.count/metrics.summary.numOrders*100 | number:0) || 0 }}%
+        <span class="text-split">{{(metrics.repeatSummary.tags.untracked.count/metrics.summary.numOrders*100 | number:0) || 0 }}%</span>
+      </td>
       <td></td>
     </tr>
 
-    <tr class="success">
+<!--     <tr class="active">
+      <td></td>
+      <td> Repeat </td>
+      <td>{{metrics.repeatSummary.numOrders}}</td>
+
+      <td class="text-info">{{metrics.repeatSummary.tags.ad.count | number: 0}}</td>
+      <td class="text-info">{{metrics.repeatSummary.tags.affiliate.count | number: 0}}</td>
+      <td class="text-info">{{metrics.repeatSummary.tags.direct.count | number: 0}}</td>
+      <td class="text-info">{{metrics.repeatSummary.tags.incubator.count | number: 0}}</td>
+      <td class="text-info">{{metrics.repeatSummary.tags.newsletterairpair.count | number: 0}}</td>
+      <td class="text-info">{{metrics.repeatSummary.tags.press.count | number: 0}}</td>
+      <td class="text-info">{{metrics.repeatSummary.tags.seo.count | number: 0}}</td>
+      <td class="text-info">{{metrics.repeatSummary.tags.social.count | number: 0}}</td>
+      <td class="text-info">{{metrics.repeatSummary.tags.wordofmouth.count | number: 0}}</td>
+      <td class="text-info">{{metrics.repeatSummary.tags.untracked.count | number: 0}}</td>
+      <td></td>
+    </tr>
+ -->
+
+    <tr class="row-summary success">
       <td></td>
       <td><strong>Revenue</strong></td>
-      <td>{{metrics.summary.revenueTotal | number}}</td>
+      <td>
+        {{metrics.summary.revenueTotal | numFloor}}
+        <span class="text-split">{{metrics.repeatSummary.revenueTotal | numFloor}}</span>
+      </td>
 
-      <td class="text-info">{{metrics.summary.tags.ad.revenue | number:0}}</td>
-      <td class="text-info">{{metrics.summary.tags.affiliate.revenue | number:0}}</td>
-      <td class="text-info">{{metrics.summary.tags.direct.revenue | number:0}}</td>
-      <td class="text-info">{{metrics.summary.tags.incubator.revenue | number:0}}</td>
-      <td class="text-info">{{metrics.summary.tags.newsletterairpair.revenue | number:0}}</td>
-      <td class="text-info">{{metrics.summary.tags.press.revenue | number:0}}</td>
-      <td class="text-info">{{metrics.summary.tags.seo.revenue | number:0}}</td>
-      <td class="text-info">{{metrics.summary.tags.social.revenue | number:0}}</td>
-      <!-- <td class="text-info">{{metrics.summary.tags.stackoverflowads.revenue | number}}</td> -->
-      <td class="text-info">{{metrics.summary.tags.wordofmouth.revenue | number:0}}</td>
-      <td class="text-info">{{metrics.summary.tags.untracked.revenue | number:0}}</td>
+      <td class="text-info">
+        {{metrics.summary.tags.ad.revenue | numFloor}}
+        <span class="text-split">{{metrics.repeatSummary.tags.ad.revenue | numFloor}}</span>
+      </td>
+      <td class="text-info">
+        {{metrics.summary.tags.affiliate.revenue | numFloor}}
+        <span class="text-split">{{metrics.repeatSummary.tags.affiliate.revenue | numFloor}}</span>
+      </td>
+      <td class="text-info">
+        {{metrics.summary.tags.direct.revenue | numFloor}}
+        <span class="text-split">{{metrics.repeatSummary.tags.direct.revenue | numFloor}}</span>
+      </td>
+      <td class="text-info">
+        {{metrics.summary.tags.incubator.revenue | numFloor}}
+        <span class="text-split">{{metrics.repeatSummary.tags.incubator.revenue | numFloor}}</span>
+      </td>
+      <td class="text-info">
+        {{metrics.summary.tags.newsletterairpair.revenue | numFloor}}
+        <span class="text-split">{{metrics.repeatSummary.tags.newsletterairpair.revenue | numFloor}}</span>
+      </td>
+      <td class="text-info">
+        {{metrics.summary.tags.press.revenue | numFloor}}
+        <span class="text-split">{{metrics.repeatSummary.tags.press.revenue | numFloor}}</span>
+      </td>
+      <td class="text-info">
+        {{metrics.summary.tags.seo.revenue | numFloor}}
+        <span class="text-split">{{metrics.repeatSummary.tags.seo.revenue | numFloor}}</span>
+      </td>
+      <td class="text-info">
+        {{metrics.summary.tags.social.revenue | numFloor}}
+        <span class="text-split">{{metrics.repeatSummary.tags.social.revenue | numFloor}}</span>
+      </td>
+      <td class="text-info">
+        {{metrics.summary.tags.wordofmouth.revenue | numFloor}}
+        <span class="text-split">{{metrics.repeatSummary.tags.wordofmouth.revenue | numFloor}}</span>
+      </td>
+      <td class="text-info">
+        {{metrics.summary.tags.untracked.revenue | numFloor}}
+        <span class="text-split">{{metrics.repeatSummary.tags.untracked.revenue | numFloor}}</span>
+      </td>
 
       <td></td>
     </tr>
 
 
+    <tr class="row-summary active">
+      <td></td>
+      <td></td>
+      <td></td>
+
+      <td class="text-info">
+        {{(metrics.summary.tags.ad.revenue/metrics.summary.revenueTotal*100 | number:0) || 0}}%
+        <span class="text-split">{{(metrics.repeatSummary.tags.ad.revenue/metrics.summary.revenueTotal*100 | number:0) || 0}}%</span>
+      </td>
+      <td class="text-info">
+        {{(metrics.summary.tags.affiliate.revenue/metrics.summary.revenueTotal*100 | number:0) || 0}}%
+        <span class="text-split">{{(metrics.repeatSummary.tags.affiliate.revenue/metrics.summary.revenueTotal*100 | number:0) || 0}}%</span>
+      </td>
+      <td class="text-info">
+        {{(metrics.summary.tags.direct.revenue/metrics.summary.revenueTotal*100 | number:0) || 0}}%
+        <span class="text-split">{{(metrics.repeatSummary.tags.direct.revenue/metrics.summary.revenueTotal*100 | number:0) || 0}}%</span>
+      </td>
+      <td class="text-info">
+        {{(metrics.summary.tags.incubator.revenue/metrics.summary.revenueTotal*100 | number:0) || 0}}%
+        <span class="text-split">{{(metrics.repeatSummary.tags.incubator.revenue/metrics.summary.revenueTotal*100 | number:0) || 0}}%</span>
+      </td>
+      <td class="text-info">
+        {{(metrics.summary.tags.newsletterairpair.revenue/metrics.summary.revenueTotal*100 | number:0) || 0}}%
+        <span class="text-split">{{(metrics.repeatSummary.tags.newsletterairpair.revenue/metrics.summary.revenueTotal*100 | number:0) || 0}}%</span>
+      </td>
+      <td class="text-info">
+        {{(metrics.summary.tags.press.revenue/metrics.summary.revenueTotal*100 | number:0) || 0}}%
+        <span class="text-split">{{(metrics.repeatSummary.tags.press.revenue/metrics.summary.revenueTotal*100 | number:0) || 0}}%</span>
+      </td>
+      <td class="text-info">
+        {{(metrics.summary.tags.seo.revenue/metrics.summary.revenueTotal*100 | number:0) || 0}}%
+        <span class="text-split">{{(metrics.repeatSummary.tags.seo.revenue/metrics.summary.revenueTotal*100 | number:0) || 0}}%</span>
+      </td>
+      <td class="text-info">
+        {{(metrics.summary.tags.social.revenue/metrics.summary.revenueTotal*100 | number:0) || 0}}%
+        <span class="text-split">{{(metrics.repeatSummary.tags.social.revenue/metrics.summary.revenueTotal*100 | number:0) || 0}}%</span>
+      </td>
+      <td class="text-info">
+        {{(metrics.summary.tags.wordofmouth.revenue/metrics.summary.revenueTotal*100 | number:0) || 0}}%
+        <span class="text-split">{{(metrics.repeatSummary.tags.wordofmouth.revenue/metrics.summary.revenueTotal*100 | number:0) || 0}}%</span>
+      </td>
+      <td class="text-info">
+        {{(metrics.summary.tags.untracked.revenue/metrics.summary.revenueTotal*100 | number:0) || 0}}%
+        <span class="text-split">{{(metrics.repeatSummary.tags.untracked.revenue/metrics.summary.revenueTotal*100 | number:0) || 0}}%</span>
+      </td>
+
+      <td></td>
+    </tr>
+
+<!--
     <tr class="active">
       <td></td>
-      <td>% of Total</td>
-      <td></td>
+      <td>Repeat</td>
+      <td>{{metrics.repeatSummary.revenueTotal | number}}</td>
 
-      <td class="text-info">{{(metrics.summary.tags.ad.revenue/metrics.summary.revenueTotal*100 | number:0) || 0}}%</td>
-      <td class="text-info">{{(metrics.summary.tags.affiliate.revenue/metrics.summary.revenueTotal*100 | number:0) || 0}}%</td>
-      <td class="text-info">{{(metrics.summary.tags.direct.revenue/metrics.summary.revenueTotal*100 | number:0) || 0}}%</td>
-      <td class="text-info">{{(metrics.summary.tags.incubator.revenue/metrics.summary.revenueTotal*100 | number:0) || 0}}%</td>
-      <td class="text-info">{{(metrics.summary.tags.newsletterairpair.revenue/metrics.summary.revenueTotal*100 | number:0) || 0}}%</td>
-      <td class="text-info">{{(metrics.summary.tags.press.revenue/metrics.summary.revenueTotal*100 | number:0) || 0}}%</td>
-      <td class="text-info">{{(metrics.summary.tags.seo.revenue/metrics.summary.revenueTotal*100 | number:0) || 0}}%</td>
-      <td class="text-info">{{(metrics.summary.tags.social.revenue/metrics.summary.revenueTotal*100 | number:0) || 0}}%</td>
-      <!-- <td class="text-info">{{(metrics.summary.tags.stackoverflowads.revenue/metrics.summary.revenueTotal*100 | number:1) || 0}}%</td> -->
-      <td class="text-info">{{(metrics.summary.tags.wordofmouth.revenue/metrics.summary.revenueTotal*100 | number:0) || 0}}%</td>
-      <td class="text-info">{{(metrics.summary.tags.untracked.revenue/metrics.summary.revenueTotal*100 | number:0) || 0}}%</td>
+      <td class="text-info">{{metrics.repeatSummary.tags.ad.revenue | number:0}}</td>
+      <td class="text-info">{{metrics.repeatSummary.tags.affiliate.revenue | number:0}}</td>
+      <td class="text-info">{{metrics.repeatSummary.tags.direct.revenue | number:0}}</td>
+      <td class="text-info">{{metrics.repeatSummary.tags.incubator.revenue | number:0}}</td>
+      <td class="text-info">{{metrics.repeatSummary.tags.newsletterairpair.revenue | number:0}}</td>
+      <td class="text-info">{{metrics.repeatSummary.tags.press.revenue | number:0}}</td>
+      <td class="text-info">{{metrics.repeatSummary.tags.seo.revenue | number:0}}</td>
+      <td class="text-info">{{metrics.repeatSummary.tags.social.revenue | number:0}}</td>
+      <td class="text-info">{{metrics.repeatSummary.tags.wordofmouth.revenue | number:0}}</td>
+      <td class="text-info">{{metrics.repeatSummary.tags.untracked.revenue | number:0}}</td>
 
       <td></td>
     </tr>
-
+ -->
 
 
     <tr ng-repeat="order in metrics.orders | orderBy : 'utc':true">
       <td class="text-muted">{{order.utc | date:"MM dd"}}</td>
-      <td><a href="/adm/pipeline/request/{{order.requestId}}" target="blank">{{order.name}}</a></td>
-      <td><b>{{order.total}}</b></td>
+      <td><a href="/adm/pipeline/request/{{order.requestId}}" target="blank" ng-class="{'text-orange': order.isRepeat}">{{order.name}}</a></td>
+      <td><b>{{order.total | numFloor}}</b></td>
 
-      <td class="text-info a{{order.tags.ad.total}}">{{order.tags.ad.total | number: 0}}</td>
-      <td class="text-info a{{order.tags.affiliate.total}}">{{order.tags.affiliate.total | number: 0}}</td>
-      <td class="text-info a{{order.tags.direct.total}}">{{order.tags.direct.total | number: 0}}</td>
-      <td class="text-info a{{order.tags.incubator.total}}">{{order.tags.incubator.total | number: 0}}</td>
-      <td class="text-info a{{order.tags.newsletterairpair.total}}">{{order.tags.newsletterairpair.total | number: 0}}</td>
-      <td class="text-info a{{order.tags.press.total}}">{{order.tags.press.total | number: 0}}</td>
-      <td class="text-info a{{order.tags.seo.total}}">{{order.tags.seo.total | number: 0}}</td>
-      <td class="text-info a{{order.tags.social.total}}">{{order.tags.social.total | number: 0}}</td>
-      <td class="text-info a{{order.tags.wordofmouth.total}}">{{order.tags.wordofmouth.total | number: 0}}</td>
-      <td class="text-info a{{order.tags.untracked.total}}">{{order.tags.untracked.total | number: 0}}</td>
+      <td class="text-info a{{order.tags.ad.total}}">{{order.tags.ad.total  | numFloor}}</td>
+      <td class="text-info a{{order.tags.affiliate.total}}">{{order.tags.affiliate.total  | numFloor}}</td>
+      <td class="text-info a{{order.tags.direct.total}}">{{order.tags.direct.total  | numFloor}}</td>
+      <td class="text-info a{{order.tags.incubator.total}}">{{order.tags.incubator.total  | numFloor}}</td>
+      <td class="text-info a{{order.tags.newsletterairpair.total}}">{{order.tags.newsletterairpair.total  | numFloor}}</td>
+      <td class="text-info a{{order.tags.press.total}}">{{order.tags.press.total  | numFloor}}</td>
+      <td class="text-info a{{order.tags.seo.total}}">{{order.tags.seo.total  | numFloor}}</td>
+      <td class="text-info a{{order.tags.social.total}}">{{order.tags.social.total  | numFloor}}</td>
+      <td class="text-info a{{order.tags.wordofmouth.total}}">{{order.tags.wordofmouth.total  | numFloor}}</td>
+      <td class="text-info a{{order.tags.untracked.total}}">{{order.tags.untracked.total  | numFloor}}</td>
       <!-- <td class="text-info">{{order.tags.stackoverflowads.total | number: 0}}</td> -->
       <td>
-        <span ng-repeat="tag in order.campaigns" class="label label-success">{{tag}}</span>
+        <span ng-repeat="tag in order.campaigns" class="label marketingtag campaign">{{tag}}</span>
       </td>
 
     </tr>
