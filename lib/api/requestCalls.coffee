@@ -30,7 +30,7 @@ class RequestCallsApi extends require('./_api')
     req.sanitize('duration').toInt()
 
     {date, time} = req.body
-    req.body.datetime = moment("#{date} #{time}").tz('America/Los_Angeles').toDate()
+    req.body.datetime = moment.tz("#{date} #{time}", 'America/Los_Angeles').toDate()
     if isNaN(req.body.datetime.getTime())
       return res.send data: date: 'Invalid Date', 400
 
