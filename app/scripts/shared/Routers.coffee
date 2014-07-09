@@ -51,6 +51,10 @@ class exports.AirpairSessionRouter extends BB.SessionRouter
     if !addjs? && AddJS?
       window.addjs = new AddJS { peopleProps: peopleProps }
       addjs.trackSession()
+
+      if window.location.search.match(/newUser/)?
+        addjs.alias()
+
       jQuery(".trackBookLogin").click (e) ->
         return_to = jQuery(this).attr("href")
         return_to = window.location.pathname + window.location.search  if return_to is "#"

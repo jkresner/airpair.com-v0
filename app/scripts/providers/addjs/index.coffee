@@ -10,6 +10,12 @@ module.exports = class Addjs
         console.log 'Addjs.constructor', 'WARNING segment.io is not loaded'
     @peopleProps = config.peopleProps
 
+  alias: ->
+    if @peopleProps? && @peopleProps.email?
+      analytics.alias(@peopleProps.email)
+    else
+      console.log("Aliasing new user Failed")
+
   trackSession: (additionalProperties={}) ->
     return unless analytics?
     properties =

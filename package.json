@@ -26,6 +26,7 @@
     }
   },
   "dependencies": {
+    "analytics-node": "1.0.0",
     "async": "0.2.9",
     "awssum-amazon-ses": "1.x.x",
     "brunch": "1.7.14",
@@ -45,7 +46,6 @@
     "hipchatter": "0.1.x",
     "javascript-brunch": "> 1.0 < 1.5",
     "lodash.clonedeep": "~2.4.1",
-    "mixpanel": "0.0.18",
     "moment": "2.0.x",
     "moment-timezone": "0.0.3",
     "mongoose": "3.8.5",

@@ -138,10 +138,13 @@ module.exports = class OrdersService extends DomainService
 
 
   trackPayment: (order, type) ->
-    props = {
-      usr: @usr.google._json.email, distinct_id: @usr.google._json.email,
-      total: order.total, profit: order.profit, type: type
-    }
+    props =
+      usr: @usr.google._json.email
+      distinct_id: @usr.google._json.email
+      total: order.total
+      profit: order.profit
+      revenue: order.total
+      type: type
 
     if order.utm?
       props.utm_source   = order.utm.utm_source
@@ -150,8 +153,10 @@ module.exports = class OrdersService extends DomainService
       props.utm_content  = order.utm.utm_content
       props.utm_campaign = order.utm.utm_campaign
 
-    mixpanel.track 'customerPayment', props
-    mixpanel.people.track_charge @usr.google._json.email, order.total
+    segmentio.track
+      userId: @usr.google._json.email
+      event: 'customerPayment'
+      proerties: props
 
     # add event to request's log
     # TODO: when mongo can't find an ID, it returns null as the result.

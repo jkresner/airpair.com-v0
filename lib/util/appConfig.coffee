@@ -11,7 +11,7 @@ c.mongoUri = process.env.MONGOHQ_URL || "mongodb://localhost/airpair_#{c.env}"
 c.oauthHost = 'http://localhost:3333'
 
 c.analytics =
-  mixpanel: { id: '836dbdc21253fa8f3a68657c2f5ec4f1' }
+  segmentio: { writeKey: 'v8ltc907ww' }
 
 c.SES_ACCESS_KEY = process.env.AP_SES_ACCESS_KEY ? 'blah'
 c.SES_SECRET_KEY = process.env.AP_SES_SECRET_KEY ? 'gah'
@@ -45,7 +45,6 @@ if c.env is 'test'
   c.oauthHost = 'http://localhost:4444'
 
 if c.env is 'prod'
-  c.analytics.mixpanel.id = '076cac7a822e2ca5422c38f8ab327d62'
   c.payment.stripe =
     publishedKey: 'pk_live_FEGruKDm6OZyagTHqhXWvV8G'
     secretKey:    'sk_live_ei0Duv3MIp56TzPYPSK2XWWf'
