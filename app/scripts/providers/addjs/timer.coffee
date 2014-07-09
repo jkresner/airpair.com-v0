@@ -14,12 +14,6 @@ module.exports = class Timer
     @endTime = new Date().getTime()
     @
 
-#   send: ->
-#     timeSpent = @endTime - @startTime
-#     window._gaq.pus h ['_trackTiming', @category, @variable,
-# timeSpent, @label]
-#     @
-
   timeSpent: ->
     if !@endTime? then @end()
     @endTime - @startTime

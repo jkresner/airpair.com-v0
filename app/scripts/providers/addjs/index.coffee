@@ -1,61 +1,50 @@
-Events               = require './events'
-AddjsGoogleAnalytics = require './googleanalytics'
-AddjsMixPanel        = require './mixpanel'
-# AddjsOptimizely    = require './addjs/optimizely'
-
 module.exports = class Addjs
 
   Timer: require './timer'
   events: require './events'
 
-  providers: {}
-
-  constructor: (config) ->
-
+  constructor: (config={}) ->
     if @logging is on
-      console.log 'Addjs.constructor', config, @providers
+      console.log 'Addjs.constructor'
+      unless analytics?
+        console.log 'Addjs.constructor', 'WARNING segment.io is not loaded'
+    @peopleProps = config.peopleProps
 
-    if config.providers.ga
-      @providers.ga = new AddjsGoogleAnalytics config.providers.ga
-
-    if config.providers.mp
-      @providers.mp = new AddjsMixPanel config.providers.mp
-
-    # if config.providers.optimizely
-    #   providers.op = new AddjsOptimizely config.providers.optimizely
-
+  trackSession: (additionalProperties={}) ->
+    return unless analytics?
+    properties =
+      gravatar: @peopleProps.picture
+      name: @peopleProps.name
+      last_name: @peopleProps.family_name
+      first_name: @peopleProps.given_name
+      created: @peopleProps.created_at
+      # TODO test and fix these
+      utm_source: @peopleProps.utm_source
+      utm_medium: @peopleProps.utm_medium
+      utm_term: @peopleProps.utm_term
+      utm_content: @peopleProps.utm_content
+      utm_campaign: @peopleProps.utm_campaign
+    properties[key] = val for key, val of additionalProperties
+    if @peopleProps? && @peopleProps.email?
+      analytics.identify @peopleProps.email
+    else
+      analytics.identify()
 
   trackEvent: (category, action, label, value, bounce) ->
-    for k, p of @providers
-      p.trackEvent.apply(p, arguments)
+    return unless analytics?
+    analytics.track action,
+      category: category
+      label: label
+      value: value
+      bounce: bounce
 
+  trackPageView: (name, data) ->
+    return unless analytics?
+    # segment.io automatically tracks page views
+    # only use this method for client side page
+    # views (a la angular)
+    analytics.page(name, data)
 
-  trackSocial: (network, socialAction, opt_target, opt_pagePath) ->
-    for k, p of @providers
-      p.trackSocial.apply(p, arguments)
-
-
-  trackPageView: (url, data) ->
-    for k, p of @providers
-      p.trackPageView.apply(p, arguments)
-
-
-  trackLanding: (data) ->
-    urlWithoutQuery = window.location.pathname
-    for k, p of @providers
-      p.trackLanding.call(p, urlWithoutQuery, data)
-      # mixpanel.register_once({ 'landing page': window.location.href });
-
-
-  trackClick: (e, destUrl, evnt, elmId) =>
-    if evnt?
-      @trackEvent evnt.category, evnt.name, evnt.uri, window.location.pathname+':'+elmId
-
-    if mixpanel?
-      if e? then e.preventDefault()
-      redirectLocation = "#{window.location.origin}/#{destUrl}&mixpanelId=#{mixpanel.get_distinct_id()}"
-      redirect = =>
-        # $log 'redirect', redirectLocation
-        window.location = redirectLocation
-
-      setTimeout(redirect,300)
+  trackLink: (link, name, options) ->
+    return unless analytics?
+    analytics.trackLink(link, name, options)

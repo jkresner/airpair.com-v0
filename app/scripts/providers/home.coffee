@@ -1,12 +1,12 @@
 # if document.location.hostname != "localhost"
 if true
+  require("./cegg")()
+  require("./segmentio")()
+  require("./adroll")()
+  require("./olark")()
+
   AddJS = require("./addjs/index") # custom analytics tracking
 
   if !addjs?
-    window.addjs = new AddJS providers: { ga: { logging: off }, mp: { logging: off } }
+    window.addjs = new AddJS
 
-  require("./cegg")()
-  require("./mixpanel")()
-  require("./ga")()
-  require("./adroll")()
-  require("./olark")()
