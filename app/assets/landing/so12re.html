@@ -28,6 +28,25 @@
         <h1 class="text-thin">Live {{tag.name}} Help from Thousands of Experts</h1>
         <hr class="grad white">
         <h3 class="m-b-3 text-thin">Available to pair program live using video chat and screen sharing.</h3>
+
+        <div id="signUpForm" style="width: 500px;margin: 0 auto 40px;" >
+          <div id="signUpEmail">
+            <h4>Sign up to get <strong>10%</strong> extra right now!</h4>
+            <div class="input-group input-group-lg">
+              <input id="signUpEmailInput" type="text" class="form-control" placeholder="Email">
+              <span class="input-group-btn">
+                <button id="saveEmailBtn" class="btn btn-default" type="button">Get discount</button>
+              </span>
+            </div>
+            <div class="alert alert-danger" style="margin-top: 10px;display: none;" ><strong>Oops!</strong> Not a correct email</div>
+          </div>
+          <div id="signUpGoogle" style="display: none;" >
+            <h4 class=""><strong>Promo code registered!</strong> We use google hangouts for Airpairs, connect your google account to get started</h4>
+            <a id="find-fold" href="/auth/google?return_to=/find-an-expert" class="trackCustomerLogin btn btn-lg btn-primary btn-block m-t-1">Sign in with Google</a>
+          </div>
+        </div>
+
+
       </div>
       <div class="bg-white p-b-3">
         <div class="container">
@@ -51,21 +70,7 @@
 
               <!-- <a id="find-fold" href="/find-an-expert" class="trackCustomerLogin btn btn-lg btn-primary btn-block m-t-1">GET THE PERFECT EXPERT FOR YOU</a> -->
 
-              <div id="signUpForm">
-                <div id="signUpEmail">
-                  <h5>Sign up to get 10% extra right now!</h5>
-                  <div class="input-group">
-                    <input id="signUpEmailInput" type="text" class="form-control" placeholder="Email">
-                    <span class="input-group-btn">
-                      <button id="saveEmailBtn" class="btn btn-default" type="button">Get discount</button>
-                    </span>
-                  </div>
-                </div>
-                <div id="signUpGoogle">
-                  <h5 class="text-success"><strong>Promo code registered!</strong> We use google hangouts for Airpairs, connect your google account to get started</h5>
-                  <a id="find-fold" href="/find-an-expert" class="trackCustomerLogin btn btn-lg btn-primary btn-block m-t-1">Sign in with Google</a>
-                </div>
-              </div>
+
 
               <p class="m-t-1 block">We'll help you find the right expert for your
     project and needs.</p>
@@ -339,24 +344,70 @@
 
   <!-- EMAIL FORM -->
   <script type="text/javascript">
+
+    validateEmail = function(email) {
+      var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return re.test(email);
+    }
+
     jQuery(function($){
 
-      var emailsRef = new Firebase('https://airpair-marketing.firebaseio.com/so12');
+      // var emailsRef = new Firebase('https://airpair-marketing.firebaseio.com/so12');
 
-      $('#saveEmailBtn').click(function(event) {
+      submitEmail =  function() {
         email = $('#signUpEmailInput').val()
-        emailsRef.push(email, function(err){
-          console.log("SAVED!");
-          $("#signUpEmail").hide()
-          $("#signUpGoogle").show()
-        });
+        if (validateEmail(email)) {
+          // emailsRef.push(email, onSuccess);
+          $.ajax({
+            type: "POST",
+            url: "https://us7.api.mailchimp.com/2.0/lists/subscribe.json",
+            data: {
+              "apikey": "5d5d6fe4516c81e9314e24ec93bb869f",
+              "id": "77665bde1d",
+              "email": {
+                "email": email
+              },
+              "double_optin": false
+            },
+            crossDomain: true,
+            success: onSuccess
+          });
+
+
+        } else {
+          $("#signUpEmail .alert").show()
+          console.warn("not and email '"+email+"'" );
+        }
+      }
+
+      onSuccess = function() {
+        console.log("SAVED!", email);
+        $("#signUpEmail").hide()
+        $("#signUpGoogle").show()
+      }
+
+
+
+      // Bind listeners to input and button
+
+      $('#signUpEmailInput').keypress(function (e) {
+        if (e.which == 13) {
+          e.preventDefault();
+          submitEmail()
+          return false;
+        }
       });
+      $('#saveEmailBtn').click(function(event) {
+        submitEmail()
+      });
+
+
 
     });
   </script>
 
   <style>
-    #signUpGoogle {display: none;}
+    /*#signUpGoogle {display: none;}*/
   </style>
 
 
