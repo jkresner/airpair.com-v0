@@ -3,7 +3,7 @@
   @include clearfix();
   background: url("/images/pages/home/banner-home.jpg") 0 -38px;
   background-size: cover;
-  
+
   @media (max-width: 1200) {
     background-size: 1200px;
   }
@@ -11,7 +11,7 @@
     background-size: 1033px;
     background-position: -270px 0;
   }
-  
+
 
   &.behind-nav {
     margin-top: -100px;
@@ -20,7 +20,7 @@
       padding-bottom: 50px;
     }
   }
-  
+
 
   @media (max-width: $screen-xs) {
 
@@ -123,8 +123,8 @@
         overflow: auto;
       }
       ul {width: 1150px;}
-      &::-webkit-scrollbar { 
-        display: none; 
+      &::-webkit-scrollbar {
+        display: none;
       }
     }
   }
@@ -143,6 +143,7 @@
 }
 
 .hero-cta-text {
+  @include clearfix();
   height: 100px;
 }
 

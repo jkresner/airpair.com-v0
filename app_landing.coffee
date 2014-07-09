@@ -3,6 +3,7 @@ module.exports = (app, render) ->
   app.get '/so10/:id', render 'landing/so10', ['params.id']
   app.get '/so11/:id', render 'landing/so11', ['params.id']
   app.get '/so12/:id', render 'landing/so12', ['params.id']
+  app.get '/so12re/:id', render 'landing/so12re', ['params.id']
   app.get '/so13/:id', render 'landing/so13', ['params.id']
   app.get '/so14/:id', render 'landing/so14', ['params.id']
   app.get '/so15/:id', render 'landing/so15', ['params.id']
