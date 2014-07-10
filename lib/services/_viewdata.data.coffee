@@ -1,7 +1,7 @@
 module.exports =
   so10:
     'ruby':       name: 'Yehuda Katz', me: 'wycats', claim: 'Rails Core Team Member'
-    'python':     name: 'Daniel Roseman', me: 'danielroseman', claim: 'Djano #1 Answerer'
+    'python':     name: 'Daniel Roseman', me: 'danielroseman', claim: 'Django #1 Answerer'
     'android' :   name: 'Ran Nachmany', me: 'rannachmany', claim: 'Android Google Developer Expert'
     'angularjs':  name: 'Matias Niemelä', me: 'matsko', claim: 'AngularJS Core Team'
     'php':        name: 'Phil Sturgeon', me: 'philsturgeon', claim: 'PHP Top Answerer'
@@ -15,17 +15,28 @@ module.exports =
   so15:
     'jquery':     name: 'Yehuda Katz', me: 'wycats', claim: 'Rails Core Team Member'
     'python':     name: 'Martijn Pieters', me: 'zopatista', claim: 'All time #1 Python Answerer'
-    'laravel':    name: 'Antonio Carlos Ribeiro', me: 'antonioribeiro', claim: '#1 All Time Laravel Top Answerer'
+    'laravel':    name: 'Antonio Carlos Ribeiro', me: 'antonioribeiro', claim: '#1 All-time Laravel Top Answerer'
     'typescript': name: 'Basarat Ali', me: 'basarat', claim: 'Typescript Top Answerer'
     'uikit':      name: 'Nevan King', me: 'nevanking', claim: 'UIkit Top Answerer'
     'uilabel':    name: 'Nevan King', me: 'nevanking', claim: 'UIlabel Top Answerer'
     'cocoa-touch':name: 'Nevan King', me: 'nevanking', claim: 'Cocoa-touch Top Answerer'
     'scheme':     name: 'Chris K. Jester-Young', me: 'cky', claim: 'Scheme Top Answerer'
     'd3.js':      name: 'Lars Kotthoff', me: 'larskotthoff', claim: 'd3.js Top Answerer'
+    'ruby':       name: 'Yehuda Katz', me: 'wycats', claim: 'Rails Core Team Member'
+    'android' :   name: 'Ran Nachmany', me: 'rannachmany', claim: 'Android Google Developer Expert'
+    'angularjs':  name: 'Matias Niemelä', me: 'matsko', claim: 'AngularJS Core Team'
+    'php':        name: 'Phil Sturgeon', me: 'philsturgeon', claim: 'PHP Top Answerer'
+    'node.js':    name: 'Tim Caswell', me: 'creationix', claim: 'Early Node.js Contributor'
+    'ios':        name: 'Wain Glaister', me: 'wain', claim: 'iOS Top Answerer'
+    'asp.net':    name: 'Amir Rajan', me: 'amirrajan', claim: 'ASP .net AirPair Expert'
+    'c++':        name: 'Steve Purves', me: 'stevejpurves', claim: 'C++ AirPair Expert'
+    'c#':         name: 'John Feminella', me: 'john-feminella', claim: 'C# Top Answerer'
+    'java':       name: 'Marko Topolnik', me: 'marko', claim: 'Java Top Answerer'
+    'django':     name: 'Daniel Roseman', me: 'danielroseman', claim: 'Django #1 Answerer'
 
   speakers:
 
-    'danielroseman':  d: 'Fri, 1st Aug 16:00 GMT', n: 'Daniel Roseman', c: "All-time Django #1 Answerer", t: "What's New in <br />Django 1.7", so: '104349/daniel-roseman', tags: ['django'], u: 'danielroseman', g: '0f4cefeedec5163556751d61625eedd0', a: "All time Django #1 Answerer on stackoverflow - Daniel Roseman - will you taking you through the latest Django features in Django 1.7. Daniel will be covering advise on migration gotchas and finish off with a hint at 1.8."
+    'danielroseman':  d: 'Fri, 1st Aug 16:00 GMT', n: 'Daniel Roseman', c: "All-time Django #1 Answerer", t: "What's New in <br />Django 1.7", so: '104349/daniel-roseman', tags: ['django'], u: 'danielroseman', g: '0f4cefeedec5163556751d61625eedd0', a: "Django 1.7 is shaping up to be one of the biggest releases for years. Alongside the headline feature, db migrations, there's a whole range of enhancements to app loading, queries and forms, all of which can significantly improve your code. Daniel Roseman, top StackOverflow answerer for Django, will take you through the new features and show how to use them in your apps."
     'wycats':         d: '!Register', n: 'Yehuda Katz', c: "Rails Co-creator", t: "How to Build a Smart Profiler for Rails", gh: 'wycats', tags: ['rails'], u: 'wycats', g: '428167a3ec72235ba971162924492609', a: "Customers love fast apps. We've got tools to help us figure out how our Rails apps are performing on our development machines, but that's not what matters. It's critical that we also be able to measure how our apps are actually performing in the production environment."
     'ryanbigg':       d: 'Mon, 4th Aug 22:00 GMT', n: 'Ryan Bigg', c: "Rails Book Author", t: "Refactoring Big Features <br />in Large Codebases", so: '15245/ryan-bigg', tags: ['rails','spree'], u: 'ryanbigg', g: '9a2a53db8e9b4476038c94a64b32833f', a: "Spree had a problem: the adjustments system was slow and difficult to understand. Over a period of some months, we refactored the code to be much faster and cleaner. The talk will cover the unique challenges that faced Spree and how we overcome them."
     'abedra':         d: 'Tue, 5th Aug 16:00 GMT', n: 'Aaron Bedra', c: "Groupon Intrastructure", t: "Creating Dynamic Security Controls With Repsheet", tw: 'abedra', tags: ['repsheet','rails','mod-security'], u: 'abedra', g: '24659470071279a42020d5b87411598e', a: "It's 2014 and our security controls should start acting like it. We maintain static controls on security because we lack the intelligence to adapt them to the situation at hand. Join Aaron as he walks you through creating dynamic security controls using the Repsheet threat intelligence and reputation framework."
