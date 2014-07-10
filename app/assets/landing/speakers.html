@@ -100,7 +100,27 @@
           </div>
         </div>
 
-        <!-- <div class="testimonial" style="float:left">
+        <div class="testimonial" style="float:left">
+          <div class="col-sm-4 text-center">
+            <div class="avatar-logo">
+              <img src="//secure.gravatar.com/avatar/780d02a99798886da48711d8104801a4?s=140" alt="" class="img-circle" width="130px" style="margin-top:-20px" />
+              <img src="/images/landing/speakers/deepnishar.png" alt="" class="img-circle" width="130px" style="margin-top:-40px" />
+              <img src="/images/landing/speakers/ccheever.png" alt="" class="img-circle" width="130px" style="margin-top:-40px" />
+            </div>
+          </div>
+          <div class="col-sm-8">
+            <h4 class="text-bold">Software Engineering vs Entrepreneurship</h4>
+            Software Engineering is precise or broken, yet Entrepreneurship especially early in company's lifetime often needs to be scrappy and out the door as fast as possible. Are the two really at odds? Is there a way to have both
+            quality and speed, or do the two exist at different stages of every software project.
+            <small class="block m-t-1">
+              <b><a href="//twitter.com/hackerpreneur" target="_blank">Jonathon Kresner</a></b> &ndash; AirPair</b><span class="text-muted">, CEO</span>
+              <br /><b><a href="//www.linkedin.com/in/deepnishar" target="_blank">Deep Nishar</a></b> &ndash; LinkedIn<span class="text-muted">, SVP Product/UX</span>
+              <br /><b><a href="//twitter.com/ccheever" target="_blank">Charlie Cheever</a></b> &ndash; Quora<span class="text-muted">, Cofounder</span>
+            </small>
+          </div>
+        </div>
+
+        <!-- <div class="testimonial" style="float:right">
           <div class="col-sm-4 text-center">
             <div class="avatar-logo">
               <img src="//secure.gravatar.com/avatar/2db848de65112c20aa13f566c0cbf9d7?s=200" alt="" class="img-circle" width="130px"/>
@@ -114,25 +134,9 @@
             </small>
           </div>
         </div>
+      </div> -->
 
-        <div class="testimonial" style="float:right">
-          <div class="col-sm-4 text-center">
-            <div class="avatar-logo">
-              <img src="//secure.gravatar.com/avatar/780d02a99798886da48711d8104801a4?s=200" alt="" class="img-circle" width="130px"/>
-            </div>
-          </div>
-          <div class="col-sm-8">
-            <h4 class="text-bold">Software Engineering vs Entrepreneurship</h4>
-            Software Engineering is precise or broken, yet Entrepreneurship especially early in company's lifetime often needs to be scrappy and out the door as fast as possible. Are the two really at odds? Is there a way to have both
-            quality and speed, or do the two exist at different stages of every software project.
-            <small class="block m-t-1">
-              <b>Jonathon Kresner</b> &ndash; AirPair</b><span class="text-muted">, CEO</span>
-              <br /><b><a href="//twitter.com/ccheever" target="_blank">Charlie Cheever</a></b> &ndash; Quora<span class="text-muted">, Cofounder</span>
-            </small>
-          </div>
-        </div> -->
-      </div>
-
+<div style="clear:both"></div>
 
 {{#with speakers }}
 
@@ -144,10 +148,11 @@
         {{#with andrewchen}}{{> speaker }}{{/with}}
         <!-- {{#with wycats}}{{> speaker }}{{/with}} -->
         {{#with ryanbigg}}{{> speaker }}{{/with}}
+        {{#with jefflinwood}}{{> speaker }}{{/with}}
         {{#with abedra}}{{> speaker }}{{/with}}
-        {{#with alyssa}}{{> speaker }}{{/with}}
       </div>
       <div class="columns-five m-t-2">
+        {{#with alyssa}}{{> speaker }}{{/with}}
         {{#with joshowens}}{{> speaker }}{{/with}}
         {{#with toddmotto}}{{> speaker }}{{/with}}
         {{#with stefanpenner}}{{> speaker }}{{/with}}
@@ -164,7 +169,7 @@
       </div>
       <div class="columns-five m-t-2">
         {{#with zopatista}}{{> speaker }}{{/with}}
-        {{#with jefflinwood}}{{> speaker }}{{/with}}
+
         {{#with searls}}{{> speaker }}{{/with}}
       </div>
 
