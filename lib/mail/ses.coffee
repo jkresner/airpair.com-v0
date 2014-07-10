@@ -1,8 +1,8 @@
 Ses = require('awssum-amazon-ses').Ses
 
 ses = new Ses
-    accessKeyId     : cfg.SES_ACCESS_KEY
-    secretAccessKey : cfg.SES_SECRET_KEY
+    accessKeyId     : cfg.mail.ses_access_key
+    secretAccessKey : cfg.mail.ses_secret_key
 
 emailDefaults =
   #CcAddresses: []

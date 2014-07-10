@@ -1,14 +1,14 @@
 require 'colors'
 console.log "--- In app file: ".yellow, process.cwd()
+process.env.Env = brunch.env if !process.env.Env? && brunch?
 
-require './lib/util/appConfig'
 require './lib/util/globals'
 express          = require 'express'
 expressValidator = require 'express-validator'
 passport         = require 'passport'
 inspect          = require('util').inspect
 
-
+console.log 'config: ', inspect(cfg, depth: null).white
 
 # setup our express app
 app = express()

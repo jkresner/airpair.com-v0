@@ -1,4 +1,4 @@
-global.cfg            = cfg  # cfg is already declared in util/appConfig
+global.cfg            = require('./appConfig')[process.env.Env || 'dev']
 global.$log           = console.log
 
 global._              = require 'underscore'
