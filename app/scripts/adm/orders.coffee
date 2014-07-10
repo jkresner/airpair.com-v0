@@ -273,15 +273,8 @@ module.exports = (pageData) ->
 
         getGrowthRequests: (callback = ->) ->
 
-
-          # @growthStart = moment(@data[0].utc).subtract("d", 1)
-          # @growthEnd = moment()
-
-          # if not @growthRequests or not @growthRequestCalls
           startDate = @growthStart.format('YYYY-MM-DD')
           endDate = @growthEnd.format('YYYY-MM-DD')
-
-          console.log "getGrowthRequests()", startDate, endDate
 
           count = 0
           api = {}
@@ -303,14 +296,12 @@ module.exports = (pageData) ->
 
 
         filterGrowthRequests: (start, end, callback) ->
-          # console.log "END?", end
 
-          # console.log "filterGrowthRequests", start.format('YYYY-MM-DD'), "–", end.format('YYYY-MM-DD')
+          # console.log "filterGrowthRequests", start.toDate(), "–", end.toDate()
 
           data =
             requests: @growthRequests
             calls: @growthRequestCalls
-          # @getGrowthRequests (data) ->
 
 
           filteredRequests = []
@@ -318,7 +309,7 @@ module.exports = (pageData) ->
 
           for val, i in data.requests
             date = moment ObjectId2Date(val._id)
-            # console.log "date", date.format('YYYY-MM-DD'), date.isAfter(start), date.isBefore(end)
+            # console.log "date", date.toDate(), date.isAfter(start), date.isBefore(end), end.toDate()
             if date.isAfter(start) and date.isBefore(end)
               filteredRequests.push val
 
@@ -340,28 +331,15 @@ module.exports = (pageData) ->
 
         getGrowth: (interval = 'monthly', start = moment(@data[0].utc).subtract("d", 1), end = moment(), callback) ->
 
-          console.group "getGrowth #{interval}"
+          console.group "getGrowth #{interval} #{start.toDate()} – #{end.toDate()}"
 
-          console.log "#{start.format('YYYY-MM-DD')} – #{end.format('YYYY-MM-DD')}"
 
           console.time("Total getGrowth")
 
           @growthStart = start
           @growthEnd = end
 
-
           @calcRepeatCustomers()
-
-
-
-
-
-
-
-
-
-
-
 
           # Get API requests first
           console.time("api calls")
@@ -472,8 +450,6 @@ module.exports = (pageData) ->
                 period.ordersPerReq = period.orders.length/period.requestsNum
                 period.hrsOnAir = 0
                 _.each data.calls, (item, i) -> period.hrsOnAir += item.duration
-
-                # console.log "period.hrsOnAir", period.hrsOnAir, period.intervalName
                 period.hrsAirPerHrsSold = period.hrsOnAir/period.hrsSold
 
 
@@ -534,11 +510,7 @@ module.exports = (pageData) ->
             reportTotals.custReturningPercent = reportTotals.custReturning/reportTotals.customerTotal
 
 
-
             # Get requests
-            # @getGrowthRequests (data) ->
-            # @filterGrowthRequests start, end, (data) =>
-              # console.log "data.requests", data.requests
             reportTotals.requestsNum = @growthRequests.length
             reportTotals.ordersPerReq = reportTotals.ordersNum/reportTotals.requestsNum
 
@@ -548,50 +520,6 @@ module.exports = (pageData) ->
             console.timeEnd("data - finals")
 
             console.timeEnd("data - 2 - interate periods")
-
-
-
-
-
-            # Make api calls to get requests and hrs on air
-
-            # callsLeft = (report.length+1)
-            # calcDiffs = ->
-            #   if callsLeft > 1 then callsLeft-- else
-            #     console.log "GET DIFF"
-            #     for period, i in report
-            #       if period.intervalStart and report[i + 2]?
-            #         diff = report[i + 1]
-            #         periodNext = report[i + 2]
-            #         diff.prequestsNum = (periodNext.requestsNum/period.requestsNum) - 1
-            #         diff.pordersPerReq = (periodNext.ordersPerReq/period.ordersPerReq) - 1
-            #         diff.phrsOnAir = (periodNext.hrsOnAir/period.hrsOnAir) - 1
-            #         diff.phrsAirPerHrsSold = (periodNext.hrsAirPerHrsSold/period.hrsAirPerHrsSold) - 1
-            #     calcFinalDiff(report)
-
-            # _.each report, (period, index) =>
-
-            #   # Add start and end dates in each interval
-            #   if period.intervalStart
-            #     if report[index + 2]?
-            #       period.intervalEnd = report[index + 2].intervalStart
-            #     else
-            #       period.intervalEnd = moment()
-
-            #     @filterGrowthRequests period.intervalStart, period.intervalEnd, (data) ->
-
-            #       period.requestsNum = data.requests.length
-            #       period.ordersPerReq = period.requestsNum/period.orders.length
-            #       period.hrsOnAir = 0
-            #       _.each data.calls, (item, i) -> period.hrsOnAir += item.duration
-            #       period.hrsAirPerHrsSold = period.hrsOnAir/period.hrsSold
-
-            #       calcDiffs()
-
-
-
-
-
 
 
 
@@ -605,7 +533,6 @@ module.exports = (pageData) ->
               if interval is "weekly"
 
                 # Get current week index
-                # time = moment({y: 2014, M: 5, d: 23})
                 time = moment()
                 if time.day() < 6
                   time.startOf("week").subtract("d", 1).startOf("day")
@@ -616,19 +543,12 @@ module.exports = (pageData) ->
 
                 return if not finalWeek
 
-                # console.log "weeks", curWeekIdx, finalWeek.intervalIdx
-                # console.log "report", report
-
                 # If last week
                 if curWeekIdx is finalWeek.intervalIdx and report.length > 2
 
 
                   finalDiff = report[report.length - 2]
                   prevWeek = report[report.length - 3]
-
-                  # console.log "finalWeek", finalWeek
-                  # console.log "finalDiff", finalDiff
-                  # console.log "prevWeek", prevWeek
 
 
                   # Get week percentage
@@ -784,7 +704,7 @@ module.exports = (pageData) ->
               metricsRepeated: @metricsRepeatFiltered
             }
 
-            console.log "CHANNEL METRICS", data
+            # console.log "CHANNEL METRICS", data
             return data
 
           else
@@ -882,7 +802,7 @@ module.exports = (pageData) ->
             summary.numOrders += week.metrics.summary.numOrders
             summary.revenueTotal += week.metrics.summary.revenueTotal
             _.each week.metrics.summary.tags, (tag, key) ->
-              console.log "tag", tag, key
+              # console.log "tag", tag, key
               if not summary.tags[key]
                 summary.tags[key] =
                  count: 0
@@ -1110,11 +1030,23 @@ module.exports = (pageData) ->
 
     # Overall Growth
     $scope.dateStart = moment().subtract('w', 4).toDate()
-    $scope.dateEnd = moment().endOf('day').toDate()
+
+    now = moment()
+    if now.day() < 6
+      now.endOf("week").subtract("d", 1).endOf("day")
+      # console.log("now", now.toDate())
+    else
+      now.endOf("week").add('w', 1).subtract("d", 1).endOf("day")
+
+
+    $scope.dateEnd = now.toDate()
+    # $scope.dateEnd = moment().subtract('d', 1).toDate()
+
 
     updateRange = () ->
       return if not $scope.dateStart or not $scope.dateEnd
-      apData.orders.getGrowth 'weekly', moment($scope.dateStart), moment($scope.dateEnd), (week2week) ->
+      # $scope.dateEnd = moment($scope.dateEnd).endOf('day').toDate()
+      apData.orders.getGrowth 'weekly', moment($scope.dateStart).startOf('day'), moment($scope.dateEnd).endOf('day'), (week2week) ->
         $scope.report = week2week.report
         $scope.reportTotals = week2week.reportTotals
         $scope.$apply() if not $scope.$$phase
