@@ -98,6 +98,7 @@ module.exports = class ViewDataService
 
   so11: (id, cb) -> @so10 id, cb
   so12: (id, cb) -> @so10 id, cb
+  so12re: (id, cb) -> @so10 id, cb
   so13: (id, cb) -> @so10 id, cb
   so14: (id, cb) -> @so10 id, cb
 
