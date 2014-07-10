@@ -53,11 +53,11 @@
           </td>
  -->
           <td>
-            <span ng-if="r.hrsOnAir" class="animated-fast fadeIn">{{r.hrsOnAir | number:0}}</span>
+            <span ng-if="r.hrsOnAir" class="">{{r.hrsOnAir | number:0}}</span>
             <span ng-if="r.phrsOnAir != null" ng-class="{'text-danger': r.phrsOnAir < 0, 'text-success': r.phrsOnAir > 0}">{{(r.phrsOnAir*100 | number:0)|| 0}}%</span>
           </td>
           <td class="text-orange">
-            <span ng-if="r.hrsAirPerHrsSold" class="animated-fast fadeIn">{{r.hrsAirPerHrsSold*100 | number:0}}%</span>
+            <span ng-if="r.hrsAirPerHrsSold" class="">{{r.hrsAirPerHrsSold*100 | number:0}}%</span>
             <span ng-if="r.phrsAirPerHrsSold" ng-class="{'text-danger': r.phrsAirPerHrsSold < 0, 'text-success': r.phrsAirPerHrsSold > 0}">{{r.phrsAirPerHrsSold*100 | number:0}}%</span>
           </td>
           <td>
@@ -108,11 +108,11 @@
 
           </td>
           <td class="text-orange">
-            <span ng-if="r.ordersPerReq" class="animated-fast fadeIn">{{r.ordersPerReq*100 | number:0}}%</span>
+            <span ng-if="r.ordersPerReq" class="">{{r.ordersPerReq*100 | number:0}}%</span>
             <span ng-if="r.pordersPerReq != null" ng-class="{'text-danger': r.pordersPerReq < 0, 'text-success': r.pordersPerReq > 0}">{{r.pordersPerReq*100 | number:0}}%</span>
           </td>
           <td class="last">
-            <span ng-if="r.requestsNum" class="animated-fast fadeIn">{{r.requestsNum | number:0}}</span>
+            <span ng-if="r.requestsNum" class="">{{r.requestsNum | number:0}}</span>
             <span ng-if="r.prequestsNum != null" ng-class="{'text-danger': r.prequestsNum < 0, 'text-success': r.prequestsNum > 0}">{{r.prequestsNum*100 | number:0}}%</span>
           </td>
         </tr>
