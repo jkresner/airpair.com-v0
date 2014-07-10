@@ -37,7 +37,7 @@ exports.config =
        'javascripts/adm.js': /(scripts\/angular|lodash|moment-2.6|scripts\/adm\/|lib\/mix)/
        'javascripts/adm-old.js': /(scripts\/adm-old|scripts\/shared|scripts\/providers|lib\/mix)/
        'javascripts/providers.js': /^app\/scripts\/providers/
-       'javascripts/home.js': /providers\/(home|addjs|ga|mix|mixpanel|cegg|olark|adroll)|bootstrap3\/dropdown|bootstrap3\/collapse/
+       'javascripts/home.js': /providers\/(home|addjs|ga|mix|mixpanel|cegg|olark|adroll)|bootstrap3\/dropdown|bootstrap3\/collapse|bootstrap3\/modal/
        'test/javascripts/test.js': /^test(\/|\\)(?=integration)/
        'test/javascripts/test-data.js': /^test(\/|\\)(?=data)/
        'test/javascripts/test-vendor.js': /^test(\/|\\)(?=vendor)/

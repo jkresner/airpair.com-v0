@@ -48,7 +48,7 @@
     }
   }
   .user-info {
-    position: relative;  
+    position: relative;
     .tech {
       color: $gray-light;
     }
@@ -71,7 +71,7 @@
       @media (max-width: $screen-xs-max) {
         font-size: 14px;
       }
-      
+
     }
   }
   @media (max-width: $screen-xs-max) {
@@ -102,6 +102,13 @@ a.user-badge{
   }
   & > div:nth-child(odd) {
     background: #FFF;
+  }
+  &.with-btn {
+    cursor: pointer;
+    .column:hover {
+      color: $brand-primary;
+      border-color:$brand-primary;
+    }
   }
   .column {
     float: left;
@@ -143,10 +150,16 @@ a.user-badge{
     .price {font-size: 40px;}
     p {font-size: inherit;}
     .column {height: 260px;}
+    &.with-btn .column {
+      height: 280px;
+    }
   }
 
   @media (min-width: $screen-lg-min) {
     .column {height: 230px;}
+    &.with-btn .column {
+      height: 262px;
+    }
   }
 
 }
@@ -212,17 +225,17 @@ a.user-badge{
 
   }
   @media (max-width: $grid-float-breakpoint-max) {
-    .diagram, .main-points {    
+    .diagram, .main-points {
       width: 360px;
       margin-right: auto;
       margin-left: auto;
     }
-  }    
+  }
   @media (max-width: $screen-xs) {
     .diagram, .main-points {
       width: 290px;
     }
-  }    
+  }
 }
 
 
@@ -276,7 +289,7 @@ a.user-badge{
     }
     &:first-child {
       padding-top: 0;
-    } 
+    }
     &:last-child {
       border-bottom: none;
     }
@@ -365,6 +378,35 @@ hr {
 
   }
 }
+
+
+
+// Email sign up forms on remarketing pages
+
+.form-email-signup {
+  width: 500px;
+  margin: 0 auto 40px;
+  .signup-email {
+    // display: none;
+    .alert {
+      margin-top: 10px;
+      display: none;
+    }
+  }
+  .signup-google, .signup-google-skipped {
+    display: none;
+  }
+}
+.modal .form-email-signup {
+  width: auto;
+  margin: 0;
+  .incentive {
+    font-size: 28px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+}
+
 
 
 
