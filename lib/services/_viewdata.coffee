@@ -6,7 +6,7 @@ ExpertsSvc       = require '../services/experts'
 CompanysSvc      = require '../services/companys'
 # SettingsSvc      = require '../services/settings'
 RequestsSvc      = require '../services/requests'
-stripePK         = cfg.payment.stripe.publishedKey
+stripePK         = config.payment.stripe.publishedKey
 
 module.exports = class ViewDataService
 

@@ -8,14 +8,14 @@ expressValidator = require 'express-validator'
 passport         = require 'passport'
 inspect          = require('util').inspect
 
-console.log 'config: ', inspect(cfg, depth: null).white
+console.log 'config: ', inspect(config, depth: null).white
 
 # setup our express app
 app = express()
 
 # load our db
 {MongoSessionStore} = require('./app_mongoose')(app, express)
-storeOptions = url: "#{cfg.mongoUri}/sessions", auto_reconnect: true
+storeOptions = url: "#{config.mongoUri}/sessions", auto_reconnect: true
 mongoSessionStore = new MongoSessionStore storeOptions
 
 hbs              = require('hbs')
@@ -47,7 +47,7 @@ app.use express.session
 #       r.cookie param, req.query[param]
 #   next()
 
-if cfg.env is 'test'
+if config.env is 'test'
   require('./app_test')(app)
 else
   app.use passport.initialize()
@@ -56,7 +56,7 @@ app.use passport.session()
 
 require('./app_routes')(app)
 
-if cfg.env is 'test'
+if config.env is 'test'
   require('./app_test_routes')(app)
 
 app.use (err, req, res, next) ->
@@ -67,12 +67,12 @@ app.use (err, req, res, next) ->
     userInfo = req.user._id + ' ' + goog._json.email + ' ' + goog.displayName
 
   console.log "handleError #{userInfo} #{req.url} #{str}"
-  winston.error "handleError #{userInfo} #{req.url} #{str}" if cfg.isProd
+  winston.error "handleError #{userInfo} #{req.url} #{str}" if config.isProd
   res.status(500).sendfile "./public/500.html"
 
 process.on 'uncaughtException', (err) ->
   console.log "uncaughtException #{err.stack}"
-  winston.error "uncaughtException #{err.stack}" if cfg.isProd
+  winston.error "uncaughtException #{err.stack}" if config.isProd
   process.exit 1
 
 # exports.startServer is called automatically in brunch watch mode, but needs invoking in normal node
@@ -81,7 +81,7 @@ exports.startServer = (port, path, callback) ->
   $log "--- starting on port: #{p}, path #{path}".yellow
   app.listen p
 
-if cfg.isProd || !module.parent
+if config.isProd || !module.parent
   exports.startServer()
 
 

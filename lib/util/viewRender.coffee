@@ -36,7 +36,7 @@ module.exports =
             next e
           else
             data =
-              isProd: cfg.isProd.toString()
+              isProd: config.isProd.toString()
               session: vdSvc.session false
               reqUrl: req.url
             data = _.extend data, getViewData()

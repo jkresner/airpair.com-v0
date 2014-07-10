@@ -30,14 +30,6 @@ logout = (req, res) ->
   req.logout()
   res.redirect('/')
 
-
-exports.getEnvConfig = (config) ->
-  env = process.env.OAUTH_Env
-  if env? && env is 'staging' then return config.staging
-  if env? && env is 'prod' then return config.prod
-  config.dev
-
-
 exports.authnOrAuthz = (req, res, next, providerName, scope) ->
 
   opts = failureRedirect: '/failed-login', scope: scope

@@ -1,4 +1,4 @@
-api_key = cfg.payment.stripe.secretKey
+api_key = config.payment.stripe.secretKey
 stripe  = require('stripe')(api_key)
 
 
@@ -24,7 +24,7 @@ module.exports = class StripeService
     # Make a charge
     stripe.charges.create payload, (err, charge) =>
       if err then return callback err
-      if cfg.isProd
+      if config.isProd
         # $log "StripeResponse: ", payload, charge
         winston.log "StripResponse: ", charge
       callback null, charge
@@ -37,7 +37,7 @@ module.exports = class StripeService
     $log 'svc.createAnonCharge.payload', payload
     stripe.charges.create payload, (err, charge) =>
       if err then return callback err
-      if cfg.isProd
+      if config.isProd
         # $log "StripeResponse: ", payload, charge
         winston.log "StripResponse: ", charge
       callback null, charge
