@@ -393,8 +393,25 @@ hr {
       display: none;
     }
   }
-  .signup-google, .signup-google-skipped {
+  .signup-google,
+  .signup-google-skipped,
+  .signup-user {
     display: none;
+  }
+  .signup-user {
+    @include clearfix();
+    img{
+      width: 20%;
+      // margin-right: 30px;
+    }
+    .user-info {
+      width: 74%;
+      float: right;
+      // padding-top: 17px;
+    }
+    .blurb {
+      padding-bottom: 10px;
+    }
   }
 }
 .modal .form-email-signup {

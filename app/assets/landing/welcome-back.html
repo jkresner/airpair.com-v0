@@ -61,10 +61,10 @@
 
           <div class="row">
             <div class="col-xs-4 col-xs-offset-4 text-center">
-              <div class="img-overlap three pointer" data-toggle="modal" data-target="#modalSignup">
-                <img src="/images/avatars/of.png" alt="" class="img-circle img-border">
-                <img src="/images/avatars/rb.png" alt="" class="img-circle img-border">
-                <img src="/images/avatars/ag.jpeg" alt="" class="img-circle img-border">
+              <div class="img-overlap three pointer" >
+                <img src="/images/avatars/of.png" alt="" class="img-circle img-border" onclick="showUser('of')">
+                <img src="/images/avatars/rb.png" alt="" class="img-circle img-border" onclick="showUser('rb')">
+                <img src="/images/avatars/ag.jpeg" alt="" class="img-circle img-border" onclick="showUser('ag')">
               </div>
               <div class="hero-cta-text" style="height: 150px;" >
 
@@ -341,6 +341,14 @@
         <!-- <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button> -->
 
         <div class="form-email-signup" data-location="modal" >
+          <div class="signup-user">
+            <img src="" alt="" class="img-circle img-border pull-left">
+            <div class="user-info">
+              <h4 class="name"></h4>
+              <div class="blurb"></div>
+              <a href="#" class="show-credits" onclick="showCredits()">book <span class="name"></span> &rarr;</a>
+            </div>
+          </div>
           <div class="signup-email">
             <h4 class="incentive">Sign up to get <strong>10%</strong> extra credits right now!</h4>
             <div class="input-group input-group-lg">
@@ -448,8 +456,47 @@
 
       onSkipUndo = function($form) {
         $form.find(".signup-email").show()
-        $form.find(".signup-google-skipped").hide()
+        $form.find(".signup-google-skipped, .signup-user").hide()
       }
+
+
+      showUser = function(user) {
+        $form = $(".modal .form-email-signup");
+
+        $form.find(".signup-user").show()
+        $form.find(".signup-email").hide();
+
+        var name, blurb, img;
+
+        switch(user) {
+          case "of":
+            name = 'Obie';
+            blurb = 'AirPair helped us quickly optimize Intel’s next generation cloud orchestration front-end by connection us in a few hours with Stefan Penner, the creator of the library we were using.';
+            img = "/images/avatars/of.png";
+            break;
+          case "rb":
+            name = 'RB';
+            blurb = 'AirPair helped us quickly optimize Intel’s next generation cloud orchestration front-end by connection us in a few hours with Stefan Penner, the creator of the library we were using.';
+            img = "/images/avatars/rb.png";
+            break;
+          case "ag":
+            name = 'AG';
+            blurb = 'AirPair helped us quickly optimize Intel’s next generation cloud orchestration front-end by connection us in a few hours with Stefan Penner, the creator of the library we were using.';
+            img = "/images/avatars/ag.jpeg";
+        }
+
+        $form.find(".signup-user .name").text(name);
+        $form.find(".signup-user .blurb").text(blurb);
+        $form.find(".signup-user img").attr('src', img);
+        $('#modalSignup').modal('show');
+      }
+
+      showCredits = function() {
+        $form = $(".modal .form-email-signup");
+        $form.find(".signup-user").hide()
+        $form.find(".signup-email").show()
+      }
+
 
 
 
@@ -487,12 +534,14 @@
       })
 
 
+
       showModal = function(e) {
         inputVal = $('.form-email-signup .input-email').val();
         if(!inputVal) {
           $('#modalSignup').modal('show');
         }
       }
+
 
       var scrolled = false;
       $(window).scroll(function(event) {scrolled = true;});
