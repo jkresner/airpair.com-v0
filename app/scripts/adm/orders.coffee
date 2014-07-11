@@ -566,8 +566,8 @@ module.exports = (pageData) ->
                     phrsSold: (finalWeek.hrsSold / (prevWeek.hrsSold*wkPercentage)) - 1
                     prevenue: (finalWeek.revenue / (prevWeek.revenue*wkPercentage)) - 1
                     pgross: (finalWeek.gross / (prevWeek.gross*wkPercentage)) - 1
-                    prequestsNum: (period.requestsNum/prevPeriod.requestsNum*wkPercentage) - 1
-                    phrsOnAir: (period.hrsOnAir/prevPeriod.hrsOnAir*wkPercentage) - 1
+                    prequestsNum: (finalWeek.requestsNum/prevWeek.requestsNum*wkPercentage) - 1
+                    phrsOnAir: (finalWeek.hrsOnAir/prevWeek.hrsOnAir*wkPercentage) - 1
 
 
 
