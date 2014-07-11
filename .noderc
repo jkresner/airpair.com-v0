@@ -1,4 +1,0 @@
-require("coffee-script");
-require('./lib/util/globals');
-var mongoose = require('./app_mongoose')();
-
