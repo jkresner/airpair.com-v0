@@ -1,10 +1,10 @@
-require("../segmentio")()
 module.exports = class Addjs
 
   Timer: require './timer'
   events: require './events'
 
-  constructor: (config={}) ->
+  constructor: (segmentioKey, config={}) ->
+    require("../segmentio")(segmentioKey)
     if @logging is on
       console.log 'Addjs.constructor'
       unless analytics?

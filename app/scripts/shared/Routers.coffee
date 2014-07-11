@@ -10,9 +10,9 @@ getElmId = (elm) ->
 
 class exports.AirpairRouter extends BB.BadassAppRouter
 
-  preConstructorHook: ->
+  preConstructorHook: (pageData) ->
     unless addjs?
-      window.addjs = new AddJS()
+      window.addjs = new AddJS(pageData.segmentioKey)
       addjs.trackSession()
       jQuery(".trackBookLogin").click (e) ->
         return_to = jQuery(this).attr("href")
@@ -27,6 +27,7 @@ class exports.AirpairRouter extends BB.BadassAppRouter
         addjs.trackLink "auth/google?return_to=/be-an-expert", addjs.events.expertLogin.name, elementId: getElmId(this)
         return
 
+
   # load external providers like google analytics, user-voice etc.
   loadExternalProviders: ->
 
@@ -37,7 +38,7 @@ class exports.AirpairSessionRouter extends BB.SessionRouter
 
   model: Models.User
 
-  preConstructorHook: ->
+  preConstructorHook: (pageData) ->
     # $log 'preConstructorHook', @routeMiddleware
 
     { google } = @app.session.attributes
@@ -48,7 +49,7 @@ class exports.AirpairSessionRouter extends BB.SessionRouter
       peopleProps = { email, name, picture, id, family_name, given_name, created_at }
 
     unless addjs?
-      window.addjs = new AddJS { peopleProps: peopleProps }
+      window.addjs = new AddJS pageData.segmentioKey, { peopleProps: peopleProps }
       addjs.trackSession()
 
       if window.location.search.match(/newUser/)?

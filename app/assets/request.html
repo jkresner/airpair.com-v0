@@ -54,7 +54,7 @@ var google_remarketing_only = false;
     window.useOlark = true;
     window.useUserVoice = true;
     function initApp() {
-      var pageData = {};
+      var pageData = {segmentioKey: '{{{segmentioKey}}}'};
       Router = require('/scripts/ap/request/Router');
       window.router = new Router(pageData);
       console.log('created router');

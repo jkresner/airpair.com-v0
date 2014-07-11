@@ -1,4 +1,4 @@
-module.exports = function() {
+module.exports = function(segmentioKey) {
   // Create a queue, but don't obliterate an existing one!
   window.analytics = window.analytics || [];
 
@@ -51,7 +51,7 @@ module.exports = function() {
 
   // Load Analytics.js with your key, which will automatically
   // load the tools you've enabled for your account. Boosh!
-  window.analytics.load('v8ltc907ww');
+  window.analytics.load(segmentioKey);
 
   // Make the first page call to load the integrations. If
   // you'd like to manually name or tag the page, edit or

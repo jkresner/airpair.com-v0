@@ -461,7 +461,7 @@ ul.expertise li {
     function initApp() {
       originalLocation = window.location.toString();
 
-      var pageData = { {{JSON 'session'}}, {{JSON 'expert'}}, {{JSON 'stripePK'}} };
+      var pageData = { {{JSON 'session'}}, {{JSON 'expert'}}, {{JSON 'stripePK'}}, segmentioKey: '{{{segmentioKey}}}' };
 
       Router = require('/scripts/ap/book/Router');
       window.router = new Router(pageData);

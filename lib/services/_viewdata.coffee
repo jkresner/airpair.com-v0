@@ -7,6 +7,7 @@ CompanysSvc      = require '../services/companys'
 # SettingsSvc      = require '../services/settings'
 RequestsSvc      = require '../services/requests'
 stripePK         = config.payment.stripe.publishedKey
+segmentioKey     = config.analytics.segmentio.writeKey
 
 module.exports = class ViewDataService
 
@@ -33,59 +34,59 @@ module.exports = class ViewDataService
       authenticated : false
 
   settings: (cb) ->
-    cb null, -> { stripePK }
+    cb null, -> { stripePK, segmentioKey }
 
   beexpert: (cb) ->
     session = @session true
-    cb null, -> { session }
+    cb null, -> { session, segmentioKey }
 
   dashboard: (cb) ->
-    cb null, -> { }
+    cb null, -> { segmentioKey }
 
   review: (id, cb) ->
     new RequestsSvc(@usr).getByIdSmart id, (e, request) =>
-      cb e, -> { request }
+      cb e, -> { request, segmentioKey }
 
   schedule: (requestId, cb) ->
     new RequestsSvc(@usr).getById requestId, (e, request) =>
       if !request? then return cb e, -> {}
       new OrdersSvc(@usr).getByRequestId request._id, (ee, orders) =>
-        cb ee, -> { request, orders }
+        cb ee, -> { request, orders, segmentioKey }
 
   book: (id, code, cb) ->
     new ExpertsSvc(@user).getByBookme id, code, (e, expert) =>
-      cb e, -> { expert, stripePK }
+      cb e, -> { expert, stripePK, segmentioKey }
 
   history: (id, cb) ->
     new RequestsSvc(@usr).getForHistory id, (e,requests) =>
       new OrdersSvc(@usr).getForHistory id, (ee,orders) =>
-        cb ee, -> { orders, requests }
+        cb ee, -> { orders, requests, segmentioKey }
 
   bookme: (cb) ->
     githubToken = if @usr.github.token? then @usr.github.token.token else ''
     new ExpertsSvc(@usr).getByBookmeByUserId @usr._id, (e, expert) =>
-      cb e, -> { expert, githubToken }
+      cb e, -> { expert, githubToken, segmentioKey }
 
   pipeline: (cb) ->
     new RequestsSvc(@usr).getActive (e, requests) =>
-      cb e, -> { requests }
+      cb e, -> { requests, segmentioKey }
 
   orders: (cb) ->
     new OrdersSvc(@usr).getAll (e, orders) =>
-      cb e, -> { orders }
+      cb e, -> { orders, segmentioKey }
 
   ordersang: (cb) -> @orders cb
 
   experts: (cb) ->
     new ExpertsSvc(@usr).getAll (e, experts) =>
-      cb e, -> { experts }
+      cb e, -> { experts, segmentioKey }
 
   companys: (cb) ->
     new CompanysSvc(@usr).getAll (e, companys) =>
-      cb e, -> { companys, stripePK }
+      cb e, -> { companys, stripePK, segmentioKey }
 
   speakers: (cb) ->
-    cb null, -> { speakers: Data.speakers }
+    cb null, -> { speakers: Data.speakers, segmentioKey }
 
 
   so10: (id, cb) ->
@@ -94,7 +95,7 @@ module.exports = class ViewDataService
     new TagsSvc(@usr).getBySoId id, (e, tag) =>
       feature = name:'Yehuda Katz', me: 'wycats', claim: 'Rails Core Team Member'
       feature = Data.so10[id] if Data.so10[id]
-      cb e, -> { tag, feature }
+      cb e, -> { tag, feature, segmentioKey }
 
   so11: (id, cb) -> @so10 id, cb
   so12: (id, cb) -> @so10 id, cb
@@ -109,7 +110,7 @@ module.exports = class ViewDataService
     new TagsSvc(@usr).getBySoId id, (e, tag) =>
       feature = name:'Yehuda Katz', me: 'wycats', claim: 'Rails Core Team Member'
       feature = Data.so15[id] if Data.so15[id]
-      cb e, -> { tag, feature }
+      cb e, -> { tag, feature, segmentioKey }
 
   so16: (id, cb) -> @so15 id, cb
   so17: (id, cb) -> @so15 id, cb
@@ -129,10 +130,10 @@ module.exports = class ViewDataService
 
   paypalSuccess: (id, cb) ->
     new OrdersSvc(@usr).markPaymentReceived id, {}, (e, order) =>
-      cb e, -> { order }
+      cb e, -> { order, segmentioKey }
 
   paypalCancel: (id, cb) ->
     new OrdersSvc(@usr).getById id, (e, order) =>
-      cb e, -> { order }
+      cb e, -> { order, segmentioKey }
 
 

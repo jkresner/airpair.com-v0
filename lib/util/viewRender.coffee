@@ -23,7 +23,7 @@ module.exports =
       fnName = fileName.replace('adm/', '').replace('payment/', '').replace('landing/', '')
 
       if !vdSvc[fnName]?
-        resp.render "#{fileName}.html"
+        resp.render "#{fileName}.html", { segmentioKey: config.analytics.segmentio.writeKey }
       else
         args = []
 
