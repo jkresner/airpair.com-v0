@@ -20,11 +20,7 @@ module.exports = (grep) ->
     'PAYPAL'
   ]
 
-  mocha.setup
-    timeout: 5000
-    ui:'bdd'
-    grep: grep
-    globals: globalIgnores
+  mocha.setup({timeout: 5000, ui:'bdd', grep: grep, globals: globalIgnores})
 
   window.expect = chai.expect;
 
