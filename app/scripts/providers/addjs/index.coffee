@@ -1,3 +1,4 @@
+require("../segmentio")()
 module.exports = class Addjs
 
   Timer: require './timer'
@@ -17,7 +18,6 @@ module.exports = class Addjs
       console.log("Aliasing new user Failed")
 
   trackSession: (additionalProperties={}) ->
-    return unless analytics?
     properties =
       gravatar: @peopleProps.picture
       name: @peopleProps.name
@@ -37,7 +37,6 @@ module.exports = class Addjs
       analytics.identify()
 
   trackEvent: (category, action, label, value, bounce) ->
-    return unless analytics?
     analytics.track action,
       category: category
       label: label
@@ -45,12 +44,10 @@ module.exports = class Addjs
       bounce: bounce
 
   trackPageView: (name, data) ->
-    return unless analytics?
     # segment.io automatically tracks page views
     # only use this method for client side page
     # views (a la angular)
     analytics.page(name, data)
 
   trackLink: (link, name, options) ->
-    return unless analytics?
     analytics.trackLink(link, name, options)

@@ -1,8 +1,7 @@
 exports = {}
 Models = require './Models'
 BB = require 'BB'
-try
-  AddJS = require '/scripts/providers/addjs/index'
+AddJS = require '/scripts/providers/addjs/index'
 
 getElmId = (elm) ->
   elmId = jQuery(elm).attr("id")
@@ -12,7 +11,7 @@ getElmId = (elm) ->
 class exports.AirpairRouter extends BB.BadassAppRouter
 
   preConstructorHook: ->
-    if !addjs?
+    unless addjs?
       window.addjs = new AddJS()
       addjs.trackSession()
       jQuery(".trackBookLogin").click (e) ->
@@ -48,7 +47,7 @@ class exports.AirpairSessionRouter extends BB.SessionRouter
       { email, name, picture, id, family_name, given_name } = google._json
       peopleProps = { email, name, picture, id, family_name, given_name, created_at }
 
-    if !addjs? && AddJS?
+    unless addjs?
       window.addjs = new AddJS { peopleProps: peopleProps }
       addjs.trackSession()
 
