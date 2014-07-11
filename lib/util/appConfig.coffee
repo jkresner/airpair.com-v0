@@ -108,7 +108,7 @@ module.exports =
   staging:
     env: 'staging'
     mongoUri: process.env.MONGOHQ_URL || "mongodb://localhost/airpair_staging"
-    oauthHost: process.env.oauthHost || 'http://staging.airpair.com'
+    oauthHost: process.env.oauthHost || 'http://airpair-com-staging.herokuapp.com'
     analytics:
       segmentio:
         writeKey: 'v8ltc907ww'
