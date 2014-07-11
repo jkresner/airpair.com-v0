@@ -128,8 +128,8 @@ module.exports =
         APPLICATIONID: 'APP-80W284485P519543T'
     google:
       passport:
-        clientID: '140030887085.apps.googleusercontent.com'
-        clientSecret: 'jeynX5cSK5Zjv6kvIFLDs2uA'
+        clientID: '980673476043-cuf282ecpil53odvov4jlt1nb425vm4v.apps.googleusercontent.com'
+        clientSecret: 'GfHNIzfDZrZPdeowpvcnMumK'
       oauth:
         CLIENT_ID: "980673476043-qo125e4cghau62thkrb4igkm50a1rp0l.apps.googleusercontent.com"
         CLIENT_SECRET: "T3OP1W-LjcdiS_cg8Ib8bBsc"
