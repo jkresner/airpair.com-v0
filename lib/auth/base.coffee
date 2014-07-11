@@ -69,7 +69,7 @@ exports.insertOrUpdateUser = (req, done, providerName, profile) ->
     $log 'userExists', user?, user
     if !user?
       # pass a param for client side aliasing of new users
-      returnUrl = if req.session.returnTo? req.session.returnTo else '/'
+      returnUrl = req.session.returnTo || '/'
       req.session.returnTo = "#{returnUrl}?newUser=1"
     saveUser()
 

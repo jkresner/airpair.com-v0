@@ -1,6 +1,7 @@
 module.exports =
   dev:
     env: 'dev'
+    isProd: false
     mongoUri: process.env.MONGOHQ_URL || "mongodb://localhost/airpair_dev"
     oauthHost: 'http://localhost:3333'
     analytics:
@@ -54,6 +55,7 @@ module.exports =
 
   test:
     env: 'test'
+    isProd: false
     mongoUri: process.env.MONGOHQ_URL || "mongodb://localhost/airpair_test"
     oauthHost: 'http://localhost:4444'
     analytics:
@@ -107,6 +109,7 @@ module.exports =
 
   staging:
     env: 'staging'
+    isProd: false
     mongoUri: process.env.MONGOHQ_URL || "mongodb://localhost/airpair_staging"
     oauthHost: process.env.oauthHost || 'http://airpair-com-staging.herokuapp.com'
     analytics:
