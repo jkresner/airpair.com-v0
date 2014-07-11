@@ -18,23 +18,23 @@ module.exports = class Addjs
       console.log("Aliasing new user Failed")
 
   trackSession: (additionalProperties={}) ->
-    properties =
-      gravatar: @peopleProps.picture
-      name: @peopleProps.name
-      last_name: @peopleProps.family_name
-      first_name: @peopleProps.given_name
-      created: @peopleProps.created_at
-      # TODO test and fix these
-      utm_source: @peopleProps.utm_source
-      utm_medium: @peopleProps.utm_medium
-      utm_term: @peopleProps.utm_term
-      utm_content: @peopleProps.utm_content
-      utm_campaign: @peopleProps.utm_campaign
-    properties[key] = val for key, val of additionalProperties
     if @peopleProps? && @peopleProps.email?
-      analytics.identify @peopleProps.email
+      properties =
+        gravatar: @peopleProps.picture
+        name: @peopleProps.name
+        last_name: @peopleProps.family_name
+        first_name: @peopleProps.given_name
+        created: @peopleProps.created_at
+        # TODO test and fix these
+        utm_source: @peopleProps.utm_source
+        utm_medium: @peopleProps.utm_medium
+        utm_term: @peopleProps.utm_term
+        utm_content: @peopleProps.utm_content
+        utm_campaign: @peopleProps.utm_campaign
+      properties[key] = val for key, val of additionalProperties
+      analytics.identify @peopleProps.email, properties
     else
-      analytics.identify()
+      analytics.identify(null, additionalProperties)
 
   trackEvent: (category, action, label, value, bounce) ->
     analytics.track action,
