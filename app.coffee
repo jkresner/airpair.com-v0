@@ -14,9 +14,7 @@ console.log 'config: ', inspect(config, depth: null).white
 app = express()
 
 # load our db
-{MongoSessionStore} = require('./app_mongoose')(app, express)
-storeOptions = url: "#{config.mongoUri}/sessions", auto_reconnect: true
-mongoSessionStore = new MongoSessionStore storeOptions
+mongoSessionStore = require('./app_mongoose')(express)
 
 hbs              = require('hbs')
 hbsPartials      = require './lib/util/hbsPartials'
