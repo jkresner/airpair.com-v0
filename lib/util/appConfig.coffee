@@ -8,8 +8,8 @@ module.exports =
         writeKey: 'v8ltc907ww'
         settings: { flushAt: 1 }
     mail:
-      ses_access_key: process.env.AP_SES_ACCESS_KEY
-      ses_secret_key: process.env.AP_SES_SECRET_KEY
+      ses_access_key: process.env.AP_SES_ACCESS_KEY || "none"
+      ses_secret_key: process.env.AP_SES_SECRET_KEY || "none"
     payment:
       stripe:
         publishedKey: 'pk_test_aj305u5jk2uN1hrDQWdH0eyl'
@@ -113,8 +113,8 @@ module.exports =
       segmentio:
         writeKey: 'v8ltc907ww'
     mail:
-      ses_access_key: process.env.AP_SES_ACCESS_KEY
-      ses_secret_key: process.env.AP_SES_SECRET_KEY
+      ses_access_key: process.env.AP_SES_ACCESS_KEY || "none"
+      ses_secret_key: process.env.AP_SES_SECRET_KEY || "none"
     payment:
       stripe:
         publishedKey: 'pk_test_aj305u5jk2uN1hrDQWdH0eyl'
