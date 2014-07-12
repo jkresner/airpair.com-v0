@@ -623,6 +623,7 @@ module.exports = (pageData) ->
         getChannelMetrics: (start, end) ->
           # console.log "getChannelMetrics"
           # console.log "dates = ", start, end
+          end = moment(end).endOf("day")
           @calcRepeatCustomers()
 
 
