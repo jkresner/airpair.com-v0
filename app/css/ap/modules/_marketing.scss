@@ -406,6 +406,11 @@ hr {
   .signup-complete {
     display: none;
   }
+  .signup-tech {
+    .form-control.select2-container .select2-choices {
+      padding: 11px 16px;
+    }
+  }
   .form-contain {
     width: 500px;
     margin: 0 auto 40px;
