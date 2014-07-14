@@ -13,11 +13,13 @@ module.exports = class Addjs
 
   alias: ->
     if @peopleProps? && @peopleProps.email?
-      analytics.alias(@peopleProps.email)
+      console.log("Aliasing new user", @peopleProps.email)
+      analytics.alias(@peopleProps.email, null, null, @trackSession)
     else
       console.log("Aliasing new user Failed")
 
-  trackSession: (additionalProperties={}) ->
+  trackSession: (additionalProperties={}) =>
+    console.log("identify", @peopleProps)
     if @peopleProps? && @peopleProps.email?
       properties =
         gravatar: @peopleProps.picture
@@ -25,12 +27,6 @@ module.exports = class Addjs
         last_name: @peopleProps.family_name
         first_name: @peopleProps.given_name
         created: @peopleProps.created_at
-        # TODO test and fix these
-        utm_source: @peopleProps.utm_source
-        utm_medium: @peopleProps.utm_medium
-        utm_term: @peopleProps.utm_term
-        utm_content: @peopleProps.utm_content
-        utm_campaign: @peopleProps.utm_campaign
       properties[key] = val for key, val of additionalProperties
       analytics.identify @peopleProps.email, properties
     else

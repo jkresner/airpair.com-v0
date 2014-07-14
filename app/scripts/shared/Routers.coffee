@@ -50,11 +50,12 @@ class exports.AirpairSessionRouter extends BB.SessionRouter
 
     unless addjs?
       window.addjs = new AddJS pageData.segmentioKey, { peopleProps: peopleProps }
-      addjs.trackSession()
 
       if window.location.search.match(/newUser/)?
         console.log "Wolcome, you are a new User!"
         addjs.alias()
+      else
+        addjs.trackSession()
 
       jQuery(".trackBookLogin").click (e) ->
         return_to = jQuery(this).attr("href")
