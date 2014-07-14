@@ -17,4 +17,4 @@ module.exports = (app, render) ->
 
   app.get '/welcome-back', render 'landing/welcome-back', ['params.id']
 
-  app.get '/bsa2', render 'landing/bsa2', ['params.id']
+  app.get '/bsa02/:id', render 'landing/bsa02', ['params.id']
