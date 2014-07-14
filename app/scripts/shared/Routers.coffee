@@ -53,6 +53,7 @@ class exports.AirpairSessionRouter extends BB.SessionRouter
       addjs.trackSession()
 
       if window.location.search.match(/newUser/)?
+        console.log "Wolcome, you are a new User!"
         addjs.alias()
 
       jQuery(".trackBookLogin").click (e) ->
