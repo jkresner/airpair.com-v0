@@ -88,6 +88,8 @@ module.exports = class ViewDataService
   speakers: (cb) ->
     cb null, -> { speakers: Data.speakers, segmentioKey }
 
+  home: (cb) ->
+    cb null, -> { segmentioKey }
 
   so10: (id, cb) ->
     id = 'c++' if id is 'c%2b%rub2b'

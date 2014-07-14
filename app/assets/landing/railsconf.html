@@ -531,13 +531,13 @@
   </body>
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+    {{> InitPage }}
     <script type="text/javascript">
 
     function initPage()
     {
       window.useOlark = true;
-      require('scripts/providers/all');
-      addjs.trackEvent('page','view', 'railconf2014');
+      initStaticPage('railconf2014');
       addjs.trackSession({railsconf: '2014'});
     }
 
