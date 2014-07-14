@@ -188,6 +188,10 @@ a.user-badge{
     @extend .bg-primary;
     margin: 40px auto 100px;
     border-radius: 3px;
+    &.light {
+      color: #333;
+      background:#fff;
+    }
     .img-overlap {
       img {
         width: 90px;
