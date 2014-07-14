@@ -188,6 +188,10 @@ a.user-badge{
     @extend .bg-primary;
     margin: 40px auto 100px;
     border-radius: 3px;
+    &.light {
+      color: #333;
+      background:#fff;
+    }
     .img-overlap {
       img {
         width: 90px;
@@ -384,7 +388,7 @@ hr {
 // Email sign up forms on remarketing pages
 
 .form-email-signup {
-  width: 500px;
+  width: 900px;
   margin: 0 auto 40px;
   .signup-email {
     // display: none;
@@ -393,8 +397,18 @@ hr {
       display: none;
     }
   }
-  .signup-google, .signup-google-skipped {
+  .signup-2,
+  .signup-3,
+  .signup-google,
+  .signup-google-skipped,
+  .signup-phone,
+  .signup-tech,
+  .signup-complete {
     display: none;
+  }
+  .form-contain {
+    width: 500px;
+    margin: 0 auto 40px;
   }
 }
 .modal .form-email-signup {
