@@ -3,7 +3,6 @@ if true
   require("./cegg")()
   require("./adroll")()
   require("./blog")()
-  require("./gr")()
   require("./adroll")()
   require("./uservoice")() if window.useUserVoice
   require("./olark")() if window.useOlark
