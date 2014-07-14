@@ -14,6 +14,7 @@ module.exports =
 
   so15:
     'jquery':     name: 'Yehuda Katz', me: 'wycats', claim: 'Rails Core Team Member'
+    'ruby-on-rails':name: 'Yehuda Katz', me: 'wycats', claim: 'Rails Core Team Member'
     'python':     name: 'Martijn Pieters', me: 'zopatista', claim: 'All time #1 Python Answerer'
     'laravel':    name: 'Antonio Carlos Ribeiro', me: 'antonioribeiro', claim: '#1 All-time Laravel Top Answerer'
     'typescript': name: 'Basarat Ali', me: 'basarat', claim: 'Typescript Top Answerer'
@@ -26,13 +27,13 @@ module.exports =
     'android' :   name: 'Ran Nachmany', me: 'rannachmany', claim: 'Android Google Developer Expert'
     'angularjs':  name: 'Matias Niemelä', me: 'matsko', claim: 'AngularJS Core Team'
     'php':        name: 'Phil Sturgeon', me: 'philsturgeon', claim: 'PHP Top Answerer'
-    'node.js':    name: 'Tim Caswell', me: 'creationix', claim: 'Early Node.js Contributor'
+    # 'node.js':    name: 'Tim Caswell', me: 'creationix', claim: 'Early Node.js Contributor'
     'ios':        name: 'Wain Glaister', me: 'wain', claim: 'iOS Top Answerer'
-    'asp.net':    name: 'Amir Rajan', me: 'amirrajan', claim: 'ASP .net AirPair Expert'
+    # 'asp.net':    name: 'Amir Rajan', me: 'amirrajan', claim: 'ASP .net AirPair Expert'
     'c++':        name: 'Steve Purves', me: 'stevejpurves', claim: 'C++ AirPair Expert'
-    'c#':         name: 'John Feminella', me: 'john-feminella', claim: 'C# Top Answerer'
-    'java':       name: 'Marko Topolnik', me: 'marko', claim: 'Java Top Answerer'
+    # 'java':       name: 'Marko Topolnik', me: 'marko', claim: 'Java Top Answerer'
     'django':     name: 'Daniel Roseman', me: 'danielroseman', claim: 'Django #1 Answerer'
+    # 'c#':         name: 'John Feminella', me: 'john-feminella', claim: 'C# Top Answerer'
 
   speakers:
 

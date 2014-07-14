@@ -89,7 +89,7 @@ module.exports = class ViewDataService
 
 
   so10: (id, cb) ->
-    id = 'c++' if id is 'c%2b%2b'
+    id = 'c++' if id is 'c%2b%rub2b'
     id = 'c#' if id is 'c%23'
     new TagsSvc(@usr).getBySoId id, (e, tag) =>
       feature = name:'Yehuda Katz', me: 'wycats', claim: 'Rails Core Team Member'
@@ -105,6 +105,7 @@ module.exports = class ViewDataService
   so15: (id, cb) ->
     id = 'c++' if id is 'c%2b%2b'
     id = 'c#' if id is 'c%23'
+    id = 'ruby-on-rails' if id is 'rails'
     new TagsSvc(@usr).getBySoId id, (e, tag) =>
       feature = name:'Yehuda Katz', me: 'wycats', claim: 'Rails Core Team Member'
       feature = Data.so15[id] if Data.so15[id]
