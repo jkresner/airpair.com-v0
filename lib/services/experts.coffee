@@ -23,7 +23,7 @@ module.exports = class ExpertsService extends DomainService
         callback ee, rr
 
   getBySubscriptions: (tagId, level, cb) =>
-    @searchMany { tags: { $elemMatch: { '_id': tagId }, $elemMatch: { subscription: level } } }, { fields: @admSelect }, cb
+    @searchMany { tags: { $elemMatch: { '_id': tagId, 'subscription.auto': { $elemMatch: { $in: [level] } } } } }, { fields: @admSelect }, cb
 
 
   detailOnRequest: (id, cb) =>
