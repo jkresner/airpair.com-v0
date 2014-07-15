@@ -39,6 +39,7 @@ module.exports =
               isProd: config.isProd.toString()
               session: vdSvc.session false
               reqUrl: req.url
+              segmentioKey: config.analytics.segmentio.writeKey
             data = _.extend data, getViewData()
 
             if vdSvc.logging then $log 'viewData', fnName, data
