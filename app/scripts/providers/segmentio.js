@@ -74,8 +74,11 @@ module.exports = function(segmentioKey) {
         firstReferrer,
         firstCampaign,
         latestReferrer,
-        latestCampaign;
-
+        latestCampaign,
+        utmSource,
+        utmMedium,
+        utmContent,
+        utmTerm;
 
     // referralHost = the domain name of the referrer of this request, or null
     var referralHost = function() {
@@ -123,6 +126,11 @@ module.exports = function(segmentioKey) {
     // Get the first and latest campaigns and referrers
     latestReferrer = referralHost;
     latestCampaign = (QueryString.utm_campaign || null);
+    utmSource = (QueryString.utm_source || null);
+    utmMedium = (QueryString.utm_medium || null);
+    utmContent = (QueryString.utm_content || null);
+    utmTerm = (QueryString.utm_term || null);
+
     firstReferrer  = $.cookie('first_referrer');
     firstCampaign  = $.cookie('first_campaign');
 
@@ -140,7 +148,13 @@ module.exports = function(segmentioKey) {
     analytics_traits['firstReferrer'] = firstReferrer;
     analytics_traits['firstCampaign'] = firstCampaign;
     analytics_traits['latestReferrer'] = latestReferrer;
-    analytics_traits['latestCampaign'] = latestCampaign;
+    if(latestCampaign !== null) {
+      analytics_traits['utm_campaign'] = latestCampaign;
+      analytics_traits['utm_source'] = utmSource;
+      analytics_traits['utm_medium'] = utmMedium;
+      analytics_traits['utm_content'] = utmContent;
+      analytics_traits['utm_term'] = utmTerm;
+    }
 
     return analytics_traits;
   }
