@@ -28,7 +28,7 @@ module.exports = class Addjs
       properties[key] = val for key, val of additionalProperties
       analytics.identify @peopleProps.email, properties
     else
-      analytics.identify(null, additionalProperties)
+      analytics.identify(additionalProperties)
 
   trackEvent: (category, action, label, value, bounce) ->
     analytics.track action,
