@@ -20,11 +20,12 @@ module.exports = class Addjs
   trackSession: (additionalProperties={}) =>
     if @peopleProps? && @peopleProps.email?
       properties =
-        gravatar: @peopleProps.picture
+        avatar: @peopleProps.picture
+        email: @peopleProps.email
         name: @peopleProps.name
-        last_name: @peopleProps.family_name
-        first_name: @peopleProps.given_name
-        created: @peopleProps.created_at
+        lastName: @peopleProps.family_name
+        firstName: @peopleProps.given_name
+        createdAt: @peopleProps.created_at
       properties[key] = val for key, val of additionalProperties
       analytics.identify @peopleProps.email, properties
     else
