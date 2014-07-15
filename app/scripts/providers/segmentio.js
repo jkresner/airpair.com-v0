@@ -70,7 +70,6 @@ module.exports = function(segmentioKey) {
 
     var analytics_args = [],
         analytics_traits = {},
-        acquisitionSource,
         firstReferrer,
         firstCampaign,
         latestReferrer,
@@ -113,15 +112,6 @@ module.exports = function(segmentioKey) {
       } 
       return query_string;
     } ();
-
-    // log this users' acquisition source:
-    //  - utm_source overrides referrer
-    //  - Referrer only set when present and not blacklisted
-    //  - Directs are not logged. This means the last used referrer will remain. 
-    acquisitionSource = (QueryString.utm_source || referralHost);
-    if(acquisitionSource !== null) {
-      analytics_traits['acquisitionSource'] = acquisitionSource;
-    }
 
     // Get the first and latest campaigns and referrers
     latestReferrer = referralHost;

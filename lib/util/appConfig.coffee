@@ -6,7 +6,7 @@ module.exports =
     oauthHost: 'http://localhost:3333'
     analytics:
       segmentio:
-        writeKey: 'v8ltc907ww'
+        writeKey: 'none'
         settings: { flushAt: 1 }
     mail:
       ses_access_key: process.env.AP_SES_ACCESS_KEY || "none"
@@ -114,7 +114,7 @@ module.exports =
     oauthHost: process.env.oauthHost || 'http://staging.airpair.com'
     analytics:
       segmentio:
-        writeKey: 'v8ltc907ww'
+        writeKey: process.env.SEGMENT_IO_WRITE_KEY
     mail:
       ses_access_key: process.env.AP_SES_ACCESS_KEY || "none"
       ses_secret_key: process.env.AP_SES_SECRET_KEY || "none"
@@ -167,7 +167,7 @@ module.exports =
     oauthHost: 'https://www.airpair.com' # note https
     analytics:
       segmentio:
-        writeKey: 'v8ltc907ww'
+        writeKey: process.env.SEGMENT_IO_WRITE_KEY
     mail:
       ses_access_key: process.env.AP_SES_ACCESS_KEY
       ses_secret_key: process.env.AP_SES_SECRET_KEY
