@@ -52,8 +52,9 @@ class exports.AirpairSessionRouter extends BB.SessionRouter
       window.addjs = new AddJS pageData.segmentioKey, { peopleProps: peopleProps }
 
       if window.location.search.match(/newUser/)?
-        console.log "Wolcome, you are a new User!"
         addjs.alias()
+        event = addjs.events.signUp
+        addjs.trackEvent event.category, event.name, window.location.pathname, 0
       else
         addjs.trackSession()
 

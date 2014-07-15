@@ -44,4 +44,6 @@ addEvent 'bookView', 'bookView', '/@*', 50, 'week', 'customer viewed expert book
 
 addEvent 'book', 'customerBookLogin', '/book', 100, 'week', 'customer tried to login via google'
 
+addEvent 'general', 'signUp', '/', 100, 'week', 'user creates account via google login'
+
 module.exports = addjsevents

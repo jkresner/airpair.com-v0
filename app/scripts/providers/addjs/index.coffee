@@ -13,13 +13,11 @@ module.exports = class Addjs
 
   alias: ->
     if @peopleProps? && @peopleProps.email?
-      console.log("Aliasing new user", @peopleProps.email)
       analytics.alias(@peopleProps.email, null, null, @trackSession)
     else
       console.log("Aliasing new user Failed")
 
   trackSession: (additionalProperties={}) =>
-    console.log("identify", @peopleProps)
     if @peopleProps? && @peopleProps.email?
       properties =
         gravatar: @peopleProps.picture
