@@ -4,6 +4,8 @@
 
 require('./../../../lib/api/experts')(app)
 
+ExpertsService = require('./../../../lib/services/experts')
+svc = new ExpertsService
 
 describe "REST api experts", ->
 
@@ -12,6 +14,22 @@ describe "REST api experts", ->
   after (done) -> dbDestroy @, done
   beforeEach -> @testNum++
 
+  it "can update expert with tags and subscriptions", (done) ->
+    mvh = data.experts[8]  # Matt Van Horn
+    svc.create mvh, (e,r) ->
+      # mutate Matt's subscription before PUT'ing him back in the db
+      mvh.tags.push {"soId":"angular","short":"angular","name":"angular", "subscription": {auto: ["beginner"]}}
+
+      http(app).put("/api/experts/#{r.id}")
+        .send(mvh)
+        .expect(200)
+        .end (err, res) =>
+          if err then return done err
+          tag = _.find res.body.tags, (tag) ->
+            tag.soId == "angular"
+
+          expect(tag.subscription.auto).to.include("beginner")
+          done()
 
   it "can get created expert", (done) ->
     @timeout 10000
