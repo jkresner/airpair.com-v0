@@ -10,18 +10,26 @@ describe 'ExpertsService', ->
   before dbConnect
   after (done) -> dbDestroy @, done
 
-  it "returns experts subscribed to a particular tag and skill level", (done) ->
-    mvh = data.experts[8] # Matthew Van Horn
-    svc.create mvh, (e,r) ->
-      svc.getBySubscriptions "514825fa2a26ea0200000031", "advanced", (e, experts) ->
-        userNames = _.pluck(experts,'username')
-        expect(userNames).to.include mvh.username
-        done()
+  mvh = data.experts[8] # Matthew Van Horn
+  mp = data.experts[9] # Michael Prins
 
-  it "doesn't return experts not subscribed to a particular tag and skill level", (done) ->
-    mp = data.experts[9] # Michael Prins
-    svc.create mp, (e,r) ->
-      svc.getBySubscriptions "514825fa2a26ea0200000031", "advanced", (e, experts) ->
-        userNames = _.pluck(experts,'username')
-        expect(userNames).to.not.include mp.username
-        done()
+  describe 'getBySubscriptions', ->
+
+    it "returns experts subscribed to a particular tag and skill level", (done) ->
+      svc.create mvh, (e,r) ->
+        svc.getBySubscriptions "514825fa2a26ea0200000031", "advanced", (e, experts) ->
+          userNames = _.pluck(experts,'username')
+          expect(userNames).to.include mvh.username
+          done()
+
+    it "doesn't return experts not subscribed to a particular tag and skill level", (done) ->
+      svc.create mp, (e,r) ->
+        svc.getBySubscriptions "514825fa2a26ea0200000031", "advanced", (e, experts) ->
+          userNames = _.pluck(experts,'username')
+          expect(userNames).to.not.include mp.username
+          done()
+
+  describe 'getByTagsAndMaxRate', ->
+    it "returns experts with tags and rate less than the max", (done) ->
+
+        svc.getByTagsAndMaxRate ['ruby-on-rails'], 100, ->
