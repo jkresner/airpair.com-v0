@@ -15,9 +15,12 @@ class exports.RequestRowView extends BB.BadassView
     @$el.html @tmpl @templateData()
     @
   templateData: ->
+    suggested = _.select @model.sortedSuggestions(), (suggestion) ->
+      suggestion.expertStatus != 'waiting'
     _.extend @model.toJSON(),
       contactName:  @model.get('company').contacts[0].fullName
       created:      @model.createdDateString()
+      suggested: suggested
 
 class exports.RequestsView extends Backbone.View
   el: '#requestslist'
