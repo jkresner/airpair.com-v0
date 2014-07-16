@@ -46,3 +46,18 @@ module.exports = class Addjs
 
   trackLink: (link, name, options) ->
     analytics.trackLink(link, name, options)
+
+  bindTrackLinks: ->
+    jQuery(".trackBookLogin").click (e) ->
+      return_to = jQuery(this).attr("href")
+      return_to = window.location.pathname + window.location.search  if return_to is "#"
+      @trackLink "auth/google?return_to=" + return_to, @events.customerBookLogin.name, elementId: getElmId(this)
+      true
+
+    jQuery(".trackLogin,.trackCustomerLogin").click (e) ->
+      @trackLink "auth/google?return_to=/find-an-expert", @events.customerLogin.name, elementId: getElmId(this)
+      true
+
+    jQuery(".trackExpertLogin").click (e) ->
+      @trackLink "auth/google?return_to=/be-an-expert", @events.expertLogin.name, elementId: getElmId(this)
+      true

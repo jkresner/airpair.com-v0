@@ -14,19 +14,7 @@ class exports.AirpairRouter extends BB.BadassAppRouter
     unless addjs?
       window.addjs = new AddJS(pageData.segmentioKey)
       addjs.trackSession()
-      jQuery(".trackBookLogin").click (e) ->
-        return_to = jQuery(this).attr("href")
-        return_to = window.location.pathname + window.location.search  if return_to is "#"
-        addjs.trackLink "auth/google?return_to=" + return_to, addjs.events.customerBookLogin.name, elementId: getElmId(this)
-
-      jQuery(".trackLogin,.trackCustomerLogin").click (e) ->
-        addjs.trackLink "auth/google?return_to=/find-an-expert", addjs.events.customerLogin.name, elementId: getElmId(this)
-        return
-
-      jQuery(".trackExpertLogin").click (e) ->
-        addjs.trackLink "auth/google?return_to=/be-an-expert", addjs.events.expertLogin.name, elementId: getElmId(this)
-        return
-
+      addjs.bindTrackLinks()
 
   # load external providers like google analytics, user-voice etc.
   loadExternalProviders: ->
@@ -57,19 +45,7 @@ class exports.AirpairSessionRouter extends BB.SessionRouter
         addjs.trackEvent event.category, event.name, window.location.pathname, 0
       else
         addjs.trackSession()
-
-      jQuery(".trackBookLogin").click (e) ->
-        return_to = jQuery(this).attr("href")
-        return_to = window.location.pathname + window.location.search  if return_to is "#"
-        addjs.trackLink "auth/google?return_to=" + return_to, addjs.events.customerBookLogin.name, elementId: getElmId(this)
-
-      jQuery(".trackLogin,.trackCustomerLogin").click (e) ->
-        addjs.trackLink "auth/google?return_to=/find-an-expert", addjs.events.customerLogin.name, elementId: getElmId(this)
-        return
-
-      jQuery(".trackExpertLogin").click (e) ->
-        addjs.trackLink "auth/google?return_to=/be-an-expert", addjs.events.expertLogin.name, elementId: getElmId(this)
-        return
+        addjs.bindTrackLinks()
 
   # load external providers like google analytics, user-voice etc.
   loadExternalProviders: ->
