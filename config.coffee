@@ -39,6 +39,7 @@ exports.config =
        'javascripts/providers.js': /^app\/scripts\/providers/
        'javascripts/home.js': /jquery|jquery.cookie|lodash|providers\/(home|addjs|cegg|olark|segmentio)|bootstrap3\/dropdown|bootstrap3\/collapse|bootstrap3\/modal/
        'javascripts/landing.js': /jquery|jquery.cookie|lodash|providers\/(home|addjs|ga|cegg|olark|segmentio)|bootstrap3\/dropdown|bootstrap3\/collapse|bootstrap3\/modal|select2/
+       'javascripts/site.js': /(scripts\/angular|lodash|jquery)|^app\/scripts\/site/
        'test/javascripts/test.js': /^test(\/|\\)(?=integration)/
        'test/javascripts/test-data.js': /^test(\/|\\)(?=data)/
        'test/javascripts/test-vendor.js': /^test(\/|\\)(?=vendor)/

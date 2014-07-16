@@ -18,6 +18,11 @@ module.exports = (app) ->
   app.get '/', renderHome, render 'dashboard'
   app.get '/book/me', authd, render 'bookme'
 
+  # angular site pages
+  app.get '/site', render 'site'
+  app.get '/angularController', render 'site'
+  app.get '/templates/test', render 'templates/test'
+
   # pages
   app.get '/login', file 'login'
   app.get '/be-an-expert*', render 'beexpert'
