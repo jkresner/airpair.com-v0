@@ -73,7 +73,7 @@
     "coffee-errors": "https://registry.npmjs.org/coffee-errors/-/coffee-errors-0.8.5.tgz",
     "mocha": "~1.12.0",
     "mocha-phantomjs": "~3.2.0",
-    "nock": "-0.42.1",
+    "nock": "~0.42.1",
     "run": "~1.2.0",
     "sinon": "1.4.2",
     "sinon-chai": "2.1.2",
