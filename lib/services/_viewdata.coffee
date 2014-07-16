@@ -32,6 +32,9 @@ module.exports = class ViewDataService
     else
       authenticated : false
 
+  dashboard: (cb) ->
+    cb null, -> { }
+
   settings: (cb) ->
     cb null, -> { stripePK }
 
