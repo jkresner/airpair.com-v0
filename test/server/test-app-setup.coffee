@@ -10,7 +10,11 @@ require './../../lib/util/globals'
 express      = require 'express'
 passport     = require 'passport'
 passportMock = require './test-passport'
+nock         = require 'nock'
 
+nock.disableNetConnect()
+nock.enableNetConnect(/(127.0.0.1|localhost)/)
+# nock.recorder.rec() # this will allow you to record http requests
 
 app = express()
 
@@ -28,4 +32,4 @@ app.configure ->
 
 data = require './../data/all'
 
-module.exports = {app,data,passportMock}
+module.exports = {app,data,passportMock,nock}

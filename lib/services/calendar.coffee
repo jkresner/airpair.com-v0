@@ -24,7 +24,7 @@ addTime = (original, milliseconds) ->
 
 class CalendarService
   google: google
-  account: cfg.google.calendar.account
+  account: config.google.calendar.account
 
   _getEventName: (request, expertId) ->
     sug = _.find request.suggested, (s) -> _.idsEqual s.expert._id, expertId
@@ -71,13 +71,13 @@ class CalendarService
       body.attendees.shift()
 
     # don't show test data up in people's calendars
-    if !cfg || !cfg.isProd
+    if !config || !config.isProd
       body.attendees = body.attendees.map (o) ->
         o.email = o.email.replace('@', 'AT') + '@example.com'
         o
 
     # only development and prod will make events, in their respective calendars
-    if cfg.env is 'test'
+    if config.env is 'test'
       return cb null, { htmlLink: 'http://example.com/google-calendar-link' }
 
     @google.createEvent @account, params, body, cb
@@ -103,10 +103,10 @@ class CalendarService
 
     # allow development to edit prod's calls, but don't update gcal
     # TODO wow so ugly.
-    isTest = cfg?.env is 'test'
-    isDevButNotOurs = cfg?.env is 'dev' &&
+    isTest = config?.env is 'test'
+    isDevButNotOurs = config?.env is 'dev' &&
       oldCall.gcal.creator?.email == 'team@airpair.com'
-    if !cfg || isTest || isDevButNotOurs
+    if !config || isTest || isDevButNotOurs
       fakeEventData = _.extend oldCall.gcal, body
       return process.nextTick -> cb null, fakeEventData
 
@@ -133,10 +133,10 @@ class CalendarService
 
     # allow development to edit prod's calls, but don't update gcal
     # TODO wow so ugly.
-    isTest = cfg?.env is 'test'
-    isDevButNotOurs = cfg?.env is 'dev' &&
+    isTest = config?.env is 'test'
+    isDevButNotOurs = config?.env is 'dev' &&
       call.gcal.creator?.email == 'team@airpair.com'
-    if !cfg || isTest || isDevButNotOurs
+    if !config || isTest || isDevButNotOurs
       fakeEventData = _.extend call.gcal, body
       return process.nextTick -> cb null, fakeEventData
 

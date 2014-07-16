@@ -1,13 +1,19 @@
 mongoose = require 'mongoose'
 
-module.exports = (app, express) ->
-  mongoose.connect cfg.mongoUri
+module.exports = (express=null) ->
+  mongoose.connect config.mongoUri
   db = mongoose.connection
 
   db.on 'error', ->
     console.error.bind console, 'connection error:'
 
   db.once 'open', ->
-    console.log "connected to db #{cfg.mongoUri}"
+    console.log "connected to db #{config.mongoUri}"
 
-  MongoSessionStore: require('connect-mongo')(express)
+  if express?
+    MongoSessionStore = require('connect-mongo')(express)
+    storeOptions = url: "#{config.mongoUri}/sessions", auto_reconnect: true
+
+    new MongoSessionStore storeOptions
+  else
+    mongoose

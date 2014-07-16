@@ -1,26 +1,13 @@
 TwitterStrategy = require('passport-twitter').Strategy
 
-config =
-  dev:
-    consumerKey: '8eIvjnVbj0BkMiUVQP0ZQ'
-    consumerSecret: 'OwrnjqCz3BeRswKLuDJqdzMQlgdDZi9F3hFZPIbxgVM'
-
-  staging:
-    consumerKey: 'hzcDmWTPJZFooDh6r0v9A'
-    consumerSecret: 'NwA4bJc6RFAGeSbpYwuEX0CdiTuoDj3qzyXj9uCQNs'
-
-  prod:
-    consumerKey: '8eIvjnVbj0BkMiUVQP0ZQ'
-    consumerSecret: 'OwrnjqCz3BeRswKLuDJqdzMQlgdDZi9F3hFZPIbxgVM'
-
 class Twitter
 
   constructor: (auth, passport) ->
     @auth = auth
     @passport = passport
-    envConfig = @auth.getEnvConfig(config)
-    envConfig.callbackURL = "#{cfg.oauthHost}/auth/twitter/callback"
-    envConfig.passReqToCallback = true    
+    envConfig = _.clone config.twitter
+    envConfig.callbackURL = "#{config.oauthHost}/auth/twitter/callback"
+    envConfig.passReqToCallback = true
     passport.use 'twitter-authz', new TwitterStrategy envConfig, @verifyCallback
 
   # Process the response from the external provider

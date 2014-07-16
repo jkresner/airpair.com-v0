@@ -6,7 +6,7 @@ ExpertsSvc       = require '../services/experts'
 CompanysSvc      = require '../services/companys'
 # SettingsSvc      = require '../services/settings'
 RequestsSvc      = require '../services/requests'
-stripePK         = cfg.payment.stripe.publishedKey
+stripePK         = config.payment.stripe.publishedKey
 
 module.exports = class ViewDataService
 
@@ -32,15 +32,15 @@ module.exports = class ViewDataService
     else
       authenticated : false
 
+  dashboard: (cb) ->
+    cb null, -> { }
+
   settings: (cb) ->
     cb null, -> { stripePK }
 
   beexpert: (cb) ->
     session = @session true
     cb null, -> { session }
-
-  dashboard: (cb) ->
-    cb null, -> { }
 
   review: (id, cb) ->
     new RequestsSvc(@usr).getByIdSmart id, (e, request) =>
@@ -87,9 +87,8 @@ module.exports = class ViewDataService
   speakers: (cb) ->
     cb null, -> { speakers: Data.speakers }
 
-
   so10: (id, cb) ->
-    id = 'c++' if id is 'c%2b%2b'
+    id = 'c++' if id is 'c%2b%rub2b'
     id = 'c#' if id is 'c%23'
     new TagsSvc(@usr).getBySoId id, (e, tag) =>
       feature = name:'Yehuda Katz', me: 'wycats', claim: 'Rails Core Team Member'
@@ -105,6 +104,7 @@ module.exports = class ViewDataService
   so15: (id, cb) ->
     id = 'c++' if id is 'c%2b%2b'
     id = 'c#' if id is 'c%23'
+    id = 'ruby-on-rails' if id is 'rails'
     new TagsSvc(@usr).getBySoId id, (e, tag) =>
       feature = name:'Yehuda Katz', me: 'wycats', claim: 'Rails Core Team Member'
       feature = Data.so15[id] if Data.so15[id]
@@ -124,7 +124,6 @@ module.exports = class ViewDataService
       cb e, ->
         console.log "BSA02 -- #{id}"
         return { tag, feature }
-
 
   paypalSuccess: (id, cb) ->
     new OrdersSvc(@usr).markPaymentReceived id, {}, (e, order) =>

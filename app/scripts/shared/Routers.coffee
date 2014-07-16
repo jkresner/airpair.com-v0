@@ -1,29 +1,32 @@
 exports = {}
-M       = require './Models'
-BB      = require 'BB'
-try
-  AddJS = require '/scripts/providers/addjs/index'
+Models = require './Models'
+BB = require 'BB'
+AddJS = require '/scripts/providers/addjs/index'
+
+getElmId = (elm) ->
+  elmId = jQuery(elm).attr("id")
+  elmId = jQuery(elm).parent().attr("id")  if _.isEmpty(elmId)
+  elmId
 
 class exports.AirpairRouter extends BB.BadassAppRouter
 
-  preConstructorHook: ->
-    if !addjs?
-      window.addjs = new AddJS providers: { ga: { logging: off }, mp: { logging: off } }
+  preConstructorHook: (pageData) ->
+    unless addjs?
+      window.addjs = new AddJS(pageData.segmentioKey)
+      addjs.trackSession()
+      addjs.bindTrackLinks()
 
   # load external providers like google analytics, user-voice etc.
   loadExternalProviders: ->
 
-    # bring in Google analytics, uservoice & other 3rd party things
+    # bring in uservoice & other 3rd party things
     require '/scripts/providers/all'
-
-
 
 class exports.AirpairSessionRouter extends BB.SessionRouter
 
-  model: M.User
+  model: Models.User
 
-
-  preConstructorHook: ->
+  preConstructorHook: (pageData) ->
     # $log 'preConstructorHook', @routeMiddleware
 
     { google } = @app.session.attributes
@@ -33,23 +36,23 @@ class exports.AirpairSessionRouter extends BB.SessionRouter
       { email, name, picture, id, family_name, given_name } = google._json
       peopleProps = { email, name, picture, id, family_name, given_name, created_at }
 
-    if !addjs? && AddJS?
-      window.addjs = new AddJS
-        providers: { ga: { logging: off }, mp: { logging: off, peopleProps: peopleProps } }
+    unless addjs?
+      window.addjs = new AddJS pageData.segmentioKey, { peopleProps: peopleProps }
+
+      if window.location.search.match(/newUser/)?
+        addjs.alias()
+        event = addjs.events.signUp
+        addjs.trackEvent event.category, event.name, window.location.pathname, 0
+      else
+        addjs.trackSession()
+        addjs.bindTrackLinks()
 
   # load external providers like google analytics, user-voice etc.
   loadExternalProviders: ->
     # bring in Google analytics, uservoice & other 3rd party things
     require '/scripts/providers/all'
 
-
   isAuthenticated: ->
     @app.session.authenticated()
-
-
-  # routeMiddleware: (routeFn) ->
-  #   $log 'window.location', window.location.pathname, routeFn.routeName
-  #   addjs.trackPageView window.location.pathname, { route: routeFn.routeName }
-
 
 module.exports = exports

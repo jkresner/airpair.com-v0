@@ -1,38 +1,11 @@
 request = require 'superagent'
 
-config =
-  dev:
-    AP: 'http://localhost:3333'
-    Endpoint: 'https://svcs.sandbox.paypal.com/AdaptivePayments'
-    PrimaryReceiver: 'jk-facilitator@airpair.com'
-    SECURITYUSERID: 'jk-facilitator_api1.airpair.com',
-    SECURITYPASSWORD: '1372567697',
-    SECURITYSIGNATURE: 'An5ns1Kso7MWUdW4ErQKJJJ4qi4-AC6a0z5no3hrQwQyUMvBCahLxwBA'
-    APPLICATIONID: 'APP-80W284485P519543T'
-
-  prod:
-    AP: 'https://www.airpair.com'
-    Endpoint: 'https://svcs.paypal.com/AdaptivePayments'
-    PrimaryReceiver: 'jk@airpair.com'
-    SECURITYUSERID: 'jk_api1.airpair.com',
-    SECURITYPASSWORD: 'CKGLTLST5C2KYCXQ',
-    SECURITYSIGNATURE: 'AFcWxV21C7fd0v3bYYYRCpSSRl31AQ3FdahDmrAydOM0v6NUkwsQ2Nug'
-    APPLICATIONID: 'APP-7AK038815Y6144228'
-
-getEnvConfig = (config) ->
-  env = process.env.Payment_Env
-  if env? && env is 'prod' then return config.prod
-  cfg = config.dev
-  if env? && env is 'staging' then cfg.AP = 'http://staging.airpair.com'
-  if env? && env is 'test' then cfg.AP = 'http://localhost:4444'
-  cfg
-
-payloadDefault = (cfg) ->
+payloadDefault = ->
   actionType:      "PAY_PRIMARY"
   currencyCode:    "USD"
   feesPayer:       "EACHRECEIVER"
-  returnUrl:       "#{cfg.AP}/paypal/success/"
-  cancelUrl:       "#{cfg.AP}/paypal/cancel/"
+  returnUrl:       "#{config.oauthHost}/paypal/success/"
+  cancelUrl:       "#{config.oauthHost}/paypal/cancel/"
   requestEnvelope: { errorLanguage:"en_US", detailLevel:"ReturnAll" }
   receiverList:    receiver: []
 
@@ -46,13 +19,13 @@ getExpertPaypalEmail = (item) ->
 
 module.exports = class PaypalAdaptive
 
-  cfg: getEnvConfig(config)
+  settings: _.clone(config.payment.paypal)
 
   constructor: () ->
 
   Pay: (order, callback) ->
     order.paymentType = 'paypal'
-    payload = payloadDefault(@cfg)
+    payload = payloadDefault()
     payload.memo = "https://airpair.com/review/#{order.requestId}"
 
     for item in order.lineItems
@@ -64,7 +37,7 @@ module.exports = class PaypalAdaptive
 
     payload.receiverList.receiver.push
       primary:  true
-      email:    @cfg.PrimaryReceiver
+      email:    @settings.primaryReceiver
       amount:   @formatCurrency(order.total)
 
     payload.returnUrl += order._id
@@ -73,10 +46,10 @@ module.exports = class PaypalAdaptive
     @postPayload "Pay", payload, callback
 
   PaySingle: (order, lineItem, callback) ->
-    payload = payloadDefault(@cfg)
+    payload = payloadDefault()
     payload.memo = "https://airpair.com/review/#{order.requestId}"
     payload.actionType = 'PAY'
-    payload.senderEmail = @cfg.PrimaryReceiver
+    payload.senderEmail = @settings.primaryReceiver
 
     payeePaypalEmail = getExpertPaypalEmail(lineItem)
     payload.receiverList.receiver.push
@@ -103,20 +76,20 @@ module.exports = class PaypalAdaptive
 
 
   postPayload: (operation, payload, callback) ->
-    endpoint = "#{@cfg.Endpoint}/#{operation}"
+    endpoint = "#{@settings.endpoint}/#{operation}"
     winston.log "PayalPost: #{endpoint}", payload
     request
       .post(endpoint)
       .send(payload)
-      .set('X-PAYPAL-SECURITY-USERID', @cfg.SECURITYUSERID)
-      .set('X-PAYPAL-SECURITY-PASSWORD', @cfg.SECURITYPASSWORD)
-      .set('X-PAYPAL-SECURITY-SIGNATURE', @cfg.SECURITYSIGNATURE)
+      .set('X-PAYPAL-SECURITY-USERID', @settings.SECURITYUSERID)
+      .set('X-PAYPAL-SECURITY-PASSWORD', @settings.SECURITYPASSWORD)
+      .set('X-PAYPAL-SECURITY-SIGNATURE', @settings.SECURITYSIGNATURE)
       .set('X-PAYPAL-REQUEST-DATA-FORMAT', 'JSON')
       .set('X-PAYPAL-RESPONSE-DATA-FORMAT', 'JSON')
-      .set('X-PAYPAL-APPLICATION-ID', @cfg.APPLICATIONID)
+      .set('X-PAYPAL-APPLICATION-ID', @settings.APPLICATIONID)
       .end (err, res) =>
         if err then return callback err
-        if cfg.isProd
+        if config.isProd
           $log "PayalResponse: #{endpoint}", payload, res.body
           winston.log "PayalResponse: #{endpoint}", res.body
         callback null, res.body

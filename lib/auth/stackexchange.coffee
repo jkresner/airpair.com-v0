@@ -1,29 +1,12 @@
 StackExchangeStrategy = require('passport-stackexchange').Strategy
 
-config =
-  dev:
-    clientID:          '1451'
-    clientSecret:      'CCkJpq3BY3e)lZFNsgkCkA(('
-    key:               'dTtlx1WL0TJvOKPfoU88yg(('
-
-  staging:
-    clientID:          '1489'
-    clientSecret:      '4cwYFL7O*I9xrmFm6wmGYQ(('
-    key:               'tfYVUqc1*XmoIgqvCZH3Gg(('
-
-  prod:
-    clientID:          '1432'
-    clientSecret:      'oA5O0hVgWg3muObSVC8mSQ(('
-    key:               'h0fVRSYpv0*MAKD7HXj5bw(('
-
-
 class StackExchange
 
   constructor: (auth, passport) ->
     @auth = auth
     @passport = passport
-    envConfig = @auth.getEnvConfig(config)
-    envConfig.callbackURL = "#{cfg.oauthHost}/auth/stackexchange/callback"
+    envConfig = _.clone config.stackexchange
+    envConfig.callbackURL = "#{config.oauthHost}/auth/stackexchange/callback"
     envConfig.passReqToCallback = true
     @passport.use 'stack-authz', new StackExchangeStrategy envConfig, @verifyCallback
 

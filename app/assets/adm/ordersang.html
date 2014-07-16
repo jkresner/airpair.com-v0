@@ -17,7 +17,7 @@
 
   <script type="text/javascript">
     function initApp() {
-      var pageData = { {{JSON 'session'}}, {{JSON 'orders'}} };
+      var pageData = { {{JSON 'session'}}, {{JSON 'orders'}}, segmentioKey: '{{{segmentioKey}}}' };
       ap_ang = require('scripts/adm/orders')(pageData);
     }
   </script>

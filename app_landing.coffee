@@ -10,6 +10,7 @@ module.exports = (app, render) ->
   app.get '/so17/:id', render 'landing/so17', ['params.id']
 
   app.get '/speakers', render 'landing/speakers'
+  app.get '/airconf2014', render 'landing/speakers'
 
   app.get '/railsconf2014', render 'landing/railsconf'
   app.get '/rails/consulting', render 'landing/railsconsulting'
