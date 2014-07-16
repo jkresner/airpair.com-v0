@@ -390,35 +390,71 @@ hr {
 .form-email-signup {
   width: 900px;
   margin: 0 auto 40px;
-  .signup-email {
+  // .signup-email {
     // display: none;
-    .alert {
-      margin-top: 10px;
-      display: none;
-    }
-  }
-  .signup-2,
-  .signup-3,
-  .signup-google,
-  .signup-google-skipped,
-  .signup-phone,
-  .signup-tech,
-  .signup-complete {
+  // }
+  .alert-danger {
+    margin-top: 10px;
     display: none;
   }
-  .signup-tech {
-    .form-control.select2-container .select2-choices {
-      padding: 11px 16px;
-    }
+
+  [class^='step-'],
+  .input-group-phone,
+  .input-question,
+  .title-question {
+    display: none;
+  }
+  .step-1 {
+    display: block;
+  }
+
+  // .signup-2,
+  // .signup-3,
+  // .signup-google,
+  // .signup-google-skipped,
+  // .signup-phone,
+  // .signup-tech,
+  // .signup-complete {
+  //   display: none;
+  // }
+  // .signup-tech {
+  // }
+  .form-control.select2-container .select2-choices {
+    padding: 11px 16px;
+  }
+  .select2-container-multi .select2-choices .select2-search-choice {
+    margin: 7px 0 3px 5px;
+  }
+  .select2-container-multi .select2-choices {
+    background-image: none;
   }
   .form-contain {
     width: 500px;
     margin: 0 auto 40px;
   }
+  a {
+    color:#fff;
+  }
+  h3 a {
+    font-weight: bold;
+    text-decoration: underline;
+  }
 }
+
+
 .modal .form-email-signup {
   width: auto;
   margin: 0;
+  a {
+    color: $brand-primary;
+  }
+  h2 {
+    text-align: center;
+  }
+  .form-contain {
+    margin-bottom: 10px;
+    width: auto;
+  }
   .incentive {
     font-size: 28px;
     margin-bottom: 20px;
