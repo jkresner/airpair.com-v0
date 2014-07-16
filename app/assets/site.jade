@@ -4,16 +4,13 @@ html(ng-app='ngAirPair')
     script(src="/javascripts/site.js")
 
   body
-    header(ng-controller='HeaderController')
-      h1 This is the main site
-      h4(ng-show='session.isSignedIn()')
-        and you are signed in as {{ session.name() }}
+    h1 this is a Jade test
 
-    div
-      a(href="/site") Home
+    div(ng-conroller="expertsController")
+      a(href="/site") home
       span &nbsp;|&nbsp;
-      a(href="/experts/me") Expert Settings
+      a(href="/angularController") see a template
     div(ng-view)
 
     script.
-      require('scripts/site/app');
+      require('scripts/site/app')();
