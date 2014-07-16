@@ -1,0 +1,16 @@
+doctype html
+html(ng-app='ngAirPair')
+  head
+    script(src="/javascripts/site.js")
+
+  body
+    h1 this is a Jade test
+
+    div(ng-conroller="expertsController")
+      a(href="/site") home
+      span &nbsp;|&nbsp;
+      a(href="/angularController") see a template
+    div(ng-view)
+
+    script.
+      require('scripts/site/app')();
