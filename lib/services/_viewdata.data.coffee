@@ -34,7 +34,7 @@ module.exports =
     'ios':        name: 'Wain Glaister', me: 'wain', claim: 'iOS Top Answerer'
     'django':     name: 'Daniel Roseman', me: 'danielroseman', claim: 'Django #1 Answerer'
     'ember.js':   name: 'Michael Grassotti', me: 'mikegrassotti', claim: 'All-time Ember.js #1 Answerer'
-    'express':    name: 'Peter Lyson', me: 'focusaurus', claim: 'All-time Express #1 Answerer'
+    'express':    name: 'Peter Lyons', me: 'focusaurus', claim: 'All-time Express #1 Answerer'
     'mysql':      name: 'Alex Bolenok', me: 'quassnoi', claim: 'All-time MySql Top Answerer'
     'twilio':     name: 'Jeff Linwood', me: 'jefflinwood', claim: 'Twilio book author'
     # 'asp.net':    name: 'Amir Rajan', me: 'amirrajan', claim: 'ASP .net AirPair Expert'
