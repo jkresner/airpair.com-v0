@@ -1,4 +1,4 @@
-global.cfg            = cfg  # cfg is already declared in util/appConfig
+global.config         = require('./appConfig')[process.env.Env || 'dev']
 global.$log           = console.log
 
 global._              = require 'underscore'
@@ -7,8 +7,10 @@ global._.idsEqual     = require '../mix/idsEqual'
 
 global.winston        = require 'winston'   # logging
 require './winstonConfig'             # setup logging configuration / plugins
-winston.error "app restart" if cfg.isProd  # log application restart/ send email notification
+winston.error "app restart" if config.isProd  # log application restart/ send email notification
 
-Mixpanel              = require 'mixpanel'
-global.mixpanel       = Mixpanel.init cfg.analytics.mixpanel.id
-mixpanel.track 'app restart'
+SegmentIo              = require('analytics-node')
+global.segmentio       = new SegmentIo config.analytics.segmentio.writeKey
+segmentio.track
+  userId: '0'
+  event: 'app restart'

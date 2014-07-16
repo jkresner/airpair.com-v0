@@ -126,7 +126,7 @@
   <script type="text/javascript">
 
     function initApp() {
-      pageData = { {{JSON 'session'}} };
+      pageData = { {{JSON 'session'}}, segmentioKey: '{{{segmentioKey}}}' };
       Router = require('/scripts/ap/beexpert/Router');
       window.router = new Router(pageData);
     }

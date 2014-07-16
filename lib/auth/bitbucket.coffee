@@ -1,25 +1,12 @@
 BitBucketStrategy = require('passport-bitbucket').Strategy
 
-config =
-  dev:
-    consumerKey: 'QNw3HsMSKzM6ptP4G4',
-    consumerSecret: 'Cx5pvK2ZEjsymVxME42hSffkzkaQ9Buf'
-
-  staging:
-    consumerKey: 'aLajWwZkcLY7jThvWZ',
-    consumerSecret: 'gJtv3zmpzFJvh4V3kvzfegAxDKWcYw8h'
-
-  prod:
-    consumerKey: 'WpdhX5mWW4wmLuDPwA',
-    consumerSecret: 'uZveS97GysRW6EzjfQhERSB2SpkyBeSJ'
-
 class BitBucket
 
   constructor: (auth, passport) ->
     @auth = auth
     @passport = passport
-    envConfig = @auth.getEnvConfig(config)
-    envConfig.callbackURL = "#{cfg.oauthHost}/auth/bitbucket/callback"
+    envConfig = _.clone config.bitbucket
+    envConfig.callbackURL = "#{config.oauthHost}/auth/bitbucket/callback"
     envConfig.passReqToCallback = true
     passport.use 'bitbucket-authz', new BitBucketStrategy envConfig, @verifyCallback
 

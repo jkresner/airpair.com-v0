@@ -536,26 +536,21 @@
   </body>
 
 <script src="//cdn.optimizely.com/js/280598780.js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+{{> InitPage }}
 <script type="text/javascript">
-
-function initPage()
-{
-  require('scripts/providers/home');
-  addjs.trackEvent('page','view', window.location.pathname, 'homepage');
-}
-
-  // Scroll to hash. Just add class "scroll"
-  $(function() {
-    $(".scroll").click(function(e){
-      e.preventDefault();
-      $("html,body").animate({
-        scrollTop:$(this.hash).offset().top
-      },500);
+  function initPage() {
+    initStaticPage('homepage');
+    // Scroll to hash. Just add class "scroll"
+    $(function() {
+      $(".scroll").click(function(e){
+        e.preventDefault();
+        $("html,body").animate({
+          scrollTop:$(this.hash).offset().top
+        },500);
+      });
     });
-  });
-
+  }
 </script>
-
 <script src="/javascripts/home.js" defer onload="initPage()"></script>
+
 </html>

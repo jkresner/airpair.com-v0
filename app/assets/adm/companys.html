@@ -94,7 +94,7 @@
 
   <script type="text/javascript">
     function initApp() {
-      var pageData = { {{JSON 'session'}}, {{JSON 'companys'}}, stripePK: '{{{stripePK}}}' }
+      var pageData = { {{JSON 'session'}}, {{JSON 'companys'}}, stripePK: '{{{stripePK}}}', segmentioKey: '{{{segmentioKey}}}' }
       Router = require('/scripts/adm-old/companys/Router');
       window.router = new Router(pageData);
     }

@@ -6,7 +6,7 @@ ExpertsSvc       = require '../services/experts'
 CompanysSvc      = require '../services/companys'
 # SettingsSvc      = require '../services/settings'
 RequestsSvc      = require '../services/requests'
-stripePK         = cfg.payment.stripe.publishedKey
+stripePK         = config.payment.stripe.publishedKey
 
 module.exports = class ViewDataService
 
@@ -38,9 +38,6 @@ module.exports = class ViewDataService
   beexpert: (cb) ->
     session = @session true
     cb null, -> { session }
-
-  dashboard: (cb) ->
-    cb null, -> { }
 
   review: (id, cb) ->
     new RequestsSvc(@usr).getByIdSmart id, (e, request) =>
@@ -87,7 +84,6 @@ module.exports = class ViewDataService
   speakers: (cb) ->
     cb null, -> { speakers: Data.speakers }
 
-
   so10: (id, cb) ->
     id = 'c++' if id is 'c%2b%rub2b'
     id = 'c#' if id is 'c%23'
@@ -125,7 +121,6 @@ module.exports = class ViewDataService
       cb e, ->
         console.log "BSA02 -- #{id}"
         return { tag, feature }
-
 
   paypalSuccess: (id, cb) ->
     new OrdersSvc(@usr).markPaymentReceived id, {}, (e, order) =>

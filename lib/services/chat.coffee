@@ -12,7 +12,7 @@ module.exports = class ChatService extends DomainService
 
   constructor: (user) ->
     admin = user.google._json.email.split('@')[0]
-    token = cfg.hipChat.tokens[admin];
+    token = config.hipChat.tokens[admin];
     $log 'ChatService', user.google._json.email, admin, token
     @hc = new HC token
 

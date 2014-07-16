@@ -1,8 +1,8 @@
 Ses = require('awssum-amazon-ses').Ses
 
 ses = new Ses
-    accessKeyId     : cfg.SES_ACCESS_KEY
-    secretAccessKey : cfg.SES_SECRET_KEY
+    accessKeyId     : config.mail.ses_access_key
+    secretAccessKey : config.mail.ses_secret_key
 
 emailDefaults =
   #CcAddresses: []
@@ -19,7 +19,7 @@ send = (to, data, callback) ->
   data.ToAddresses = to
   # $log 'ses.send', to, data.Subject, data.Text
   data = _.defaults(data, emailDefaults)
-  if cfg.env is 'test' or cfg.env is 'dev'
+  if config.env in ['test', 'dev']
     if callback? then callback()
   else
     ses.SendEmail data, callback || (e) ->

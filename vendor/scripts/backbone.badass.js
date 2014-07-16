@@ -326,7 +326,7 @@ module.exports = BadassAppRouter = (function(_super) {
     }
     this.defaultFragment = this.getDefaultFragment();
     if (this.preConstructorHook != null) {
-      this.preConstructorHook();
+      this.preConstructorHook(pageData);
     }
     app = this.appConstructor(pageData, callback);
     this.app = this.app != null ? _.extend(this.app, app) : app;

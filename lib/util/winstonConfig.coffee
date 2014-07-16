@@ -16,18 +16,17 @@ winston.add winston.transports.Console, logConsoleConfig
 logConsoleConfig =
   level:          'error' # process.env.AP_CONSOLE_LOG_LEVEL || 'info'
   timestamp:      true
-  #colorize:      not cfg.isProd
+  #colorize:      not config.isProd
 
 winston.add winston.transports.File, logFileConfig
 
-
 logEmailConfig =
   level:          'error'
-  sesAccessKey:   process.env.AP_SES_ACCESS_KEY
-  sesSecretKey:   process.env.AP_SES_SECRET_KEY
+  sesAccessKey:   config.mail.ses_access_key
+  sesSecretKey:   config.mail.ses_secret_key
   sesFrom:        'airpair <jk@airpair.com>'
   sesTo:          ['airpair <jk@airpair.com>']
   sesSubject:     'ap error'
 
 
-winston.add(winstonses, logEmailConfig) if cfg.isProd
+winston.add(winstonses, logEmailConfig) if config.isProd

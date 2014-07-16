@@ -23,7 +23,7 @@ module.exports =
       fnName = fileName.replace('adm/', '').replace('payment/', '').replace('landing/', '')
 
       if !vdSvc[fnName]?
-        resp.render "#{fileName}.html"
+        resp.render "#{fileName}.html", { segmentioKey: config.analytics.segmentio.writeKey }
       else
         args = []
 
@@ -36,9 +36,10 @@ module.exports =
             next e
           else
             data =
-              isProd: cfg.isProd.toString()
+              isProd: config.isProd.toString()
               session: vdSvc.session false
               reqUrl: req.url
+              segmentioKey: config.analytics.segmentio.writeKey
             data = _.extend data, getViewData()
 
             if vdSvc.logging then $log 'viewData', fnName, data

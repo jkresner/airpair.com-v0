@@ -85,7 +85,7 @@ class exports.InfoFormView extends BB.ModelSaveView
   renderSuccess: (model, response, options) =>
     router.navTo 'thanks'
     addjs.trackEvent @e.category, @e.name, @model.get('name'), @timer.timeSpent()
-    addjs.providers.mp.setPeopleProps isExpert : 'Y'
+    addjs.trackSession isExpert : 'Y'
   getViewData: ->
     homepage: @elm('homepage').val()
     brief: @elm('brief').val()
