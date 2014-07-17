@@ -418,7 +418,7 @@ hr {
     position: relative;
     // @include transition(all .2s ease-in);
     @include transition-transform(0.3s ease-out);
-    &:hover {
+    &.btn-lift:hover {
       @include translate(0, -10px);
       // top: -10px;
       background-image: -o-linear-gradient(-89deg, #FF8D61 0%, #F3632A 100%);
@@ -447,7 +447,7 @@ hr {
   }
 
   [class^='step-'],
-  .input-group-phone,
+  // .input-group-phone,
   .input-question,
   .title-question {
     display: none;

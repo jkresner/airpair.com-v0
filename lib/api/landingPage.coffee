@@ -1,3 +1,5 @@
+api_key = config.payment.stripe.secretKey
+stripe  = require('stripe')(api_key)
 
 
 class LandingPageApi extends require('./_api')
@@ -5,17 +7,32 @@ class LandingPageApi extends require('./_api')
   Svc: require '../services/wrappers/stripe'
 
   routes: (app, route) ->
-    app.get "/api/#{route}/bsa/:youtubeId", @ap, @fetchYouTube
+    app.post "/api/#{route}/bsa02/purchase", @ap, @createCustomer
 
-    # make customer. save customer in firebase. charge customer. 
+  # Create customer, return customer to client, then charge customer.
+  createCustomer: (req, res, next) =>
+    stripe.customers.create {email: req.body.email, card: req.body.stripeToken.id}, (err, customer) =>
+      if err
+        console.warn err
+        return res.send status: "error", error: err
+      res.send
+        status: "success"
+        customer: customer
+      @chargeCustomer customer.id, req.body.stripeCharge.amount
 
 
-  fetchYouTube: (req, res, next) =>
-    @svc.fetchYouTube req.params.youtubeId, (err, videoData) =>
-      if err?.message.indexOf('Forbidden') == 0 || err?.message.indexOf('Not Found') == 0
-        return res.send data: youtube: err.message, 400
-      if err then return next err
-      res.send videoData
+  # Charge a customer given a customer id and amount.
+  chargeCustomer: (customerId, amount) =>
+    stripe.charges.create
+      amount: amount
+      currency: "USD"
+      customer:customerId
+    , (err, charge) ->
+      if err then console.log "ERROR - chargeCustomer failed"
+      console.log "customer charged #{amount}"
+
+
+
 
 
 module.exports = (app) -> new LandingPageApi app, 'landing'
