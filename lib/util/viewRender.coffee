@@ -45,7 +45,6 @@ module.exports =
             else
               resp.end(html)
 
-
       vdSvc = new ViewDataSvc req.user
 
       # convention we just rip out the path to get viewDataFunction

@@ -5,4 +5,3 @@ angular
   .module('ngAirPair')
   .controller('HeaderController', ['$scope', 'Session', HeaderController])
 
-
