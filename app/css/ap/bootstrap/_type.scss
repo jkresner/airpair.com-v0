@@ -96,13 +96,13 @@ cite    { font-style: normal; }
 
 .text-upper { text-transform: uppercase; }
 
-.text-bright {
-  color: #fff;
-}
+.text-bright {color: #fff;}
+.text-blue {color: $brand-blue;}
 
 .text-xs {font-size: 12px;}
 .text-lg {font-size: 20px;}
 .text-xl {font-size: 28px;}
+.text-xxl {font-size: 73px;}
 
 
 // Rendering

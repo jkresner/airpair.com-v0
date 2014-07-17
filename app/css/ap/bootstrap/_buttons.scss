@@ -14,11 +14,12 @@
   vertical-align: middle;
   cursor: pointer;
   background-image: none; // Reset unusual Firefox-on-Android default style; see https://github.com/necolas/normalize.css/issues/214
-  border: 1px solid transparent;
+  border: 0px solid transparent;
   white-space: nowrap;
   text-transform: uppercase;
   @include button-size($padding-base-vertical, $padding-base-horizontal, $font-size-small, $line-height-base, $border-radius-base);
   @include user-select(none);
+
 
   &,
   &:active,
@@ -65,6 +66,17 @@
 }
 .btn-primary {
   @include button-variant($btn-primary-color, $btn-primary-bg, $btn-primary-border);
+  // background-image: -o-linear-gradient(-89deg, #FF7B47 0%, #EE591F 100%);
+  // background-image: -moz-linear-gradient(-89deg, #FF7B47 0%, #EE591F 100%);
+  // background-image: -ms-linear-gradient(-89deg, #FF7B47 0%, #EE591F 100%);
+  // background-image: linear-gradient(-179deg, #FF7B47 0%, #EE591F 100%);
+
+  &:hover {
+    // background-image: -o-linear-gradient(-89deg, #FF8D61 0%, #F3632A 100%);
+    // background-image: -moz-linear-gradient(-89deg, #FF8D61 0%, #F3632A 100%);
+    // background-image: -ms-linear-gradient(-89deg, #FF8D61 0%, #F3632A 100%);
+    // background-image: linear-gradient(-179deg, #FF8D61 0%, #F3632A 100%);
+  }
 }
 .btn-slate {
   @include button-variant($btn-slate-color, $brand-slate, $btn-slate-border);

@@ -116,14 +116,7 @@ module.exports = class ViewDataService
   so19: (id, cb) -> @so15 id, cb
 
   bsa02: (id, cb) ->
-    id = 'c++' if id is 'c%2b%2b'
-    id = 'c#' if id is 'c%23'
-    new TagsSvc(@usr).getBySoId id, (e, tag) =>
-      feature = name:'Yehuda Katz', me: 'wycats', claim: 'Rails Core Team Member'
-      feature = Data.so15[id] if Data.so15[id]
-      cb e, ->
-        console.log "BSA02 -- #{id}"
-        return { tag, feature }
+    cb null, -> { stripePK }
 
   paypalSuccess: (id, cb) ->
     new OrdersSvc(@usr).markPaymentReceived id, {}, (e, order) =>
