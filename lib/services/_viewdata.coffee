@@ -84,8 +84,13 @@ module.exports = class ViewDataService
     new CompanysSvc(@usr).getAll (e, companys) =>
       cb e, -> { companys, stripePK }
 
-  speakers: (cb) ->
-    cb null, -> { speakers: Data.speakers }
+  airconf: (cb) ->
+    cb null, -> { sessions: Data.airconfSessions }
+
+  airconfsession: (id, cb) ->
+    session = _.find Data.airconfSessions, (s) -> s.slug == id
+    cb null, -> { sessions: Data.airconfSessions, session }
+
 
   so10: (id, cb) ->
     id = 'c++' if id is 'c%2b%rub2b'
@@ -97,7 +102,6 @@ module.exports = class ViewDataService
 
   so11: (id, cb) -> @so10 id, cb
   so12: (id, cb) -> @so10 id, cb
-  so12re: (id, cb) -> @so10 id, cb
   so13: (id, cb) -> @so10 id, cb
   so14: (id, cb) -> @so10 id, cb
 

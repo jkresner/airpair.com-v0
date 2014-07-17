@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>AirPair | AirConf</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="author" content="airpair, inc.">
+    <meta name="keywords" content="World's biggest Software Speaker List">
+    <meta name="description" content="One month long virtual Software Conference">
+    <link rel="canonical" href="http://www.airpair.com/speakers" />
+    <link rel="stylesheet" href="/css/ap.css">
+    <link rel="publisher" href="//plus.google.com/105075583437166504731/"/>
+    <link rel='stylesheet' type='text/css' href='//fonts.googleapis.com/css?family=Open+Sans:400,300,600' >
+  </head>
+<body id="home">
+
+    <div class="subscribe" style="position:fixed;right:20px;top:15px;z-index:125;text-align:right;float:right;width:500px">
+      <div class="control-group">
+        <div class="controls">
+          <div class="input-prepend">
+            <span class="add-on" style="color:gray">Schedule Updates &nbsp;</span>
+            <input type="text" name="rake" placeholder="By email" value="" data-error-style="inline" style="width:220px">
+            <button id="btnSubscribe" class="btn btn-primary" style="height:30px;margin-top:-4px">Subscribe</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="subscribe" style="width:100%;height:70px;background:black;opacity:0.7;position:fixed;z-index:112">
+
+    </div>
+
+    <!-- 1) If not logged in show email box -->
+
+    <nav class="navbar navbar-default navbar-static-top" role="navigation" style="z-index:116">
+      <div class="container">
+        <div class="navbar-header">
+          <span class="navbar-brand-img">
+            <a href="/airconf2014"><img src="/images/logos/airpair.png" alt="" width="140px"></a>
+          </span>
+        </div>
+      </div>
+    </nav>
+
+    {{#with session}}
+
+    <!-- HERO -->
+    <div class="hero behind-nav hero-landing-top">
+      <div class="container hero-content text-bright animated fadeInDown">
+        <div class="row">
+          <div class="col-md-12">
+            <img src="//secure.gravatar.com/avatar/{{g}}?s=180" alt="{{n}}" class="img-circle" width="50%">
+            <h2>{{n}}</h2>
+            <h1>{{{t}}}</h1>
+          </div>
+          <div class="col-sm-8 col-sm-offset-2">
+            <p>{{{a}}}</p>
+            <h6 class="title">{{#each tags}}<span>{ {{this}} }</span> {{/each}}</h6>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  {{/with}}
+
+<div style="clear:both"></div>
+
+
+</div>
+
+  <div class="bg-gray">
+    <div class="container p-b-4">
+
+      <h2 class="text-thin text-center m-t-4">Register</h2>
+
+      <p style="margin:40px;text-align:center">This speaker series is free for anyone that has ever purchased an AirPair. If you have not bought an AirPair, simply buy one to regsiter. To register simply book an hour and get access to these amazing talks.</p>
+
+    </div>
+  </div>
+
+  {{#with session}}
+
+  <div class="bg-gray">
+    <div class="container p-b-4">
+
+      <h2 class="text-thin text-center m-t-4">About {{n}}</h2>
+
+      <p style="margin:40px;text-align:center">{{b}}</p>
+
+    </div>
+  </div>
+
+  {{/with}}
+
+  <div class="bg-gray">
+    <div class="container p-b-4">
+
+      <h2 class="text-thin text-center m-t-4">Sponsor</h2>
+
+      <p style="margin:40px;text-align:center">Twilio</p>
+
+    </div>
+  </div>
+
+<!--
+    <div class="bg-slate text-bright p-t-2 p-b-2">
+
+      <div class="container text-center">
+        <h2 class="">Supported Technology Parthers</h2>
+
+        <div class="row m-t-2">
+          <div class="col-sm-4"><img src="/images/pages/home/keeniow.png" alt="" width="260px"></div>
+          <div class="col-sm-4"><img src="/images/pages/home/twiliow.png" alt="" width="260px"></div>
+          <div class="col-sm-4"><img src="/images/pages/home/stripew.png" alt="" width="190px"></div>
+        </div>
+        <div class="row m-t-2">
+          <div class="col-sm-4"><img src="/images/pages/home/sendgridw.png" alt="" width="260px"></div>
+          <div class="col-sm-4 p-t-1"><img src="/images/pages/home/balancedw.png" alt="" width="260px"></div>
+          <div class="col-sm-4"><img src="/images/pages/home/evernotew.png" alt="" width="260px"></div>
+        </div>
+        <a href="" class="btn btn-lg btn-primary m-t-2 btn-wide">See all Partners</a>
+      </div>
+
+    </div>
+
+ -->
+
+    <footer>
+      <p>&copy; airpair, Inc. · (800) 487-0668 · <a href="mailto:team@airpair.com">Email Us</a> · <a href="/experts">Experts</a> · <a href="/tutorials">Tutorials</a> · <a href="/privacy">Privacy Policy</a></p>
+    </footer>
+
+  </body>
+
+<script src="//cdn.optimizely.com/js/280598780.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+<script type="text/javascript">
+
+function storage(k, v) {
+  if (window.localStorage)
+  {
+    if (typeof v == 'undefined')
+    {
+      return localStorage[k];
+    }
+    localStorage[k] = v;
+    return v;
+  }
+}
+
+function initPage()
+{
+  $('.user-badge').each(function (idx) {
+    this.$badge = jQuery(this);
+    this.$badge.mouseover(function (emover) {
+      this.btn = $(this).find('.btn-slate');
+      this.btn.data('act', this.btn.html())
+      this.btn.html("Register");
+    }).mouseout(function (emout) {
+      this.btn = $(this).find('.btn-slate');
+      this.btn.html(this.btn.data('act'));
+    });
+  });
+
+  $('a.session').click(function (e) {
+    e.preventDefault();
+    alert("Page still under construction and we're still fleshing out the schedule :)");
+    false;
+  });
+
+  if (storage('subscribed') !== 'true')
+  {
+    $('.subscribe').show();
+  }
+
+  $('#btnSubscribe').click(function(e) {
+    storage('subscribed', true);
+  });
+
+  // var newsletterSignup = $('#newsletterSignup').offset().top - 20;
+  // $(window).scroll(function(e){
+  //   if (window.scrollY > newsletterSignup) {
+  //     newsletterSignup.addClass('affix');
+  //   } else {
+  //     newsletterSignup.removeClass('affix');
+  //   }
+  //   // console.log(window.scrollY);
+  // });
+}
+
+</script>
+
+<style>
+.subscribe { display:none }
+code { background:none;padding:none;margin:none; }
+code { padding:0; }
+.testimonial { width:48%;padding:10px;border-bottom:none!important;vertical-align:top;padding-top:0px!important }
+.testimonial .col-sm-8 { height:280px; }
+#experts .coloumn { padding-left:10px;padding-right:10px;  }
+#experts h3 { font-size:18px!important;padding-bottom:0;margin-bottom:4px }
+#experts h4 { font-size:12px!important;padding-top:0;margin-top:0;color:gray; }
+#experts h5 { font-size:14px!important;color:#CE5323;font-weight:bold;margin-left:0;margin-right:0; }
+.description { height:230px!important; }
+.description h6 { margin-top:0!important;padding-top:0!important;font-weight:bold }
+.btn-slate { font-weight:normal; }
+.btn-slate:hover { font-weight:bold; }
+.social-icons { padding-top:2px; }
+.social-icons a { width:32px;height:32px;display:inline-block;background-color:#d3d3d3;background-size:100%;background-position:center;background-repeat:no-repeat;margin-right:1px }
+.social-icons a:hover { border-bottom:solid 1px orange; }
+.social-icons span { width:32px;height:32px;display:inline-block;background-color:#d3d3d3;background-size:100%;background-position:center;margin-right:1px }
+.ap { background:url('/images/icons/ap-white.png') }
+.title span { display:inline-block;background:;color:white; }
+a.ap { background-color:#ce5323 }
+.gh { background:url('/images/icons/gh-white.png') }
+a.gh { background-color:#3b3b3b }
+.tw { background:url('/images/icons/tw-white.png') }
+a.tw { background-color:#00afea }
+.bb { background:url('/images/icons/bb-white.png') }
+a.bb { background-color:#1a4f7e }
+.so { background:url('/images/icons/so-white.png') }
+a.so { background-color:#ffa43c }
+.in { background:url('/images/icons/in-white.png') }
+a.in { background-color:#0081af }
+</style>
+
+
+<script src="/javascripts/home.js" defer onload="initPage()"></script>
+</html>

@@ -1,3 +1,5 @@
+{airconfSessions} = require './lib/services/_viewdata.data'
+
 module.exports = (app, render) ->
 
   app.get '/so10/:id', render 'landing/so10', ['params.id']
@@ -9,8 +11,18 @@ module.exports = (app, render) ->
   app.get '/so16/:id', render 'landing/so16', ['params.id']
   app.get '/so17/:id', render 'landing/so17', ['params.id']
 
-  app.get '/speakers', render 'landing/speakers'
-  app.get '/airconf2014', render 'landing/speakers'
+
+  checkSession = (req, r, n) ->
+    session = _.find airconfSessions, (s) -> s.slug == req.params.id
+    if session then n()
+    else
+      r.status 404
+      render('landing/airconf')(req, r, n)
+
+  app.get '/airconf/:id', checkSession, render 'landing/airconfsession', ['params.id']
+  app.get '/airconf2014', render 'landing/airconf'
+  app.get '/speakers', render 'landing/airconf'
+
 
   app.get '/railsconf2014', render 'landing/railsconf'
   app.get '/rails/consulting', render 'landing/railsconsulting'
