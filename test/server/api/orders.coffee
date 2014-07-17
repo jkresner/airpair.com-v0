@@ -1,4 +1,4 @@
-{http,_,sinon,chai,expect,dbConnect,dbDestroy} = require './../test-lib-setup'
+{http,_,sinon,chai,expect} = require './../test-lib-setup'
 {app,data,passportMock,nock} = require './../test-app-setup'
 
 require('./../../../lib/api/requests')(app)
@@ -6,13 +6,7 @@ require('./../../../lib/api/orders')(app)
 
 createReq = require('../util/createRequest')(app)
 
-
 describe "REST api orders", ->
-  @testNum = 0
-  before dbConnect
-  after (done) -> dbDestroy @, done
-  beforeEach -> @testNum++
-
   it "can not create order if not authenticated", (done) ->
     passportMock.setSession 'anon'
     order = data.orders[1]

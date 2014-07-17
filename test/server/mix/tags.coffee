@@ -3,10 +3,6 @@
 
 describe "UI models shared", ->
 
-  before ->
-  after ->
-  beforeEach ->
-
   it "tagsString returns empty string for null tags", ->
     expect( tagsString() ).to.equal ''
 

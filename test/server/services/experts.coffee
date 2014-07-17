@@ -1,4 +1,4 @@
-{http,_,sinon,chai,expect,dbConnect,dbDestroy} = require '../test-lib-setup'
+{http,_,sinon,chai,expect} = require '../test-lib-setup'
 {app, data}                                    = require '../test-app-setup'
 
 ObjectId = require('mongoose').Types.ObjectId
@@ -7,9 +7,6 @@ ExpertsService = require('./../../../lib/services/experts')
 svc = new ExpertsService
 
 describe 'ExpertsService', ->
-  before dbConnect
-  after (done) -> dbDestroy @, done
-
   mvh = data.experts[8] # Matthew Van Horn
   mp = data.experts[9] # Michael Prins
 
@@ -30,6 +27,11 @@ describe 'ExpertsService', ->
           done()
 
   describe 'getByTagsAndMaxRate', ->
-    it "returns experts with tags and rate less than the max", (done) ->
 
-        svc.getByTagsAndMaxRate ['ruby-on-rails'], 100, ->
+    # todo: depends on previous examples to put experts in db, kinda nasty
+    it "returns experts with tags and rate less than the max", (done) ->
+      svc.getByTagsAndMaxRate ['ruby-on-rails'], 100, (e, experts) ->
+        userNames = _.pluck(experts,'username')
+        expect(userNames).to.include mvh.username
+        expect(userNames).to.not.include mp.username
+        done()

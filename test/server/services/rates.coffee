@@ -1,15 +1,9 @@
-{http,_,sinon,chai,expect,dbConnect,dbDestroy} = require './../test-lib-setup'
+{http,_,sinon,chai,expect} = require './../test-lib-setup'
 
 RatesService = require('./../../../lib/services/rates')
 svc = new RatesService()
 
 describe "RatesService", ->
-  @testNum = 0
-
-  before ->
-  after ->
-  beforeEach -> @testNum++
-
   it "should get suggestedExpertRate < expertRate when expertRate > budget", ->
     expert = rate: 160
     request = pricing: 'opensource', budget: 90

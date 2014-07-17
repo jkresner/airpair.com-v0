@@ -1,4 +1,4 @@
-{http,_,sinon,chai,expect,dbConnect,dbDestroy} = require '../test-lib-setup'
+{http,_,sinon,chai,expect} = require '../test-lib-setup'
 {app, data, nock} = require '../test-app-setup'
 
 async     = require 'async'
@@ -14,12 +14,10 @@ viewDataSvc      = new (require '../../../lib/services/_viewdata')(data.users[13
 svc              = new (require '../../../lib/services/requestCalls')()
 
 describe "RequestCallsService", ->
-  @testNum = 0
   user = data.users[13]  # bchristie
   request = data.requests[10] # experts[0] = paul, experts[1] = matthews
   request = _.omit request, '_id'
-  before dbConnect
-  after (done) -> dbDestroy @, done
+
   beforeEach () ->
     nock('https://api.stripe.com:443')
       .post('/v1/charges', "customer=cus_35N03uIhfJPhzU&amount=18000&currency=usd")

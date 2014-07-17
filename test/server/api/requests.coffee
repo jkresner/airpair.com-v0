@@ -1,4 +1,4 @@
-{http,_,sinon,chai,expect,dbConnect,dbDestroy} = require './../test-lib-setup'
+{http,_,sinon,chai,expect} = require './../test-lib-setup'
 {app,data,passportMock}                        = require './../test-app-setup'
 
 require('./../../../lib/api/requests')(app)
@@ -6,12 +6,6 @@ require('./../../../lib/api/requests')(app)
 createReq = require('../util/createRequest')(app)
 
 describe "REST api requests", ->
-  @testNum = 0
-
-  before dbConnect
-  after (done) -> dbDestroy @, done
-  beforeEach -> @testNum++
-
   it "should get first request", (done) ->
     passportMock.setSession 'admin'
     createReq data.requests[1], (e, req) =>

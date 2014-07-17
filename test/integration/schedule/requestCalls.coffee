@@ -20,12 +20,6 @@ createReq = (reqData, callback) ->
 
 
 describe "REST api request calls", ->
-  @testNum = 0
-
-  before dbConnect
-  after (done) -> dbDestroy @, done
-  beforeEach -> @testNum++
-
 
   it "can create call (with order credit) as customer", (done) ->
     # check experts calendar availability

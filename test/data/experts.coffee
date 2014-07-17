@@ -196,7 +196,7 @@ module.exports = [
   "timezone":"GMT+0200 (SAST)",
   "status":"busy",
   "so":{"profile_image":"http://www.gravatar.com/avatar/ad641961a030d715748458c7511ea4da?d=identicon&r=PG", "reputation":91, "link":"1264269/requnix", "website_url":"","id":1264269},
-  "rate":140,
+  "rate":40,
   "pic":"https://lh6.googleusercontent.com/-mwLiQp42QCo/AAAAAAAAAAI/AAAAAAAAAFA/oY5FP-maKOs/photo.jpg",
   "name":"Michael Prins",
   "in":{"displayName":"Michael Prins","id":"FvfkHwMjRp"},

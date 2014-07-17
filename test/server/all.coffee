@@ -1,14 +1,4 @@
-{dbConnect,dbDestroy} = require './test-lib-setup'
-mongoose              = require 'mongoose'
-global.suiteCtx       = true
-
 describe "Server-side suite", ->
-
-  before (done) ->
-    @timeout 10000
-    dbConnect ->
-      mongoose.connection.db.executeDbCommand { dropDatabase: 1 }, done
-
   describe 'mix/tags', (done) -> require './mix/tags'
   describe 'api/companys', (done) -> require './api/companys'
   describe 'api/experts', (done) -> require './api/experts'
@@ -19,7 +9,3 @@ describe "Server-side suite", ->
   describe 'services/request', (done) -> require './services/request'
   describe 'services/requestCalls', (done) -> require './services/requestCalls'
   describe 'mail/mailman', (done) -> require './mail/mailman'
-
-  after (done) ->
-    suiteCtx = false
-    dbDestroy @, done

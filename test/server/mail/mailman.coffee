@@ -5,12 +5,6 @@ mailman         = require '../../../lib/mail/mailman'
 {tagsString}    = require '../../../lib/mix/tags'
 
 describe "mailman", ->
-  # @testNum = 0
-
-  # before dbConnect
-  # after (done) -> dbDestroy @, done
-  # beforeEach () ->
-  #   @testNum++
 
   it "importantRequestEvent sends to options.owner + '@airpair.com'", (done) ->
     expect(mailman).to.be.a 'object'
