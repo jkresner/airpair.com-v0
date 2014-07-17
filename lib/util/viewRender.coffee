@@ -13,9 +13,16 @@ module.exports =
     (req, resp, next) ->
       resp.sendfile "./public/#{fileName}.html"
 
-  render: (fileName, propList) ->
-    propList = [] if !propList?
+  render: (fileName, propList=[]) ->
     (req, resp, next) ->
+
+      renderTemplate = (name, data={}) ->
+        resp.render "#{name}.html", data, (err, html) ->
+          if err?
+            resp.render "#{fileName}.jade", data
+          else
+            resp.end(html)
+
 
       vdSvc = new ViewDataSvc req.user
 
@@ -23,17 +30,10 @@ module.exports =
       fnName = fileName.replace('adm/', '').replace('payment/', '').replace('landing/', '')
 
       if !vdSvc[fnName]?
-        resp.render "#{fileName}.html", { segmentioKey: config.analytics.segmentio.writeKey }, (err, html) ->
-          if err?
-            resp.render "#{fileName}.jade", {}
-          else
-            resp.end(html)
-
+        renderTemplate fileName, { segmentioKey: config.analytics.segmentio.writeKey }
       else
-        args = []
-
-        for prop in propList
-          args.push getProp req, prop
+        args = _.map propList, (prop) ->
+          getProp req, prop
 
         args.push (e, getViewData) =>
           if e
@@ -49,6 +49,6 @@ module.exports =
 
             if vdSvc.logging then $log 'viewData', fnName, data
 
-            resp.render "#{fileName}.html", data
+            renderTemplate fileName, data
 
         vdSvc[fnName].apply vdSvc, args
