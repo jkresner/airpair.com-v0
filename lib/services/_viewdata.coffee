@@ -35,6 +35,10 @@ module.exports = class ViewDataService
   dashboard: (cb) ->
     cb null, -> { }
 
+  site: (cb) ->
+    session = @session true
+    cb null, -> { session }
+
   settings: (cb) ->
     cb null, -> { stripePK }
 

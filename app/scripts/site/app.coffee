@@ -8,6 +8,7 @@ app.config ($routeProvider, $locationProvider) ->
   $locationProvider.html5Mode(true)
 
 require("./services/global")(app)
+require("./controllers/headerController")(app)
 require("./controllers/expertSettingsController")(app)
 
 module.exports = -> app
