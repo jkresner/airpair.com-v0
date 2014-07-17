@@ -26,14 +26,6 @@
           <span class="navbar-brand-img">
             <img src="/images/logos/airpair.png" alt="" width="140px">
           </span>
-          <button type="button" class="navbar-toggle pull-right" data-toggle="collapse" data-target="#nav-mobile">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-
-          <!-- <span class="brand-slogan">Better, faster, cheaper consulting. Pay by the hour.</i> -->
         </div>
       </div>
     </nav>
@@ -63,6 +55,7 @@
             <div class="avatar-logo">
               <img src="/images/avatars/of.png" alt="" class="img-circle" width="130px" style="margin-top:-20px" />
               <img src="//avatars3.githubusercontent.com/u/76?s=130" alt="" class="img-circle" width="130px" style="margin-top:-40px" />
+              <img src="//secure.gravatar.com/avatar/1eb7539f1f0a62f74ea3f7a0fa0f486f?s=140" alt="" class="img-circle" width="130px" style="margin-top:-40px" />
             </div>
           </div>
           <div class="col-sm-8">
@@ -70,12 +63,8 @@
             With remote work and distributed teams becoming more popular each year, what does the future hold for consulting? Consultancies like Thoughtworks and Pivotal Labs have gone beyond outsourcing. The best consultancies leave clients with new skills on top of deliverables. But will this be enough going forward, what does the future hold?
             <small class="block m-t-1">
               <b><a href="//twitter.com/obie" target="_blank">Obie Fernandez</a></b> &ndash; Hashrocket <span class="text-muted">, CEO (prev)</span> | AirPair</b><span class="text-muted">, CTO</span>
-              <!-- <br /><b>?Martin Fowler</b> &ndash; ThoughtWorks<span class="text-muted">, Chief Scientist</span> -->
               <br /><b><a href="//twitter.com/rabble" target="_blank">Evan Henshaw-Plath</a></b> &ndash; Neo<span class="text-muted">, CTO</span>
-<!--               <br /><b>Panelist 3</b> &ndash; <span class="text-muted">, </span>
-              <br /><b>Panelist 4</b> &ndash; <span class="text-muted">, </span>
- -->
-
+              <br /><b><a href="//twitter.com/cpytel" target="_blank">Chad Pytel</a></b> &ndash; ThoughtBot<span class="text-muted">, CEO</span>
              </small>
           </div>
         </div>
@@ -141,71 +130,72 @@
 
 <div style="clear:both"></div>
 
-{{#with speakers }}
+{{#with sessions }}
 
 <div class="container p-b-4" id="experts">
   <h2 class="text-thin text-center m-t-3">Week 1 Speakers</h2><hr>
 
   <div class="columns-five m-t-2">
-    {{#with danielroseman}}{{> speaker }}{{/with}}
-    {{#with andrewchen}}{{> speaker }}{{/with}}
-    {{#with wycats}}{{> speaker }}{{/with}}
-    {{#with ryanbigg}}{{> speaker }}{{/with}}
-    {{#with jefflinwood}}{{> speaker }}{{/with}}
+    {{#with danielroseman}}{{> sessionSummary }}{{/with}}
+    {{#with andrewchen}}{{> sessionSummary }}{{/with}}
+    {{#with wycats}}{{> sessionSummary }}{{/with}}
+    {{#with ryanbigg}}{{> sessionSummary }}{{/with}}
+    {{#with jefflinwood}}{{> sessionSummary }}{{/with}}
   </div>
   <div class="columns-five m-t-2">
-    {{#with abedra}}{{> speaker }}{{/with}}
-    {{#with alyssa}}{{> speaker }}{{/with}}
-    {{#with joshowens}}{{> speaker }}{{/with}}
-    {{#with toddmotto}}{{> speaker }}{{/with}}
-    {{#with stefanpenner}}{{> speaker }}{{/with}}
+    {{#with abedra}}{{> sessionSummary }}{{/with}}
+    {{#with alyssa}}{{> sessionSummary }}{{/with}}
+    {{#with joshowens}}{{> sessionSummary }}{{/with}}
+    {{#with toddmotto}}{{> sessionSummary }}{{/with}}
+    {{#with stefanpenner}}{{> sessionSummary }}{{/with}}
   </div>
 
   <h2 class="text-thin text-center m-t-3">Week 2 Speakers</h2><hr>
 
   <div class="columns-five m-t-2">
-    {{#with domenic}}{{> speaker }}{{/with}}
-    {{#with adymo}}{{> speaker }}{{/with}}
-    {{#with matsko}}{{> speaker }}{{/with}}
-    {{#with felienne}}{{> speaker }}{{/with}}
-    {{#with ehrenreilly}}{{> speaker }}{{/with}}
+    {{#with domenic}}{{> sessionSummary }}{{/with}}
+    {{#with adymo}}{{> sessionSummary }}{{/with}}
+    {{#with matsko}}{{> sessionSummary }}{{/with}}
+    {{#with felienne}}{{> sessionSummary }}{{/with}}
+    {{#with ehrenreilly}}{{> sessionSummary }}{{/with}}
   </div>
   <div class="columns-five m-t-2">
-    {{#with zopatista}}{{> speaker }}{{/with}}
-    {{#with hackerpreneur}}{{> speaker }}{{/with}}
-    {{#with searls}}{{> speaker }}{{/with}}
+    {{#with acuppy1}}{{> sessionSummary }}{{/with}}
+    {{#with zopatista}}{{> sessionSummary }}{{/with}}
+    {{#with hackerpreneur}}{{> sessionSummary }}{{/with}}
+    {{#with searls}}{{> sessionSummary }}{{/with}}
   </div>
 
  <h2 class="text-thin text-center m-t-3">Week 3 Speakers</h2><hr />
 
  <div class="columns-five m-t-2">
-    {{#with philsturgeon}}{{> speaker }}{{/with}}
-    {{#with evgenyz}}{{> speaker }}{{/with}}
-    {{#with acuppy}}{{> speaker }}{{/with}}
-    {{#with al_the_x}}{{> speaker }}{{/with}}
-    {{#with amirrajan}}{{> speaker }}{{/with}}
+    {{#with philsturgeon}}{{> sessionSummary }}{{/with}}
+    {{#with evgenyz}}{{> sessionSummary }}{{/with}}
+    {{#with acuppy2}}{{> sessionSummary }}{{/with}}
+    {{#with al_the_x}}{{> sessionSummary }}{{/with}}
+    {{#with amirrajan}}{{> sessionSummary }}{{/with}}
   </div>
   <div class="columns-five m-t-2">
-    {{#with basarat}}{{> speaker }}{{/with}}
-    {{#with mariovisic}}{{> speaker }}{{/with}}
-    {{#with larskotthoff}}{{> speaker }}{{/with}}
-    {{#with fluffyjack}}{{> speaker }}{{/with}}
+    {{#with basarat}}{{> sessionSummary }}{{/with}}
+    {{#with mariovisic}}{{> sessionSummary }}{{/with}}
+    {{#with larskotthoff}}{{> sessionSummary }}{{/with}}
+    {{#with fluffyjack}}{{> sessionSummary }}{{/with}}
   </div>
 
 <h2 class="text-thin text-center m-t-3">Week 4 Speakers</h2><hr>
 
   <div class="columns-five m-t-2">
-    {{#with urish}}{{> speaker }}{{/with}}
-    {{#with antonioribeiro}}{{> speaker }}{{/with}}
-    {{#with 2upmedia}}{{> speaker }}{{/with}}
-    {{#with kn0tch}}{{> speaker }}{{/with}}
-    {{#with auser}}{{> speaker }}{{/with}}
+    {{#with urish}}{{> sessionSummary }}{{/with}}
+    {{#with antonioribeiro}}{{> sessionSummary }}{{/with}}
+    {{#with 2upmedia}}{{> sessionSummary }}{{/with}}
+    {{#with kn0tch}}{{> sessionSummary }}{{/with}}
+    {{#with auser}}{{> sessionSummary }}{{/with}}
   </div>
   <div class="columns-five m-t-2">
-    {{#with abeisgreat}}{{> speaker }}{{/with}}
-    {{#with ronlichty}}{{> speaker }}{{/with}}
-    {{#with mikegrassotti}}{{> speaker }}{{/with}}
-    {{#with mfeckie}}{{> speaker }}{{/with}}
+    {{#with abeisgreat}}{{> sessionSummary }}{{/with}}
+    {{#with ronlichty}}{{> sessionSummary }}{{/with}}
+    {{#with mikegrassotti}}{{> sessionSummary }}{{/with}}
+    {{#with mfeckie}}{{> sessionSummary }}{{/with}}
   </div>
 
 </div>
@@ -264,7 +254,7 @@ function initPage()
     this.$badge.mouseover(function (emover) {
       this.btn = $(this).find('.btn-slate');
       this.btn.data('act', this.btn.html())
-      this.btn.html("Register");
+      this.btn.html("More info");
     }).mouseout(function (emout) {
       this.btn = $(this).find('.btn-slate');
       this.btn.html(this.btn.data('act'));
@@ -272,9 +262,12 @@ function initPage()
   });
 
   $('a.session').click(function (e) {
-    e.preventDefault();
-    alert("Page still under construction and we're still fleshing out the schedule :)");
-    false;
+    if ($(this).attr('href') == '/airconf/')
+    {
+      e.preventDefault();
+      alert("Page still under construction and we're still fleshing out the schedule :)");
+      false;
+    }
   });
 }
 
