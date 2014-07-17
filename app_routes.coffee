@@ -19,9 +19,9 @@ module.exports = (app) ->
   app.get '/book/me', authd, render 'bookme'
 
   # angular site pages
-  app.get '/site', render 'site'
-  app.get '/experts/me', render 'site'
-  app.get '/templates/experts/me', render 'templates/experts/me'
+  app.get '/site', authd, render 'site'
+  app.get '/experts/me', authd, render 'site'
+  app.get '/templates/experts/me', authd, render 'templates/experts/me'
 
   # pages
   app.get '/login', file 'login'

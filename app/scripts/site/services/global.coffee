@@ -1,7 +1,7 @@
 module.exports = (app) ->
   app.factory 'global', ->
     {
-      currentUser: -> currentUser
-      isSignedIn: -> !!currentUser
-      currentId: -> currentId
+      currentUser: currentUser
+      name: currentUser.google._json.name
+      isSignedIn: currentUser._id?
     }
