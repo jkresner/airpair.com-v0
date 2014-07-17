@@ -19,9 +19,10 @@ module.exports = class AutoMatchService
     @expertService.getByTagsAndMaxRate soTagIds, maxRate, (e, results) =>
       @pickFiveBestExperts results, (matchedExperts) =>
         for expert in matchedExperts
-          @mailmanService.autoMatchNotification expert, request
+          @mailmanService.sendAutoNotification expert, request
         done()
 
   pickFiveBestExperts: (superset, cb) ->
     # whatever the algorithm does
-    cb _.first(superset, 5)
+    matches = _.first(superset, 5)
+    cb matches

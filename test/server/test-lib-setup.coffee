@@ -1,12 +1,13 @@
 global.$log = console.log
-global._    = require 'underscore'
+global._ = require 'underscore'
 
 mongoose = require 'mongoose'
-chai     = require 'chai'
+chai = require 'chai'
 chai.use require 'sinon-chai'
 
-Factory  = require 'factory-lady'
+Factory = require 'factory-lady'
 require ("../factory/expertFactory")
+require ("../factory/requestFactory")
 
 before (done) ->
   return done() if mongoose.connections[0]._listening

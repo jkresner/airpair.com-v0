@@ -27,11 +27,11 @@ describe 'ExpertsService', ->
           done()
 
   describe 'getByTagsAndMaxRate', ->
-
     # todo: depends on previous examples to put experts in db, kinda nasty
     it "returns experts with tags and rate less than the max", (done) ->
-      svc.getByTagsAndMaxRate ['ruby-on-rails'], 100, (e, experts) ->
-        userNames = _.pluck(experts,'username')
-        expect(userNames).to.include mvh.username
-        expect(userNames).to.not.include mp.username
-        done()
+      svc.create mvh, (e,r) ->
+        svc.getByTagsAndMaxRate ['oop'], 100, (e, experts) ->
+          userNames = _.pluck(experts,'username')
+          expect(userNames).to.include mvh.username
+          expect(userNames).to.not.include mp.username
+          done()
