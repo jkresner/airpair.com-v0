@@ -66,16 +66,16 @@
 }
 .btn-primary {
   @include button-variant($btn-primary-color, $btn-primary-bg, $btn-primary-border);
-  background-image: -o-linear-gradient(-89deg, #FF7B47 0%, #EE591F 100%);
-  background-image: -moz-linear-gradient(-89deg, #FF7B47 0%, #EE591F 100%);
-  background-image: -ms-linear-gradient(-89deg, #FF7B47 0%, #EE591F 100%);
-  background-image: linear-gradient(-179deg, #FF7B47 0%, #EE591F 100%);
+  // background-image: -o-linear-gradient(-89deg, #FF7B47 0%, #EE591F 100%);
+  // background-image: -moz-linear-gradient(-89deg, #FF7B47 0%, #EE591F 100%);
+  // background-image: -ms-linear-gradient(-89deg, #FF7B47 0%, #EE591F 100%);
+  // background-image: linear-gradient(-179deg, #FF7B47 0%, #EE591F 100%);
 
   &:hover {
-    background-image: -o-linear-gradient(-89deg, #FF8D61 0%, #F3632A 100%);
-    background-image: -moz-linear-gradient(-89deg, #FF8D61 0%, #F3632A 100%);
-    background-image: -ms-linear-gradient(-89deg, #FF8D61 0%, #F3632A 100%);
-    background-image: linear-gradient(-179deg, #FF8D61 0%, #F3632A 100%);
+    // background-image: -o-linear-gradient(-89deg, #FF8D61 0%, #F3632A 100%);
+    // background-image: -moz-linear-gradient(-89deg, #FF8D61 0%, #F3632A 100%);
+    // background-image: -ms-linear-gradient(-89deg, #FF8D61 0%, #F3632A 100%);
+    // background-image: linear-gradient(-179deg, #FF8D61 0%, #F3632A 100%);
   }
 }
 .btn-slate {
