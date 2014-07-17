@@ -25,8 +25,8 @@ module.exports = class ExpertsService extends DomainService
   getBySubscriptions: (tagId, level, cb) =>
     @searchMany { tags: { $elemMatch: { '_id': tagId, 'subscription.auto': { $elemMatch: { $in: [level] } } } } }, { fields: @admSelect }, cb
 
-  getByTagsAndMaxRate: (tags, maxRate, cb) =>
-    @searchMany { tags: { $in: tags },  rate: { $lt: maxRate }}, { fields: @admSelect }, cb
+  getByTagsAndMaxRate: (soTagIds, maxRate, cb) =>
+    @searchMany { tags: { $elemMatch: { soId: { $in: soTagIds } } },  rate: { $lt: maxRate } }, { fields: @admSelect }, cb
 
   detailOnRequest: (id, cb) =>
     @searchOne userId: @usr._id, {}, (e, expert) =>

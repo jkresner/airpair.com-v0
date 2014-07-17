@@ -1,24 +1,27 @@
-async                 = require 'async'
-Data                  = require './requests.query'
-Roles                 = require '../identity/roles'
-DomainService         = require './_svc'
-RatesService          = require './rates'
 ExpertsService        = require './experts'
+RatesService          = require './rates'
 SettingsService       = require './settings'
-MarketingTagsSvc      = require './marketingtags'
-expertPick            = require '../mix/expertForSuggestion'
-objectIdWithTimestamp = require '../mix/objectIdWithTimestamp'
 
 
-module.exports = class AutoMatchService extends DomainService
+module.exports = class AutoMatchService
 
   logging: on
 
-  mailman:      require '../mail/mailman'
-  rates:        new RatesService()
-  experts:      new ExpertsService()
+  mailmanService:  require '../mail/mailman'
+  expertService:   new ExpertsService()
+  ratesService:    new RatesService()
+  settingsService: new SettingsService()
 
-  sendAutoNotifications: (request) ->
+  sendExpertNotifications: (request, done) ->
+    soTagIds = _.pluck(request.tags, 'soId')
+    maxRate = @ratesService.getMaxExpertRate(request.budget, request.pricing)
 
-    experts.getBySubscriptions(tagId, level, cb)
-      mailman.autoMatchNotification expert, request
+    @expertService.getByTagsAndMaxRate soTagIds, maxRate, (e, results) =>
+      @pickFiveBestExperts results, (matchedExperts) =>
+        for expert in matchedExperts
+          @mailmanService.autoMatchNotification expert, request
+        done()
+
+  pickFiveBestExperts: (superset, cb) ->
+    # whatever the algorithm does
+    cb _.first(superset, 5)
