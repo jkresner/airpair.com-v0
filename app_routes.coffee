@@ -20,8 +20,8 @@ module.exports = (app) ->
 
   # angular site pages
   app.get '/site', render 'site'
-  app.get '/angularController', render 'site'
-  app.get '/templates/test', render 'templates/test'
+  app.get '/experts/me', render 'site'
+  app.get '/templates/experts/me', render 'templates/experts/me'
 
   # pages
   app.get '/login', file 'login'
