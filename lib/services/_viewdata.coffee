@@ -122,7 +122,6 @@ module.exports = class ViewDataService
       feature = name:'Yehuda Katz', me: 'wycats', claim: 'Rails Core Team Member'
       feature = Data.so15[id] if Data.so15[id]
       cb e, ->
-        console.log "BSA02 -- #{id}"
         return { tag, feature }
 
   paypalSuccess: (id, cb) ->
