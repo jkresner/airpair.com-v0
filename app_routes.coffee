@@ -21,7 +21,6 @@ module.exports = (app) ->
   app.get '/book/me', authd, render 'bookme'
 
   # angular site pages
-<<<<<<< HEAD
   require('./lib/api/workshops')(app) # keep above :tag/workshops
 
   app.get '/admin', authd, adm, render 'admin'
