@@ -4,6 +4,8 @@ namespace 'test', ->
     jake.createExec(['mocha test/server/**/*Spec.coffee'])
       .addListener 'stdout', (message) ->
         process.stdout.write(message.toString())
+      .addListener 'error', (message) ->
+        process.stdout.write(message.toString())
       .run()
 
 namespace 'db', ->
