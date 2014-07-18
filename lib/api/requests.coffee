@@ -12,6 +12,7 @@ class RequestApi extends Api
   routes: (app, route) ->
     app.get    "/api/#{route}", @loggedIn, @ap, @list
     app.get    "/api/#{route}/:id", @ap, @detail
+    app.get    "/api/#{route}/expert/:expertId", @loggedIn, @ap, @expertList
     app.get    "/api/admin/#{route}/active", @admin, @ap, @active
     app.get    "/api/admin/#{route}/inactive", @admin, @ap, @inactive
     app.get    "/api/admin/#{route}/inactive", @admin, @ap, @inactive
@@ -24,6 +25,7 @@ class RequestApi extends Api
     app.delete "/api/#{route}/:id", @admin, @ap, @delete
 
   list: (req) => @svc.getByUserId req.user._id, @cbSend
+  expertList: (req) => @svc.getBySuggestedExpert req.params.expertId, @cbSend
   active: (req) => @svc.getActive @cbSend
   inactive: (req) => @svc.getInactive @cbSend
   detail: (req) => @svc.getByIdSmart req.params.id, @cbSend
