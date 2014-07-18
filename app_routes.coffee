@@ -48,6 +48,7 @@ module.exports = (app) ->
   app.get '/schedule/:id', authd, mm, render 'schedule', ['params.id']
 
   # api
+  require('./lib/api/session')(app)
   require('./lib/api/users')(app)
   require('./lib/api/companys')(app)
   require('./lib/api/tags')(app)

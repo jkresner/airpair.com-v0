@@ -5,7 +5,6 @@ class Api
   # is overriden in child class
   Svc:  ->
 
-  # turn on to get information about requests in the console
   logging: off
 
   # set important authorization-related properties

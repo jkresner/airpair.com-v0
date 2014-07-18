@@ -1,15 +1,13 @@
+ViewDataService = require('../services/_viewdata')
 
 class UserApi extends require('./_api')
 
-  Svc:  ->
-
   routes: (app, route) ->
-    app.get   "/api/#{route}/me", @ap, @detail
+    app.get "/api/#{route}/me", @ap, @detail
 
 
   detail: (req, res) =>
-    VDSvc = require('../services/_viewdata')
-    res.send new VDSvc(req.user).session true
+    res.send new ViewDataService(req.user).session true
 
 
 module.exports = (app) -> new UserApi app, 'users'
