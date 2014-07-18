@@ -72,6 +72,7 @@
     "chai": "~1.7.2",
     "coffee-errors": "https://registry.npmjs.org/coffee-errors/-/coffee-errors-0.8.5.tgz",
     "factory-lady": "latest",
+    "jake": "latest",
     "mocha": "~1.12.0",
     "mocha-phantomjs": "~3.2.0",
     "nock": "~0.42.1",

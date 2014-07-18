@@ -23,6 +23,7 @@ afterEach (done) ->
 chai.Assertion.includeStack = true
 
 module.exports =
+
   http:       require 'supertest'
   _:          require 'underscore'
   sinon:      require 'sinon'

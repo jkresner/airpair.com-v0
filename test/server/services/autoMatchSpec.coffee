@@ -1,4 +1,4 @@
-{http,_,sinon,chai,expect,Factory} = require './../test-lib-setup'
+{http,_,sinon,chai,expect,Factory} = require('./../test-lib-setup')
 {app, data} = require './../test-app-setup'
 
 AutoMatchService = require('./../../../lib/services/autoMatch')

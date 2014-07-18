@@ -1,5 +1,5 @@
 {http,_,sinon,chai,expect} = require './../test-lib-setup'
-{app,data,passportMock}                        = require './../test-app-setup'
+{app,data,passportMock} = require './../test-app-setup'
 
 
 require('./../../../lib/api/companys')(app)

@@ -83,7 +83,6 @@ describe "PaypalService", ->
       svc.ExecutePayment o, (e, res2) ->
         if e then return done e
 
-        console.log('sep res', JSON.stringify(res2, null, 2))
         expect(res2.responseEnvelope.ack).to.equal 'Failure'
         expect(res2.error.length).to.equal 1
         msg = "This payment request must be authorized by the sender"

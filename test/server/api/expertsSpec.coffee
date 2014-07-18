@@ -11,7 +11,6 @@ describe "REST api experts", ->
   it "can update expert with tags and subscriptions", (done) ->
     mvh = data.experts[8]  # Matt Van Horn
     svc.create mvh, (e,r) ->
-      console.log e
       # mutate Matt's subscription before PUT'ing him back in the db
       mvh.tags.push {"soId":"angular","short":"angular","name":"angular", "subscription": {auto: ["beginner"]}}
 

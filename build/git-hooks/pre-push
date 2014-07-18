@@ -7,7 +7,7 @@ if [[ -n "${test_pid}" ]]; then
 fi
 brunch w -e test &
 test_pid=$!
-mocha test/server/all.coffee
+jake test:server
 success=$?
 if [[ ${success} == "0" ]]; then
   mocha-phantomjs "http://localhost:${test_port}/test/index.html"
