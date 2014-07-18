@@ -3,6 +3,7 @@ authz    = require './../identity/authz'
 
 class Api
 
+  Svc:  ->
 
   logging: off    # note: can set logging in the child class
 

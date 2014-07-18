@@ -7,7 +7,7 @@ app.config ($routeProvider, $locationProvider) ->
 
   $locationProvider.html5Mode(true)
 
-require("./services/global")(app)
+require("./services/session")(app)
 require("./controllers/headerController")(app)
 require("./controllers/expertSettingsController")(app)
 
