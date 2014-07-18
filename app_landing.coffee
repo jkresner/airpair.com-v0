@@ -1,4 +1,4 @@
-{airconfSessions} = require './lib/services/_viewdata.data'
+{confSessions} = require './lib/services/_viewdata.data'
 
 module.exports = (app, render) ->
 
@@ -11,9 +11,10 @@ module.exports = (app, render) ->
   app.get '/so16/:id', render 'landing/so16', ['params.id']
   app.get '/so17/:id', render 'landing/so17', ['params.id']
 
+  app.get '/bsa02', render 'landing/bsa02'
 
   checkSession = (req, r, n) ->
-    session = _.find airconfSessions, (s) -> s.slug == req.params.id
+    session = _.find confSessions, (s) -> s.slug == req.params.id
     if session then n()
     else
       r.status 404
@@ -30,4 +31,3 @@ module.exports = (app, render) ->
 
   app.get '/welcome-back', render 'landing/welcome-back', ['params.id']
 
-  app.get '/bsa02/:id', render 'landing/bsa02', ['params.id']

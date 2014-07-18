@@ -85,11 +85,11 @@ module.exports = class ViewDataService
       cb e, -> { companys, stripePK }
 
   airconf: (cb) ->
-    cb null, -> { sessions: Data.airconfSessions }
+    cb null, -> { sessions: Data.confSessions }
 
   airconfsession: (id, cb) ->
-    session = _.find Data.airconfSessions, (s) -> s.slug == id
-    cb null, -> { sessions: Data.airconfSessions, session }
+    session = _.find Data.confSessions, (s) -> s.slug == id
+    cb null, -> { sessions: Data.confSessions, session }
 
 
   so10: (id, cb) ->
