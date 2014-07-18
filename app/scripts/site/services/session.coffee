@@ -13,6 +13,12 @@ SessionFactory = ($http, $window) ->
       if @isSignedIn()
         @data.user.google.displayName
 
+    updateSession: ->
+      $http.get('/api/session')
+        .success (data) =>
+          @data = data
+        .error (data) ->
+          console.log('Error: ' + data)
   session
 
 angular

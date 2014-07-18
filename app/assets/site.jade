@@ -2,14 +2,12 @@ doctype html
 html(ng-app='ngAirPair')
   head
     script(src="/javascripts/site.js")
-    script(type="text/javascript").
-      window.currentUser = !{ session ? JSON.stringify(session) : 'null'};
 
   body
     header(ng-controller='headerController')
       h1 This is the main site
-      h4(ng-show='global.isSignedIn')
-        and you are signed in as {{ global.name }}
+      h4(ng-show='session.isSignedIn()')
+        and you are signed in as {{ session.name() }}
 
     div(ng-conroller='expertsController')
       a(href="/site") Home
