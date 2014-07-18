@@ -247,3 +247,16 @@ describe "REST api requests", ->
               expect( d.events[2].by.name ).to.equal 'Jonathon Kresner'
               done()
 
+  describe "GET /api/requests/expert/:expertId", ->
+    it "should get requests that have been suggested to an expert", (done) ->
+      passportMock.setSession 'jk'
+      requestData = _.extend(data.requests[3], data.requests[4])
+      createReq requestData, (e, req) =>
+        passportMock.setSession 'bearMountain'
+        expertId = data.requests[4].suggested[1].expert._id
+        http(app).get("/api/requests/expert/#{expertId}")
+          .end (err, response) =>
+            body = response.body
+            expect(body[0]._id).to.eq(req._id)
+            done()
+
