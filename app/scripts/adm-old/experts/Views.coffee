@@ -68,6 +68,33 @@ class exports.BookMeView extends BB.ModelSaveView
     if @elm('code2').val() then d.coupons.push { code: @elm('code2').val(), rate: @elm('rate2').val() }
     d
 
+class exports.TagSubscriptionsView extends BB.ModelSaveView
+  el: '#tagSubscriptions'
+  tmpl: require './templates/TagSubscriptions'
+  events:
+    'change .subscription': 'toggleSubscription'
+  initialize: ->
+    @model.once 'change', =>
+      @render()
+      @listenTo @model, 'change:tags', @render
+  render: ->
+    @$el.html @tmpl @model.toJSON()
+    for tag in @model.get('tags')
+      for type in ['auto','custom']
+        for level in (tag.subscription?[type] || [])
+          hash = "#{tag._id}_#{level}_#{type}"
+          @$("[data-hash='#{hash}']").attr('checked','checked')
+    @
+  updateSubscriptions: (tags) ->
+    for tag in tags
+      $log 'tag', tag
+      tag.subscription = auto: [], custom: []
+      for level in ['beginner','intermediate','advanced']
+        tag.subscription['auto'].push level if @$("[data-hash='#{tag._id}_#{level}_auto']").is(':checked')
+        tag.subscription['custom'].push level if @$("[data-hash='#{tag._id}_#{level}_custom']").is(':checked')
+    tags
+
+
 class exports.ExpertView extends BB.ModelSaveView
   el: '#edit'
   tmpl: require './templates/Expert'
@@ -81,6 +108,7 @@ class exports.ExpertView extends BB.ModelSaveView
     @$el.html @tmpl {}
     @tagsInput = new SV.TagsInputView model: @model, collection: @tags
     @bookMe = new exports.BookMeView model: @model
+    @tagSubscriptions = new exports.TagSubscriptionsView model: @model
     @listenTo @model, 'change', @render
   render: (model) ->
     @setValsFromModel ['name', 'email', 'gmail', 'pic', 'homepage', 'brief', 'hours']
@@ -104,7 +132,7 @@ class exports.ExpertView extends BB.ModelSaveView
     hours: @elm('hours').val()
     rate: @$("[name='rate']:checked").val()
     status: @$("[name='status']:checked").val()
-    tags: @tagsInput.getViewData()
+    tags: @tagSubscriptions.updateSubscriptions( @tagsInput.getViewData() )
     bookMe: @bookMe.getViewData()
   destroy: ->
     m = @collection.findWhere(_id: @model.id)

@@ -1,4 +1,4 @@
-{http,_,sinon,chai,expect,dbConnect,dbDestroy} = require './../test-lib-setup'
+{http,_,sinon,chai,expect} = require './../test-lib-setup'
 {app,data,passportMock}                        = require './../test-app-setup'
 
 
@@ -6,12 +6,6 @@ require('./../../../lib/api/companys')(app)
 
 
 describe "REST api companys", ->
-
-  @testNum = 0
-  before dbConnect
-  after (done) -> dbDestroy @, done
-  beforeEach -> @testNum++
-
 
   it "can not create company if not authenticated", (done) ->
     passportMock.setSession 'anon'

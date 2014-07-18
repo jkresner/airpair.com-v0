@@ -4,6 +4,8 @@ RatesService    = require './rates'
 
 module.exports = class ExpertsService extends DomainService
 
+  logging: on
+
   model: require './../models/expert'
 
   # Used for adm/pipeline dashboard list
@@ -20,6 +22,11 @@ module.exports = class ExpertsService extends DomainService
         if !rr? then rr = {}
         callback ee, rr
 
+  getBySubscriptions: (tagId, level, cb) =>
+    @searchMany { tags: { $elemMatch: { '_id': tagId, 'subscription.auto': { $elemMatch: { $in: [level] } } } } }, { fields: @admSelect }, cb
+
+  getByTagsAndMaxRate: (soTagIds, maxRate, cb) =>
+    @searchMany { tags: { $elemMatch: { soId: { $in: soTagIds } } },  rate: { $lt: maxRate } }, { fields: @admSelect }, cb
 
   detailOnRequest: (id, cb) =>
     @searchOne userId: @usr._id, {}, (e, expert) =>

@@ -1,4 +1,4 @@
-{http,_,sinon,chai,expect,dbConnect,dbDestroy} = require '../test-lib-setup'
+{http,_,sinon,chai,expect} = require '../test-lib-setup'
 {app, data}                                    = require '../test-app-setup'
 
 cloneDeep = require 'lodash.cloneDeep'

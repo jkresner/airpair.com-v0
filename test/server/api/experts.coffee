@@ -1,17 +1,30 @@
-{http,_,sinon,chai,expect,dbConnect,dbDestroy} = require './../test-lib-setup'
-{app,data,passportMock}                        = require './../test-app-setup'
+{http,_,sinon,chai,expect} = require './../test-lib-setup'
+{app,data,passportMock} = require './../test-app-setup'
 
 
 require('./../../../lib/api/experts')(app)
 
+ExpertsService = require('./../../../lib/services/experts')
+svc = new ExpertsService
 
 describe "REST api experts", ->
+  it "can update expert with tags and subscriptions", (done) ->
+    mvh = data.experts[8]  # Matt Van Horn
+    svc.create mvh, (e,r) ->
+      console.log e
+      # mutate Matt's subscription before PUT'ing him back in the db
+      mvh.tags.push {"soId":"angular","short":"angular","name":"angular", "subscription": {auto: ["beginner"]}}
 
-  @testNum = 0
-  before dbConnect
-  after (done) -> dbDestroy @, done
-  beforeEach -> @testNum++
+      http(app).put("/api/experts/#{r.id}")
+        .send(mvh)
+        .expect(200)
+        .end (err, res) =>
+          if err then return done err
+          tag = _.find res.body.tags, (tag) ->
+            tag.soId == "angular"
 
+          expect(tag.subscription.auto).to.include("beginner")
+          done()
 
   it "can get created expert", (done) ->
     @timeout 10000

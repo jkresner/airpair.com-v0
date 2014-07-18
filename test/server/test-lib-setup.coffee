@@ -1,24 +1,26 @@
 global.$log = console.log
+global._ = require 'underscore'
 
 mongoose = require 'mongoose'
-chai     = require 'chai'
+chai = require 'chai'
 chai.use require 'sinon-chai'
-#require "sinon/lib/sinon/util/fake_xml_http_request"
 
-chai.Assertion.includeStack = true
+Factory = require 'factory-lady'
+require ("../factory/expertFactory")
+require ("../factory/requestFactory")
 
-connect = (done) ->
+before (done) ->
   return done() if mongoose.connections[0]._listening
   mongoose.connection.once 'connected', done
   mongoose.connect 'localhost/airpair_test'
 
-destroy = (mocha, done) ->
-  return done() if suiteCtx?  # set in /test/server/all.coffee
-  # db destruction takes a long time
-  mocha.timeout 5000
-  mongoose.connection.db.executeDbCommand { dropDatabase:1 }, (e, r) ->
-    if e then return done e
-    mongoose.connection.close done
+afterEach (done) ->
+  if mongoose.connection.db?
+    mongoose.connection.db.dropDatabase done
+  else
+    done()
+
+chai.Assertion.includeStack = true
 
 module.exports =
   http:       require 'supertest'
@@ -26,5 +28,4 @@ module.exports =
   sinon:      require 'sinon'
   chai:       require 'chai'
   expect:     chai.expect
-  dbConnect:  connect
-  dbDestroy:  destroy
+  Factory:    Factory

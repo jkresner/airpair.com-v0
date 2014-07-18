@@ -1,14 +1,10 @@
-{http,_,sinon,chai,expect,dbConnect,dbDestroy} = require './../test-lib-setup'
-{app, data}                                    = require './../test-app-setup'
+{http,_,sinon,chai,expect} = require './../test-lib-setup'
+{app, data} = require './../test-app-setup'
 
 RequestsService = require('./../../../lib/services/requests')
 svc = new RequestsService(data.users[3])
 
 describe "RequestsService", ->
-
-  before dbConnect
-  after (done) -> dbDestroy @, done
-  beforeEach () ->
 
   it "should send an email on notifyAdmins", (done) ->
     user = data.users[3]

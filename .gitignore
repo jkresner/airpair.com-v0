@@ -25,6 +25,7 @@ results
 .ackrc
 .DS_Store
 .cache
+.idea
 .project
 .settings
 .tmproj
