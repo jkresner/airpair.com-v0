@@ -38,13 +38,13 @@
             <h3 style="margin-top: 10px;margin-bottom: 80px;" >Limited time offer, save up to 60%</h3>
             <div class="row">
               <div class="col-xs-6">
-                <button id="stripe-now" class="btn btn-primary btn-lg m-b-1 btn-lift" data-track="customerInitiate" data-track-prop='{"cta": "get-help-now"}'>
+                <button id="stripe-now" class="btn btn-primary btn-lg m-b-1 btn-lift" data-track="getOffer" data-track-prop='{"cta": "get-help-now"}'>
                   Get help <strong>now</strong>
                 </button>
                 <div class="btn-help">You'll have an expert in 20-100 minutes</div>
               </div>
               <div class="col-xs-6">
-                <button id="stripe-later" class="btn btn-primary btn-lg m-b-1 btn-lift" data-track="customerInitiate" data-track-prop='{"cta": "get-help-later"}'>
+                <button id="stripe-later" class="btn btn-primary btn-lg m-b-1 btn-lift" data-track="getOffer" data-track-prop='{"cta": "get-help-later"}'>
                   Redeem help <strong>later</strong>
                 </button>
                 <div class="btn-help">Valid for next 4 weeks</div>
@@ -288,7 +288,7 @@
       <div class="row">
 
         <div class="col-sm-4 col-sm-offset-4 m-t-3">
-          <a id="find-how" href="#" class=" scroll btn btn-primary btn-lg btn-block"data-track="customerInitiate" data-track-prop='{"cta": "get-started-experts"}'>Get Started</a>
+          <a id="find-how" href="#" class=" scroll btn btn-primary btn-lg btn-block"data-track="clickBtn" data-track-prop='{"cta": "get-started-experts"}'>Get Started</a>
         </div>
 
       </div>
@@ -360,7 +360,7 @@
         </div>
         <div class="row m-b-3 m-t-2">
           <div class="col-sm-4 col-sm-offset-4">
-            <a href="#" class="scroll btn btn-default btn-lg btn-block" data-track="customerInitiate" data-track-prop='{"cta": "get-started-description"}'>Get Started</a>
+            <a href="#" class="scroll btn btn-default btn-lg btn-block" data-track="clickBtn" data-track-prop='{"cta": "get-started-description"}'>Get Started</a>
           </div>
         </div>
       </div>
@@ -555,7 +555,7 @@
               <div class="col-xs-5 text-center p-t-2">
                 <img src="/images/pages/marketing/customers.png" alt="">
                 <p class="m-t-2">Ready to see how AirPairing can help you?</p>
-                <a id="find-customers" href="" class="scroll  btn btn-lg btn-primary btn-block" data-track="customerInitiate" data-track-prop='{"cta": "get-started-testimonials"}'>Get Started</a>
+                <a id="find-customers" href="" class="scroll  btn btn-lg btn-primary btn-block" data-track="clickBtn" data-track-prop='{"cta": "get-started-testimonials"}'>Get Started</a>
               </div>
             </div>
           </div>
@@ -827,11 +827,7 @@
           }
         });
 
-
-
-
         window.signUpForm = {
-
           step: function(e) {
             var num = this.$form.data("step");
             return num;
@@ -860,6 +856,7 @@
             }
 
           },
+
           nextStep: function(num) {
             if(num) { this.setStep(num); }
             this.$form.find("[class^='step-']").hide();
@@ -886,7 +883,6 @@
               callback($input)
             });
           },
-
 
           bindStep: function() {
             var step = this.step();
@@ -920,20 +916,17 @@
             }
           },
 
-
-
           stripeModal: function(choice) {
             this.choice = choice;
 
             if(choice === "now") {
-              stripeCharge.description ='Get the first hour for $50 now';
+              stripeCharge.description ='We\'ll email you after your purchase.';
             } else {
               stripeCharge.description ='Redeem offer later';
             }
 
             stripe.open(stripeCharge);
           },
-
 
           saveToken: function(token) {
             var self = this;
@@ -945,7 +938,6 @@
               stripeCharge: stripeCharge
             }
 
-
             self.userRef = firebase.push(purchase, function(err) {
               signUpForm.nextStep()
               $.post("/api/landing/bsa02/purchase", purchase, function(data){
@@ -954,12 +946,8 @@
                 }
               });
             });
-
-            addjs.trackEvent('Landing', "customerStripePayment");
-
+            addjs.trackEvent('Landing', "firstHourPayment", {email: token.email});
           },
-
-
 
           showPhone: function(e) {
             self = this;
@@ -974,28 +962,12 @@
             )
           },
 
-
           phoneSaved: function(e) {
             addjs.trackEvent('Landing', "customerPhoneProvided");
             this.$form.find(".input-group-phone").hide();
             this.$form.find(".alert-phone").show();
           }
-
-
-
         }
-
-
-
-
-
-
-
-
-
-
-
-
 
         // Bind listeners
 
@@ -1016,7 +988,6 @@
         // });
 
 
-
         // TRACK EVENTS (the cool way)
 
         $("[data-track]").click(function(event) {
@@ -1026,22 +997,11 @@
           console.log(eventName, eventProps);
           addjs.trackEvent('Landing', eventName, "cta", eventProps.cta);
         });
-
-
-
-
-
       });
-
-
     }
   </script>
 
   <style>
     /*#signUpGoogle {display: none;}*/
   </style>
-
-
-
-
 </html>

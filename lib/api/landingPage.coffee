@@ -20,7 +20,6 @@ class LandingPageApi extends require('./_api')
         customer: customer
       @chargeCustomer customer.id, req.body.stripeCharge.amount
 
-
   # Charge a customer given a customer id and amount.
   chargeCustomer: (customerId, amount) =>
     stripe.charges.create
@@ -30,9 +29,5 @@ class LandingPageApi extends require('./_api')
     , (err, charge) ->
       if err then console.log "ERROR - chargeCustomer failed"
       console.log "customer charged #{amount}"
-
-
-
-
 
 module.exports = (app) -> new LandingPageApi app, 'landing'

@@ -6,7 +6,7 @@ module.exports =
     oauthHost: 'http://localhost:3333'
     analytics:
       segmentio:
-        writeKey: 'none'
+        writeKey: 'tjld2les7x'
         settings: { flushAt: 1 }
     mail:
       ses_access_key: process.env.AP_SES_ACCESS_KEY || "none"

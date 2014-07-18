@@ -119,7 +119,7 @@ module.exports = class ViewDataService
   so18: (id, cb) -> @so15 id, cb
   so19: (id, cb) -> @so15 id, cb
 
-  bsa02: (id, cb) ->
+  bsa02: (cb) ->
     cb null, -> { stripePK }
 
   paypalSuccess: (id, cb) ->
