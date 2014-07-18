@@ -1,7 +1,9 @@
 doctype html
 html(ng-app='ngAirPair')
   head
+    script(src="https://cdn.firebase.com/js/client/1.0.17/firebase.js")
     script(src="/javascripts/site.js")
+    script(src="https://cdn.firebase.com/libs/angularfire/0.7.1/angularfire.min.js")
     script(type="text/javascript").
       window.currentUser = !{ session ? JSON.stringify(session) : 'null'};
 
@@ -10,6 +12,11 @@ html(ng-app='ngAirPair')
       h1 This is the main site
       h4(ng-show='global.isSignedIn')
         and you are signed in as {{ global.name }}
+      ul.chats
+        li(ng-repeat="chat in chats")
+          {{chat.name}}: {{chat.message}}
+      input(ng-model="chatOut")
+      a(ng-click="sendMessage()", href="#") send
 
     div(ng-conroller='expertsController')
       a(href="/site") Home
@@ -18,4 +25,4 @@ html(ng-app='ngAirPair')
     div(ng-view)
 
     script.
-      require('scripts/site/app');
+      require('scripts/site/app')();
