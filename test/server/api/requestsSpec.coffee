@@ -233,6 +233,7 @@ describe "REST api requests", ->
       createReq req, (e, up) =>
         http(app).get("/api/requests/#{up._id}").end () ->
           http(app).get("/api/requests/#{up._id}").end () ->
+<<<<<<< HEAD
 
             passportMock.setSession 'admin'
             http(app).get("/api/requests/#{up._id}").end (e, r) ->
@@ -259,4 +260,19 @@ describe "REST api requests", ->
             body = response.body
             expect(body[0]._id).to.eq(req._id)
             done()
+=======
+
+            passportMock.setSession 'admin'
+            http(app).get("/api/requests/#{up._id}").end (e, r) ->
+
+              d = r.body
+              expect( d.suggested[0].events.length ).to.equal 3
+              expect( d.suggested[0].events[1].name ).to.equal "viewed"
+              expect( d.events.length ).to.equal 3
+              expect( d.events[1].name ).to.equal "expert view"
+              expect( d.events[1].by.name ).to.equal 'Jonathon Kresner'
+              expect( d.events[2].name ).to.equal "expert view"
+              expect( d.events[2].by.name ).to.equal 'Jonathon Kresner'
+              done()
+>>>>>>> wip
 
