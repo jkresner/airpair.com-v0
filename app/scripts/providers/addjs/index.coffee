@@ -48,16 +48,27 @@ module.exports = class Addjs
     analytics.trackLink(link, name, options)
 
   bindTrackLinks: ->
+    parent = @
     jQuery(".trackBookLogin").click (e) ->
       return_to = jQuery(this).attr("href")
       return_to = window.location.pathname + window.location.search  if return_to is "#"
-      @trackLink "auth/google?return_to=" + return_to, @events.customerBookLogin.name, elementId: getElmId(this)
-      true
+      event = parent.events.customerBookLogin
+      parent.trackEvent event.category, event.name, "#{window.location.pathname}:#{@id}"
+      parent.redirectToLogin(e, "auth/google?return_to=" + return_to)
 
     jQuery(".trackLogin,.trackCustomerLogin").click (e) ->
-      @trackLink "auth/google?return_to=/find-an-expert", @events.customerLogin.name, elementId: getElmId(this)
-      true
+      event = parent.events.customerLogin
+      parent.trackEvent event.category, event.name, "#{window.location.pathname}:#{@id}"
+      parent.redirectToLogin(e, "auth/google?return_to=/find-an-expert")
 
     jQuery(".trackExpertLogin").click (e) ->
-      @trackLink "auth/google?return_to=/be-an-expert", @events.expertLogin.name, elementId: getElmId(this)
-      true
+      event = parent.events.expertLogin
+      parent.trackEvent event.category, event.name, "#{window.location.pathname}:#{@id}"
+      parent.redirectToLogin(e, "auth/google?return_to=/be-an-expert")
+
+  redirectToLogin: (e, destinationUrl) ->
+    if e? then e.preventDefault()
+    redirectLocation = "#{window.location.origin}/#{destinationUrl}"
+    redirect = =>
+      window.location = redirectLocation
+    setTimeout(redirect,300)
