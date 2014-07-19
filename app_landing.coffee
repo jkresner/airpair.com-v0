@@ -22,6 +22,7 @@ module.exports = (app, render) ->
 
   app.get '/airconf/:id', checkSession, render 'landing/airconfsession', ['params.id']
   app.get '/airconf2014', render 'landing/airconf'
+  app.get '/airconf', render 'landing/airconf'
   app.get '/speakers', render 'landing/airconf'
 
 

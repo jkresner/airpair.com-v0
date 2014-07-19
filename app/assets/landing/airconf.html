@@ -64,14 +64,14 @@
     .hero section div.about { top:170px }
     .hero section div.about h2 { font-size:22px; }
     .hero section div.about p { }
-    .hero img { width:70%; }
-    .hero a { width:70%; }
+    .hero img { width:80%; }
+    .hero a { width:80%; }
   }
 </style>
 
     <!-- HERO -->
     <div class="hero behind-nav hero-landing-top">
-      <img src="/images/landing/airconf/air-conf-logo-v2.png" />
+      <img src="/images/landing/airconf/logo.png" />
       <section>
         <div class="bg"></div>
         <div class="about">
@@ -79,32 +79,31 @@
           <p><span>Broadcasting Worldwide <span> Aug 4 - 31, via G+ Hangouts</p>
         </div>
       </section>
-      <a class="btn btn-block" href="javascript:alert('Registration will open Mon Jul 21')">Register</a>
+      <a class="btn btn-block" href="javascript:alert('Registration will open Mon Jul 21')">Attend AirConf 2014</a>
     </div>
 
 <style type="text/css">
 
   #keynotes { width:1002px;margin:auto }
-  .keynote { width:480px;padding:10px;vertical-align:top;padding:0px;margin-bottom:20px; }
-  .keynote.left { float:left;margin-left:10px; }
-  .keynote.left .col-sm-8 { padding-right:0; }
-  .keynote.right { float:right;margin-right:10px; }
-  .keynote.right .col-sm-8 { padding-left:0; }
-  .keynote { height:300px; }
-  .keynote .avatars { width:155px;display:inline-block; }
-  .keynote .content { width:300px;display:inline-block;margin-left:10px;vertical-align:top }
-  .keynote img { height:100px;width:100px;border-radius:26px; }
-  .keynote img.first { margin:-8px 0 0 -10px }
-  .keynote img.second { margin:-28px 0 0 45px }
-  .keynote img.third { margin:-28px 0 0 -10px }
-  .keynote img.fourth { margin:-28px 0 0 45px }
-  .keynote .right img.first { margin:-8px 0 0 75px }
-  .keynote .right img.second { margin:-28px 0 0 10px }
-  .keynote .right img.third { margin:-28px 0 0 75px }
-  .keynote .right img.fourth { margin:-28px 0 0 10px }
-  .keynote h3 { margin-top:15px;line-height:22px;font-size:22px;font-weight:400; }
-  .keynote small { display:block;font-size:80%;margin-top:14px; }
-  .keynote.three a { color:#dff2ef; }
+  .keynote { width:470px;vertical-align:top;padding:0px;margin-bottom:20px;border-radius:26px;display:block;text-decoration:none }
+  .keynote.left { float:left;margin-left:16px; }
+  .keynote.right { float:right;margin-right:16px; }
+  .keynote h3 { margin-top:3px;line-height:22px;font-size:22px;font-weight:400; }
+  .keynote ul { height:320px;width:90px;padding:0 5px 0 5px;display:inline-block;background:white;margin:0;position:relative; }
+  .keynote.left ul { border-radius:8px 0px 0px 8px;left:-2px }
+  .keynote.right ul { border-radius:0 8px 8px 0;right:-2px }
+  .keynote ul img, ul li { height:80px;width:80px;border-radius:34px;padding:0;margin:0;list-style:none }
+  .keynote:hover { background:black!important;color:white; }
+  .keynote:hover ul { background:#D3653A }
+  .keynote summary { font-size:12px;display:inline-block;width:340px;margin:15px 17px 15px 18px;vertical-align:top }
+  .keynote:hover summary { display:none }
+  .keynote small { display:block;font-size:13px; }
+  .keynote.left small { color:#989999;margin-top:30px  }
+  .keynote.left small label { color:#232835 }
+  .keynote.left small span { color:#4d4e4e }
+  .keynote div { display:none;width:340px;margin:15px 15px 15px 20px;vertical-align:top;color:white; }
+  .keynote div .btn-block { font-size:20px;background:#ce5424;width:268px;color:white;height:50px;font-weight:300;padding-top:12px;text-transform:none;margin:30px; }
+  .keynote:hover div { display:inline-block; }
 
   @-moz-document url-prefix() {
     .keynote h3 { font-weight:300 }
@@ -113,118 +112,171 @@
   @media (max-width:1024px) {
     #keynotes { width:100% }
     .keynote { width:640px }
-    .keynote .avatars { margin:0 25px; }
-    .keynote.left { float:none;margin:20px auto;padding-left:40px; }
-    .keynote.right { float:none;margin:20px auto;padding-right:40px; }
+    .keynote.left { float:none;margin:20px auto;padding-left:70px; }
+    .keynote.right { float:none;margin:20px auto;padding-left:100px; }
+    .keynote.left ul { border-radius:0 }
+    .keynote.right ul { border-radius:0 }
     @-moz-document url-prefix() {
     }
   }
 
   @media (max-width:801px) {
-    .keynote { width:480px;padding:0px }
-    .keynote .avatars { margin:0; }
-    .keynote.left { float:none;margin:20px auto;padding-left:0px; }
-    .keynote.right { float:none;margin:20px auto;padding-right:0px; }
+    .keynote { width:560px;padding:0px }
+    .keynote.left { padding-left:30px; }
+    .keynote.right { padding-left:60px; }
   }
 
   @media (max-width:640px) {
-    .keynote { width:460px }
-    .keynote .avatars { width:145px; }
-    .keynote .content { width:280px }
-    .keynote.left { padding-left:20px; }
-    .keynote.right { padding-right:20px; }
-    .keynote h3 { font-size:18px; }
-    .keynote p { font-size:13px; }
-  }
-
-  @media (max-width:480px) {
-    .keynote { width:90% }
-    .keynote .content { width:40% }
+    .keynote { width:460px;margin:20px 0 }
     .keynote.left { padding-left:0px; }
-    .keynote.right { padding-right:0px; }
-    .keynote h3 { font-size:16px; }
-    .keynote p { display:none }
-    .keynote small { font-size:9px; }
-    .keynote img { height:80px;width:80px;border-radius:26px; }
+    .keynote.right { padding-left:0px; }
+    .keynote ul { width:80px;padding:0 }
+    .keynote.left ul { border-radius:26px 0px 0px 26px;left:-2px }
+    .keynote.right ul { border-radius:0 26px 26px 0;right:-2px }
   }
-
 
   @media (max-width:480px) {
-    #experts .column { width:200px }
+    .keynote { width:300px;margin:20px 0 }
+    .keynote ul { height:52px;width:300px;padding:1px 0px 1px 0px;background:black }
+    .keynote.left ul { border-radius:26px 26px 0px 0px;left:0px }
+    .keynote.right ul { border-radius:0 0 26px 26px;right:0px }
+    .keynote ul img, ul li { height:50px;width:50px;border-radius:20px;display:inline-block;margin-left:12px; }
+    .keynote summary { font-size:11px;width:92%;margin:5px;padding:6px; }
+    .keynote small { display:block;font-size:11px;margin-top:0 }
+    .keynote h3 { line-height:18px;font-size:18px;font-weight:400; }
   }
+
+</style>
+
+<style>
+
+  #experts { text-align:center }
+  #experts .sessionCol { width:200px;display:inline-block;margin:30px 10px; }
+  #experts .description { font-size:11px }
+
+  @media (max-width:800px) {
+    #experts .sessionCol { margin:30px 4% 30px 0; }
+  }
+
+  @media (max-width:640px) {
+    #experts .sessionCol { margin:30px 4% 30px 5%; }
+  }
+
+  @media (max-width:480px) {
+    #experts .sessionCol { margin:30px auto; }
+  }
+
 
 </style>
 
   <div id="keynotes">
 
     <h2>Keynote Panels</h2>
+        <!-- <a href="//twitter.com/obie" target="_blank"></a>
+        <a href="//twitter.com/rabble" target="_blank"></a>
+        <a href="//twitter.com/mikemasonca" target="_blank"></a>
+        <a href="//twitter.com/cpytel" target="_blank"></a>
+        <a href="//twitter.com/hackerpreneur" target="_blank"></a>
+        <a href="//www.linkedin.com/in/deepnishar" target="_blank"></a>
+        <a href="//twitter.com/garrytan" target="_blank"></a>
+        <a href="//twitter.com/ccheever" target="_blank"></a>
+        -->
 
-      <div class="keynote one left" style="background:#dff2ef">
-        <div class="avatars left">
-          <img class="first" src="/images/avatars/of.png" alt="Obie Fernandez" />
-          <img class="second" src="//secure.gravatar.com/avatar/1eb7539f1f0a62f74ea3f7a0fa0f486f?s=110" alt="Chad Pytel" />
-          <img class="third" src="/images/landing/airconf/mikemasonca.png" alt="Mike Mason" />
-          <img class="fourth" src="/images/landing/airconf/rabble.png" alt="Evan Henshaw-Plath" />
-        </div>
-        <div class="content">
+      <a href="javascript:alert('Registration opens Mon Jul 21')" class="keynote one left" style="background:#dff2ef;color:#4d4e4e">
+        <ul>
+          <li class="left"><img src="/images/avatars/of.png" alt="Obie Fernandez" /></li>
+          <li class="right"><img src="//secure.gravatar.com/avatar/1eb7539f1f0a62f74ea3f7a0fa0f486f?s=110" alt="Chad Pytel" /></li>
+          <li class="left"><img src="/images/landing/airconf/mikemasonca.png" alt="Mike Mason" /></li>
+          <li class="right"><img src="/images/landing/airconf/rabble.png" alt="Evan Henshaw-Plath" /></li>
+        </ul>
+        <summary>
+          <label>Mon Aug TBA, 00:00 GMT</label>
           <h3>The Future of Consulting</h3>
           <p>Remote teams are becoming more popular each year. With increasing access to high quality distributed talent, consultancies like Thoughtworks and Pivotal Labs now go beyond outsourcing. The top consultancies leave clients with new skills as well as deliverables. Will this be enough going forward?</p>
           <small>
-            <b><a href="//twitter.com/obie" target="_blank">Obie Fernandez</a></b> Hashrocket <span class="text-muted"> CEO (prev)</span> AirPair</b><span class="text-muted"> CTO</span>
-            <br /><b><a href="//twitter.com/rabble" target="_blank">Evan Henshaw-Plath</a></b> Neo<span class="text-muted"> CTO</span>
-            <br /><b><a href="//twitter.com/mikemasonca" target="_blank">Mike Mason</a></b> ThoughtWorks<span class="text-muted"> Head of Technology</span>
-            <br /><b><a href="//twitter.com/cpytel" target="_blank">Chad Pytel</a></b> ThoughtBot<span class="text-muted"> CEO</span>
-           </small>
+            <label>Obie Fernandez</label> Hashrocket <span> CEO (prev)</span> AirPair<span> CTO</span>
+            <br /><label>Evan Henshaw-Plath</label> Neo<span> CTO</span>
+            <br /><label>Mike Mason</label> ThoughtWorks<span> Head of Technology</span>
+            <br /><label>Chad Pytel</label> ThoughtBot<span> CEO</span>
+          </small>
+        </summary>
+        <div>
+          <label>Mon Aug TBA, 00:00 GMT</label>
+          <h3>The Future of Consulting</h3>
+          <button class="btn btn-block">Register</button>
         </div>
-      </div>
+      </a>
 
-      <div class="keynote two right" style="background:#7e7f7f;color:white">
-        <div class="avatars">
-            <img class="first" src="//pivotallabs.com/wordpress/wp-content/uploads/2012/09/Rob-Mee_avatar-96x96.jpg" alt="" />
-        </div>
-        <div class="content">
+      <a href="javascript:alert('Registration opens Mon Jul 21')" class="keynote two right" style="background:#4d4e4e;color:white">
+        <summary>
+          <label>Mon Aug TBA, 00:00 GMT</label>
           <h3>Will Pairing Be Mainstream?</h3>
           <p>Does pairing make sense for other disciplines outside of coding. What makes pairing a compelling value proposition with software?</p>
           <small>
-            <br /><b>Rob Mee</b> &ndash; Pivotal Labs <span class="text-muted">, CEO</span>
+            <label>Rob Mee</label> Pivotal Labs <span>CEO</span>
           </small>
+        </summary>
+        <div class="detail">
+          <label>Mon Aug TBA, 00:00 GMT</label>
+          <h3>Will Pairing Be Mainstream?</h3>
+          <button class="btn btn-block">Register</button>
         </div>
-      </div>
+        <ul>
+          <li class="right"><img src="//pivotallabs.com/wordpress/wp-content/uploads/2012/09/Rob-Mee_avatar-96x96.jpg" alt="" /></li>
+          <li class="left"><img src="//secure.gravatar.com/avatar/543d49f405c7e3cbd78f8e1a6d1c091d?s=140" alt="" /></li>
+          <li class="right"><img src="//secure.gravatar.com/avatar/543d49f405c7e3cbd78f8e1a6d1c091d?s=140" alt="" /></li>
+          <li class="left"><img src="//secure.gravatar.com/avatar/543d49f405c7e3cbd78f8e1a6d1c091d?s=140" alt="" /></li>
+        </ul>
+      </a>
 
-      <div class="keynote three left" style="background:#4d4e4e;color:white">
-        <div class="content">
+      <a href="javascript:alert('Registration opens Mon Jul 21')" class="keynote three left" style="background:#90d1cc;color:black">
+        <ul>
+          <li class="left"><img src="//secure.gravatar.com/avatar/780d02a99798886da48711d8104801a4?s=140" alt="Jonathon kresner" /></li>
+          <li class="right"><img src="/images/landing/airconf/deepnishar.png" alt="Dipchand Nishard" /></li>
+          <li class="left"><img src="//secure.gravatar.com/avatar/88bc70a80914f2036f24ecfc7b0e4b4d?s=140" alt="Garry Tan" /></li>
+          <li class="right"><img src="/images/landing/airconf/ccheever.png" alt="Charlie Cheever" /></li>
+        </ul>
+        <summary>
+          <label>Mon Aug 11, 18:30 GMT</label>
           <h3>Software Engineering vs Entrepreneurship</h3>
           <p>Software Engineering is a precise discipline. Often early in a company's lifetime, thing needs to be scrappy and fast. Are Software Engineering and Entrepreneurship at odds? Is there a way to have both
           quality and speed and can the two co-exist at the same time?</p>
-          <small>
-            <b><a href="//twitter.com/hackerpreneur" target="_blank">Jonathon Kresner</a></b> &ndash; AirPair</b><span class="text-muted">, CEO</span>
-            <br /><b><a href="//www.linkedin.com/in/deepnishar" target="_blank">Deep Nishar</a></b> &ndash; LinkedIn<span class="text-muted">, SVP Product/UX</span>
-            <br /><b><a href="//twitter.com/garrytan" target="_blank">Garry Tan</a></b> &ndash; YCombinator<span class="text-muted">, Partner</span>
-            <br /><b><a href="//twitter.com/ccheever" target="_blank">Charlie Cheever</a></b> &ndash; Quora<span class="text-muted">, Cofounder</span>
+          <small style="color:#FCFCFC">
+            <label>Jonathon Kresner</label> AirPair<span> CEO</span>
+            <br /><label>Deep Nishar</label> LinkedIn<span> SVP Product/UX</span>
+            <br /><label>Garry Tan</label> YCombinator<span> Partner</span>
+            <br /><label>Charlie Cheever</label> Quora<span> Cofounder</span>
           </small>
+        </summary>
+        <div class="detail">
+          <label>Mon Aug TBA, 00:00 GMT</label>
+          <h3>Software Engineering vs Entrepreneurship</h3>
+          <button class="btn btn-block">Register</button>
         </div>
-        <div class="avatars right">
-            <img class="first" src="//secure.gravatar.com/avatar/780d02a99798886da48711d8104801a4?s=140" alt="Jonathon kresner" />
-            <img class="second" src="/images/landing/airconf/deepnishar.png" alt="Dipchand Nishard" />
-            <img class="third" src="//secure.gravatar.com/avatar/88bc70a80914f2036f24ecfc7b0e4b4d?s=140" alt="Garry Tan" />
-            <img class="fourth" src="/images/landing/airconf/ccheever.png" alt="Charlie Cheever" />
-          </div>
-      </div>
+      </a>
 
-      <div class="keynote right" style="background:#90d1cc">
-        <div class="content">
+      <a href="javascript:alert('Registration opens Mon Jul 21')" class="keynote four right" style="background:#7e7f7f;color:white">
+        <summary>
+          <label>Mon Aug TBA, 00:00 GMT</label>
           <h3>Developer Personal Brand Marketing</h3>
           <p>What are the best strategies for building your personal developer brand? In this panel we ask a famous StackOverflow member, prolific open-source contributor, technical blogger and conference speaker how they rose to fame in their respective communities.</p>
           <small>
-            <br /><b>Igor Lebovic</b> &ndash; AirPair</b><span class="text-muted">, CMO</span>
+            Igor Lebovic &ndash; AirPair<span class="text-muted">, CMO</span>
 
           </small>
+        </summary>
+        <div class="detail">
+          <label>Mon Aug TBA, 00:00 GMT</label>
+          <h3>Developer Personal Brand Marketing</h3>
+          <button class="btn btn-block">Register</button>
         </div>
-        <div class="avatars right">
-          <img class="first" src="//secure.gravatar.com/avatar/2db848de65112c20aa13f566c0cbf9d7?s=140" alt="Igor Lebovic" />
-        </div>
-      </div>
-
+        <ul>
+          <li class="right"><img src="//secure.gravatar.com/avatar/2db848de65112c20aa13f566c0cbf9d7?s=140" alt="Igor Lebovic" /></li>
+          <li class="left"><img src="//secure.gravatar.com/avatar/543d49f405c7e3cbd78f8e1a6d1c091d?s=140" alt="" /></li>
+          <li class="right"><img src="//secure.gravatar.com/avatar/543d49f405c7e3cbd78f8e1a6d1c091d?s=140" alt="" /></li>
+          <li class="left"><img src="//secure.gravatar.com/avatar/543d49f405c7e3cbd78f8e1a6d1c091d?s=140" alt="" /></li>
+        </ul>
+      </a>
   </div>
 
 <div style="clear:both"></div>
@@ -232,70 +284,55 @@
 {{#with sessions }}
 
 <div class="container p-b-4" id="experts">
+<center>
   <h2 class="text-thin text-center m-t-3">Week 1 Speakers</h2><hr>
 
-  <div class="columns-five m-t-2">
-    {{#with danielroseman}}{{> sessionSummary }}{{/with}}
-    {{#with andrewchen}}{{> sessionSummary }}{{/with}}
-    {{#with ryanbigg}}{{> sessionSummary }}{{/with}}
-    {{#with jefflinwood}}{{> sessionSummary }}{{/with}}
-    {{#with abedra}}{{> sessionSummary }}{{/with}}
-  </div>
-  <div class="columns-five m-t-2">
-    {{#with alyssa}}{{> sessionSummary }}{{/with}}
-    {{#with joshowens}}{{> sessionSummary }}{{/with}}
-    {{#with stefanpenner}}{{> sessionSummary }}{{/with}}
-    {{#with toddmotto}}{{> sessionSummary }}{{/with}}
-  </div>
+  {{#with danielroseman}}{{> sessionSummary }}{{/with}}
+  {{#with andrewchen}}{{> sessionSummary }}{{/with}}
+  {{#with ryanbigg}}{{> sessionSummary }}{{/with}}
+  {{#with jefflinwood}}{{> sessionSummary }}{{/with}}
+  {{#with abedra}}{{> sessionSummary }}{{/with}}
+  {{#with alyssa}}{{> sessionSummary }}{{/with}}
+  {{#with joshowens}}{{> sessionSummary }}{{/with}}
+  {{#with stefanpenner}}{{> sessionSummary }}{{/with}}
+  {{#with toddmotto}}{{> sessionSummary }}{{/with}}
 
   <h2 class="text-thin text-center m-t-3">Week 2 Speakers</h2><hr>
 
-  <div class="columns-five m-t-2">
-    {{#with domenic}}{{> sessionSummary }}{{/with}}
-    {{#with adymo}}{{> sessionSummary }}{{/with}}
-    {{#with matsko}}{{> sessionSummary }}{{/with}}
-    {{#with felienne}}{{> sessionSummary }}{{/with}}
-    {{#with ehrenreilly}}{{> sessionSummary }}{{/with}}
-  </div>
-  <div class="columns-five m-t-2">
-    {{#with acuppy1}}{{> sessionSummary }}{{/with}}
-    {{#with zopatista}}{{> sessionSummary }}{{/with}}
-    {{#with hackerpreneur}}{{> sessionSummary }}{{/with}}
-    {{#with searls}}{{> sessionSummary }}{{/with}}
-  </div>
+  {{#with domenic}}{{> sessionSummary }}{{/with}}
+  {{#with adymo}}{{> sessionSummary }}{{/with}}
+  {{#with matsko}}{{> sessionSummary }}{{/with}}
+  {{#with felienne}}{{> sessionSummary }}{{/with}}
+  {{#with ehrenreilly}}{{> sessionSummary }}{{/with}}
+  {{#with acuppy1}}{{> sessionSummary }}{{/with}}
+  {{#with zopatista}}{{> sessionSummary }}{{/with}}
+  {{#with hackerpreneur}}{{> sessionSummary }}{{/with}}
+  {{#with searls}}{{> sessionSummary }}{{/with}}
 
  <h2 class="text-thin text-center m-t-3">Week 3 Speakers</h2><hr />
 
- <div class="columns-five m-t-2">
-    {{#with philsturgeon}}{{> sessionSummary }}{{/with}}
-    {{#with evgenyz}}{{> sessionSummary }}{{/with}}
-    {{#with acuppy2}}{{> sessionSummary }}{{/with}}
-    {{#with al_the_x}}{{> sessionSummary }}{{/with}}
-    {{#with amirrajan}}{{> sessionSummary }}{{/with}}
-  </div>
-  <div class="columns-five m-t-2">
-    {{#with basarat}}{{> sessionSummary }}{{/with}}
-    {{#with mariovisic}}{{> sessionSummary }}{{/with}}
-    {{#with larskotthoff}}{{> sessionSummary }}{{/with}}
-    {{#with fluffyjack}}{{> sessionSummary }}{{/with}}
-  </div>
+  {{#with philsturgeon}}{{> sessionSummary }}{{/with}}
+  {{#with evgenyz}}{{> sessionSummary }}{{/with}}
+  {{#with acuppy2}}{{> sessionSummary }}{{/with}}
+  {{#with al_the_x}}{{> sessionSummary }}{{/with}}
+  {{#with amirrajan}}{{> sessionSummary }}{{/with}}
+  {{#with basarat}}{{> sessionSummary }}{{/with}}
+  {{#with mariovisic}}{{> sessionSummary }}{{/with}}
+  {{#with larskotthoff}}{{> sessionSummary }}{{/with}}
+  {{#with fluffyjack}}{{> sessionSummary }}{{/with}}
 
 <h2 class="text-thin text-center m-t-3">Week 4 Speakers</h2><hr>
 
-  <div class="columns-five m-t-2">
-    {{#with urish}}{{> sessionSummary }}{{/with}}
-    {{#with antonioribeiro}}{{> sessionSummary }}{{/with}}
-    {{#with 2upmedia}}{{> sessionSummary }}{{/with}}
-    {{#with kn0tch}}{{> sessionSummary }}{{/with}}
-    {{#with auser}}{{> sessionSummary }}{{/with}}
-  </div>
-  <div class="columns-five m-t-2">
-    {{#with abeisgreat}}{{> sessionSummary }}{{/with}}
-    {{#with ronlichty}}{{> sessionSummary }}{{/with}}
-    {{#with mikegrassotti}}{{> sessionSummary }}{{/with}}
-    {{#with mfeckie}}{{> sessionSummary }}{{/with}}
-  </div>
-
+  {{#with urish}}{{> sessionSummary }}{{/with}}
+  {{#with antonioribeiro}}{{> sessionSummary }}{{/with}}
+  {{#with 2upmedia}}{{> sessionSummary }}{{/with}}
+  {{#with kn0tch}}{{> sessionSummary }}{{/with}}
+  {{#with auser}}{{> sessionSummary }}{{/with}}
+  {{#with abeisgreat}}{{> sessionSummary }}{{/with}}
+  {{#with ronlichty}}{{> sessionSummary }}{{/with}}
+  {{#with mikegrassotti}}{{> sessionSummary }}{{/with}}
+  {{#with mfeckie}}{{> sessionSummary }}{{/with}}
+</center>
 </div>
 
 {{/with}}
@@ -375,6 +412,7 @@ function initPage()
 code { background:none;padding:none;margin:none; }
 code { padding:0; }
 #experts .coloumn { padding-left:10px;padding-right:10px;  }
+#experts h2 { clear:both }
 #experts h3 { font-size:18px!important;padding-bottom:0;margin-bottom:4px }
 #experts h4 { font-size:12px!important;padding-top:0;margin-top:0;color:gray; }
 #experts h5 { font-size:14px!important;color:#CE5323;font-weight:bold;margin-left:0;margin-right:0; }
