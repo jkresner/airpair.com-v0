@@ -18,6 +18,8 @@
 
 <style type="text/css">
 
+  h2 { text-align:center;margin:40px auto; }
+
   .hero { background:url('/images/landing/airconf/bg.jpg');height:540px;margin-top:0!important;text-align:center }
   .hero img { margin:70px 0 40px 0 }
   .hero section { height:110px;margin-bottom:60px }
@@ -43,7 +45,7 @@
   @media (max-width:801px) {
     .hero section { height:146px  }
     .hero section div.bg { height:146px }
-    .hero section div.about { height:140px;position:fixed;top:210px;width:100%;color:#dff2ef; }
+    .hero section div.about { height:140px;position:absolute;top:210px;width:100%;color:#dff2ef; }
     .hero section div.about span { display:block; }
     .hero section div.about h2 { width:500px; }
     .hero section div.about p { font-size:16px;width:500px; }
@@ -82,111 +84,148 @@
 
 <style type="text/css">
 
-  .keynotes { background:url('/images/landing/airconf/bg.jpg');height:540px;margin-top:0!important;text-align:center }
-  .testimonial { width:48%;padding:10px;border-bottom:none!important;vertical-align:top;padding-top:0px!important }
-  .testimonial .col-sm-8 { height:280px; }
+  #keynotes { width:1002px;margin:auto }
+  .keynote { width:480px;padding:10px;vertical-align:top;padding:0px;margin-bottom:20px; }
+  .keynote.left { float:left;margin-left:10px; }
+  .keynote.left .col-sm-8 { padding-right:0; }
+  .keynote.right { float:right;margin-right:10px; }
+  .keynote.right .col-sm-8 { padding-left:0; }
+  .keynote { height:300px; }
+  .keynote .avatars { width:155px;display:inline-block; }
+  .keynote .content { width:300px;display:inline-block;margin-left:10px;vertical-align:top }
+  .keynote img { height:100px;width:100px;border-radius:26px; }
+  .keynote img.first { margin:-8px 0 0 -10px }
+  .keynote img.second { margin:-28px 0 0 45px }
+  .keynote img.third { margin:-28px 0 0 -10px }
+  .keynote img.fourth { margin:-28px 0 0 45px }
+  .keynote .right img.first { margin:-8px 0 0 75px }
+  .keynote .right img.second { margin:-28px 0 0 10px }
+  .keynote .right img.third { margin:-28px 0 0 75px }
+  .keynote .right img.fourth { margin:-28px 0 0 10px }
+  .keynote h3 { margin-top:15px;line-height:22px;font-size:22px;font-weight:400; }
+  .keynote small { display:block;font-size:80%;margin-top:14px; }
+  .keynote.three a { color:#dff2ef; }
 
   @-moz-document url-prefix() {
+    .keynote h3 { font-weight:300 }
   }
 
   @media (max-width:1024px) {
+    #keynotes { width:100% }
+    .keynote { width:640px }
+    .keynote .avatars { margin:0 25px; }
+    .keynote.left { float:none;margin:20px auto;padding-left:40px; }
+    .keynote.right { float:none;margin:20px auto;padding-right:40px; }
     @-moz-document url-prefix() {
     }
   }
 
   @media (max-width:801px) {
+    .keynote { width:480px;padding:0px }
+    .keynote .avatars { margin:0; }
+    .keynote.left { float:none;margin:20px auto;padding-left:0px; }
+    .keynote.right { float:none;margin:20px auto;padding-right:0px; }
   }
 
   @media (max-width:640px) {
+    .keynote { width:460px }
+    .keynote .avatars { width:145px; }
+    .keynote .content { width:280px }
+    .keynote.left { padding-left:20px; }
+    .keynote.right { padding-right:20px; }
+    .keynote h3 { font-size:18px; }
+    .keynote p { font-size:13px; }
   }
 
   @media (max-width:480px) {
+    .keynote { width:90% }
+    .keynote .content { width:40% }
+    .keynote.left { padding-left:0px; }
+    .keynote.right { padding-right:0px; }
+    .keynote h3 { font-size:16px; }
+    .keynote p { display:none }
+    .keynote small { font-size:9px; }
+    .keynote img { height:80px;width:80px;border-radius:26px; }
   }
+
+
+  @media (max-width:480px) {
+    #experts .column { width:200px }
+  }
+
 </style>
 
-    <div id="keynotes" class="container">
+  <div id="keynotes">
 
-      <h2 class="text-thin text-center m-t-3">Keynote Panels</h2>
+    <h2>Keynote Panels</h2>
 
-      <div class="testimonial-list" style="width:100%;padding:10px 0;margin-left:0;margin-right:0;border:none">
-
-        <div class="testimonial" style="float:left">
-          <div class="col-sm-4 text-center">
-            <div class="avatar-logo">
-              <img src="/images/avatars/of.png" alt="" class="img-circle" width="130px" style="margin-top:-20px" />
-              <img src="//avatars3.githubusercontent.com/u/76?s=130" alt="" class="img-circle" width="130px" style="margin-top:-40px" />
-              <img src="//secure.gravatar.com/avatar/1eb7539f1f0a62f74ea3f7a0fa0f486f?s=140" alt="" class="img-circle" width="130px" style="margin-top:-40px" />
-            </div>
-          </div>
-          <div class="col-sm-8">
-            <h4 class="text-bold">The Future of Consulting</h4>
-            With remote work and distributed teams becoming more popular each year, what does the future hold for consulting? Consultancies like Thoughtworks and Pivotal Labs have gone beyond outsourcing. The best consultancies leave clients with new skills on top of deliverables. But will this be enough going forward, what does the future hold?
-            <small class="block m-t-1">
-              <b><a href="//twitter.com/obie" target="_blank">Obie Fernandez</a></b> &ndash; Hashrocket <span class="text-muted">, CEO (prev)</span> | AirPair</b><span class="text-muted">, CTO</span>
-              <br /><b><a href="//twitter.com/mikemasonca" target="_blank">Mike Mason</a></b> &ndash; ThoughtWorks<span class="text-muted">, Head of Technology</span>
-              <br /><b><a href="//twitter.com/rabble" target="_blank">Evan Henshaw-Plath</a></b> &ndash; Neo<span class="text-muted">, CTO</span>
-              <br /><b><a href="//twitter.com/cpytel" target="_blank">Chad Pytel</a></b> &ndash; ThoughtBot<span class="text-muted">, CEO</span>
-             </small>
-          </div>
+      <div class="keynote one left" style="background:#dff2ef">
+        <div class="avatars left">
+          <img class="first" src="/images/avatars/of.png" alt="Obie Fernandez" />
+          <img class="second" src="//secure.gravatar.com/avatar/1eb7539f1f0a62f74ea3f7a0fa0f486f?s=110" alt="Chad Pytel" />
+          <img class="third" src="/images/landing/airconf/mikemasonca.png" alt="Mike Mason" />
+          <img class="fourth" src="/images/landing/airconf/rabble.png" alt="Evan Henshaw-Plath" />
         </div>
-
-        <div class="testimonial" style="float:right">
-          <div class="col-sm-4 text-center">
-            <div class="avatar-logo">
-              <img src="//pivotallabs.com/wordpress/wp-content/uploads/2012/09/Rob-Mee_avatar-96x96.jpg" alt="" class="img-circle" width="130px"/>
-            </div>
-          </div>
-          <div class="col-sm-8">
-            <h4 class="text-bold">Will Pairing Ever Be Mainstream?</h4>
-            Does pairing make sense for other disciplines outside of software. What makes pairing a compelling value proposition? Desc coming soon.
-            <small class="block m-t-1">
-              <br /><b>Rob Mee</b> &ndash; Pivotal Labs <span class="text-muted">, CEO</span>
-              <!-- <br /><b>Panelist 2</b> &ndash; <span class="text-muted">, </span>
-              <br /><b>Panelist 3</b> &ndash; <span class="text-muted">, </span>
-              <br /><b>Panelist 4</b> &ndash; <span class="text-muted">, </span> -->
-              <!-- <br /><b>?Kent Beck</b> &ndash; <span class="text-muted"> eXtreme Programing, Creator</span> -->
-            </small>
-          </div>
-        </div>
-
-        <div class="testimonial" style="float:left">
-          <div class="col-sm-4 text-center">
-            <div class="avatar-logo">
-              <img src="//secure.gravatar.com/avatar/780d02a99798886da48711d8104801a4?s=140" alt="" class="img-circle" width="130px" style="margin-top:-20px" />
-              <img src="/images/landing/airconf/deepnishar.png" alt="" class="img-circle" width="130px" style="margin-top:-40px" />
-              <img src="/images/landing/airconf/ccheever.png" alt="" class="img-circle" width="130px" style="margin-top:-40px" />
-            </div>
-          </div>
-          <div class="col-sm-8">
-            <h4 class="text-bold">Software Engineering vs Entrepreneurship</h4>
-            Software Engineering is a precise discipline. Often early in a company's lifetime, thing needs to be scrappy and fast. Are Software Engineering and Entrepreneurship at odds? Is there a way to have both
-            quality and speed, or can the two only exist at different stages of every successful software project?
-            <small class="block m-t-1">
-              <b><a href="//twitter.com/hackerpreneur" target="_blank">Jonathon Kresner</a></b> &ndash; AirPair</b><span class="text-muted">, CEO</span>
-              <br /><b><a href="//www.linkedin.com/in/deepnishar" target="_blank">Deep Nishar</a></b> &ndash; LinkedIn<span class="text-muted">, SVP Product/UX</span>
-              <br /><b><a href="//twitter.com/ccheever" target="_blank">Charlie Cheever</a></b> &ndash; Quora<span class="text-muted">, Cofounder</span>
-            </small>
-          </div>
-        </div>
-
-        <div class="testimonial" style="float:right">
-          <div class="col-sm-4 text-center">
-            <div class="avatar-logo">
-              <img src="//secure.gravatar.com/avatar/2db848de65112c20aa13f566c0cbf9d7?s=140" alt="" class="img-circle" width="130px" style="margin-top:-20px" />
-              <img src="//secure.gravatar.com/avatar/88bc70a80914f2036f24ecfc7b0e4b4d?s=140" alt="" class="img-circle" width="130px" style="margin-top:-40px" />
-            </div>
-          </div>
-          <div class="col-sm-8">
-            <h4 class="text-bold">Developer Brand Marketing</h4>
-            What are the best strategies for building a personal brand as a developer? Should you work on your reputation score on StackOverflow, publish open source projects on Github, write on your personal blog, or speak at meetups and conferences? Our panelists will discuss their experiences and will share tips and tricks for establishing and managing a reputation in the developer community.
-            <small class="block m-t-1">
-              <br /><b>Igor Lebovic</b> &ndash; AirPair</b><span class="text-muted">, CMO</span>
-              <br /><b><a href="//twitter.com/garrytan" target="_blank">Garry Tan</a></b> &ndash; YCombinator<span class="text-muted">, Partner</span>
-            </small>
-          </div>
+        <div class="content">
+          <h3>The Future of Consulting</h3>
+          <p>Remote teams are becoming more popular each year. With increasing access to high quality distributed talent, consultancies like Thoughtworks and Pivotal Labs now go beyond outsourcing. The top consultancies leave clients with new skills as well as deliverables. Will this be enough going forward?</p>
+          <small>
+            <b><a href="//twitter.com/obie" target="_blank">Obie Fernandez</a></b> Hashrocket <span class="text-muted"> CEO (prev)</span> AirPair</b><span class="text-muted"> CTO</span>
+            <br /><b><a href="//twitter.com/rabble" target="_blank">Evan Henshaw-Plath</a></b> Neo<span class="text-muted"> CTO</span>
+            <br /><b><a href="//twitter.com/mikemasonca" target="_blank">Mike Mason</a></b> ThoughtWorks<span class="text-muted"> Head of Technology</span>
+            <br /><b><a href="//twitter.com/cpytel" target="_blank">Chad Pytel</a></b> ThoughtBot<span class="text-muted"> CEO</span>
+           </small>
         </div>
       </div>
-    </div>
+
+      <div class="keynote two right" style="background:#7e7f7f;color:white">
+        <div class="avatars">
+            <img class="first" src="//pivotallabs.com/wordpress/wp-content/uploads/2012/09/Rob-Mee_avatar-96x96.jpg" alt="" />
+        </div>
+        <div class="content">
+          <h3>Will Pairing Be Mainstream?</h3>
+          <p>Does pairing make sense for other disciplines outside of coding. What makes pairing a compelling value proposition with software?</p>
+          <small>
+            <br /><b>Rob Mee</b> &ndash; Pivotal Labs <span class="text-muted">, CEO</span>
+          </small>
+        </div>
+      </div>
+
+      <div class="keynote three left" style="background:#4d4e4e;color:white">
+        <div class="content">
+          <h3>Software Engineering vs Entrepreneurship</h3>
+          <p>Software Engineering is a precise discipline. Often early in a company's lifetime, thing needs to be scrappy and fast. Are Software Engineering and Entrepreneurship at odds? Is there a way to have both
+          quality and speed and can the two co-exist at the same time?</p>
+          <small>
+            <b><a href="//twitter.com/hackerpreneur" target="_blank">Jonathon Kresner</a></b> &ndash; AirPair</b><span class="text-muted">, CEO</span>
+            <br /><b><a href="//www.linkedin.com/in/deepnishar" target="_blank">Deep Nishar</a></b> &ndash; LinkedIn<span class="text-muted">, SVP Product/UX</span>
+            <br /><b><a href="//twitter.com/garrytan" target="_blank">Garry Tan</a></b> &ndash; YCombinator<span class="text-muted">, Partner</span>
+            <br /><b><a href="//twitter.com/ccheever" target="_blank">Charlie Cheever</a></b> &ndash; Quora<span class="text-muted">, Cofounder</span>
+          </small>
+        </div>
+        <div class="avatars right">
+            <img class="first" src="//secure.gravatar.com/avatar/780d02a99798886da48711d8104801a4?s=140" alt="Jonathon kresner" />
+            <img class="second" src="/images/landing/airconf/deepnishar.png" alt="Dipchand Nishard" />
+            <img class="third" src="//secure.gravatar.com/avatar/88bc70a80914f2036f24ecfc7b0e4b4d?s=140" alt="Garry Tan" />
+            <img class="fourth" src="/images/landing/airconf/ccheever.png" alt="Charlie Cheever" />
+          </div>
+      </div>
+
+      <div class="keynote right" style="background:#90d1cc">
+        <div class="content">
+          <h3>Developer Personal Brand Marketing</h3>
+          <p>What are the best strategies for building your personal developer brand? In this panel we ask a famous StackOverflow member, prolific open-source contributor, technical blogger and conference speaker how they rose to fame in their respective communities.</p>
+          <small>
+            <br /><b>Igor Lebovic</b> &ndash; AirPair</b><span class="text-muted">, CMO</span>
+
+          </small>
+        </div>
+        <div class="avatars right">
+          <img class="first" src="//secure.gravatar.com/avatar/2db848de65112c20aa13f566c0cbf9d7?s=140" alt="Igor Lebovic" />
+        </div>
+      </div>
+
+  </div>
 
 <div style="clear:both"></div>
 
