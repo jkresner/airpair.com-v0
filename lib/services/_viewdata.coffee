@@ -116,8 +116,8 @@ module.exports = class ViewDataService
 
   so16: (id, cb) -> @so15 id, cb
   so17: (id, cb) -> @so15 id, cb
-  so18: (id, cb) -> @so15 id, cb
-  so19: (id, cb) -> @so15 id, cb
+  so18: (cb) -> cb null, -> { stripePK }
+  so19: (cb) -> cb null, -> { stripePK }
 
   bsa02: (cb) ->
     cb null, -> { stripePK }
