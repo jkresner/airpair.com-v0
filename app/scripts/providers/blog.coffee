@@ -11,3 +11,16 @@ module.exports = () ->
       btn.html(jQuery(this).data('act'))
       btn.next('figure').remove()
     )
+
+  jQuery('.trackBookLogin').click (e) ->
+    return_to = jQuery(this).attr('href')
+    if (return_to == "#")
+      return_to = window.location.pathname+window.location.search
+
+    addjs.trackClick(e,'auth/google?return_to='+return_to,addjs.events.customerBookLogin,getElmId(@))
+
+  jQuery('.trackLogin,.trackCustomerLogin').click (e) ->
+    addjs.trackClick(e,'auth/google?return_to=/find-an-expert',addjs.events.customerLogin,getElmId(@))
+
+  jQuery('.trackExpertLogin').click (e) ->
+    addjs.trackClick(e,'auth/google?return_to=/be-an-expert',addjs.events.expertLogin,getElmId(@))
