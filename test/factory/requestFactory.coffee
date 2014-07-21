@@ -4,8 +4,8 @@ Request = require('../../lib/models/request')
 
 defaults =
   userId: '41224d776a326fb40f000001'
-  company: 'anexpert'
-  brief: 'daskjlkja a fdjadfkj adfjlkadf jadfl adf jlajlkadfs jlkj adfj ladflskjlkj adfjladfjljkl daf jkladfjkl adf'
+  company: 'Newbies, LLC'
+  brief: 'Help me deploy my Rails app on my own VPN'
   status: 'received'
   budget: 100
   pricing: 'private'
