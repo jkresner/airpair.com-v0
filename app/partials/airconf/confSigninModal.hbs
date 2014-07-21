@@ -7,7 +7,7 @@
       </div>
       <div class="modal-body" style="text-align:center;padding:60px">
         <p style="font-size:16px;margin-bottom:60px;">AirConf is broadcasted via Google+ Hangouts</p>
-        <a class="btn btn-block btn-orange" href="#">Sign in with Google to access AirConf</a>
+        <a class="btn btn-block btn-orange btn-signin trackAirConfLogin" href="#">Sign in with Google to access AirConf</a>
         <p style="font-size:12px;margin:10px 0 0 0">Your Google email be use to invite you to live workshops.</p>
       </div>
       <div class="modal-footer">
@@ -19,13 +19,22 @@
 
 
 <script type="text/javascript">
-  $(function() {
-    $('.loginRequied,#experts a').click(function(e){
+  function bindLoginModal() {
+    $('.loginRequied,#experts a').click(function(e) {
       e.preventDefault();
+      return_to = $(this).data('return-to') || window.location.pathname;
+      elemId = window.location.pathname + ':' + $(this).attr('id');
+
       $('#loginModal').modal({ keyboard: false });
-      $('#loginModal').modal('show');
+      // console.log('return_to', return_to, elemId);
+
+      $(".trackAirConfLogin").click(function(e) {
+        // return_to = window.location.pathname + window.location.search  if return_to is "#"
+        addjs.trackEvent('airconf', 'airconfLogin', elemId);
+        addjs.redirectToLogin(e, "auth/google?return_to=" + return_to);
+      });
     });
-  });
+  }
 </script>
 
 {{/if}}
