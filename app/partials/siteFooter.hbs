@@ -1,5 +1,11 @@
 <footer class="site-footer">
   <div class="wrap">
-  <p>© airpair, Inc. · 875 Howard St, San Francisco CA · <a href="mailto:team@airpair.com">Email Us</a> · +1 (800) 487-0668</p>
+    <p>
+      {{#if showFaqLink}}
+      <a href="http://www.airpair.com/customer-faq" target="_blank">Customer FAQ</a>&nbsp;&nbsp;&#124;&nbsp;
+      <a href="http://www.airpair.com/expert-faq" target="_blank">Expert FAQ</a>&nbsp;&nbsp;&#124;&nbsp;
+      {{/if}}
+      &copy; airpair, Inc. · 875 Howard St, San Francisco CA · <a href="mailto:team@airpair.com">Email Us</a> · +1 (800) 487-0668
+    </p>
   </div>
 </footer>
