@@ -1,3 +1,7 @@
 h1 Expert Settings
 h2 {{ name }}
+h4 {{ expertStats.requestCount() }} requests received
+h4 {{ expertStats.responseRate() | number:0 }}% response rate
+
 pre(ng-bind='expert | json')
+pre(ng-bind='expertRequests | json')
