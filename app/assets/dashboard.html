@@ -9,39 +9,21 @@
 </head>
 
 <body id="dashboardpage">
-
   <div class="site-container">
 
-  {{> siteNav this }}
+    {{> siteNav this }}
 
     <div class="site-inner">
       <div class="wrap">
-
-  <div id="requests" class="route">
-    <div id="requestslist"></div>
-    <div class="rightCol">
-
-<!--      <h2 style="margin-top:40px">Follow us</h2>
-      <br />
-      <div class="social">
-
-         <a class="zocial twitter icon" href="http://twitter.com/airpair" target="_blank"></a> <a class="zocial facebook icon" href="http://facebook.com/airpair" target="_blank"></a>
-        <a class="zocial angellist icon" href="http://angel.co/airpair" target="_blank"></a>
-        <a class="zocial googleplus icon" href="https://plus.google.com/105075583437166504731" target="_blank"></a>
- -->
+        <div id="requests" class="route">
+          <div id="requestslist"></div>
+          <div class="rightCol"></div>
+        </div>
       </div>
-
     </div>
-
-      </div>  </div>
-
+    {{> siteFooter }}
   </div>
-  </div>
-
   <style> td img { width:40px; } </style>
-
-
-</body>
 
   <script type="text/javascript">
     window.useOlark = true;
@@ -62,4 +44,5 @@
   <script src="/javascripts/vendor.js" defer></script>
   <script src="/javascripts/ap.js" defer onload="initApp()"></script>
 
+</body>
 </html>
