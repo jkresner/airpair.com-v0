@@ -1,0 +1,31 @@
+{{#if session.authenticated }}{{else}}
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginTitle" aria-hidden="true" style="opacity:0.95">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="loginTitle" style="font-weight:bold;font-size:22px">Attend AirConf 2014</h4>
+      </div>
+      <div class="modal-body" style="text-align:center;padding:60px">
+        <p style="font-size:16px;margin-bottom:60px;">AirConf is broadcasted via Google+ Hangouts</p>
+        <a class="btn btn-block btn-orange" href="#">Sign in with Google to access AirConf</a>
+        <p style="font-size:12px;margin:10px 0 0 0">Your Google email be use to invite you to live workshops.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script type="text/javascript">
+  $(function() {
+    $('.loginRequied,#experts a').click(function(e){
+      e.preventDefault();
+      $('#loginModal').modal({ keyboard: false });
+      $('#loginModal').modal('show');
+    });
+  });
+</script>
+
+{{/if}}

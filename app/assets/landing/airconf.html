@@ -19,6 +19,8 @@
 <style type="text/css">
 
   h2 { text-align:center;margin:40px auto; }
+  a.btn-orange { font-size:22px;background:#ce5424;margin:auto;color:white;height:50px;font-weight:300;text-transform:none;padding-top:10px; }
+  a.btn-orange:hover { font-weight:500;color:white; }
 
   .hero { background:url('/images/landing/airconf/bg.jpg');height:540px;margin-top:0!important;text-align:center }
   .hero img { margin:70px 0 40px 0 }
@@ -79,7 +81,7 @@
           <p><span>Broadcasting Worldwide <span> Aug 4 - 31, via G+ Hangouts</p>
         </div>
       </section>
-      <a class="btn btn-block" href="javascript:alert('Registration will open Mon Jul 21')">Attend AirConf 2014</a>
+      <a class="btn btn-block loginRequied" href="javascript:alert('Registration will open Mon Jul 21')">Attend AirConf 2014</a>
     </div>
 
 <style type="text/css">
@@ -259,7 +261,7 @@
         <summary>
           <label>Mon Aug TBA, 00:00 GMT</label>
           <h3>How to Build a Personal <br />Developer Brand</h3>
-          <p>Strong personal brands get better consulting rates. What are the best strategies for building a personal developer brand? In this panel we ask a Top StackOverflow member, prolific open-source contributor, well known technical blogger and charismatic conference speaker for their tips and tricks.</p>
+          <p>Strong personal brands get better consulting rates. What are the best strategies for building a personal developer brand? In this panel we ask a top Stack Overflow member, a prolific open-source contributor, a well-known technical blogger and a charismatic conference speaker for their tips and tricks.</p>
           <small>
             Igor Lebovic &ndash; AirPair<span class="text-muted">, CMO</span>
 
@@ -267,7 +269,7 @@
         </summary>
         <div class="detail">
           <label>Mon Aug TBA, 00:00 GMT</label>
-          <h3>Developer Personal Brand Marketing</h3>
+          <h3>How to Build a Personal <br />Developer Brand</h3>
           <button class="btn btn-block">Register</button>
         </div>
         <ul>
@@ -380,6 +382,9 @@
 
 <script src="//cdn.optimizely.com/js/280598780.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+
+{{> confSigninModal }}
+
 <script type="text/javascript">
 
 function initPage()
@@ -416,27 +421,27 @@ code { padding:0; }
 #experts h3 { font-size:18px!important;padding-bottom:0;margin-bottom:4px }
 #experts h4 { font-size:12px!important;padding-top:0;margin-top:0;color:gray; }
 #experts h5 { font-size:14px!important;color:#CE5323;font-weight:bold;margin-left:0;margin-right:0; }
-.description { height:230px!important; }
-.description h6 { margin-top:0!important;padding-top:0!important;font-weight:bold }
-.btn-slate { font-weight:normal; }
-.btn-slate:hover { font-weight:bold; }
-.social-icons { padding-top:2px; }
-.social-icons a { width:32px;height:32px;display:inline-block;background-color:#d3d3d3;background-size:100%;background-position:center;background-repeat:no-repeat;margin-right:1px }
-.social-icons a:hover { border-bottom:solid 1px orange; }
-.social-icons span { width:32px;height:32px;display:inline-block;background-color:#d3d3d3;background-size:100%;background-position:center;margin-right:1px }
-.ap { background:url('/images/icons/ap-white.png') }
+#experts .description { height:230px!important; }
+#experts .description h6 { margin-top:0!important;padding-top:0!important;font-weight:bold }
+#experts .btn-slate { font-weight:normal; }
+#experts .btn-slate:hover { font-weight:bold; }
+#experts .social-icons { padding-top:2px; }
+#experts .social-icons a { width:32px;height:32px;display:inline-block;background-color:#d3d3d3;background-size:100%;background-position:center;background-repeat:no-repeat;margin-right:1px }
+#experts .social-icons a:hover { border-bottom:solid 1px orange; }
+#experts .social-icons span { width:32px;height:32px;display:inline-block;background-color:#d3d3d3;background-size:100%;background-position:center;margin-right:1px }
 .title span { display:inline-block;background:;color:white; }
-a.ap { background-color:#ce5323 }
-.gh { background:url('/images/icons/gh-white.png') }
-a.gh { background-color:#3b3b3b }
-.tw { background:url('/images/icons/tw-white.png') }
-a.tw { background-color:#00afea }
-.bb { background:url('/images/icons/bb-white.png') }
-a.bb { background-color:#1a4f7e }
-.so { background:url('/images/icons/so-white.png') }
-a.so { background-color:#ffa43c }
-.in { background:url('/images/icons/in-white.png') }
-a.in { background-color:#0081af }
+#experts .ap { background:url('/images/icons/ap-white.png') }
+#experts a.ap { background-color:#ce5323 }
+#experts .gh { background:url('/images/icons/gh-white.png') }
+#experts a.gh { background-color:#3b3b3b }
+#experts .tw { background:url('/images/icons/tw-white.png') }
+#experts a.tw { background-color:#00afea }
+#experts .bb { background:url('/images/icons/bb-white.png') }
+#experts a.bb { background-color:#1a4f7e }
+#experts .so { background:url('/images/icons/so-white.png') }
+#experts a.so { background-color:#ffa43c }
+#experts .in { background:url('/images/icons/in-white.png') }
+#experts a.in { background-color:#0081af }
 </style>
 
 
