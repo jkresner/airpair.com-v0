@@ -6,7 +6,6 @@
 # https://gist.github.com/joshbirk/1732068
 
 exports  = {}
-und      = require 'underscore'
 passport = require 'passport'
 
 ######## Session
