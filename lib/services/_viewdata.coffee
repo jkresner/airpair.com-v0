@@ -4,7 +4,7 @@ TagsSvc          = require '../services/tags'
 OrdersSvc        = require '../services/orders'
 ExpertsSvc       = require '../services/experts'
 CompanysSvc      = require '../services/companys'
-# SettingsSvc      = require '../services/settings'
+SettingsSvc      = require '../services/settings'
 RequestsSvc      = require '../services/requests'
 stripePK         = config.payment.stripe.publishedKey
 
@@ -92,9 +92,10 @@ module.exports = class ViewDataService
     cb null, -> { workshops: Data.workshops, workshop }
 
   airconfreg: (cb) ->
-    new OrdersSvc(@usr).getAirConfRegisration (e, registration) =>
-      $log 'got reg', e, registration
-      cb null, -> { workshops: Data.workshops, registration }
+    new SettingsSvc(@usr).getByUserId @usr._id, (e, settings) =>
+      hasCard = _.find(settings.paymentMethods, (p) -> p.type == 'stripe')?
+      new OrdersSvc(@usr).getAirConfRegisration (ee, registration) =>
+        cb null, -> { workshops: Data.workshops, hasCard, registration }
 
 
   so10: (id, cb) ->

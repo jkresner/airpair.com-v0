@@ -418,4 +418,5 @@ module.exports = class OrdersService extends DomainService
 
   """ Don't want to fill OrdersService files with obscure AirConf logic, this was best I could think of """
   getAirConfRegisration: => AirConfOrders.getAirConfRegisration.apply @, arguments
+  getAirConfPromoRate: => AirConfOrders.getAirConfPromoRate.apply @, arguments
 

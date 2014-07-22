@@ -1,6 +1,6 @@
-api_key = config.payment.stripe.secretKey
-stripe  = require('stripe')(api_key)
-
+api_key    = config.payment.stripe.secretKey
+stripe     = require('stripe')(api_key)
+OrdersSvc  = require './../services/orders'
 
 class LandingPageApi extends require('./_api')
 
@@ -8,6 +8,7 @@ class LandingPageApi extends require('./_api')
 
   routes: (app, route) ->
     app.post "/api/#{route}/bsa02/purchase", @ap, @createCustomer
+    app.post "/api/#{route}/airconf/promo", @ap, @airconfPromo
 
   # Create customer, return customer to client, then charge customer.
   createCustomer: (req, res, next) =>
@@ -29,5 +30,11 @@ class LandingPageApi extends require('./_api')
     , (err, charge) ->
       if err then console.log "ERROR - chargeCustomer failed"
       console.log "customer charged #{amount}"
+
+
+  # Charge a customer given a customer id and amount.
+  airconfPromo: (req, res, next) =>
+    new OrdersSvc(req.user).getAirConfPromoRate @data.code, @cbSend
+
 
 module.exports = (app) -> new LandingPageApi app, 'landing'

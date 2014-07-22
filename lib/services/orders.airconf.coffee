@@ -11,15 +11,16 @@
 """
 module.exports =
 
+
   getAirConfRegisration: (cb) ->
+
     @searchMany {userId: @usr._id}, { fields: @Data.view.history }, (e, r) =>
       if e? then cb e, r
 
-      d = paid: false, totalOtherPurchaes: 0, workshops: []
-
       confOrder = _.find r, (o) => _.idsEqual o.requestId, @Data.airconf.requestId
 
-      paid = confOrder?
+      d = _.extend @Data.airconf, { paid: confOrder?, workshops: [], confOrder: confOrder }
+
       d.totalOtherPurchaes += o.total for o in _.without(r, confOrder)
 
       if confOrder?
@@ -29,5 +30,19 @@ module.exports =
       else
         d.discount = d.totalOtherPurchaes/10 % 10;
 
-      $log 'getAirConf2014Order', cb, confOrder, d
+      $log 'getAirConf2014Order', d
       cb e, d
+
+
+  getAirConfPromoRate: (promoCode, cb) ->
+    message = "Invalid Code"
+    rate = @Data.airconf.ticketPrice
+    if promoCode == 'pairupYC' then rate = 0
+    else if promoCode == 'sfor' then rate = rate - 20
+
+    if rate != @Data.airconf.ticketPrice
+      message = "Code applied"
+
+    cb null, { promoRate: rate, message: message }
+
+

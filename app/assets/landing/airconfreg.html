@@ -18,6 +18,8 @@
 
 <style type="text/css">
 
+  .route { display:none }
+
   h1 { text-align:center;margin:40px auto; }
   h2 { text-align:left;margin:40px auto; }
   a.btn-orange { font-size:22px;background:#ce5424;margin:auto;color:white;height:50px;font-weight:300;text-transform:none;padding-top:10px; }
@@ -50,29 +52,49 @@
       <img src="/images/landing/airconf/logo.png" />
   </div>
 
-  <div class="white" style="position:absolute;top:180px;left:25%;background:white;opacity:0.9;width:50%;margin:auto;padding:20px">
+  <div class="white" style="position:absolute;top:180px;left:20%;background:white;width:60%;padding:20px">
 
-    <div class="about">
-      <h1>Registration</h1>
+    <div id="thanks" class="route">
+      Thanks yo
     </div>
 
-    <h3>$150 includes</h3>
-    <ul>
-      <li>Live attendance for up to 3 workshops.</li>
-      <li>Access to all workshop recordings.</li>
-      <li>$150 credit towards pairing with an AirConf speaker</li>
-    </ul>
 
-    <hr />
-      <h3>>Discounts</h3>
-      <h6><a href="javascript:alert('implementing soon')">Re-tweet</a> for $5 off | <a href="javascript:alert('implementing soon')">Share</a> for $5 off | Enter promo code </h6>
-    <hr />
+    <div id="register">
 
+      <div id="order">
+      <h1>Registration</h1>
 
-    <div>-- We already have your card on file.</div>
+      <h3>$150 includes</h3>
+      <ul>
+        <li>Live attendance for up to 3 workshops.</li>
+        <li>Access to all workshop recordings.</li>
+        <li>$150 credit towards pairing with an AirConf speaker</li>
+      </ul>
 
-    <div>--- We want your card on file and will charge you and give you credit.</div>
+      <hr />
+        <h3>Discounts</h3>
+        <h6>
+<!--           <a href="javascript:alert('implementing soon')">Re-tweet</a> for $5 off |
+          <a href="javascript:alert('implementing soon')">Share</a> for $5 off | -->
+          Promo code </a>
+          <input type="text" name="promocode" /> <a href="#" class="promocode">Submit</a>
+          <span class="promocodeMessage"></span>
+        </h6>
+      <hr />
 
+      <article id="stripeRegister" class="post type-post format-standard entry"></article>
+      <article id="haveCard" style="display:none">
+        <h4>Easy, peasy</h4>
+        <br />
+        <p>We already have your card on file!</p>
+        <br />
+        <a class="btn btn-block btn-orange pay" href="#">Pay $<span class="total"></span> for my ticket</a>
+        <p style="font-size:12px;margin:10px 0 0 0">We will charge your card on file.</p>
+      </article>
+
+      </div>
+
+    </div>
 
   </div>
 
@@ -106,9 +128,9 @@
 
 <script type="text/javascript">
   function initApp() {
-    var pageData = { {{JSON 'isProd'}} , {{JSON 'session'}}, {{JSON 'registration'}}, segmentioKey: '{{{segmentioKey}}}' };
-    // Router = require('/scripts/ap/review/Router');
-    // window.router = new Router(pageData);
+    var pageData = { {{JSON 'isProd'}} , {{JSON 'session'}}, {{JSON 'registration'}}, {{JSON 'hasCard'}}, segmentioKey: '{{{segmentioKey}}}' };
+    Router = require('/scripts/ap/airconf/RouterRegistration');
+    window.router = new Router(pageData);
   }
 </script>
 <script src="/javascripts/vendor.js" defer></script>

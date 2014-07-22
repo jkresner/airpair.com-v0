@@ -2,6 +2,7 @@ class QueryHelper
 
   airconf:
     requestId: '53ce8a703441d602008095b6'
+    ticketPrice: 150
     pairCredit: 150
 
   query: {}
