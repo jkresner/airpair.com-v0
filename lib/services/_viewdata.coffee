@@ -85,11 +85,16 @@ module.exports = class ViewDataService
       cb e, -> { companys, stripePK }
 
   airconf: (cb) ->
-    cb null, -> { sessions: Data.confSessions }
+    cb null, -> { workshops: Data.workshops }
 
   airconfsession: (id, cb) ->
-    session = _.find Data.confSessions, (s) -> s.slug == id
-    cb null, -> { sessions: Data.confSessions, session }
+    workshop = _.find Data.workshops, (s) -> s.slug == id
+    cb null, -> { workshops: Data.workshops, workshop }
+
+  airconfreg: (cb) ->
+    new OrdersSvc(@usr).getAirConfRegisration (e, registration) =>
+      $log 'got reg', e, registration
+      cb null, -> { workshops: Data.workshops, registration }
 
 
   so10: (id, cb) ->

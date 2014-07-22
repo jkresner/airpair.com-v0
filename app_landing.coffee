@@ -1,4 +1,6 @@
-{confSessions} = require './lib/services/_viewdata.data'
+{workshops}    = require './lib/services/_viewdata.data'
+authz          = require './lib/identity/authz'
+authd          = authz.LoggedIn()
 
 module.exports = (app, render) ->
 
@@ -15,8 +17,8 @@ module.exports = (app, render) ->
   app.get '/bsa02', render 'landing/bsa02'
 
   checkSession = (req, r, n) ->
-    session = _.find confSessions, (s) -> s.slug == req.params.id
-    if session then n()
+    workshop = _.find workshops, (s) -> s.slug == req.params.id
+    if workshop then n()
     else
       r.status 404
       render('landing/airconf')(req, r, n)
@@ -24,8 +26,8 @@ module.exports = (app, render) ->
   app.get '/airconf/:id', checkSession, render 'landing/airconfsession', ['params.id']
   app.get '/airconf2014', render 'landing/airconf'
   app.get '/airconf', render 'landing/airconf'
+  app.get '/airconf-registration', authd, render 'landing/airconfreg'
   app.get '/speakers', render 'landing/airconf'
-
 
   app.get '/railsconf2014', render 'landing/railsconf'
   app.get '/rails/consulting', render 'landing/railsconsulting'

@@ -1,6 +1,6 @@
 module.exports =
 
-  confSessions:
+  workshops:
 
     'danielroseman':  d: 'Mon, 4th Aug 18:00 GMT', n: 'Daniel Roseman', c: "All-time Django #1 Answerer", t: "What's New in <br />Django 1.7", slug: "new-in-django-1.7", so: '104349/daniel-roseman', tags: ['django'], u: 'danielroseman', g: '0f4cefeedec5163556751d61625eedd0', a: "Django 1.7 is shaping up to be one of the biggest releases for years. Alongside the headline feature, db migrations, there's a whole range of enhancements to app loading, queries and forms, all of which can significantly improve your code. Daniel Roseman, top StackOverflow answerer for Django, will take you through the new features and show how to use them in your apps."
     'ryanbigg':       d: ':Mon, 4th Aug 22:00 GMT', n: 'Ryan Bigg', c: "Rails Book Author", t: "Refactoring Big Features <br />in Large Codebases", so: '15245/ryan-bigg', tags: ['rails','spree'], u: 'ryanbigg', g: '9a2a53db8e9b4476038c94a64b32833f', a: "Spree had a problem: the adjustments system was slow and difficult to understand. Over a period of some months, we refactored the code to be much faster and cleaner. The talk will cover the unique challenges that faced Spree and how we overcome them."
