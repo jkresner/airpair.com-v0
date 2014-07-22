@@ -30,7 +30,7 @@
 
   <script type="text/javascript">
     function initApp() {
-      var pageData = { {{JSON 'session'}}, {{JSON 'experts'}} };
+      var pageData = { {{JSON 'session'}}, {{JSON 'experts'}}, segmentioKey: '{{{segmentioKey}}}' };
       Router = require('/scripts/adm-old/experts/Router');
       window.router = new Router(pageData);
     }

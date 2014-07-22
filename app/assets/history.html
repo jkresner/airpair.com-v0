@@ -66,7 +66,7 @@
     window.useOlark = true;
 
     function initApp() {
-      var pageData = { {{JSON 'session'}}, {{JSON 'orders'}}, {{JSON 'requests'}}, isAdmin: {{isAdmin }} };
+      var pageData = { {{JSON 'session'}}, {{JSON 'orders'}}, {{JSON 'requests'}}, isAdmin: {{{ isAdmin }}}, segmentioKey: '{{{segmentioKey}}}' };
       Router = require('/scripts/ap/history/Router');
       window.router = new Router(pageData);
     }

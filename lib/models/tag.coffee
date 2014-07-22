@@ -15,5 +15,6 @@ schema = new Schema
   gh:        {}            # gihub repo object
   tokens:    String        # extra comma separated strings to assist search
 
+  subscription: { custom: [String], auto: [String] }
 
 module.exports = mongoose.model 'Tag', schema

@@ -1,0 +1,13 @@
+<script type="text/javascript">
+function initStaticPage(name, sessionParams) {
+  require("/scripts/providers/optimizely")
+  require("/scripts/providers/olark")()
+  if(typeof addjs === 'undefined') {
+    var AddJS = require("scripts/providers/addjs/index");
+    window.addjs = new AddJS('{{segmentioKey}}');
+  }
+  addjs.bindTrackLinks()
+  addjs.trackEvent('page', 'view', window.location.pathname, name);
+  addjs.trackSession(sessionParams || {});
+}
+</script>

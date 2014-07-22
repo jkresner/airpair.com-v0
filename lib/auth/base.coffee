@@ -30,14 +30,6 @@ logout = (req, res) ->
   req.logout()
   res.redirect('/')
 
-
-exports.getEnvConfig = (config) ->
-  env = process.env.OAUTH_Env
-  if env? && env is 'staging' then return config.staging
-  if env? && env is 'prod' then return config.prod
-  config.dev
-
-
 exports.authnOrAuthz = (req, res, next, providerName, scope) ->
 
   opts = failureRedirect: '/failed-login', scope: scope
@@ -72,23 +64,14 @@ exports.insertOrUpdateUser = (req, done, providerName, profile) ->
       console.log 'findOneAndUpdate', err && err.stack, JSON.stringify(user)
       done(err, user)
 
-  # We are only tracking sign ups from known flows (1:Request,2:BeExpert)
-  mpId = req.session.mixpanelId if req.session
-  $log 'mpIdExists', mpId?, mpId, search
-  if mpId?
-    User.findOne search, (err, user) ->
-      if err then return done err
-      $log 'userExists', user?, user
-      if !user?
-        mixpanel.alias mpId, update.google._json.email, =>
-          $log 'alias callback', update.google._json.email, mpId
-          mixpanel.track 'signUp', { distinct_id: mpId }, =>
-            console.log 'signUp mixpanel.track callback'
-      saveUser()
-  else
+  User.findOne search, (err, user) ->
+    if err then return done err
+    $log 'userExists', user?, user
+    if !user?
+      # pass a param for client side aliasing of new users
+      returnUrl = req.session.returnTo || '/'
+      req.session.returnTo = "#{returnUrl}?newUser=1"
     saveUser()
-
-
 
 
 ######## Load Providers

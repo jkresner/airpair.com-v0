@@ -39,7 +39,7 @@ To setup + run locally
 
 6)   Open browser @ http://localhost:3333/
 
-7)   For testing, install PhantomJS & mocha-phantomjs `npm install -g mocha mocha-phantomjs phantomjs`
+7)   For testing, install PhantomJS & mocha-phantomjs & jake `npm install -g mocha mocha-phantomjs phantomjs jake`
 
 8)   Run "npm run hooks" to set up the pre-push hooks"
 
@@ -51,9 +51,9 @@ Running tests
 
 ##### 1. /test/server
 
-   Runs in node with mocha (e.g api tests)
+   Runs in node with mocha via jake (e.g api tests)
 
-   `mocha test/server/all.coffee`
+   `jake test:server`
 
 ##### 2. /test/integration
 

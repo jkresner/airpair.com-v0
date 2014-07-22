@@ -22,8 +22,10 @@ logs
 results
 
 # OS or Editor folders
+.ackrc
 .DS_Store
 .cache
+.idea
 .project
 .settings
 .tmproj

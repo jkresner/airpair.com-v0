@@ -13,4 +13,4 @@ module.exports =
     hbs.registerHelper 'isAdmin', ->
       Roles = require '../identity/roles'
       $log 'isAdmin', Roles, @session
-      Roles.isAdmin @session
+      Roles.isAdmin(@session).toString()

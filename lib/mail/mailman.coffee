@@ -32,6 +32,8 @@ class Mailman
     options.to = roles.getAdminEmails()
     @sendEmail options, callback
 
+  sendAutoNotification: (expert, request) ->
+    console.log 'sending an automatched expert request!!!'
 
   admNewRequest: (request) ->
     fullName = ''  #temporary until fix bookme flow

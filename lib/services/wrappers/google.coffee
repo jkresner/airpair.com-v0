@@ -25,7 +25,7 @@ class Google
       if !err then return
       stack = new Error('Google constructor: ' + err.message).stack
       console.log stack
-      if cfg.isProd then winston.error stack
+      if config.isProd then winston.error stack
       return cb(err)
 
     query = name: 'googleapi'
@@ -61,7 +61,7 @@ class Google
     _.each apis, (version, name) ->
       googleapis.discover(name, version)
 
-    if cfg.env is 'test'
+    if config.env is 'test'
       console.log 'google wrapper in test mode.'
       return cb && cb()
 
@@ -69,7 +69,7 @@ class Google
       if err
         stack = new Error('discovery: ' + err.message).stack
         console.log stack
-        if cfg.isProd then winston.error stack
+        if config.isProd then winston.error stack
         return cb(err)
       @client = client
       cb(err, @)
@@ -148,14 +148,14 @@ class Google
     @makeCall user, fn, cb
 
   createEvent: (user, params, body, cb) ->
-    params = _.defaults params, cfg.google.calendar.params
+    params = _.defaults params, config.google.calendar.params
     fn = (client) -> client.calendar.events.insert(params, body)
     @makeCall user, fn, cb
 
   patchEvent: (user, params, body, cb) ->
     # the properties in here that matter are eventId and sendNotifications
-    params = _.defaults params, cfg.google.calendar.params
+    params = _.defaults params, config.google.calendar.params
     fn = (client) -> client.calendar.events.patch(params, body)
     @makeCall user, fn, cb
 
-module.exports = new Google(cfg.google.oauth)
+module.exports = new Google(config.google.oauth)

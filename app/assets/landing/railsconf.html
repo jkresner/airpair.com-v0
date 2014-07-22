@@ -9,7 +9,6 @@
     <meta name="keywords" content="Software Expert, Onine Code Review, Remote Pair Programming, Software Training">
     <meta name="description" content="AirPair connects companies to Software Developers they can book and pay 1 hour at a time.">
     <link rel="stylesheet" href="/css/ap-old.css">
-    <link rel="stylesheet" href="/stylesheets/railsconf.css" type="text/css" media="all" />
     <link rel="canonical" href="http://www.airpair.com/" />
     <link href="https://plus.google.com/105075583437166504731/" rel="publisher"/>
   </head>
@@ -531,35 +530,6 @@
   </body>
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
-    <script type="text/javascript">
-
-    function initPage()
-    {
-      window.useOlark = true;
-      require('scripts/providers/all');
-      addjs.trackEvent('page','view', 'railconf2014');
-      addjs.providers.mp.setPeopleProps({railsconf: '2014'});
-    }
-
-    </script>
-
-    <script src="/javascripts/providers.js" defer onload="initPage()"></script>
-
-    <script type="text/javascript">
-adroll_adv_id = "XF634YIRAZHM5AG2HSQDII";
-adroll_pix_id = "RJLKZHU5IFD2NP5M3C6X35";
-(function () {
-var oldonload = window.onload;
-window.onload = function(){
-  __adroll_loaded=true;
-  var scr = document.createElement("script");
-  var host = (("https:" == document.location.protocol) ? "https://s.adroll.com" : "http://a.adroll.com");
-  scr.setAttribute('async', 'true');
-  scr.type = "text/javascript";
-  scr.src = host + "/j/roundtrip.js";
-  ((document.getElementsByTagName('head') || [null])[0] ||
-    document.getElementsByTagName('script')[0].parentNode).appendChild(scr);
-  if(oldonload){oldonload()}};
-}());
-</script>
+    {{> InitPage }}
+    <script src="/javascripts/landing.js" defer onload="initStaticPage('railconf2014', {railsconf: '2014'})"></script>
 </html>

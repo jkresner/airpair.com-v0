@@ -37,7 +37,7 @@
 
   <script type="text/javascript">
     function initApp() {
-      var pageData = { {{JSON 'session' }}, {{JSON 'request' }}, {{JSON 'orders' }} };
+      var pageData = { {{JSON 'session' }}, {{JSON 'request' }}, {{JSON 'orders' }}, segmentioKey: '{{{segmentioKey}}}' };
       Router = require('/scripts/ap/schedule/Router');
       window.router = new Router(pageData);
     }

@@ -11,8 +11,8 @@ class exports.SessionPage
       @initialize pageData
       callback @
 
-      # bring in Google analytics, uservoice & others
-      require '/scripts/providers/all'
+      require("/scripts/providers/uservoice")() if window.useUserVoice
+      require("/scripts/providers/olark")() if window.useOlark
 
   setOrFetch: (model, local) ->
     if local? then model.set local else model.fetch reset:true

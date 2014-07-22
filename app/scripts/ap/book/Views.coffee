@@ -31,7 +31,7 @@ class exports.StripeRegisterView extends SV.StripeRegisterView
     @model.unset 'stripeCreate'
     name = @session.get('google').displayName
     addjs.trackEvent 'book', 'customerSetStripeInfo', name
-    addjs.providers.mp.setPeopleProps paymentInfoSet: 'stripe'
+    addjs.trackSession paymentInfoSet: 'stripe'
     @successAction()
   successAction: =>
     $('#card').hide()
@@ -88,7 +88,6 @@ class exports.RequestView extends BB.ModelSaveView
     pricing: @$("[name='pricing']:checked").val()
     suggested: [{expert:@expert.toJSON(),suggestedRate:@getBudget()}]
   renderSuccess: (model, response, options) =>
-    addjs.providers.mp.incrementPeopleProp "requestCount"
     addjs.trackEvent 'book', @e.name, @model.contact(0).fullName
     if @company.get('name')?
       router.navTo 'thanks'
@@ -106,7 +105,7 @@ class exports.InfoFormView extends RV.InfoFormView
     if @isReturnCustomer
       @e.name = "customerInfoRepeat"
     addjs.trackEvent @e.category, @e.name, @elm('fullName').val(), @timer.timeSpent()
-    addjs.providers.mp.setPeopleProps isCustomer : 'Y'
+    addjs.trackSession isCustomer : 'Y'
     router.navTo 'thanks'
     @request.urlRoot = '/api/requests'
     @request.save 'company', model.attributes

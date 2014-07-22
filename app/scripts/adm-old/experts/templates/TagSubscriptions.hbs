@@ -1,0 +1,23 @@
+<h4>Auto Notifications</h4>
+{{#each tags}}
+
+  <div class="subscription" >
+    <strong class="label label-tag">{{soId}}</strong>
+    <input type="checkbox" data-hash="{{_id}}_beginner_auto"></input> Beginner
+    <input type="checkbox" data-hash="{{_id}}_intermediate_auto"></input> Intermediate
+    <input type="checkbox" data-hash="{{_id}}_advanced_auto"></input> Advanced
+  </div>
+
+{{/each}}
+
+<h4>Custom Matchmaking</h4>
+{{#each tags}}
+
+  <div class="subscription" >
+    <strong class="label label-tag">{{soId}}</strong>
+    <input type="checkbox" data-hash="{{_id}}_beginner_custom"></input> Beginner
+    <input type="checkbox" data-hash="{{_id}}_intermediate_custom"></input> Intermediate
+    <input type="checkbox" data-hash="{{_id}}_advanced_custom"></input> Advanced
+  </div>
+
+{{/each}}

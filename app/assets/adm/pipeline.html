@@ -35,7 +35,7 @@
 
   <script type="text/javascript">
     function initApp() {
-      var pageData = { {{JSON 'session'}}, {{JSON 'requests'}} };
+      var pageData = { {{JSON 'session'}}, {{JSON 'requests'}}, segmentioKey: '{{{segmentioKey}}}' };
       Router = require('/scripts/adm-old/pipeline/Router');
       window.router = new Router(pageData);
     }

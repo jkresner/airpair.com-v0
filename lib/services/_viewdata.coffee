@@ -6,7 +6,7 @@ ExpertsSvc       = require '../services/experts'
 CompanysSvc      = require '../services/companys'
 # SettingsSvc      = require '../services/settings'
 RequestsSvc      = require '../services/requests'
-stripePK         = cfg.payment.stripe.publishedKey
+stripePK         = config.payment.stripe.publishedKey
 
 module.exports = class ViewDataService
 
@@ -32,15 +32,15 @@ module.exports = class ViewDataService
     else
       authenticated : false
 
+  dashboard: (cb) ->
+    cb null, -> { showFaqLink: true }
+
   settings: (cb) ->
     cb null, -> { stripePK }
 
   beexpert: (cb) ->
     session = @session true
     cb null, -> { session }
-
-  dashboard: (cb) ->
-    cb null, -> { }
 
   review: (id, cb) ->
     new RequestsSvc(@usr).getByIdSmart id, (e, request) =>
@@ -84,12 +84,16 @@ module.exports = class ViewDataService
     new CompanysSvc(@usr).getAll (e, companys) =>
       cb e, -> { companys, stripePK }
 
-  speakers: (cb) ->
-    cb null, -> { speakers: Data.speakers }
+  airconf: (cb) ->
+    cb null, -> { sessions: Data.confSessions }
+
+  airconfsession: (id, cb) ->
+    session = _.find Data.confSessions, (s) -> s.slug == id
+    cb null, -> { sessions: Data.confSessions, session }
 
 
   so10: (id, cb) ->
-    id = 'c++' if id is 'c%2b%2b'
+    id = 'c++' if id is 'c%2b%rub2b'
     id = 'c#' if id is 'c%23'
     new TagsSvc(@usr).getBySoId id, (e, tag) =>
       feature = name:'Yehuda Katz', me: 'wycats', claim: 'Rails Core Team Member'
@@ -98,13 +102,13 @@ module.exports = class ViewDataService
 
   so11: (id, cb) -> @so10 id, cb
   so12: (id, cb) -> @so10 id, cb
-  so12re: (id, cb) -> @so10 id, cb
   so13: (id, cb) -> @so10 id, cb
   so14: (id, cb) -> @so10 id, cb
 
   so15: (id, cb) ->
     id = 'c++' if id is 'c%2b%2b'
     id = 'c#' if id is 'c%23'
+    id = 'ruby-on-rails' if id is 'rails'
     new TagsSvc(@usr).getBySoId id, (e, tag) =>
       feature = name:'Yehuda Katz', me: 'wycats', claim: 'Rails Core Team Member'
       feature = Data.so15[id] if Data.so15[id]
@@ -112,8 +116,12 @@ module.exports = class ViewDataService
 
   so16: (id, cb) -> @so15 id, cb
   so17: (id, cb) -> @so15 id, cb
-  so18: (id, cb) -> @so15 id, cb
-  so19: (id, cb) -> @so15 id, cb
+  so18: (cb) -> cb null, -> { stripePK }
+  so19: (cb) -> cb null, -> { stripePK }
+
+
+  bsa02: (cb) ->
+    cb null, -> { stripePK }
 
   paypalSuccess: (id, cb) ->
     new OrdersSvc(@usr).markPaymentReceived id, {}, (e, order) =>

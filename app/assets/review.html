@@ -41,7 +41,7 @@
   <script type="text/javascript">
     window.useOlark = true;
     function initApp() {
-      var pageData = { {{JSON 'isProd'}} , {{JSON 'session'}}, {{JSON 'request'}} };
+      var pageData = { {{JSON 'isProd'}} , {{JSON 'session'}}, {{JSON 'request'}}, segmentioKey: '{{{segmentioKey}}}' };
       Router = require('/scripts/ap/review/Router');
       window.router = new Router(pageData);
     }

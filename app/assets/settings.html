@@ -71,7 +71,7 @@
 
   <script type="text/javascript">
     function initApp() {
-      var pageData = { {{JSON 'session'}}, stripePK: '{{{stripePK}}}' }
+      var pageData = { {{JSON 'session'}}, stripePK: '{{{stripePK}}}', segmentioKey: '{{{segmentioKey}}}' }
       Router = require('/scripts/ap/settings/Router');
       window.router = new Router(pageData);
     }

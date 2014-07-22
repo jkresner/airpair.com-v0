@@ -8,9 +8,14 @@ module.exports = class RatesService
     private: 40
     nda: 90
 
-
+  # budget: request.rate
+  # requestPricing: type of rate (open-source, private, nda)
+  # pricing:
   getRelativeBudget: (budget, requestPricing, pricing) ->
     budget - (@base[requestPricing]-@base[pricing])
+
+  getMaxExpertRate: (budget, pricing) ->
+    budget - @base[pricing]
 
 
   addRequestSuggestedRates: (request, isCust) ->

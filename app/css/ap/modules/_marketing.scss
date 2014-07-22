@@ -188,6 +188,10 @@ a.user-badge{
     @extend .bg-primary;
     margin: 40px auto 100px;
     border-radius: 3px;
+    &.light {
+      color: #333;
+      background:#fff;
+    }
     .img-overlap {
       img {
         width: 90px;
@@ -381,25 +385,138 @@ hr {
 
 
 
+
+
+
 // Email sign up forms on remarketing pages
 
-.form-email-signup {
-  width: 500px;
-  margin: 0 auto 40px;
-  .signup-email {
-    // display: none;
-    .alert {
-      margin-top: 10px;
-      display: none;
-    }
+
+.page-landing {
+  .hero-landing-top {
+    background-size: 130%;
+    background-image: url('/images/pages/home/banner-home3.jpg');
+    background-position: 45% 0;
+    max-height: 1090px;
+    background-attachment: fixed;
   }
-  .signup-google, .signup-google-skipped {
-    display: none;
+  .hero-content {
+    padding-top: 140px;
+    padding-bottom: 20px;
   }
 }
+
+
+.form-email-signup {
+
+  width: 900px;
+  margin: 0 auto 40px;
+
+
+  .btn {
+    padding: 23px 22px;
+    font-size: 22px;
+    text-transform: none;
+    // background: #FF7B47;
+    border: none;
+    // box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    width: 290px;
+    font-weight: 300;
+
+    border-radius: 4px;
+    background-image: -o-linear-gradient(-89deg, #FF7B47 0%, #EE591F 100%);
+    background-image: -moz-linear-gradient(-89deg, #FF7B47 0%, #EE591F 100%);
+    background-image: -ms-linear-gradient(-89deg, #FF7B47 0%, #EE591F 100%);
+    background-image: linear-gradient(-179deg, #FF7B47 0%, #EE591F 100%);
+    -moz-box-shadow:    0px 1px 2px 0px rgba(0,0,0,0.29), inset 0px 0px 1px 1px rgba(255,255,255,0.19);
+    box-shadow:         0px 1px 2px 0px rgba(0,0,0,0.29), inset 0px 0px 1px 1px rgba(255,255,255,0.19);
+    position: relative;
+    // @include transition(all .2s ease-in);
+    @include transition-transform(0.3s ease-out);
+    &.btn-lift:hover {
+      @include translate(0, -10px);
+      // top: -10px;
+      background-image: -o-linear-gradient(-89deg, #FF8D61 0%, #F3632A 100%);
+      background-image: -moz-linear-gradient(-89deg, #FF8D61 0%, #F3632A 100%);
+      background-image: -ms-linear-gradient(-89deg, #FF8D61 0%, #F3632A 100%);
+      background-image: linear-gradient(-179deg, #FF8D61 0%, #F3632A 100%);
+      -moz-box-shadow:    0px 4px 6px 0px rgba(0, 0, 0, 0.35), inset 0px 0px 1px 1px rgba(255, 255, 255, 0.19);
+      box-shadow:         0px 4px 6px 0px rgba(0, 0, 0, 0.35), inset 0px 0px 1px 1px rgba(255, 255, 255, 0.19);
+    }
+  }
+  .btn-help {
+    font-size: 18px;
+    width: 290px;
+    margin: 0 auto;
+    font-weight: 300;
+  }
+  .input-group-btn .btn {
+    text-transform: uppercase;
+    width: auto;
+  }
+
+
+  .alert-danger {
+    margin-top: 10px;
+    display: none;
+  }
+
+  [class^='step-'],
+  // .input-group-phone,
+  .input-question,
+  .title-question {
+    display: none;
+  }
+  .step-1 {
+    display: block;
+  }
+
+  // .signup-2,
+  // .signup-3,
+  // .signup-google,
+  // .signup-google-skipped,
+  // .signup-phone,
+  // .signup-tech,
+  // .signup-complete {
+  //   display: none;
+  // }
+  // .signup-tech {
+  // }
+  .form-control.select2-container .select2-choices {
+    padding: 11px 16px;
+  }
+  .select2-container-multi .select2-choices .select2-search-choice {
+    margin: 7px 0 3px 5px;
+  }
+  .select2-container-multi .select2-choices {
+    background-image: none;
+  }
+  .form-contain {
+    width: 500px;
+    margin: 0 auto 40px;
+  }
+  a {
+    color:#fff;
+  }
+  h3 a {
+    font-weight: bold;
+    text-decoration: underline;
+  }
+}
+
+
 .modal .form-email-signup {
   width: auto;
   margin: 0;
+  a {
+    color: $brand-primary;
+  }
+  h2 {
+    text-align: center;
+  }
+  .form-contain {
+    margin-bottom: 10px;
+    width: auto;
+  }
   .incentive {
     font-size: 28px;
     margin-bottom: 20px;
