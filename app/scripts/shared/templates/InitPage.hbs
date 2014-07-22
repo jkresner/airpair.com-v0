@@ -1,6 +1,6 @@
 <script type="text/javascript">
 function initStaticPage(name, sessionParams) {
-  require('scripts/providers/home');
+  require("/scripts/providers/olark")()
   if(typeof addjs === 'undefined') {
     var AddJS = require("scripts/providers/addjs/index");
     window.addjs = new AddJS('{{segmentioKey}}');
