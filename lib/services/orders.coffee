@@ -87,6 +87,8 @@ module.exports = class OrdersService extends DomainService
     else
       @paypalSvc.Pay order, savePaymentResponse
 
+  getByExpert: (id, callback) ->
+    callback(null)
 
   getForHistory: (id, cb) =>
     userId = if id? && Roles.isAdmin(@usr) then id else @usr._id

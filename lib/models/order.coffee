@@ -40,7 +40,7 @@ schema = new Schema
   paymentType:    { required: true, type: String   }
   payment:        { required: true, type: {} }
   payouts:        { type: [ExpertPayout] }
-  paymentStatus:  { required: true, type: String, default: 'pending' }
+  paymentStatus:  { required: true, type: String, default: 'pending' } # pending, received, paidout
   utm:            { required: false, type: {} }
   # when a request is saved, this gets copied over from request.owner
   owner:          { type: String, default: '' }
