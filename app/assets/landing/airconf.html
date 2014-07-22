@@ -417,7 +417,7 @@
   {
     initStaticPage('airconf');
 
-    if (bindLoginModal) { bindLoginModal(); }
+    if (typeof bindLoginModal !== 'undefined') { bindLoginModal(); }
 
     $('.user-badge').each(function (idx) {
       this.$badge = jQuery(this);
