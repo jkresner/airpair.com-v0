@@ -105,7 +105,9 @@
     <tr class="row-summary active">
       <td></td>
       <td></td>
-      <td></td>
+      <td class="text-info">
+        <span class="text-split">{{(metrics.repeatSummary.numOrders/metrics.summary.numOrders*100 | number:0) || 0}}%</span></td>
+      </td>
 
       <td class="text-info">
         {{(metrics.summary.tags.ad.count/metrics.summary.numOrders*100 | number:0) || 0 }}%
@@ -225,7 +227,9 @@
     <tr class="row-summary active">
       <td></td>
       <td></td>
-      <td></td>
+      <td>
+        <span class="text-split">{{(metrics.repeatSummary.revenueTotal/metrics.summary.revenueTotal*100 | number:0) || 0}}%</span>
+      </td>
 
       <td class="text-info">
         {{(metrics.summary.tags.ad.revenue/metrics.summary.revenueTotal*100 | number:0) || 0}}%
