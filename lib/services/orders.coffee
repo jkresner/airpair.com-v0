@@ -86,8 +86,12 @@ module.exports = class OrdersService extends DomainService
     else
       @paypalSvc.Pay order, savePaymentResponse
 
-  getByExpert: (id, callback) ->
-    callback(null)
+  getByExpert: (expertId, callback) ->
+    query = lineItems:
+      $elemMatch:
+        'suggestion.expert._id': expertId
+    @searchMany query, @historySelect, (error, orders) ->
+      callback error, orders
 
   getForHistory: (id, cb) =>
     userId = if id? && Roles.isAdmin(@usr) then id else @usr._id
