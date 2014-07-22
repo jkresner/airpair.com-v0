@@ -53,5 +53,4 @@ schema = new Schema
   hours:          String
   bookMe:         { required: false, type: Bookme }
 
-
 module.exports = mongoose.model 'Expert', schema
