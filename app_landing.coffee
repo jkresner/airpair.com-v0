@@ -12,6 +12,7 @@ module.exports = (app, render) ->
   app.get '/so17/:id', render 'landing/so17', ['params.id']
   app.get '/so18', render 'landing/so18'
 
+
   app.get '/bsa02', render 'landing/bsa02'
 
   checkSession = (req, r, n) ->
