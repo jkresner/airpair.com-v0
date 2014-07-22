@@ -1,26 +1,35 @@
 module.exports = (app) ->
   app.controller 'ExpertSettingsController',
-    ($scope, $http, $window, Session) ->
+    ($scope, $http, $window, Session, $log) ->
       _.extend $scope,
         name: "expertsController"
 
-        updateExpert: ->
+        fetchExpert: ->
           $http.get("/api/experts/me")
             .success (data) ->
               $scope.expert = data
-              $scope.updateExpertRequests(data._id)
+              $scope.fetchExpertRequests(data._id)
+              $scope.fetchExpertOrders(data._id)
             .error (data) ->
               console.log('Error: ' + data)
 
-        updateExpertRequests: (expertId) ->
+        fetchExpertRequests: (expertId) ->
           $http.get("/api/requests/expert/#{expertId}")
             .success (data) =>
               $scope.expertRequests = data
-              $scope.expertStats = @buildStats(expertId, data)
+              $scope.expertRequestStats = @buildRequestStats(expertId, data)
             .error (data) ->
-              console.log('Error: ' + data)
+              console.error('Error: ' + data)
 
-        buildStats: (expertId, requests) ->
+        fetchExpertOrders: (expertId) ->
+          $http.get("/api/orders/expert/#{expertId}")
+            .success (data) =>
+              $scope.expertOrders = data
+              $scope.expertOrderStats = @buildOrderStats(expertId, data)
+            .error (data) ->
+              console.error('Error: ' + data)
+
+        buildRequestStats: (expertId, requests) ->
           requestCount: ->
             requests.length
 
@@ -39,4 +48,18 @@ module.exports = (app) ->
             _.map requests, (request) ->
                _.find(request.suggested, (suggestion) -> suggestion.expert._id == expertId)
 
-      $scope.updateExpert()
+        buildOrderStats: (expertId, orders) ->
+          paidOrders: ->
+            _.select orders, (order) ->
+              order.payment? && order.payment.paid
+
+          paidOrderCount: ->
+            @paidOrders().length
+
+          totalAmountReceived: ->
+            _.reduce(@paidOrders(), (sum, order) ->
+              sum + order.total - order.profit
+            , 0)
+
+
+      $scope.fetchExpert()
