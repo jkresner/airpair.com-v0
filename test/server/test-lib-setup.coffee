@@ -1,5 +1,5 @@
 global.$log = console.log
-global._ = require 'underscore'
+global._ = require 'lodash'
 
 mongoose = require 'mongoose'
 chai = require 'chai'
@@ -25,7 +25,7 @@ chai.Assertion.includeStack = true
 module.exports =
 
   http:       require 'supertest'
-  _:          require 'underscore'
+  _:          require 'lodash'
   sinon:      require 'sinon'
   chai:       require 'chai'
   expect:     chai.expect
