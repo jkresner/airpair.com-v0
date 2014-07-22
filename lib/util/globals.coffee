@@ -1,7 +1,7 @@
 global.config         = require('./appConfig')[process.env.Env || 'dev']
 global.$log           = console.log
 
-global._              = require 'underscore'
+global._              = require 'lodash'
 global._.pickNested   = require '../mix/pickNested'
 global._.idsEqual     = require '../mix/idsEqual'
 
