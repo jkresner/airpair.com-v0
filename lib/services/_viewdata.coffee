@@ -116,8 +116,15 @@ module.exports = class ViewDataService
 
   so16: (id, cb) -> @so15 id, cb
   so17: (id, cb) -> @so15 id, cb
-  so18:  (cb) ->
-    cb null, -> { stripePK }
+  # so18: (id, cb) -> @so15 id, cb
+  so18:  (id, cb) ->
+    id = 'c++' if id is 'c%2b%2b'
+    id = 'c#' if id is 'c%23'
+    id = 'ruby-on-rails' if id is 'rails'
+    new TagsSvc(@usr).getBySoId id, (err, tag) =>
+      feature = name:'Yehuda Katz', me: 'wycats', claim: 'Rails Core Team Member'
+      feature = Data.so15[id] if Data.so15[id]
+      cb err, -> { tag, feature, stripePK }
 
   so19: (id, cb) -> @so15 id, cb
 

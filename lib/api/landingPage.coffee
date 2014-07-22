@@ -7,7 +7,7 @@ class LandingPageApi extends require('./_api')
   Svc: require '../services/wrappers/stripe'
 
   routes: (app, route) ->
-    app.post "/api/#{route}/bsa02/purchase", @ap, @createCustomer
+    app.post "/api/#{route}/purchase", @ap, @createCustomer
 
   # Create customer, return customer to client, then charge customer.
   createCustomer: (req, res, next) =>

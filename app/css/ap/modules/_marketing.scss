@@ -392,10 +392,12 @@ hr {
 
 
 .page-landing {
-  .hero {
+  .hero-landing-top {
     background-size: 130%;
     background-image: url('/images/pages/home/banner-home3.jpg');
-    background-position: 45% 20px;max-height: 1090px;
+    background-position: 45% 0;
+    max-height: 1090px;
+    background-attachment: fixed;
   }
   .hero-content {
     padding-top: 140px;
