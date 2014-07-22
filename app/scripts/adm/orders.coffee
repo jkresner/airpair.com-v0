@@ -274,7 +274,9 @@ module.exports = (pageData) ->
         getGrowthRequests: (callback = ->) ->
 
           startDate = @growthStart.format('YYYY-MM-DD')
-          endDate = @growthEnd.format('YYYY-MM-DD')
+          endDate = @growthEnd.clone().add("d", 1).format('YYYY-MM-DD')
+
+          console.log "getGrowthRequests", startDate, endDate
 
           count = 0
           api = {}
@@ -286,7 +288,7 @@ module.exports = (pageData) ->
             if count is 2 then callback(api)
           # Hrs on air
           $http.get("/api/admin/requests/calls/#{startDate}/#{endDate}").success (data, status, headers, config) =>
-            console.log "API calls"
+            console.log "API calls", data.length
             @growthRequestCalls = api.calls = data
             count++
             if count is 2 then callback(api)
@@ -297,7 +299,11 @@ module.exports = (pageData) ->
 
         filterGrowthRequests: (start, end, callback) ->
 
-          # console.log "filterGrowthRequests", start.toDate(), "–", end.toDate()
+          # start = moment("2014-07-12")
+          # end   = moment("2014-07-19")
+
+          console.log "filterGrowthRequests", start.toDate(), "–", end.toDate()
+
 
           data =
             requests: @growthRequests
@@ -316,7 +322,10 @@ module.exports = (pageData) ->
 
           for val, i in data.calls
             date = moment val.datetime
-            if date.isAfter(start) and date.isBefore(end) then filteredCalls.push val
+            if date.isAfter(start) and date.isBefore(end)
+              filteredCalls.push val
+              # console.log "calls date", date.isAfter(start), date.isBefore(end), date.toDate()
+
 
           filtered =  {
             requests: filteredRequests
@@ -446,8 +455,12 @@ module.exports = (pageData) ->
               # Add start and end dates in each interval
               @filterGrowthRequests period.intervalStart, period.intervalEnd, (data) ->
 
+                console.log "@filterGrowthRequests", data
+
                 period.requestsNum = data.requests.length
                 period.ordersPerReq = period.orders.length/period.requestsNum
+
+                console.log "num calls", data.calls.length
                 period.hrsOnAir = 0
                 _.each data.calls, (item, i) -> period.hrsOnAir += item.duration
                 period.hrsAirPerHrsSold = period.hrsOnAir/period.hrsSold
