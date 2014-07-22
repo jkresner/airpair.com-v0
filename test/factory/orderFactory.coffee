@@ -1,17 +1,18 @@
 global._ = require 'underscore'
 Factory = require('factory-lady')
 Order = require('../../lib/models/order')
+{ObjectId} = require('mongoose').Types
 
 defaults =
-  requestId: "request_id"
-  userId: "user_id"
+  requestId: new ObjectId()
+  userId: new ObjectId()
   company: { name: "TestCo" }
   lineItems: [
     total: 80
     unitPrice: 80
     qty: 1
     redeemedCalls: [
-      callId: "call_id"
+      callId: new ObjectId()
       qtyRedeemed: 1
       qtyCompleted: 1
     ]

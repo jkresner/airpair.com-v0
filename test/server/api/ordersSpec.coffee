@@ -1,5 +1,6 @@
 {http, _, sinon, chai, expect, Factory} = require './../test-lib-setup'
 {app,data,passportMock,nock} = require './../test-app-setup'
+{ObjectId} = require('mongoose').Types
 
 require('./../../../lib/api/requests')(app)
 require('./../../../lib/api/orders')(app)
@@ -54,6 +55,24 @@ describe "REST api orders", ->
       passportMock.setSession 'jk'
       Factory.create 'dhh', (dhh) ->
         Factory.create 'aslak', (aslak) ->
-          Factory.create 'order', suggestion: {expert: dhh} , (order) ->
-              expect(order.suggestion.expert._id).to.eq(dhh._id)
-              done()
+          lineItems = [
+            total: 80
+            unitPrice: 80
+            qty: 1
+            redeemedCalls: [
+              callId: new ObjectId()
+              qtyRedeemed: 1
+              qtyCompleted: 1
+            ]
+            type: "private"
+            suggestion: { expert: {_id: dhh._id.toString()} }
+          ]
+          Factory.create 'order', (order1) ->
+            Factory.create 'order', {lineItems: lineItems}, (order2) ->
+              http(app).get("/api/orders/expert/#{dhh._id}")
+                .expect(200)
+                .end (err, res) =>
+                  body = res.body
+                  expect(body.length).to.eq 1
+                  expect(body[0]._id).to.eq order2._id.toString()
+                  done()
