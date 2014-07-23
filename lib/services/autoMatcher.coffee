@@ -48,10 +48,10 @@ module.exports = class AutoMatcher
 
       # add an increasing number of points for each tag that matches between request and expert
       # reverse so that the first tag of the request collection gets the most points
-      tagPoints = 1
+      tagPoints = 5
       _.each tags.reverse(), (tag) ->
         expert.score += tagPoints if _.contains(_.pluck(expert.tags, 'soId'), tag)
-        tagPoints++
+        tagPoints += 3
 
       console.log 'filter result for ', expert.name, expert.score
       # add weightings for different social indicators
