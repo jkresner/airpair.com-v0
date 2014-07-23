@@ -18,9 +18,8 @@ class exports.AirpairRouter extends BB.BadassAppRouter
 
   # load external providers like google analytics, user-voice etc.
   loadExternalProviders: ->
-
-    # bring in uservoice & other 3rd party things
-    require '/scripts/providers/all'
+    require("/scripts/providers/uservoice")() if window.useUserVoice
+    require("/scripts/providers/olark")() if window.useOlark
 
 class exports.AirpairSessionRouter extends BB.SessionRouter
 
@@ -49,8 +48,8 @@ class exports.AirpairSessionRouter extends BB.SessionRouter
 
   # load external providers like google analytics, user-voice etc.
   loadExternalProviders: ->
-    # bring in Google analytics, uservoice & other 3rd party things
-    require '/scripts/providers/all'
+    require("/scripts/providers/uservoice")() if window.useUserVoice
+    require("/scripts/providers/olark")() if window.useOlark
 
   isAuthenticated: ->
     @app.session.authenticated()

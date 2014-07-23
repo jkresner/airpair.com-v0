@@ -33,7 +33,7 @@ module.exports = class ViewDataService
       authenticated : false
 
   dashboard: (cb) ->
-    cb null, -> { }
+    cb null, -> { showFaqLink: true }
 
   settings: (cb) ->
     cb null, -> { stripePK }
@@ -125,6 +125,7 @@ module.exports = class ViewDataService
   so17: (id, cb) -> @so15 id, cb
   so18: (cb) -> cb null, -> { stripePK }
   so19: (cb) -> cb null, -> { stripePK }
+
 
   bsa02: (cb) ->
     cb null, -> { stripePK }

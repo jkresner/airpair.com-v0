@@ -20,6 +20,8 @@
             </div>
     </div>
 
+
+
     <!-- HERO -->
     <div class="hero behind-nav hero-landing-top" >
       <div class="container hero-content text-bright">
@@ -31,10 +33,13 @@
         <div class="form-email-signup" data-location="hero">
 
           <div class="step-1">
+
+
             <h1 class="incentive flush-bottom">
               Live coding help over video chat <br>
-              <span class="text-xxl text-bold text-blue" style="font-weight: 600;" >$50 first hour</span>
+              <span class="text-xxl text-bold text-blue" style="font-weight: 600;text-shadow: 0px 1px 2px rgba(0,0,0,0.41);" >$50 first hour</span>
             </h1>
+
             <h3 style="margin-top: 10px;margin-bottom: 80px;" >Limited time offer, save up to 60%</h3>
             <div class="row">
               <div class="col-xs-6">
@@ -50,30 +55,46 @@
                 <div class="btn-help">Valid for next 4 weeks</div>
               </div>
             </div>
-
-
-
           </div>
 
-
-          <div class="step-2">
-            <h1>Thanks, we'll be getting in touch soon!</h1>
-            <h3>Want us to get in touch sooner? Leave your phone number below.</h3>
-
+          <div class="step-2 animated fadeInDown" >
+            <h2 class="if-now hide-soft">Let's get started! Where can our experts reach you?</h2>
+            <h2 class="if-later hide-soft">To redeem your offer, enter your email</h2>
             <div class="form-contain">
-              <div class="input-group-phone input-group input-group-lg animated bounceIn m-t-1">
-                <input class="input-phone form-control" type="text" placeholder="Phone">
+              <div class="input-group-email input-group input-group-lg m-t-1">
+                <input class="input-email form-control" type="email" placeholder="Email">
                 <span class="input-group-btn">
-                  <button class="btn btn-primary btn-submit-phone" type="button">Send</button>
+                  <button class="btn btn-primary btn-submit-email" type="button">
+                    <span class="if-now hide-soft">Start</span>
+                    <span class="if-later hide-soft">Redeem</span>
+                  </button>
                 </span>
               </div>
-              <div class="alert alert-success hide-soft alert-phone">
-                Thanks! Talk to you soon.
+            </div>
+          </div>
+
+
+          <div class="step-3">
+            <div class="if-now hide-soft">
+              <h1>Thanks, we'll email you shortly!</h1>
+              <h3>We can also call you if you prefer to connect via phone</h3>
+              <div class="form-contain">
+                <div class="input-group-phone input-group input-group-lg animated bounceIn m-t-1">
+                  <input class="input-phone form-control" type="text" placeholder="Phone">
+                  <span class="input-group-btn">
+                    <button class="btn btn-primary btn-submit-phone" type="button">Send</button>
+                  </span>
+                </div>
+                <div class="alert alert-success hide-soft alert-phone">
+                  Thanks! Talk to you soon.
+                </div>
               </div>
             </div>
-
-            <!-- <h3>Meanwhile, read the <a href="http://www.airpair.com/customer-faq" target="_blank">FAQs</a>, watch example videos on <a href="https://plus.google.com/+AirPair/posts" target="_blank">Google+</a> and like us on <a href="https://www.facebook.com/airpair" target="_blank">Facebook</a> or <a href="https://twitter.com/airpair" target="_blank">Twitter</a>.</h3> -->
+            <div class="if-later hide-soft">
+              <h1>Thanks, we'll be getting in touch soon!</h1>
+            </div>
           </div>
+
 
         </div> <!-- .form-email-signup -->
 
@@ -81,10 +102,8 @@
 
 
 
-
-
       </div>
-    </div>
+    </div> <!-- .hero -->
 
 
 
@@ -94,7 +113,7 @@
 
 
     <div class="container p-b-4" id="experts">
-      <h2 class="text-thin text-center m-t-3">What do Airpair Experts Look Like?</h2>
+      <h2 class="text-thin text-center m-t-3">What do AirPair Experts Look Like?</h2>
       <hr>
 
       <div class="row">
@@ -371,7 +390,7 @@
       <div class="bg-white p-t-2 p-b-4 hide">
         <div class="container">
 
-          <h2 class="text-center m-t-2 m-b-1">What is Airpair?</h2>
+          <h2 class="text-center m-t-2 m-b-1">What is AirPair?</h2>
 
           <h3 class="text-center m-b-2">Get programming help instantly from thousands of experts via video chat and screen sharing.</h3>
 
@@ -386,7 +405,7 @@
 
                 <h3>
                   <small class="text-upper text-xs"></small><br>
-                  Airpair Experts
+                  AirPair Experts
                 </h3>
                 <h5 class="text-muted">We have Assembled the World's Best {{tag.name}} Team</h5>
                 <hr class="grad gray">
@@ -620,7 +639,7 @@
 
     <!-- CONTACT -->
 
-    <div class="hero ">
+    <div class="hero " style="background-position: 45% 100%;background-attachment: fixed;" >
       <div class="container p-t-4 p-b-4">
         <h2 class="text-thin text-bright text-center">We’d Love to Hear From You</h2>
         <div class="row m-t-2">
@@ -745,49 +764,33 @@
 
   </body>
 
-  <script src="//cdn.optimizely.com/js/280598780.js"></script>
-  <!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script> -->
-
   {{> InitPage }}
 
   <script type="text/javascript">
     function initPage(){
       initStaticPage('bsa02');
-
-      require('scripts/providers/home');
-
+      setTimeout(function() {
+        // $(".hero .btn").eq(0).addClass("animated bounceIn").show();
         setTimeout(function() {
-          // $(".hero .btn").eq(0).addClass("animated bounceIn").show();
-          setTimeout(function() {
-            // $(".hero .btn").eq(1).addClass("animated bounceIn").show();
-          }, 200);
-        }, 1000);
+          // $(".hero .btn").eq(1).addClass("animated bounceIn").show();
+        }, 200);
+      }, 1000);
 
 
-        $(".scroll").click(function(e){
-          e.preventDefault();
-          $("html,body").animate({
-            scrollTop: 0
-          },500,"swing", function(e) {
-            console.log("scrolled");
-            $(".hero .btn").addClass("animated wobble");
-            setTimeout(function(e) {
-              $(".hero .btn").removeClass("animated wobble");
-            }, 2000)
-          });
+      $(".scroll").click(function(e){
+        e.preventDefault();
+        $("html,body").animate({
+          scrollTop: 0
+        },500,"swing", function(e) {
+          console.log("scrolled");
+          $(".hero .btn").addClass("animated wobble");
+          setTimeout(function(e) {
+            $(".hero .btn").removeClass("animated wobble");
+          }, 2000)
         });
-
-
-      // $("a[href^='#']").click(function(e){
-      //   e.preventDefault();
-      //   $("html,body").stop().animate({
-      //     scrollTop:$(this.hash).offset().top
-      //   },500);
-      // });
-
+      });
 
       pageReady();
-
     }
   </script>
   <script src="/javascripts/landing.js" defer onload="initPage()"></script>
@@ -806,10 +809,7 @@
     window.pageReady = function(e) {
       console.log("pageReady");
 
-
       jQuery(function($){
-
-
 
         window.firebase = new Firebase("https://airpair-marketing.firebaseio.com/bsa02");
 
@@ -847,7 +847,6 @@
 
           setForm: function($form) {
             var location = $form.data('location');
-            console.log("location", location);
             if(this.location != location) {
               this.location = location;
               this.$form = $form;
@@ -888,85 +887,111 @@
             var step = this.step();
             var self = this;
             if(step === 1) {
+
               $("#stripe-now").click(function(e) {
-                self.stripeModal("now");
+                self.choice = "now";
+                self.nextStep();
               });
               $("#stripe-later").click(function(e) {
-                self.stripeModal("later");
+                self.choice = "later";
+                self.nextStep();
               });
 
             } else if(step === 2) {
+
+              self.$form.find('.if-'+self.choice).show();
+
+              setTimeout(function() {
+                self.$form.find('.input-email').focus();
+              }, 200);
+
+              self.bindInputs(
+                self.$form.find('.input-email'),
+                self.$form.find('.btn-submit-email'),
+                function($input) {
+                  if($input.val()) {
+                    self.saveEmail($input.val())
+                  }
+              });
+
+
+            } else if(step === 3) {
+
+
+              self.$form.find('.if-'+self.choice).show();
 
               self.bindInputs(
                 self.$form.find('.input-phone'),
                 self.$form.find('.btn-submit-phone'),
                 function($input) {
                   if($input.val()) {
-                    self.userRef.child("phone").set($input.val());
-                    self.phoneSaved()
+                    self.savePhone($input.val())
                   }
               });
 
-              this.$form.find('.input-phone').focusout(function(e) {
+              self.$form.find('.input-phone').focusout(function(e) {
                 if($(this).val()) {
-                  self.userRef.child('phone').set($(this).val());
+                  self.savePhone($(this).val(), true)
                 }
               });
 
+              setTimeout(function() {
+                self.$form.find('.input-phone').focus();
+              }, 200);
+
+
             }
           },
 
-          stripeModal: function(choice) {
-            this.choice = choice;
 
-            if(choice === "now") {
-              stripeCharge.description ='We\'ll email you after your purchase.';
+
+          saveEmail: function(email) {
+            this.openStripe(email);
+            this.userRef = firebase.push({email: email, choice: this.choice});
+          },
+
+
+          openStripe: function(email) {
+            if(this.choice === "now") {
+              stripeCharge.description = "Our experts are waiting to help you";
             } else {
-              stripeCharge.description ='Redeem offer later';
+              stripeCharge.description = 'Valid for 4 weeks';
             }
-
+            stripeCharge.email = email;
             stripe.open(stripeCharge);
           },
+
+
 
           saveToken: function(token) {
             var self = this;
 
             var purchase = {
               email: token.email,
-              choice: this.choice,
               stripeToken: token,
               stripeCharge: stripeCharge
             }
 
-            self.userRef = firebase.push(purchase, function(err) {
-              signUpForm.nextStep()
-              $.post("/api/landing/bsa02/purchase", purchase, function(data){
-                if(data.customer) {
-                  self.userRef.child("customer").set(data.customer);
-                }
-              });
-            });
-            addjs.trackEvent('Landing', "firstHourPayment", {email: token.email});
-          },
-
-          showPhone: function(e) {
-            self = this;
-            this.$form.find('.options-phone').hide();
-            this.$form.find('.input-group-phone').show();
-            this.bindInputs(
-              this.$form.find('.input-phone'),
-              this.$form.find('.btn-submit-phone'),
-              function(callback) {
-                callback();
+            $.post("/api/landing/purchase", purchase, function(data){
+              if(data.customer) {
+                self.userRef.child("customer").set(data.customer);
+                self.nextStep();
               }
-            )
+            });
+
+
+            addjs.trackEvent('Landing', "firstHourPayment", {email: token.email});
+
           },
 
-          phoneSaved: function(e) {
+          savePhone: function(phone, stop) {
+            this.userRef.child('phone').set(phone);
+            if(stop) { return }
             addjs.trackEvent('Landing', "customerPhoneProvided");
             this.$form.find(".input-group-phone").hide();
             this.$form.find(".alert-phone").show();
           }
+
         }
 
         // Bind listeners

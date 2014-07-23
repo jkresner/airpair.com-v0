@@ -6,7 +6,7 @@ class LandingPageApi extends require('./_api')
   Svc: require './../services/orders'
 
   routes: (app, route) ->
-    app.post "/api/#{route}/bsa02/purchase", @ap, @createCustomer
+    app.post "/api/#{route}/purchase", @ap, @createCustomer # generic, client decides $$
     app.post "/api/#{route}/airconf/promo", @ap, @loggedIn, @airconfPromo
     app.post "/api/#{route}/airconf/order", @ap, @loggedIn, @airconfCreateOrder
 

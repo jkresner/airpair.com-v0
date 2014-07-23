@@ -37,8 +37,7 @@ exports.config =
        'javascripts/adm.js': /(scripts\/angular|lodash|moment-2.6|scripts\/adm\/|lib\/mix)/
        'javascripts/adm-old.js': /(scripts\/adm-old|scripts\/shared|scripts\/providers|lib\/mix)/
        'javascripts/providers.js': /^app\/scripts\/providers/
-       'javascripts/home.js': /jquery|jquery.cookie|lodash|providers\/(home|addjs|cegg|olark|segmentio)|bootstrap3\/dropdown|bootstrap3\/collapse|bootstrap3\/modal/
-       'javascripts/landing.js': /jquery|jquery.cookie|lodash|providers\/(home|addjs|ga|cegg|olark|segmentio)|bootstrap3\/dropdown|bootstrap3\/collapse|bootstrap3\/modal|select2/
+       'javascripts/landing.js': /jquery|jquery.cookie|lodash|providers\/(addjs|olark|segmentio|optimizely)|bootstrap3\/dropdown|bootstrap3\/collapse|bootstrap3\/modal|select2/
 
        'test/javascripts/test.js': /^test(\/|\\)(?=integration)/
        'test/javascripts/test-data.js': /^test(\/|\\)(?=data)/
