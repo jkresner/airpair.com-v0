@@ -666,6 +666,7 @@ module.exports = (pageData) ->
                 campaigns: []
                 requestId: order.requestId
                 isRepeat: if @findRepeatCustomers([order.userId], order.utc) > 0 then true else false
+                hasTags: false
                 tags:
                   ad: {total:0, revenue: 0}
                   affiliate: {total:0, revenue: 0}
@@ -694,8 +695,10 @@ module.exports = (pageData) ->
                   # tags.push tagName
                   metric.tags[tagName] = tag
                   metric.tags[tagName].total = metric.total/channelTags.length
+                  metric.hasTags = true
                 if tag.type is "campaign"
                   metric.campaigns.push(tag.name)
+                  metric.hasTags = true
 
               @metricsRepeated.push metric if metric.isRepeat
               @metrics.push metric
