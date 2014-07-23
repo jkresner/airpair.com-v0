@@ -3,13 +3,22 @@ module.exports = (app) ->
     ($scope, $http, $window, Session, Restangular) ->
       _.extend $scope,
         name: "automatchController"
-        options: []
-        tags: []
-        predicate: ''
+        budget: 100
+        pricingOptions: ['opensource', 'private', 'nda', 'subscription', 'offline']
+        pricing: 'private'
+        tagsAvailable: []
+        tagsSelected: []
+        sort: '-score'
 
       Restangular.all('tags').getList().then (tags) ->
-        $scope.options = _.pluck(tags, 'soId')
+        $scope.tagsAvailable = _.pluck(tags, 'soId')
 
-      $scope.$watchCollection 'tags', (tags) ->
-        Restangular.all("experts/automatch/tags/" + tags).getList().then (experts) ->
-          $scope.experts = experts
+      $scope.$watchCollection 'tagsSelected', (newTags, oldTags) ->
+        return if newTags == oldTags
+        Restangular.all("match/tags/" + newTags)
+          .getList
+            budget: $scope.budget
+            pricing: $scope.pricing
+          .then (experts) ->
+            console.log experts
+            $scope.experts = experts

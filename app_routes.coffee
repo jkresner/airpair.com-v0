@@ -55,6 +55,7 @@ module.exports = (app) ->
   require('./lib/api/users')(app)
   require('./lib/api/companys')(app)
   require('./lib/api/tags')(app)
+  require('./lib/api/matchers')(app)
   require('./lib/api/experts')(app)
   require('./lib/api/requests')(app)
   require('./lib/api/requestCalls')(app)
