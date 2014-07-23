@@ -38,9 +38,11 @@ module.exports = class AutoMatcher
         console.log 'experts.length', experts.length, cb
         cb(err, experts)
 
-  filter: (tags, superset, cb) ->
-    console.log 'superset length', superset.length
-    _.each superset, (expert) =>
+  # takes a "superset" of experts that mightcould qualify and sorts/reduces them
+  # according to an algorithm
+  filter: (tags, expertSuperset, cb) ->
+    console.log 'expertSuperset length', expertSuperset.length
+    _.each expertSuperset, (expert) =>
       # start with karma, defaults to 0
       expert.score = expert.karma
 
@@ -56,4 +58,4 @@ module.exports = class AutoMatcher
       # expert.score += @githubFollowerPoints(expert)
 
     # return sorted list of experts
-    cb(_.sortBy(superset, 'score').reverse())
+    cb(_.sortBy(expertSuperset, 'score').reverse())
