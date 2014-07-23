@@ -23,7 +23,7 @@ module.exports = (app) ->
               'text-shadow' : '0 0 4px black'
 
             # background color based on a hex representation of the tag name
-            rootHex = _.map(tag, (c) ->c.charCodeAt(0).toString(16))
+            rootHex = _.map(tag, (c) ->c.charCodeAt(0).toString(15))
             color = "#" + _.first(rootHex, 3).join("").split("").reverse().join("")
             styleAttrs['background-color'] = color
 

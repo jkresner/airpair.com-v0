@@ -25,28 +25,33 @@
     h3 Expert List
     table.table
       tr
-        th(width="10%") Score
-          &nbsp;
-          a(ng-click="sort = 'score'") ⇑
-          &nbsp;
-          a(ng-click="sort = '-score'") ⇓
-        th Name
+        th(width="10%")
+          .text-center
+            | Score &nbsp;
+            a(ng-click="sort = 'score'") ⇑ &nbsp;
+            a(ng-click="sort = '-score'") ⇓
+        th(colspan="2") Expert
           &nbsp;
           a(ng-click="sort = 'name'") ⇑
           &nbsp;
           a(ng-click="sort = '-name'") ⇓
-        th Email
-        th Rate
-          &nbsp;
-          a(ng-click="sort = 'rate'") ⇑
-          &nbsp;
-          a(ng-click="sort = '-rate'") ⇓
+        th
+          .text-center
+            | Rate &nbsp;
+            a(ng-click="sort = 'rate'") ⇑ &nbsp;
+            a(ng-click="sort = '-rate'") ⇓
         th Tags
       tr(ng-repeat='expert in experts | orderBy:sort')
-        td {{ expert.score }}
-        td {{ expert.name }}
         td
+          .text-center {{ expert.score }}
+        td(width="10%")
+          img.img-responsive(src= "{{expert.pic}}")
+        td
+          strong
+            a(href="/adm/experts/edit/{{expert._id}}") {{ expert.name }}
+          br
           a(href="mailto:{{expert.gmail}}") {{ expert.gmail }}
-        td {{ expert.rate }}
+        td
+          .text-center {{ expert.rate }}
         td
           span.angular-tagger__tag(ng-click="selectTag(tag.soId)" ng-repeat='tag in expert.tags' ng-style="tagColor(tag.soId)") {{ tag.soId }}
