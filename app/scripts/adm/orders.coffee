@@ -880,6 +880,7 @@ module.exports = (pageData) ->
       report: "="
       reportTotals: "="
       interval: "@"
+      hideSummary: "="
     templateUrl: "/adm/templates/orders_table_growth.html"
   ]).
 
@@ -1082,6 +1083,22 @@ module.exports = (pageData) ->
 
       # console.log "channelGrowth", $scope.channelGrowth
       # console.log "channelGrowthSummary", $scope.channelGrowthSummary
+
+
+
+
+    $scope.lastWeekView = false
+    $scope.showLastWeek = ->
+      console.log "$scope.lastWeekView", $scope.lastWeekView
+      if not $scope.lastWeekView
+        start = moment().subtract('w', 1)
+        if start.day() < 6
+          start.startOf("week").subtract("d", 1).startOf("day")
+        else
+          start.endOf("week").startOf("day")
+        $scope.dateStart = start.toDate()
+        $scope.dateEnd = moment().toDate()
+
 
 
 

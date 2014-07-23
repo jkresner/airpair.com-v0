@@ -5,11 +5,12 @@
   <div class="row">
 
     <div class="row">
-      <div class="col-sm-7">
+      <div class="col-sm-6">
         <h3 class="text-thin">Week on Week</h3>
       </div>
-      <div class="col-sm-5" style="padding:20px 0px 0 40px">
-        <div class="input-group">
+      <div class="col-sm-6" >
+        <button type="button" class="btn btn-default" ng-click="showLastWeek()" ng-model="lastWeekView" btn-checkbox> Current </button>
+        <div class="input-group" style="width: 440px;float: right;">
           <span class="input-group-addon">Start</span>
           <input class="form-control" type="date" name="startdate" ng-model="dateStart" placeholder="yyyy-MM-dd" min="2013-01-01" max="" style="width:160px" required />
           <span class="input-group-addon">End</span>
@@ -27,7 +28,7 @@
   <div class="container">
 
 
-  <div ap-table-growth interval="weekly" report="report" report-totals="reportTotals"></div>
+  <div ap-table-growth interval="weekly" report="report" report-totals="reportTotals" hide-summary="lastWeekView"></div>
 
 
 
@@ -35,12 +36,12 @@
 </div>
 
 
-<hr>
+<hr ng-hide="lastWeekView">
 
 <div class="container m-b-3">
 
 
-  <table class="table table-hover table-condensed growth"  Xng-repeat="week in weeks">
+  <table class="table table-hover table-condensed growth">
 
     <thead>
 
@@ -95,7 +96,7 @@
     </tr>
 
 
-    <tr class="muted">
+    <tr class="muted" ng-hide="lastWeekView">
 
       <td class="text-muted"></td>
       <td>{{channelGrowthSummary.numOrders}}</td>
