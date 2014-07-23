@@ -10,8 +10,11 @@ module.exports = class AutoMatcher
   expertService: new ExpertsService()
   mailmanService: Mailman # todo: this should probably be changed to an instance
   ratesService: new RatesService()
+  user: {}
 
-  constructor: (@request, cb) ->
+  constructor: (@user) ->
+
+  notifyExperts: (@request, cb) ->
     @autoMatch = new AutoMatch(requestId: request.id)
     soTagIds = _.pluck(request.tags, 'soId')
     maxRate = @ratesService.getMaxExpertRate(request.budget, request.pricing)
@@ -28,26 +31,29 @@ module.exports = class AutoMatcher
         @autoMatch.save =>
           cb(@autoMatch)
 
-  filter: (superset, cb) ->
+  getMatches: (soTagIds, budget, pricing, cb) ->
+    maxRate = @ratesService.getMaxExpertRate(budget, pricing)
+    @expertService.getByTagsAndMaxRate soTagIds, maxRate, (err, results) =>
+      @filter soTagIds, results, (experts) =>
+        console.log 'experts.length', experts.length, cb
+        cb(err, experts)
+
+  filter: (tags, superset, cb) ->
+    console.log 'superset length', superset.length
     _.each superset, (expert) =>
       # start with karma, defaults to 0
       expert.score = expert.karma
 
-      # add a point for each tag that matches between request and expert
-      expert.score += _.intersection(_.pluck(@request.tags, 'soId'), _.pluck(expert.tags, 'soId')).length
+      # add an increasing number of points for each tag that matches between request and expert
+      # reverse so that the first tag of the request collection gets the most points
+      tagPoints = 1
+      _.each tags.reverse(), (tag) ->
+        expert.score += tagPoints if _.contains(_.pluck(expert.tags, 'soId'), tag)
+        tagPoints++
 
+      console.log 'filter result for ', expert.name, expert.score
       # add weightings for different social indicators
       # expert.score += @githubFollowerPoints(expert)
 
     # return sorted list of experts
-    cb(_.sortBy(superset, 'score'))
-
-  # githubFollowerPoints: (expert) ->
-  #   if expert?
-  #     usersService.for expert, (user) ->
-  #       user.github
-
-  #   else
-  #     0
-
-
+    cb(_.sortBy(superset, 'score').reverse())

@@ -1,23 +1,41 @@
 h1 Automatch Console
-h2 Select Tags...
+
+h3 Max Rate (Budget)
 p
-  tagger(ng-model="tags" options="options")
+  input(ng-model="budget")
+
+h3 Pricing
+p
+  select(ng-options="o as o for o in pricingOptions" ng-model="pricing")
+
+h3 Select Tags...
+p
+  tagger(ng-model="tagsSelected" options="tagsAvailable")
 
 .container
   table.table
     tr
       th Name
+        &nbsp;
+        a(ng-click="sort = 'name'") ⇑
+        &nbsp;
+        a(ng-click="sort = '-name'") ⇓
       th Email
       th Rate
-        a(ng-click="predicate = 'rate'") ^
-        a(ng-click="predicate = '-rate'") ,
+        &nbsp;
+        a(ng-click="sort = 'rate'") ⇑
+        &nbsp;
+        a(ng-click="sort = '-rate'") ⇓
+      th Score
+        &nbsp;
+        a(ng-click="sort = 'score'") ⇑
+        &nbsp;
+        a(ng-click="sort = '-score'") ⇓
       th Tags
-    tr(ng-repeat='expert in experts | orderBy:predicate')
+    tr(ng-repeat='expert in experts | orderBy:sort')
       td {{ expert.name }}
       td {{ expert.gmail }}
       td {{ expert.rate }}
+      td {{ expert.score }}
       td
-        span.angular-tagger__tag(ng-repeat='tag in expert.tags')
-          {{ tag.soId }}
-
-
+        span.angular-tagger__tag(ng-repeat='tag in expert.tags') {{ tag.soId }}

@@ -8,6 +8,10 @@ module.exports = class ExpertsService extends DomainService
 
   model: require './../models/expert'
 
+  automatch: (tags, cb) =>
+    @getByTagsAndMaxRate tags.split(','), 150, (err, experts) ->
+      cb err, experts
+
   # Used for adm/pipeline dashboard list
   getAll: (cb) ->
     @searchMany { rate: { $gt: 0 } }, { fields: @admSelect }, cb
@@ -34,12 +38,6 @@ module.exports = class ExpertsService extends DomainService
       new RequestService(@usr).getById id, (ee, request) =>
         expert.suggestedRate = new RatesService().calcSuggestedRates request, expert
         cb ee, expert
-
-  automatch: (tags, cb) =>
-    console.log 'tags', arguments
-    @getByTagsAndMaxRate tags.split(','), 150, (err, experts) ->
-      cb err, experts
-
 
   getByBookme: (urlSlug, code, cb) =>
     urlSlug = urlSlug.toLowerCase()
