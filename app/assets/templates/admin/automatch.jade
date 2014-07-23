@@ -25,33 +25,44 @@
     h3 Expert List
     table.table
       tr
-        th(width="10%")
+        th(width="15%")
           .text-center
             | Score &nbsp;
-            a(ng-click="sort = 'score'") ⇑ &nbsp;
-            a(ng-click="sort = '-score'") ⇓
-        th(colspan="2") Expert
-          &nbsp;
-          a(ng-click="sort = 'name'") ⇑
-          &nbsp;
-          a(ng-click="sort = '-name'") ⇓
-        th
+            button(ng-click="sort = 'score'") ⇑
+            | &nbsp;
+            button(ng-click="sort = '-score'") ⇓
+        th(colspan="2")
+          | Expert &nbsp;
+          button(ng-click="sort = 'name'") ⇑
+          | &nbsp;
+          button(ng-click="sort = '-name'") ⇓
+        th(width="10%")
           .text-center
             | Rate &nbsp;
-            a(ng-click="sort = 'rate'") ⇑ &nbsp;
-            a(ng-click="sort = '-rate'") ⇓
-        th Tags
-      tr(ng-repeat='expert in experts | orderBy:sort')
+            button(ng-click="sort = 'rate'") ⇑
+            | &nbsp;
+            button(ng-click="sort = '-rate'") ⇓
+        th(width="40%") Tags
+      tr.expert(ng-repeat='expert in experts | orderBy:sort' ng-class="{busy: (expert.status == 'busy')}")
         td
           .text-center {{ expert.score }}
         td(width="10%")
           img.img-responsive(src= "{{expert.pic}}")
-        td
+        td(width="30%")
           strong
             a(href="/adm/experts/edit/{{expert._id}}") {{ expert.name }}
+            &nbsp;
+            span.label.label-danger(ng-if="expert.status == 'busy'") BUSY
           br
           a(href="mailto:{{expert.gmail}}") {{ expert.gmail }}
+          .stats.row
+            .col-xs-2.text-center(ng-if="expert.so.reputation" title="StackOverflow reputation")
+              i.fa.fa-stack-exchange &nbsp;
+              span.stat(ng-bind="expert.so.reputation")
+            .col-xs-2.text-center(ng-if="expert.gh.followers" title="Github follower count")
+              i.fa.fa-github &nbsp;
+              span.stat(ng-bind="expert.gh.followers")
         td
-          .text-center {{ expert.rate }}
+          .text-center ${{ expert.rate }} per hour
         td
-          span.angular-tagger__tag(ng-click="selectTag(tag.soId)" ng-repeat='tag in expert.tags' ng-style="tagColor(tag.soId)") {{ tag.soId }}
+          span.angular-tagger__tag(ng-click="selectTag(tag.soId)" ng-repeat='tag in expert.tags.reverse()' ng-style="tagColor(tag.soId)") {{ tag.soId }}

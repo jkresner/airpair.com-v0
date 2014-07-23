@@ -40,6 +40,7 @@ module.exports = class AutoMatcher
 
   # takes a "superset" of experts that mightcould qualify and sorts/reduces them
   # according to an algorithm
+  # NOTE: LIMITED TO 100 RESULTS
   filter: (tags, expertSuperset, cb) ->
     console.log 'expertSuperset length', expertSuperset.length
     _.each expertSuperset, (expert) =>
@@ -53,9 +54,20 @@ module.exports = class AutoMatcher
         expert.score += tagPoints if _.contains(_.pluck(expert.tags, 'soId'), tag)
         tagPoints += 3
 
-      console.log 'filter result for ', expert.name, expert.score
+      # add weight for StackOverflow reputation
+      if expert.so?.reputation? and expert.so.reputation > 0
+        expert.score += Math.floor(Math.log(expert.so.reputation))
+
+      # add weight for Github follower count
+      if expert.gh?.followers? and expert.gh.followers > 0
+        expert.score += Math.floor(Math.log(expert.gh.followers))
+
       # add weightings for different social indicators
       # expert.score += @githubFollowerPoints(expert)
 
+      # sort the expert's tags per the tags requested
+      expert.tags = _.sortBy expert.tags, (t) ->
+        tags.indexOf(t.soId)
+
     # return sorted list of experts
-    cb(_.sortBy(expertSuperset, 'score').reverse())
+    cb(_.first(_.sortBy(expertSuperset, 'score').reverse(), 100))
