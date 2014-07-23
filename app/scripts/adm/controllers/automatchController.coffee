@@ -3,7 +3,7 @@ module.exports = (app) ->
     ($scope, $http, $window, Session, Restangular) ->
       _.extend $scope,
         name: "automatchController"
-        budget: 100
+        budget: 250
         popularTags: ["android","aws","azure","c","c++","c#","chef","coffeescript","css","email","html5","ios","java","javascript","jquery",".net","linux","mongodb","mysql","node.js","objective-c","php","postgres","python","redis","ruby-on-rails","ruby","wordpress"]
         pricingOptions: ['opensource', 'private', 'nda', 'subscription', 'offline']
         pricing: 'private'
