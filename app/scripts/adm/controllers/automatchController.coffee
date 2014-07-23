@@ -10,6 +10,11 @@ module.exports = (app) ->
         tagsSelected: []
         sort: '-score'
 
+        tagColor: (tag) ->
+          color = "##{tag._id.substr(tag._id.length - 3)}"
+          'background-color': color
+          'text-shadow' : '0 0 4px black'
+
       Restangular.all('tags').getList().then (tags) ->
         $scope.tagsAvailable = _.pluck(tags, 'soId')
 
@@ -20,5 +25,4 @@ module.exports = (app) ->
             budget: $scope.budget
             pricing: $scope.pricing
           .then (experts) ->
-            console.log experts
             $scope.experts = experts
