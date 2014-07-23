@@ -1,41 +1,44 @@
-h1 Automatch Console
+.container
+  .row
+    h1 Automatch Console
 
-h3 Max Rate (Budget)
-p
-  input(ng-model="budget")
+    h3 Max Rate (Budget)
+    p
+      input(ng-model="budget")
 
-h3 Pricing
-p
-  select(ng-options="o as o for o in pricingOptions" ng-model="pricing")
+    h3 Pricing
+    p
+      select(ng-options="o as o for o in pricingOptions" ng-model="pricing")
 
-h3 Select Tags...
-p
-  tagger(ng-model="tagsSelected" options="tagsAvailable")
+    h3 Select Tags...
+    p
+      tagger(ng-model="tagsSelected" options="tagsAvailable" style="width: 100%")
 
 .container
-  table.table
-    tr
-      th Name
-        &nbsp;
-        a(ng-click="sort = 'name'") ⇑
-        &nbsp;
-        a(ng-click="sort = '-name'") ⇓
-      th Email
-      th Rate
-        &nbsp;
-        a(ng-click="sort = 'rate'") ⇑
-        &nbsp;
-        a(ng-click="sort = '-rate'") ⇓
-      th Score
-        &nbsp;
-        a(ng-click="sort = 'score'") ⇑
-        &nbsp;
-        a(ng-click="sort = '-score'") ⇓
-      th Tags
-    tr(ng-repeat='expert in experts | orderBy:sort')
-      td {{ expert.name }}
-      td {{ expert.gmail }}
-      td {{ expert.rate }}
-      td {{ expert.score }}
-      td
-        span.angular-tagger__tag(ng-repeat='tag in expert.tags' ng-style="tagColor(tag)") {{ tag.soId }}
+  .row
+    table.table
+      tr
+        th Name
+          &nbsp;
+          a(ng-click="sort = 'name'") ⇑
+          &nbsp;
+          a(ng-click="sort = '-name'") ⇓
+        th Email
+        th Rate
+          &nbsp;
+          a(ng-click="sort = 'rate'") ⇑
+          &nbsp;
+          a(ng-click="sort = '-rate'") ⇓
+        th Score
+          &nbsp;
+          a(ng-click="sort = 'score'") ⇑
+          &nbsp;
+          a(ng-click="sort = '-score'") ⇓
+        th Tags
+      tr(ng-repeat='expert in experts | orderBy:sort')
+        td {{ expert.name }}
+        td {{ expert.gmail }}
+        td {{ expert.rate }}
+        td {{ expert.score }}
+        td
+          span.angular-tagger__tag(ng-click="selectTag(tag)" ng-repeat='tag in expert.tags' ng-style="tagColor(tag)") {{ tag.soId }}
