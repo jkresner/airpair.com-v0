@@ -38,4 +38,4 @@ p
       td {{ expert.rate }}
       td {{ expert.score }}
       td
-        span.angular-tagger__tag(ng-repeat='tag in expert.tags') {{ tag.soId }}
+        span.angular-tagger__tag(ng-repeat='tag in expert.tags' ng-style="tagColor(tag)") {{ tag.soId }}
