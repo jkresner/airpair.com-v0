@@ -22,11 +22,11 @@
   a.btn-orange { font-size:22px;background:#ce5424;margin:auto;color:white;height:50px;font-weight:300;text-transform:none;padding-top:10px; }
   a.btn-orange:hover { font-weight:500;color:white; }
 
-  .hero { background:url('/images/landing/airconf/bg.jpg');height:540px;margin-top:0!important;text-align:center }
-  .hero img { margin:70px 0 40px 0 }
-  .hero section { height:110px;margin-bottom:60px }
-  .hero section div.bg { height:110px;background:black;opacity:0.3  }
-  .hero section div.about { height:110px;position:absolute;top:210px;width:100%;color:#dff2ef; }
+  .hero { background:url('/images/landing/airconf/bg-2.jpg');height:540px;margin-top:0!important;text-align:center }
+  .hero img { margin:50px 0 40px 0 }
+  .hero section { height:110px;margin-bottom:40px }
+  /*.hero section div.bg { height:110px;background:black;opacity:0.3  }*/
+  .hero section div.about { height:110px;position:absolute;top:240px;width:100%;color:#dff2ef; }
   .hero section h2 { font-size:32px;font-weight:600;margin:16px auto;color:#dff2ef; }
   .hero section p { font-size:18px;margin:auto;font-weight:400 }
   .hero a { font-size:24px;background:#ce5424;margin:auto;width:400px;color:white;height:60px;font-weight:300;padding-top:12px;text-transform:none }
@@ -46,16 +46,14 @@
 
   @media (max-width:801px) {
     .hero section { height:146px  }
-    .hero section div.bg { height:146px }
-    .hero section div.about { height:140px;position:absolute;top:210px;width:100%;color:#dff2ef; }
+    .hero section div.about { height:140px;position:absolute;top:230px;width:100%;color:#dff2ef; }
     .hero section div.about span { display:block; }
     .hero section div.about h2 { width:500px; }
     .hero section div.about p { font-size:16px;width:500px; }
   }
 
   @media (max-width:640px) {
-    .hero section div.bg { display:none }
-    .hero section div.about { top:190px }
+    .hero section div.about { top:220px }
     .hero section div.about h2 { width:96%; }
     .hero section div.about p { width:96%; }
     .hero img { width:60%; }
@@ -63,7 +61,7 @@
   }
 
   @media (max-width:480px) {
-    .hero section div.about { top:170px }
+    .hero section div.about { top:200px }
     .hero section div.about h2 { font-size:22px; }
     .hero section div.about p { }
     .hero img { width:80%; }
@@ -73,9 +71,9 @@
 
     <!-- HERO -->
     <div class="hero behind-nav hero-landing-top">
-      <img src="/images/landing/airconf/logo.png" />
+      <img src="/images/landing/airconf/full-logo.png" />
       <section>
-        <div class="bg"></div>
+        <!-- <div class="bg"></div> -->
         <div class="about">
           <h2><span>Virtual workshops & panels </span> by the worlds top software experts</h2>
           <p><span>Broadcasting Worldwide <span> Aug 4 - 31, via G+ Hangouts</p>
@@ -213,7 +211,7 @@
         <a href="//twitter.com/ccheever" target="_blank"></a>
         -->
 
-      <a href="javascript:alert('Registration opens Mon Jul 21')" class="keynote one left" style="background:#dff2ef;color:#4d4e4e">
+      <a href="javascript:alert('Registration opens Mon Jul 21')" class="keynote one left loginRequied" style="background:#dff2ef;color:#4d4e4e">
         <ul>
           <li class="left"><img src="/images/avatars/of.png" alt="Obie Fernandez" /></li>
           <li class="right"><img src="//secure.gravatar.com/avatar/1eb7539f1f0a62f74ea3f7a0fa0f486f?s=110" alt="Chad Pytel" /></li>
@@ -234,11 +232,11 @@
         <div>
           <label>Mon Aug TBA, 00:00 GMT</label>
           <h3>The Future of Consulting</h3>
-          <button class="btn btn-block">Register</button>
+          <button class="btn btn-block">Register for panel</button>
         </div>
       </a>
 
-      <a href="javascript:alert('Registration opens Mon Jul 21')" class="keynote two right" style="background:#4d4e4e;color:white">
+      <a href="javascript:alert('Registration opens Mon Jul 21')" class="keynote two right loginRequied" style="background:#4d4e4e;color:white">
         <summary>
           <label>Mon Aug TBA, 00:00 GMT</label>
           <h3>Will Pairing Be Mainstream?</h3>
@@ -250,7 +248,7 @@
         <div class="detail">
           <label>Mon Aug TBA, 00:00 GMT</label>
           <h3>Will Pairing Be Mainstream?</h3>
-          <button class="btn btn-block">Register</button>
+          <button class="btn btn-block">Register for panel</button>
         </div>
         <ul>
           <li class="right"><img src="//pivotallabs.com/wordpress/wp-content/uploads/2012/09/Rob-Mee_avatar-96x96.jpg" alt="" /></li>
@@ -260,7 +258,7 @@
         </ul>
       </a>
 
-      <a href="javascript:alert('Registration opens Mon Jul 21')" class="keynote three left" style="background:#90d1cc;color:black">
+      <a href="javascript:alert('Registration opens Mon Jul 21')" class="keynote three left loginRequied" style="background:#90d1cc;color:black">
         <ul>
           <li class="left"><img src="//secure.gravatar.com/avatar/780d02a99798886da48711d8104801a4?s=140" alt="Jonathon kresner" /></li>
           <li class="right"><img src="/images/landing/airconf/deepnishar.png" alt="Dipchand Nishard" /></li>
@@ -282,11 +280,11 @@
         <div class="detail">
           <label>Mon Aug TBA, 00:00 GMT</label>
           <h3>Software Engineering vs Entrepreneurship</h3>
-          <button class="btn btn-block">Register</button>
+          <button class="btn btn-block">Register for panel</button>
         </div>
       </a>
 
-      <a href="javascript:alert('Registration opens Mon Jul 21')" class="keynote four right" style="background:#7e7f7f;color:white">
+      <a href="javascript:alert('Registration opens Mon Jul 21')" class="keynote four right loginRequied" style="background:#7e7f7f;color:white">
         <summary>
           <label>Mon Aug TBA, 00:00 GMT</label>
           <h3>How to Build a Personal <br />Developer Brand</h3>
@@ -299,7 +297,7 @@
         <div class="detail">
           <label>Mon Aug TBA, 00:00 GMT</label>
           <h3>How to Build a Personal <br />Developer Brand</h3>
-          <button class="btn btn-block">Register</button>
+          <button class="btn btn-block">Register to see panel</button>
         </div>
         <ul>
           <li class="right"><img src="//secure.gravatar.com/avatar/2db848de65112c20aa13f566c0cbf9d7?s=140" alt="Igor Lebovic" /></li>
@@ -377,7 +375,11 @@
 
       <h2 class="text-thin text-center m-t-4">How Much Does it Cost?</h2>
 
-      <p style="margin:40px;text-align:center">This speaker series is free for anyone that has ever purchased an AirPair. If you have not bought an AirPair, simply buy one to regsiter. To register simply book an hour and get access to these amazing talks.</p>
+      <h3>$150 ticket includes</h3>
+
+        <div>- Attending up to 3 workshops</div>
+        <div>- Access to all session recordings</div>
+        <div>- $150 credit towards pairing with a speaker (valid for 3 months)</div>
 
     </div>
   </div>
@@ -433,15 +435,16 @@
       });
     });
 
+{{#if session.authenticated }}
     $('a.session').click(function (e) {
       if ($(this).attr('href') == '/airconf/')
       {
         e.preventDefault();
-        alert("Page still under construction and we're still fleshing out the schedule :)");
+        alert("Workshop registrations open Mon Jul 28");
         false;
       }
     });
-
+{{/if}}
 
   }
 </script>
