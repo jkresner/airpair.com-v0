@@ -10,10 +10,13 @@ module.exports = (app) ->
         tagsSelected: []
         sort: '-score'
 
+        selectTag: (tag) ->
+          $scope.tagsSelected.push(tag.soId) unless _.contains($scope.tagsSelected, tag.soId)
+
         tagColor: (tag) ->
-          color = "##{tag._id.substr(tag._id.length - 3)}"
-          'background-color': color
-          'text-shadow' : '0 0 4px black'
+          if tag?._id?
+            color = "##{tag._id.substr(tag._id.length - 3)}"
+            { 'background-color': color,'text-shadow' : '0 0 4px black' }
 
       Restangular.all('tags').getList().then (tags) ->
         $scope.tagsAvailable = _.pluck(tags, 'soId')
