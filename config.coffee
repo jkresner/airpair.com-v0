@@ -34,7 +34,7 @@ exports.config =
       joinTo:
        'javascripts/vendor.js': /^vendor\/scripts(\/|\\)(?!angular)/
        'javascripts/ap.js': /(scripts\/ap|scripts\/shared|scripts\/providers|lib\/mix)/
-       'javascripts/adm.js': /(scripts\/angular|lodash|moment-2.6|scripts\/adm\/|lib\/mix)/
+       'javascripts/adm.js': /(scripts\/angular|lodash|moment-2.6|scripts\/(adm|site)\/|lib\/mix)/
        'javascripts/adm-old.js': /(scripts\/adm-old|scripts\/shared|scripts\/providers|lib\/mix)/
        'javascripts/providers.js': /^app\/scripts\/providers/
        'javascripts/landing.js': /jquery|jquery.cookie|lodash|providers\/(addjs|olark|segmentio|optimizely)|bootstrap3\/dropdown|bootstrap3\/collapse|bootstrap3\/modal|select2/
@@ -48,6 +48,7 @@ exports.config =
         # even if they aren't specified in order.
         before: [
           'vendor/scripts/angular.js'
+          'vendor/scripts/angular-tagger.js'
           'vendor/scripts/console-helper.js'
           'vendor/scripts/jquery.js'
           'vendor/scripts/jquery-cookie.js'
@@ -74,6 +75,7 @@ exports.config =
           'vendor/css/adm-bb/bootstrap.css'
           'vendor/css/adm-bb/bootstrap-responsive.css'
           'vendor/css/ap/epik.css'
+          'vendor/css/shared/angular-tagger.css'
           'vendor/css/shared/jquery.datepicker.css'
           'vendor/css/shared/jquery.timepicker.css'
           'vendor/css/shared/bootstrap-typeahead.css'

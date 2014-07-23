@@ -1,0 +1,21 @@
+h1 Automatch Console
+h2 Select Tags...
+p
+  tagger(ng-model="tags" options="options")
+
+.container
+  table.table
+    tr
+      th Name
+      th Email
+      th Rate
+      th Tags
+    tr(ng-repeat='expert in experts')
+      td {{ expert.name }}
+      td {{ expert.gmail }}
+      td {{ expert.rate }}
+      td
+        span.angular-tagger__tag(ng-repeat='tag in expert.tags')
+          {{ tag.soId }}
+
+
