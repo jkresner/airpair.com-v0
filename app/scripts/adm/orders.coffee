@@ -83,7 +83,6 @@ module.exports = (pageData) ->
         return weeks
 
       getWeeksByFriday: (start, end) ->
-        console.log "getWeeksByFriday", start.toDate(), end.toDate()
 
         if not start
           start = moment().startOf('month').subtract("days", 2)
@@ -115,7 +114,6 @@ module.exports = (pageData) ->
           cur = cur.clone().subtract('w', 1)
 
 
-        console.log "RETURN WEEKS", weeks
         return weeks
 
 
@@ -155,7 +153,7 @@ module.exports = (pageData) ->
           return orderDate > start && orderDate < end
 
         calcSummary: (orders) ->
-          console.log "calcSummary"
+
           summary =
             totalRevenue: 0
             orderCount: 0
@@ -244,7 +242,7 @@ module.exports = (pageData) ->
 
           _.each customers, (cust, id) -> if cust.orderDates.length < 2 then delete customers[id]
 
-          console.log "customers repeat", _.size(customers)
+          # console.log "customers repeat", _.size(customers)
 
 
           console.timeEnd("calcRepeatCustomers")
@@ -281,7 +279,7 @@ module.exports = (pageData) ->
           startDate = @growthStart.format('YYYY-MM-DD')
           endDate = @growthEnd.clone().add("d", 1).format('YYYY-MM-DD')
 
-          console.log "getGrowthRequests", startDate, endDate
+          # console.log "getGrowthRequests", startDate, endDate
 
           count = 0
           api = {}
@@ -307,7 +305,7 @@ module.exports = (pageData) ->
           # start = moment("2014-07-12")
           # end   = moment("2014-07-19")
 
-          console.log "filterGrowthRequests", start.toDate(), "–", end.toDate()
+          # console.log "filterGrowthRequests", start.toDate(), "–", end.toDate()
 
 
           data =
@@ -449,10 +447,10 @@ module.exports = (pageData) ->
               period.revPerCust = period.revenue/period.customerTotal
               period.ltv = period.margin*period.revPerHour*period.hrPerCust
 
-              console.time("data - repeat customers")
+              # console.time("data - repeat customers")
               period.custReturning = @findRepeatCustomers(period.customers, period.intervalStart)
               # period.custReturning = _.intersection(period.customers, @getCustomersBefore(period.intervalStart)).length
-              console.timeEnd("data - repeat customers")
+              # console.timeEnd("data - repeat customers")
 
               period.custReturningPercent = period.custReturning/period.customerTotal
 
@@ -460,12 +458,12 @@ module.exports = (pageData) ->
               # Add start and end dates in each interval
               @filterGrowthRequests period.intervalStart, period.intervalEnd, (data) ->
 
-                console.log "@filterGrowthRequests", data
+                # console.log "@filterGrowthRequests", data
 
                 period.requestsNum = data.requests.length
                 period.ordersPerReq = period.orders.length/period.requestsNum
 
-                console.log "num calls", data.calls.length
+                # console.log "num calls", data.calls.length
                 period.hrsOnAir = 0
                 _.each data.calls, (item, i) -> period.hrsOnAir += item.duration
                 period.hrsAirPerHrsSold = period.hrsOnAir/period.hrsSold
@@ -485,17 +483,23 @@ module.exports = (pageData) ->
                   report.push
                     css: 'change'
                     intervalIdx: "#{prevPeriod.intervalIdx}c#{period.intervalIdx}"
-                    pltv: (period.ltv-prevPeriod.ltv)/prevPeriod.ltv
-                    phrsSold: (period.hrsSold-prevPeriod.hrsSold)/prevPeriod.hrsSold
+                    pltv: (period.ltv/prevPeriod.ltv) - 1
+                    # pltv: (period.ltv-prevPeriod.ltv)/prevPeriod.ltv
+                    phrsSold: (period.hrsSold/prevPeriod.hrsSold) - 1
+                    # phrsSold: (period.hrsSold-prevPeriod.hrsSold)/prevPeriod.hrsSold
                     pprofitPerHour: (period.profitPerHour/prevPeriod.profitPerHour)-1
-                    # profit/hr
-                    prevPerHour: (period.revPerHour-prevPeriod.revPerHour)/prevPeriod.revPerHour
-                    pgross: (period.gross-prevPeriod.gross)/prevPeriod.gross
-                    pmargin: (period.margin-prevPeriod.margin)/prevPeriod.margin
-                    prevenue: (period.revenue-prevPeriod.revenue)/prevPeriod.revenue
+                    prevPerHour: (period.revPerHour/prevPeriod.revPerHour) - 1
+                    # prevPerHour: (period.revPerHour-prevPeriod.revPerHour)/prevPeriod.revPerHour
+                    pgross: (period.gross/prevPeriod.gross) - 1
+                    # pgross: (period.gross-prevPeriod.gross)/prevPeriod.gross
+                    pmargin: (period.margin/prevPeriod.margin) - 1
+                    # pmargin: (period.margin-prevPeriod.margin)/prevPeriod.margin
+                    prevenue: (period.revenue/prevPeriod.revenue) - 1
+                    # prevenue: (period.revenue-prevPeriod.revenue)/prevPeriod.revenue
                     prevPerCust: (period.revPerCust/prevPeriod.revPerCust)-1
                     phrPerCust: (period.revPerCust/prevPeriod.revPerCust)-1
-                    pcustomerTotal: (period.customerTotal-prevPeriod.customerTotal)/prevPeriod.customerTotal
+                    pcustomerTotal: (period.customerTotal/prevPeriod.customerTotal) - 1
+                    # pcustomerTotal: (period.customerTotal-prevPeriod.customerTotal)/prevPeriod.customerTotal
                     pcustReturningPercent: (period.custReturningPercent/prevPeriod.custReturningPercent)-1
                     porders: (period.orders.length/prevPeriod.orders.length)-1
 
@@ -578,14 +582,18 @@ module.exports = (pageData) ->
                   wkPercentage = (moment().unix()-wkStart.unix())/60/60/24/7
                   console.log "wkPercentage = #{Math.floor(wkPercentage*100)}%"
 
+                  console.log "finalDiff", finalDiff
+
+                  console.log "prequestsNum = #{finalWeek.requestsNum}/(#{prevWeek.requestsNum}*#{wkPercentage}) - 1 = #{(finalWeek.requestsNum/(prevWeek.requestsNum*wkPercentage)) - 1}"
+
                   _.extend finalDiff,
                     intervalName: "#{Math.floor(wkPercentage*100)}%"
                     pcustomerTotal: (finalWeek.customerTotal / (prevWeek.customerTotal*wkPercentage)) - 1
                     phrsSold: (finalWeek.hrsSold / (prevWeek.hrsSold*wkPercentage)) - 1
                     prevenue: (finalWeek.revenue / (prevWeek.revenue*wkPercentage)) - 1
                     pgross: (finalWeek.gross / (prevWeek.gross*wkPercentage)) - 1
-                    prequestsNum: (finalWeek.requestsNum/prevWeek.requestsNum*wkPercentage) - 1
-                    phrsOnAir: (finalWeek.hrsOnAir/prevWeek.hrsOnAir*wkPercentage) - 1
+                    prequestsNum: (finalWeek.requestsNum/(prevWeek.requestsNum*wkPercentage)) - 1
+                    phrsOnAir: (finalWeek.hrsOnAir/(prevWeek.hrsOnAir*wkPercentage)) - 1
 
 
 
@@ -813,7 +821,7 @@ module.exports = (pageData) ->
 
         getChannelGrowthSummary: (weeks) ->
 
-          console.log "weeks", weeks
+          # console.log "weeks", weeks
           summary =
             numOrders: 0
             revenueTotal: 0
@@ -939,7 +947,7 @@ module.exports = (pageData) ->
 
     newSearch = true
     updateOrderList = (searchText) ->
-      console.log "updateOrderList"
+      # console.log "updateOrderList"
       $scope.orderViewLimit = 40
       # Search all if new search is starting
       return if not $scope.dateStart or not $scope.dateEnd
@@ -1062,7 +1070,7 @@ module.exports = (pageData) ->
     updateRange = () ->
       return if not $scope.dateStart or not $scope.dateEnd
       # $scope.dateEnd = moment($scope.dateEnd).endOf('day').toDate()
-      console.log "updateRange()"
+      # console.log "updateRange()"
 
       apData.orders.getGrowth 'weekly', moment($scope.dateStart).startOf('day'), moment($scope.dateEnd).endOf('day'), (week2week) ->
         $scope.report = week2week.report
@@ -1072,8 +1080,8 @@ module.exports = (pageData) ->
       $scope.channelGrowth = apData.orders.getChannelGrowth(moment($scope.dateStart), moment($scope.dateEnd))
       $scope.channelGrowthSummary = apData.orders.getChannelGrowthSummary($scope.channelGrowth)
 
-      console.log "channelGrowth", $scope.channelGrowth
-      console.log "channelGrowthSummary", $scope.channelGrowthSummary
+      # console.log "channelGrowth", $scope.channelGrowth
+      # console.log "channelGrowthSummary", $scope.channelGrowthSummary
 
 
 
