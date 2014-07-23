@@ -32,6 +32,9 @@ module.exports = class ViewDataService
     else
       authenticated : false
 
+  automatch: (tags, cb) ->
+    cb null, -> {}
+
   dashboard: (cb) ->
     cb null, -> { showFaqLink: true }
 

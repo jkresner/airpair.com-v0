@@ -4,7 +4,7 @@ RatesService    = require './rates'
 
 module.exports = class ExpertsService extends DomainService
 
-  logging: on
+  #logging: on
 
   model: require './../models/expert'
 
@@ -35,6 +35,10 @@ module.exports = class ExpertsService extends DomainService
         expert.suggestedRate = new RatesService().calcSuggestedRates request, expert
         cb ee, expert
 
+  automatch: (tags, cb) =>
+    console.log 'tags', arguments
+    @getByTagsAndMaxRate tags.split(','), 150, (err, experts) ->
+      cb err, experts
 
 
   getByBookme: (urlSlug, code, cb) =>
