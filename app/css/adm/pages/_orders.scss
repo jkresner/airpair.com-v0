@@ -3,7 +3,7 @@
 /*  Orders - Growth
 ~-----------------------------------------*/
 
-.growth {
+.channels-growth, .growth {
   text-align: center;
 
   th {
@@ -42,11 +42,12 @@
     padding-right: 0 !important;
     padding-left: 0 !important;
     &.text-left {text-align: left;}
-    &.text-orange {
+    &.text-orange  {
       text-align:center;
       font-size:12px;
       padding:10px 2px 0 38px!important;
     }
+
   }
 
   tr {
@@ -69,6 +70,10 @@
       border-top:1px solid #2E2E2E;
       background-color:#F8F8F8;
     }
+  }
+
+  .row-week .text-split {
+      // font-size: 12px;
   }
 
   table.double {
@@ -97,8 +102,66 @@
 
 }
 
+.channels-growth {
+  th {
+    text-align: left;
+    width: 8.8%;
+  }
+  tr {
+    td {
+      text-align: left;
+      &:last-child {
+        padding-right:0 !important;
+        text-align: left;
+      }
+    }
+  }
+  .row-week {
+    .text-info.text-muted {
+      &, .text-split {
+        color: $text-muted;
+      }
+    }
+  }
+  .row-week, .row-summary {
+    .text-split {
+      @extend .text-orange;
+      font-size: 11px;
+      padding-top: 2px;
+    }
+  }
+  td .text-split {
+    width: 63%;
+  }
+}
 
 
+
+
+
+
+
+/*  Orders - Channels
+~-----------------------------------------*/
+.channels {
+  .text-split {
+    display: inline-block;
+    width: 50%;
+    padding-left: 3px;
+    float: right;
+  }
+  .row-summary {
+    .text-split {
+      @extend .text-orange;
+    }
+  }
+  .label {
+    font-weight: normal;
+    font-size: 80%;
+    letter-spacing: .04em;
+    padding: 0.1em 0.5em 0.2em;
+  }
+}
 
 
 
@@ -143,30 +206,6 @@
   .received { color:#333333 }
   .paidout { color:#468847; }
   .incomplete { display: none; }
-}
-
-
-
-
-
-/*  Orders - Channels
-~-----------------------------------------*/
-.channels {
-  .row-summary {
-    .text-split {
-      display: inline-block;
-      width: 50%;
-      padding-left: 3px;
-      float: right;
-      @extend .text-orange;
-    }
-  }
-  .label {
-    font-weight: normal;
-    font-size: 80%;
-    letter-spacing: .04em;
-    padding: 0.1em 0.5em 0.2em;
-  }
 }
 
 

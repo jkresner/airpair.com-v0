@@ -52,7 +52,7 @@ module.exports = class RequestsService extends DomainService
     query =
       _id:
         $gt: objectIdWithTimestamp(startUtc.toDate())
-        $lt: objectIdWithTimestamp(endUtc.endOf('day').toDate())
+        $lt: objectIdWithTimestamp(endUtc.toDate())
 
     @searchMany query, { fields: Data.view.pipeline },(e,r) =>
       if e then console.log "ERROR", e else

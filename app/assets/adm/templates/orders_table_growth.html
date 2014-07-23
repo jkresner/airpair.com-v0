@@ -1,7 +1,7 @@
 
       <!-- .growth CSS in 'css/adm/pages/_orders.scss' -->
 
-      <table class="table growth">
+      <table class="table table-hover growth ">
 
         <thead>
           <tr>
@@ -53,11 +53,11 @@
           </td>
  -->
           <td>
-            <span ng-if="r.hrsOnAir" class="">{{r.hrsOnAir | number:0}}</span>
+            <span ng-if="r.hrsOnAir != null" class="">{{(r.hrsOnAir | number:0) || 0}}</span>
             <span ng-if="r.phrsOnAir != null" ng-class="{'text-danger': r.phrsOnAir < 0, 'text-success': r.phrsOnAir > 0}">{{(r.phrsOnAir*100 | number:0)|| 0}}%</span>
           </td>
           <td class="text-orange">
-            <span ng-if="r.hrsAirPerHrsSold" class="">{{r.hrsAirPerHrsSold*100 | number:0}}%</span>
+            <span ng-if="r.hrsAirPerHrsSold != null" class="">{{r.hrsAirPerHrsSold*100 | number:0}}%</span>
             <span ng-if="r.phrsAirPerHrsSold" ng-class="{'text-danger': r.phrsAirPerHrsSold < 0, 'text-success': r.phrsAirPerHrsSold > 0}">{{r.phrsAirPerHrsSold*100 | number:0}}%</span>
           </td>
           <td>
@@ -119,7 +119,7 @@
 
 
 
-        <tr class="summary">
+        <tr class="summary" ng-hide="hideSummary">
           <td class="text-muted"> </td>
           <td class="first text-orange">{{reportTotals.ltv | currency}}</td>
           <td>{{reportTotals.gross | number : 0}}</td>
@@ -141,7 +141,7 @@
           <td class="text-orange">
             <table class="double">
               <tr>
-                <td class="left">{{reportTotals.hrPerCust | number : 0}}</td>
+                <td class="left">{{reportTotals.hrPerCust | number : 1}}</td>
                 <td class="middle"><span class="text-muted">|</span></td>
                 <td class="right">{{reportTotals.custReturningPercent*100 | number:0}}%</td>
               </tr>
