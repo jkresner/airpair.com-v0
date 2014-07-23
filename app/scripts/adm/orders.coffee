@@ -82,11 +82,14 @@ module.exports = (pageData) ->
           cur = cur.subtract('weeks', 1)
         return weeks
 
-      getWeeksByFriday: (start) ->
-        console.log "getWeeksByFriday", start.toDate()
+      getWeeksByFriday: (start, end) ->
+        console.log "getWeeksByFriday", start.toDate(), end.toDate()
 
         if not start
           start = moment().startOf('month').subtract("days", 2)
+
+        if not end
+          end = moment()
 
         if start.day() < 6
           start.startOf("week").subtract("d", 1).startOf("day")
@@ -104,13 +107,15 @@ module.exports = (pageData) ->
 
 
         while cur.isAfter(start) or cur.isSame(start)
-          weeks.push
-            str: cur.clone().add('w', 1).subtract('d', 1).format("MM DD")
-            start: cur.toDate()
-            end: cur.clone().add('w', 1).toDate()
+          if cur.isBefore(end) or cur.isSame(end)
+            weeks.push
+              str: cur.clone().add('w', 1).subtract('d', 1).format("MM DD")
+              start: cur.toDate()
+              end: cur.clone().add('w', 1).toDate()
           cur = cur.clone().subtract('w', 1)
 
 
+        console.log "RETURN WEEKS", weeks
         return weeks
 
 
@@ -750,7 +755,9 @@ module.exports = (pageData) ->
         getChannelGrowth: (start = moment(@data[0].utc), end = moment()) ->
 
 
-          weeks = $moment.getWeeksByFriday(start, moment()).reverse()
+          weeks = $moment.getWeeksByFriday(start, end).reverse()
+
+          console.log "getChannelGrowth WEEKS", weeks, start.toDate(), end.toDate()
 
 
           # Get Metrics for each week
@@ -825,11 +832,6 @@ module.exports = (pageData) ->
               summary.tags[key].revenue += tag.revenue
 
           return summary
-
-
-
-
-
 
 
 
@@ -1060,14 +1062,17 @@ module.exports = (pageData) ->
     updateRange = () ->
       return if not $scope.dateStart or not $scope.dateEnd
       # $scope.dateEnd = moment($scope.dateEnd).endOf('day').toDate()
+      console.log "updateRange()"
+
       apData.orders.getGrowth 'weekly', moment($scope.dateStart).startOf('day'), moment($scope.dateEnd).endOf('day'), (week2week) ->
         $scope.report = week2week.report
         $scope.reportTotals = week2week.reportTotals
         $scope.$apply() if not $scope.$$phase
 
-      $scope.channelGrowth = apData.orders.getChannelGrowth(moment($scope.dateStart))
-
+      $scope.channelGrowth = apData.orders.getChannelGrowth(moment($scope.dateStart), moment($scope.dateEnd))
       $scope.channelGrowthSummary = apData.orders.getChannelGrowthSummary($scope.channelGrowth)
+
+      console.log "channelGrowth", $scope.channelGrowth
       console.log "channelGrowthSummary", $scope.channelGrowthSummary
 
 
