@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 AutoMatchController = ($scope, $location, Restangular) ->
   _.extend $scope,
     name: "automatchController"
@@ -60,3 +61,19 @@ AutoMatchController = ($scope, $location, Restangular) ->
 angular
   .module('ngAirPair')
   .controller('AutoMatchController', ['$scope', '$location', 'Restangular', AutoMatchController])
+=======
+module.exports = (app) ->
+  app.controller 'AutoMatchController',
+    ($scope, $http, $window, Session, Restangular) ->
+      _.extend $scope,
+        name: "automatchController"
+        options: []
+        tags: []
+
+      Restangular.all('tags').getList().then (tags) ->
+        $scope.options = _.pluck(tags, 'soId')
+
+      $scope.$watchCollection 'tags', (tags) ->
+        Restangular.all("experts/automatch/tags/" + tags).getList().then (experts) ->
+          $scope.experts = experts
+>>>>>>> wip

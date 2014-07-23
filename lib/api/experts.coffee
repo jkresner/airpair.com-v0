@@ -3,6 +3,7 @@ class ExpertApi extends require('./_api')
   Svc: require('./../services/experts')
 
   routes: (app, route) ->
+    app.get  "/api/#{route}/automatch/tags/:tags", @loggedIn, @ap, @automatch
     app.get  "/api/#{route}", @admin, @ap, @list
     app.get  "/api/#{route}/:id", @loggedIn, @ap, @detail
     app.get  "/api/#{route}/request/:id", @loggedIn, @ap, @detailOnRequest
