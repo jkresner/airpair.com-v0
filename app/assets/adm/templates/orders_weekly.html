@@ -2,37 +2,31 @@
 
 
 <div class="container">
-  <div class="row">
 
     <div class="row">
       <div class="col-sm-6">
         <h3 class="text-thin">Week on Week</h3>
       </div>
       <div class="col-sm-6" >
-        <button type="button" class="btn btn-default" ng-click="showLastWeek()" ng-model="lastWeekView" btn-checkbox> Current </button>
-        <div class="input-group" style="width: 440px;float: right;">
+        <div class="input-group" style="width: 440px;float: left;">
           <span class="input-group-addon">Start</span>
           <input class="form-control" type="date" name="startdate" ng-model="dateStart" placeholder="yyyy-MM-dd" min="2013-01-01" max="" style="width:160px" required />
           <span class="input-group-addon">End</span>
           <input class="form-control" type="date" name="enddate" ng-model="dateEnd" placeholder="yyyy-MM-dd" min="2013-01-01" max="" style="width:160px" required/>
         </div>
+        <button type="button" class="btn btn-default" ng-click="showLastWeek()" ng-model="lastWeekView" btn-checkbox style="float: right;" > Current </button>
       </div>
     </div>
 </div>
 
 
-</div>
+
 
 <hr>
 
-  <div class="container">
 
-
+<div class="container">
   <div ap-table-growth interval="weekly" report="report" report-totals="reportTotals" hide-summary="lastWeekView"></div>
-
-
-
-
 </div>
 
 
