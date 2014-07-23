@@ -5,6 +5,7 @@ module.exports = (app) ->
         name: "automatchController"
         options: []
         tags: []
+        predicate: ''
 
       Restangular.all('tags').getList().then (tags) ->
         $scope.options = _.pluck(tags, 'soId')

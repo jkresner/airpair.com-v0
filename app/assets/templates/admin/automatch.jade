@@ -9,8 +9,10 @@ p
       th Name
       th Email
       th Rate
+        a(ng-click="predicate = 'rate'") ^
+        a(ng-click="predicate = '-rate'") ,
       th Tags
-    tr(ng-repeat='expert in experts')
+    tr(ng-repeat='expert in experts | orderBy:predicate')
       td {{ expert.name }}
       td {{ expert.gmail }}
       td {{ expert.rate }}
