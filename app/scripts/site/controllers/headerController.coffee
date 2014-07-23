@@ -1,5 +1,6 @@
-HeaderController = ($scope, Session) ->
+HeaderController = ($scope, Session, Expert) ->
   $scope.session = Session
+  $scope.expert = Expert
 
 angular
   .module('ngAirPair')

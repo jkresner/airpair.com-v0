@@ -13,6 +13,12 @@ SessionFactory = ($http, $window) ->
       if @isSignedIn()
         @data.user.google.displayName
 
+    imageUrl: ->
+      if @isSignedIn()
+        @data.user.google._json.picture
+      else
+        "/images/avatars/default.jpg"
+
     updateSession: ->
       $http.get('/api/session')
         .success (data) =>
@@ -24,4 +30,3 @@ SessionFactory = ($http, $window) ->
 angular
   .module('ngAirPair')
   .factory('Session', ['$http', '$window', SessionFactory])
-

@@ -1,0 +1,25 @@
+.page.expert-me {
+  .info {
+    background-color: #DFF2EF;
+    height: 50px;
+    width: 100%;
+
+    span {
+      font-size: 24px;
+      font-weight: bold;
+    }
+    span.sub-label {
+      font-size: 12px;
+      text-transform: uppercase;
+    }
+    span.received:before {
+      content: url('/images/icons/received.png');
+    }
+    span.response:before {
+      content: url('/images/icons/response.png');
+    }
+    span.pairs:before {
+      content: url('/images/icons/pair.png');
+    }
+  }
+}
