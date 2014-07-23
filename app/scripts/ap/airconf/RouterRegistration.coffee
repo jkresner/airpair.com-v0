@@ -12,14 +12,13 @@ module.exports = class Router extends S.AirpairSessionRouter
   pushStateRoot: '/airconf-registration'
 
   routes:
-    ''          : 'register'
     'register'  : 'register'
     'thanks'    : 'thanks'
 
   appConstructor: (pageData, callback) ->
     {ticketPrice,pairCredit,paid,confOrder} = pageData.registration
     d =
-      page: new BB.BadassModel paid: pairCredit, hasCard: pageData.hasCard, stripePK: pageData.stripePK
+      page: new BB.BadassModel paid: paid, hasCard: pageData.hasCard, stripePK: pageData.stripePK
       company: new M.Company pageData.company
       order: new M.Order confOrder
     v =
@@ -36,8 +35,11 @@ module.exports = class Router extends S.AirpairSessionRouter
     _.extend d, v
 
   initialize: (args) ->
-    @navTo 'thanks' if @app.page.get 'paid'
-
+    if @app.page.get('paid')
+      @navTo 'thanks'
+    else
+      @navTo 'register'
   register: ->
 
   thanks: ->
+    $log 'thanks'
