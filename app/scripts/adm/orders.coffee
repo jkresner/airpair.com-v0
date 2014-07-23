@@ -772,18 +772,35 @@ module.exports = (pageData) ->
           prev = null
           for week in weeks
             week.metrics = @getChannelMetrics(week.start, week.end)
+            # Get difference between weeks
             if prev
+              # Get difference for normal tags
               week.diffTags = {}
               _.each prev.metrics.summary.tags, (tag, tagName) ->
                 if tagName is '' then return
                 if not week.metrics.summary.tags[tagName]
                   week.metrics.summary.tags[tagName] =
                     count: 0
-
                 newCount = week.metrics.summary.tags[tagName].count
                 oldCount = tag.count
                 week.diffTags[tagName] =
                   count: if oldCount is 0 then (newCount-oldCount) else (newCount/oldCount)-1
+              # get total diff
+              week.diffTags.TOTAL = (week.metrics.summary.numOrders/prev.metrics.summary.numOrders)-1
+
+              # Get difference for repeat customer tags
+              week.diffTagsRepeat = {}
+              _.each prev.metrics.repeatSummary.tags, (tag, tagName) ->
+                if tagName is '' then return
+                if not week.metrics.repeatSummary.tags[tagName]
+                  week.metrics.repeatSummary.tags[tagName] =
+                    count: 0
+                newCount = week.metrics.repeatSummary.tags[tagName].count
+                oldCount = tag.count
+                week.diffTagsRepeat[tagName] =
+                  count: if oldCount is 0 then (newCount-oldCount) else (newCount/oldCount)-1
+              # get total diff
+              week.diffTagsRepeat.TOTAL = (week.metrics.repeatSummary.numOrders/prev.metrics.repeatSummary.numOrders)-1
             prev = week
 
 
@@ -809,6 +826,15 @@ module.exports = (pageData) ->
               oldCount = prevWeek.metrics.summary.tags[tagName].count*wkPercentage
               finalWeek.diffTags[tagName] =
                 count: if oldCount is 0 then (newCount-oldCount) else (newCount/oldCount)-1
+            finalWeek.diffTags.percentage = "#{Math.floor(wkPercentage*100)}%"
+            # diff for repeats
+            _.each finalWeek.metrics.repeatSummary.tags, (tag, tagName) ->
+              if tagName is '' or not prevWeek.metrics.repeatSummary.tags[tagName] then return
+              newCount = tag.count
+              oldCount = prevWeek.metrics.repeatSummary.tags[tagName].count*wkPercentage
+              finalWeek.diffTagsRepeat[tagName] =
+                count: if oldCount is 0 then (newCount-oldCount) else (newCount/oldCount)-1
+
 
 
 
@@ -821,25 +847,42 @@ module.exports = (pageData) ->
 
         getChannelGrowthSummary: (weeks) ->
 
-          # console.log "weeks", weeks
           summary =
             numOrders: 0
             revenueTotal: 0
             tags: {}
 
+          repeatSummary =
+            numOrders: 0
+            revenueTotal: 0
+            tags: {}
+
           for week in weeks
+            # Calc summary
             summary.numOrders += week.metrics.summary.numOrders
             summary.revenueTotal += week.metrics.summary.revenueTotal
             _.each week.metrics.summary.tags, (tag, key) ->
-              # console.log "tag", tag, key
               if not summary.tags[key]
                 summary.tags[key] =
                  count: 0
                  revenue: 0
               summary.tags[key].count += tag.count
               summary.tags[key].revenue += tag.revenue
+            # Calc repeat summary
+            repeatSummary.numOrders += week.metrics.repeatSummary.numOrders
+            repeatSummary.revenueTotal += week.metrics.repeatSummary.revenueTotal
+            _.each week.metrics.repeatSummary.tags, (tag, key) ->
+              if not repeatSummary.tags[key]
+                repeatSummary.tags[key] =
+                 count: 0
+                 revenue: 0
+              repeatSummary.tags[key].count += tag.count
+              repeatSummary.tags[key].revenue += tag.revenue
 
-          return summary
+          return {
+            summary: summary
+            repeatSummary: repeatSummary
+          }
 
 
 
