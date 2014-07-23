@@ -1,4 +1,3 @@
-
 # Logic associated with hacking AirConf purchases into the orders collection
 # Advantage is it shows up in our dashboard and revenue reporting stays consistent across the company
 # Note: this logic is extended into the OrdersService in it's constructor
@@ -19,7 +18,9 @@ module.exports =
 
       confOrder = _.find r, (o) => _.idsEqual o.requestId, @Data.airconf.requestId
 
-      d = _.extend @Data.airconf, { paid: confOrder?, workshops: [], confOrder: confOrder }
+      {ticketPrice,pairCredit} = @Data.airconf
+
+      d = { paid: confOrder?, workshops: [], confOrder, ticketPrice, pairCredit }
 
       d.totalOtherPurchaes += o.total for o in _.without(r, confOrder)
 
@@ -30,8 +31,32 @@ module.exports =
       else
         d.discount = d.totalOtherPurchaes/10 % 10;
 
-      $log 'getAirConf2014Order', d
+      $log 'getConfOrder', d
       cb e, d
+
+
+  createAirConfOrder: (order, cb) ->
+    @getAirConfPromoRate order.promocode, (e,d) -> order.total = d.promoRate
+    orderEmail = order.company.contacts[0].email
+    order.company.contacts[0].pic = gravatarLnk orderEmail
+
+    createOrder = (e, settings) =>
+      order.paymentMethod = _.find settings.paymentMethods, (p) -> p.type == 'stripe'
+      order.requestId = @Data.airconf.requestId
+      order.lineItems = [ @Data.airconf.ticketLineItem, @Data.airconf.pairCreditLineItem ]
+      $log 'createOrder', settings, order.total, order
+      @create order, cb
+
+    if order.stripeCreate?
+      @settingsSvc.getByUserId @usr._id, (e, s) =>
+        s = _.extend s, { stripeCreate: order.stripeCreate }
+        if !s.paymentMethods?
+          s.paymentMethods = []
+          s.userId = @usr._id
+        # $log 'going to createStripe', s
+        @settingsSvc.createStripeSettings s, createOrder
+    else
+      @settingsSvc.getByUserId @usr._id, createOrder
 
 
   getAirConfPromoRate: (promoCode, cb) ->

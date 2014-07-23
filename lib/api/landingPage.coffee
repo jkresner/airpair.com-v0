@@ -1,14 +1,14 @@
 api_key    = config.payment.stripe.secretKey
 stripe     = require('stripe')(api_key)
-OrdersSvc  = require './../services/orders'
 
 class LandingPageApi extends require('./_api')
 
-  Svc: require '../services/wrappers/stripe'
+  Svc: require './../services/orders'
 
   routes: (app, route) ->
     app.post "/api/#{route}/bsa02/purchase", @ap, @createCustomer
     app.post "/api/#{route}/airconf/promo", @ap, @airconfPromo
+    app.post "/api/#{route}/airconf/order", @ap, @airconfCreateOrder
 
   # Create customer, return customer to client, then charge customer.
   createCustomer: (req, res, next) =>
@@ -33,8 +33,9 @@ class LandingPageApi extends require('./_api')
 
 
   # Charge a customer given a customer id and amount.
-  airconfPromo: (req, res, next) =>
-    new OrdersSvc(req.user).getAirConfPromoRate @data.code, @cbSend
+  airconfPromo: => @svc.getAirConfPromoRate @data.code, @cbSend
+  airconfOrder: => @svc.createAirConfOrder @data, @cbSend
+  airconfCreateOrder: => @svc.createAirConfOrder @data, @cbSend
 
 
 module.exports = (app) -> new LandingPageApi app, 'landing'

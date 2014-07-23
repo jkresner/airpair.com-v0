@@ -77,8 +77,11 @@ module.exports = class OrdersService extends DomainService
           winston.error "order.save.error", e
         callback e, rr
 
-    if order.paymentMethod? && order.paymentMethod.type == 'stripe'
-      # $log 'stripSvc.createCharge', order
+    if order.total == 0 && order.paymentMethod.type == 'stripe'
+      order.paymentType = 'stripe'
+      savePaymentResponse null, { type: '$0 order' }
+    else if order.paymentMethod? && order.paymentMethod.type == 'stripe'
+      # $log 'stripeSvc.createCharge', order
       @stripSvc.createCharge order, savePaymentResponse
     else
       @paypalSvc.Pay order, savePaymentResponse
@@ -94,9 +97,9 @@ module.exports = class OrdersService extends DomainService
     @settingsSvc.getByUserId request.userId, (ee, settings) =>
       if ee then return callback ee
       pm = _.find settings.paymentMethods, (p) -> p.type == 'stripe'
-      $log 'settings', settings._id
+      # $log 'settings', settings._id
       @requestSvc.updateSuggestionByExpert request, expertReview, (e, r) =>
-        $log 'request updated', r.status, r.suggested
+        # $log 'request updated', r.status, r.suggested
         if e then return callback e
         if expertReview.expertStatus != 'available' then return callback e,r
 
@@ -419,4 +422,6 @@ module.exports = class OrdersService extends DomainService
   """ Don't want to fill OrdersService files with obscure AirConf logic, this was best I could think of """
   getAirConfRegisration: => AirConfOrders.getAirConfRegisration.apply @, arguments
   getAirConfPromoRate: => AirConfOrders.getAirConfPromoRate.apply @, arguments
+  createAirConfOrder: => AirConfOrders.createAirConfOrder.apply @, arguments
+
 

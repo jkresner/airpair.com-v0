@@ -19,14 +19,28 @@
 <style type="text/css">
 
   .route { display:none }
+  .control-group { margin-bottom:10px; }
+  .control-group input { width:220px; }
+  input.mm { width:107px }
+  input.yyyy { width:107px }
 
-  h1 { text-align:center;margin:40px auto; }
+  h1 { text-align:center;margin:10px auto 20px auto; }
   h2 { text-align:left;margin:40px auto; }
-  a.btn-orange { font-size:22px;background:#ce5424;margin:auto;color:white;height:50px;font-weight:300;text-transform:none;padding-top:10px; }
-  a.btn-orange:hover { font-weight:500;color:white; }
+  h3 { color:#ce5424;font-size:20px; }
+  .btn-orange { font-size:22px;background:#ce5424;margin:auto;color:white;height:50px;font-weight:300;text-transform:none;padding-top:10px; }
+  .btn-orange:hover { font-weight:500;color:white; }
 
   .hero { background:url('/images/landing/airconf/bg.jpg');height:540px;margin-top:0!important;text-align:center }
   .hero img { margin:70px 0 40px 0 }
+
+  .whitebg { position:absolute;top:180px;left:25%;background:white;width:50%;padding:20px;  }
+
+  .promocode { display:none }
+  .card-required { display:none }
+  .muted { color:gray;font-size:11px; }
+  .stripeLogo { width:100px;float:right }
+
+  .blackbg { background:black;height:800px }
 
   h6 a { font-weight:bold }
 
@@ -34,12 +48,22 @@
   }
 
   @media (max-width:1024px) {
+    .whitebg { left:20%;width:60%; }
   }
 
   @media (max-width:801px) {
+    .whitebg { left:15%;width:70%; }
   }
 
   @media (max-width:640px) {
+    .control-group input { width:100%; }
+    input.mm { width:50px }
+    input.yyyy { width:60px }
+    .whitebg { width:100%;margin:auto;position:auto;left:auto;padding:5% 10%; }
+    .muted { display:block; }
+    .individual { display:block;padding-top:5px }
+    .hero img { width:80%;margin:50px auto; }
+    .stripeLogo { width:60px;float:right;margin:-5px 5px 0 0; }
   }
 
   @media (max-width:480px) {
@@ -47,72 +71,151 @@
 
 </style>
 
-  <!-- HERO -->
-  <div class="hero behind-nav hero-landing-top">
-      <img src="/images/landing/airconf/logo.png" />
+<div class="hero behind-nav hero-landing-top">
+    <img src="/images/landing/airconf/logo.png" />
+</div>
+
+<div class="whitebg">
+
+  <div id="thanks" class="route">
+    <h1>Thanks for your order</h1>
+    <p>You are attending AirConf :{}</p>
+    <p>Watch your email for schedule updates and announcements</p>
   </div>
 
-  <div class="white" style="position:absolute;top:180px;left:20%;background:white;width:60%;padding:20px">
-
-    <div id="thanks" class="route">
-      Thanks yo
-    </div>
-
-
-    <div id="register">
-
-      <div id="order">
+  <div id="register" class="route">
+    <div id="order">
       <h1>Registration</h1>
 
-      <h3>$150 includes</h3>
-      <ul>
-        <li>Live attendance for up to 3 workshops.</li>
-        <li>Access to all workshop recordings.</li>
-        <li>$150 credit towards pairing with an AirConf speaker</li>
+      <h3>$150 ticket includes</h3>
+      <ul style="list-style:none;padding-left:0">
+        <li>Attending up to 3 workshops</li>
+        <li>Access to all session recordings</li>
+        <li>$150 credit towards pairing with a speaker</li>
       </ul>
 
       <hr />
-        <h3>Discounts</h3>
-        <h6>
-<!--           <a href="javascript:alert('implementing soon')">Re-tweet</a> for $5 off |
-          <a href="javascript:alert('implementing soon')">Share</a> for $5 off | -->
-          Promo code </a>
-          <input type="text" name="promocode" /> <a href="#" class="promocode">Submit</a>
-          <span class="promocodeMessage"></span>
-        </h6>
+
+      <h6>
+<!--  <a href="javascript:alert('implementing soon')">Re-tweet</a> for $5 off |
+    <a href="javascript:alert('implementing soon')">Share</a> for $5 off | -->
+        Promo code </a>
+        <input type="text" name="promocode" /> <a href="#" class="promocode">Submit</a>
+        <span class="promocodeMessage"></span>
+      </h6>
+
       <hr />
 
-      <article id="stripeRegister" class="post type-post format-standard entry"></article>
+      <h3>Attendee info</h3>
+
+      <div class="personal-info-group">
+        <div class="control-group">
+          <label for="contactName{{num}}" class="control-label">Full name</label>
+          <div class="controls">
+            <input type="text" data-error-style="inline" value="{{ fullName }}" placeholder="Full name" name="fullName" id="contactName{{num}}" class="input-block-level">
+          </div>
+        </div>
+        <div class="control-group">
+          <label for="contactEmail{{num}}" class="control-label">Contact email <span class="muted">* Where you'll get the receipt</span></label>
+          <div class="controls">
+            <input type="text" data-error-style="inline" value="{{ email }}" placeholder="Email" name="email" id="contactEmail{{num}}" class="input-block-level">
+          </div>
+        </div>
+        <div class="control-group">
+          <label for="contactTwitter{{num}}" class="control-label">Twitter</label>
+          <div class="controls">
+            <div class="input-prepend">
+              <!-- <span class="add-on">@</span> -->
+              <input type="text" data-error-style="inline" value="{{ twitter }}" placeholder="twitter handle" name="twitter" id="contactTwitter{{num}}" class="input-block-level">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="companyInfo">
+        <div>
+          <div class="control-group">
+            <label class="control-label" for="companyName">Company</label>
+            <div class="controls">
+              <input type="text" id="companyName" name="name" placeholder="Company name" value="{{ name }}" data-error-style="inline">
+              <a class="individual" href="#">I'm an individual</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr />
+
+      <article id="stripeRegister" style="display:none">
+        <header class="entry-header">
+          <h3>Card info <span style="font-size:14px"></span></h3>
+
+          <p class="entry-meta">Your card will be securely stored using <b>stripe</b> for future AirPair purchases</p>
+          <p class="card-required">* required, even with promotional tickets.</p>
+
+        </header>
+
+        <form action="" method="POST" id="payment-form">
+
+        <div class="entry-content">
+
+          <img src="/images/css/stripe.png" class="stripeLogo" alt="Stripe logo" />
+
+          <span class="payment-errors text-error"></span>
+
+          <div class="control-group">
+            <label class="control-label">Card Number</label>
+            <div class="controls">
+              <input type="text" size="20" placeholder="Card Number" data-stripe="number"/>
+            </div>
+          </div>
+
+          <div class="control-group">
+            <label class="control-label">CVC</label>
+            <div class="controls">
+              <input type="text" size="4" placeholder="CVC" data-stripe="cvc"/>
+            </div>
+          </div>
+
+          <div class="control-group">
+            <label class="control-label">Expiration (MM/YYYY)</label>
+            <div class="controls">
+              <input class="mm" type="text" size="2" data-stripe="exp-month" placeholder="MM" />
+              <input class="yyyy" type="text" size="4" data-stripe="exp-year" placeholder="YYYY" />
+            </div>
+          </div>
+
+        </div>
+          <div style="padding:20px 0">
+          <button class="btn btn-block btn-orange" href="#">Pay $<span class="total"></span> for my ticket</button>
+          </div>
+        </form>
+
+      </article>
       <article id="haveCard" style="display:none">
         <h4>Easy, peasy</h4>
         <br />
         <p>We already have your card on file!</p>
         <br />
         <a class="btn btn-block btn-orange pay" href="#">Pay $<span class="total"></span> for my ticket</a>
-        <p style="font-size:12px;margin:10px 0 0 0">We will charge your card on file.</p>
+        <p style="font-size:12px;margin:10px 0 0 0">We will charge your card</p>
       </article>
 
-      </div>
-
     </div>
 
   </div>
 
+</div>
 
-  <div class="bg-gray" style="background:#151821">
-    <div class="container p-b-4">
 
-      <h2 class="text-thin text-center m-t-4">How Much Does it Cost?</h2>
-
-      <p style="margin:40px;text-align:center">This speaker series is free for anyone that has ever purchased an AirPair. If you have not bought an AirPair, simply buy one to regsiter. To register simply book an hour and get access to these amazing talks.</p>
-
-    </div>
+<div class="blackbg">
+  <div class="container p-b-4">
   </div>
+</div>
 
 
-  <footer>
-    <p>&copy; airpair, Inc. · (800) 487-0668 · <a href="mailto:team@airpair.com">Email Us</a> · <a href="/experts">Experts</a> · <a href="/tutorials">Tutorials</a> · <a href="/privacy">Privacy Policy</a></p>
-  </footer>
+<footer>
+  <p>&copy; airpair, Inc. · (800) 487-0668 · <a href="mailto:team@airpair.com">Email Us</a> · <a href="/experts">Experts</a> · <a href="/tutorials">Tutorials</a> · <a href="/privacy">Privacy Policy</a></p>
+</footer>
 
 </body>
 
@@ -128,7 +231,7 @@
 
 <script type="text/javascript">
   function initApp() {
-    var pageData = { {{JSON 'isProd'}} , {{JSON 'session'}}, {{JSON 'registration'}}, {{JSON 'hasCard'}}, segmentioKey: '{{{segmentioKey}}}' };
+    var pageData = { {{JSON 'isProd'}}, {{JSON 'session'}}, {{JSON 'company'}}, {{JSON 'registration'}}, {{JSON 'hasCard'}}, {{JSON 'stripePK'}}, segmentioKey: '{{{segmentioKey}}}' };
     Router = require('/scripts/ap/airconf/RouterRegistration');
     window.router = new Router(pageData);
   }

@@ -92,10 +92,11 @@ module.exports = class ViewDataService
     cb null, -> { workshops: Data.workshops, workshop }
 
   airconfreg: (cb) ->
-    new SettingsSvc(@usr).getByUserId @usr._id, (e, settings) =>
-      hasCard = _.find(settings.paymentMethods, (p) -> p.type == 'stripe')?
-      new OrdersSvc(@usr).getAirConfRegisration (ee, registration) =>
-        cb null, -> { workshops: Data.workshops, hasCard, registration }
+    new CompanysSvc(@usr).getById 'me', (e, company) =>
+      new OrdersSvc(@usr).getAirConfRegisration (eee, registration) =>
+        new SettingsSvc(@usr).getByUserId @usr._id, (ee, settings) =>
+          hasCard = _.find(settings.paymentMethods, (p) -> p.type == 'stripe')?
+          cb eee, -> { workshops: Data.workshops, hasCard, registration, company, stripePK }
 
 
   so10: (id, cb) ->

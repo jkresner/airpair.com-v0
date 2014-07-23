@@ -3,129 +3,87 @@ BB      = require 'BB'
 M       = require './Models'
 SV      = require '../../shared/Views'
 
-
 #############################################################################
 ## Book
 #############################################################################
 
-# class exports.StripeRegisterView extends SV.StripeRegisterView
-#   logging: on
-#   email: ->
-#     @session.get('google')._json.email
-#   # meta: ->
-#   #   "Enter the card you want to use to pay #{@expert.get('name')}."
-#   render: ->
-#     super()
-#     $('#card').show()
-#   stripeCustomerSuccess: (model, resp, opts) =>
-#     @model.unset 'stripeCreate'
-#     name = @session.get('google').displayName
-#     addjs.trackEvent 'book', 'customerSetStripeInfo', name
-#     addjs.trackSession paymentInfoSet: 'stripe'
-#     @successAction()
-#   successAction: =>
-#     $('#card').hide()
-#     @$el.remove()
 
-
-# class exports.ThankYouView extends BB.ModelSaveView
-#   el: '#thankyou'
-#   tmpl: require './templates/ThankYou'
-#   initialize: (args) ->
-#     @listenTo @model, 'change', @render
-#   render: ->
-#     @$el.html @tmpl { requestId: @model.id }
-
-
+""" JK: this is the worst view I've written in the whole app """
 class exports.OrderView extends BB.ModelSaveView
-  logging: on
+  # logging: on
   el: '#order'
-  # tmpl: require './templates/BookSummary'
   events:
-    'click .promocode': 'renderPromo'
     'click .pay': 'pay'
+    'click .promocode': 'renderPromo'
+    'input [name=promocode]': -> @$('.promocode').show()
+    'click .individual': -> @elm("name").val('Individual')
   initialize: (args) ->
-    @listenTo @model, 'change', @render
+    # @listenTo @model, 'change', @render
   render: ->
-    # @model.setTotal()
-    $log 'o.render', @$('.total'), @model.get('total')
+    if !@page.get('hasCard') then @renderStripe()
+    else @$('#haveCard').show()
+
     @$('.total').html @model.get('total')
-    # @$('#summary').html @tmpl @model.toJSON()
+    # $log '@company', @company.attributes.contacts
+    contact = @company.get('contacts')[0]
+    if contact?
+      @elm("name").val @company.get('name')
+      @elm("fullName").val contact.fullName
+      @elm("email").val contact.email
+      @elm("twitter").val contact.twitter
     @
+  renderStripe: ->
+    return if @stripeRendered
+    require '/scripts/providers/stripe.v2'
+    @stripeRendered = true
+    Stripe.setPublishableKey @page.get('stripePK')
+    @$('#stripeRegister').show()
+    @$form = @$('form')
+    @$form.on 'submit', (e) =>
+      e.preventDefault()
+      @$('button').prop 'disabled', true  # Disable submitBtn to prevent repeat clicks
+      Stripe.card.createToken @$form, @responseHandler
+  responseHandler: (status, response) =>
+    if response.error # Show the errors on the form
+      @$('.payment-errors').text response.error.message
+      @$('button').prop 'disabled', false
+    else
+      @model.set 'stripeCreate', { token: response.id, email: @elm("email").val() }
+      addjs.trackEvent "airconf", 'customerTryPayStripe', "/airconf-registration"
+      @save null
   renderPromo: ->
     code = @elm('promocode').val()
     $.post '/api/landing/airconf/promo',{code}, (data) =>
-      $log 'hellooooo????'
       @$('.promocodeMessage').html data.message
-      $log 'data', data.promoRate, @model.get('total')
       if data.promoRate != @model.get('total')
-        $log 'setting', data.promoRate
-        @model.set 'total', data.promoRate
+        @model.set { total: data.promoRate, promocode: code }
+        @$('.total').html @model.get('total')
+        if data.promoRate is 0
+          $('.card-required').show()
+      @elm('promocode').val('')
   pay: (e) ->
-    # if @model.get('total') is 0
-    #   e.preventDefault()
-    #   alert('please select at least one hour')
-    # else
-    #     @model.set('utm', utm_values)
-
-    #   eventName = 'customerTryPayStripe'
-    #   # Disable submitBtn to prevent repeat clicks
-    #   @$('.payStripe').html('Payment processing ...').prop 'disabled', true
-
-    #   addjs.trackEvent "request", eventName, "/review/book/#{@model.get('requestId')}"
-
-    #   @save(e)
-    # false
+    # Disable submitBtn to prevent repeat clicks
+    @$('.pay').html('Payment processing ...').prop 'disabled', true
+    addjs.trackEvent "airconf", 'customerTryPayStripe', "/airconf-registration"
+    @save e
   getViewData: ->
+    company = @model.get('company')
+    companyViewData =
+      name:    @elm("name").val()
+      contact:
+        fullName: @elm("fullName").val()
+        email:    @elm("email").val()
+        twitter:  @elm("twitter").val()
+    if company?
+      company.name = companyViewData.name
+      company.contacts[0] = _.extend company.contacts[0], companyViewData.contact
+      @model.set('company', company)
+    else
+      @model.set('company', companyViewData)
+    # $log 'getViewData', @model.attributes
     @model.attributes
   renderSuccess: (model, resp, opts) =>
-    if @isStripeMode
-      router.navTo "#thankyou/#{router.app.request.id}"
-    else
-      @$('#paykey').val model.attributes.payment.payKey
-      @$('#submitBtn').click()
-
-
-
-# class exports.BookExpertView extends BB.BadassView
-#   className: 'bookableExpert'
-#   tmpl: require './templates/BookExpert'
-#   events:
-#     'change select': 'update'
-#   initialize: (args) ->
-#   render: ->
-#     @li = @model.lineItem @suggestion._id
-#     @$el.html @tmpl @li
-#     @elm('type').val @li.type
-#     @elm('qty').val @li.qty
-#     @
-#   update: ->
-#     @li.type = @elm('type').val()
-#     @li.qty = parseInt( @elm('qty').val() )
-#     @li.unitPrice = @suggestion.suggestedRate[@li.type].total
-#     @li.total = @li.qty * @li.unitPrice
-#     @model.trigger 'change'
-#     @render()
-
-
-# class exports.BookView extends BB.BadassView
-#   el: '#book'
-#   tmpl: require './templates/BookInfo'
-#   initialize: (args) ->
-#     @$el.html @tmpl useSandbox: !@isProd
-#     window.PAYPAL = require '/scripts/providers/paypal'
-#     @embeddedPPFlow = new PAYPAL.apps.DGFlow trigger: 'submitBtn',type:'light'
-#     @orderView = new exports.OrderView model: @model
-#     @listenTo @request, 'change', @render
-#     @listenTo @model, 'change', =>
-#       @$('#selecthours').toggle @mget('total') is 0
-#   render: ->
-#     if @request.get('suggested')?
-#       @model.setFromRequest @request
-#       $ul = @$('ul').html('')
-#       for li in @model.get('lineItems')
-#         $ul.append new exports.BookExpertView(suggestion:li.suggestion,model:@model).render().el
-#     @
+    router.navTo "thanks"
 
 
 
