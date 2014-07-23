@@ -24,7 +24,7 @@ app.set 'view engine', 'hbs'
 app.engine 'html', hbs.__express #allow html extension
 
 # Eventually all global partials should be in '/app/partials'
-hbsPartials.register __dirname, ['/app/partials','/app/scripts/shared/templates']
+hbsPartials.register __dirname, ['/app/partials','/app/partials/airconf','/app/scripts/shared/templates']
 hbsHelpers.register hbs
 
 app.use express.compress() # gzip
