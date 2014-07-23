@@ -7,8 +7,8 @@ class LandingPageApi extends require('./_api')
 
   routes: (app, route) ->
     app.post "/api/#{route}/bsa02/purchase", @ap, @createCustomer
-    app.post "/api/#{route}/airconf/promo", @ap, @airconfPromo
-    app.post "/api/#{route}/airconf/order", @ap, @airconfCreateOrder
+    app.post "/api/#{route}/airconf/promo", @ap, @loggedIn, @airconfPromo
+    app.post "/api/#{route}/airconf/order", @ap, @loggedIn, @airconfCreateOrder
 
   # Create customer, return customer to client, then charge customer.
   createCustomer: (req, res, next) =>
@@ -32,7 +32,6 @@ class LandingPageApi extends require('./_api')
       console.log "customer charged #{amount}"
 
 
-  # Charge a customer given a customer id and amount.
   airconfPromo: => @svc.getAirConfPromoRate @data.code, @cbSend
   airconfOrder: => @svc.createAirConfOrder @data, @cbSend
   airconfCreateOrder: => @svc.createAirConfOrder @data, @cbSend

@@ -68,18 +68,12 @@ class exports.OrderView extends BB.ModelSaveView
     @save e
   getViewData: ->
     company = @model.get('company')
-    companyViewData =
-      name:    @elm("name").val()
-      contact:
+    company.name = @elm("name").val()
+    company.contacts[0] =
         fullName: @elm("fullName").val()
         email:    @elm("email").val()
         twitter:  @elm("twitter").val()
-    if company?
-      company.name = companyViewData.name
-      company.contacts[0] = _.extend company.contacts[0], companyViewData.contact
-      @model.set('company', company)
-    else
-      @model.set('company', companyViewData)
+    @model.set { company }
     # $log 'getViewData', @model.attributes
     @model.attributes
   renderSuccess: (model, resp, opts) =>
