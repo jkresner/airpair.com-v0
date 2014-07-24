@@ -138,18 +138,6 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
 <script type="text/javascript">
 
-function storage(k, v) {
-  if (window.localStorage)
-  {
-    if (typeof v == 'undefined')
-    {
-      return localStorage[k];
-    }
-    localStorage[k] = v;
-    return v;
-  }
-}
-
 function initPage()
 {
   $('.user-badge').each(function (idx) {
@@ -168,15 +156,6 @@ function initPage()
     e.preventDefault();
     alert("Page still under construction and we're still fleshing out the schedule :)");
     false;
-  });
-
-  if (storage('subscribed') !== 'true')
-  {
-    $('.subscribe').show();
-  }
-
-  $('#btnSubscribe').click(function(e) {
-    storage('subscribed', true);
   });
 
   // var newsletterSignup = $('#newsletterSignup').offset().top - 20;

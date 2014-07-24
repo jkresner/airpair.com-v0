@@ -85,7 +85,11 @@ module.exports = class ViewDataService
       cb e, -> { companys, stripePK }
 
   airconf: (cb) ->
-    cb null, -> { workshops: Data.workshops }
+    if @usr?
+      new OrdersSvc(@usr).getAirConfRegisration (e, registration) =>
+        cb e, -> { workshops: Data.workshops, registration }
+    else
+      cb null, -> { workshops: Data.workshops }
 
   airconfsession: (id, cb) ->
     workshop = _.find Data.workshops, (s) -> s.slug == id

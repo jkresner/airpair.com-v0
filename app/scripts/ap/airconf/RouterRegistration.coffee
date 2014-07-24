@@ -42,4 +42,3 @@ module.exports = class Router extends S.AirpairSessionRouter
   register: ->
 
   thanks: ->
-    $log 'thanks'
