@@ -3,7 +3,7 @@ app.config ($routeProvider, $locationProvider) ->
   $routeProvider
    .when '/experts/me',
      templateUrl: '/templates/experts/me'
-     controller: 'ExpertSettingsController'
+     controller: 'ExpertSettingsController as expert'
 
   $locationProvider.html5Mode(true)
 

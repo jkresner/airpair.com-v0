@@ -8,7 +8,13 @@ module.exports = (app) ->
             @private.fetchExpertRequests(data._id)
             @private.fetchExpertOrders(data._id)
           .error (data) ->
-            console.log('Error: ' + data)
+            console.error('Error: ' + data)
+
+      status: ->
+          @private.data.expert? && @private.data.expert.status == "ready"
+
+      isHours: (hours) ->
+        hours.toString() == @hoursAvailable()
 
       hoursAvailable: ->
           @private.data.expert? && @private.data.expert.hours

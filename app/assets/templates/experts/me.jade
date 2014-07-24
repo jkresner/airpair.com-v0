@@ -3,22 +3,31 @@
     .info
       .received
       div
-        span {{ requestStats().requestCount }}
+        span {{ expert.requestStats().requestCount }}
       div
         span.sub-label requests received
       .response
       div
-        span {{ requestStats().responseRate | number:0 }}%
+        span {{ expert.requestStats().responseRate | number:0 }}%
       div
         span.sub-label response rate
       .pairs
       div
-        span {{ orderStats().paidOrderCount }}
+        span {{ expert.orderStats().paidOrderCount }}
       div
         span.sub-label Air Pairs
 
   .section
     h1 notification status
+    .expert-status
+    input(type="checkbox", name="active", ng-checked="expert.status()")
+    label(for="name") Send me AirPairs!
+    select(name="hours")
+      option(ng-repeat="a in expert.range(20) track by $index" ng-selected="expert.isHours($index + 1)") {{ $index + 1 }}
+    input(name="schedule", type="text", placeholder="What days and times are you available to AirPair?")
+    label(for="name") Best Times
+
+
   .section
     h1 subscription settings
     .slider-row.header
