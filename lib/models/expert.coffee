@@ -52,6 +52,7 @@ schema = new Schema
   brief:          String
   karma:          { required: true, type: Number, default: 0 }
   status:         String
+  availability:   String
   hours:          String
   bookMe:         { required: false, type: Bookme }
 

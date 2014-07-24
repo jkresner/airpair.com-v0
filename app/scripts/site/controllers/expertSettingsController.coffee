@@ -1,8 +1,14 @@
 ExpertSettingsController = (Expert) ->
   _.extend(@, Expert)
-  @range = (n) ->
-    new Array(n)
-  window.Expert = Expert
+  @hourRange = _.map(new Array(20), (a, i) -> (i+1).toString())
+  window.Expert = @
+  _hours = '3'
+  @name = (value) ->
+    console.log "name", value
+    if value?
+      console.log "value"
+      _hours = value
+    _hours
 
   $(".level .slider").noUiSlider
     start: [ 1, 2 ]

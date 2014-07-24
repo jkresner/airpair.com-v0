@@ -1,23 +1,26 @@
 module.exports = (app) ->
-  app.factory 'Expert', ($http) ->
+  app.factory 'Expert', ($http, Restangular) ->
     Expert =
       fetchExpert: ->
-        $http.get("/api/experts/me")
-          .success (data) =>
-            @private.data.expert = data
-            @private.fetchExpertRequests(data._id)
-            @private.fetchExpertOrders(data._id)
-          .error (data) ->
-            console.error('Error: ' + data)
+        Restangular.one('experts', 'me').get().then (expert) =>
+          @private.data.expert = expert
+          @private.fetchExpertRequests(expert._id)
+          @private.fetchExpertOrders(expert._id)
 
-      status: ->
-          @private.data.expert? && @private.data.expert.status == "ready"
+      hoursAvailable: (value) ->
+        if value?
+          Expert.private.data.expert.hours = value.toString()
+        Expert.private.data.expert? && Expert.private.data.expert.hours
 
-      isHours: (hours) ->
-        hours.toString() == @hoursAvailable()
+      status: (value) ->
+        if value?
+          Expert.private.data.expert.status = if value then "ready" else "busy"
+        Expert.private.data.expert? && Expert.private.data.expert.status == "ready"
 
-      hoursAvailable: ->
-          @private.data.expert? && @private.data.expert.hours
+      availability: (value) ->
+        if value?
+          Expert.private.data.expert.availability = value
+        Expert.private.data.expert? && Expert.private.data.expert.availability
 
       requestStats: ->
         responseRate: @private.responseRate()
@@ -27,6 +30,10 @@ module.exports = (app) ->
         paidOrderCount: @private.paidOrders().length
         totalAmountReceived: @private.totalAmountReceived()
         averagePerHour: @private.averagePerHour()
+
+      update: ->
+        console.log "updating expert"
+        @private.data.expert.save()
 
       private:
         data: {}
@@ -41,18 +48,12 @@ module.exports = (app) ->
           @data.orders || []
 
         fetchExpertRequests: ->
-          $http.get("/api/requests/expert/#{@expertId()}")
-            .success (data) =>
-              @data.requests = data
-            .error (data) ->
-              console.error('Error: ' + data)
+          Restangular.all("requests/expert/#{@expertId()}").getList().then (requests) =>
+            @data.requests = requests
 
         fetchExpertOrders: ->
-          $http.get("/api/orders/expert/#{@expertId()}")
-            .success (data) =>
-              @data.orders = data
-            .error (data) ->
-              console.error('Error: ' + data)
+          Restangular.all("orders/expert/#{@expertId()}").getList().then (orders) =>
+            @data.orders = orders
 
         requestCount: -> @requests().length
 
