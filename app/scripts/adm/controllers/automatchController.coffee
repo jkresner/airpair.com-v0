@@ -1,6 +1,6 @@
 module.exports = (app) ->
   app.controller 'AutoMatchController',
-    ($scope, $http, $window, Session, Restangular) ->
+    ($scope, $http, $window, $location, Session, Restangular) ->
       _.extend $scope,
         name: "automatchController"
         budget: 250
@@ -33,10 +33,14 @@ module.exports = (app) ->
             return styleAttrs
 
         update: ->
-          Restangular.all("match/tags/" + $scope.tagsSelected)
-            .getList
-              budget: $scope.budget
-              pricing: $scope.pricing
+          params =
+            tags: $scope.tagsSelected.join(",")
+            budget: $scope.budget
+            pricing: $scope.pricing
+
+          $location.search params
+          Restangular.all("match/tags")
+            .getList(params)
             .then (experts) ->
               $scope.experts = experts
 
