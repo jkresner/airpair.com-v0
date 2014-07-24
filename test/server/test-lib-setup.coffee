@@ -1,6 +1,7 @@
 global.$log = console.log
 global._ = require 'underscore'
 
+async = require 'async'
 mongoose = require 'mongoose'
 chai = require 'chai'
 chai.use require 'sinon-chai'
@@ -15,10 +16,11 @@ before (done) ->
   mongoose.connect 'localhost/airpair_test'
 
 afterEach (done) ->
-  if mongoose.connection.db?
-    mongoose.connection.db.dropDatabase done
-  else
-    done()
+  async.each _.values(mongoose.connection.collections),
+    (collection, callback) ->
+      collection.remove callback
+    , (err) ->
+      done()
 
 chai.Assertion.includeStack = true
 
