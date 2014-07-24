@@ -46,6 +46,7 @@
     "hipchatter": "0.1.x",
     "javascript-brunch": "> 1.0 < 1.5",
     "lodash.clonedeep": "~2.4.1",
+    "mailchimp-api": "2.0.6",
     "moment": "2.0.x",
     "moment-timezone": "0.0.3",
     "mongoose": "3.8.5",
