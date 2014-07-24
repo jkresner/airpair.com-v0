@@ -62,12 +62,13 @@ exports.config =
           'vendor/scripts/backbone.badass.js',
           'vendor/scripts/picker.js',
           'vendor/scripts/picker.date.js',
-          'vendor/scripts/jquery.timepicker.js'
+          'vendor/scripts/jquery.timepicker.js',
+          'vendor/scripts/jquery.nouislider.min.js'
         ]
     stylesheets:
       defaultExtension: 'scss'
       joinTo:
-        'css/ap.css': /(css\/ap\/|css\/shared)/
+        'css/ap.css': /(css\/ap\/|vendor\/css\/ap|css\/shared)/
         'css/adm.css': /(css\/adm\/|css\/shared)/
         'css/ap-old.css': /(css\/ap-old)/
         'css/adm-old.css': /(css\/adm-old|vendor\/css\/shared)/

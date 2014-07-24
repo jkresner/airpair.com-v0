@@ -1,12 +1,59 @@
 .page.expert-me
-  .info
-    span.received {{ requestStats().requestCount }}
-    span.sub-label requests received
-    span.response {{ requestStats().responseRate | number:0 }}%
-    span.sub-label response rate
-    span.pairs {{ orderStats().paidOrderCount }}
-    span.sub-label Air Pairs
+  .section
+    .info
+      .received
+      div
+        span {{ requestStats().requestCount }}
+      div
+        span.sub-label requests received
+      .response
+      div
+        span {{ requestStats().responseRate | number:0 }}%
+      div
+        span.sub-label response rate
+      .pairs
+      div
+        span {{ orderStats().paidOrderCount }}
+      div
+        span.sub-label Air Pairs
 
-  h1 notification status
+  .section
+    h1 notification status
+  .section
+    h1 subscription settings
+    .slider-row.header
+      .slider-wrapper
+        .slider-col
+          .row
+            .col-xs-4.text-left Beginner
+            .col-xs-4.text-center Intermediate
+            .col-xs-4.text-right Difficult
+      .type What types of airpairs
+    .slider-row.level
+      .slider-wrapper
+        .slider.slider-col
+      .type Javascript
+      input#value-input(type="hidden")
+      input#value-input2(type="hidden")
+    .slider-row.level
+      .slider-wrapper
+        .slider.slider-col
+      .type HTML5
+    .slider-row.header
+      .slider-wrapper
+        .slider-col
+          .row
+            .col-xs-2.text-left $10
+            .col-xs-2.text-center $40
+            .col-xs-2.text-center $70
+            .col-xs-2.text-center $110
+            .col-xs-2.text-center $160
+            .col-xs-2.text-right $230
+    .slider-row.hourly
+      .slider-wrapper
+        .slider.slider-col
+      .type Hourly Range
+    input#hourly1
+    input#hourly2
 
 //-pre(ng-bind='expertOrderStats() | json')

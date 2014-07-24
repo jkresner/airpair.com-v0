@@ -29,6 +29,7 @@
     }
   }
   &.internal {
+    margin-bottom: 0;
     min-height: 80px;
     padding-top: 7px;
 
@@ -185,6 +186,7 @@
 //page content
 .site-container {
   background-color: #000;
+  margin-top: 70px;
   padding-left: 160px;
   -webkit-transition: all 0.5s ease;
   -moz-transition: all 0.5s ease;
