@@ -105,14 +105,21 @@
 .channels-growth {
   th {
     text-align: left;
-    width: 8.8%;
+    width: 7.8%;
+    &:first-child {
+      width: 5.5%;
+    }
+    &:last-child {
+      width: 7.5%;
+      text-align: right;
+    }
   }
   tr {
     td {
       text-align: left;
       &:last-child {
         padding-right:0 !important;
-        text-align: left;
+        text-align: right;
       }
     }
   }
@@ -127,7 +134,7 @@
     .text-split {
       @extend .text-orange;
       font-size: 11px;
-      padding-top: 2px;
+      padding-top: 3px;
     }
   }
   td .text-split {
