@@ -24,7 +24,7 @@ module.exports = (app, render) ->
       r.status 404
       render('landing/airconf')(req, r, n)
 
-  app.get '/airconf/:id', checkSession, render 'landing/airconfsession', ['params.id']
+  app.get '/airconf/:id', checkSession, render 'landing/airconfworkshop', ['params.id']
   app.get '/airconf2014', render 'landing/airconf'
   app.get '/airconf', render 'landing/airconf'
   app.get '/airconf-registration', authd, render 'landing/airconfreg'
