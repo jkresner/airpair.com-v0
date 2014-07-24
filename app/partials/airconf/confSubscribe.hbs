@@ -1,0 +1,110 @@
+<style>
+
+  #subscribe { background:#90d1cc;height:66px;display:none; }
+  #subscribe img { width:280px;margin-top:-32px;float:left; }
+  #subscribe .container { width:1024px;margin:auto; }
+  #subscribe .container p { text-align:center;padding:16px;font-size:22px; }
+  #subscribe .form-group { float:left;margin:16px 0 0 20px;font-size:20px;color:#4d4e4e;width:680px; }
+  #subscribe label { float:left;font-size:22px;margin:1px 6px }
+  #subscribe input { float:left;width:280px;display:inline;height:34px;padding:3px }
+  #subscribe button { float:left;height:34px;margin:0 2px }
+  #subscribe.affix { width:100%;z-index:100;opacity:0.95;top:0; }
+
+  @media (max-width:1024px) {
+    #subscribe .container { width:800px }
+    #subscribe img { width:180px;margin-top:-7px }
+    #subscribe .form-group { margin:16px 0 0 10px; }
+  }
+
+  @media (max-width:801px) {
+    #subscribe .container { width:640px }
+    #subscribe img { display:none }
+  }
+
+  @media (max-width:640px) {
+    #subscribe .container { text-align:center;width:100%;padding-top:5px; }
+    #subscribe .form-group { width:100%;text-align:center;margin:0;padding:0;font-size:16px; }
+    #subscribe label { display:block;font-size:14px;margin-bottom:2px; }
+    #subscribe input { width:64% }
+    #subscribe button { height:28px;padding-top:5px;padding-bottom:5px;  }
+  }
+
+</style>
+
+<div id="subscribe">
+  <div class="container">
+      <img src="/images/landing/airconf/full-logo.png" />
+      <div class="form-group">
+        <label class="control-label">Schedule & updates</label>
+        <input type="text" name="subscribe" placeholder="by email" value="" data-error-style="inline" class="form-control">
+        <button id="btnSubscribe" class="btn btn-primary">Subscribe</button>
+      </div>
+   </div>
+</div>
+
+
+<script type="text/javascript">
+
+  function validateEmail(email) {
+    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
+  }
+
+  function storage(k, v) {
+    if (window.localStorage)
+    {
+      if (typeof v == 'undefined')
+      {
+        return localStorage[k];
+      }
+      localStorage[k] = v;
+      return v;
+    }
+  }
+
+  function showSubscribe() {
+
+    // storage('subscribed', false);
+
+    if (storage('subscribed') !== 'true')
+    {
+      $('#subscribe').show();
+
+      // Fixed subscribe on scroll
+      var subscribe = $('#subscribe').offset().top - 20;
+      $(window).scroll(function(e){
+        if (window.scrollY > subscribe) {
+          $('#subscribe').addClass('affix');
+        } else {
+          $('#subscribe').removeClass('affix');
+        }
+      });
+
+      $('#btnSubscribe').click(function(e){
+        $input = $('[name=subscribe]');
+        email = $input.val()
+        if (validateEmail(email))
+        {
+          $input.parent().removeClass('has-error');
+          $.post("/api/landing/mailchimp/subscribe", { "listId": "39f4769300", "email": email })
+            .done(function(data) {
+              $('#subscribe .container').html("<p>Thank you. Check your email.</p>");
+              addjs.trackEvent('airconf', 'subscribe', email);
+              storage('subscribed', true);
+              $('#subscribe').fadeOut(1500);
+            })
+            .fail(function(resp, data) {
+              d = JSON.parse(resp.responseText);
+              console.log('args', arguments)
+              $input.parent().addClass('has-error'); alert(d.error);
+            });
+
+        } else {
+          $input.parent().addClass('has-error');
+        }
+      });
+    }
+
+  }
+
+</script>
