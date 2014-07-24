@@ -25,15 +25,15 @@
   input.yyyy { width:107px }
 
   h1 { text-align:center;margin:10px auto 20px auto; }
-  h2 { text-align:left;margin:40px auto; }
-  h3 { color:#ce5424;font-size:20px; }
+  h2 { text-align:left;margin:40px auto }
+  h3 { color:#ce5424;font-size:20px;font-weight:bold }
   .btn-orange { font-size:22px;background:#ce5424;margin:auto;color:white;height:50px;font-weight:300;text-transform:none;padding-top:10px; }
   .btn-orange:hover { font-weight:500;color:white; }
 
   .hero { background:url('/images/landing/airconf/bg.jpg');height:540px;margin-top:0!important;text-align:center }
-  .hero img { margin:70px 0 40px 0 }
+  .hero img { margin:40px 0 40px 0;z-index:2;position:relative;  }
 
-  .whitebg { position:absolute;top:180px;left:25%;background:white;width:50%;padding:20px;  }
+  .whitebg { position:absolute;top:180px;left:25%;background:white;width:50%;padding:20px; }
 
   .promocode { display:none }
   .card-required { display:none }
@@ -59,28 +59,32 @@
     .control-group input { width:100%; }
     input.mm { width:50px }
     input.yyyy { width:60px }
-    .whitebg { width:100%;margin:auto;position:auto;left:auto;padding:5% 10%; }
+    .whitebg { width:100%;margin:auto;position:auto;left:auto;padding:5% 10%;top:160px; }
     .muted { display:block; }
     .individual { display:block;padding-top:5px }
-    .hero img { width:80%;margin:50px auto; }
+    .hero img { width:64%;margin:50px auto; }
     .stripeLogo { width:60px;float:right;margin:-5px 5px 0 0; }
   }
 
   @media (max-width:480px) {
+    .whitebg { top:120px; }
   }
 
 </style>
 
 <div class="hero behind-nav hero-landing-top">
-    <img src="/images/landing/airconf/logo.png" />
+    <img src="/images/landing/airconf/full-logo.png" />
 </div>
 
 <div class="whitebg">
 
   <div id="thanks" class="route">
     <h1>Thanks for your order</h1>
-    <p>You are attending AirConf :{}</p>
-    <p>Watch your email for schedule updates and announcements</p>
+    <br />
+    <h3>You are attending AirConf :{}</h3>
+    <p>Starting Mon Jul 28, you can sign up to attend up to 3 virtual workshops.</p>
+    <hr />
+    <p>Make sure you're subscribed by email for the schedule, updates and announcements</p>
   </div>
 
   <div id="register" class="route">
@@ -226,7 +230,7 @@
     var pageData = { {{JSON 'isProd'}}, {{JSON 'session'}}, {{JSON 'company'}}, {{JSON 'registration'}}, {{JSON 'hasCard'}}, {{JSON 'stripePK'}}, segmentioKey: '{{{segmentioKey}}}' };
     Router = require('/scripts/ap/airconf/RouterRegistration');
     window.router = new Router(pageData);
-    addjs.trackEvent('page', 'view', window.location.pathname, 'airconfreg');
+    addjs.trackEvent('airconf', 'view', window.location.pathname, 'airconfreg');
   }
 </script>
 <script src="/javascripts/vendor.js" defer></script>

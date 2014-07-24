@@ -1,5 +1,6 @@
 api_key    = config.payment.stripe.secretKey
 stripe     = require('stripe')(api_key)
+mcapi      = require('mailchimp-api');
 
 class LandingPageApi extends require('./_api')
 
@@ -9,6 +10,7 @@ class LandingPageApi extends require('./_api')
     app.post "/api/#{route}/purchase", @ap, @createCustomer # generic, client decides $$
     app.post "/api/#{route}/airconf/promo", @ap, @loggedIn, @airconfPromo
     app.post "/api/#{route}/airconf/order", @ap, @loggedIn, @airconfCreateOrder
+    app.post "/api/#{route}/mailchimp/subscribe", @ap, @mailchimpSubscribe
 
   # Create customer, return customer to client, then charge customer.
   createCustomer: (req, res, next) =>
@@ -30,6 +32,11 @@ class LandingPageApi extends require('./_api')
     , (err, charge) ->
       if err then console.log "ERROR - chargeCustomer failed"
       console.log "customer charged #{amount}"
+
+  mailchimpSubscribe: =>
+    mc = new mcapi.Mailchimp 'b888ee9284cd0d57f425867c0bde3fe0-us7'
+    success = (data) => @cbSend(null, data)
+    mc.lists.subscribe { id: @data.listId, email: { email: @data.email } }, success, (e) => @cbSend e
 
 
   airconfPromo: => @svc.getAirConfPromoRate @data.code, @cbSend
