@@ -40,6 +40,19 @@ module.exports = (pageData) ->
 
 
 
+  # Helpers Service
+  #----------------------------------------------
+
+  factory('$helpers', () ->
+    $helpers =
+      calcDiff: (oldNum, newNum, percentage) ->
+        if percentage
+          (newNum / (oldNum * percentage) - 1)
+        else
+          (newNum - oldNum) / oldNum
+  ).
+
+
   # Moment Service - For date logic
   #----------------------------------------------
 
@@ -126,7 +139,7 @@ module.exports = (pageData) ->
   # Airpair Data Service
   #----------------------------------------------
 
-  factory('apData', ['$moment', '$filter', '$http', ($moment, $filter, $http) ->
+  factory('apData', ['$moment', '$filter', '$http', '$helpers', ($moment, $filter, $http, $helpers) ->
 
     window.apData =
       orders:
@@ -142,10 +155,16 @@ module.exports = (pageData) ->
               visibleOrders.push order
           if searchText
             visibleOrders = $filter('filter')(visibleOrders, searchText)
-          return {
+
+
+          data = {
             orders: visibleOrders
             summary: @calcSummary(visibleOrders)
           }
+
+          console.log "data", data
+
+          return data
 
 
         isWithinDate: (order, start, end) ->
@@ -171,7 +190,15 @@ module.exports = (pageData) ->
             for item in order.lineItems
               summary.totalRedeemed += calcRedeemed [item]
               summary.totalCompleted += calcCompleted [item]
+
+              console.log "SAME?", (item.total == calcTotal([item])), item.total, calcTotal([item])
+
+              if item.total isnt calcTotal([item])
+                console.log "order === ", order
               summary.totalHours += calcTotal [item]
+              # summary.totalHours += item.total
+
+
               summary.experts.push item.suggestion.expert._id
           summary.orderCount = orders.length
           summary.customerCount = _.uniq(_.pluck orders, 'userId').length
@@ -446,11 +473,9 @@ module.exports = (pageData) ->
               period.margin = period.gross/period.revenue
               period.revPerCust = period.revenue/period.customerTotal
               period.ltv = period.margin*period.revPerHour*period.hrPerCust
+              period.ordersNum = period.orders.length
 
-              # console.time("data - repeat customers")
               period.custReturning = @findRepeatCustomers(period.customers, period.intervalStart)
-              # period.custReturning = _.intersection(period.customers, @getCustomersBefore(period.intervalStart)).length
-              # console.timeEnd("data - repeat customers")
 
               period.custReturningPercent = period.custReturning/period.customerTotal
 
@@ -458,12 +483,11 @@ module.exports = (pageData) ->
               # Add start and end dates in each interval
               @filterGrowthRequests period.intervalStart, period.intervalEnd, (data) ->
 
-                # console.log "@filterGrowthRequests", data
+
 
                 period.requestsNum = data.requests.length
-                period.ordersPerReq = period.orders.length/period.requestsNum
+                period.ordersPerReq = period.ordersNum/period.requestsNum
 
-                # console.log "num calls", data.calls.length
                 period.hrsOnAir = 0
                 _.each data.calls, (item, i) -> period.hrsOnAir += item.duration
                 period.hrsAirPerHrsSold = period.hrsOnAir/period.hrsSold
@@ -471,7 +495,6 @@ module.exports = (pageData) ->
 
 
                 reportTotals.numPeriods++
-                # reportTotals.customerTotal += period.customerTotal
                 reportTotals.hrsSold += period.hrsSold
                 reportTotals.revPerHour += period.revPerHour
                 reportTotals.revenue += period.revenue
@@ -483,30 +506,23 @@ module.exports = (pageData) ->
                   report.push
                     css: 'change'
                     intervalIdx: "#{prevPeriod.intervalIdx}c#{period.intervalIdx}"
-                    pltv: (period.ltv/prevPeriod.ltv) - 1
-                    # pltv: (period.ltv-prevPeriod.ltv)/prevPeriod.ltv
-                    phrsSold: (period.hrsSold/prevPeriod.hrsSold) - 1
-                    # phrsSold: (period.hrsSold-prevPeriod.hrsSold)/prevPeriod.hrsSold
-                    pprofitPerHour: (period.profitPerHour/prevPeriod.profitPerHour)-1
-                    prevPerHour: (period.revPerHour/prevPeriod.revPerHour) - 1
-                    # prevPerHour: (period.revPerHour-prevPeriod.revPerHour)/prevPeriod.revPerHour
-                    pgross: (period.gross/prevPeriod.gross) - 1
-                    # pgross: (period.gross-prevPeriod.gross)/prevPeriod.gross
-                    pmargin: (period.margin/prevPeriod.margin) - 1
-                    # pmargin: (period.margin-prevPeriod.margin)/prevPeriod.margin
-                    prevenue: (period.revenue/prevPeriod.revenue) - 1
-                    # prevenue: (period.revenue-prevPeriod.revenue)/prevPeriod.revenue
-                    prevPerCust: (period.revPerCust/prevPeriod.revPerCust)-1
-                    phrPerCust: (period.revPerCust/prevPeriod.revPerCust)-1
-                    pcustomerTotal: (period.customerTotal/prevPeriod.customerTotal) - 1
-                    # pcustomerTotal: (period.customerTotal-prevPeriod.customerTotal)/prevPeriod.customerTotal
-                    pcustReturningPercent: (period.custReturningPercent/prevPeriod.custReturningPercent)-1
-                    porders: (period.orders.length/prevPeriod.orders.length)-1
 
-                    prequestsNum: (period.requestsNum/prevPeriod.requestsNum) - 1
-                    pordersPerReq: (period.ordersPerReq/prevPeriod.ordersPerReq) - 1
-                    phrsOnAir: (period.hrsOnAir/prevPeriod.hrsOnAir) - 1
-                    phrsAirPerHrsSold: (period.hrsAirPerHrsSold/prevPeriod.hrsAirPerHrsSold) - 1
+                    pltv: $helpers.calcDiff( prevPeriod.ltv, period.ltv )
+                    pgross: $helpers.calcDiff( prevPeriod.gross, period.gross )
+                    pmargin: $helpers.calcDiff( prevPeriod.margin, period.margin )
+                    pprofitPerHour: $helpers.calcDiff( prevPeriod.profitPerHour, period.profitPerHour )
+                    phrsOnAir: $helpers.calcDiff( prevPeriod.hrsOnAir, period.hrsOnAir )
+                    phrsAirPerHrsSold: $helpers.calcDiff( prevPeriod.hrsAirPerHrsSold, period.hrsAirPerHrsSold )
+                    phrsSold: $helpers.calcDiff( prevPeriod.hrsSold, period.hrsSold )
+                    prevPerHour: $helpers.calcDiff( prevPeriod.revPerHour, period.revPerHour )
+                    prevenue: $helpers.calcDiff( prevPeriod.revenue, period.revenue )
+                    prevPerCust: $helpers.calcDiff( prevPeriod.revPerCust, period.revPerCust )
+                    pcustomerTotal: $helpers.calcDiff( prevPeriod.customerTotal, period.customerTotal )
+                    phrPerCust: $helpers.calcDiff( prevPeriod.revPerCust, period.revPerCust )
+                    pcustReturningPercent: $helpers.calcDiff( prevPeriod.custReturningPercent, period.custReturningPercent )
+                    porders: $helpers.calcDiff( prevPeriod.ordersNum, period.ordersNum )
+                    pordersPerReq: $helpers.calcDiff( prevPeriod.ordersPerReq, period.ordersPerReq )
+                    prequestsNum: $helpers.calcDiff( prevPeriod.requestsNum, period.requestsNum )
 
 
                 report.push period
@@ -548,9 +564,12 @@ module.exports = (pageData) ->
             console.time("data - 3 - final diff")
 
 
-            # Calc final Week Diff
+            # Calcuate Final Projections
 
             calcFinalDiff = (report) ->
+
+
+              # Weekly Projections
 
               if interval is "weekly"
 
@@ -580,7 +599,8 @@ module.exports = (pageData) ->
                   else
                     wkStart.endOf("week").startOf("day")
                   wkPercentage = (moment().unix()-wkStart.unix())/60/60/24/7
-                  console.log "wkPercentage = #{Math.floor(wkPercentage*100)}%"
+
+                  console.log "wkPercentage = #{wkPercentage*100}%"
 
                   console.log "finalDiff", finalDiff
 
@@ -588,17 +608,19 @@ module.exports = (pageData) ->
 
                   _.extend finalDiff,
                     intervalName: "#{Math.floor(wkPercentage*100)}%"
-                    pcustomerTotal: (finalWeek.customerTotal / (prevWeek.customerTotal*wkPercentage)) - 1
-                    phrsSold: (finalWeek.hrsSold / (prevWeek.hrsSold*wkPercentage)) - 1
-                    prevenue: (finalWeek.revenue / (prevWeek.revenue*wkPercentage)) - 1
-                    pgross: (finalWeek.gross / (prevWeek.gross*wkPercentage)) - 1
-                    prequestsNum: (finalWeek.requestsNum/(prevWeek.requestsNum*wkPercentage)) - 1
-                    phrsOnAir: (finalWeek.hrsOnAir/(prevWeek.hrsOnAir*wkPercentage)) - 1
+
+                    pgross: $helpers.calcDiff(prevWeek.gross, finalWeek.gross, wkPercentage)
+                    phrsOnAir: $helpers.calcDiff( prevWeek.hrsOnAir, finalWeek.hrsOnAir, wkPercentage )
+                    phrsSold: $helpers.calcDiff( prevWeek.hrsSold, finalWeek.hrsSold, wkPercentage )
+                    prevenue: $helpers.calcDiff( prevWeek.revenue, finalWeek.revenue, wkPercentage )
+                    pcustomerTotal: $helpers.calcDiff( prevWeek.customerTotal, finalWeek.customerTotal, wkPercentage )
+                    porders: $helpers.calcDiff( prevWeek.ordersNum, finalWeek.ordersNum, wkPercentage )
+                    prequestsNum: $helpers.calcDiff( prevWeek.requestsNum, finalWeek.requestsNum, wkPercentage )
 
 
 
 
-              # Calc final Month Diff
+              # Monthly Projections
 
               if interval is "monthly"
 
@@ -611,12 +633,14 @@ module.exports = (pageData) ->
 
                 _.extend finalDiff,
                   intervalName: "#{Math.floor(monthPercentage*100)}%"
-                  pcustomerTotal: (finalMonth.customerTotal / (prevMonth.customerTotal*monthPercentage)) - 1
-                  phrsSold: (finalMonth.hrsSold / (prevMonth.hrsSold*monthPercentage)) - 1
-                  prevenue: (finalMonth.revenue / (prevMonth.revenue*monthPercentage)) - 1
-                  pgross: (finalMonth.gross/(prevMonth.gross*monthPercentage)) - 1
-                  prequestsNum: (finalMonth.requestsNum/(prevMonth.requestsNum*monthPercentage)) - 1
-                  phrsOnAir: (finalMonth.hrsOnAir/(prevMonth.hrsOnAir*monthPercentage)) - 1
+
+                  pgross: $helpers.calcDiff(prevMonth.gross, finalMonth.gross, monthPercentage)
+                  phrsOnAir: $helpers.calcDiff( prevMonth.hrsOnAir, finalMonth.hrsOnAir, monthPercentage )
+                  phrsSold: $helpers.calcDiff( prevMonth.hrsSold, finalMonth.hrsSold, monthPercentage )
+                  prevenue: $helpers.calcDiff( prevMonth.revenue, finalMonth.revenue, monthPercentage )
+                  pcustomerTotal: $helpers.calcDiff( prevMonth.customerTotal, finalMonth.customerTotal, monthPercentage )
+                  porders: $helpers.calcDiff( prevMonth.ordersNum, finalMonth.ordersNum, monthPercentage )
+                  prequestsNum: $helpers.calcDiff( prevMonth.requestsNum, finalMonth.requestsNum, monthPercentage )
 
 
 
@@ -803,7 +827,7 @@ module.exports = (pageData) ->
                 week.diffTagsRepeat[tagName] =
                   count: if oldCount is 0 then (newCount-oldCount) else (newCount/oldCount)-1
               # get total diff
-              week.diffTagsRepeat.TOTAL = (week.metrics.repeatSummary.numOrders/prev.metrics.repeatSummary.numOrders)-1
+              week.diffTagsRepeat.TOTAL = $helpers.calcDiff prev.metrics.repeatSummary.numOrders, week.metrics.repeatSummary.numOrders
             prev = week
 
 
@@ -829,6 +853,7 @@ module.exports = (pageData) ->
               oldCount = prevWeek.metrics.summary.tags[tagName].count*wkPercentage
               finalWeek.diffTags[tagName] =
                 count: if oldCount is 0 then (newCount-oldCount) else (newCount/oldCount)-1
+            finalWeek.diffTags.TOTAL = $helpers.calcDiff prevWeek.metrics.summary.numOrders, finalWeek.metrics.summary.numOrders, wkPercentage
             finalWeek.diffTags.percentage = "#{Math.floor(wkPercentage*100)}%"
             # diff for repeats
             _.each finalWeek.metrics.repeatSummary.tags, (tag, tagName) ->
@@ -983,8 +1008,13 @@ module.exports = (pageData) ->
             $scope.dateStart = moment().startOf("month").toDate()
             $scope.dateEnd = date
           when "week"
-            $scope.dateStart = moment().startOf("week").toDate()
-            $scope.dateEnd = date
+            now = moment()
+            if now.day() < 6
+              start = now.startOf("week").subtract("d", 1)
+            else
+              start = now.endOf("week").startOf("day")
+            $scope.dateStart = start.toDate()
+            $scope.dateEnd = start.clone().add("week", 1).subtract('d', 1).endOf('day').toDate()
           when "day"
             $scope.dateStart = moment().startOf("day").toDate()
             $scope.dateEnd = date
@@ -1102,13 +1132,18 @@ module.exports = (pageData) ->
     # Overall Growth
     $scope.dateStart = moment().subtract('w', 4).toDate()
 
+    # TODO
     now = moment()
     if now.day() < 6
-      now.endOf("week").subtract("d", 1).endOf("day")
-      # console.log("now", now.toDate())
+      now.endOf("week").subtract("d", 1)
     else
       now.endOf("week").add('w', 1).subtract("d", 1).endOf("day")
 
+    # now = moment()
+    # if now.day() < 6
+    #   now.clone().startOf("week").subtract("d", 1)
+    # else
+    #   now.clone().endOf("week").add('w', 1).subtract("d", 1).endOf("day")
 
     $scope.dateEnd = now.toDate()
     # $scope.dateEnd = moment().subtract('d', 1).toDate()
