@@ -20,7 +20,7 @@ module.exports = (app) ->
 
   # angular site pages
   app.get '/admin', authd, adm, render 'admin'
-  app.get '/adm/match/tags', authd, adm, render 'admin'
+  app.get '/adm/matching', authd, adm, render 'admin'
   app.get '/site', authd, render 'site'
   app.get '/experts/me', authd, render 'site'
   app.get '/templates/admin/automatch', authd, render 'templates/admin/automatch'

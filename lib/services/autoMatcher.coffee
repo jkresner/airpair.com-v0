@@ -46,7 +46,9 @@ module.exports = class AutoMatcher
   # and sorts/reduces them according to a proprietary algorithm
   # NOTE: PROCESSES RESULTS IN PARALLEL AND LIMITED TO 100 RESULTS
   filter: (@tags, expertSuperset, cb) ->
-    console.log 'expertSuperset length', expertSuperset.length
+    # we work backwards with the tags
+    @tags.reverse()
+
     async.each expertSuperset, @filterIterator, (err) ->
       # sort and limit the scored list of experts
       cb(_.first(_.sortBy(expertSuperset, 'score').reverse(), 50))
@@ -58,7 +60,7 @@ module.exports = class AutoMatcher
     # add an increasing number of points for each tag that matches between request and expert
     # reverse so that the first tag of the request collection gets the most points
     tagPoints = 20
-    _.each @tags.reverse(), (tag) ->
+    _.each @tags, (tag) ->
       expert.score += tagPoints if _.contains(_.pluck(expert.tags, 'soId'), tag)
       tagPoints -= 4
 

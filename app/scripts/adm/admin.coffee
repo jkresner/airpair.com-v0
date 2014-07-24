@@ -2,7 +2,7 @@ window.app = angular.module('ngAirPairAdmin', ['ngRoute','tagger','restangular']
 
 app.config ($routeProvider, $locationProvider) ->
   $routeProvider
-   .when '/adm/match/tags',
+   .when '/adm/matching',
      templateUrl: '/templates/admin/automatch'
      controller: 'AutoMatchController'
      reloadOnSearch: false
