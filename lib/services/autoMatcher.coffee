@@ -1,7 +1,11 @@
+async = require 'async'
 AutoMatch = require '../models/autoMatch'
 ExpertsService = require './experts'
-RatesService = require './rates'
 Mailman = require '../mail/mailman'
+moment   = require 'moment'
+Order = require '../models/order'
+RatesService = require './rates'
+Request = require '../models/request'
 User = require '../models/user'
 
 module.exports = class AutoMatcher
@@ -38,36 +42,50 @@ module.exports = class AutoMatcher
         console.log 'experts.length', experts.length, cb
         cb(err, experts)
 
-  # takes a "superset" of experts that mightcould qualify and sorts/reduces them
-  # according to an algorithm
-  # NOTE: LIMITED TO 100 RESULTS
-  filter: (tags, expertSuperset, cb) ->
+  # Filters a "superset" of experts that qualify based on their tags and rate
+  # and sorts/reduces them according to a proprietary algorithm
+  # NOTE: PROCESSES RESULTS IN PARALLEL AND LIMITED TO 100 RESULTS
+  filter: (@tags, expertSuperset, cb) ->
     console.log 'expertSuperset length', expertSuperset.length
-    _.each expertSuperset, (expert) =>
-      # start with karma, defaults to 0
-      expert.score = expert.karma
+    async.each expertSuperset, @filterIterator, (err) ->
+      # sort and limit the scored list of experts
+      cb(_.first(_.sortBy(expertSuperset, 'score').reverse(), 50))
 
-      # add an increasing number of points for each tag that matches between request and expert
-      # reverse so that the first tag of the request collection gets the most points
-      tagPoints = 5
-      _.each tags.reverse(), (tag) ->
-        expert.score += tagPoints if _.contains(_.pluck(expert.tags, 'soId'), tag)
-        tagPoints += 3
+  filterIterator: (expert, done) =>
+    # start with karma, defaults to 0
+    expert.score = expert.karma
 
-      # add weight for StackOverflow reputation
-      if expert.so?.reputation? and expert.so.reputation > 0
-        expert.score += Math.floor(Math.log(expert.so.reputation))
+    # add an increasing number of points for each tag that matches between request and expert
+    # reverse so that the first tag of the request collection gets the most points
+    tagPoints = 20
+    _.each @tags.reverse(), (tag) ->
+      expert.score += tagPoints if _.contains(_.pluck(expert.tags, 'soId'), tag)
+      tagPoints -= 4
 
-      # add weight for Github follower count
-      if expert.gh?.followers? and expert.gh.followers > 0
-        expert.score += Math.floor(Math.log(expert.gh.followers))
+    # add weight for StackOverflow reputation
+    if expert.so?.reputation? and expert.so.reputation > 0
+      expert.score += Math.floor(Math.log(expert.so.reputation))
 
-      # add weightings for different social indicators
-      # expert.score += @githubFollowerPoints(expert)
+    # add weight for Github follower count
+    if expert.gh?.followers? and expert.gh.followers > 0
+      expert.score += Math.floor(Math.log(expert.gh.followers))
 
-      # sort the expert's tags per the tags requested
-      expert.tags = _.sortBy expert.tags, (t) ->
-        tags.indexOf(t.soId)
+    # sort the expert's tags per the tags requested
+    expert.tags = _.sortBy expert.tags, (t) =>
+      @tags.indexOf(t.soId)
 
-    # return sorted list of experts
-    cb(_.first(_.sortBy(expertSuperset, 'score').reverse(), 100))
+    q =
+      calls:
+        $elemMatch:
+          'expertId' : expert._id
+
+    Request.find(q).lean().exec (err, requests) =>
+      calls = _.flatten(_.map(requests, 'calls'))
+      if _.any(calls)
+        expert.sessionsCount = calls.length
+        expert.score += Math.floor(Math.log(calls.length))
+        expert.lastSession = moment(_.last(_.sortBy(calls, 'datetime')).datetime).format("MMM D")
+      else
+        expert.sessionsCount = 0
+        expert.lastSession = "n/a"
+      done()
