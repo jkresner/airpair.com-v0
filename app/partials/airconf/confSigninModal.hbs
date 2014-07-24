@@ -21,7 +21,10 @@
   function bindLoginModal() {
     $('.loginRequied,#experts a').click(function(e) {
       e.preventDefault();
-      return_to = $(this).attr('href') || window.location.pathname;
+
+      // return_to = $(this).attr('href') || window.location.pathname;
+      return_to = '/airconf-registration';
+
       elemId = window.location.pathname + ':' + $(this).attr('id');
 
       addjs.trackEvent('airconf', 'airconfExplore', elemId);
