@@ -169,6 +169,7 @@
   #subscribe label { float:left;font-size:22px;margin:1px 6px }
   #subscribe input { float:left;width:280px;display:inline;height:34px;padding:3px }
   #subscribe button { float:left;height:34px;margin:0 2px }
+  #subscribe.affix { width:100%;z-index:100;opacity:0.9;top:0; }
 
   @media (max-width:1024px) {
     #subscribe .container { width:800px }
@@ -221,28 +222,25 @@
 
   function showSubscribe() {
 
-    storage('subscribed', false);
+    // storage('subscribed', false);
 
     if (storage('subscribed') !== 'true')
     {
       console.log('showing');
       $('#subscribe').show();
+
+      // Fixed subscribe on scroll
+      var subscribe = $('#subscribe').offset().top - 20;
+      $(window).scroll(function(e){
+        if (window.scrollY > subscribe) {
+          $('#subscribe').addClass('affix');
+        } else {
+          $('#subscribe').removeClass('affix');
+        }
+        // console.log(window.scrollY);
+      });
     }
 
-
-    // // Fixed subscribe on scroll
-    // setTimeout(function() {
-    //   var subscribe = $('#subscribe').offset().top - 20;
-    //   $(window).scroll(function(e){
-    //     if (window.scrollY > tableOfContents) {
-    //       $('#subscribe').addClass('affix');
-    //     } else {
-    //       $('#subscribe').removeClass('affix');
-    //     }
-    //     // console.log(window.scrollY);
-    //   });
-
-    // }, 2000)
 
     validateEmail = function(email) {
       var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -256,42 +254,39 @@
       {
         $input.parent().removeClass('has-error');
 
-        $.ajax({
-          type: "POST",
-          url: "https://us7.api.mailchimp.com/2.0/lists/subscribe.json",
-          dataType: 'jsonp',
-          data: {
-            "apikey": "b888ee9284cd0d57f425867c0bde3fe0-us7",
-            "id": "1945d147e6",
-            "email": { "email": email},
-            "double_optin": false
-          },
-          crossDomain: true,
-          success: function() {
+        $.post("/api/landing/mailchimp/subscribe", { "listId": "39f4769300", "email": email })
+          .done(function(data) {
+            console.log('success', data);
             console.log('subscribed', email);
             storage('subscribed', true);
             $('#subscribed').hide();
-          },
-          error: function(req, status, err) { $input.parent().addClass('has-error'); console.error(status, err); }
-        });
+          })
+          .fail(function(resp, data) {
+            d = JSON.parse(resp.responseText);
+            console.log('args', arguments)
+            $input.parent().addClass('has-error'); alert(d.error);
+          });
+
       } else {
         $input.parent().addClass('has-error');
       }
     });
 
+    // onSkipUndo = function($form) {
+    //   $form.find(".signup-email").show()
+    //   $form.find(".signup-google-skipped").hide()
+    // }
+
+
+    // showModal = function(e) {
+    //   inputVal = $('.form-email-signup .input-email').val();
+    //   if(!inputVal) {
+    //     $('#modalSignup').modal('show');
+    //   }
+    // }
+
     // var scrolled = false;
     // $(window).scroll(function(event) {scrolled = true;});
-
-    // setTimeout(function(e) {
-    //   if(scrolled) {
-    //     setTimeout(function(e) {
-    //       showModal();
-    //     }, 3000);
-    //   } else {
-    //     showModal();
-    //   }
-    // }, 2000)
-
 
   }
 
