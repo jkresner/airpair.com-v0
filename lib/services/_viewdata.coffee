@@ -18,7 +18,7 @@ module.exports = class ViewDataService
   # session gets called from viewRender.render
   session: (full) ->
     if @usr? && @usr.google?
-      u = _.clone @usr
+      u = @usr
       if u.google then delete u.google.token
       if u.twitter then delete u.twitter.token
       if u.bitbucket then delete u.bitbucket.token
@@ -39,15 +39,13 @@ module.exports = class ViewDataService
     cb null, -> { showFaqLink: true }
 
   site: (cb) ->
-    session = @session true
-    cb null, -> { session }
+    cb null, => { session: @session(true) }
 
   settings: (cb) ->
     cb null, -> { stripePK }
 
   beexpert: (cb) ->
-    session = @session true
-    cb null, -> { session }
+    cb null, => { session: @session(true) }
 
   review: (id, cb) ->
     new RequestsSvc(@usr).getByIdSmart id, (e, request) =>

@@ -20,7 +20,7 @@ passport.deserializeUser (id, done) ->
     # console.log '=================================================='
     email = if user? then user.google._json.email else "anonymous"
     console.log 'user', id, email
-    done err, user
+    done err, user.toObject()
 
 ######## Shared
 
