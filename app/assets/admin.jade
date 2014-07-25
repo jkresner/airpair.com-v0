@@ -1,5 +1,5 @@
 doctype html
-html(ng-app='ngAirPairAdmin')
+html(ng-app='ngAirPair' ng-strict-di)
   head
     title AirPair Admin
     meta(charset="utf-8")
@@ -13,7 +13,7 @@ html(ng-app='ngAirPairAdmin')
     link(rel='stylesheet', type='text/css', href='//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css')
 
   body
-    .nav.navbar.navbar-default.navbar-static-top(role="navigation", ng-controller='headerController')
+    .nav.navbar.navbar-default.navbar-static-top(role="navigation", ng-controller='HeaderController')
       .container
         .navbar-header
           span.navbar-brand-img

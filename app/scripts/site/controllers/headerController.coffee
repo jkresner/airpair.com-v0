@@ -1,4 +1,8 @@
-module.exports = (app) ->
-  window.app.controller 'headerController',
-    ($scope, Session) ->
-      $scope.session = Session
+HeaderController = ($scope, Session) ->
+  $scope.session = Session
+
+angular
+  .module('ngAirPair')
+  .controller('HeaderController', ['$scope', 'Session', HeaderController])
+
+

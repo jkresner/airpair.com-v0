@@ -4,7 +4,7 @@ html(ng-app='ngAirPair')
     script(src="/javascripts/site.js")
 
   body
-    header(ng-controller='headerController')
+    header(ng-controller='HeaderController')
       h1 This is the main site
       h4(ng-show='session.isSignedIn()')
         and you are signed in as {{ session.name() }}
