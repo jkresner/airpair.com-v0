@@ -14,7 +14,7 @@ class QueryHelper
         expert:
           userId:         '52b3c4ff66a6f999a465fe3e' # experts@airpair.com
           name:           'AirConf Ticket'
-          username:       'AirConf Ticket'
+          username:       'airconf'
           rate:           150
           email:          'team@airpair.com'
           pic:            '//0.gravatar.com/avatar/543d49f405c7e3cbd78f8e1a6d1c091d'
@@ -27,7 +27,7 @@ class QueryHelper
         suggestedRate:  { credit: { expert: 0 } }
         expert:
           userId:         '52b3c4ff66a6f999a465fe3e' # experts@airpair.com
-          name:           'Pair Credit'
+          name:           'redit'
           username:       'paircredit'
           rate:           150
           email:          'team@airpair.com'

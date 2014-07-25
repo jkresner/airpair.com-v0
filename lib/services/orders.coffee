@@ -68,6 +68,7 @@ module.exports = class OrdersService extends DomainService
 
       if payWith is 'stripe' && paymentResponse? && !paymentResponse.failure_code?
         order.paymentStatus = 'received'
+        order.paymentStatus = 'promo' if paymentResponse.type == '$0 order'
         @trackPayment order, 'stripe'
 
       new @model(order).save (e, rr) ->
