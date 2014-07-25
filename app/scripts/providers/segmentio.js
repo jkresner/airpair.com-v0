@@ -133,8 +133,12 @@ module.exports = function(segmentioKey) {
     }
 
     // Append first and latest referrers to the traits being reported with each event
-    analytics_traits['utm_campaign_first'] = firstCampaign;
-    analytics_traits['Latest Referrer'] = latestReferrer;
+    if(firstCampaign !== null && firstCampaign != 'null') {
+      analytics_traits['utm_campaign_first'] = firstCampaign;
+    }
+    if(latestReferrer !== null && latestReferrer.length > 0) {
+      analytics_traits['Latest Referrer'] = latestReferrer;
+    }
     if(latestCampaign !== null) {
       analytics_traits['utm_campaign'] = latestCampaign;
       analytics_traits['utm_source'] = utmSource;
