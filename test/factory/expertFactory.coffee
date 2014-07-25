@@ -4,7 +4,7 @@ Expert = require('../../lib/models/expert')
 
 require('./userFactory')
 
-defaults = {
+Factory.define 'expert', Expert, defaults =
   name: 'An Expert'
   username: 'anexpert'
   email: 'an@experts.com'
@@ -12,11 +12,8 @@ defaults = {
   rate: 100
   pic: 'http://adfskljadlkjadfs.adfljadsfljadfs.com'
   karma: 1
-}
 
-Factory.define 'expert', Expert, defaults
-
-Factory.define 'dhhExpert', Expert, _.extend({}, defaults,
+Factory.define 'dhhExpert', Expert, _.extend {}, defaults,
   name: 'David Hansson'
   email: 'dhh@experts.com'
   rate: 50
@@ -27,9 +24,8 @@ Factory.define 'dhhExpert', Expert, _.extend({}, defaults,
     soId: "ruby-on-rails"
     levels: ["intermediate","advanced"]
   ]
-)
 
-Factory.define 'aslakExpert', Expert, _.extend({}, defaults,
+Factory.define 'aslakExpert', Expert, _.extend {}, defaults,
   name: 'Aslak Hellesoy'
   email: 'aslak@experts.com'
   rate: 100
@@ -40,4 +36,3 @@ Factory.define 'aslakExpert', Expert, _.extend({}, defaults,
     soId: "cucumber"
     levels: ["beginner","intermediate","advanced"]
   ]
-)

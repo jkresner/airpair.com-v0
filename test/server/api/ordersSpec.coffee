@@ -1,6 +1,7 @@
 {http, _, sinon, chai, expect, Factory} = require './../test-lib-setup'
 {app,data,passportMock,nock} = require './../test-app-setup'
 {ObjectId} = require('mongoose').Types
+async = require 'async'
 
 require('./../../../lib/api/requests')(app)
 require('./../../../lib/api/orders')(app)
@@ -50,29 +51,33 @@ describe "REST api orders", ->
             expect(d.total).to.equal 180
             done()
 
+  # todo: this spec belongs elsewhere
   describe "GET /api/orders/expert/:expertId", ->
     it "should get orders that an expert was associated with", (done) ->
       passportMock.setSession 'jk'
-      Factory.create 'dhh', (dhh) ->
-        Factory.create 'aslak', (aslak) ->
-          lineItems = [
-            total: 80
-            unitPrice: 80
-            qty: 1
-            redeemedCalls: [
-              callId: new ObjectId()
-              qtyRedeemed: 1
-              qtyCompleted: 1
-            ]
-            type: "private"
-            suggestion: { expert: {_id: dhh._id.toString()} }
+      async.parallel [
+        (cb) => Factory.create 'dhhExpert', (@dhh) => cb()
+        (cb) => Factory.create 'aslakExpert', (@aslak) => cb()
+        (cb) => Factory.create 'order', cb
+      ], =>
+        lineItem = {
+          total: 80
+          unitPrice: 80
+          qty: 1
+          redeemedCalls: [
+            callId: new ObjectId()
+            qtyRedeemed: 1
+            qtyCompleted: 1
           ]
-          Factory.create 'order', (order1) ->
-            Factory.create 'order', {lineItems: lineItems}, (order2) ->
-              http(app).get("/api/orders/expert/#{dhh._id}")
-                .expect(200)
-                .end (err, res) =>
-                  body = res.body
-                  expect(body.length).to.eq 1
-                  expect(body[0]._id).to.eq order2._id.toString()
-                  done()
+          type: "private"
+          suggestion: { expert: {_id: @dhh._id.toString()} }
+        }
+
+        Factory.create 'order', {lineItems: [lineItem]}, (order2) =>
+          http(app).get("/api/orders/expert/#{@dhh._id}")
+            .expect(200)
+            .end (err, res) =>
+              body = res.body
+              expect(body.length).to.eq 1
+              expect(body[0]._id).to.eq order2._id.toString()
+              done()
