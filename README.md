@@ -35,7 +35,11 @@ To setup + run locally
 
 4)   Install npm package `npm install`
 
-5)   Run brunch server `brunch w`
+OPTIONAL: Setup a split-window terminal for steps 5a and 5b
+
+5a)  Run brunch server `brunch w` to keep browser coffee files compiled and up-to-date
+
+5b)  Run `npm start` to fire up the server (will reload on changes)
 
 6)   Open browser @ http://localhost:3333/
 
