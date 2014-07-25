@@ -16,22 +16,28 @@ defaults = {
 
 Factory.define 'expert', Expert, defaults
 
-dhhExpert = _.extend {}, defaults,
+Factory.define 'dhhExpert', Expert, _.extend({}, defaults,
   name: 'David Hansson'
   email: 'dhh@experts.com'
   rate: 50
-  tags: [{"soId":"ruby","short":"ruby","name":"Ruby","_id":"514825fa2a26ea0200000031", "subscription": { custom: ["advanced"], auto: ["advanced"] } },{"soId":"ruby-on-rails","short":"ruby-on-rails","name":"ruby-on-rails","_id":"514825fa2a26ea020000002f", "subscription": {}} ]
-  user: (cb) ->
-    Factory.create 'dhhUser', (dhhUser) ->
-      cb(dhhUser.id)
+  tags: [
+    soId:"ruby"
+    levels: ["advanced"]
+  ,
+    soId: "ruby-on-rails"
+    levels: ["intermediate","advanced"]
+  ]
+)
 
-
-Factory.define 'dhhExpert', Expert, dhhExpert
-
-aslakExpert = _.extend {}, defaults,
+Factory.define 'aslakExpert', Expert, _.extend({}, defaults,
   name: 'Aslak Hellesoy'
   email: 'aslak@experts.com'
   rate: 100
-  tags: [ {"soId":"ruby","short":"ruby","name":"Ruby","_id":"514825fa2a26ea0200000031", "subscription": { custom: ["beginner", "intermediate", "advanced"], auto: ["beginner", "advanced"] } }, {"soId":"cucumber","short":"cucumber","name":"cucumber","_id":"5181d0aa66a6f999a465ee0b", "subscription": { custom: ["beginner", "intermediate", "advanced"], auto: ["beginner", "advanced"] } }  ]
-
-Factory.define 'aslakExpert', Expert, aslakExpert
+  tags: [
+    soId:"ruby"
+    levels: ["intermediate","advanced"]
+  ,
+    soId: "cucumber"
+    levels: ["beginner","intermediate","advanced"]
+  ]
+)
