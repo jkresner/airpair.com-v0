@@ -16,30 +16,31 @@ module.exports = class AutoMatcher
   ratesService: new RatesService()
   user: {}
 
-  constructor: (@user) ->
-
-  notifyExperts: (@request, cb) ->
-    @autoMatch = new AutoMatch(requestId: request.id)
+  notifyExperts: (request, cb) ->
+    autoMatch = new AutoMatch(requestId: request.id)
     soTagIds = _.pluck(request.tags, 'soId')
     maxRate = @ratesService.getMaxExpertRate(request.budget, request.pricing)
 
     @expertService.getByTagsAndMaxRate soTagIds, maxRate, (e, results) =>
-      @filter results, (experts) =>
-        @autoMatch.experts = experts
-        if experts.length
-          for expert in experts
-            Mailman.sendAutoNotification expert, request
-          @autoMatch.status = 'completed'
+      @filter soTagIds, results, (experts) =>
+        autoMatch.status = 'failed'
+        autoMatch.experts = experts
+        if _.any(experts)
+          async.each experts, (expert, done) =>
+            # email the expert
+            @mailmanService.sendAutoNotification(expert, request)
+            autoMatch.status = 'completed'
+            autoMatch.save done
+          , (err) ->
+            cb(err, autoMatch)
         else
-          @autoMatch.status = 'failed'
-        @autoMatch.save =>
-          cb(@autoMatch)
+          cb(null, autoMatch)
+
 
   getMatches: (soTagIds, budget, pricing, cb) ->
     maxRate = @ratesService.getMaxExpertRate(budget, pricing)
     @expertService.getByTagsAndMaxRate soTagIds, maxRate, (err, results) =>
       @filter soTagIds, results, (experts) =>
-        console.log 'experts.length', experts.length, cb
         cb(err, experts)
 
   # Filters a "superset" of experts that qualify based on their tags and rate
@@ -90,4 +91,5 @@ module.exports = class AutoMatcher
       else
         expert.sessionsCount = 0
         expert.lastSession = "n/a"
+
       done()

@@ -5,27 +5,43 @@ async = require 'async'
 AutoMatcher = require('./../../../lib/services/AutoMatcher')
 
 describe "AutoMatcher", ->
-  describe "constructor(request)", ->
-    it "should set its request properly", (done) ->
-      Factory.create 'rails-request', (request) ->
-        new AutoMatcher request, (autoMatch) ->
-          expect(String(autoMatch.requestId)).to.eql(request.id)
-          done()
+  describe "notifyExperts(request)", ->
+    before (done) ->
+      async.parallel [
+        (cb) => Factory.create 'rails-request', (@request) => cb()
+        (cb) => Factory.create 'dhhExpert', (@dhh) => cb()
+        (cb) => Factory.create 'aslakExpert', (@aslak) => cb()
+      ], =>
+        @autoMatcher = new AutoMatcher()
+        done()
 
     it "should yield a failed AutoMatch record if no experts available", (done) ->
-      Factory.create 'rails-request', (request) ->
-        new AutoMatcher request, (autoMatch) ->
-          expect(autoMatch.status).to.equal('failed')
-          done()
+      @autoMatcher.expertService = # stub
+        getByTagsAndMaxRate: (soTagIds, maxRate, cb) => cb(null, [])
+      @autoMatcher.notifyExperts @request, (err, autoMatch) ->
+        expect(autoMatch.status).to.equal('failed')
+        done()
 
-    it "picks at least one expert that matches", (done) ->
-      async.parallel [
-        (cb) -> Factory.create 'rails-request', (@request) -> cb()
-        (cb) -> Factory.create 'dhhExpert', (@dhh) -> cb()
-        (cb) -> Factory.create 'aslakExpert', -> cb()
-      ], ->
+    it "notifies the expert that matches", (done) ->
+      @autoMatcher.expertService = # stub
+        getByTagsAndMaxRate: (soTagIds, maxRate, cb) =>
+          cb null, [@dhh]
 
-        new AutoMatcher @request, (autoMatch) =>
-          expect(autoMatch.experts.length).to.equal(1)
-          expect(autoMatch.experts[0].email).to.equal(@dhh.email)
-          done()
+      mailMock = sinon.mock(@autoMatcher.mailmanService)
+      mailMock.expects('sendAutoNotification').once().withExactArgs(@dhh, @request)
+
+      @autoMatcher.notifyExperts @request, (err, autoMatch) =>
+        mailMock.verify()
+        done()
+
+    it "returns a completed AutoMatch object with matched experts", (done) ->
+      @autoMatcher.expertService = # stub
+        getByTagsAndMaxRate: (soTagIds, maxRate, cb) =>
+          cb null, [@dhh]
+
+      @autoMatcher.notifyExperts @request, (err, autoMatch) =>
+        expect(autoMatch.experts.length).to.equal(1)
+        expect(autoMatch.experts[0].email).to.equal(@dhh.email)
+        expect(autoMatch.status).to.equal('completed')
+        done()
+
