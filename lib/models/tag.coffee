@@ -4,6 +4,8 @@ Schema   = mongoose.Schema
 ## Chosen to use abbreviations for tag model (eg. short == shortName)
 ## because of the volume of tags and bloating size of search results
 
+VALID_LEVELS = ['beginner', 'intermediate', 'expert']
+
 schema = new Schema
 
   name:      { required: true, type: String }   # verbose name "Windows Communication Foundation"
@@ -14,7 +16,6 @@ schema = new Schema
   ghId:      { type: String, unique: true, sparse: true }        # github repo full_Name
   gh:        {}            # gihub repo object
   tokens:    String        # extra comma separated strings to assist search
-
-  subscription: { custom: [String], auto: [String] }
+  levels:    [ String ]    # mongoose doesn't support enum on arrays
 
 module.exports = mongoose.model 'Tag', schema

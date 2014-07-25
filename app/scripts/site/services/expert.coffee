@@ -4,6 +4,7 @@ module.exports = (app) ->
       fetchExpert: ->
         Restangular.one('experts', 'me').get().then (expert) =>
           @private.data.expert = expert
+          @private.initializeTags()
           @private.fetchExpertRequests(expert._id)
           @private.fetchExpertOrders(expert._id)
 
@@ -16,6 +17,22 @@ module.exports = (app) ->
         if value?
           Expert.private.data.expert.status = if value then "ready" else "busy"
         Expert.private.data.expert? && Expert.private.data.expert.status == "ready"
+
+      rate: (value) ->
+        if value?
+          Expert.private.data.expert.rate = value
+        Expert.private.data.expert? && Expert.private.data.expert.rate
+
+      minRate: (value) ->
+        if value?
+          Expert.private.data.expert.minRate = value
+        Expert.private.data.expert? && Expert.private.data.expert.minRate
+
+      tags: ->
+        Expert.private.data.expert? && Expert.private.data.expert.tags
+
+      tagHasLevel: (tag, level) ->
+        _.include(tag.levels, level)
 
       availability: (value) ->
         if value?
@@ -96,6 +113,25 @@ module.exports = (app) ->
           _.reduce(@paidOrders(), (sum, order) ->
             sum + order.total - order.profit
           , 0)
+
+        initializeTags: ->
+          _.each @data.expert.tags, (tag) =>
+            tag.levelBeginner = @tagGetterSetter(tag, 'beginner')
+            tag.levelIntermediate = @tagGetterSetter(tag, 'intermediate')
+            tag.levelExpert = @tagGetterSetter(tag, 'expert')
+
+        tagGetterSetter: (tag, level) ->
+          (value) ->
+            if value?
+              if value
+                _.include(tag.levels, level) || tag.levels.push(level)
+                console.log "true", tag
+              else
+                tag.levels = _.without(tag.levels, level)
+                console.log "false", tag
+            else
+              _.include(tag.levels, level)
+
 
 
     Expert.fetchExpert()

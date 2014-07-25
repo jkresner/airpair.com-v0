@@ -56,12 +56,28 @@
       font-size: 14px;
       font-weight: normal;
     }
+    .row.dispersed {
+      margin-left: -10%;
+      margin-right: -9%;
+    }
   }
   .slider-row.hourly {
     .type {
       background: none;
     }
   }
+  .slider-row.level {
+    input[type=checkbox] {
+      /* Double-sized Checkboxes */
+      -ms-transform: scale(2); /* IE */
+      -moz-transform: scale(2); /* FF */
+      -webkit-transform: scale(2); /* Safari and Chrome */
+      -o-transform: scale(2); /* Opera */
+      padding: 10px;
+      width: 30px;
+    }
+  }
+
   .slider-row {
     height: 70px;
     .slider-wrapper{

@@ -1,6 +1,6 @@
 mongoose = require 'mongoose'
 Schema   = mongoose.Schema
-ObjectId = Schema.ObjectId;
+ObjectId = Schema.ObjectId
 
 
 # This object Allows our experts to charge different amount to different customers
@@ -47,6 +47,7 @@ schema = new Schema
   tw:             {}          # twitter
   tags:           [{}]
   rate:           Number
+  minRate:        Number
   timezone:       String
   location:       String
   brief:          String

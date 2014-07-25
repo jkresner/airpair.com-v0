@@ -24,13 +24,29 @@
       form(ng-model-options="{ getterSetter: true }")
         input(type="checkbox", id="status", ng-checked="expert.status()", ng-model="expert.status", ng-change="expert.update()")
         label(for="status") Send me AirPairs!
-        select(ng-model="expert.hoursAvailable", ng-change="expert.update()")
-          option(value="1") 1
-          option(value="2") 2
-          option(value="3") 3
-          option(value="4") 4
+        select(ng-model="expert.hoursAvailable", ng-change="expert.update()", ng-options="h for h in expert.hourRange")
         input(id="availability", type="text", placeholder="What days and times are you available to AirPair?", ng-model="expert.availability", ng-change="expert.update()", ng-delay="500")
         label(for="availability") Best Times
+
+  .section
+    h1 notification price range
+    .slider-row.header
+      .slider-wrapper
+        .slider-col
+          .row.dispersed
+            .col-xs-2.text-center $10
+            .col-xs-2.text-center $40
+            .col-xs-2.text-center $70
+            .col-xs-2.text-center $110
+            .col-xs-2.text-center $160
+            .col-xs-2.text-center $230
+    .slider-row.hourly
+      .slider-wrapper
+        .slider.slider-col
+      .type Hourly Range
+      form(ng-model-options="{ getterSetter: true }")
+        input(ng-model="expert.minRate", ng-change="expert.update()", ng-delay="500")#minRate
+        input(ng-model="expert.rate", ng-change="expert.update()", ng-delay="500")#rate
 
 
   .section
@@ -39,35 +55,21 @@
       .slider-wrapper
         .slider-col
           .row
-            .col-xs-4.text-left Beginner
-            .col-xs-4.text-center Intermediate
-            .col-xs-4.text-right Difficult
+            .col-xs-4 Beginner
+            .col-xs-4 Intermediate
+            .col-xs-4 Expert
       .type What types of airpairs
-    .slider-row.level
-      .slider-wrapper
-        .slider.slider-col
-      .type Javascript
-      input#value-input(type="hidden")
-      input#value-input2(type="hidden")
-    .slider-row.level
-      .slider-wrapper
-        .slider.slider-col
-      .type HTML5
-    .slider-row.header
-      .slider-wrapper
-        .slider-col
-          .row
-            .col-xs-2.text-left $10
-            .col-xs-2.text-center $40
-            .col-xs-2.text-center $70
-            .col-xs-2.text-center $110
-            .col-xs-2.text-center $160
-            .col-xs-2.text-right $230
-    .slider-row.hourly
-      .slider-wrapper
-        .slider.slider-col
-      .type Hourly Range
-    input#hourly1
-    input#hourly2
+    form(ng-model-options="{ getterSetter: true }")
+      .slider-row.level(ng-repeat="tag in expert.tags()")
+        .slider-wrapper
+          .slider-col
+            .row
+              .col-xs-4
+                input(type="checkbox", ng-checked="expert.tagHasLevel(tag, 'beginner')", ng-model="tag.levelBeginner", ng-change="expert.update()")
+              .col-xs-4
+                input(type="checkbox", ng-checked="expert.tagHasLevel(tag, 'intermediate')", ng-model="tag.levelIntermediate", ng-change="expert.update()")
+              .col-xs-4
+                input(type="checkbox", ng-checked="expert.tagHasLevel(tag, 'expert')", ng-model="tag.levelExpert", ng-change="expert.update()")
+        .type {{tag.name}}
 
 //-pre(ng-bind='expertOrderStats() | json')

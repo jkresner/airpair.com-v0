@@ -69,3 +69,24 @@ namespace 'onetime', ->
         else
           console.log "Success", recordsUpdated, "records updated"
         complete()
+
+  task 'addLevelsToExpertTags', {async: true},  ->
+    require("./scripts/env")
+    async = require("async")
+    console.log "Adding levels to expert tags"
+    recordsUpdated = 0
+    Expert.find {}, (err, experts) ->
+      async.each experts, (expert, callback)->
+        recordsUpdated++
+        tags = _.map expert.tags, (tag) ->
+          newTag = _.clone(tag)
+          newTag.levels = ['beginner', 'intermediate', 'expert']
+          newTag
+        expert.tags = tags
+        expert.save(callback)
+      , (err) ->
+        if err?
+          console.log "Error", err
+        else
+          console.log "Success", recordsUpdated, "records updated"
+        complete()
