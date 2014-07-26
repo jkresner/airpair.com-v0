@@ -49,7 +49,6 @@ module.exports = (app) ->
         averagePerHour: @private.averagePerHour()
 
       update: ->
-        console.log "updating expert"
         @private.data.expert.save()
 
       private:
