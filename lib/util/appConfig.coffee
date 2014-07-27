@@ -68,6 +68,9 @@ module.exports =
     mail:
       ses_access_key: 'test'
       ses_secret_key: 'test'
+    mailchimp:
+      apiKey: 'test'
+      airconfListId: 'test'
     payment:
       stripe:
         publishedKey: 'pk_test_aj305u5jk2uN1hrDQWdH0eyl'
@@ -121,6 +124,9 @@ module.exports =
     mail:
       ses_access_key: process.env.AP_SES_ACCESS_KEY || "none"
       ses_secret_key: process.env.AP_SES_SECRET_KEY || "none"
+    mailchimp:
+      apiKey: 'b888ee9284cd0d57f425867c0bde3fe0-us7'
+      airconfListId: '39f4769300'
     payment:
       stripe:
         publishedKey: 'pk_test_aj305u5jk2uN1hrDQWdH0eyl'
@@ -174,6 +180,9 @@ module.exports =
     mail:
       ses_access_key: process.env.AP_SES_ACCESS_KEY
       ses_secret_key: process.env.AP_SES_SECRET_KEY
+    mailchimp:
+      apiKey: 'b888ee9284cd0d57f425867c0bde3fe0-us7'
+      airconfListId: '39f4769300'
     payment:
       stripe:
         publishedKey: 'pk_live_FEGruKDm6OZyagTHqhXWvV8G'
