@@ -8,17 +8,18 @@
   # 2) Users register for talks using the other lineItems
   # 3) The total of other non-airconf purchases drives a discount for conference attendance
 """
+chimp = require "../mail/chimp"
+
 module.exports =
 
-
   getAirConfRegisration: (cb) ->
-
     @searchMany {userId: @usr._id}, { fields: @Data.view.history }, (e, r) =>
-      if e? then cb e, r
+      if e? then cb(e, r)
 
-      confOrder = _.find r, (o) => _.idsEqual o.requestId, @Data.airconf.requestId
+      confOrder = _.find r, (order) =>
+        _.idsEqual order.requestId, @Data.airconf.requestId
 
-      {ticketPrice,pairCredit} = @Data.airconf
+      { ticketPrice, pairCredit } = @Data.airconf
 
       d = { paid: confOrder?, workshops: [], confOrder, ticketPrice, pairCredit }
 
@@ -34,7 +35,6 @@ module.exports =
       $log 'getConfOrder', d
       cb e, d
 
-
   createAirConfOrder: (order, cb) ->
     @getAirConfPromoRate order.promocode, (e,d) -> order.total = d.promoRate
     orderEmail = order.company.contacts[0].email
@@ -44,8 +44,9 @@ module.exports =
       order.paymentMethod = _.find settings.paymentMethods, (p) -> p.type == 'stripe'
       order.requestId = @Data.airconf.requestId
       order.lineItems = [ @Data.airconf.ticketLineItem, @Data.airconf.pairCreditLineItem ]
-      $log 'createOrder', settings, order.total, order
-      @create order, cb
+      @create order, (e, order) =>
+        chimp.subscribe config.mailchimp.airconfListId, orderEmail, { Paid: 'Yes' }
+        cb(e, order)
 
     if order.stripeCreate?
       @settingsSvc.getByUserId @usr._id, (e, s) =>
@@ -53,7 +54,6 @@ module.exports =
         if !s.paymentMethods?
           s.paymentMethods = []
           s.userId = @usr._id
-        # $log 'going to createStripe', s
         @settingsSvc.createStripeSettings s, createOrder
     else
       @settingsSvc.getByUserId @usr._id, createOrder
