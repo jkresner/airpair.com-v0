@@ -185,7 +185,7 @@
     <div class="container" id="experts">
       <h2>Just a sampling of our expert lineup...</h2>
       <div class="sessionCol">
-        <a class="session user-badge text-center" href="/airconf/new-in-django-1.7">
+        <a class="session user-badge text-center" href="#">
           <div class="user-info">
             <img src="//secure.gravatar.com/avatar/0f4cefeedec5163556751d61625eedd0?s=180" alt="Daniel Roseman" class="img-circle" width="50%">
             <h3 class="name">Daniel Roseman</h3>
@@ -201,7 +201,7 @@
       </div>
 
       <div class="sessionCol">
-        <a class="session user-badge text-center" href="/airconf/andrew-chen-product-market-fit">
+        <a class="session user-badge text-center" href="#">
           <div class="user-info">
             <img src="//secure.gravatar.com/avatar/2c9c63e72bc96de12e6acd7ba07d6f02?s=180" alt="Andrew Chen" class="img-circle" width="50%">
             <h3 class="name">Andrew Chen</h3>
@@ -217,7 +217,7 @@
       </div>
 
       <div class="sessionCol">
-        <a class="session user-badge text-center" href="/airconf/">
+        <a class="session user-badge text-center" href="#">
           <div class="user-info">
             <img src="//secure.gravatar.com/avatar/f524745bb9975ba777b5c4a9922eb614?s=180" alt="Felienne Hermans" class="img-circle" width="50%">
             <h3 class="name">Felienne Hermans</h3>
@@ -233,7 +233,7 @@
       </div>
 
       <div class="sessionCol">
-        <a class="session user-badge text-center" href="/airconf/">
+        <a class="session user-badge text-center" href="#">
           <div class="user-info">
             <img src="//secure.gravatar.com/avatar/433d6daba7a9f7e563b793c0890ef906?s=180" alt="Amir Rajan" class="img-circle" width="50%">
             <h3 class="name">Amir Rajan</h3>
@@ -251,67 +251,69 @@
     <footer>
       <p>&copy; airpair, Inc. · (800) 487-0668 · <a href="mailto:team@airpair.com">Email Us</a> · <a href="/experts">Experts</a> · <a href="/tutorials">Tutorials</a> · <a href="/privacy">Privacy Policy</a></p>
     </footer>
-    <script type="text/javascript">
-      function validateEmail(email) {
-        var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        return re.test(email);
-      }
+  </body>
 
-      function storage(k, v) {
-        if (window.localStorage) {
-          if (typeof v == 'undefined') {
-            return localStorage[k];
-          }
-          localStorage[k] = v;
-          return v;
+  {{> InitPage }}
+
+  <script type="text/javascript">
+    function validateEmail(email) {
+      var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return re.test(email);
+    }
+
+    function storage(k, v) {
+      if (window.localStorage) {
+        if (typeof v == 'undefined') {
+          return localStorage[k];
         }
+        localStorage[k] = v;
+        return v;
       }
+    }
 
-      function showSubscribe() {
-        if (storage('subscribed') !== 'true') {
-          $('#subscription').show();
+    function showSubscribe() {
+      if (storage('subscribed') !== 'true') {
+        $('#subscription').show();
 
-          // Fixed subscribe on scroll
-          var subscribe = $('#subscription').offset().top - 20;
-          $(window).scroll(function(e){
-            if (window.scrollY > subscribe) {
-              $('#subscription').addClass('affix');
-            } else {
-              $('#subscription').removeClass('affix');
-            }
-          });
-        }
-      }
-
-      function init() {
-        showSubscribe();
-
-        $('#btnSubscribe').click(function(e){
-          console.log('shit');
-          $input = $('[name=subscribe]');
-          email = $input.val()
-          if (validateEmail(email)) {
-            $input.parent().removeClass('has-error');
-            $.post("/api/landing/mailchimp/subscribe", { "email": email })
-              .done(function(data) {
-                $('#subscription form').html("<h3>Thank you. Please check your email for confirmation link.</h3>");
-                addjs.trackEvent('airconf', 'subscribe', email);
-                storage('subscribed', true);
-                $('#subscribe').fadeOut(1500);
-              })
-              .fail(function(resp, data) {
-                d = JSON.parse(resp.responseText);
-                console.log('args', arguments)
-                $input.parent().addClass('has-error'); alert(d.error);
-              });
+        // Fixed subscribe on scroll
+        var subscribe = $('#subscription').offset().top - 20;
+        $(window).scroll(function(e){
+          if (window.scrollY > subscribe) {
+            $('#subscription').addClass('affix');
           } else {
-            $input.parent().addClass('has-error');
+            $('#subscription').removeClass('affix');
           }
         });
       }
+    }
 
-      init();
-    </script>
-  </body>
+    function initPage() {
+      showSubscribe();
+      initStaticPage('airconf');
 
+      $('#btnSubscribe').click(function(e){
+        console.log('shit');
+        $input = $('[name=subscribe]');
+        email = $input.val()
+        if (validateEmail(email)) {
+          $input.parent().removeClass('has-error');
+          $.post("/api/landing/mailchimp/subscribe", { "email": email })
+            .done(function(data) {
+              $('#subscription form').html("<h3>Thank you. Please check your email for confirmation link.</h3>");
+              addjs.trackEvent('airconf', 'subscribe', email);
+              storage('subscribed', true);
+              $('#subscribe').fadeOut(1500);
+            })
+            .fail(function(resp, data) {
+              d = JSON.parse(resp.responseText);
+              console.log('args', arguments)
+              $input.parent().addClass('has-error'); alert(d.error);
+            });
+        } else {
+          $input.parent().addClass('has-error');
+        }
+      });
+    }
+  </script>
+  <script src="/javascripts/landing.js" defer onload="initPage()"></script>
 </html>
