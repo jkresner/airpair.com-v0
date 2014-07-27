@@ -15,14 +15,25 @@
     <meta property="og:description" content="Welome to AirConf, a month long speaker series broadcasting world-wide via Google Hangouts with coding book authors, top Stack Overflow answerers, framework core team members and more." />
     <meta property="og:image" content="https://www.airpair.com/images/landing/airconf/og.png" />
     <link rel="canonical" href="http://www.airpair.com/airconf" />
+    <link rel="publisher" href="https://plus.google.com/105075583437166504731" />
     <link rel="stylesheet" href="/css/ap.css">
     <link rel='stylesheet' type='text/css' href='//fonts.googleapis.com/css?family=Open+Sans:400,300,600' >
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript">
+    (function()
+    {var po = document.createElement("script");
+         po.type = "text/javascript";
+         po.async = true;
+         po.src = "https://apis.google.com/js/plusone.js";
+         var s = document.getElementsByTagName("script")[0];
+         s.parentNode.insertBefore(po, s);
+    })();
+    </script>
     <style type="text/css">
       h2 { text-align:center;margin:40px auto; }
       a.btn-orange { font-size:22px;background:#ce5424;margin:auto;color:white;height:50px;font-weight:300;text-transform:none;padding-top:10px; }
       a.btn-orange:hover { font-weight:500;color:white; }
-      .subscribe {
+      .subscribe, #plus {
         background-color: #D5E2D5;
         border-radius: 2px;
         padding: 15px;
@@ -153,6 +164,12 @@
       input:required:invalid, input:focus:invalid {
         border-color: red;
       }
+
+      /* Google Plus widget overrides */
+      #widget_bounds.Yfd {
+        border: 0px !important;
+        border-width: 0 !important;
+      }
     </style>
   </head>
   <body id="airconf">
@@ -180,6 +197,23 @@
           <div class="col-md-4"><button id="btnSubscribe" class="btn-block">Reserve My Seat</button></div>
         </div>
       </form>
+    </div>
+
+    <div class="container" id="plus" style="display:none">
+    <div class="row">
+      <div class="col-md-4">
+        <g:plus href="https://plus.google.com/105075583437166504731" size="badge"></g:plus>
+      </div>
+      <div class="col-md-8">
+        <h3 style="margin-top: 20px">
+          Add us on Google+ to get a feed of all our live workshops.
+        </h3>
+        <p>
+          Thank you for subscribing. Please check your email for confirmation link.
+        </p>
+      </div>
+    </div>
+
     </div>
 
     <div class="container" id="experts">
@@ -273,6 +307,9 @@
         $('[name=subscribe]').val(urlParam('e'));
 >>>>>>> d94244d52ad74b2e3b6c2b21a2d47e966177f693
       }
+      else {
+        $('#plus').show();
+      }
     }
 
     function prefillEmailBox() {
@@ -293,10 +330,10 @@
           $input.parent().removeClass('has-error');
           $.post("/api/landing/mailchimp/subscribe", { "email": email })
             .done(function(data) {
-              $('#subscription form').html("<h3>Thank you. Please check your email for confirmation link.</h3>");
               addjs.trackEvent('airconf', 'subscribe', email);
               storage('subscribed', true);
-              $('#subscribe').fadeOut(1500);
+              $('.subscribe').hide();
+              $('#plus').show();
             })
             .fail(function(resp, data) {
               d = JSON.parse(resp.responseText);
