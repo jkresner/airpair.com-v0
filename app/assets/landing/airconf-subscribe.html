@@ -263,6 +263,15 @@
     function showSubscribe() {
       if (storage('subscribed') !== 'true') {
         $('#subscription').show();
+<<<<<<< HEAD
+=======
+      }
+    }
+
+    function prefillEmailBox() {
+      if (urlParam('e')) {
+        $('[name=subscribe]').val(urlParam('e'));
+>>>>>>> d94244d52ad74b2e3b6c2b21a2d47e966177f693
       }
     }
 
