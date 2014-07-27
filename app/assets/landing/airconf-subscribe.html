@@ -256,6 +256,17 @@
   {{> InitPage }}
 
   <script type="text/javascript">
+    window.urlParam = function(name, url) {
+        if (!url) {
+         url = window.location.href;
+        }
+        var results = new RegExp('[\\?&]' + name + '=([^&#]*)').exec(url);
+        if (!results) {
+            return false;
+        }
+        return results[1] || false;
+    }
+
     function validateEmail(email) {
       var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       return re.test(email);
@@ -274,25 +285,21 @@
     function showSubscribe() {
       if (storage('subscribed') !== 'true') {
         $('#subscription').show();
+      }
+    }
 
-        // Fixed subscribe on scroll
-        var subscribe = $('#subscription').offset().top - 20;
-        $(window).scroll(function(e){
-          if (window.scrollY > subscribe) {
-            $('#subscription').addClass('affix');
-          } else {
-            $('#subscription').removeClass('affix');
-          }
-        });
+    function prefillEmailBox() {
+      if (urlParam('e')) {
+        $('[name=subscribe]').val(urlParam('e'));
       }
     }
 
     function initPage() {
       showSubscribe();
+      prefillEmailBox();
       initStaticPage('airconf');
 
       $('#btnSubscribe').click(function(e){
-        console.log('shit');
         $input = $('[name=subscribe]');
         email = $input.val()
         if (validateEmail(email)) {
@@ -306,7 +313,6 @@
             })
             .fail(function(resp, data) {
               d = JSON.parse(resp.responseText);
-              console.log('args', arguments)
               $input.parent().addClass('has-error'); alert(d.error);
             });
         } else {
