@@ -8,7 +8,7 @@ exports.config =
     path: 'app.coffee'
     port: 3333
     base: '/'
-    run: yes
+    run: no
 
   plugins:
     sass:
@@ -24,7 +24,7 @@ exports.config =
     test:
       paths:    watched: ['app','vendor', 'test','lib','mail']
       plugins:  autoReload: enabled: false
-      server:   { port: 4444, env: 'test' }
+      server:   { port: 4444, env: 'test', run: yes }
     prod:
       optimize: true
 
