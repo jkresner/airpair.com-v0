@@ -86,14 +86,14 @@
           <p><span>Broadcasting Worldwide <span> Aug 4 - 31, via G+ Hangouts</p>
         </div>
       </section>
-      {{#if session.authenticated }}
+      <!-- {{#if session.authenticated }}
         {{#if registration.paid }}
         {{else}}
           <a id="attendFold" class="btn btn-block loginRequied" href="/airconf-registration">Attend AirConf 2014</a>
         {{/if}}
       {{else}}
         <a id="attendFold" class="btn btn-block loginRequied" href="/airconf-registration">Attend AirConf 2014</a>
-      {{/if}}
+      {{/if}} -->
     </div>
 
 <style type="text/css">
@@ -165,7 +165,15 @@
 
 </style>
 
+<div id="about">
 
+</div>
+
+<!--
+<style type="text/css">
+  #about { height:160px; }
+</style>
+ -->
 
 {{> confSubscribe }}
 
@@ -289,6 +297,8 @@
   #experts { text-align:center }
   #experts .sessionCol { width:200px;display:inline-block;margin:30px 10px; }
   #experts .description { font-size:11px }
+  #experts time { color:black; }
+  #experts time span { font-size:10px; }
 
   @media (max-width:800px) {
     #experts .sessionCol { margin:30px 4% 30px 0; }
@@ -361,9 +371,9 @@
 
  <h2 class="text-thin text-center m-t-3">Week 3 Speakers</h2><hr />
 
+  {{#with hcatlin}}{{> workshopSummary }}{{/with}}
   {{#with joshowens}}{{> workshopSummary }}{{/with}}
   {{#with philsturgeon}}{{> workshopSummary }}{{/with}}
-  {{#with hcatlin}}{{> workshopSummary }}{{/with}}
   {{#with evgenyz}}{{> workshopSummary }}{{/with}}
   {{#with acuppy2}}{{> workshopSummary }}{{/with}}
   {{#with andrew_weiss}}{{> workshopSummary }}{{/with}}
@@ -457,6 +467,21 @@
         this.btn = $(this).find('.btn-slate');
         this.btn.html(this.btn.data('act'));
       });
+    });
+
+    $('time').each(function (idx, time) {
+      $time = $(time);
+      utc = $time.attr('datetime');
+      offset = moment().format('ZZ')
+      if (utc!='') {
+        localTime = moment(utc).format('ddd Do MMM hha ZZ')
+
+        $time.html( localTime.replace(offset,'<span>('+offset+')</span>') );
+      } else
+      {
+        $time.html( 'Confirming time' );
+      }
+
     });
 
 {{#if session.authenticated }}
