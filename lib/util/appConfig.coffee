@@ -75,8 +75,8 @@ module.exports =
       ses_access_key: 'test'
       ses_secret_key: 'test'
     mailchimp:
-      apiKey: 'test'
-      airconfListId: 'test'
+      apiKey: 'testing'
+      airconfListId: 'testing'
     payment:
       stripe:
         publishedKey: 'pk_test_aj305u5jk2uN1hrDQWdH0eyl'
