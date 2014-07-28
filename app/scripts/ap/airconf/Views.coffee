@@ -97,7 +97,7 @@ class exports.OrderView extends BB.ModelSaveView
         @elm('promocode').removeClass('invalid')
         $('#ordertotalamount').html(data.cost)
         @model.set(total: data.cost, promocode: data.code)
-        if !@page.get('hasCard') and data.cost is "0"
+        if !@page.get('hasCard') and data.cost is 0
           $('.card-required').show()
           $('#payment-form input').attr('required','required')
 
