@@ -8,9 +8,11 @@
   # 2) Users register for talks using the other lineItems
   # 3) The total of other non-airconf purchases drives a discount for conference attendance
 """
-chimp = require "../mail/chimp"
-
 module.exports =
+
+  # These are defined in Orders service
+  # Chimp: require("../mail/chimp")
+  # Discounts: require("./discounts")
 
   getAirConfRegisration: (cb) ->
     @searchMany {userId: @usr._id}, { fields: @Data.view.history }, (e, r) =>
@@ -36,43 +38,25 @@ module.exports =
       cb e, d
 
   createAirConfOrder: (order, cb) ->
-    @getAirConfPromoRate order.promocode, (e,d) -> order.total = d.promoRate
-    orderEmail = order.company.contacts[0].email
-    order.company.contacts[0].pic = gravatarLnk orderEmail
+    @Discounts.lookup order.promocode, (e, code) =>
+      unless e? then order.total = code.cost
+      orderEmail = order.company.contacts[0].email
+      order.company.contacts[0].pic = gravatarLnk orderEmail
 
-    createOrder = (e, settings) =>
-      order.paymentMethod = _.find settings.paymentMethods, (p) -> p.type == 'stripe'
-      order.requestId = @Data.airconf.requestId
-      order.lineItems = [ @Data.airconf.ticketLineItem, @Data.airconf.pairCreditLineItem ]
-      @create order, (e, order) =>
-        chimp.subscribe config.mailchimp.airconfListId, orderEmail, { Paid: 'Yes' }
-        cb(e, order)
+      createOrder = (e, settings) =>
+        order.paymentMethod = _.find(settings.paymentMethods, (p) -> p.type == 'stripe')
+        order.requestId = @Data.airconf.requestId
+        order.lineItems = [ @Data.airconf.ticketLineItem, @Data.airconf.pairCreditLineItem ]
+        @create order, (e, order) =>
+          @Chimp.subscribe config.mailchimp.airconfListId, orderEmail, { Paid: 'Yes' }
+          cb(e, order)
 
-    if order.stripeCreate?
-      @settingsSvc.getByUserId @usr._id, (e, s) =>
-        s = _.extend s, { stripeCreate: order.stripeCreate }
-        if !s.paymentMethods?
-          s.paymentMethods = []
-          s.userId = @usr._id
-        @settingsSvc.createStripeSettings s, createOrder
-    else
-      @settingsSvc.getByUserId @usr._id, createOrder
-
-
-  getAirConfPromoRate: (promoCode, cb) ->
-    restler.get(config.defaults.airconf.discountCodesUrl)
-      .on 'success', (data, response) ->
-        entry = _.find(data.feed.entry, (e) -> e.gsx$code.$t == promoCode)
-        if entry?
-          paybutton = entry.gsx$paybutton?.$t || "Pay $#{entry.gsx$cost.$t} for my ticket"
-          data =
-            paybutton: paybutton
-            cost: entry.gsx$cost.$t
-            code: entry.gsx$code.$t
-            message: "Discount applied."
-          cb(null, data)
-        else
-          cb(status: 404, message: 'Unknown code.')
-      .on 'error', (err, response) ->
-        cb(err)
-
+      if order.stripeCreate?
+        @settingsSvc.getByUserId @usr._id, (e, s) =>
+          s = _.extend s, { stripeCreate: order.stripeCreate }
+          if !s.paymentMethods?
+            s.paymentMethods = []
+            s.userId = @usr._id
+          @settingsSvc.createStripeSettings s, createOrder
+      else
+        @settingsSvc.getByUserId @usr._id, createOrder
