@@ -35,7 +35,7 @@
 <div class="container m-b-3">
 
 
-  <table class="table table-hover channels channels-growth" style="width: 1203px;" >
+  <table class="table table-hover channels channels-growth" style="width: 1232px;" >
 
     <thead>
 
@@ -44,13 +44,13 @@
       <th class="text-info">Ad</th>
       <th class="text-info">Affiliate</th>
       <th class="text-info">Direct</th>
+      <th class="text-info">Event</th>
       <th class="text-info">Newsletter</th>
       <th class="text-info">Portfolio</th>
       <th class="text-info">Press</th>
       <th class="text-info">SEO</th>
       <th class="text-info">Social</th>
       <th class="text-info">WoM</th>
-      <th class="text-info">Event</th>
       <th class="text-info">Untracked</th>
     </thead>
 
@@ -83,6 +83,13 @@
         {{week.metrics.summary.tags.direct.count | number: 0}}
         <span class="text-split">
           {{((week.metrics.repeatSummary.tags.direct.share)*100 | numFloor) || 0}}%
+        </span>
+
+      </td>
+      <td class="text-info" ng-class="{'text-muted': week.metrics.summary.tags.event.count == 0}">
+        {{week.metrics.summary.tags.event.count | number: 0}}
+        <span class="text-split">
+          {{((week.metrics.repeatSummary.tags.event.share)*100 | numFloor) || 0}}%
         </span>
 
       </td>
@@ -128,13 +135,6 @@
         </span>
 
       </td>
-      <td class="text-info" ng-class="{'text-muted': week.metrics.summary.tags.event.count == 0}">
-        {{week.metrics.summary.tags.event.count | number: 0}}
-        <span class="text-split">
-          {{((week.metrics.repeatSummary.tags.event.share)*100 | numFloor) || 0}}%
-        </span>
-
-      </td>
       <td class="text-info" ng-class="{'text-muted': week.metrics.summary.tags.untracked.count == 0}">
         {{week.metrics.summary.tags.untracked.count | number: 0}}
         <span class="text-split">
@@ -177,6 +177,14 @@
         </span>
         <span class="text-split" ng-class="{'text-danger': week.diffTagsRepeat.direct.count < 0, 'text-success': week.diffTagsRepeat.direct.count >= 0}">
           {{ week.diffTagsRepeat.direct.count*100 | number:0 }}%
+        </span>
+      </td>
+      <td>
+        <span ng-class="{'text-danger': week.diffTags.event.count < 0, 'text-success': week.diffTags.event.count >= 0}">
+          {{ week.diffTags.event.count*100 | number:0 }}%
+        </span>
+        <span class="text-split" ng-class="{'text-danger': week.diffTagsRepeat.event.count < 0, 'text-success': week.diffTagsRepeat.event.count >= 0}">
+          {{ week.diffTagsRepeat.event.count*100 | number:0 }}%
         </span>
       </td>
       <td>
@@ -228,14 +236,6 @@
         </span>
       </td>
       <td>
-        <span ng-class="{'text-danger': week.diffTags.event.count < 0, 'text-success': week.diffTags.event.count >= 0}">
-          {{ week.diffTags.event.count*100 | number:0 }}%
-        </span>
-        <span class="text-split" ng-class="{'text-danger': week.diffTagsRepeat.event.count < 0, 'text-success': week.diffTagsRepeat.event.count >= 0}">
-          {{ week.diffTagsRepeat.event.count*100 | number:0 }}%
-        </span>
-      </td>
-      <td>
         <span ng-class="{'text-danger': week.diffTags.untracked.count < 0, 'text-success': week.diffTags.untracked.count >= 0}">
           {{ week.diffTags.untracked.count*100 | number:0 }}%
         </span>
@@ -275,6 +275,12 @@
         </span>
       </td>
       <td class="text-info">
+        {{channelGrowthSummary.summary.tags.event.count | number: 0}}
+        <span class="text-split">
+          {{((channelGrowthSummary.repeatSummary.tags.event.count/channelGrowthSummary.summary.tags.event.count)*100 | numFloor) || 0}}%
+        </span>
+      </td>
+      <td class="text-info">
         {{channelGrowthSummary.summary.tags.newsletterairpair.count | number: 0}}
         <span class="text-split">
           {{((channelGrowthSummary.repeatSummary.tags.newsletterairpair.count/channelGrowthSummary.summary.tags.newsletterairpair.count)*100 | numFloor) || 0}}%
@@ -308,12 +314,6 @@
         {{channelGrowthSummary.summary.tags.wordofmouth.count | number: 0}}
         <span class="text-split">
           {{((channelGrowthSummary.repeatSummary.tags.wordofmouth.count/channelGrowthSummary.summary.tags.wordofmouth.count)*100 | numFloor) || 0}}%
-        </span>
-      </td>
-      <td class="text-info">
-        {{channelGrowthSummary.summary.tags.event.count | number: 0}}
-        <span class="text-split">
-          {{((channelGrowthSummary.repeatSummary.tags.event.count/channelGrowthSummary.summary.tags.event.count)*100 | numFloor) || 0}}%
         </span>
       </td>
       <td class="text-info">
