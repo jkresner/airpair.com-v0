@@ -60,14 +60,19 @@ module.exports =
 
 
   getAirConfPromoRate: (promoCode, cb) ->
-    message = "Invalid Code"
-    rate = @Data.airconf.ticketPrice
-    if promoCode == 'pairupYC' then rate = 0
-    else if promoCode == 'sfor' then rate = rate - 20
-
-    if rate != @Data.airconf.ticketPrice
-      message = "Code applied"
-
-    cb null, { promoRate: rate, message: message }
-
+    restler.get(config.defaults.airconf.discountCodesUrl)
+      .on 'success', (data, response) ->
+        entry = _.find(data.feed.entry, (e) -> e.gsx$code.$t == promoCode)
+        if entry?
+          paybutton = entry.gsx$paybutton?.$t || "Pay $#{entry.gsx$cost.$t} for my ticket"
+          data =
+            paybutton: paybutton
+            cost: entry.gsx$cost.$t
+            code: entry.gsx$code.$t
+            message: "Discount applied."
+          cb(null, data)
+        else
+          cb(status: 404, message: 'Unknown code.')
+      .on 'error', (err, response) ->
+        cb(err)
 

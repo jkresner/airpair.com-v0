@@ -1,5 +1,10 @@
+defaults =
+  airconf:
+    discountCodesUrl: 'http://spreadsheets.google.com/feeds/list/1oTVraiCyHBg6JrFpGMGf0wppXYVznDGJ3rLqYqvAawE/od6/public/values?alt=json'
+
 module.exports =
   dev:
+    defaults: defaults
     env: 'dev'
     isProd: false
     mongoUri: process.env.MONGOHQ_URL || "mongodb://localhost/airpair_dev"
@@ -57,6 +62,7 @@ module.exports =
       tokens: {}
 
   test:
+    defaults: defaults
     env: 'test'
     isProd: false
     mongoUri: process.env.MONGOHQ_URL || "mongodb://localhost/airpair_test"
@@ -170,6 +176,7 @@ module.exports =
       tokens: {}
 
   prod:
+    defaults: defaults
     env: 'prod'
     isProd: true
     mongoUri: process.env.MONGOHQ_URL || "mongodb://localhost/airpair_prod"

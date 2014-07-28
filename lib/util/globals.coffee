@@ -5,6 +5,8 @@ global._              = require 'lodash'
 global._.pickNested   = require '../mix/pickNested'
 global._.idsEqual     = require '../mix/idsEqual'
 
+global.restler        = require('restler')
+
 global.winston        = require 'winston'   # logging
 require './winstonConfig'             # setup logging configuration / plugins
 winston.error "app restart" if config.isProd  # log application restart/ send email notification
