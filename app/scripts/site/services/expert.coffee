@@ -1,137 +1,143 @@
-module.exports = (app) ->
-  app.factory 'Expert', ($http, Restangular) ->
-    Expert =
-      fetchExpert: ->
-        Restangular.one('experts', 'me').get().then (expert) =>
-          @private.data.expert = expert
-          @private.initializeTags()
-          @private.fetchExpertRequests(expert._id)
-          @private.fetchExpertOrders(expert._id)
+Expert = ($http, $rootScope, Restangular) ->
+  expertObject =
+    fetchExpert: ->
+      Restangular.one('experts', 'me').get().then (expert) =>
+        @private.data.expert = expert
+        $rootScope.$emit('expertLoaded')
+        @private.initializeTags()
+        @private.fetchExpertRequests(expert._id)
+        @private.fetchExpertOrders(expert._id)
 
-      hoursAvailable: (value) ->
-        if value?
-          Expert.private.data.expert.hours = value.toString()
-        Expert.private.data.expert? && Expert.private.data.expert.hours
+    hoursAvailable: (value) ->
+      if value?
+        expertObject.private.data.expert.hours = value.toString()
+      expertObject.private.data.expert? && expertObject.private.data.expert.hours
 
-      status: (value) ->
-        if value?
-          Expert.private.data.expert.status = if value then "ready" else "busy"
-        Expert.private.data.expert? && Expert.private.data.expert.status == "ready"
+    status: (value) ->
+      if value?
+        expertObject.private.data.expert.status = if value then "ready" else "busy"
+      expertObject.private.data.expert? && expertObject.private.data.expert.status == "ready"
 
-      rate: (value) ->
-        if value?
-          Expert.private.data.expert.rate = value
-        Expert.private.data.expert? && Expert.private.data.expert.rate
+    setRate: (min, max) ->
+      @minRate(min)
+      @rate(max)
 
-      minRate: (value) ->
-        if value?
-          Expert.private.data.expert.minRate = value
-        Expert.private.data.expert? && Expert.private.data.expert.minRate
+    rate: (value) ->
+      if value?
+        expertObject.private.data.expert.rate = value
+      expertObject.private.data.expert? && expertObject.private.data.expert.rate
 
-      tags: ->
-        Expert.private.data.expert? && Expert.private.data.expert.tags
+    minRate: (value) ->
+      if value?
+        expertObject.private.data.expert.minRate = value
+      expertObject.private.data.expert? && expertObject.private.data.expert.minRate
 
-      tagHasLevel: (tag, level) ->
-        _.include(tag.levels, level)
+    tags: ->
+      expertObject.private.data.expert? && expertObject.private.data.expert.tags
 
-      availability: (value) ->
-        if value?
-          Expert.private.data.expert.availability = value
-        Expert.private.data.expert? && Expert.private.data.expert.availability
+    tagHasLevel: (tag, level) ->
+      _.include(tag.levels, level)
 
-      requestStats: ->
-        responseRate: @private.responseRate()
-        requestCount: @private.requestCount()
+    availability: (value) ->
+      if value?
+        expertObject.private.data.expert.availability = value
+      expertObject.private.data.expert? && expertObject.private.data.expert.availability
 
-      orderStats: ->
-        paidOrderCount: @private.paidOrders().length
-        totalAmountReceived: @private.totalAmountReceived()
-        averagePerHour: @private.averagePerHour()
+    requestStats: ->
+      responseRate: @private.responseRate()
+      requestCount: @private.requestCount()
 
-      update: ->
-        @private.data.expert.save()
+    orderStats: ->
+      paidOrderCount: @private.paidOrders().length
+      totalAmountReceived: @private.totalAmountReceived()
+      averagePerHour: @private.averagePerHour()
 
-      private:
-        data: {}
+    update: ->
+      @private.data.expert.save()
 
-        expertId: ->
-          @data.expert? && @data.expert._id
+    private:
+      data: {}
 
-        requests: ->
-          @data.requests || []
+      expertId: ->
+        @data.expert? && @data.expert._id
 
-        orders: ->
-          @data.orders || []
+      requests: ->
+        @data.requests || []
 
-        fetchExpertRequests: ->
-          Restangular.all("requests/expert/#{@expertId()}").getList().then (requests) =>
-            @data.requests = requests
+      orders: ->
+        @data.orders || []
 
-        fetchExpertOrders: ->
-          Restangular.all("orders/expert/#{@expertId()}").getList().then (orders) =>
-            @data.orders = orders
+      fetchExpertRequests: ->
+        Restangular.all("requests/expert/#{@expertId()}").getList().then (requests) =>
+          @data.requests = requests
 
-        requestCount: -> @requests().length
+      fetchExpertOrders: ->
+        Restangular.all("orders/expert/#{@expertId()}").getList().then (orders) =>
+          @data.orders = orders
 
-        responseRate: ->
-          if @requestCount() > 0
-            (@respondedCount() / @requestCount()) * 100
-          else
-            0
+      requestCount: -> @requests().length
 
-        respondedCount: ->
-          _.select(@suggestions(), (suggestion) ->
-            suggestion.expertStatus not in ["waiting", "opened"]
-          ).length
+      responseRate: ->
+        if @requestCount() > 0
+          (@respondedCount() / @requestCount()) * 100
+        else
+          0
 
-        suggestions: ->
-          expertId = @expertId()
-          _.map @requests(), (request) =>
-             _.find request.suggested, (suggestion) ->
-               suggestion.expert._id == expertId
+      respondedCount: ->
+        _.select(@suggestions(), (suggestion) ->
+          suggestion.expertStatus not in ["waiting", "opened"]
+        ).length
 
-        paidOrders: ->
-          _.select @orders(), (order) ->
-            order.payment? && order.payment.paid
+      suggestions: ->
+        expertId = @expertId()
+        _.map @requests(), (request) =>
+           _.find request.suggested, (suggestion) ->
+             suggestion.expert._id == expertId
 
-        averagePerHour: ->
-          if @orderHours() > 0
-            @totalAmountReceived() / @orderHours()
-          else
-            0
+      paidOrders: ->
+        _.select @orders(), (order) ->
+          order.payment? && order.payment.paid
 
-        orderHours: ->
-          _.reduce(@paidOrders(), (sum, order) ->
-            itemSum = _.reduce(order.lineItems, (sum2, lineItem) ->
-              sum2 + lineItem.qty
-            , 0)
-            sum + itemSum
+      averagePerHour: ->
+        if @orderHours() > 0
+          @totalAmountReceived() / @orderHours()
+        else
+          0
+
+      orderHours: ->
+        _.reduce(@paidOrders(), (sum, order) ->
+          itemSum = _.reduce(order.lineItems, (sum2, lineItem) ->
+            sum2 + lineItem.qty
           , 0)
+          sum + itemSum
+        , 0)
 
-        totalAmountReceived: ->
-          _.reduce(@paidOrders(), (sum, order) ->
-            sum + order.total - order.profit
-          , 0)
+      totalAmountReceived: ->
+        _.reduce(@paidOrders(), (sum, order) ->
+          sum + order.total - order.profit
+        , 0)
 
-        initializeTags: ->
-          _.each @data.expert.tags, (tag) =>
-            tag.levelBeginner = @tagGetterSetter(tag, 'beginner')
-            tag.levelIntermediate = @tagGetterSetter(tag, 'intermediate')
-            tag.levelExpert = @tagGetterSetter(tag, 'expert')
+      initializeTags: ->
+        _.each @data.expert.tags, (tag) =>
+          tag.levelBeginner = @tagGetterSetter(tag, 'beginner')
+          tag.levelIntermediate = @tagGetterSetter(tag, 'intermediate')
+          tag.levelexpertObject = @tagGetterSetter(tag, 'expert')
 
-        tagGetterSetter: (tag, level) ->
-          (value) ->
-            if value?
-              if value
-                _.include(tag.levels, level) || tag.levels.push(level)
-                console.log "true", tag
-              else
-                tag.levels = _.without(tag.levels, level)
-                console.log "false", tag
+      tagGetterSetter: (tag, level) ->
+        (value) ->
+          if value?
+            if value
+              _.include(tag.levels, level) || tag.levels.push(level)
             else
-              _.include(tag.levels, level)
+              tag.levels = _.without(tag.levels, level)
+          else
+            _.include(tag.levels, level)
 
 
 
-    Expert.fetchExpert()
-    Expert
+  expertObject.fetchExpert()
+  expertObject
+
+angular
+  .module('ngAirPair')
+  .factory('Expert', ['$http', '$rootScope', 'Restangular', Expert])

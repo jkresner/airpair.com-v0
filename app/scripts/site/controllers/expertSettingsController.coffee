@@ -1,4 +1,4 @@
-ExpertSettingsController = (Expert, $scope) ->
+ExpertSettingsController = ($scope, Expert) ->
   _.extend(@, Expert)
   @hourRange = _.map(new Array(20), (a, i) -> (i+1).toString())
   values = [10, 40, 70, 110, 160, 230]
@@ -15,24 +15,20 @@ ExpertSettingsController = (Expert, $scope) ->
       min: 0
       max: 5
     serialization:
-      lower: [$.Link(target: $("#minRate"))]
-      upper: [$.Link( target: $("#rate") )]
       format:
         decimals: 0
         encoder: (value) ->
           values[value]
 
   $('.hourly .slider').change (event, value) =>
-    @minRate(value[0])
-    @rate(value[1])
+    @setRate(value[0], value[1])
     @update()
 
-  $scope.$on '$viewContentLoaded', =>
+  $scope.$on 'expertLoaded', =>
+    console.log @minRate(), @rate()
     $('.hourly .slider').val([values.indexOf(@minRate()), values.indexOf(@rate())])
-
   @
 
-
-
-module.exports = (app) ->
-  app.controller 'ExpertSettingsController', ExpertSettingsController
+angular
+  .module('ngAirPair')
+  .controller('ExpertSettingsController', ['$scope', 'Expert', ExpertSettingsController])
