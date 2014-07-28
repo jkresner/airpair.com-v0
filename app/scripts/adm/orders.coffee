@@ -46,10 +46,23 @@ module.exports = (pageData) ->
   factory('$helpers', () ->
     $helpers =
       calcDiff: (oldNum, newNum, percentage) ->
+
         if percentage
-          (newNum / (oldNum * percentage) - 1)
+          if oldNum is 0
+            1
+          if newNum is 0 and oldNum is 0
+            0
+          else
+            (newNum / (oldNum * percentage) - 1)
+
         else
-          (newNum - oldNum) / oldNum
+          if oldNum is newNum then return 0
+          if oldNum is 0
+            num = (newNum - oldNum)
+          else
+            num = (newNum - oldNum) / oldNum
+          return num
+
   ).
 
 
@@ -122,6 +135,7 @@ module.exports = (pageData) ->
           if cur.isBefore(end) or cur.isSame(end)
             weeks.push
               str: cur.clone().add('w', 1).subtract('d', 1).format("MM DD")
+              index: cur.format("YYMMDD")
               start: cur.toDate()
               end: cur.clone().add('w', 1).toDate()
           cur = cur.clone().subtract('w', 1)
@@ -210,7 +224,6 @@ module.exports = (pageData) ->
 
 
 
-
         calcCredits: () ->
           for order in @data
             order.lineItems = order.lineItems.map (li) ->
@@ -222,7 +235,6 @@ module.exports = (pageData) ->
 
 
         # Get unique customers before a specific date.
-
         getCustomersBefore: (timeEnd) ->
           orders = []
           for order in @data
@@ -230,23 +242,6 @@ module.exports = (pageData) ->
               orders.push order
           unique = _.uniq(_.pluck orders, 'userId')
           return unique
-
-
-
-
-        # Get growth metrics
-
-
-
-        # only users with more than one purchase
-        # repeatCustomer = { userId: '5ooo23423', orderDate: [] }
-        # repeatCustmer[userId] # orderDate[]
-
-        # O(1) X 2000 = O(N) + O(1)
-
-        # O(N) X M = O(N*N)
-
-        # if !repeatCustmer[userId]?
 
 
 
@@ -269,9 +264,6 @@ module.exports = (pageData) ->
 
           _.each customers, (cust, id) -> if cust.orderDates.length < 2 then delete customers[id]
 
-          # console.log "customers repeat", _.size(customers)
-
-
           console.timeEnd("calcRepeatCustomers")
 
           @repeatCustomers = customers
@@ -280,13 +272,10 @@ module.exports = (pageData) ->
 
         findRepeatCustomers: (customers, start) ->
 
-          # console.log "findRepeatCustomers", customers
           count = 0
           for cust in customers
-            # console.log "for ", cust
 
             if @repeatCustomers[cust]
-              # console.log "Repeat", cust, @repeatCustomers[cust]
               before = false
               for date in @repeatCustomers[cust].orderDates
                 if moment(date).isBefore(start) then before = true
@@ -294,7 +283,7 @@ module.exports = (pageData) ->
 
           # console.timeEnd("findRepeatCustomers")
 
-          # console.log "count", count
+
 
           return count
 
@@ -766,7 +755,7 @@ module.exports = (pageData) ->
 
 
         getChannelMetricsSummary: (metrics) ->
-          # console.log "getChannelMetricsSummary"
+          # console.log "getChannelMetricsSummary", metrics
           summary =
             numOrders: metrics.length
             revenueTotal: 0
@@ -799,8 +788,18 @@ module.exports = (pageData) ->
           prev = null
           for week in weeks
             week.metrics = @getChannelMetrics(week.start, week.end)
+            console.log "#{week.str} week.metrics ", week.metrics
+
+            # Calculate the percentage share for repeat customers
+            week.metrics.repeatSummary.numOrdersShare = week.metrics.repeatSummary.numOrders/week.metrics.summary.numOrders
+            _.each week.metrics.repeatSummary.tags, (tag, tagName) ->
+              tag.share = tag.count/week.metrics.summary.tags[tagName].count
+
+
+
             # Get difference between weeks
             if prev
+
               # Get difference for normal tags
               week.diffTags = {}
               _.each prev.metrics.summary.tags, (tag, tagName) ->
@@ -822,51 +821,67 @@ module.exports = (pageData) ->
                 if not week.metrics.repeatSummary.tags[tagName]
                   week.metrics.repeatSummary.tags[tagName] =
                     count: 0
-                newCount = week.metrics.repeatSummary.tags[tagName].count
-                oldCount = tag.count
+                newCount = week.metrics.repeatSummary.tags[tagName].share or 0 #/week.metrics.summary.tags[tagName].count
+                oldCount = tag.share or 0 #/prev.metrics.summary.tags[tagName].count
                 week.diffTagsRepeat[tagName] =
-                  count: if oldCount is 0 then (newCount-oldCount) else (newCount/oldCount)-1
+                  count: $helpers.calcDiff oldCount, newCount
               # get total diff
               week.diffTagsRepeat.TOTAL = $helpers.calcDiff prev.metrics.repeatSummary.numOrders, week.metrics.repeatSummary.numOrders
+
             prev = week
 
 
 
-          #FINAL DIFF
-          # calc last week diff
+          # Calc Projections
+
+          # Get current week index
+          time = moment()
+          if time.day() < 6
+            time.startOf("week").subtract("d", 1).startOf("day")
+          else
+            time.endOf("week").startOf("day")
+          curWeekIdx = time.format("YYMMDD")
+
+          # Get last two weeks
           finalWeek = weeks[weeks.length - 1]
           prevWeek = weeks[weeks.length - 2]
 
-          # get percentage through week
-          wkStart = moment()
-          if wkStart.day() < 6
-            wkStart.startOf("week").subtract("d", 1).startOf("day")
-          else
-            wkStart.endOf("week").startOf("day")
-          wkPercentage = (moment().unix()-wkStart.unix())/60/60/24/7
-
-          # Update final week diff
-          if prevWeek
-            _.each finalWeek.metrics.summary.tags, (tag, tagName) ->
-              if tagName is '' or not prevWeek.metrics.summary.tags[tagName] then return
-              newCount = tag.count
-              oldCount = prevWeek.metrics.summary.tags[tagName].count*wkPercentage
-              finalWeek.diffTags[tagName] =
-                count: if oldCount is 0 then (newCount-oldCount) else (newCount/oldCount)-1
-            finalWeek.diffTags.TOTAL = $helpers.calcDiff prevWeek.metrics.summary.numOrders, finalWeek.metrics.summary.numOrders, wkPercentage
-            finalWeek.diffTags.percentage = "#{Math.floor(wkPercentage*100)}%"
-            # diff for repeats
-            _.each finalWeek.metrics.repeatSummary.tags, (tag, tagName) ->
-              if tagName is '' or not prevWeek.metrics.repeatSummary.tags[tagName] then return
-              newCount = tag.count
-              oldCount = prevWeek.metrics.repeatSummary.tags[tagName].count*wkPercentage
-              finalWeek.diffTagsRepeat[tagName] =
-                count: if oldCount is 0 then (newCount-oldCount) else (newCount/oldCount)-1
+          return if not finalWeek
 
 
+          # If the current week is the final week, calculate projections
+          if curWeekIdx is finalWeek.index
+
+            # get percentage through week
+            wkStart = moment()
+            if wkStart.day() < 6
+              wkStart.startOf("week").subtract("d", 1).startOf("day")
+            else
+              wkStart.endOf("week").startOf("day")
+            wkPercentage = (moment().unix()-wkStart.unix())/60/60/24/7
+
+            # Update final week diff
+            if prevWeek
+              _.each finalWeek.metrics.summary.tags, (tag, tagName) ->
+                if tagName is '' or not prevWeek.metrics.summary.tags[tagName] then return
+                newCount = tag.count or 0
+                oldCount = prevWeek.metrics.summary.tags[tagName].count or 0
+                finalWeek.diffTags[tagName] =
+                  count: $helpers.calcDiff oldCount, newCount, wkPercentage
+              finalWeek.diffTags.TOTAL = $helpers.calcDiff prevWeek.metrics.summary.numOrders, finalWeek.metrics.summary.numOrders, wkPercentage
+              finalWeek.diffTags.percentage = "#{Math.floor(wkPercentage*100)}%"
+
+              # diff for repeats
+              _.each finalWeek.metrics.repeatSummary.tags, (tag, tagName) ->
+                if tagName is '' or not prevWeek.metrics.repeatSummary.tags[tagName] then return
+                newCount = tag.share or 0
+                oldCount = prevWeek.metrics.repeatSummary.tags[tagName].share or 0
+                finalWeek.diffTagsRepeat[tagName] =
+                  count: $helpers.calcDiff oldCount, newCount, wkPercentage
+                finalWeek.diffTagsRepeat.TOTAL = $helpers.calcDiff prevWeek.metrics.repeatSummary.numOrdersShare, finalWeek.metrics.repeatSummary.numOrdersShare, wkPercentage
+                console.log "final week #{tagName} - #{oldCount} to #{newCount} ", finalWeek.diffTagsRepeat[tagName].count
 
 
-          # console.groupEnd()
           return weeks.reverse()
 
 

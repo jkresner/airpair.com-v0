@@ -61,76 +61,76 @@
       <td>
         {{week.metrics.summary.numOrders}}
         <span class="text-split">
-          {{(week.metrics.repeatSummary.numOrders/week.metrics.summary.numOrders)*100 | numFloor}}%
+          {{(week.metrics.repeatSummary.numOrdersShare)*100 | numFloor}}%
         </span>
       </td>
       <td class="text-info" ng-class="{'text-muted': week.metrics.summary.tags.ad.count == 0}">
         {{week.metrics.summary.tags.ad.count | number: 0}}
         <span class="text-split">
-          {{((week.metrics.repeatSummary.tags.ad.count/week.metrics.summary.tags.ad.count)*100 | numFloor) || 0}}%
+          {{((week.metrics.repeatSummary.tags.ad.share)*100 | numFloor) || 0}}%
         </span>
 
       </td>
       <td class="text-info" ng-class="{'text-muted': week.metrics.summary.tags.affiliate.count == 0}">
         {{week.metrics.summary.tags.affiliate.count | number: 0}}
         <span class="text-split">
-          {{((week.metrics.repeatSummary.tags.affiliate.count/week.metrics.summary.tags.affiliate.count)*100 | numFloor) || 0}}%
+          {{((week.metrics.repeatSummary.tags.affiliate.share)*100 | numFloor) || 0}}%
         </span>
 
       </td>
       <td class="text-info" ng-class="{'text-muted': week.metrics.summary.tags.direct.count == 0}">
         {{week.metrics.summary.tags.direct.count | number: 0}}
         <span class="text-split">
-          {{((week.metrics.repeatSummary.tags.direct.count/week.metrics.summary.tags.direct.count)*100 | numFloor) || 0}}%
+          {{((week.metrics.repeatSummary.tags.direct.share)*100 | numFloor) || 0}}%
         </span>
 
       </td>
       <td class="text-info" ng-class="{'text-muted': week.metrics.summary.tags.newsletterairpair.count == 0}">
         {{week.metrics.summary.tags.newsletterairpair.count | number:0}}
         <span class="text-split">
-          {{((week.metrics.repeatSummary.tags.newsletterairpair.count/week.metrics.summary.tags.newsletterairpair.count)*100 | numFloor) || 0}}%
+          {{((week.metrics.repeatSummary.tags.newsletterairpair.share)*100 | numFloor) || 0}}%
         </span>
 
       </td>
       <td class="text-info" ng-class="{'text-muted': week.metrics.summary.tags.incubator.count == 0}">
         {{week.metrics.summary.tags.incubator.count | number: 0}}
         <span class="text-split">
-          {{((week.metrics.repeatSummary.tags.incubator.count/week.metrics.summary.tags.incubator.count)*100 | numFloor) || 0}}%
+          {{((week.metrics.repeatSummary.tags.incubator.share)*100 | numFloor) || 0}}%
         </span>
 
       </td>
       <td class="text-info" ng-class="{'text-muted': week.metrics.summary.tags.press.count == 0}">
         {{week.metrics.summary.tags.press.count | number: 0}}
         <span class="text-split">
-          {{((week.metrics.repeatSummary.tags.press.count/week.metrics.summary.tags.press.count)*100 | numFloor) || 0}}%
+          {{((week.metrics.repeatSummary.tags.press.share)*100 | numFloor) || 0}}%
         </span>
 
       </td>
       <td class="text-info" ng-class="{'text-muted': week.metrics.summary.tags.seo.count == 0}">
         {{week.metrics.summary.tags.seo.count | number: 0}}
         <span class="text-split">
-          {{((week.metrics.repeatSummary.tags.seo.count/week.metrics.summary.tags.seo.count)*100 | numFloor) || 0}}%
+          {{((week.metrics.repeatSummary.tags.seo.share)*100 | numFloor) || 0}}%
         </span>
 
       </td>
       <td class="text-info" ng-class="{'text-muted': week.metrics.summary.tags.social.count == 0}">
         {{week.metrics.summary.tags.social.count | number: 0}}
         <span class="text-split">
-          {{((week.metrics.repeatSummary.tags.social.count/week.metrics.summary.tags.social.count)*100 | numFloor) || 0}}%
+          {{((week.metrics.repeatSummary.tags.social.share)*100 | numFloor) || 0}}%
         </span>
 
       </td>
       <td class="text-info" ng-class="{'text-muted': week.metrics.summary.tags.wordofmouth.count == 0}">
         {{week.metrics.summary.tags.wordofmouth.count | number: 0}}
         <span class="text-split">
-          {{((week.metrics.repeatSummary.tags.wordofmouth.count/week.metrics.summary.tags.wordofmouth.count)*100 | numFloor) || 0}}%
+          {{((week.metrics.repeatSummary.tags.wordofmouth.share)*100 | numFloor) || 0}}%
         </span>
 
       </td>
       <td class="text-info" ng-class="{'text-muted': week.metrics.summary.tags.untracked.count == 0}">
         {{week.metrics.summary.tags.untracked.count | number: 0}}
         <span class="text-split">
-          {{((week.metrics.repeatSummary.tags.untracked.count/week.metrics.summary.tags.untracked.count)*100 | numFloor) || 0}}%
+          {{((week.metrics.repeatSummary.tags.untracked.share)*100 | numFloor) || 0}}%
         </span>
 
       </td>
