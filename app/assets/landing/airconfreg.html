@@ -31,20 +31,33 @@
   h1 { text-align:center;margin:10px auto 20px auto; }
   h2 { text-align:left;margin:40px auto }
   h3 { color:#ce5424;font-size:20px;font-weight:bold }
-  .btn-orange { font-size:22px;background:#ce5424;margin:auto;color:white;height:50px;font-weight:300;text-transform:none;padding-top:10px; }
-  .btn-orange:hover { font-weight:500;color:white; }
+
+  #paybutton {
+    font-size:22px;
+    background:#ce5424;
+    margin:auto;
+    color:white;
+    height:50px;
+    font-weight: bold;
+    text-transform:none;
+    padding:5px;
+  }
+
+  .btn-orange:hover { color:white; }
 
   .hero { background:url('/images/landing/airconf/bg.jpg');height:540px;margin-top:0!important;text-align:center }
   .hero img { margin:40px 0 40px 0;z-index:2;position:relative;  }
 
   .whitebg { position:absolute;top:180px;left:25%;background:white;width:50%;padding:20px; }
 
-  .promocode { display:none }
   .card-required { display:none }
   .muted { color:gray;font-size:11px; }
   .stripeLogo { width:100px;float:right }
 
   .blackbg { background:black;height:800px }
+
+  .invalid { border: 2px solid red }
+   #payment-form input:invalid { border: 2px solid red }
 
   h6 a { font-weight:bold }
 
@@ -74,6 +87,10 @@
     .whitebg { top:120px; }
   }
 
+  .clickable span {
+    cursor: pointer;
+    border-bottom: 1px dashed silver;
+  }
 </style>
 
 <div class="hero behind-nav hero-landing-top">
@@ -95,135 +112,128 @@
 
   <div id="register" class="route">
     <div id="order">
-      <h1>Registration</h1>
+      <form action="" method="POST" id="payment-form">
+        <h1>Registration</h1>
+        <h3>Your $150 ticket includes:</h3>
+        <ul style="list-style:none; padding-left:0; line-height: 150%">
+          <li>Attend live workshops with your favorite AirConf experts</li>
+          <li>$150 credit towards pairing with AirConf expert (valid for 3 months)</li>
+          <li>Full access to workshop recordings archive.</li>
+        </ul>
 
-      <h3>$150 ticket includes</h3>
-      <ul style="list-style:none;padding-left:0">
-        <li>Access to all workshop recordings</li>
-        <li>Attending live workshops (first come first served)</li>
-        <li>$150 credit towards pairing with a speaker (valid for 3 months)</li>
-      </ul>
+        <hr />
 
-      <hr />
-
-      <h6>
-<!--  <a href="javascript:alert('implementing soon')">Re-tweet</a> for $5 off |
-    <a href="javascript:alert('implementing soon')">Share</a> for $5 off | -->
-        Promo code </a>
-        <input type="text" name="promocode" /> <a href="#" class="promocode">Submit</a>
-        <span class="promocodeMessage"></span>
-      </h6>
-
-      <hr />
-
-      <h3>Attendee info</h3>
-
-      <div class="personal-info-group">
-        <div class="control-group">
-          <label for="contactName{{num}}" class="control-label">Full name</label>
-          <div class="controls">
-            <input type="text" data-error-style="inline" value="{{ fullName }}" placeholder="Full name" name="fullName" id="contactName{{num}}" class="input-block-level">
-          </div>
-        </div>
-        <div class="control-group">
-          <label for="contactEmail{{num}}" class="control-label">Contact email <span class="muted">* Where you'll get the receipt</span></label>
-          <div class="controls">
-            <input type="text" data-error-style="inline" value="{{ email }}" placeholder="Email" name="email" id="contactEmail{{num}}" class="input-block-level">
-          </div>
-        </div>
-        <div class="control-group">
-          <label for="contactTwitter{{num}}" class="control-label">Twitter</label>
-          <div class="controls">
-            <div class="input-prepend">
-              <!-- <span class="add-on">@</span> -->
-              <input type="text" data-error-style="inline" value="{{ twitter }}" placeholder="twitter handle" name="twitter" id="contactTwitter{{num}}" class="input-block-level">
-            </div>
-          </div>
-        </div>
-      </div>
-      <div id="companyInfo">
-        <div>
+        <h3>Attendee info</h3>
+        <div class="personal-info-group">
           <div class="control-group">
-            <label class="control-label" for="companyName">Company</label>
+            <label for="contactName{{num}}" class="control-label">Full name</label>
             <div class="controls">
-              <input type="text" id="companyName" name="name" placeholder="Company name" value="{{ name }}" data-error-style="inline">
-              <a class="individual" href="#">I'm an individual</a>
+              <input type="text" data-error-style="inline" value="{{ fullName }}" placeholder="Full name" name="fullName" id="contactName{{num}}" class="input-block-level">
+            </div>
+          </div>
+          <div class="control-group">
+            <label for="contactEmail{{num}}" class="control-label">Contact email <span class="muted">* Where you'll get the receipt</span></label>
+            <div class="controls">
+              <input type="text" data-error-style="inline" value="{{ email }}" placeholder="Email" name="email" id="contactEmail{{num}}" class="input-block-level">
+            </div>
+          </div>
+          <div class="control-group">
+            <label for="contactTwitter{{num}}" class="control-label">Twitter</label>
+            <div class="controls">
+              <div class="input-prepend">
+                <!-- <span class="add-on">@</span> -->
+                <input type="text" data-error-style="inline" value="{{ twitter }}" placeholder="twitter handle" name="twitter" id="contactTwitter{{num}}" class="input-block-level">
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <hr />
-
-      <article id="stripeRegister" style="display:none">
-        <header class="entry-header">
-          <h3>Card info <span style="font-size:14px"></span></h3>
-
-          <p class="entry-meta">Your card will be securely stored using <b>stripe</b> for future AirPair purchases</p>
-          <p class="card-required">* required, even with promotional tickets.</p>
-
-        </header>
-
-        <form action="" method="POST" id="payment-form">
-
-        <div class="entry-content">
-
-          <img src="/images/css/stripe.png" class="stripeLogo" alt="Stripe logo" />
-
-          <span class="payment-errors text-error"></span>
-
-          <div class="control-group">
-            <label class="control-label">Card Number</label>
-            <div class="controls">
-              <input type="text" size="20" placeholder="Card Number" data-stripe="number"/>
+        <div id="companyInfo">
+          <div>
+            <div class="control-group">
+              <label class="control-label" for="companyName">Company</label>
+              <div class="controls">
+                <input type="text" id="companyName" name="name" placeholder="Company name" value="{{ name }}" data-error-style="inline">
+                <a class="individual" href="#">I'm an individual</a>
+              </div>
             </div>
           </div>
-
-          <div class="control-group">
-            <label class="control-label">CVC</label>
-            <div class="controls">
-              <input type="text" size="4" placeholder="CVC" data-stripe="cvc"/>
-            </div>
-          </div>
-
-          <div class="control-group">
-            <label class="control-label">Expiration (MM/YYYY)</label>
-            <div class="controls">
-              <input class="mm" type="text" size="2" data-stripe="exp-month" placeholder="MM" />
-              <input class="yyyy" type="text" size="4" data-stripe="exp-year" placeholder="YYYY" />
-            </div>
-          </div>
-
-          <div class=".payment-errors"></div>
-
         </div>
-          <div style="padding:20px 0">
-          <button class="btn btn-block btn-orange" href="#">Pay $<span class="total"></span> for my ticket</button>
+
+        <hr />
+
+        <article id="stripeRegister" style="display:none">
+          <header class="entry-header">
+            <h3>Card info</h3>
+            <p class="entry-meta">Your card will be securely stored using <b>stripe</b> for future AirPair purchases.</p>
+          </header>
+          <div class="entry-content" style="padding: 10px">
+            <img src="/images/css/stripe.png" class="stripeLogo" alt="Stripe logo" />
+
+            <span class="payment-errors text-error"></span>
+
+            <div class="control-group">
+              <label class="control-label">Card Number</label>
+              <div class="controls">
+                <input type="text" size="20" placeholder="Card Number" data-stripe="number"/>
+              </div>
+            </div>
+
+            <div class="control-group">
+              <label class="control-label">CVC</label>
+              <div class="controls">
+                <input type="text" size="4" placeholder="CVC" data-stripe="cvc"/>
+              </div>
+            </div>
+
+            <div class="control-group">
+              <label class="control-label">Expiration (MM/YYYY)</label>
+              <div class="controls">
+                <input class="mm" type="text" size="2" data-stripe="exp-month" placeholder="MM" />
+                <input class="yyyy" type="text" size="4" data-stripe="exp-year" placeholder="YYYY" />
+              </div>
+            </div>
+            <div class=".payment-errors"></div>
+            <p class="card-required"><em>Card required, even with promotional tickets. Your card will not be charged.</em></p>
           </div>
-        </form>
+        </article>
 
-      </article>
-      <article id="haveCard" style="display:none">
-        <h4>Easy, peasy</h4>
-        <br />
-        <p>We already have your card on file!</p>
-        <br />
-        <a class="btn btn-block btn-orange pay" href="#">Pay $<span class="total"></span> for my ticket</a>
-        <p style="font-size:12px;margin:10px 0 0 0">We will charge your card</p>
-      </article>
+        <article id="haveCard" style="display:none">
+          <h4>Easy, peasy</h4>
+          <br />
+          <p>We already have your card on file!</p>
+        </article>
 
+        <hr />
+        <div id="ordertotal" class="p-b-1">
+          <strong>Order total:</strong>
+          $<span id="ordertotalamount">150</span>
+        </div>
+        <div id="promo">
+          <h4 class="clickable">
+            <span>Have a special discount code?</span>
+          </h4>
+          <div id="promoform" style="display:none">
+            <input type="text" name="promocode" placeholder="Enter promo code"/>
+            <a href="#" class="promocode btn">Submit</a>
+          </div>
+        </div>
+        <div id="promoresult" style="display:none">
+          <span class="promocodeMessage"></span>
+          <a href="#" class="retry btn">Use a different code</a>
+        </div>
+        <div style="padding:20px 0">
+          <button id="paybutton" class="btn btn-block btn-orange" href="#">Pay $<span class="total"></span> for my ticket</button>
+        </div>
+      </form>
     </div>
-
   </div>
-
 </div>
-
 
 <div class="blackbg">
   <div class="container p-b-4">
   </div>
 </div>
-
 
 <footer>
   <p>&copy; airpair, Inc. · (800) 487-0668 · <a href="mailto:team@airpair.com">Email Us</a> · <a href="/experts">Experts</a> · <a href="/tutorials">Tutorials</a> · <a href="/privacy">Privacy Policy</a></p>

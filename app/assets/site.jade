@@ -1,0 +1,19 @@
+doctype html
+html(ng-app='ngAirPair')
+  head
+    script(src="/javascripts/site.js")
+
+  body
+    header(ng-controller='HeaderController')
+      h1 This is the main site
+      h4(ng-show='session.isSignedIn()')
+        and you are signed in as {{ session.name() }}
+
+    div
+      a(href="/site") Home
+      span &nbsp;|&nbsp;
+      a(href="/experts/me") Expert Settings
+    div(ng-view)
+
+    script.
+      require('scripts/site/app');

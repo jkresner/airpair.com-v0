@@ -21,8 +21,11 @@ module.exports = class OrdersService extends DomainService
 
   model: require './../models/order'
   paypalSvc: new PaypalAdaptiveSvc()
-  stripSvc: new StripeSvc()
+  stripeSvc: new StripeSvc()
   rates: new RatesSvc()
+
+  Chimp: require("../mail/chimp")
+  Discounts: require("./discounts")
 
   constructor: (user) ->
     @Data = Data
@@ -43,7 +46,7 @@ module.exports = class OrdersService extends DomainService
     order
 
   createAnonCharge: (charge, callback) ->
-    @stripSvc.createAnonCharge charge, callback
+    @stripeSvc.createAnonCharge charge, callback
 
 
   create: (order, callback) ->
@@ -82,11 +85,16 @@ module.exports = class OrdersService extends DomainService
       order.paymentType = 'stripe'
       savePaymentResponse null, { type: '$0 order' }
     else if order.paymentMethod? && order.paymentMethod.type == 'stripe'
-      # $log 'stripeSvc.createCharge', order
-      @stripSvc.createCharge order, savePaymentResponse
+      @stripeSvc.createCharge order, savePaymentResponse
     else
       @paypalSvc.Pay order, savePaymentResponse
 
+  getByExpert: (expertId, callback) ->
+    query = lineItems:
+      $elemMatch:
+        'suggestion.expert._id': expertId
+    @searchMany query, @historySelect, (error, orders) ->
+      callback error, orders
 
   getForHistory: (id, cb) =>
     userId = if id? && Roles.isAdmin(@usr) then id else @usr._id

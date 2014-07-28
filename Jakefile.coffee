@@ -1,7 +1,10 @@
 namespace 'test', ->
   desc('Test runners')
-  task 'server', ->
-    jake.createExec(['mocha test/server/**/*Spec.coffee'])
+  task 'server', (params) ->
+    execString = 'mocha test/server/**/*Spec.coffee'
+    execString += " -g \"#{params}\"" if params?
+    console.log execString
+    jake.createExec([execString])
       .addListener 'stdout', (message) ->
         process.stdout.write(message.toString())
       .addListener 'error', (message) ->

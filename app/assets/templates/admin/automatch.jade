@@ -1,0 +1,84 @@
+.container
+  .row
+    h1 Matching Console
+
+    .col-xs-6
+      h3 Max Rate (Budget)
+      p
+        input(ng-model="budget" ng-change="update()")
+
+      h3 Pricing
+      p
+        select(ng-options="o as o for o in pricingOptions" ng-model="pricing" ng-change="update()")
+
+      h3 Tags
+      p
+        tagger(ng-model="tagsSelected" options="tagsAvailable" style="width: 100%")
+        p.help-block Specify in order of importance
+
+    .col-xs-6
+      h3 Popular Tags
+      span.angular-tagger__tag(ng-click="selectTag(tag)" ng-repeat='tag in popularTags' ng-style="tagColor(tag)") {{ tag }}
+
+.container
+  .row
+    h3 Expert List
+    table.table
+      tr
+        th(width="5%")
+          .text-center
+            | Score
+            br
+            button(ng-click="sort = 'score'") ⇑
+            | &nbsp;
+            button(ng-click="sort = '-score'") ⇓
+        th
+        th
+          | Expert
+          br
+          button(ng-click="sort = 'name'") ⇑
+          | &nbsp;
+          button(ng-click="sort = '-name'") ⇓
+        th(width="7%")
+          .text-center
+            | Rate
+            br
+            button(ng-click="sort = 'rate'") ⇑
+            | &nbsp;
+            button(ng-click="sort = '-rate'") ⇓
+        th(width="40%") Tags
+      tr.expert(ng-repeat='expert in experts | orderBy:sort' ng-class="{busy: (expert.status == 'busy')}")
+        td
+          .text-center {{ expert.score }}
+        td(width="8%")
+          img.img-responsive(src= "{{expert.pic}}")
+        td(width="30%")
+          strong
+            a(href="/adm/experts/edit/{{expert._id}}") {{ expert.name }}
+            &nbsp;
+            span.label.label-danger(ng-if="expert.status == 'busy'") BUSY
+          br
+          a(href="mailto:{{expert.gmail}}") {{ expert.gmail }}
+          .stats.row
+            .col-xs-2.text-center(title="Karma")
+              i.fa.fa-heart &nbsp;
+              span.stat {{ expert.karma  }}
+            .col-xs-2.text-center(title="Sessions")
+              i.fa.fa-file-video-o &nbsp;
+              span.stat {{ expert.sessionsCount }}
+            .col-xs-2.text-center(title="Last Session")
+              i.fa.fa-calendar &nbsp;
+              span.stat {{ expert.lastSession }}
+            .col-xs-2.text-center(title="Lifetime earnings")
+              i.fa.fa-money &nbsp;
+              span.stat {{ expert.lifetimeEarnings }}
+            .col-xs-2.text-center(title="StackOverflow reputation")
+              i.fa.fa-stack-exchange &nbsp;
+              span.stat {{ expert.so.reputation }}
+            .col-xs-2.text-center(title="Github follower count")
+              i.fa.fa-github &nbsp;
+              span.stat {{ expert.gh.followers }}
+        td(width="7%")
+          .text-center ${{ expert.rate }}
+        td
+          span.angular-tagger__tag(ng-click="selectTag(tag.soId)" ng-repeat='tag in expert.tags' ng-style="tagColor(tag.soId)") {{ tag.soId }}

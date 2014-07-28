@@ -1,5 +1,5 @@
 global.$log = console.log
-global._ = require 'underscore'
+global._ = require 'lodash'
 
 async = require 'async'
 mongoose = require 'mongoose'
@@ -9,6 +9,7 @@ chai.use require 'sinon-chai'
 Factory = require 'factory-lady'
 require ("../factory/expertFactory")
 require ("../factory/requestFactory")
+require ("../factory/orderFactory")
 
 before (done) ->
   return done() if mongoose.connections[0]._listening
@@ -27,7 +28,7 @@ chai.Assertion.includeStack = true
 module.exports =
 
   http:       require 'supertest'
-  _:          require 'underscore'
+  _:          require 'lodash'
   sinon:      require 'sinon'
   chai:       require 'chai'
   expect:     chai.expect

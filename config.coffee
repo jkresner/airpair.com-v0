@@ -8,7 +8,7 @@ exports.config =
     path: 'app.coffee'
     port: 3333
     base: '/'
-    run: yes
+    run: no
 
   plugins:
     sass:
@@ -38,7 +38,7 @@ exports.config =
        'javascripts/adm-old.js': /(scripts\/adm-old|scripts\/shared|scripts\/providers|lib\/mix)/
        'javascripts/providers.js': /^app\/scripts\/providers/
        'javascripts/landing.js': /jquery|jquery.cookie|moment|lodash|providers\/(addjs|olark|segmentio|optimizely)|bootstrap3\/dropdown|bootstrap3\/collapse|bootstrap3\/modal|select2/
-
+       'javascripts/site.js': /(scripts\/angular|lodash|jquery)|^app\/scripts\/site/
        'test/javascripts/test.js': /^test(\/|\\)(?=integration)/
        'test/javascripts/test-data.js': /^test(\/|\\)(?=data)/
        'test/javascripts/test-vendor.js': /^test(\/|\\)(?=vendor)/
@@ -47,6 +47,7 @@ exports.config =
         # even if they aren't specified in order.
         before: [
           'vendor/scripts/angular.js'
+          'vendor/scripts/angular-tagger.js'
           'vendor/scripts/console-helper.js'
           'vendor/scripts/jquery.js'
           'vendor/scripts/jquery-cookie.js'
@@ -73,6 +74,7 @@ exports.config =
           'vendor/css/adm-bb/bootstrap.css'
           'vendor/css/adm-bb/bootstrap-responsive.css'
           'vendor/css/ap/epik.css'
+          'vendor/css/shared/angular-tagger.css'
           'vendor/css/shared/jquery.datepicker.css'
           'vendor/css/shared/jquery.timepicker.css'
           'vendor/css/shared/bootstrap-typeahead.css'

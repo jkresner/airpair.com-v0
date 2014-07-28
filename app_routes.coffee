@@ -18,6 +18,14 @@ module.exports = (app) ->
   app.get '/', renderHome, render 'dashboard'
   app.get '/book/me', authd, render 'bookme'
 
+  # angular site pages
+  app.get '/admin', authd, adm, render 'admin'
+  app.get '/adm/matching', authd, adm, render 'admin'
+  app.get '/site', authd, render 'site'
+  app.get '/experts/me', authd, render 'site'
+  app.get '/templates/admin/automatch', authd, render 'templates/admin/automatch'
+  app.get '/templates/experts/me', authd, render 'templates/experts/me'
+
   # pages
   app.get '/login', file 'login'
   app.get '/be-an-expert*', render 'beexpert'
@@ -43,9 +51,11 @@ module.exports = (app) ->
   app.get '/schedule/:id', authd, mm, render 'schedule', ['params.id']
 
   # api
+  require('./lib/api/session')(app)
   require('./lib/api/users')(app)
   require('./lib/api/companys')(app)
   require('./lib/api/tags')(app)
+  require('./lib/api/matchers')(app)
   require('./lib/api/experts')(app)
   require('./lib/api/requests')(app)
   require('./lib/api/requestCalls')(app)

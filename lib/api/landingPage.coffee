@@ -1,20 +1,35 @@
-api_key    = config.payment.stripe.secretKey
-stripe     = require('stripe')(api_key)
-chimp      = require('../mail/chimp');
-
 class LandingPageApi extends require('./_api')
 
-  Svc: require './../services/orders'
+  Svc: require('../services/orders')
+  Chimp: require('../mail/chimp')
+  Discounts: require('../services/discounts')
+  Stripe: require('stripe')(config.payment.stripe.secretKey)
 
   routes: (app, route) ->
-    app.post "/api/#{route}/purchase", @ap, @createCustomer # generic, client decides $$
-    app.post "/api/#{route}/airconf/promo", @ap, @loggedIn, @airconfPromo
     app.post "/api/#{route}/airconf/order", @ap, @loggedIn, @airconfCreateOrder
+    app.post "/api/#{route}/airconf/promo", @ap, @loggedIn, @airconfPromoLookup
     app.post "/api/#{route}/mailchimp/subscribe", @ap, @mailchimpSubscribe
+    app.post "/api/#{route}/purchase", @ap, @createCustomer # generic, client decides $$
+
+  airconfCreateOrder: =>
+    @svc.createAirConfOrder @data, @cbSend
+
+  airconfOrder: =>
+    @svc.createAirConfOrder @data, @cbSend
+
+  airconfPromoLookup: =>
+    @Discounts.lookup @data.code, (err, result) =>
+      if result?.valid
+        @cbSend(null, result)
+      else if not result?.valid
+        err.status = 404
+        @cbSend(err)
+      else
+        @cbSend(err)
 
   # Create customer, return customer to client, then charge customer.
   createCustomer: (req, res, next) =>
-    stripe.customers.create {email: req.body.email, card: req.body.stripeToken.id}, (err, customer) =>
+    @Stripe.customers.create {email: req.body.email, card: req.body.stripeToken.id}, (err, customer) =>
       if err
         console.warn err
         return res.send status: "error", error: err
@@ -25,7 +40,7 @@ class LandingPageApi extends require('./_api')
 
   # Charge a customer given a customer id and amount.
   chargeCustomer: (customerId, amount) =>
-    stripe.charges.create
+    @Stripe.charges.create
       amount: amount
       currency: "USD"
       customer:customerId
@@ -34,10 +49,7 @@ class LandingPageApi extends require('./_api')
       console.log "customer charged #{amount}"
 
   mailchimpSubscribe: =>
-    chimp.subscribe config.mailchimp.airconfListId, @data.email, { Paid: 'No' }, @cbSend
+    @Chimp.subscribe config.mailchimp.airconfListId, @data.email, { Paid: 'No' }, @cbSend
 
-  airconfPromo: => @svc.getAirConfPromoRate @data.code, @cbSend
-  airconfOrder: => @svc.createAirConfOrder @data, @cbSend
-  airconfCreateOrder: => @svc.createAirConfOrder @data, @cbSend
 
 module.exports = (app) -> new LandingPageApi app, 'landing'

@@ -1,7 +1,6 @@
-
 class ExpertApi extends require('./_api')
 
-  Svc: require './../services/experts'
+  Svc: require('./../services/experts')
 
   routes: (app, route) ->
     app.get  "/api/#{route}", @admin, @ap, @list
@@ -9,7 +8,6 @@ class ExpertApi extends require('./_api')
     app.get  "/api/#{route}/request/:id", @loggedIn, @ap, @detailOnRequest
     app.post "/api/#{route}", @loggedIn, @ap, @create
     app.put  "/api/#{route}/:id", @loggedIn, @ap, @update
-
 
   detailOnRequest: (req) => @svc.detailOnRequest req.params.id, @cbSend
 

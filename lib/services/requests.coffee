@@ -27,6 +27,12 @@ module.exports = class RequestsService extends DomainService
 
   getByCallId: (callId, cb) -> @searchOne { 'calls._id': callId }, {}, cb
 
+  getBySuggestedExpert: (expertId, callback) =>
+    query = suggested:
+      $elemMatch:
+        'expert._id': expertId
+    @searchMany query, {}, (error, requests) ->
+      callback error, requests
 
   """ Used for adm/inbound dashboard inactive """
   getInactive: (cb) ->

@@ -4,8 +4,6 @@ class Api
   # Accessor to backing Service object for this API
   # is overriden in child class
   Svc:  ->
-
-  # turn on to get information about requests in the console
   logging: off
 
   # set important authorization-related properties

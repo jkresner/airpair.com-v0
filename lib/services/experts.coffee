@@ -4,9 +4,13 @@ RatesService    = require './rates'
 
 module.exports = class ExpertsService extends DomainService
 
-  logging: on
+  #logging: on
 
   model: require './../models/expert'
+
+  automatch: (tags, cb) =>
+    @getByTagsAndMaxRate tags.split(','), 150, (err, experts) ->
+      cb err, experts
 
   # Used for adm/pipeline dashboard list
   getAll: (cb) ->
@@ -26,7 +30,7 @@ module.exports = class ExpertsService extends DomainService
     @searchMany { tags: { $elemMatch: { '_id': tagId, 'subscription.auto': { $elemMatch: { $in: [level] } } } } }, { fields: @admSelect }, cb
 
   getByTagsAndMaxRate: (soTagIds, maxRate, cb) =>
-    @searchMany { tags: { $elemMatch: { soId: { $in: soTagIds } } },  rate: { $lt: maxRate } }, { fields: @admSelect }, cb
+    @searchMany { tags: { $elemMatch: { soId: { $in: soTagIds } } },  rate: { $lt: maxRate } }, {}, cb
 
   detailOnRequest: (id, cb) =>
     @searchOne userId: @usr._id, {}, (e, expert) =>
@@ -34,8 +38,6 @@ module.exports = class ExpertsService extends DomainService
       new RequestService(@usr).getById id, (ee, request) =>
         expert.suggestedRate = new RatesService().calcSuggestedRates request, expert
         cb ee, expert
-
-
 
   getByBookme: (urlSlug, code, cb) =>
     urlSlug = urlSlug.toLowerCase()
