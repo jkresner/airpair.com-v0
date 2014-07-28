@@ -4,4 +4,4 @@ HeaderController = ($scope, Session, Expert) ->
 
 angular
   .module('ngAirPair')
-  .controller('HeaderController', ['$scope', 'Session', HeaderController])
+  .controller('HeaderController', ['$scope', 'Session', 'Expert', HeaderController])

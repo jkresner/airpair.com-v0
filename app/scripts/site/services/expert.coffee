@@ -3,7 +3,6 @@ Expert = ($http, $rootScope, Restangular) ->
     fetchExpert: ->
       Restangular.one('experts', 'me').get().then (expert) =>
         @private.data.expert = expert
-        $rootScope.$emit('expertLoaded')
         @private.initializeTags()
         @private.fetchExpertRequests(expert._id)
         @private.fetchExpertOrders(expert._id)
@@ -121,7 +120,7 @@ Expert = ($http, $rootScope, Restangular) ->
         _.each @data.expert.tags, (tag) =>
           tag.levelBeginner = @tagGetterSetter(tag, 'beginner')
           tag.levelIntermediate = @tagGetterSetter(tag, 'intermediate')
-          tag.levelexpertObject = @tagGetterSetter(tag, 'expert')
+          tag.levelExpert = @tagGetterSetter(tag, 'expert')
 
       tagGetterSetter: (tag, level) ->
         (value) ->

@@ -20,12 +20,19 @@
   .section
     h1 notification status
 
-    .expert-status
-      form(ng-model-options="{ getterSetter: true }")
+    form.availability(ng-model-options="{ getterSetter: true }")
+      .expert-status
+        .send-toggle.top
+          .toggle.on.active
+          .toggle.off
+        label Send me AirPairs!
         input(type="checkbox", id="status", ng-checked="expert.status()", ng-model="expert.status", ng-change="expert.update()")
-        label(for="status") Send me AirPairs!
-        select(ng-model="expert.hoursAvailable", ng-change="expert.update()", ng-options="h for h in expert.hourRange")
-        input(id="availability", type="text", placeholder="What days and times are you available to AirPair?", ng-model="expert.availability", ng-change="expert.update()", ng-delay="500")
+      .hours
+        select.top(ng-model="expert.hoursAvailable", ng-change="expert.update()", ng-options="h for h in expert.hourRange")
+        label Hrs/Week
+      .times
+        .top
+          input(id="availability", type="text", placeholder="What days and times are you available to AirPair?", ng-model="expert.availability", ng-change="expert.update()", ng-delay="500")
         label(for="availability") Best Times
 
   .section
@@ -56,17 +63,18 @@
             .col-xs-4 Intermediate
             .col-xs-4 Expert
       .type What types of airpairs
-    form(ng-model-options="{ getterSetter: true }")
+    form.tags(ng-model-options="{ getterSetter: true }")
       .slider-row.level(ng-repeat="tag in expert.tags()")
         .slider-wrapper
           .slider-col
             .row
               .col-xs-4
-                input(type="checkbox", ng-checked="expert.tagHasLevel(tag, 'beginner')", ng-model="tag.levelBeginner", ng-change="expert.update()")
+                input(type="checkbox", ng-checked="expert.tagHasLevel(tag, 'beginner')", ng-model="tag.levelBeginner", ng-change="expert.update()", ng-delay="500")
               .col-xs-4
-                input(type="checkbox", ng-checked="expert.tagHasLevel(tag, 'intermediate')", ng-model="tag.levelIntermediate", ng-change="expert.update()")
+                input(type="checkbox", ng-checked="expert.tagHasLevel(tag, 'intermediate')", ng-model="tag.levelIntermediate", ng-change="expert.update()", ng-delay="500")
               .col-xs-4
-                input(type="checkbox", ng-checked="expert.tagHasLevel(tag, 'expert')", ng-model="tag.levelExpert", ng-change="expert.update()")
+                input(type="checkbox", ng-checked="expert.tagHasLevel(tag, 'expert')", ng-model="tag.levelExpert", ng-change="expert.update()", ng-delay="500")
         .type {{tag.name}}
+          .all-levels
 
 //-pre(ng-bind='expertOrderStats() | json')

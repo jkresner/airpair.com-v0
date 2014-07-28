@@ -40,9 +40,77 @@
     padding-bottom: 75px;
   }
 
-  .expert-status {
-    height: 70px;
-    width: 180px;
+  #status {
+    display: none;
+  }
+  .availability {
+    & > div {
+      float: left;
+      text-align: center;
+
+      .top {
+        height: 75px;
+      }
+      label {
+        padding-top: 24px;
+      }
+    }
+    .expert-status {
+      width: 190px;
+
+      .send-toggle {
+        background-color: #DFF2EF;
+        border: 1px solid #C8D6D3;
+        border-radius: 40px;
+        .toggle {
+          background-repeat: no-repeat;
+          background-position: center;
+          background-color: #CCD6D4;
+          border-radius: 30px;
+          border: 3px solid #B3BAB9;
+          display: inline-block;
+          height: 63px;
+          margin: 6px;
+          width: 61px;
+          &.active {
+            background-color: #CE5424;
+            border-radius: 30px;
+            border: 3px solid #99391C;
+          }
+        }
+        .on {
+          background-image: url('/images/icons/pairing-on.png');
+          float: left;
+        }
+        .off {
+          background-image: url('/images/icons/pairing-off.png');
+          float: right;
+        }
+      }
+    }
+
+    .hours {
+      margin-left: 100px;
+      width: 80px;
+
+      select {
+        border: 0;
+        box-shadow: none;
+        font-size: 36px;
+      }
+    }
+
+    .times {
+      padding-left: 100px;
+      width: 600px;
+      input {
+        border: 0;
+        border-bottom: 1px solid #ccc;
+        box-shadow: none;
+        font-size: 18px;
+        margin-top: 34px;
+      }
+    }
   }
 
   .slider-row.header {
@@ -102,6 +170,19 @@
       padding-left: 22px;
       text-transform: uppercase;
       width: 220px;
+
+      .all-levels {
+        background-image: url('/images/icons/levels-inactive.png');
+        background-repeat: no-repeat;
+        background-position: center;
+        width: 26px;
+        height: 26px;
+        float: right;
+        margin: 10px;
+        &.active {
+          background-image: url('/images/icons/levels-active.png');
+        }
+      }
     }
   }
 
