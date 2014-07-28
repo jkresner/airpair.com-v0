@@ -7,6 +7,7 @@ CompanysSvc      = require '../services/companys'
 SettingsSvc      = require '../services/settings'
 RequestsSvc      = require '../services/requests'
 stripePK         = config.payment.stripe.publishedKey
+AirConfDiscountsSvc  = require '../services/discounts'
 
 module.exports = class ViewDataService
 
@@ -106,6 +107,13 @@ module.exports = class ViewDataService
         new SettingsSvc(@usr).getByUserId @usr._id, (ee, settings) =>
           hasCard = _.find(settings.paymentMethods, (p) -> p.type == 'stripe')?
           cb eee, -> { workshops: Data.workshops, hasCard, registration, company, stripePK }
+
+  airconfpromo: (id, cb) ->
+    AirConfDiscountsSvc.lookup id, (e, promo) =>
+      if e then promo = _.extend e, promo
+
+      # set on the session ? or pass through query string
+      cb null, -> { promo }
 
 
   so10: (id, cb) ->

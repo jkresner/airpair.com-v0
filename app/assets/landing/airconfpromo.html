@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <title>AirPair | AirConf</title>
+    <title>AirPair | AirConf Promotion</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="robots" content="index, follow">
@@ -15,25 +15,14 @@
     <meta property="og:description" content="Welome to AirConf, a month long speaker series broadcasting world-wide via Google Hangouts with coding book authors, top Stack Overflow answerers, framework core team members and more." />
     <meta property="og:image" content="https://www.airpair.com/images/landing/airconf/og.png" />
     <link rel="canonical" href="http://www.airpair.com/airconf" />
-    <link rel="publisher" href="https://plus.google.com/105075583437166504731" />
     <link rel="stylesheet" href="/css/ap.css">
     <link rel='stylesheet' type='text/css' href='//fonts.googleapis.com/css?family=Open+Sans:400,300,600' >
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-    <script type="text/javascript">
-    (function()
-    {var po = document.createElement("script");
-         po.type = "text/javascript";
-         po.async = true;
-         po.src = "https://apis.google.com/js/plusone.js";
-         var s = document.getElementsByTagName("script")[0];
-         s.parentNode.insertBefore(po, s);
-    })();
-    </script>
     <style type="text/css">
       h2 { text-align:center;margin:40px auto; }
       a.btn-orange { font-size:22px;background:#ce5424;margin:auto;color:white;height:50px;font-weight:300;text-transform:none;padding-top:10px; }
       a.btn-orange:hover { font-weight:500;color:white; }
-      .subscribe, #plus {
+      .subscribe {
         background-color: #D5E2D5;
         border-radius: 2px;
         padding: 15px;
@@ -165,11 +154,6 @@
         border-color: red;
       }
 
-      /* Google Plus widget overrides */
-      #widget_bounds.Yfd {
-        border: 0px !important;
-        border-width: 0 !important;
-      }
     </style>
   </head>
   <body id="airconf">
@@ -197,23 +181,6 @@
           <div class="col-md-4"><button id="btnSubscribe" class="btn-block">Reserve My Seat</button></div>
         </div>
       </form>
-    </div>
-
-    <div class="container" id="plus" style="display:none">
-    <div class="row">
-      <div class="col-md-4">
-        <g:plus href="https://plus.google.com/105075583437166504731" size="badge"></g:plus>
-      </div>
-      <div class="col-md-8">
-        <h3 style="margin-top: 20px">
-          Add us on Google+ to get a feed of our live workshops.
-        </h3>
-        <p>
-          Please check your email for our subscription confirmation email.
-        </p>
-      </div>
-    </div>
-
     </div>
 
     <div class="container" id="experts">
@@ -261,13 +228,16 @@
       </div>
     </div>
     <footer>
-      <p>&copy; airpair, Inc. · (800) 487-0668 · <a href="mailto:team@airpair.com">Email Us</a> · <a href="/experts">Experts</a> · <a href="/tutorials">Tutorials</a> · <a href="/privacy">Privacy Policy</a></p>
+      <p>&copy; airpair, Inc. · (800) 487-0668  <a href="#" class="loginRequired"></a></p>
     </footer>
+
+
   </body>
 
   {{> InitPage }}
 
   <script type="text/javascript">
+
     window.urlParam = function(name, url) {
         if (!url) {
          url = window.location.href;
@@ -294,12 +264,21 @@
       }
     }
 
-    function showSubscribe() {
-      if (storage('subscribed') !== 'true') {
-        $('#subscription').show();
+    function showSubscribe(pageData) {
+      if (storage('subscribed') === 'true')
+      {
+        $('.subscribe').hide();
+        if (pageData.session.authenticated)
+        {
+          window.location = '/airconf-registration'
+        }
+        else
+        {
+          $('.loginRequired').click();
+        }
       }
       else {
-        $('#plus').show();
+        $('#subscription').show();
       }
     }
 
@@ -316,9 +295,14 @@
     }
 
     function initPage() {
-      showSubscribe();
+      var pageData = { {{JSON 'promo'}}, {{JSON 'session'}}, segmentioKey: '{{{segmentioKey}}}' };
+
+      initStaticPage('airconf-promo');
+
+      if (typeof bindLoginModal !== 'undefined') { bindLoginModal(); }
+
+      showSubscribe(pageData);
       prefillEmailBox();
-      initStaticPage('airconf');
 
       $('#btnSubscribe').click(function(e){
         $input = $('[name=subscribe]');
@@ -329,8 +313,7 @@
             .done(function(data) {
               addjs.trackEvent('airconf', 'subscribe', email);
               storage('subscribed', true);
-              $('.subscribe').hide();
-              $('#plus').show();
+              showSubscribe(pageData);
             })
             .fail(function(resp, data) {
               d = JSON.parse(resp.responseText);
@@ -342,5 +325,9 @@
       });
     }
   </script>
+
   <script src="/javascripts/landing.js" defer onload="initPage()"></script>
+
+  {{> confSigninModal }}
+
 </html>
