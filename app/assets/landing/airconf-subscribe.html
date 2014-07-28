@@ -206,10 +206,10 @@
       </div>
       <div class="col-md-8">
         <h3 style="margin-top: 20px">
-          Add us on Google+ to get a feed of all our live workshops.
+          Add us on Google+ to get a feed of our live workshops.
         </h3>
         <p>
-          Thank you for subscribing. Please check your email for confirmation link.
+          Please check your email for our subscription confirmation email.
         </p>
       </div>
     </div>
@@ -297,18 +297,15 @@
     function showSubscribe() {
       if (storage('subscribed') !== 'true') {
         $('#subscription').show();
-<<<<<<< HEAD
-=======
+      }
+      else {
+        $('#plus').show();
       }
     }
 
     function prefillEmailBox() {
       if (urlParam('e')) {
         $('[name=subscribe]').val(urlParam('e'));
->>>>>>> d94244d52ad74b2e3b6c2b21a2d47e966177f693
-      }
-      else {
-        $('#plus').show();
       }
     }
 
