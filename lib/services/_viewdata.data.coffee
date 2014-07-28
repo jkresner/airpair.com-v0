@@ -18,6 +18,7 @@ module.exports =
 
   workshops:
 
+
     'danielroseman':  convert 'danielroseman', 'new-in-django-1.7', so:'104349/daniel-roseman'
     'ryanbigg':       d: 'Mon, 4th Aug 22:00 GMT', n: 'Ryan Bigg', c: "Rails Book Author", t: "Refactoring Big Features <br />in Large Codebases", so: '15245/ryan-bigg', tags: ['rails','spree'], u: 'ryanbigg', g: '9a2a53db8e9b4476038c94a64b32833f', a: "Spree had a problem: the adjustments system was slow and difficult to understand. Over a period of some months, we refactored the code to be much faster and cleaner. The talk will cover the unique challenges that faced Spree and how we overcome them."
     'abedra':         d: 'Tue, 5th Aug 16:00 GMT', n: 'Aaron Bedra', c: "Groupon Intrastructure", t: "Creating Dynamic Security Controls With Repsheet", slug: "repsheet-dynamic-security-controls", tw: 'abedra', tags: ['repsheet','rails','mod-security'], u: 'abedra', g: '24659470071279a42020d5b87411598e', a: "It's 2014 and our security controls should start acting like it. We maintain static controls on security because we lack the intelligence to adapt them to the situation at hand. Join Aaron as he walks you through creating dynamic security controls using the Repsheet threat intelligence and reputation framework."
