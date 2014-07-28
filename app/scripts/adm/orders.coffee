@@ -669,6 +669,7 @@ module.exports = (pageData) ->
           if not @metrics
             @metricsRepeated = []
             @metrics = []
+            TAGS = []
             for order in apData.orders.data
               metric =
                 utc: order.utc
@@ -687,7 +688,7 @@ module.exports = (pageData) ->
                   incubator: {total:0, revenue: 0}
                   newsletterairpair: {total:0, revenue: 0}
                   press: {total:0, revenue: 0}
-                  # product: {total:0, revenue: 0}
+                  event: {total:0, revenue: 0}
                   seo: {total:0, revenue: 0}
                   social: {total:0, revenue: 0}
                   wordofmouth: {total:0, revenue: 0}
@@ -700,6 +701,8 @@ module.exports = (pageData) ->
 
 
               _.each order.marketingTags, (tag) ->
+                # console.log "tag.group", tag.group
+                TAGS.push tag.group
                 channelTags = _.where order.marketingTags, { type: "channel" }
                 tagName = tag.group.replace('-', '')
                 if tag.type is "channel"
@@ -715,6 +718,10 @@ module.exports = (pageData) ->
 
               @metricsRepeated.push metric if metric.isRepeat
               @metrics.push metric
+
+            console.log "tag.groups", _.groupBy TAGS, (num) -> num
+
+
             # tags = _.uniq(tags)
 
 

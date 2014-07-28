@@ -105,7 +105,7 @@
 .channels-growth {
   th {
     text-align: left;
-    width: 7.9%;
+    width: 8.2%;
     &:first-child {
       width: 5.5%;
     }
@@ -139,6 +139,9 @@
   }
   td .text-split {
     width: 63%;
+  }
+  td:last-child .text-split {
+    width: 54%;
   }
 }
 
