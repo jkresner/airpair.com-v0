@@ -66,7 +66,7 @@
       font-size:11px;
       padding:10px 4px;
     }
-    &.summary td {
+    &.row-summary td {
       border-top:1px solid #2E2E2E;
       background-color:#F8F8F8;
     }
@@ -105,7 +105,7 @@
 .channels-growth {
   th {
     text-align: left;
-    width: 7.8%;
+    width: 8%;
     &:first-child {
       width: 5.5%;
     }
@@ -139,6 +139,9 @@
   }
   td .text-split {
     width: 63%;
+  }
+  td:last-child .text-split {
+    width: 54%;
   }
 }
 

@@ -29,7 +29,7 @@
 
 <style type="text/css">
 
-  .hero { background:url('/images/landing/airconf/bg-2.jpg');height:540px;margin-top:0!important;text-align:center }
+  .hero { background:url('/images/landing/airconf/bg-2.jpg');height:480px;margin-top:0!important;text-align:center }
   .hero img { margin:50px 0 40px 0 }
   .hero section { height:110px;margin-bottom:40px }
   /*.hero section div.bg { height:110px;background:black;opacity:0.3  }*/
@@ -157,7 +157,17 @@
 
 </style>
 
+<div id="about">
+  <p>We've organized the largest collection of technical experts in the world that want to help you and your business. While we've paired thousands of people individually with our experts, it's never been possible to get direct access to our top experts all at one event.</p>
 
+  <p>This August, you're invited to get unprecedented access to {{workshops.count}}+ top experts in the field — open source core team members, technical author and noted entrepreneurs — who can not only help you with problems and challenges specific to your project, but can also help you better understand the future of the frameworks, libraries and languages that power your codebases.</p>
+</div>
+
+
+<style type="text/css">
+  #about { padding:10px 0 30px 10px; }
+  #about p { width:80%;margin:20px auto;text-align:center;font-size:16px; }
+</style>
 
 {{> confSubscribe }}
 
@@ -281,6 +291,8 @@
   #experts { text-align:center }
   #experts .sessionCol { width:200px;display:inline-block;margin:30px 10px; }
   #experts .description { font-size:11px }
+  #experts time { color:black; }
+  #experts time span { font-size:10px; }
 
   @media (max-width:800px) {
     #experts .sessionCol { margin:30px 4% 30px 0; }
@@ -353,6 +365,7 @@
 
  <h2 class="text-thin text-center m-t-3">Week 3 Speakers</h2><hr />
 
+  {{#with hcatlin}}{{> workshopSummary }}{{/with}}
   {{#with joshowens}}{{> workshopSummary }}{{/with}}
   {{#with philsturgeon}}{{> workshopSummary }}{{/with}}
   {{#with evgenyz}}{{> workshopSummary }}{{/with}}
@@ -448,6 +461,21 @@
         this.btn = $(this).find('.btn-slate');
         this.btn.html(this.btn.data('act'));
       });
+    });
+
+    $('time').each(function (idx, time) {
+      $time = $(time);
+      utc = $time.attr('datetime');
+      offset = moment().format('ZZ')
+      if (utc!='') {
+        localTime = moment(utc).format('ddd Do MMM hha ZZ')
+
+        $time.html( localTime.replace(offset,'<span>('+offset+')</span>') );
+      } else
+      {
+        $time.html( 'Confirming time' );
+      }
+
     });
 
 {{#if session.authenticated }}

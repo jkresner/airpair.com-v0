@@ -21,7 +21,7 @@ class Chimp
   errorHandler: (listId, email, mergeVars, cb) ->
     (err) ->
       if config.isProd
-        winston.error "Chimp Problem: #{listId}, #{email}, #{updateExisting}, #{mergeVars} #{err}"
+        winston.error "Chimp Problem: #{listId}, #{email}, #{mergeVars} #{err}"
       else
         $log "Chimp: subscribe failed !!!", listId, email, mergeVars, err
       cb(err) if cb?
