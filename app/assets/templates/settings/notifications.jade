@@ -3,17 +3,17 @@
     .info
       .received
       div
-        span {{ expert.requestStats().requestCount }}
+        span {{ requestStats().requestCount }}
       div
         span.sub-label requests received
       .response
       div
-        span {{ expert.requestStats().responseRate | number:0 }}%
+        span {{ requestStats().responseRate | number:0 }}%
       div
         span.sub-label response rate
       .pairs
       div
-        span {{ expert.orderStats().paidOrderCount }}
+        span {{ orderStats().paidOrderCount }}
       div
         span.sub-label Air Pairs
 
@@ -26,13 +26,13 @@
           .toggle.on.active
           .toggle.off
         label Send me AirPairs!
-        input(type="checkbox", id="status", ng-checked="expert.status()", ng-model="expert.status", ng-change="expert.update()")
+        input(type="checkbox", id="status", ng-checked="status()", ng-model="status", ng-change="update()")
       .hours
-        select.top(ng-model="expert.hoursAvailable", ng-change="expert.update()", ng-options="h for h in expert.hourRange")
+        select.top(ng-model="hoursAvailable", ng-change="update()", ng-options="h for h in hourRange")
         label Hrs/Week
       .times
         .top
-          input(id="availability", type="text", placeholder="What days and times are you available to AirPair?", ng-model="expert.availability", ng-change="expert.update()", ng-delay="500")
+          input(id="availability", type="text", placeholder="What days and times are you available to AirPair?", ng-model="availability", ng-change="update()", ng-delay="500")
         label(for="availability") Best Times
 
   .section
@@ -64,16 +64,16 @@
             .col-xs-4 Expert
       .type What types of airpairs
     form.tags(ng-model-options="{ getterSetter: true }")
-      .slider-row.level(ng-repeat="tag in expert.tags()")
+      .slider-row.level(ng-repeat="tag in tags()")
         .slider-wrapper
           .slider-col
             .row
               .col-xs-4
-                input(type="checkbox", ng-checked="expert.tagHasLevel(tag, 'beginner')", ng-model="tag.levelBeginner", ng-change="expert.update()", ng-delay="500")
+                input(type="checkbox", ng-checked="tagHasLevel(tag, 'beginner')", ng-model="tag.levelBeginner", ng-change="update()", ng-delay="500")
               .col-xs-4
-                input(type="checkbox", ng-checked="expert.tagHasLevel(tag, 'intermediate')", ng-model="tag.levelIntermediate", ng-change="expert.update()", ng-delay="500")
+                input(type="checkbox", ng-checked="tagHasLevel(tag, 'intermediate')", ng-model="tag.levelIntermediate", ng-change="update()", ng-delay="500")
               .col-xs-4
-                input(type="checkbox", ng-checked="expert.tagHasLevel(tag, 'expert')", ng-model="tag.levelExpert", ng-change="expert.update()", ng-delay="500")
+                input(type="checkbox", ng-checked="tagHasLevel(tag, 'expert')", ng-model="tag.levelExpert", ng-change="update()", ng-delay="500")
         .type {{tag.name}}
           .all-levels
 

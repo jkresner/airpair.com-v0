@@ -1,8 +1,8 @@
 Config = ($routeProvider, $locationProvider, RestangularProvider) ->
   $routeProvider
-   .when '/experts/me',
-     templateUrl: '/templates/experts/me'
-     controller: 'ExpertSettingsController as expert'
+   .when '/settings/notifications',
+     templateUrl: '/templates/settings/notifications'
+     controller: 'ExpertSettingsController'
 
   $locationProvider.html5Mode(true)
   RestangularProvider.setBaseUrl('/api')

@@ -1,6 +1,6 @@
-ExpertSettingsController = ($scope, $timeout, Expert) ->
-  _.extend(@, Expert)
-  @hourRange = _.map(new Array(20), (a, i) -> (i+1).toString())
+ExpertSettingsController = ($scope, Expert) ->
+  _.forIn Expert, (value, key) -> $scope[key] = value
+  $scope.hourRange = _.map(new Array(20), (a, i) -> (i+1).toString())
   values = [10, 40, 70, 110, 160, 230]
 
   $(".hourly .slider").noUiSlider
@@ -21,8 +21,8 @@ ExpertSettingsController = ($scope, $timeout, Expert) ->
           values[value]
 
   $('.hourly .slider').change (event, value) =>
-    @setRate(value[0], value[1])
-    @update()
+    Expert.setRate(value[0], value[1])
+    Expert.update()
 
   $('.send-toggle').click (event, value) =>
     $(".send-toggle .toggle.on").toggleClass("active", !$("#status").prop("checked"))
@@ -30,14 +30,14 @@ ExpertSettingsController = ($scope, $timeout, Expert) ->
     $("#status").click()
     true
 
-  $scope.$watch @status, (newValue, oldValue) ->
-    $(".send-toggle .toggle.on").toggleClass("active", !!@status())
-    $(".send-toggle .toggle.off").toggleClass("active", !@status())
+  $scope.$watch Expert.status(), (newValue, oldValue) =>
+    $(".send-toggle .toggle.on").toggleClass("active", !!Expert.status())
+    $(".send-toggle .toggle.off").toggleClass("active", !Expert.status())
 
-  $scope.$watchGroup [@minRate, @rate], (newValue, oldValue) ->
-    $('.hourly .slider').val([values.indexOf(@minRate()), values.indexOf(@rate())])
+  $scope.$watchGroup [Expert.minRate(), Expert.rate()], (newValue, oldValue) =>
+    $('.hourly .slider').val([values.indexOf(Expert.minRate()), values.indexOf(Expert.rate())])
 
-  $scope.$watch @tags, (newValue, oldValue) ->
+  $scope.$watch Expert.tags(), (newValue, oldValue) ->
     $('form.tags .type').each ->
       allTags = $(this).parents(".level").find('input[type="checkbox"]')
       uncheckedTags = allTags.not(":checked")
@@ -53,8 +53,7 @@ ExpertSettingsController = ($scope, $timeout, Expert) ->
       uncheckedTags.click()
     else
       allTags.click()
-  @
 
 angular
   .module('ngAirPair')
-  .controller('ExpertSettingsController', ['$scope', '$timeout', 'Expert', ExpertSettingsController])
+  .controller('ExpertSettingsController', ['$scope', 'Expert', ExpertSettingsController])
