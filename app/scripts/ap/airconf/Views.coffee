@@ -6,7 +6,12 @@ SV      = require '../../shared/Views'
 #############################################################################
 ## Book
 #############################################################################
+storage = (k, v) ->
+  if window.localStorage
+    if typeof v == 'undefined'
+      return localStorage[k]
 
+    localStorage[k] = v
 
 """ JK: this is the worst view I've written in the whole app """
 class exports.OrderView extends BB.ModelSaveView
@@ -38,6 +43,10 @@ class exports.OrderView extends BB.ModelSaveView
 
     # populate the total on the buy button
     @$('.total').html @model.get('total')
+
+    if promoCode = storage('promoCode')
+      $('#promoform').find('input').val(promoCode)
+      @showPromo()
 
     @
 

@@ -323,8 +323,12 @@
 
       showSubscribe(pageData);
       prefillEmailBox();
-
       mergeCodeContent(pageData);
+
+      // save code for registration form later
+      if(pageData.promo) {
+        storage('promoCode', pageData.promo.code)
+      }
 
       $('#btnSubscribe').click(function(e){
         $input = $('[name=subscribe]');
