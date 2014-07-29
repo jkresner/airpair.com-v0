@@ -48,7 +48,7 @@ class exports.OrderView extends BB.ModelSaveView
     if promoCode = storage('promoCode')
       $('#promoform').find('input').val(promoCode)
       @showPromo()
-
+      $('#promoform a').click()
     @
 
   renderStripe: ->
@@ -101,6 +101,9 @@ class exports.OrderView extends BB.ModelSaveView
     $.post('/api/landing/airconf/promo', {code})
       .done (data) =>
         console.log 'valid promocode', data
+        $('.originalTotal').attr('style','text-decoration:line-through;color:#7e7f7f;font-weight:normal;font-size:14px')
+        $('.newTotal').remove() #in case multiple codes entered
+        $('.originalTotal').after('<span class="newTotal"> $'+data.cost+'</span>');
         $('.promocodeMessage').html(data.message)
         $('promoresult').show()
         $('#paybutton').html(data.paybutton)
