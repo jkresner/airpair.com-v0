@@ -18,7 +18,6 @@ module.exports =
 
   workshops:
 
-
     'danielroseman':  convert 'danielroseman', 'new-in-django-1.7', so:'104349/daniel-roseman'
     'ryanbigg':       d: 'Mon, 4th Aug 22:00 GMT', n: 'Ryan Bigg', c: "Rails Book Author", t: "Refactoring Big Features <br />in Large Codebases", so: '15245/ryan-bigg', tags: ['rails','spree'], u: 'ryanbigg', g: '9a2a53db8e9b4476038c94a64b32833f', a: "Spree had a problem: the adjustments system was slow and difficult to understand. Over a period of some months, we refactored the code to be much faster and cleaner. The talk will cover the unique challenges that faced Spree and how we overcome them."
     'abedra':         d: 'Tue, 5th Aug 16:00 GMT', n: 'Aaron Bedra', c: "Groupon Intrastructure", t: "Creating Dynamic Security Controls With Repsheet", slug: "repsheet-dynamic-security-controls", tw: 'abedra', tags: ['repsheet','rails','mod-security'], u: 'abedra', g: '24659470071279a42020d5b87411598e', a: "It's 2014 and our security controls should start acting like it. We maintain static controls on security because we lack the intelligence to adapt them to the situation at hand. Join Aaron as he walks you through creating dynamic security controls using the Repsheet threat intelligence and reputation framework."
@@ -57,6 +56,7 @@ module.exports =
     'mikegrassotti':  d: '!Sun, 31st Aug 16:00 GMT', n: 'Michael Grassotti', c: "All-time Ember.js #1 Answerer", t: "Something<br />Ember.js", so: '983357/mike-grassotti', tags: ['ember.js'], u: 'mikegrassotti', g: '9b9536f792ccd2b3641d8e3f9a157167', a: "Description coming soon"
     'mfeckie':        d: '!Sun, 31st Aug 23:00 GMT', n: 'Martin Feckie', c: "Ember.js Book Author", t: "TDD Ember.js<br /> for Beginners", so: '1849245/muttonlamb', tags: ['ember.js','tdd'], u: 'mfeckie', g: 'c247d50c623c3bf6257ad11e08f732f1', a: "Description coming soon"
     'u':              d: '', n: '', c: "", t: "", in: '', tags: [''], u: '', g: '', a: ""
+    'count':          60
 
     # 'stefanpenner':   d: '!Sun, 10th Aug 22:00 GMT', n: 'Stefan Penner', c: "Ember.js Core Team", t: "Testing the <br />Ember-CLI", gh: 'stefanpenner', tags: ['ember.js'], u: 'stefanpenner', g: '8ccebbc3d28f903d5c214efd3447ac71', a: "Description coming soon"
     # 'wycats':         d: '!Tue, 5th Aug 16:00 GMT', n: 'Yehuda Katz', c: "Rails Co-creator", t: "How to Build a Smart Profiler for Rails", gh: 'wycats', tags: ['rails'], u: 'wycats', g: '428167a3ec72235ba971162924492609', a: "Customers love fast apps. We've got tools to help us figure out how our Rails apps are performing on our development machines, but that's not what matters. It's critical that we also be able to measure how our apps are actually performing in the production environment."
