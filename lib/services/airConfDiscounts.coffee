@@ -9,7 +9,6 @@ class AirConfDiscounts
       .on 'success', (data, response) ->
         entry = _.find(data.feed.entry, (e) -> e.gsx$code.$t == promoCode)
         if entry?
-          console.log entry
           if not beforeExpiration(entry)
             return cb({message: "Code expired."}, {valid: false})
 
@@ -21,6 +20,8 @@ class AirConfDiscounts
             offer: entry.gsx$offer?.$t
             message: "Discount applied."
             valid: true
+
+          console.log 'discount.data', data
 
           cb(null, data)
 
