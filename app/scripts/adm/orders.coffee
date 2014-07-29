@@ -798,7 +798,7 @@ module.exports = (pageData) ->
             console.log "#{week.str} week.metrics ", week.metrics
 
             # Calculate the percentage share for repeat customers
-            week.metrics.repeatSummary.numOrdersShare = week.metrics.repeatSummary.numOrders/week.metrics.summary.numOrders
+            week.metrics.repeatSummary.numOrdersShare = week.metrics.repeatSummary.numOrders/week.metrics.summary.numOrders or 0
             _.each week.metrics.repeatSummary.tags, (tag, tagName) ->
               tag.share = tag.count/week.metrics.summary.tags[tagName].count
 
@@ -946,6 +946,29 @@ module.exports = (pageData) ->
 
     apData.orders.data = _.sortBy(apData.orders.data, (o) -> moment(o.utc))
     apData.orders.calcCredits()
+
+
+    # Delete records from date
+    # deleteFrom = "2014-07-24"
+    # numNew = 0
+    # first = null
+    # _.each apData.orders.data, (order, index) ->
+    #   if not order
+    #     console.log "ORDER UNDEFINED?? ", order, index
+    #     return
+    #   if moment(order.utc).isAfter(moment(deleteFrom))
+    #     if not first then first = index
+    #     console.log "DELETE order", index
+    #     numNew++
+    # apData.orders.data.splice(first, numNew)
+
+
+
+
+
+
+
+
     # apData.orders.findRepeatCustomers()
 
     console.log "apData", apData
