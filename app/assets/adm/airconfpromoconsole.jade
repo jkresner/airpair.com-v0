@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en" ng-app='AirpairAdmin'>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>AirConf Promo Console | AirPair</title>
+<meta name="viewport" content="width=device-width">
+<link rel="stylesheet" href="/css/adm.css">
+style.
+  input, textarea {
+    display: block;
+    width: 100%
+  }
+  textarea {
+    height: 400px
+  }
+  .template {
+    border: 1px solid silver;
+    padding: 20px
+  }
+</head>
+<body>
+
+.container
+  img(src="/images/landing/airconf/full-logo.png")
+  h1 AirConf Promo Console
+  .row
+    .col-md-8
+      label Subject
+      input(value="Mining for hidden gems (plus exclusive #{promo.offer} discount for #{promo.organization}) ")
+      br
+      .template
+        p Hey ________________,
+
+        p We're in the process of launching one of the world's first large scale virtual conferences. We already have a bunch of notable speakers covering everything from Agile to Programming and UX design. Many of them are successful software entrepreneurs, bloggers and popular open-source contributors. However... it's not good enough.
+
+        p We think there's a lot more expert talent out waiting to shine, and that's where you come in to the picture. We think you can give the hidden gems of your community a chance to shine in front of a worldwide audience.
+
+        p The link to our AirConf Call for Presentations (CFP) is http://bit.ly/airconf-cfp  -- please share it directly with experts in your group, especially women and minorities.
+
+        p We're also including a general announcement email you can send out to the entire group. It has a unique promo code just for your members.
+
+        p Thanks in advance for your help and feel free to hit me up with any questions that I can answer about the event.
+
+        p Best,
+        = promo.owner
+
+        hr
+
+        h3 #{promo.offer} AirConf for #{promo.organization} Members until Friday
+
+        p Hey everybody,
+
+        p AirPair have put together an exclusive online software conference, hosted by a HUGE list of open source core team members, book authors, and entrepreneurs like…
+
+        p
+          a(href="http://twitter.com/andrewchen") Andrew Chen
+          |  (Growth hacking),
+          a(href="http://stackoverflow.com/users/104349/daniel-roseman") Daniel Roseman
+          |  (Django),
+          a(href="http://twitter.com/toddmotto") Todd Motto
+          |  (HTML5+Chrome),
+          a(href="https://www.linkedin.com/in/deepnishar") Deep Nishar
+          |  (Product/UX),
+          a(href="http://twitter.com/joshowens") Josh Owens
+          |  (MeteorJS),
+          a(href="http://github.com/philsturgeon") Phil Sturgeon
+          |  (PHP),
+          a(href="http://twitter.com/brennandunn") Brennan Dunn
+          |  (Email Growth Hacking),
+          a(href="https://twitter.com/garrytan") Garry Tan
+          |  (Software Entrepreneur),
+          a(href="http://stackoverflow.com/users/1172002/lars-kotthoff") Lars Kotthoff
+          |  (d3.js) and many many more...
+
+        p Unlike most conferences, you're not going to need to book a flight or hotel room. It's 100% online. You're also not going to need to block out a few days from your calendar. The conference is scheduled from August 4th - 31st, and you can join the workshops that you're interested in (plus watch replays of the ones you can't attend live).
+
+        p
+          strong #{promo.organization} has a limited number of promo codes for #{promo.offer} registration.
+
+        p Claim your promo code now!
+
+        a(href="https://www.airpair.com/airconf-promo/#{promo.code}?utm_source=meetup&utm_medium=email&utm_term=#{promo.technology}&utm_content=#{promo.code}&utm_campaign=airconf") https://www.airpair.com/airconf-promo/#{promo.code}
+        br
+        p p.s. this code expires August 1st at midnight
+
+</body>
+</html>

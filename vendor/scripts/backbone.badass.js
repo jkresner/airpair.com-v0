@@ -838,7 +838,11 @@ module.exports = ModelSaveView = (function(_super) {
     obj = {};
     for (_i = 0, _len = attrs.length; _i < _len; _i++) {
       attr = attrs[_i];
-      obj[attr] = this.$("[name='" + attr + "']").val();
+      if(this.$("[name='" + attr + "']").attr("type") === "checkbox") {
+        obj[attr] = this.$("[name='" + attr + "']").is(':checked');
+      } else {
+        obj[attr] = this.$("[name='" + attr + "']").val();
+      }
     }
     return obj;
   };
