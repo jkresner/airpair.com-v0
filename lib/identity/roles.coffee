@@ -2,8 +2,6 @@ adminIds = [
   '117132380360243205600' #JK gravatar: 19183084115c4a79d34cdc3110adef37
   '105314633561185226973' #IL gravatar: 7345f338d4e79f7d22dac6403beb300c
   '110496794584456738170' #PG gravatar: 2b22b4cd4f65cbef1331cf07e82e6b27
-  '108148963133977375684' #TB gravatar: e307e229741052e17d027312a4fe86ca
-  '103614010394533051287' #LT
   '104421101970649173838' #AR
   '114831291174925522786' #SH
   '105976516028706632944' #OF gravatar: c5f6a1b002347ea69a0cba7e4c0da508
@@ -17,7 +15,7 @@ matchmakerIds = [
   '112631395549975740914' #RP
 ]
 
-
+# AirPair Hall Of Fame
 initials = {}
 initials['117132380360243205600'] = 'jk'
 initials['105314633561185226973'] = 'il'
@@ -30,10 +28,10 @@ initials['114831291174925522786'] = 'support' # (Saidur Hossain)
 initials['104421101970649173838'] = 'team' # (Alyssa Reese)
 initials['106265737415043894759'] = 'mf' # (Martin Feckie)
 initials['112631395549975740914'] = 'rp' # (Ramon Porter)
-initials['103614010394533051287'] = 'lt'
-initials['105922668830552511365'] = 'ds'
-initials['112300854530824394263'] = 'mi'
-initials['102299765632981130643'] = 'er'
+initials['103614010394533051287'] = 'lt' # (Lissanthea Taylor)
+initials['105922668830552511365'] = 'ds' # (Dilys Sun)
+initials['112300854530824394263'] = 'mi' # (M Ioffee)
+initials['102299765632981130643'] = 'er' # (E Roman)
 
 module.exports =
 
