@@ -89,7 +89,7 @@
           $.post("/api/landing/mailchimp/subscribe", { "listId": "39f4769300", "email": email })
             .done(function(data) {
               $('#subscribe .container').html("<p>Thank you. Check your email.</p>");
-              addjs.trackEvent('airconf', 'subscribe', email);
+              addjs.trackEvent('airconf', 'airconfSubscribe', email);
               storage('subscribed', true);
               $('#subscribe').fadeOut(1500);
             })

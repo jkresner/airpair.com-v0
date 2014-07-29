@@ -327,7 +327,7 @@
           $input.parent().removeClass('has-error');
           $.post("/api/landing/mailchimp/subscribe", { "email": email })
             .done(function(data) {
-              addjs.trackEvent('airconf', 'subscribe', email);
+              addjs.trackEvent('airconf', 'airconfSubscribe', email);
               storage('subscribed', true);
               $('.subscribe').hide();
               $('#plus').show();
