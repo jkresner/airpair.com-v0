@@ -39,6 +39,7 @@
       <th class="text-info" style="width:7%">Ad</th>
       <th class="text-info" style="width:7%">Affiliate</th>
       <th class="text-info" style="width:7%">Direct</th>
+      <th class="text-info" style="width:7%">Event</th>
       <th class="text-info" style="width:7%">Portfolio</th>
       <th class="text-info" style="width:7%">Newsletter</th>
       <th class="text-info" style="width:7%">Press</th>
@@ -70,6 +71,10 @@
       <td class="text-info">
         {{metrics.summary.tags.direct.count}}
         <span class="text-split">{{metrics.repeatSummary.tags.direct.count | numFloor}}</span>
+      </td>
+      <td class="text-info">
+        {{metrics.summary.tags.event.count}}
+        <span class="text-split">{{metrics.repeatSummary.tags.event.count | numFloor}}</span>
       </td>
       <td class="text-info">
         {{metrics.summary.tags.incubator.count}}
@@ -121,6 +126,10 @@
       <td class="text-info">
         {{(metrics.summary.tags.direct.count/metrics.summary.numOrders*100 | number:0) || 0 }}%
         <span class="text-split">{{(metrics.repeatSummary.tags.direct.count/metrics.summary.numOrders*100 | number:0) || 0 }}%</span>
+      </td>
+      <td class="text-info">
+        {{(metrics.summary.tags.event.count/metrics.summary.numOrders*100 | number:0) || 0 }}%
+        <span class="text-split">{{(metrics.repeatSummary.tags.event.count/metrics.summary.numOrders*100 | number:0) || 0 }}%</span>
       </td>
       <td class="text-info">
         {{(metrics.summary.tags.incubator.count/metrics.summary.numOrders*100 | number:0) || 0}}%
@@ -193,6 +202,10 @@
         <span class="text-split">{{metrics.repeatSummary.tags.direct.revenue | numFloor}}</span>
       </td>
       <td class="text-info">
+        {{metrics.summary.tags.event.revenue | numFloor}}
+        <span class="text-split">{{metrics.repeatSummary.tags.event.revenue | numFloor}}</span>
+      </td>
+      <td class="text-info">
         {{metrics.summary.tags.incubator.revenue | numFloor}}
         <span class="text-split">{{metrics.repeatSummary.tags.incubator.revenue | numFloor}}</span>
       </td>
@@ -243,6 +256,10 @@
       <td class="text-info">
         {{(metrics.summary.tags.direct.revenue/metrics.summary.revenueTotal*100 | number:0) || 0}}%
         <span class="text-split">{{(metrics.repeatSummary.tags.direct.revenue/metrics.summary.revenueTotal*100 | number:0) || 0}}%</span>
+      </td>
+      <td class="text-info">
+        {{(metrics.summary.tags.event.revenue/metrics.summary.revenueTotal*100 | number:0) || 0}}%
+        <span class="text-split">{{(metrics.repeatSummary.tags.event.revenue/metrics.summary.revenueTotal*100 | number:0) || 0}}%</span>
       </td>
       <td class="text-info">
         {{(metrics.summary.tags.incubator.revenue/metrics.summary.revenueTotal*100 | number:0) || 0}}%
@@ -306,6 +323,7 @@
       <td class="text-info a{{order.tags.ad.total}}">{{order.tags.ad.total  | numFloor}}</td>
       <td class="text-info a{{order.tags.affiliate.total}}">{{order.tags.affiliate.total  | numFloor}}</td>
       <td class="text-info a{{order.tags.direct.total}}">{{order.tags.direct.total  | numFloor}}</td>
+      <td class="text-info a{{order.tags.event.total}}">{{order.tags.event.total  | numFloor}}</td>
       <td class="text-info a{{order.tags.incubator.total}}">{{order.tags.incubator.total  | numFloor}}</td>
       <td class="text-info a{{order.tags.newsletterairpair.total}}">{{order.tags.newsletterairpair.total  | numFloor}}</td>
       <td class="text-info a{{order.tags.press.total}}">{{order.tags.press.total  | numFloor}}</td>
