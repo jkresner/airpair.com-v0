@@ -43,6 +43,7 @@ class exports.OrderView extends BB.ModelSaveView
 
     # populate the total on the buy button
     @$('.total').html @model.get('total')
+    @$('.originalTotal').html "$#{@model.get('total')}"
 
     if promoCode = storage('promoCode')
       $('#promoform').find('input').val(promoCode)

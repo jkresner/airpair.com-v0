@@ -172,15 +172,15 @@
     <p class="lead">At AirPair, we've organized the largest collection of technical experts in the world that want to help you and <em>your</em> business. While we've paired thousands of people individually with our experts, it's never been possible to get direct access to our top experts all at one event. Until now.</p>
     <p class="lead">This August, we'd like to invite you to get unprecedented access to top experts in the field &mdash; open-source core team members, technical author and noted entrepreneurs &mdash; who can not only help you with problems and challenges specific to your project, but can also help you better understand the future of the frameworks, libraries and languages that power your codebases.</p>
 
-    <p id="invalidCode" style="color:red;display:none;text-align:center;font-size:18px">Your code is expired</p>
+    <p id="invalidCode" style="color:red;display:none;text-align:center;font-size:18px">Your code is expired or invalid</p>
 
     <div id="subscription" style="display:none">
       <form class="subscribe centered p-b-1 p-t-2" onsubmit="return false">
-        <h3><span class="offer"></span> for <span class="organization"></span> (<b style="font-family:courier;font-weight:300;color:gray">11 #<span class="promoCode"></span></b> codes left)</h3>
-        <p id="merge" style="display: none">* Tickets are normally $150</p>
+        <h3><span class="offer"></span> for <span class="organization"></span></h3>
+        <p id="merge" style="display: none"><b style="font-family:courier;font-weight:300;color:red">11 #<span class="promoCode"></span></b> codes remaining. Tickets normally $150</p>
         <div class="row" style="padding: 10px">
           <div class="col-md-8"><input type="email" placeholder="Your email address" name="subscribe" data-error-style="inline" class="form-control"></input></div>
-          <div class="col-md-4"><button id="btnSubscribe" class="btn-block">Claim <span class="offer"></span> offer</button></div>
+          <div class="col-md-4"><button id="btnSubscribe" class="btn-block">Claim offer</button></div>
         </div>
       </form>
     </div>
@@ -281,6 +281,7 @@
         }
         else {
           $('.loginRequired').click();
+          setTimeout('Decrement()',1000);
         }
       }
       else {
@@ -294,17 +295,18 @@
       }
     }
 
-    function prefillEmailBox() {
-      if (urlParam('e')) {
-        $('[name=subscribe]').val(urlParam('e'));
-      }
-    }
-
     function initPage() {
       var pageData = { {{JSON 'promo'}}, {{JSON 'session'}}, segmentioKey: '{{{segmentioKey}}}' };
 
       if (!pageData.promo.valid) {
-        $('#invalidCode').show()
+        $('#invalidCode').show();
+        $('#subscription h3').html('Space is limited. To be notified when we open registration, register below');
+        $('#subscription button').html('Reserve My Seat');
+        $('p#merge').remove()
+      } else {
+        $('.modal-title').html('Promo code reserved for <span id="timerText">60</span> minutes');
+        // $('.modal-body').prepend('<p>Your discount code is .</p>');
+        $('.trackAirConfLogin').html('Sign in with Google to purchase ticket')
       }
 
       initStaticPage('airconf-promo');
@@ -340,6 +342,22 @@
         }
       });
     }
+
+    var mins = 60;  //Set the number of minutes you need
+    var secs = mins * 60;
+    var currentSeconds = 0;
+    var currentMinutes = 0;
+
+    function Decrement() {
+      currentMinutes = Math.floor(secs / 60);
+      currentSeconds = secs % 60;
+      if(currentSeconds <= 9) currentSeconds = "0" + currentSeconds;
+      secs--;
+      document.getElementById("timerText").innerHTML = currentMinutes + ":" + currentSeconds; //Set the element id you need the time put into.
+      if(secs !== -1) setTimeout('Decrement()',1000);
+    }
+
+
   </script>
 
   <script src="/javascripts/landing.js" defer onload="initPage()"></script>
