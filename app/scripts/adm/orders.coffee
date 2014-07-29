@@ -188,6 +188,7 @@ module.exports = (pageData) ->
             summary.totalRevenue += order.total
             summary.totalProfit += order.profit
             for item in order.lineItems
+              return unless item.type in ['opensource', 'private', 'nda']
               summary.totalRedeemed += calcRedeemed [item]
               summary.totalCompleted += calcCompleted [item]
 
