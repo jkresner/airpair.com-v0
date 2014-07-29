@@ -6,7 +6,7 @@ global._.pickNested   = require '../mix/pickNested'
 global._.idsEqual     = require '../mix/idsEqual'
 
 global.restler        = require('restler')
-
+global.moment         = require('moment')
 global.winston        = require 'winston'   # logging
 require './winstonConfig'             # setup logging configuration / plugins
 winston.error "app restart" if config.isProd  # log application restart/ send email notification
@@ -27,3 +27,4 @@ global.md5 = (str, encoding) ->
 
 global.gravatarLnk = (email) ->
   "//0.gravatar.com/avatar/#{md5(email)}"
+
