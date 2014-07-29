@@ -2,7 +2,7 @@ Config = ($routeProvider, $locationProvider, RestangularProvider) ->
   $routeProvider
    .when '/settings/notifications',
      templateUrl: '/templates/settings/notifications'
-     controller: 'ExpertSettingsController'
+     controller: 'NotificationSettingsController'
 
   $locationProvider.html5Mode(true)
   RestangularProvider.setBaseUrl('/api')
@@ -19,4 +19,4 @@ require("./directives/ngDelay")
 require("./services/session")
 require("./services/expert")
 require("./controllers/headerController")
-require("./controllers/expertSettingsController")
+require("./controllers/notificationSettingsController")

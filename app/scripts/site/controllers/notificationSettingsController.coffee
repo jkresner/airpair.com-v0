@@ -1,4 +1,4 @@
-ExpertSettingsController = ($scope, Expert) ->
+NotificationSettingsController = ($scope, Expert) ->
   _.forIn Expert, (value, key) -> $scope[key] = value
   $scope.hourRange = _.map(new Array(20), (a, i) -> (i+1).toString())
   values = [10, 40, 70, 110, 160, 230]
@@ -56,4 +56,4 @@ ExpertSettingsController = ($scope, Expert) ->
 
 angular
   .module('ngAirPair')
-  .controller('ExpertSettingsController', ['$scope', 'Expert', ExpertSettingsController])
+  .controller('NotificationSettingsController', ['$scope', 'Expert', NotificationSettingsController])

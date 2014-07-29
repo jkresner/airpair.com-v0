@@ -120,7 +120,6 @@ ngExpert = ($http, $rootScope, Restangular) ->
     availability: (value) ->
       if value?
         data.expert.availability = value
-      console.log data.expert? && data.expert.availability
       data.expert? && data.expert.availability
 
     requestStats: ->

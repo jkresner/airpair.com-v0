@@ -72,8 +72,9 @@
     span.editable {
       font-weight: lighter;
     }
-    span.editable:after {
-      content: url('/images/icons/pencil.png');
+    span.editable a {
+      background-image: url('/images/icons/pencil.png');
+      background-repeat: no-repeat;
       padding-left: 20px;
       position: relative;
       top: 5px;
