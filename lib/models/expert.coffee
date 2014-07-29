@@ -22,6 +22,7 @@ Bookme =
   urlSlug:        { required: true, type: String, index: true }  # https://www.airpair.com/@domenic (urlSlug == 'domnic')
   urlBlog:        String                                # www.airpair.com/node.js/expert-training-domenic-denicola
   youTubeId:      String                                # youtube movie
+  noIndex:        { type: Boolean, default: false    }  # no index for crawlers
   rate:           { required: true, type: Number     }  # experts external rate
   rake:           { required: true, type: Number     }  # allow the expert commission deals
   coupons:        [Coupon]                              # allow the expert to hand out promotions

@@ -36,7 +36,7 @@ class exports.ExpertsView extends Backbone.View
 class exports.BookMeView extends BB.ModelSaveView
   el: '#bookMe'
   tmpl: require './templates/BookMe'
-  viewData: ['rate', 'rake', 'urlSlug', 'urlBitly', 'urlBlog']
+  viewData: ['rate', 'rake', 'urlSlug', 'urlBitly', 'urlBlog', 'noIndex']
   events:
     'change .enabled': 'setEnabled'
   initialize: ->
