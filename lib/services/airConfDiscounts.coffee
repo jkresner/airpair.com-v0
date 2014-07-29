@@ -17,8 +17,10 @@ class AirConfDiscounts
             cost: parseInt(entry.gsx$cost.$t)
             code: entry.gsx$code.$t
             organization: entry.gsx$organization?.$t
+            technology: entry.gsx$technology?.$t
             offer: entry.gsx$offer?.$t
             message: "Discount applied."
+            owner: entry.gsx$owner?.$t
             valid: true
 
           console.log 'discount.data', data
