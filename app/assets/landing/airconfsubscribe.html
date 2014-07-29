@@ -329,7 +329,7 @@
           $input.parent().removeClass('has-error');
           $.post("/api/landing/mailchimp/subscribe", { "email": email })
             .done(function(data) {
-              addjs.trackEvent('airconf', 'subscribe', email);
+              addjs.trackEvent('airconf', 'airconfSubscribe', email);
               subscribedCallback();
             })
             .fail(function(resp, data) {
