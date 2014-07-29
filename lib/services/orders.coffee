@@ -25,7 +25,7 @@ module.exports = class OrdersService extends DomainService
   rates: new RatesSvc()
 
   Chimp: require("../mail/chimp")
-  Discounts: require("./discounts")
+  AirConfDiscounts: require("./airConfDiscounts")
 
   constructor: (user) ->
     @Data = Data

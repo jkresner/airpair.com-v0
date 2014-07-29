@@ -1,4 +1,4 @@
-class Discounts
+class AirConfDiscounts
 
   beforeExpiration = (entry) ->
     expirationDate = new Date(entry.gsx$expires?.$t)
@@ -16,8 +16,12 @@ class Discounts
             paybutton: entry.gsx$paybutton?.$t || "Pay $#{entry.gsx$cost.$t} for my ticket"
             cost: parseInt(entry.gsx$cost.$t)
             code: entry.gsx$code.$t
+            organization: entry.gsx$organization?.$t
+            offer: entry.gsx$offer?.$t
             message: "Discount applied."
             valid: true
+
+          console.log 'discount.data', data
 
           cb(null, data)
 
@@ -27,4 +31,4 @@ class Discounts
       .on 'error', (err, response) ->
         cb(err)
 
-module.exports = new Discounts()
+module.exports = new AirConfDiscounts()

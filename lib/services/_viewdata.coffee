@@ -1,12 +1,13 @@
 # async            = require 'async'
-Data             = require './_viewdata.data'
-TagsSvc          = require '../services/tags'
-OrdersSvc        = require '../services/orders'
-ExpertsSvc       = require '../services/experts'
-CompanysSvc      = require '../services/companys'
-SettingsSvc      = require '../services/settings'
-RequestsSvc      = require '../services/requests'
-stripePK         = config.payment.stripe.publishedKey
+AirConfDiscounts  = require '../services/airConfDiscounts'
+CompanysSvc = require '../services/companys'
+Data = require './_viewdata.data'
+ExpertsSvc = require '../services/experts'
+OrdersSvc = require '../services/orders'
+RequestsSvc = require '../services/requests'
+SettingsSvc = require '../services/settings'
+stripePK = config.payment.stripe.publishedKey
+TagsSvc = require '../services/tags'
 
 module.exports = class ViewDataService
 
@@ -106,6 +107,13 @@ module.exports = class ViewDataService
         new SettingsSvc(@usr).getByUserId @usr._id, (ee, settings) =>
           hasCard = _.find(settings.paymentMethods, (p) -> p.type == 'stripe')?
           cb eee, -> { workshops: Data.workshops, hasCard, registration, company, stripePK }
+
+  airconfpromo: (id, cb) ->
+    AirConfDiscounts.lookup id, (e, promo) =>
+      if e then promo = _.extend e, promo
+
+      # set on the session ? or pass through query string
+      cb null, -> { promo }
 
 
   so10: (id, cb) ->

@@ -2,7 +2,7 @@ class LandingPageApi extends require('./_api')
 
   Svc: require('../services/orders')
   Chimp: require('../mail/chimp')
-  Discounts: require('../services/discounts')
+  AirConfDiscounts: require('../services/airConfDiscounts')
   Stripe: require('stripe')(config.payment.stripe.secretKey)
 
   routes: (app, route) ->
@@ -18,7 +18,7 @@ class LandingPageApi extends require('./_api')
     @svc.createAirConfOrder @data, @cbSend
 
   airconfPromoLookup: =>
-    @Discounts.lookup @data.code, (err, result) =>
+    @AirConfDiscounts.lookup @data.code, (err, result) =>
       if result?.valid
         @cbSend(null, result)
       else if not result?.valid
