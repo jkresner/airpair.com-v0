@@ -198,27 +198,46 @@ module.exports = (pageData) ->
             expertCount: 0
             totalProfit: 0
             experts: []
+
+          # TYPES = []
+
           for order in orders
+
             summary.totalRevenue += order.total
             summary.totalProfit += order.profit
+
             for item in order.lineItems
-              summary.totalRedeemed += calcRedeemed [item]
-              summary.totalCompleted += calcCompleted [item]
 
-              console.log "SAME?", (item.total == calcTotal([item])), item.total, calcTotal([item])
-
-              if item.total isnt calcTotal([item])
-                console.log "order === ", order
-              summary.totalHours += calcTotal [item]
-              # summary.totalHours += item.total
+              # TYPES.push item.type
 
 
-              summary.experts.push item.suggestion.expert._id
+              # if _.isNaN(calcRedeemed([item])) then console.log "NAN calcRedeemed item", item, order
+              if item.type in ['opensource', 'private', 'nda']
+
+                summary.totalRedeemed += calcRedeemed [item]
+                summary.totalCompleted += calcCompleted [item]
+                summary.totalHours += calcTotal [item]
+
+                # if not _.isNumber(calcCompleted [item]) then console.log "NAN calcCompleted item", item
+                # if not _.isNumber(calcTotal [item]) then console.log "NAN calcTotal item", item
+                # console.log "SAME?", (item.total == calcTotal([item])), item.total, calcTotal([item])
+                # if item.total isnt calcTotal([item])
+                  # console.log "order === ", order
+                # summary.totalHours += item.total
+
+
+                summary.experts.push item.suggestion.expert._id
+
           summary.orderCount = orders.length
           summary.customerCount = _.uniq(_.pluck orders, 'userId').length
           summary.requestCount = _.uniq(_.pluck orders, 'requestId').length
           summary.expertCount = _.uniq(summary.experts).length
 
+
+
+          # console.log "TYPES", _.groupBy TYPES, (type) -> type
+
+          console.log "SUMMARY", summary
           return summary
 
 
@@ -669,7 +688,7 @@ module.exports = (pageData) ->
           if not @metrics
             @metricsRepeated = []
             @metrics = []
-            TAGS = []
+            # TAGS = []
             for order in apData.orders.data
               metric =
                 utc: order.utc
@@ -702,7 +721,7 @@ module.exports = (pageData) ->
 
               _.each order.marketingTags, (tag) ->
                 # console.log "tag.group", tag.group
-                TAGS.push tag.group
+                # TAGS.push tag.group
                 channelTags = _.where order.marketingTags, { type: "channel" }
                 tagName = tag.group.replace('-', '')
                 if tag.type is "channel"
@@ -719,8 +738,8 @@ module.exports = (pageData) ->
               @metricsRepeated.push metric if metric.isRepeat
               @metrics.push metric
 
-            console.log "tag.groups", _.groupBy TAGS, (num) -> num
-
+            # console.log "tag.groups", _.groupBy TAGS, (num) -> num
+#
 
             # tags = _.uniq(tags)
 
