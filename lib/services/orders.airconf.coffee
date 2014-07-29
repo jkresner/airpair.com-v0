@@ -12,7 +12,7 @@ module.exports =
 
   # These are defined in Orders service
   # Chimp: require("../mail/chimp")
-  # Discounts: require("./discounts")
+  # AirConfDiscounts: require("./airConfDiscounts")
 
   getAirConfRegisration: (cb) ->
     @searchMany {userId: @usr._id}, { fields: @Data.view.history }, (e, r) =>
@@ -38,7 +38,7 @@ module.exports =
       cb e, d
 
   createAirConfOrder: (order, cb) ->
-    @Discounts.lookup order.promocode, (e, code) =>
+    @AirConfDiscounts.lookup order.promocode, (e, code) =>
       unless e? then order.total = code.cost
       orderEmail = order.company.contacts[0].email
       order.company.contacts[0].pic = gravatarLnk orderEmail

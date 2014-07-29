@@ -1,4 +1,4 @@
-class Discounts
+class AirConfDiscounts
 
   beforeExpiration = (entry) ->
     expirationDate = new Date(entry.gsx$expires?.$t)
@@ -9,6 +9,7 @@ class Discounts
       .on 'success', (data, response) ->
         entry = _.find(data.feed.entry, (e) -> e.gsx$code.$t == promoCode)
         if entry?
+          console.log entry
           if not beforeExpiration(entry)
             return cb({message: "Code expired."}, {valid: false})
 
@@ -16,6 +17,8 @@ class Discounts
             paybutton: entry.gsx$paybutton?.$t || "Pay $#{entry.gsx$cost.$t} for my ticket"
             cost: parseInt(entry.gsx$cost.$t)
             code: entry.gsx$code.$t
+            organization: entry.gsx$organization?.$t
+            offer: entry.gsx$offer?.$t
             message: "Discount applied."
             valid: true
 
@@ -27,4 +30,4 @@ class Discounts
       .on 'error', (err, response) ->
         cb(err)
 
-module.exports = new Discounts()
+module.exports = new AirConfDiscounts()
