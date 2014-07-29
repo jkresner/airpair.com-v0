@@ -54,7 +54,9 @@ html(ng-app='ngAirPair' ng-strict-di)
           .navbar-header
             span.label Available to Airpair
             span.editable
-              ng-pluralize(count="expert.hoursAvailable()", when="{'0': 'Not available', '1': '1 hour per week', 'other': '{{ expert.hoursAvailable() }} hours per week'}")
+              ng-pluralize(count="expert.hoursAvailable()", when="{'0': 'Not available. ', '1': '1 hrs/week ', 'other': '{{ expert.hoursAvailable() }} hrs/week '}")
+              &nbsp;{{ expert.availability() }}
+              a(href="/settings/notifications")
             .navbar-info
               span.info {{ expert.orderStats().paidOrderCount }}
               span.sub-label Air Pairs
