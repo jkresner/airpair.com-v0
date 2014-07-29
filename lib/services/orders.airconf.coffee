@@ -34,7 +34,7 @@ module.exports =
       else
         d.discount = d.totalOtherPurchaes/10 % 10;
 
-      $log 'getConfOrder', d
+      # $log 'getConfOrder', d
       cb e, d
 
   createAirConfOrder: (order, cb) ->
