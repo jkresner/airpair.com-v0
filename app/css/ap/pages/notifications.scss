@@ -38,6 +38,9 @@
 
   .section {
     padding-bottom: 75px;
+    form {
+      display: inline-block;
+    }
   }
 
   #status {

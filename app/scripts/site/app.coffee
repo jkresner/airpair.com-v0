@@ -3,6 +3,9 @@ Config = ($routeProvider, $locationProvider, RestangularProvider) ->
    .when '/settings/notifications',
      templateUrl: '/templates/settings/notifications'
      controller: 'NotificationSettingsController'
+   .when '/coming',
+     templateUrl: '/templates/coming'
+     controller: 'ComingController'
 
   $locationProvider.html5Mode(true)
   RestangularProvider.setBaseUrl('/api')
@@ -20,3 +23,4 @@ require("./services/session")
 require("./services/expert")
 require("./controllers/headerController")
 require("./controllers/notificationSettingsController")
+require("./controllers/comingController")

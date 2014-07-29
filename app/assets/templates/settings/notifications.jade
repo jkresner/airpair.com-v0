@@ -1,4 +1,4 @@
-.page.expert-me(ng-init="init()")
+.page.expert-me
   .section
     .info
       .received
@@ -25,7 +25,8 @@
         .send-toggle.top
           .toggle.on.active
           .toggle.off
-        label Send me AirPairs!
+        label(ng-show="status()") Send me AirPairs!
+        label(ng-hide="status()") Busy ATM
         input(type="checkbox", id="status", ng-checked="status()", ng-model="status", ng-change="update()")
       .hours
         select.top(ng-model="hoursAvailable", ng-change="update()", ng-options="h for h in hourRange")
@@ -36,7 +37,13 @@
         label(for="availability") Best Times
 
   .section
-    h1 notification price range
+    .title
+      h1 notification price range
+    .slider-row.hourly
+      .slider-wrapper
+        .slider.slider-col
+      .type Hourly Range
+
     .slider-row.header
       .slider-wrapper
         .slider-col
@@ -47,11 +54,6 @@
             .col-xs-2.text-center $110
             .col-xs-2.text-center $160
             .col-xs-2.text-center $230
-    .slider-row.hourly
-      .slider-wrapper
-        .slider.slider-col
-      .type Hourly Range
-
 
   .section
     h1 subscription settings

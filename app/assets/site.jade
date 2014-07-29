@@ -35,17 +35,13 @@ html(ng-app='ngAirPair' ng-strict-di)
           .collapse.navbar-collapse#nav-mobile
             ul.nav.navbar-nav.nav-public
               li
-                a.scroll(href="#") Expert Profiles
+                a.scroll(href="/experts") Experts
               li
-                a.scroll(href="#") Testimonials
+                a.scroll(href="/pair-programming") Pair Programming
               li
-                a.scroll(href="#") Pair Programming
+                a.scroll(href="/training") Training
               li
-                a.scroll(href="#") Code Review
-              li
-                a.scroll(href="#") Training
-              li
-                a.scroll(href="#") Problem Solving
+                a.scroll(href="/workshops") Workshops
             ul.nav.navbar-nav.navbar-right
               li(ng-show='session.isSignedIn()')
                 a.scroll(href="#") Hi {{ session.name() }}
@@ -54,7 +50,7 @@ html(ng-app='ngAirPair' ng-strict-di)
           .navbar-header
             span.label Available to Airpair
             span.editable
-              ng-pluralize(count="expert.hoursAvailable()", when="{'0': 'Not available. ', '1': '1 hrs/week ', 'other': '{{ expert.hoursAvailable() }} hrs/week '}")
+              ng-pluralize(count="expert.hoursAvailable()", when="{'0': 'Not available. ', '1': '1 hr/week ', 'other': '{{ expert.hoursAvailable() }} hrs/week '}")
               &nbsp;{{ expert.availability() }}
               a(href="/settings/notifications")
             .navbar-info
@@ -73,27 +69,23 @@ html(ng-app='ngAirPair' ng-strict-di)
             li.sidebar-name
               a(href='#') {{ session.name() }}
             li
-              a(href='#') Dashboard
+              a(href='/dashboard') Dashboard
             li
-              a(href='#') Profile
+              a(href='/be-an-expert') Profile
             li
-              a(href='#') Notifications
+              a(href='/coming') Notifications
             li
-              a(href='#') Requests
+              a(href='/coming') My Airpairs
             li
-              a(href='#') My Airpairs
+              a(href='/coming') Payments
             li
-              a(href='#') Payments
+              a(href='/coming') Airpair{}Me
             li
-              a(href='#') Airpair{}Me
+              a(href='/customer-faq') FAQ
             li
-              a(href='#') FAQ
-            li
-              a(href='#') Tips
+              a(href='/expert-faq') Expert Tips
             li.last
-              a(href='#') Message Board
-            li.last
-              a(href='#') Logout
+              a(href='/logout') Logout
 
     .site-container
       .view-container(ng-view)
