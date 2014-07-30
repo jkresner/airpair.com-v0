@@ -18,16 +18,24 @@ module.exports =
 
   workshops:
 
+    #wk 1
     'danielroseman':  convert 'danielroseman', 'new-in-django-1.7', so:'104349/daniel-roseman'
     'ryanbigg':       convert 'ryanbigg', 'refactoring-large-rails-code', so:'15245/ryan-bigg'
     'abedra':         convert 'abedra', 'repsheet-dynamic-security-controls', tw: 'abedra'
     'jefflinwood':    convert 'jefflinwood', 'twilio-voice-sms-integration', in: 'sy5n2q8o2i49/MI4rhSkAQM'
     'philsturgeon':   convert 'philsturgeon', 'php-town-crier', tw: 'philsturgeon'
     'annisgrey':      convert 'annisgrey', 'transitioning-to-consulting-for-developers', tw:'annisgrey'
-    'joshowens':      convert 'joshowens', 'learn-meteorjs-1.0', tw:'joshowens'
+    'jenius':         convert 'jenius', 'learn-git-and-github', gh:'jenius'
+
+    #wk 2
     'arunoda':        convert 'arunoda', 'client-side-javascript-error-tracking', tw: 'arunoda'
+    'searls':         convert 'searls', 'simplifying-rails-tests', tw: 'searls'
+    'domenic':        d: 'Tue, 12th Aug 00:00 GMT', utc: '2014-08-11T12:00:00.000Z', n: 'Domenic Denicola', c: "Google Chrome Team", t: "Building web apps from reusable pieces w NPM", gh: 'domenic', tags: ['nodejs','npm'], u: 'domenic', g: 'c6d819207a3010b39d13e1f59f2c0029', a: "Description coming soon"
     'adymo':          convert 'adymo', 'rails-performance-optimization-q-and-a', in: 'sy5n2q8o2i49/1KB9BDtDYm'
+    'matsko':         convert 'matsko', 'animations-with-angularjs', gh: 'matsko'
     'felienne':       convert 'felienne', 'spreadsheets-graph-databases', tw: 'felienne'
+    'ehrenreilly':    convert 'ehrenreilly', 'panda-user-experience-and-seo', in: '/sy5n2q8o2i49/HEeMIzWKij'
+
     'brianmhunt':     convert 'brianmhunt', 'spreadsheets-graph-databases', so: '19212/brian-m-hunt'
     'andrewchen':     convert 'andrewchen', 'zero-to-product-market-fit', tw:'andrewchen'
     'hcatlin':        convert 'hcatlin', 'css-vs-sass', tw:'hcatlin'
@@ -37,25 +45,23 @@ module.exports =
     'urish':          convert 'urish', 'angularjs-performance-pitfalls', in: 'sy5n2q8o2i49/H_-Va_zs6e'
     'antonioribeiro': convert 'antonioribeiro', 'laravel-apps-and-composer-packages', so: '1959747/antonio-carlos-ribeiro'
     'al_the_x':       convert 'al_the_x', 'pair-programming-coding-dojo', in: 'sy5n2q8o2i49/yTIUuanj7P'
-    'jayfields':      convert 'jayfields', 'effectiv-unit-tests', tw: 'thejayfields'
     'arafalov':       convert 'arafalov', 'discovering-your-inned-search-engine', tw: 'arafalov'
     'kn0tch':         convert 'kn0tch', 'containerizing-production-app', tw: 'kn0tch'
     'fluffyjack':     convert 'fluffyjack', 'is-swift-that-swift', in: 'sy5n2q8o2i49/oNxzjUMtdW'
     'agravier':       convert 'agravier', 'data-processing-with-python', in: 'sy5n2q8o2i49/UFhmGZ-ZyR'
     'bantik':         convert 'bantik', 'open-source-and-women', tw: 'bantik'
+    'joshowens':      convert 'joshowens', 'learn-meteorjs-1.0', tw:'joshowens'
+    'jayfields':      convert 'jayfields', 'effectiv-unit-tests', tw: 'thejayfields'
 
-    'mariovisic':     d: 'Sat, 23rd Aug 23:00 GMT', n: 'Mario Visic', c: "Conference Speaker", t: "ActiveRecord without active record", u: 'mariovisic', tw: 'mariovisic', tags: ['rails','activerecord'], g: 'db58858a009745e96871e04ef497269a', a: "An exercise in using the popular and well maintained ActiveRecord library in a web application while avoiding the active record pattern."
-    'domenic':        d: 'Tue, 12th Aug 00:00 GMT', n: 'Domenic Denicola', c: "Google Chrome Team", t: "Building web apps from reusable pieces w npm", gh: 'domenic', tags: ['nodejs','npm'], u: 'domenic', g: 'c6d819207a3010b39d13e1f59f2c0029', a: "Description coming soon"
-    'matsko':         d: 'Wed, 13th Aug 04:00 GMT', n: 'Matias Niemelä', c: "Angular Core Team", t: "Awesome Interfaces with AngularJS Animations", gh: 'matsko', tags: ['anguarljs','ng-animate'], u: 'matsko', g: '3c0ca2c60c5cc418c6b3dbed47b23b69', a: "Description coming soon"
-    'ehrenreilly':    d: 'Thu, 14th Aug 01:00 GMT', n: 'Ehren Reilly', c: "Growth at Glassdoor", t: "Understanding Google's <br />Panda Algorithm", in: '/sy5n2q8o2i49/HEeMIzWKij', tags: ['seo'], u: 'ehrenreilly', g: '31e630fa1f4c36ebb986812309f09acb', a: "Google's Panda algorithm was designed to rewards sites that consistently deliver high quality experiences to users. But in SEO circles, Panda is often caricatured as a great and mysterious taker away of traffic. The truth is, search rankings are a zero sum game. Learn how to get Panda algorithm to work in your favor."
+
     'acuppy1':        d: '!Thu, 14th Aug 17:00 GMT', n: 'Adam Cuppy', c: "Conference Speaker", t: "Taming Chaotic Specs: <br />RSpec Design Patterns", in: 'sy5n2q8o2i49/OfJ8u7KW5E', tags: ['rails','rspec'], u: 'acuppy', g: '35e0dbc9533ce3d90527eeec998d9725', a: "Hate when testing takes 3x as long because your specs are hard to understand? Following a few simple patterns, you can easily take a bloated spec and make it readable, DRY and simple to extend. This workshop is a refactor kata taking a bloated sample spec and making it manageable, readable and concise."
     'zopatista':      d: '!Fri, 15th Aug 01:00 GMT', n: 'Martijn Pieters', c: "All-time #1 Python Answerer", t: "What's New in <br />Python 3.4", so: '100297/martijn-pieters', tags: ['python'], u: 'zopatista', g: '09c1bb74564cba5aa5e1005e869499d4', a: "Description coming soon"
     'hackerpreneur':  d: '!Sat, 16th Aug 16:00 GMT', n: 'Jonathon Kresner', c: "AirPair Founder", t: "Validated <br />Building", tw: 'hackerpreneur', tags: ['lean-startup'], u: 'hackerpreneur', g: '780d02a99798886da48711d8104801a4', a: "Every piece in AirPair was built MVPed using a sticky taped solution of existing software products before being custom coded. Learn how AirPair generated 15 paying customers before we'd written a single line of code."
-    'searls':         d: '!Sun, 17th Aug 22:00 GMT', n: 'Justin Searls', c: "Cartoon Guy", t: "The 'Rails of JavaScript' won't be a Framework", tw: 'searls', tags: ['rails'], u: 'searls', g: 'e6c6e133e74c3b83f04d2861deaa1c20', a: "The failure of Rails has been its perception as 'best web framework ever' instead of 'best web framework for apps like Basecamp'. Given that, it's clear why Rails makes writing a UI in HTML a joy but does few favors for JavaScript-heavy apps. We'll show how with Lineman.js & tools extracted find JavaScript joy!"
     'toddmotto':      d: '!Sat, 9th Aug 12:00 GMT', n: 'Todd Motto', c: "HTML5 Google Developer Expert", t: "Learning AngularJS <br />in 1 Day", tw: 'toddmotto', tags: ['angularjs'], u: 'toddmotto', g: 'b56bb22b3a4b83c6b534b4c114671380', a: "Angular is a client-side MVC/MVVM framework built in JavaScript, essential for modern single page web applications (and even websites). This session is a full end to end crash course from my experiences, advice and best practices I've picked up from using it."
     'acuppy2':        d: '!Wed, 20th Aug 17:00 GMT', n: 'Adam Cuppy', c: "Conference Speaker", t: "Taming Chaotic Specs: <br />RSpec Design Patterns", in: 'sy5n2q8o2i49/OfJ8u7KW5E', tags: ['rails','rspec'], u: 'acuppy', g: '02bea4b58d39ba964c32c1609c728c53', a: "Hate when testing takes 3x as long because your specs are hard to understand? Following a few simple patterns, you can easily take a bloated spec and make it readable, DRY and simple to extend. This workshop is a refactor kata taking a bloated sample spec and making it manageable, readable and concise."
     'andrew_weiss':   d: '!Thu, 21st Aug 17:00 GMT', n: 'Andrew Weiss', c: "Consultant at Mircrosoft", t: "Cross-Platform Configuration w PowerShell", in: 'sy5n2q8o2i49/KhUQbZLqfq', tags: ['powershell'], u: 'andrew_weiss', g: '487151c85bfb33f3249c5668874719d2', a: "Join me for a crash course in PowerShell and its configuration management capabilities. In this session, you’ll learn how PowerShell can be used to create consistent, Windows and Linux based development environments. We’ll also explore some of the fundamentals of the popular application distribution system known as Docker and how we can use PowerShell to provision and manage our Docker hosts."
     'amirrajan':      d: 'Fri, 22nd Aug 15:00 GMT', n: 'Amir Rajan', c: "Apple Design Award Winner", l: "Beginner", t: "How to Con Your Way to <br />App Store #1", tw: 'ADarkRoomiOS', tags: ['app-store'], u: 'amirrajan', g: '433d6daba7a9f7e563b793c0890ef906', a: "What does it take to climb your way to the top spot in the App Store? What kind of revenue can you expect from building for-pay iOS apps? How does news coverage and social media affect download rates? Amir Rajan, creator of the A Dark Room iOS, will share the wisdom he's gained from climbing to the #1 spot. He'll share revenue and provide insight into the ranking system. He'll talk about pricing strategies, combating clones, dealing with negative reviews, and what control you have (and don't have) if your app goes viral.", b: "Amir Rajan is a jack of all trades. He has expertise in a number languages (C#, F#, Ruby, Scala, JavaScript, and Objective C). He is also the creator of A Dark Room iOS. This minimalist text based RPG conquered the world and took the #1 spot in the App Store across 5 countries. This chart topping iOS game and its unprecedented rise to the top has received critical acclaim from Paste Magazine, Giant Bomb, Forbes, The Huffington Post, Cult of Mac, and The New Yorker."
+    'mariovisic':     d: 'Sat, 23rd Aug 23:00 GMT', n: 'Mario Visic', c: "Conference Speaker", t: "ActiveRecord without active record", u: 'mariovisic', tw: 'mariovisic', tags: ['rails','activerecord'], g: 'db58858a009745e96871e04ef497269a', a: "An exercise in using the popular and well maintained ActiveRecord library in a web application while avoiding the active record pattern."
     '2upmedia':       d: 'Tue, 26th Aug 18:00 GMT', n: 'Jorge Colon', c: "PHP Wiz kiz", t: "Emulate staging servers w <br />Vagrant, CentOS & LAMP", in: 'sy5n2q8o2i49/cPXFL7mBie', tags: ['vagrant','centos','lamp'], u: '2upmedia', g: 'b93914137ae67057880798210dc80e20', a: "Some developers still use FTP and a live server, some have graduated to running a development environment locally, but the savvy emulate the live server locally with a virtual server. Vagrant makes this so easy. We'll go through how to install Vagrant, configuring a basic Vagrant configuration, then install LAMP on CentOS."
     'auser':          d: '!Thu, 28th Aug 16:00 GMT', n: 'Ari Lerner', c: "ng-newsletter Creator", t: "Powering interfaces <br />with AngularJS", u: 'auser', gh: 'auser', tags: ['angularjs'], g: '0ec7fe2c17900b71bd85ff63fc9d8a17', a: "Ari is a co-author of The Rails 4 Way, Riding Rails with AngularJS and the Beginner’s Guide to AngularJS. Recently Ari has been training folks in AngularJS at Hack Reactor as a JavaScript teacher. Ari also publishes ng-newsletter.com."
     'abeisgreat':     d: '!Sat, 30th Aug 16:00 GMT', n: 'Abe Haskins', c: "Angularfire Contributor", t: "Fast Client-Side Apps w AngularFire", gh: 'abeisgreat', tags: ['firebase','angularjs'], u: 'abeisgreat', g: 'fbb79df0f24e736c8e37f9f195a738cc', a: "Description coming soon"

@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <title>AirPair | AirConf</title>
+    <title>AirConf | {{workshops.count}}+ Speakers in a month of Virtual Talks by top Software Experts</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="robots" content="index, follow">
@@ -161,7 +161,7 @@
 
 <div id="about">
   <p>Assemble with more than {{workshops.count}} software leaders and thousands of attendees, right from your living room!</p>
-  <p>Join the evolution of software thought, in a first time opportunity to access so many experts in one condensed event.</p>
+  <p>Join the evolution of software thought, in a first time opportunity to access so many top developers in one condensed event.</p>
   <hr />
 </div>
 
@@ -287,27 +287,15 @@
         </ul>
       </a>
 
-
-<!--       <a href="javascript:alert('Panel registration opens Thu Jul 31')" class="keynote four right loginRequired" style="background:#7e7f7f;color:white">
-        <summary>
-          <label>Mon Aug TBA, 00:00 GMT</label>
-          <h3>Building developer communities</h3>
-          <small>
-            <label>Jonathon Kresner</label> AirPair<span> CEO</span>
-            <br /><label>Bostco So</label> SFRuby<span> Organizer</span>
-          </small>
-        </summary>
-        <div class="detail">
-          <label>Mon Aug TBA, 00:00 GMT</label>
-          <button class="btn btn-block">Register for panel</button>
-        </div>
-        <ul>
-          <li class="right"></li>
-          <li class="left"></li>
-          <li class="right"</li>
-          <li class="left"></li>
-        </ul>
-      </a>
+<!--
+  <summary>
+    <label>Mon Aug TBA, 00:00 GMT</label>
+    <h3>Building developer communities</h3>
+    <small>
+      <label>Jonathon Kresner</label> AirPair<span> CEO</span>
+      <br /><label>Bostco So</label> SFRuby<span> Organizer</span>
+    </small>
+  </summary>
  -->
   </div>
 
@@ -382,23 +370,23 @@
   {{#with jefflinwood}}{{> workshopSummary }}{{/with}}
   {{#with philsturgeon}}{{> workshopSummary }}{{/with}}
   {{#with annisgrey}}{{> workshopSummary }}{{/with}}
-  {{#with toddmotto}}{{> workshopSummary }}{{/with}}
-  {{#with agravier}}{{> workshopSummary }}{{/with}}
+  {{#with jenius}}{{> workshopSummary }}{{/with}}
 
   <h2 class="text-thin text-center m-t-3">Week 2 Speakers</h2><hr>
 
   {{#with arunoda}}{{> workshopSummary }}{{/with}}
+  {{#with searls}}{{> workshopSummary }}{{/with}}
   {{#with domenic}}{{> workshopSummary }}{{/with}}
   {{#with adymo}}{{> workshopSummary }}{{/with}}
   {{#with matsko}}{{> workshopSummary }}{{/with}}
   {{#with felienne}}{{> workshopSummary }}{{/with}}
-  {{#with brianmhunt}}{{> workshopSummary }}{{/with}}
-  {{#with andrewchen}}{{> workshopSummary }}{{/with}}
   {{#with ehrenreilly}}{{> workshopSummary }}{{/with}}
+  {{#with brianmhunt}}{{> workshopSummary }}{{/with}}
+  {{#with agravier}}{{> workshopSummary }}{{/with}}
+  {{#with andrewchen}}{{> workshopSummary }}{{/with}}
   {{#with acuppy1}}{{> workshopSummary }}{{/with}}
   {{#with zopatista}}{{> workshopSummary }}{{/with}}
   {{#with hackerpreneur}}{{> workshopSummary }}{{/with}}
-  {{#with searls}}{{> workshopSummary }}{{/with}}
 
  <h2 class="text-thin text-center m-t-3">Week 3 Speakers</h2><hr />
 
@@ -428,6 +416,8 @@
   {{#with mikegrassotti}}{{> workshopSummary }}{{/with}}
   {{#with mfeckie}}{{> workshopSummary }}{{/with}}
   {{#with arafalov}}{{> workshopSummary }}{{/with}}
+  {{#with toddmotto}}{{> workshopSummary }}{{/with}}
+
 </center>
 </div>
 
@@ -531,11 +521,11 @@
         localTime = moment(utc).format('ddd Do MMM ha ZZ')
 
         $time.html( localTime.replace(offset,'<span>('+offset+')</span>') );
-      } else
+      }
+      else
       {
         $time.html( 'Confirming time' );
       }
-
     });
 
 {{#if session.authenticated }}
@@ -543,7 +533,7 @@
       // if ($(this).attr('href') == '/airconf/')
       // {
       e.preventDefault();
-      alert("Workshop registrations open Thu Jul 31");
+      alert("Talk registrations open Fri Jul 31. Spots will be released in batches to attendees that bought tickets first.");
       false;
       // }
     });
