@@ -16,6 +16,7 @@ calcExpertCredit  = require '../mix/calcExpertCredit'
 calcRedeemed      = calcExpertCredit.calcRedeemed
 Data              = require './orders.query'
 AirConfOrders     = require './orders.airconf'
+Mixpanel          = require('../services/mixpanel')
 
 module.exports = class OrdersService extends DomainService
 
@@ -134,7 +135,6 @@ module.exports = class OrdersService extends DomainService
 
         @create order, (eeee,rrrr) -> callback(eeee,r)
 
-
   trackPayment: (order, type) ->
     props =
       usr: @usr.google._json.email
@@ -151,23 +151,28 @@ module.exports = class OrdersService extends DomainService
       props.utm_content  = order.utm.utm_content
       props.utm_campaign = order.utm.utm_campaign
 
-    segmentio.track
-      userId: @usr.google._json.email
-      event: 'customerPayment'
-      proerties: props
+    trackCallback = (response) =>
+      if response? && _.some(response.results)
+        mixpanelId = response.results[0]['$distinct_id']
+        segmentio.track
+          userId: mixpanelId
+          event: 'customerPayment'
+          proerties: props
 
-    # add event to request's log
-    # TODO: when mongo can't find an ID, it returns null as the result.
-    @requestSvc.getById order.requestId, (e, request) =>
-      if e
-        return winston.error 'trackPayment.@requestSvc.getById.error ' + e.stack
-      request.events.push @newEvent('customer paid')
+        # add event to request's log
+        # TODO: when mongo can't find an ID, it returns null as the result.
+        @requestSvc.getById order.requestId, (e, request) =>
+          if e
+            return winston.error 'trackPayment.@requestSvc.getById.error ' + e.stack
+          request.events.push @newEvent('customer paid')
 
-      mailman.importantRequestEvent "customer paid  #{order.total}", @usr, request
+          mailman.importantRequestEvent "customer paid  #{order.total}", @usr, request
 
-      @requestSvc.update request.id, { events: request.events }, (e) =>
-        if e
-          return winston.error 'trackPayment.@requestSvc.update.error ' + e.stack
+          @requestSvc.update request.id, { events: request.events }, (e) =>
+            if e
+              return winston.error 'trackPayment.@requestSvc.update.error ' + e.stack
+
+    Mixpanel.user(@usr.google._json.email, trackCallback)
 
 
   markPaymentReceived: (id, paymentDetail, callback) ->

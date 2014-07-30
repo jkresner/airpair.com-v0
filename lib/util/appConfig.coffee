@@ -13,6 +13,9 @@ module.exports =
       segmentio:
         writeKey: 'tjld2les7x'
         settings: { flushAt: 1 }
+      mixpanel:
+        key: 'b5d4ee8855759e80e92b6b6433d5e43f'
+        secret: '7c3544cdb3030ad7612e0c0315016390'
     mail:
       ses_access_key: process.env.AP_SES_ACCESS_KEY || "none"
       ses_secret_key: process.env.AP_SES_SECRET_KEY || "none"
@@ -71,6 +74,9 @@ module.exports =
       segmentio:
         writeKey: 'test'
         settings: { flushAt: 1 }
+      mixpanel:
+        key: 'test'
+        secret: 'test'
     mail:
       ses_access_key: 'test'
       ses_secret_key: 'test'
@@ -120,6 +126,7 @@ module.exports =
       tokens: {}
 
   staging:
+    defaults: defaults
     env: 'staging'
     isProd: false
     mongoUri: process.env.MONGOHQ_URL || "mongodb://localhost/airpair_staging"
@@ -127,6 +134,9 @@ module.exports =
     analytics:
       segmentio:
         writeKey: process.env.SEGMENT_IO_WRITE_KEY
+      mixpanel:
+        key: 'e40b4a20aa555755d9b5d54936ae9cc0'
+        secret: '3deb74f760d5ebf5ea418419f437cfc6'
     mail:
       ses_access_key: process.env.AP_SES_ACCESS_KEY || "none"
       ses_secret_key: process.env.AP_SES_SECRET_KEY || "none"
@@ -184,6 +194,9 @@ module.exports =
     analytics:
       segmentio:
         writeKey: process.env.SEGMENT_IO_WRITE_KEY
+      mixpanel:
+        key: '700fdc0126f37c4a5b22666f92be6be3'
+        secret: '468ef07fb0edeb07c1c47be0269e3f6f'
     mail:
       ses_access_key: process.env.AP_SES_ACCESS_KEY
       ses_secret_key: process.env.AP_SES_SECRET_KEY
