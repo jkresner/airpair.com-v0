@@ -16,7 +16,7 @@ calcExpertCredit  = require '../mix/calcExpertCredit'
 calcRedeemed      = calcExpertCredit.calcRedeemed
 Data              = require './orders.query'
 AirConfOrders     = require './orders.airconf'
-Mixpanel          = require('../services/mixpanel')
+Mixpanel          = require './mixpanel'
 
 module.exports = class OrdersService extends DomainService
 
