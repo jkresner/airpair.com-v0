@@ -7,7 +7,7 @@ class OrdersApi extends require('./_api')
     app.post    "/api/#{route}", @loggedIn, @ap, @create
     app.post    "/api/#{route}/package", @ap, @createAnonCharge
     app.get     "/api/admin/#{route}", @admin, @ap, @list
-    app.get     "/api/#{route}/request/:id", @admin, @ap, @getByRequestId
+    app.get     "/api/#{route}/request/:id", @ap, @getByRequestId
     app.get     "/api/#{route}/me", @loggedIn, @ap, @getByMe
     app.get     "/api/#{route}/expert/:expertId", @loggedIn, @ap, @expertList
     app.put     "/api/#{route}/:id", @admin, @ap, @update

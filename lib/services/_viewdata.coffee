@@ -4,6 +4,7 @@ CompanysSvc = require '../services/companys'
 Data = require './_viewdata.data'
 ExpertsSvc = require '../services/experts'
 OrdersSvc = require '../services/orders'
+OrdersQuery = require '../services/orders.query'
 RequestsSvc = require '../services/requests'
 SettingsSvc = require '../services/settings'
 stripePK = config.payment.stripe.publishedKey
@@ -99,7 +100,8 @@ module.exports = class ViewDataService
 
   workshop: (id, cb) ->
     workshop = _.find Data.workshops, (s) -> s.slug == id
-    cb null, -> { workshops: Data.workshops, workshop }
+    workshopRequestId = OrdersQuery.workshop.requestId
+    cb null, -> { workshops: Data.workshops, workshop, workshopRequestId }
 
   airconfreg: (cb) ->
     new CompanysSvc(@usr).getById 'me', (e, company) =>

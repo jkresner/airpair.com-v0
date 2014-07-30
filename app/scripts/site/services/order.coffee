@@ -1,20 +1,20 @@
-ngOrder = ($http, $rootScope, Restangular) ->
+ngOrder = ($http, Session, Restangular) ->
   class Order
 
-    data = {}
+    requestId = Session.data.requestId
+
 
     constructor:  ->
-      @fetchOrder()
+      @fetchOrders()
 
-    fetchOrder: ->
-      Restangular.one('experts', 'me').get().then (expert) =>
-        data.expert = expert
-        initializeTags()
-        fetchExpertRequests(expert._id)
-        fetchExpertOrders(expert._id)
+    orders: []
+
+    fetchOrders: ->
+      Restangular.one('orders/request', requestId).get().then (orders) =>
+        @orders.push()
 
   new Order
 
 angular
   .module('ngAirPair')
-  .factory('Order', ['$http', '$rootScope', 'Restangular', ngOrder])
+  .factory('Order', ['$http', 'Session', 'Restangular', ngOrder])

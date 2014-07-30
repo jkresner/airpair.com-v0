@@ -73,6 +73,7 @@ module.exports = (app) ->
   require('./lib/api/videos')(app)
   require('./lib/api/chat')(app)
   require('./lib/api/landingPage')(app)
+  require('./lib/api/workshops')(app)
 
   app.get '/paypal/success/:id', authd, render 'payment/paypalSuccess', ['params.id']
   app.get '/paypal/cancel/:id', authd, render 'payment/paypalCancel', ['params.id']

@@ -21,6 +21,7 @@ html(ng-app='ngAirPair')
       window.session = {
         user: !{ session ? JSON.stringify(session) : 'null'},
         workshop: !{ workshop ? JSON.stringify(workshop) : 'null'},
+        requestId: !{ workshopRequestId ? JSON.stringify(workshopRequestId) : 'null'}
       };
 
   body(ng-controller='SessionController')
