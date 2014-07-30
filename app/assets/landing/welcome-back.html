@@ -377,27 +377,20 @@
 
 
 
-
+  {{> footerMarketing this }}
   </body>
 
+  {{> InitPage }}
+
+  <script src="/javascripts/landing.js" defer onload="initPage()"></script>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+  <script type='text/javascript' src='https://cdn.firebase.com/js/client/1.0.17/firebase.js'></script>
+
   <script type="text/javascript">
 
   function initPage()
   {
-    addjs.trackEvent('page','view', window.location.pathname, 'so12');
-  }
-
-  </script>
-
-  <script src="/javascripts/landing.js" defer onload="initPage()"></script>
-
-
-
-  <script type='text/javascript' src='https://cdn.firebase.com/js/client/1.0.17/firebase.js'></script>
-
-  <!-- EMAIL FORM -->
-  <script type="text/javascript">
+    initStaticPage('so12');
 
     jQuery(function($){
 
@@ -507,6 +500,13 @@
 
 
     });
+  }
+
+  </script>
+
+  <!-- EMAIL FORM -->
+  <script type="text/javascript">
+
 
 
 
