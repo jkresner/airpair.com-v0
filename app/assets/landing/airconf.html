@@ -215,17 +215,18 @@
 
       <a href="javascript:alert('Panel registrations open Fri Aug 1 in batches for the attendees who bought their tickets first.')" class="keynote two right loginRequired" style="background:#4d4e4e;color:white">
         <summary>
-          <label>Mon Aug 18, TBA</label>
+          <label>Mon Aug 18, Confirming Time</label>
           <h3>Will Pairing Ever be Mainstream?</h3>
-          <p>Does pairing make sense for non-coding disciplines. What makes pair programming a compelling value proposition when writing software? Are similar benefits experienced when collaborating in real time with marketing, design or even doing taxes? What makes pairing hard and what cultural roadblocks exist in both software and non-software industry that is hindering more adoption.</p>
+          <p>Does pairing make sense for non-coding disciplines. What makes pair programming a compelling value proposition when writing software? What makes pairing hard and what cultural roadblocks exist in both software and non-software industry that is hindering more adoption.</p>
           <small>
             <label>Joshua Kerievsky</label> Industrial Logic <span>CEO</span>
             <br /><label>Corey Haines</label> Rails  <span>Book Author</span>
             <br /><label>Dave Hoover</label> DevBootcamp  <span>Co-founder</span>
+            <br /><label>Desi McAdam</label> Thoughtbot  <span>Director</span>
           </small>
         </summary>
         <div class="detail">
-          <label>Mon Aug 18, TBA</label>
+          <label>Mon Aug 18, Confirming Time</label>
           <h3>Will Pairing Be Mainstream?</h3>
           <button class="btn btn-block">Register for panel</button>
         </div>
@@ -233,7 +234,7 @@
           <li class="right"><img src="//secure.gravatar.com/avatar/050efd8d626e05697dea0d0edeb8bea8?s=140" alt="Joshua Kerievsky" /></li>
           <li class="left"><img src="//secure.gravatar.com/avatar/3d7807bb66e1a0c68c73ab2daaa77d8f?s=140" alt="Corey Haines" /></li>
           <li class="right"><img src="//secure.gravatar.com/avatar/f3729d9dc86df0fc4f1ab7b20aa8e531?s=140" alt="Dave Hoover" /></li>
-          <li class="left"><img src="//secure.gravatar.com/avatar/543d49f405c7e3cbd78f8e1a6d1c091d?s=140" alt="" /></li>
+          <li class="left"><img src="//secure.gravatar.com/avatar/33da3da6b969021eb6b17eaadd48a53e?s=140" alt="Desi McAdam<" /></li>
         </ul>
       </a>
 
@@ -265,7 +266,7 @@
 
       <a href="javascript:alert('Panel registrations open Fri Aug 1 in batches for the attendees who bought their tickets first.')" class="keynote four right loginRequired" style="background:#7e7f7f;color:white">
         <summary>
-          <label>Mon Aug 25, TBA</label>
+          <label>Mon Aug 25, Confirming Time</label>
           <h3>How to Build a Personal <br />Developer Brand</h3>
           <p>Strong personal brands get better consulting rates. What are the best strategies for building a personal developer brand? In this panel we ask a top Stack Overflow member, a prolific open-source contributor, a well-known technical blogger and a charismatic conference speaker for their tips and tricks.</p>
           <small>
@@ -275,7 +276,7 @@
           </small>
         </summary>
         <div class="detail">
-          <label>Mon Aug 25, TBA</label>
+          <label>Mon Aug 25, Confirming Time</label>
           <h3>How to Build a Personal <br />Developer Brand</h3>
           <button class="btn btn-block">Register for panel</button>
         </div>
@@ -368,6 +369,7 @@
   {{#with ryanbigg}}{{> workshopSummary }}{{/with}}
   {{#with abedra}}{{> workshopSummary }}{{/with}}
   {{#with jefflinwood}}{{> workshopSummary }}{{/with}}
+  {{#with cherylquirion}}{{> workshopSummary }}{{/with}}
   {{#with philsturgeon}}{{> workshopSummary }}{{/with}}
   {{#with annisgrey}}{{> workshopSummary }}{{/with}}
   {{#with jenius}}{{> workshopSummary }}{{/with}}
@@ -540,56 +542,6 @@
 {{/if}}
 
   }
-
-  function showSubscribe() {
-      console.log('showSubscribe');
-
-      // storage('subscribed', false);
-
-      if (storage('subscribed') !== 'true')
-      {
-        $('.subscribeform').show();
-
-        // Fixed subscribe on scroll
-        var subscribe = $('#subscribe').offset().top - 20;
-        $(window).scroll(function(e){
-          if (window.scrollY > subscribe) {
-            $('#subscribe').addClass('affix');
-          } else {
-            $('#subscribe').removeClass('affix');
-          }
-        });
-
-        $('.btnSubscribe').click(function(e){
-          console.log('click', this);
-          $input = $($(this).closest('form').find('input'));
-          console.log('click', $input);
-          email = $input.val()
-          if (validateEmail(email))
-          {
-            $input.parent().removeClass('has-error');
-            $.post("/api/landing/mailchimp/subscribe", { "listId": "39f4769300", "email": email })
-              .done(function(data) {
-                $('.subscribeform .container').html("<p>Thank you. Check your email.</p>");
-                addjs.trackEvent('airconf', 'airconfSubscribe', email);
-                storage('subscribed', true);
-                $('.subscribeform').fadeOut(1500);
-              })
-              .fail(function(resp, data) {
-                d = JSON.parse(resp.responseText);
-                console.log('args', arguments);
-                $input.parent().addClass('has-error'); alert(d.error);
-              });
-
-          } else {
-            $input.parent().addClass('has-error');
-          }
-        });
-      }
-
-    }
-
-
 
 </script>
 

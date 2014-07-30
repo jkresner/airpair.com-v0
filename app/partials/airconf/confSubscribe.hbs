@@ -67,4 +67,52 @@
     }
   }
 
+  function showSubscribe() {
+      console.log('showSubscribe');
+
+      // storage('subscribed', false);
+
+      if (storage('subscribed') !== 'true')
+      {
+        $('.subscribeform').show();
+
+        // Fixed subscribe on scroll
+        var subscribe = $('#subscribe').offset().top - 20;
+        $(window).scroll(function(e){
+          if (window.scrollY > subscribe) {
+            $('#subscribe').addClass('affix');
+          } else {
+            $('#subscribe').removeClass('affix');
+          }
+        });
+
+        $('.btnSubscribe').click(function(e){
+          console.log('click', this);
+          $input = $($(this).closest('form').find('input'));
+          console.log('click', $input);
+          email = $input.val()
+          if (validateEmail(email))
+          {
+            $input.parent().removeClass('has-error');
+            $.post("/api/landing/mailchimp/subscribe", { "listId": "39f4769300", "email": email })
+              .done(function(data) {
+                $('.subscribeform .container').html("<p>Thank you. Check your email.</p>");
+                addjs.trackEvent('airconf', 'airconfSubscribe', email);
+                storage('subscribed', true);
+                $('.subscribeform').fadeOut(1500);
+              })
+              .fail(function(resp, data) {
+                d = JSON.parse(resp.responseText);
+                console.log('args', arguments);
+                $input.parent().addClass('has-error'); alert(d.error);
+              });
+
+          } else {
+            $input.parent().addClass('has-error');
+          }
+        });
+      }
+
+    }
+
 </script>

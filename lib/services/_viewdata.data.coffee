@@ -23,6 +23,7 @@ module.exports =
     'ryanbigg':       convert 'ryanbigg', 'refactoring-large-rails-code', so:'15245/ryan-bigg'
     'abedra':         convert 'abedra', 'repsheet-dynamic-security-controls', tw: 'abedra'
     'jefflinwood':    convert 'jefflinwood', 'twilio-voice-sms-integration', in: 'sy5n2q8o2i49/MI4rhSkAQM'
+    'cherylquirion':  convert 'cherylquirion', 'lean-visual-strategy', tw: 'cherylquirion'
     'philsturgeon':   convert 'philsturgeon', 'php-town-crier', tw: 'philsturgeon'
     'annisgrey':      convert 'annisgrey', 'transitioning-to-consulting-for-developers', tw:'annisgrey'
     'jenius':         convert 'jenius', 'learn-git-and-github', gh:'jenius'
