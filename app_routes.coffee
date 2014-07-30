@@ -29,7 +29,7 @@ module.exports = (app) ->
   app.get '/workshops', (req, r) -> r.redirect req.url.replace('/workshops','/airconf2014')
 
   # pages
-  app.get '/login', file 'login'
+  app.get '/login', render 'login'
   app.get '/be-an-expert*', render 'beexpert'
   app.get '/find-an-expert*', render 'request'
   app.get '/dashboard*', authd, render 'dashboard'
