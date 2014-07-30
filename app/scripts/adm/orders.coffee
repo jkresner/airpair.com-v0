@@ -22,11 +22,12 @@ module.exports = (pageData) ->
     $locationProvider.html5Mode true
 
     $routeProvider.
-      when('/adm/ang/orders/growth',    { controller: 'GrowthCtrl',   templateUrl: "/adm/templates/orders_growth.html", resolve: {title: () -> document.title = "Monthly" }}).
+      when('/adm/ang/orders/growth',    { controller: 'GrowthCtrl',   templateUrl: "/adm/templates/orders_growth.html",   resolve: {title: () -> document.title = "Monthly" }}).
       when('/adm/ang/orders/channels',  { controller: 'ChannelsCtrl', templateUrl: "/adm/templates/orders_channels.html", resolve: {title: () -> document.title = "Channels" }}).
-      when('/adm/ang/orders/weekly',    { controller: 'WeeklyCtrl',   templateUrl: "/adm/templates/orders_weekly.html", resolve: {title: () -> document.title = "Weekly" }}).
-      when('/adm/ang/orders/edit/:id',  { controller: 'OrdersCtrl',   templateUrl: "/adm/templates/orders_edit.html", resolve: {title: () -> document.title = "Edit" }}).
-      when('/adm/ang/orders',           { controller: 'OrdersCtrl',   templateUrl: "/adm/templates/orders.html", resolve: {title: () -> document.title = "Orders" }}).
+      when('/adm/ang/orders/weekly',    { controller: 'WeeklyCtrl',   templateUrl: "/adm/templates/orders_weekly.html",   resolve: {title: () -> document.title = "Weekly" }}).
+      when('/adm/ang/orders/daily',     { controller: 'DailyCtrl',    templateUrl: "/adm/templates/orders_daily",    resolve: {title: () -> document.title = "Daily" }}).
+      when('/adm/ang/orders/edit/:id',  { controller: 'OrdersCtrl',   templateUrl: "/adm/templates/orders_edit.html",     resolve: {title: () -> document.title = "Edit" }}).
+      when('/adm/ang/orders',           { controller: 'OrdersCtrl',   templateUrl: "/adm/templates/orders.html",          resolve: {title: () -> document.title = "Orders" }}).
       otherwise({redirectTo: '/'})
   ]).
 
@@ -143,6 +144,20 @@ module.exports = (pageData) ->
 
         return weeks
 
+      daysOfWeek: (weekStart) ->
+        # console.log "weekStart", weekStart.toDate()
+        dayStart = weekStart
+        days = []
+        for num in [0..6]
+          day =
+            start: dayStart.clone()
+            end: dayStart.clone().endOf("day")
+          days.push day
+          dayStart = dayStart.add("d", 1)
+          # console.log "START ", day.start.toDate(), "END", day.end.toDate()
+
+        return days
+
 
   ).
 
@@ -161,10 +176,10 @@ module.exports = (pageData) ->
         get: () ->
           @data
 
-        filter: (start, end, searchText) ->
+        filter: (start, end, searchText, dataSet = @data) ->
 
           visibleOrders = []
-          for order in @data
+          for order in dataSet
             if @isWithinDate(order, start, end)
               visibleOrders.push order
           if searchText
@@ -176,7 +191,7 @@ module.exports = (pageData) ->
             summary: @calcSummary(visibleOrders)
           }
 
-          console.log "data", data
+          # console.log "data", data
 
           return data
 
@@ -237,7 +252,7 @@ module.exports = (pageData) ->
 
           # console.log "TYPES", _.groupBy TYPES, (type) -> type
 
-          console.log "SUMMARY", summary
+          # console.log "SUMMARY", summary
           return summary
 
 
@@ -320,7 +335,8 @@ module.exports = (pageData) ->
           api = {}
           # Get requests
           $http.get("/api/admin/requests/#{startDate}/#{endDate}").success (data, status, headers, config) =>
-            console.log "API requests"
+            # window.
+            console.log "API requests", data
             @growthRequests = api.requests = data
             count++
             if count is 2 then callback(api)
@@ -610,9 +626,9 @@ module.exports = (pageData) ->
 
                   console.log "wkPercentage = #{wkPercentage*100}%"
 
-                  console.log "finalDiff", finalDiff
+                  # console.log "finalDiff", finalDiff
 
-                  console.log "prequestsNum = #{finalWeek.requestsNum}/(#{prevWeek.requestsNum}*#{wkPercentage}) - 1 = #{(finalWeek.requestsNum/(prevWeek.requestsNum*wkPercentage)) - 1}"
+                  # console.log "prequestsNum = #{finalWeek.requestsNum}/(#{prevWeek.requestsNum}*#{wkPercentage}) - 1 = #{(finalWeek.requestsNum/(prevWeek.requestsNum*wkPercentage)) - 1}"
 
                   _.extend finalDiff,
                     intervalName: "#{Math.floor(wkPercentage*100)}%"
@@ -739,7 +755,6 @@ module.exports = (pageData) ->
               @metrics.push metric
 
             # console.log "tag.groups", _.groupBy TAGS, (num) -> num
-#
 
             # tags = _.uniq(tags)
 
@@ -814,7 +829,7 @@ module.exports = (pageData) ->
           prev = null
           for week in weeks
             week.metrics = @getChannelMetrics(week.start, week.end)
-            console.log "#{week.str} week.metrics ", week.metrics
+            # console.log "#{week.str} week.metrics ", week.metrics
 
             # Calculate the percentage share for repeat customers
             week.metrics.repeatSummary.numOrdersShare = week.metrics.repeatSummary.numOrders/week.metrics.summary.numOrders or 0
@@ -905,7 +920,7 @@ module.exports = (pageData) ->
                 finalWeek.diffTagsRepeat[tagName] =
                   count: $helpers.calcDiff oldCount, newCount, wkPercentage
                 finalWeek.diffTagsRepeat.TOTAL = $helpers.calcDiff prevWeek.metrics.repeatSummary.numOrdersShare, finalWeek.metrics.repeatSummary.numOrdersShare, wkPercentage
-                console.log "final week #{tagName} - #{oldCount} to #{newCount} ", finalWeek.diffTagsRepeat[tagName].count
+                # console.log "final week #{tagName} - #{oldCount} to #{newCount} ", finalWeek.diffTagsRepeat[tagName].count
 
 
           return weeks.reverse()
@@ -952,6 +967,31 @@ module.exports = (pageData) ->
             summary: summary
             repeatSummary: repeatSummary
           }
+
+
+
+      ads:
+
+        daily: (start, end = moment()) ->
+
+          weeks = $moment.getWeeksByFriday(start, end)
+
+          # Get data for each week
+          for week in weeks
+            week.data = apData.orders.filter week.start, week.end
+            week.days = $moment.daysOfWeek moment(week.start)
+
+
+          # Group data by day
+
+
+
+
+
+          return weeks
+
+
+
 
 
 
@@ -1260,8 +1300,19 @@ module.exports = (pageData) ->
 
 
 
-  ])
+  ]).
 
+
+
+  # DAILY
+
+  controller("DailyCtrl", ['$scope', '$moment', 'apData', ($scope, $moment, apData ) ->
+
+
+
+    console.log "daily report", apData.ads.daily moment().subtract('w', 3)
+
+  ])
 
 
 

@@ -75,5 +75,6 @@ class QueryHelper
       'tags.short': 1
       'calls.recordings.type': 1
       'userId': 1
+      'marketingTags': 1
 
 module.exports = new QueryHelper()

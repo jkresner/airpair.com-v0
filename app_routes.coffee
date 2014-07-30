@@ -25,6 +25,7 @@ module.exports = (app) ->
   app.get '/experts/me', authd, render 'site'
   app.get '/templates/admin/automatch', authd, render 'templates/admin/automatch'
   app.get '/templates/experts/me', authd, render 'templates/experts/me'
+  app.get '/adm/templates/orders_daily', authd, render 'adm/templates/orders_daily'
 
   app.get '/workshops', (req, r) -> r.redirect req.url.replace('/workshops','/airconf2014')
 
