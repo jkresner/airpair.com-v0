@@ -97,7 +97,7 @@ module.exports = class ViewDataService
     else
       cb null, -> { workshops: Data.workshops }
 
-  airconfsession: (id, cb) ->
+  workshop: (id, cb) ->
     workshop = _.find Data.workshops, (s) -> s.slug == id
     cb null, -> { workshops: Data.workshops, workshop }
 
