@@ -1,13 +1,10 @@
 Speakers = require '../data/airconfspeakers'
 
 convert = (username, slugUrl, social) =>
-  moment = require('moment-timezone')
   {name, shortBio, fullBio, talkTitle, talkDescription, talkTags, level, gravatar, pdt} = _.find Speakers, (s) -> s.username == username
   result = _.extend {u:username,slug: slugUrl}, social
   result = _.extend result,
     utc: pdt
-    calutc: moment(pdt).tz('Etc/GMT+3').format('YYYYMMDDTHHmmss') + "Z"
-    calend: moment(pdt).tz('Etc/GMT+2').format('YYYYMMDDTHHmmss') + "Z"
     n: name
     b: fullBio
     c: shortBio
@@ -33,15 +30,19 @@ module.exports =
 
     #wk 2
     'arunoda':        convert 'arunoda', 'client-side-javascript-error-tracking', tw: 'arunoda'
+    'peterarmstrong': convert 'peterarmstrong', 'why-publish-developer-books', tw: 'peterarmstrong'
     'searls':         convert 'searls', 'simplifying-rails-tests', tw: 'searls'
     'domenic':        d: 'Tue, 12th Aug 00:00 GMT', utc: '2014-08-11T12:00:00.000Z', n: 'Domenic Denicola', c: "Google Chrome Team", t: "Building web apps from reusable pieces w NPM", gh: 'domenic', tags: ['nodejs','npm'], u: 'domenic', g: 'c6d819207a3010b39d13e1f59f2c0029', a: "Description coming soon"
     'adymo':          convert 'adymo', 'rails-performance-optimization-q-and-a', in: 'sy5n2q8o2i49/1KB9BDtDYm'
     'matsko':         convert 'matsko', 'animations-with-angularjs', gh: 'matsko'
     'felienne':       convert 'felienne', 'spreadsheets-graph-databases', tw: 'felienne'
     'ehrenreilly':    convert 'ehrenreilly', 'panda-user-experience-and-seo', in: '/sy5n2q8o2i49/HEeMIzWKij'
-
     'brianmhunt':     convert 'brianmhunt', 'spreadsheets-graph-databases', so: '19212/brian-m-hunt'
+    'johnscattergood':convert 'johnscattergood', 'automating-marine-container-terminals', tw: 'johnscattergood'
+    'zopatista':      convert 'zopatista', 'python-3.4', so: '100297/martijn-pieters'
+    'agravier':       convert 'agravier', 'data-processing-with-python', in: 'sy5n2q8o2i49/UFhmGZ-ZyR'
     'andrewchen':     convert 'andrewchen', 'zero-to-product-market-fit', tw:'andrewchen'
+
     'hcatlin':        convert 'hcatlin', 'css-vs-sass', tw:'hcatlin'
     'evgenyz':        convert 'evgenyz', 'test-driven-infrastructure', in: 'sy5n2q8o2i49/9ZPSg_JcCY'
     'basarat':        convert 'basarat', 'javascript-prototypal-inheritance', so: '390330/basarat'
@@ -52,14 +53,12 @@ module.exports =
     'arafalov':       convert 'arafalov', 'discovering-your-inned-search-engine', tw: 'arafalov'
     'kn0tch':         convert 'kn0tch', 'containerizing-production-app', tw: 'kn0tch'
     'fluffyjack':     convert 'fluffyjack', 'is-swift-that-swift', in: 'sy5n2q8o2i49/oNxzjUMtdW'
-    'agravier':       convert 'agravier', 'data-processing-with-python', in: 'sy5n2q8o2i49/UFhmGZ-ZyR'
     'bantik':         convert 'bantik', 'open-source-and-women', tw: 'bantik'
     'joshowens':      convert 'joshowens', 'learn-meteorjs-1.0', tw:'joshowens'
     'jayfields':      convert 'jayfields', 'effectiv-unit-tests', tw: 'thejayfields'
 
 
     'acuppy1':        d: '!Thu, 14th Aug 17:00 GMT', n: 'Adam Cuppy', c: "Conference Speaker", t: "Taming Chaotic Specs: <br />RSpec Design Patterns", in: 'sy5n2q8o2i49/OfJ8u7KW5E', tags: ['rails','rspec'], u: 'acuppy', g: '35e0dbc9533ce3d90527eeec998d9725', a: "Hate when testing takes 3x as long because your specs are hard to understand? Following a few simple patterns, you can easily take a bloated spec and make it readable, DRY and simple to extend. This workshop is a refactor kata taking a bloated sample spec and making it manageable, readable and concise."
-    'zopatista':      d: '!Fri, 15th Aug 01:00 GMT', n: 'Martijn Pieters', c: "All-time #1 Python Answerer", t: "What's New in <br />Python 3.4", so: '100297/martijn-pieters', tags: ['python'], u: 'zopatista', g: '09c1bb74564cba5aa5e1005e869499d4', a: "Description coming soon"
     'hackerpreneur':  d: '!Sat, 16th Aug 16:00 GMT', n: 'Jonathon Kresner', c: "AirPair Founder", t: "Validated <br />Building", tw: 'hackerpreneur', tags: ['lean-startup'], u: 'hackerpreneur', g: '780d02a99798886da48711d8104801a4', a: "Every piece in AirPair was built MVPed using a sticky taped solution of existing software products before being custom coded. Learn how AirPair generated 15 paying customers before we'd written a single line of code."
     'toddmotto':      d: '!Sat, 9th Aug 12:00 GMT', n: 'Todd Motto', c: "HTML5 Google Developer Expert", t: "Learning AngularJS <br />in 1 Day", tw: 'toddmotto', tags: ['angularjs'], u: 'toddmotto', g: 'b56bb22b3a4b83c6b534b4c114671380', a: "Angular is a client-side MVC/MVVM framework built in JavaScript, essential for modern single page web applications (and even websites). This session is a full end to end crash course from my experiences, advice and best practices I've picked up from using it."
     'acuppy2':        d: '!Wed, 20th Aug 17:00 GMT', n: 'Adam Cuppy', c: "Conference Speaker", t: "Taming Chaotic Specs: <br />RSpec Design Patterns", in: 'sy5n2q8o2i49/OfJ8u7KW5E', tags: ['rails','rspec'], u: 'acuppy', g: '02bea4b58d39ba964c32c1609c728c53', a: "Hate when testing takes 3x as long because your specs are hard to understand? Following a few simple patterns, you can easily take a bloated spec and make it readable, DRY and simple to extend. This workshop is a refactor kata taking a bloated sample spec and making it manageable, readable and concise."
