@@ -434,12 +434,12 @@
 
       <p>AirConf tickets get you unprecedented access to {{workshops.count}}+ top experts in the field — open source core team members, technical author and noted entrepreneurs — who can not only help you with problems and challenges specific to your project, but can also help you better understand the future of the frameworks, libraries and languages that power your codebases.</p>
       <br />
-      <div id="subscription" style="background:#D5E2D5">
-        <form class="subscribeform centered p-b-1 p-t-2" onsubmit="return false">
+      <div id="subscription" style="background:#D5E2D5" class="subscribeform container">
+        <form class="centered p-b-1 p-t-2" onsubmit="return false">
           <h3>Space is limited. To be notified when we release more tickets, register below</h3>
           <div class="row" style="padding: 10px">
             <div class="col-md-8"><input type="email" placeholder="Your email address" name="subscribe" data-error-style="inline" class="form-control"></input></div>
-            <div class="col-md-4"><button id="btnSubscribe" class="btn-block">Reserve My Seat</button></div>
+            <div class="col-md-4"><button class="btn-block btnSubscribe">Reserve My Seat</button></div>
           </div>
         </form>
       </div>
@@ -540,6 +540,57 @@
 {{/if}}
 
   }
+
+  function showSubscribe() {
+      console.log('showSubscribe');
+
+      // storage('subscribed', false);
+
+      if (storage('subscribed') !== 'true')
+      {
+        $('.subscribeform').show();
+
+        // Fixed subscribe on scroll
+        var subscribe = $('#subscribe').offset().top - 20;
+        $(window).scroll(function(e){
+          if (window.scrollY > subscribe) {
+            $('#subscribe').addClass('affix');
+          } else {
+            $('#subscribe').removeClass('affix');
+          }
+        });
+
+        $('.btnSubscribe').click(function(e){
+          console.log('click', this);
+          $input = $($(this).closest('form').find('input'));
+          console.log('click', $input);
+          email = $input.val()
+          if (validateEmail(email))
+          {
+            $input.parent().removeClass('has-error');
+            $.post("/api/landing/mailchimp/subscribe", { "listId": "39f4769300", "email": email })
+              .done(function(data) {
+                $('.subscribeform .container').html("<p>Thank you. Check your email.</p>");
+                addjs.trackEvent('airconf', 'airconfSubscribe', email);
+                storage('subscribed', true);
+                $('.subscribeform').fadeOut(1500);
+              })
+              .fail(function(resp, data) {
+                d = JSON.parse(resp.responseText);
+                console.log('args', arguments);
+                $input.parent().addClass('has-error'); alert(d.error);
+              });
+
+          } else {
+            $input.parent().addClass('has-error');
+          }
+        });
+      }
+
+    }
+
+
+
 </script>
 
 <script src="/javascripts/landing.js" defer onload="initPage()"></script>
