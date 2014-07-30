@@ -1,10 +1,13 @@
 Speakers = require '../data/airconfspeakers'
 
 convert = (username, slugUrl, social) =>
+  moment = require('moment-timezone')
   {name, shortBio, fullBio, talkTitle, talkDescription, talkTags, level, gravatar, pdt} = _.find Speakers, (s) -> s.username == username
   result = _.extend {u:username,slug: slugUrl}, social
   result = _.extend result,
     utc: pdt
+    calutc: moment(pdt).tz('Etc/GMT+3').format('YYYYMMDDTHHmmss') + "Z"
+    calend: moment(pdt).tz('Etc/GMT+2').format('YYYYMMDDTHHmmss') + "Z"
     n: name
     b: fullBio
     c: shortBio
