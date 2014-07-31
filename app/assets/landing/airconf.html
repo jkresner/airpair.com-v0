@@ -107,55 +107,76 @@
 </style>
 
 
-<div id="subscribe" class="subscribeform">
-  <div class="container">
-      <img src="/images/landing/airconf/full-logo.png" />
-      <div class="form-group">
-        <label class="control-label">Space is limited. Subscribe to be notified when we release the next batch of tickets.</label>
-        <input type="text" name="subscribe" placeholder="Your email address" value="" data-error-style="inline" class="form-control">
-        <button class="btn btn-primary btnSubscribe">Reserve My Seat</button>
-      </div>
-   </div>
+<div id="floataction">
+  <div class="subscribe">
+    <div class="container">
+        <img src="/images/landing/airconf/full-logo.png" />
+        <div class="form-group">
+          <label class="control-label">Space is limited. Subscribe to be notified when we release the next batch of tickets.</label>
+          <div class="row">
+            <div class="col-md-8"><input type="text" name="subscribe" placeholder="Your email address" value="" data-error-style="inline" class="form-control"></div>
+            <div class="col-md-4"><button class="btn btn-primary btnSubscribe">Reserve My Seat</button></div>
+          </div>
+        </div>
+    </div>
+  </div>
 </div>
 
-
-
-{{> confSubscribe }}
+  {{> confSubscribe }}
 
 <style>
 
-  #subscribe { background:#90d1cc;height:66px;display:none;padding-top:0px; }
-  #subscribe img { width:280px;margin-top:-32px;float:left; }
-  #subscribe .container { width:1024px;margin:auto; }
-  #subscribe .container p { text-align:center;padding:16px;font-size:22px; }
-  #subscribe .form-group { float:left;margin:1px 0 0 20px;font-size:20px;color:#4d4e4e;width:680px; }
-  #subscribe label { display:block;font-size:14px;margin:2px 0px }
-  #subscribe input { width:320px;display:inline;height:32px;padding:3px }
-  #subscribe button { height:32px;margin:0 1px;background:#FF5F20;padding:2px 20px; }
-  #subscribe.affix { width:100%;z-index:100;opacity:0.95;top:30px; }
+  .subscribe { display:none }
+  .subscribe button {
+    padding:2px 20px;
+    background: #FF5F20;
+    border: 2px solid #ce5424;
+    border-radius: 2px;
+    height:32px;
+    color: white;
+    font-weight: 800;
+    text-transform: none;
+    display:block;
+  }
+  #floataction .subscribe { background:#90d1cc;height:66px;display:none;padding-top:0px; }
+  #floataction .subscribe img { width:280px;margin-top:-32px;float:left; }
+  #floataction .subscribe .container { width:1024px;margin:auto; }
+  #floataction .subscribe .container p { text-align:center;padding:16px;font-size:22px; }
+  #floataction .subscribe .form-group { float:left;margin:1px 0 0 20px;font-size:20px;color:#4d4e4e;width:680px; }
+  #floataction .subscribe label { display:block;font-size:14px;margin:3px 0px; }
+  #floataction .subscribe input { display:inline;height:32px;padding:3px }
+  .subscribe .col-md-4 { padding:0; }
+  .subscribe .col-md-8 { padding:0; }
+
+  #floataction .subscribe.affix { width:100%;z-index:100;opacity:0.95;top:30px; }
 
   @media (max-width:1024px) {
-    #subscribe .container { width:800px }
-    #subscribe label { font-size:11px;font-weight:normal; }
-    #subscribe input { width:240px}
-    #subscribe img { width:180px;margin-top:-7px }
-    #subscribe .form-group { margin:5px 0 0 20px;width:60%; }
+    #floataction .subscribe .container { width:800px }
+    #floataction .subscribe label { font-size:11px;font-weight:normal; }
+    .subscribe .col-md-4 { width:30%;display:inline-block }
+    .subscribe .col-md-8 { width:60%;display:inline-block }
+    #floataction .subscribe input { }
+    #floataction .subscribe img { width:180px;margin-top:-7px }
+    #floataction .subscribe .form-group { margin:5px 0 0 20px;width:66%; }
   }
 
   @media (max-width:801px) {
-    #subscribe .container { width:640px }
-    #subscribe label { font-size:11px; }
-    #subscribe img { display:none }
-    #subscribe .form-group { margin:5px 0 0 20px;width:100%; }
+    #floataction .form-group { margin:5px 0 0 0px }
+    #floataction .subscribe { height:106px }
+    .subscribe .col-md-4 { width:100% }
+    .subscribe .col-md-8 { width:100% }
+    #floataction .subscribe .container { width:640px }
+    #floataction .subscribe label { font-size:13px;display:block;margin:5px auto;width:84%;text-align:center; }
+    #floataction .subscribe input { width:84%;margin:auto;display:block }
+    #floataction .btnSubscribe { height:28px;padding-top:4px;padding-bottom:5px;margin:1px auto;width:84% }
+    #floataction .subscribe img { display:none }
+    #floataction .subscribe .form-group { margin:5px 0 0 20px;width:100%; }
   }
 
   @media (max-width:640px) {
-    #subscribe { height:106px }
-    #subscribe .container { text-align:center;width:100%;padding-top:5px;height:90px }
-    #subscribe .form-group { width:100%;text-align:center;margin:0;padding:0;font-size:16px; }
-    #subscribe label { display:block;margin-bottom:2px; }
-    #subscribe input { width:84% }
-    #subscribe button { height:28px;padding-top:5px;padding-bottom:5px;margin-top:1px;width:84%   }
+    #floataction .subscribe label { font-size:11px;margin:2px auto }
+    #floataction .subscribe .container { text-align:center;width:100%;padding-top:5px;height:90px }
+    #floataction .subscribe .form-group { width:100%;text-align:center;margin:0;padding:0;font-size:16px; }
   }
 
 </style>
@@ -163,38 +184,44 @@
 <script type="text/javascript">
 
   function showSubscribe() {
-      console.log('showSubscribe');
-
-      // storage('subscribed', false);
+      //storage('subscribed', false );
+      //console.log('showSubscribe', (storage('subscribed') !== 'true'));
 
       if (storage('subscribed') !== 'true')
       {
-        $('.subscribeform').show();
+        $('.subscribe').show();
 
-        // Fixed subscribe on scroll
-        var subscribe = $('#subscribe').offset().top - 20;
+        // Fixed #floataction subscribe on scroll
+        var subscribe = $('#floataction .subscribe').offset().top - 20;
+
+        // console.log('showing', subscribe);
+
         $(window).scroll(function(e){
           if (window.scrollY > subscribe) {
-            $('#subscribe').addClass('affix');
+            $('#floataction .subscribe').addClass('affix');
           } else {
-            $('#subscribe').removeClass('affix');
+            $('#floataction .subscribe').removeClass('affix');
           }
         });
 
+        // console.log('binding', $('.btnSubscribe'));
+
         $('.btnSubscribe').click(function(e){
-          console.log('click', this);
-          $input = $($(this).closest('form').find('input'));
-          console.log('click', $input);
+          $input = $($(this).closest('.container').find('input'));
+          $button = $($(this).closest('.container').find('button'));
           email = $input.val()
+          console.log('click', $input, email);
           if (validateEmail(email))
           {
             $input.parent().removeClass('has-error');
+            $button.html('Thanks');
+
             $.post("/api/landing/mailchimp/subscribe", { "listId": "39f4769300", "email": email })
               .done(function(data) {
                 $('.subscribeform .container').html("<p>Thank you. Check your email.</p>");
                 addjs.trackEvent('airconf', 'airconfSubscribe', email);
                 storage('subscribed', true);
-                $('.subscribeform').fadeOut(1500);
+                $('.subscribe').fadeOut(1500);
               })
               .fail(function(resp, data) {
                 d = JSON.parse(resp.responseText);
@@ -558,50 +585,50 @@
 
       <p>AirConf tickets get you unprecedented access to {{workshops.count}}+ top experts in the field — open source core team members, technical author and noted entrepreneurs — who can not only help you with problems and challenges specific to your project, but can also help you better understand the future of the frameworks, libraries and languages that power your codebases.</p>
       <br />
-      <div id="subscription" style="background:#D5E2D5" class="subscribeform container">
-        <form class="centered p-b-1 p-t-2" onsubmit="return false">
-          <h3>Space is limited. To be notified when we release more tickets, register below</h3>
-          <div class="row" style="padding: 10px">
-            <div class="col-md-8"><input type="email" placeholder="Your email address" name="subscribe" data-error-style="inline" class="form-control"></input></div>
-            <div class="col-md-4"><button class="btn-block btnSubscribe">Reserve My Seat</button></div>
+
+      <div id="bottomaction">
+        <div class="subscribe">
+          <div class="container">
+            <form class="centered p-b-1 p-t-2" onsubmit="return false">
+              <h3>Space is limited. To be notified when we release more tickets, register below</h3>
+              <div class="row" style="padding: 10px">
+                <div class="col-md-8"><input type="email" placeholder="Your email address" name="subscribe" data-error-style="inline" class="form-control"></input></div>
+                <div class="col-md-4"><button class="btn-block btnSubscribe">Reserve My Seat</button></div>
+              </div>
+            </form>
           </div>
-        </form>
+        </div>
       </div>
-      <div class="m-t-2" style="text-align: center"><div class="addthis_sharing_toolbox"></div></div>
     </div>
+    <div class="m-t-2" style="text-align: center"><div class="addthis_sharing_toolbox"></div></div>
   </div>
 
   <style type="text/css">
-      .subscribeform {
-        padding:15px;
+      #bottomaction .container {
+        padding:15px;width:100%;background:#D5E2D5
       }
-      .subscribeform h3 {
+      #bottomaction h3 {
         text-align:center;
         font-size: 14pt;
         font-weight: 800;
         margin: 0;
         margin-bottom: 5px;
       }
-      .subscribeform input {
+      .subscribe input {
         border: 1px solid #999;
         border-radius: 2px;
         padding: 4px;
       }
-      .subscribeform button {
-        background: #FF5F20;
-        border: 2px solid #ce5424;
-        border-radius: 2px;
-        height:35px;
-        margin:5px!important;
-        margin: auto;
-        color: white;
-        font-weight: 800;
-        text-transform: none;
-      }
-      .subscribeform input, .subscribe button {
+      #bottomaction input {
         margin: 5px;
         height: 35px;
         width: 100%;
+      }
+
+      #bottomaction button {
+        margin: 5px;
+        height: 35px;
+        width: 90%;
       }
 
 
@@ -671,6 +698,6 @@
 
 {{> confSigninModal }}
 
-<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-519d1944598d7aed"></script>
+<!-- <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-519d1944598d7aed"></script> -->
 
 </html>
