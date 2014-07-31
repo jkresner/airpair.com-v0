@@ -3,7 +3,6 @@ ngWorkshop = ($http, Session, Restangular) ->
 
     requestId = Session.data.requestId
 
-
     constructor:  ->
       @fetchAttendingWorkshops()
 

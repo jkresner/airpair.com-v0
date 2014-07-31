@@ -1,0 +1,6 @@
+h2 My AirConf Schedule
+ul
+  li(ng-repeat="workshop in allAttending()")
+    span(ng-repeat="speaker in workshop.speakers") {{speaker.name}}:&nbsp;
+    span {{workshop.title}}&nbsp;&mdash;
+    span {{workshop.time}}
