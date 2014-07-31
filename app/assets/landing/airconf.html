@@ -93,6 +93,127 @@
       </section>
     </div>
 
+<div id="about">
+  <p>Assemble with more than {{workshops.count}} software leaders and thousands of attendees, right from your living room!</p>
+  <p>Join the evolution of software thought, in a first time opportunity to access so many top developers in one condensed event.</p>
+  <hr />
+</div>
+
+
+<style type="text/css">
+  #about { padding:10px 0 30px 10px; }
+  #about p { width:80%;margin:20px auto;text-align:center;font-size:16px;max-width:1020px; }
+  #about hr { width:80%;max-width:1020px; }
+</style>
+
+
+<div id="subscribe" class="subscribeform">
+  <div class="container">
+      <img src="/images/landing/airconf/full-logo.png" />
+      <div class="form-group">
+        <label class="control-label">Space is limited. Subscribe to be notified when we release the next batch of tickets.</label>
+        <input type="text" name="subscribe" placeholder="Your email address" value="" data-error-style="inline" class="form-control">
+        <button class="btn btn-primary btnSubscribe">Reserve My Seat</button>
+      </div>
+   </div>
+</div>
+
+
+
+{{> confSubscribe }}
+
+<style>
+
+  #subscribe { background:#90d1cc;height:66px;display:none;padding-top:0px; }
+  #subscribe img { width:280px;margin-top:-32px;float:left; }
+  #subscribe .container { width:1024px;margin:auto; }
+  #subscribe .container p { text-align:center;padding:16px;font-size:22px; }
+  #subscribe .form-group { float:left;margin:1px 0 0 20px;font-size:20px;color:#4d4e4e;width:680px; }
+  #subscribe label { display:block;font-size:14px;margin:2px 0px }
+  #subscribe input { width:320px;display:inline;height:32px;padding:3px }
+  #subscribe button { height:32px;margin:0 1px;background:#FF5F20;padding:2px 20px; }
+  #subscribe.affix { width:100%;z-index:100;opacity:0.95;top:30px; }
+
+  @media (max-width:1024px) {
+    #subscribe .container { width:800px }
+    #subscribe label { font-size:11px;font-weight:normal; }
+    #subscribe input { width:240px}
+    #subscribe img { width:180px;margin-top:-7px }
+    #subscribe .form-group { margin:5px 0 0 20px;width:60%; }
+  }
+
+  @media (max-width:801px) {
+    #subscribe .container { width:640px }
+    #subscribe label { font-size:11px; }
+    #subscribe img { display:none }
+    #subscribe .form-group { margin:5px 0 0 20px;width:100%; }
+  }
+
+  @media (max-width:640px) {
+    #subscribe { height:106px }
+    #subscribe .container { text-align:center;width:100%;padding-top:5px;height:90px }
+    #subscribe .form-group { width:100%;text-align:center;margin:0;padding:0;font-size:16px; }
+    #subscribe label { display:block;margin-bottom:2px; }
+    #subscribe input { width:84% }
+    #subscribe button { height:28px;padding-top:5px;padding-bottom:5px;margin-top:1px;width:84%   }
+  }
+
+</style>
+
+<script type="text/javascript">
+
+  function showSubscribe() {
+      console.log('showSubscribe');
+
+      // storage('subscribed', false);
+
+      if (storage('subscribed') !== 'true')
+      {
+        $('.subscribeform').show();
+
+        // Fixed subscribe on scroll
+        var subscribe = $('#subscribe').offset().top - 20;
+        $(window).scroll(function(e){
+          if (window.scrollY > subscribe) {
+            $('#subscribe').addClass('affix');
+          } else {
+            $('#subscribe').removeClass('affix');
+          }
+        });
+
+        $('.btnSubscribe').click(function(e){
+          console.log('click', this);
+          $input = $($(this).closest('form').find('input'));
+          console.log('click', $input);
+          email = $input.val()
+          if (validateEmail(email))
+          {
+            $input.parent().removeClass('has-error');
+            $.post("/api/landing/mailchimp/subscribe", { "listId": "39f4769300", "email": email })
+              .done(function(data) {
+                $('.subscribeform .container').html("<p>Thank you. Check your email.</p>");
+                addjs.trackEvent('airconf', 'airconfSubscribe', email);
+                storage('subscribed', true);
+                $('.subscribeform').fadeOut(1500);
+              })
+              .fail(function(resp, data) {
+                d = JSON.parse(resp.responseText);
+                console.log('args', arguments);
+                $input.parent().addClass('has-error'); alert(d.error);
+              });
+
+          } else {
+            $input.parent().addClass('has-error');
+          }
+        });
+      }
+
+    }
+
+</script>
+
+
+
 <style type="text/css">
 
   #keynotes { width:1002px;margin:auto }
@@ -116,7 +237,7 @@
   .keynote.right small label { color:#dff2ef }
   .keynote.right small span { color:white }
   .keynote div { display:none;width:340px;margin:15px 15px 15px 20px;vertical-align:top;color:white; }
-  .keynote div .btn-block { font-size:20px;background:#ce5424;width:268px;color:white;height:50px;font-weight:300;padding-top:12px;text-transform:none;margin:30px; }
+  .keynote div .btn-block { font-size:20px;width:268px;color:white;height:50px;font-weight:300;padding-top:12px;text-transform:none;margin:30px; }
   .keynote:hover div { display:inline-block; }
 
   @-moz-document url-prefix() {
@@ -164,20 +285,6 @@
 
 </style>
 
-<div id="about">
-  <p>Assemble with more than {{workshops.count}} software leaders and thousands of attendees, right from your living room!</p>
-  <p>Join the evolution of software thought, in a first time opportunity to access so many top developers in one condensed event.</p>
-  <hr />
-</div>
-
-
-<style type="text/css">
-  #about { padding:10px 0 30px 10px; }
-  #about p { width:80%;margin:20px auto;text-align:center;font-size:16px;max-width:1020px; }
-  #about hr { width:80%;max-width:1020px; }
-</style>
-
-{{> confSubscribe }}
 
 
   <div id="keynotes">
@@ -193,7 +300,7 @@
         <a href="//twitter.com/ccheever" target="_blank"></a>
         -->
 
-      <a href="javascript:alert('Panel registrations open Fri Aug 1 in batches for the attendees who bought their tickets first.')" class="keynote one left loginRequired" style="background:#dff2ef;color:#4d4e4e">
+      <div class="keynote one left" style="background:#dff2ef;color:#4d4e4e">
         <ul>
           <li class="left"><img src="/images/avatars/of.png" alt="Obie Fernandez" /></li>
           <li class="right"><img src="/images/landing/airconf/rabble.png" alt="Evan Henshaw-Plath" /></li>
@@ -214,11 +321,12 @@
         <div>
           <label><time datetime="2014-08-05T19:00:00.000Z"></time></label>
           <h3>The Future of Consulting</h3>
-          <button class="btn btn-block">Register for panel</button>
+<a class="add-to-cal btn btn-block btn-teal" target="_blank" href="https://www.google.com/calendar/render?action=TEMPLATE&text=AirConf+Keynore+The+Future+of+Consulting&dates=2014-08-05T18:30:00.000Z/2014-08-05T19:30:00.000Z&details=Remote+teams+are+becoming+more+popular+each+year.+The+top+consultancies+leave+clients+with+new+skills+as+well+as+deliverables.+Will this+be+enough+going+forward.&location=Google+Hangouts&sf=true&output=xml">Add to Calendar</a>
+<a href="javascript:alert('Panel registrations open Fri Aug 1 in batches for the attendees who bought their tickets first.')" class="loginRequired btn btn-block btn-orange">Register for panel</a>
         </div>
-      </a>
+      </div>
 
-      <a href="javascript:alert('Panel registrations open Fri Aug 1 in batches for the attendees who bought their tickets first.')" class="keynote two right loginRequired" style="background:#4d4e4e;color:white">
+      <div class="keynote two right" style="background:#4d4e4e;color:white">
         <summary>
           <label>Mon Aug 18, Confirming Time</label>
           <h3>Will Pairing Ever be Mainstream?</h3>
@@ -233,7 +341,7 @@
         <div class="detail">
           <label>Mon Aug 18, Confirming Time</label>
           <h3>Will Pairing Be Mainstream?</h3>
-          <button class="btn btn-block">Register for panel</button>
+          <a href="javascript:alert('Panel registrations open Fri Aug 1 in batches for the attendees who bought their tickets first.')" class="loginRequired btn btn-block btn-orange">Register for panel</a>
         </div>
         <ul>
           <li class="right"><img src="//airpair-blog.s3.amazonaws.com/wp-content/uploads/2013/12/Edward-Hieatt_avatar-96x96.jpg" alt="Edward Hieatt" /></li>
@@ -241,9 +349,9 @@
           <li class="right"><img src="//secure.gravatar.com/avatar/f3729d9dc86df0fc4f1ab7b20aa8e531?s=140" alt="Dave Hoover" /></li>
           <li class="left"><img src="//secure.gravatar.com/avatar/33da3da6b969021eb6b17eaadd48a53e?s=140" alt="Desi McAdam<" /></li>
         </ul>
-      </a>
+      </div>
 
-      <a href="javascript:alert('Panel registrations open Fri Aug 1 in batches for the attendees who bought their tickets first.')" class="keynote three left loginRequired" style="background:#90d1cc;color:black">
+      <div class="keynote three left" style="background:#90d1cc;color:black">
         <ul>
           <li class="left"><img src="//secure.gravatar.com/avatar/780d02a99798886da48711d8104801a4?s=140" alt="Jonathon kresner" /></li>
           <li class="right"><img src="/images/landing/airconf/deepnishar.png" alt="Dipchand Nishard" /></li>
@@ -265,11 +373,11 @@
         <div class="detail">
           <label><time datetime="2014-08-11T18:30:00.000Z"></time></label>
           <h3>Software Engineering vs Entrepreneurship</h3>
-          <button class="btn btn-block">Register for panel</button>
+          <a href="javascript:alert('Panel registrations open Fri Aug 1 in batches for the attendees who bought their tickets first.')" class="loginRequired btn btn-block btn-orange">Register for panel</a>
         </div>
-      </a>
+      </div>
 
-      <a href="javascript:alert('Panel registrations open Fri Aug 1 in batches for the attendees who bought their tickets first.')" class="keynote four right loginRequired" style="background:#7e7f7f;color:white">
+      <adiv class="keynote four right" style="background:#7e7f7f;color:white">
         <summary>
           <label>Mon Aug 25, Confirming Time</label>
           <h3>How to Build a Personal <br />Developer Brand</h3>
@@ -284,7 +392,7 @@
         <div class="detail">
           <label>Mon Aug 25, Confirming Time</label>
           <h3>How to Build a Personal <br />Developer Brand</h3>
-          <button class="btn btn-block">Register for panel</button>
+          <a href="javascript:alert('Panel registrations open Fri Aug 1 in batches for the attendees who bought their tickets first.')" class="loginRequired btn btn-block btn-orange">Register for panel</a>
         </div>
         <ul>
           <li class="right"><img src="//secure.gravatar.com/avatar/2db848de65112c20aa13f566c0cbf9d7?s=140" alt="Igor Lebovic" /></li>
@@ -292,7 +400,7 @@
           <li class="right"><img src="//secure.gravatar.com/avatar/a7f4f9dcbbf1d46d660b0a6c98435751?s=140" alt="John D. Cook" /></li>
           <li class="left"><img src="//secure.gravatar.com/avatar/3d7807bb66e1a0c68c73ab2daaa77d8f?s=140" alt="Corey Haines" /></li>
         </ul>
-      </a>
+      </div>
 
 <!--
   <summary>

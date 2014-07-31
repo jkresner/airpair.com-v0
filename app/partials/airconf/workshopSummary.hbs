@@ -1,20 +1,20 @@
 <div class="sessionCol">
 
-    <div class="user-info">
-      <img src="//secure.gravatar.com/avatar/{{g}}?s=180" alt="{{n}}" class="img-circle" width="50%">
-      <h3 class="name">{{n}}</h3>
-      <h4>{{c}}</h4>
-      <h5 class="tech">{{{t}}}</h5>
-      <h6 class="title">{{#each tags}}<span>{ {{this}} }</span> {{/each}}</h6>
-      <time datetime="{{{utc}}}"></time>
-    </div>
-    <div class="description">
-      <h3 class="name">{{n}}</h3>
-      <h6>{{{t}}}</h6>
-      <time datetime="{{{utc}}}"></time>
-      <a class="session user-badge text-center btn btn-teal" target="_blank" href="https://www.google.com/calendar/render?action=TEMPLATE&text=AirPair+AirConf+{{n}}+{{{t}}}&dates={{calutc}}/{{calend}}&details={{a}}&location=Google+Hangouts&sf=true&output=xml">Add to Calendar</a>
-      <a class="session user-badge text-center btn btn-orange" href="/airconf/{{slug}}">More info</a>
-    </div>
+  <div class="user-info">
+    <img src="//secure.gravatar.com/avatar/{{g}}?s=180" alt="{{n}}" class="img-circle" width="50%">
+    <h3 class="name">{{n}}</h3>
+    <h4>{{c}}</h4>
+    <h5 class="tech">{{{t}}}</h5>
+    <h6 class="title">{{#each tags}}<span>{ {{this}} }</span> {{/each}}</h6>
+    <time datetime="{{{utc}}}"></time>
+  </div>
+  <div class="description">
+    <h3 class="name">{{n}}</h3>
+    <h6>{{{t}}}</h6>
+    <time datetime="{{{utc}}}"></time>
+    <a class="user-badge text-center btn btn-teal" target="_blank" href="https://www.google.com/calendar/render?action=TEMPLATE&text=AirPair+AirConf+{{n}}+{{{t}}}&dates={{calutc}}/{{calend}}&details={{a}}&location=Google+Hangouts&sf=true&output=xml">Add to Calendar</a>
+    <a class="session user-badge text-center btn btn-orange" href="/airconf/{{slug}}">More info</a>
+  </div>
 
   <div class="social-icons">
     {{!-- <a class="ap" href="/book/{{u}}?code=airconf"></a> --}}
@@ -24,6 +24,5 @@
     {{#if in}}<a class="in" target="_blank" href="//linkedin.com/x/profile/{{in}}"></a>{{/if}}
     {{#if tw}}<a class="tw" target="_blank" href="//twitter.com/{{tw}}"></a>{{/if}}
   </div>
-
 
 </div>
