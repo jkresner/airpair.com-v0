@@ -336,7 +336,7 @@ module.exports = (pageData) ->
           # Get requests
           $http.get("/api/admin/requests/#{startDate}/#{endDate}").success (data, status, headers, config) =>
             # window.
-            console.log "API requests", data
+            console.log "API requests", data.length
             @growthRequests = api.requests = data
             count++
             if count is 2 then callback(api)
@@ -694,105 +694,142 @@ module.exports = (pageData) ->
 
 
 
-        getChannelMetrics: (start, end) ->
-          # console.log "getChannelMetrics"
-          # console.log "dates = ", start, end
+        getChannelMetrics: (start, end, type = 'orders') ->
+          console.log "getChannelMetrics = ", type
           end = moment(end).endOf("day")
+
           @calcRepeatCustomers()
 
 
-          if not @metrics
-            @metricsRepeated = []
-            @metrics = []
-            # TAGS = []
-            for order in apData.orders.data
-              metric =
-                utc: order.utc
-                name: order.company.contacts[0].fullName
-                userId: order.company.contacts[0]._id
-                tags: {}
-                total: order.total
-                campaigns: []
-                requestId: order.requestId
-                isRepeat: if @findRepeatCustomers([order.userId], order.utc) > 0 then true else false
-                hasTags: false
-                tags:
-                  ad: {total:0, revenue: 0}
-                  affiliate: {total:0, revenue: 0}
-                  direct: {total:0, revenue: 0}
-                  incubator: {total:0, revenue: 0}
-                  newsletterairpair: {total:0, revenue: 0}
-                  press: {total:0, revenue: 0}
-                  event: {total:0, revenue: 0}
-                  seo: {total:0, revenue: 0}
-                  social: {total:0, revenue: 0}
-                  wordofmouth: {total:0, revenue: 0}
-                  untracked: {total:0, revenue: 0}
-                  # stackoverflowads: {total:0, revenue: 0}
 
-
-              # console.log "findRepeatCustomers ORDER", order
-              # console.log "findRepeatCustomers", @findRepeatCustomers([order.userId], order.utc)
-
-
-              _.each order.marketingTags, (tag) ->
-                # console.log "tag.group", tag.group
-                # TAGS.push tag.group
-                channelTags = _.where order.marketingTags, { type: "channel" }
-                tagName = tag.group.replace('-', '')
-                if tag.type is "channel"
-                  if tag.name is "w-o-mouth"
-                    tagName = "wordofmouth"
-                  # tags.push tagName
-                  metric.tags[tagName] = tag
-                  metric.tags[tagName].total = metric.total/channelTags.length
-                  metric.hasTags = true
-                if tag.type is "campaign"
-                  metric.campaigns.push(tag.name)
-                  metric.hasTags = true
-
-              @metricsRepeated.push metric if metric.isRepeat
-              @metrics.push metric
-
-            # console.log "tag.groups", _.groupBy TAGS, (num) -> num
-
-            # tags = _.uniq(tags)
-
-
-            # console.log "@metricsRepeated", @metricsRepeated
+          cleanRequests = ->
+            for req in dataSet
+              req.utc = ObjectId2Date req._id
 
 
 
-
-
-            _(@metricsRepeated).reverse()
-            _(@metrics).reverse()
-
-
-          if start and end
-            @metricsFiltered = []
-            @metricsRepeatFiltered = []
-            for order in @metrics
-              date = new Date(order.utc)
-              if date >= start and date <= end
-                @metricsFiltered.push order
-            for order in @metricsRepeated
-              date = new Date(order.utc)
-              if date >= start and date <= end
-                @metricsRepeatFiltered.push order
-
-            data = {
-              orders: @metricsFiltered
-              summary: @getChannelMetricsSummary(@metricsFiltered)
-              repeatSummary: @getChannelMetricsSummary(@metricsRepeatFiltered)
-              metricsRepeated: @metricsRepeatFiltered
-            }
-
-            # console.log "CHANNEL METRICS", data
-            return data
-
+          if type is 'orders'
+            metrics = @metricsOrders
+            metricsRepeated = @metricsOrdersRepeated
+            dataSet = apData.orders.data
           else
-            return orders: @metrics, summary: @getChannelMetricsSummary(@metrics)
+            metrics = @metricsRequests
+            metricsRepeated = @metricsRequestsRepeated
+            dataSet = apData.orders.growthRequests
+            cleanRequests()
+
+
+
+
+
+
+
+          # Clean up the orders/requests into metics
+
+          cleanMetrics = () =>
+            console.log "cleanMetrics #{type}"
+            if not metrics
+              console.log "calc metrics"
+              metricsRepeated = []
+              metrics = []
+              # TAGS = []
+              # console.log "dataSet #{type}", dataSet
+              for order in dataSet
+                metric =
+                  utc: order.utc
+                  name: order.company.contacts[0].fullName
+                  userId: order.company.contacts[0]._id
+                  tags: {}
+                  total: order.total
+                  campaigns: []
+                  requestId: order.requestId
+                  isRepeat: if @findRepeatCustomers([order.userId], order.utc) > 0 then true else false
+                  hasTags: false
+                  tags:
+                    ad: {total:0, revenue: 0}
+                    affiliate: {total:0, revenue: 0}
+                    direct: {total:0, revenue: 0}
+                    incubator: {total:0, revenue: 0}
+                    newsletterairpair: {total:0, revenue: 0}
+                    press: {total:0, revenue: 0}
+                    event: {total:0, revenue: 0}
+                    seo: {total:0, revenue: 0}
+                    social: {total:0, revenue: 0}
+                    wordofmouth: {total:0, revenue: 0}
+                    untracked: {total:0, revenue: 0}
+                    # stackoverflowads: {total:0, revenue: 0}
+
+                _.each order.marketingTags, (tag) ->
+                  # console.log "tag.group", tag.group
+                  # TAGS.push tag.group
+                  channelTags = _.where order.marketingTags, { type: "channel" }
+                  tagName = tag.group.replace('-', '')
+                  if tag.type is "channel"
+                    if tag.name is "w-o-mouth"
+                      tagName = "wordofmouth"
+                    # tags.push tagName
+                    metric.tags[tagName] = tag
+                    metric.tags[tagName].total = metric.total/channelTags.length
+                    metric.hasTags = true
+                  if tag.type is "campaign"
+                    metric.campaigns.push(tag.name)
+                    metric.hasTags = true
+
+                metricsRepeated.push metric if metric.isRepeat
+                metrics.push metric
+              # console.log "tag.groups", _.groupBy TAGS, (num) -> num
+
+              _(metrics).reverse()
+              _(metricsRepeated).reverse()
+
+            if type is 'orders'
+              @metricsOrders = metrics
+              @metricsOrdersRepeated = metricsRepeated
+            else
+              @metricsRequests = metrics
+              @metricsRequestsRepeated = metricsRepeated
+
+
+              # return filterMetrics start, end
+              # return {
+              #   metrics: metrics
+              #   metricsRepeated: metricsRepeated
+              # }
+            # else
+            return filterMetrics start, end
+              # return {
+              #   metrics: metrics
+              #   metricsRepeated: metricsRepeated
+              # }
+
+
+          filterMetrics = (start, end) =>
+            # console.log "filterMetrics", metrics
+            # Filter by date
+            if start and end
+              metricsFiltered = []
+              metricsRepeatFiltered = []
+              for order in metrics
+                date = new Date(order.utc)
+                if date >= start and date <= end
+                  metricsFiltered.push order
+              for order in metricsRepeated
+                date = new Date(order.utc)
+                if date >= start and date <= end
+                  metricsRepeatFiltered.push order
+
+              data = {
+                orders: metricsFiltered
+                summary: @getChannelMetricsSummary(metricsFiltered)
+                repeatSummary: @getChannelMetricsSummary(metricsRepeatFiltered)
+                metricsRepeated: metricsRepeatFiltered
+              }
+              # console.log "filterMetrics COMPLETE", data
+              return data
+
+          return cleanMetrics()
+
+
 
 
         getChannelMetricsSummary: (metrics) ->
@@ -813,11 +850,11 @@ module.exports = (pageData) ->
               summary.tags[key].count++ if tag.name
               summary.tags[key].revenue += tag.total
 
-          # console.log "@metricsSummary", summary
-          @metricsSummary = summary
+          # console.log "metricsSummary", summary
+          metricsSummary = summary
 
 
-        getChannelGrowth: (start = moment(@data[0].utc), end = moment()) ->
+        getChannelGrowth: (start = moment(@data[0].utc), end = moment(), type = "orders") ->
 
 
           weeks = $moment.getWeeksByFriday(start, end).reverse()
@@ -828,8 +865,8 @@ module.exports = (pageData) ->
           # Get Metrics for each week
           prev = null
           for week in weeks
-            week.metrics = @getChannelMetrics(week.start, week.end)
-            # console.log "#{week.str} week.metrics ", week.metrics
+            week.metrics = @getChannelMetrics(week.start, week.end, type)
+            # console.log "week.metrics ", week.metrics
 
             # Calculate the percentage share for repeat customers
             week.metrics.repeatSummary.numOrdersShare = week.metrics.repeatSummary.numOrders/week.metrics.summary.numOrders or 0
@@ -967,6 +1004,7 @@ module.exports = (pageData) ->
             summary: summary
             repeatSummary: repeatSummary
           }
+
 
 
 
@@ -1265,6 +1303,16 @@ module.exports = (pageData) ->
 
       $scope.channelGrowth = apData.orders.getChannelGrowth(moment($scope.dateStart), moment($scope.dateEnd))
       $scope.channelGrowthSummary = apData.orders.getChannelGrowthSummary($scope.channelGrowth)
+
+
+      apData.orders.getGrowthRequests ->
+        $scope.channelGrowthRequests = apData.orders.getChannelGrowth(moment($scope.dateStart), moment($scope.dateEnd), "requests")
+        $scope.channelGrowthRequestsSummary = apData.orders.getChannelGrowthSummary($scope.channelGrowthRequests)
+        $scope.$apply() if not $scope.$$phase
+        console.log "$scope.channelGrowthRequests", $scope.channelGrowthRequests
+
+
+
 
       # console.log "channelGrowth", $scope.channelGrowth
       # console.log "channelGrowthSummary", $scope.channelGrowthSummary

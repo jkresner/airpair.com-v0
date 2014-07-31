@@ -34,7 +34,7 @@
 
 <div class="container m-b-3">
 
-
+  <h3 class="text-thin" ng-hide="lastWeekView">Orders</h3>
   <table class="table table-hover channels channels-growth" style="width: 1232px;" >
 
     <thead>
@@ -320,6 +320,305 @@
         {{channelGrowthSummary.summary.tags.untracked.count | number: 0}}
         <span class="text-split">
           {{((channelGrowthSummary.repeatSummary.tags.untracked.count/channelGrowthSummary.summary.tags.untracked.count)*100 | numFloor) || 0}}%
+        </span>
+      </td>
+
+    </tr>
+
+
+
+
+  </table>
+
+
+
+  <h3 class="text-thin" ng-hide="lastWeekView">Requests</h3>
+
+  <table class="table table-hover channels channels-growth" style="width: 1232px;" ng-hide="lastWeekView">
+
+    <thead>
+
+      <th>Week</th>
+      <th>Total</th>
+      <th class="text-info">Ad</th>
+      <th class="text-info">Affiliate</th>
+      <th class="text-info">Direct</th>
+      <th class="text-info">Event</th>
+      <th class="text-info">Newsletter</th>
+      <th class="text-info">Portfolio</th>
+      <th class="text-info">Press</th>
+      <th class="text-info">SEO</th>
+      <th class="text-info">Social</th>
+      <th class="text-info">WoM</th>
+      <th class="text-info">Untracked</th>
+    </thead>
+
+
+
+    <tr class="row-week" ng-repeat-start="week in channelGrowthRequests">
+
+      <td class="text-muted">{{week.str}}</td>
+      <td>
+        {{week.metrics.summary.numOrders}}
+        <span class="text-split">
+          {{(week.metrics.repeatSummary.numOrdersShare)*100 | numFloor}}%
+        </span>
+      </td>
+      <td class="text-info" ng-class="{'text-muted': week.metrics.summary.tags.ad.count == 0}">
+        {{week.metrics.summary.tags.ad.count | number: 0}}
+        <span class="text-split">
+          {{((week.metrics.repeatSummary.tags.ad.share)*100 | numFloor) || 0}}%
+        </span>
+
+      </td>
+      <td class="text-info" ng-class="{'text-muted': week.metrics.summary.tags.affiliate.count == 0}">
+        {{week.metrics.summary.tags.affiliate.count | number: 0}}
+        <span class="text-split">
+          {{((week.metrics.repeatSummary.tags.affiliate.share)*100 | numFloor) || 0}}%
+        </span>
+
+      </td>
+      <td class="text-info" ng-class="{'text-muted': week.metrics.summary.tags.direct.count == 0}">
+        {{week.metrics.summary.tags.direct.count | number: 0}}
+        <span class="text-split">
+          {{((week.metrics.repeatSummary.tags.direct.share)*100 | numFloor) || 0}}%
+        </span>
+
+      </td>
+      <td class="text-info" ng-class="{'text-muted': week.metrics.summary.tags.event.count == 0}">
+        {{week.metrics.summary.tags.event.count | number: 0}}
+        <span class="text-split">
+          {{((week.metrics.repeatSummary.tags.event.share)*100 | numFloor) || 0}}%
+        </span>
+
+      </td>
+      <td class="text-info" ng-class="{'text-muted': week.metrics.summary.tags.newsletterairpair.count == 0}">
+        {{week.metrics.summary.tags.newsletterairpair.count | number:0}}
+        <span class="text-split">
+          {{((week.metrics.repeatSummary.tags.newsletterairpair.share)*100 | numFloor) || 0}}%
+        </span>
+
+      </td>
+      <td class="text-info" ng-class="{'text-muted': week.metrics.summary.tags.incubator.count == 0}">
+        {{week.metrics.summary.tags.incubator.count | number: 0}}
+        <span class="text-split">
+          {{((week.metrics.repeatSummary.tags.incubator.share)*100 | numFloor) || 0}}%
+        </span>
+
+      </td>
+      <td class="text-info" ng-class="{'text-muted': week.metrics.summary.tags.press.count == 0}">
+        {{week.metrics.summary.tags.press.count | number: 0}}
+        <span class="text-split">
+          {{((week.metrics.repeatSummary.tags.press.share)*100 | numFloor) || 0}}%
+        </span>
+
+      </td>
+      <td class="text-info" ng-class="{'text-muted': week.metrics.summary.tags.seo.count == 0}">
+        {{week.metrics.summary.tags.seo.count | number: 0}}
+        <span class="text-split">
+          {{((week.metrics.repeatSummary.tags.seo.share)*100 | numFloor) || 0}}%
+        </span>
+
+      </td>
+      <td class="text-info" ng-class="{'text-muted': week.metrics.summary.tags.social.count == 0}">
+        {{week.metrics.summary.tags.social.count | number: 0}}
+        <span class="text-split">
+          {{((week.metrics.repeatSummary.tags.social.share)*100 | numFloor) || 0}}%
+        </span>
+
+      </td>
+      <td class="text-info" ng-class="{'text-muted': week.metrics.summary.tags.wordofmouth.count == 0}">
+        {{week.metrics.summary.tags.wordofmouth.count | number: 0}}
+        <span class="text-split">
+          {{((week.metrics.repeatSummary.tags.wordofmouth.share)*100 | numFloor) || 0}}%
+        </span>
+
+      </td>
+      <td class="text-info" ng-class="{'text-muted': week.metrics.summary.tags.untracked.count == 0}">
+        {{week.metrics.summary.tags.untracked.count | number: 0}}
+        <span class="text-split">
+          {{((week.metrics.repeatSummary.tags.untracked.share)*100 | numFloor) || 0}}%
+        </span>
+
+      </td>
+    </tr>
+
+    <tr class="row-small row-diff" ng-repeat-end ng-show="week.diffTags">
+
+      <td class="text-muted">{{week.diffTags.percentage}}</td>
+      <td>
+        <span ng-class="{'text-danger': week.diffTags.TOTAL < 0, 'text-success': week.diffTags.TOTAL >= 0}">
+          {{ week.diffTags.TOTAL*100 | number:0}}%
+        </span>
+        <span class="text-split" ng-class="{'text-danger': week.diffTagsRepeat.TOTAL < 0, 'text-success': week.diffTagsRepeat.TOTAL >= 0}">
+          {{ week.diffTagsRepeat.TOTAL*100 | number:0}}%
+        </span>
+      </td>
+      <td>
+        <span ng-class="{'text-danger': week.diffTags.ad.count < 0, 'text-success': week.diffTags.ad.count >= 0}">
+          {{ week.diffTags.ad.count*100 | number:0}}%
+        </span>
+        <span class="text-split" ng-class="{'text-danger': week.diffTagsRepeat.ad.count < 0, 'text-success': week.diffTagsRepeat.ad.count >= 0}">
+          {{ week.diffTagsRepeat.ad.count*100 | number:0}}%
+        </span>
+      </td>
+      <td>
+        <span ng-class="{'text-danger': week.diffTags.affiliate.count < 0, 'text-success': week.diffTags.affiliate.count >= 0}">
+          {{ week.diffTags.affiliate.count*100 | number:0 }}%
+        </span>
+        <span class="text-split" ng-class="{'text-danger': week.diffTagsRepeat.affiliate.count < 0, 'text-success': week.diffTagsRepeat.affiliate.count >= 0}">
+          {{ week.diffTagsRepeat.affiliate.count*100 | number:0 }}%
+        </span>
+      </td>
+      <td>
+        <span ng-class="{'text-danger': week.diffTags.direct.count < 0, 'text-success': week.diffTags.direct.count >= 0}">
+          {{ week.diffTags.direct.count*100 | number:0 }}%
+        </span>
+        <span class="text-split" ng-class="{'text-danger': week.diffTagsRepeat.direct.count < 0, 'text-success': week.diffTagsRepeat.direct.count >= 0}">
+          {{ week.diffTagsRepeat.direct.count*100 | number:0 }}%
+        </span>
+      </td>
+      <td>
+        <span ng-class="{'text-danger': week.diffTags.event.count < 0, 'text-success': week.diffTags.event.count >= 0}">
+          {{ week.diffTags.event.count*100 | number:0 }}%
+        </span>
+        <span class="text-split" ng-class="{'text-danger': week.diffTagsRepeat.event.count < 0, 'text-success': week.diffTagsRepeat.event.count >= 0}">
+          {{ week.diffTagsRepeat.event.count*100 | number:0 }}%
+        </span>
+      </td>
+      <td>
+        <span ng-class="{'text-danger': week.diffTags.newsletterairpair.count < 0, 'text-success': week.diffTags.newsletterairpair.count >= 0}">
+          {{ week.diffTags.newsletterairpair.count*100 | number:0 }}%
+        </span>
+        <span class="text-split" ng-class="{'text-danger': week.diffTagsRepeat.newsletterairpair.count < 0, 'text-success': week.diffTagsRepeat.newsletterairpair.count >= 0}">
+          {{ week.diffTagsRepeat.newsletterairpair.count*100 | number:0 }}%
+        </span>
+      </td>
+      <td>
+        <span ng-class="{'text-danger': week.diffTags.incubator.count < 0, 'text-success': week.diffTags.incubator.count >= 0}">
+          {{ week.diffTags.incubator.count*100 | number:0 }}%
+        </span>
+        <span class="text-split" ng-class="{'text-danger': week.diffTagsRepeat.incubator.count < 0, 'text-success': week.diffTagsRepeat.incubator.count >= 0}">
+          {{ week.diffTagsRepeat.incubator.count*100 | number:0 }}%
+        </span>
+      </td>
+      <td>
+        <span ng-class="{'text-danger': week.diffTags.press.count < 0, 'text-success': week.diffTags.press.count >= 0}">
+          {{ week.diffTags.press.count*100 | number:0 }}%
+        </span>
+        <span class="text-split" ng-class="{'text-danger': week.diffTagsRepeat.press.count < 0, 'text-success': week.diffTagsRepeat.press.count >= 0}">
+          {{ week.diffTagsRepeat.press.count*100 | number:0 }}%
+        </span>
+      </td>
+      <td>
+        <span ng-class="{'text-danger': week.diffTags.seo.count < 0, 'text-success': week.diffTags.seo.count >= 0}">
+          {{ week.diffTags.seo.count*100 | number:0 }}%
+        </span>
+        <span class="text-split" ng-class="{'text-danger': week.diffTagsRepeat.seo.count < 0, 'text-success': week.diffTagsRepeat.seo.count >= 0}">
+          {{ week.diffTagsRepeat.seo.count*100 | number:0 }}%
+        </span>
+      </td>
+      <td>
+        <span ng-class="{'text-danger': week.diffTags.social.count < 0, 'text-success': week.diffTags.social.count >= 0}">
+          {{ week.diffTags.social.count*100 | number:0 }}%
+        </span>
+        <span class="text-split" ng-class="{'text-danger': week.diffTagsRepeat.social.count < 0, 'text-success': week.diffTagsRepeat.social.count >= 0}">
+          {{ week.diffTagsRepeat.social.count*100 | number:0 }}%
+        </span>
+      </td>
+      <td>
+        <span ng-class="{'text-danger': week.diffTags.wordofmouth.count < 0, 'text-success': week.diffTags.wordofmouth.count >= 0}">
+          {{ week.diffTags.wordofmouth.count*100 | number:0 }}%
+        </span>
+        <span class="text-split" ng-class="{'text-danger': week.diffTagsRepeat.wordofmouth.count < 0, 'text-success': week.diffTagsRepeat.wordofmouth.count >= 0}">
+          {{ week.diffTagsRepeat.wordofmouth.count*100 | number:0 }}%
+        </span>
+      </td>
+      <td>
+        <span ng-class="{'text-danger': week.diffTags.untracked.count < 0, 'text-success': week.diffTags.untracked.count >= 0}">
+          {{ week.diffTags.untracked.count*100 | number:0 }}%
+        </span>
+        <span class="text-split" ng-class="{'text-danger': week.diffTagsRepeat.untracked.count < 0, 'text-success': week.diffTagsRepeat.untracked.count >= 0}">
+          {{ week.diffTagsRepeat.untracked.count*100 | number:0 }}%
+        </span>
+      </td>
+
+    </tr>
+
+
+    <tr class="row-summary muted" ng-hide="lastWeekView">
+
+      <td class="text-muted"></td>
+      <td>
+        {{channelGrowthRequestsSummary.summary.numOrders}}
+        <span class="text-split">
+          {{((channelGrowthRequestsSummary.repeatSummary.numOrders/channelGrowthRequestsSummary.summary.numOrders)*100 | numFloor) || 0}}%
+        </span>
+      </td>
+      <td class="text-info">
+        {{channelGrowthRequestsSummary.summary.tags.ad.count | number: 0}}
+        <span class="text-split">
+          {{((channelGrowthRequestsSummary.repeatSummary.tags.ad.count/channelGrowthRequestsSummary.summary.tags.ad.count)*100 | numFloor) || 0}}%
+        </span>
+      </td>
+      <td class="text-info">
+        {{channelGrowthRequestsSummary.summary.tags.affiliate.count | number: 0}}
+        <span class="text-split">
+          {{((channelGrowthRequestsSummary.repeatSummary.tags.affiliate.count/channelGrowthRequestsSummary.summary.tags.affiliate.count)*100 | numFloor) || 0}}%
+        </span>
+      </td>
+      <td class="text-info">
+        {{channelGrowthRequestsSummary.summary.tags.direct.count | number: 0}}
+        <span class="text-split">
+          {{((channelGrowthRequestsSummary.repeatSummary.tags.direct.count/channelGrowthRequestsSummary.summary.tags.direct.count)*100 | numFloor) || 0}}%
+        </span>
+      </td>
+      <td class="text-info">
+        {{channelGrowthRequestsSummary.summary.tags.event.count | number: 0}}
+        <span class="text-split">
+          {{((channelGrowthRequestsSummary.repeatSummary.tags.event.count/channelGrowthRequestsSummary.summary.tags.event.count)*100 | numFloor) || 0}}%
+        </span>
+      </td>
+      <td class="text-info">
+        {{channelGrowthRequestsSummary.summary.tags.newsletterairpair.count | number: 0}}
+        <span class="text-split">
+          {{((channelGrowthRequestsSummary.repeatSummary.tags.newsletterairpair.count/channelGrowthRequestsSummary.summary.tags.newsletterairpair.count)*100 | numFloor) || 0}}%
+        </span>
+      </td>
+      <td class="text-info">
+        {{channelGrowthRequestsSummary.summary.tags.incubator.count | number: 0}}
+        <span class="text-split">
+          {{((channelGrowthRequestsSummary.repeatSummary.tags.incubator.count/channelGrowthRequestsSummary.summary.tags.incubator.count)*100 | numFloor) || 0}}%
+        </span>
+      </td>
+      <td class="text-info">
+        {{channelGrowthRequestsSummary.summary.tags.press.count | number: 0}}
+        <span class="text-split">
+          {{((channelGrowthRequestsSummary.repeatSummary.tags.press.count/channelGrowthRequestsSummary.summary.tags.press.count)*100 | numFloor) || 0}}%
+        </span>
+      </td>
+      <td class="text-info">
+        {{channelGrowthRequestsSummary.summary.tags.seo.count | number: 0}}
+        <span class="text-split">
+          {{((channelGrowthRequestsSummary.repeatSummary.tags.seo.count/channelGrowthRequestsSummary.summary.tags.seo.count)*100 | numFloor) || 0}}%
+        </span>
+      </td>
+      <td class="text-info">
+        {{channelGrowthRequestsSummary.summary.tags.social.count | number: 0}}
+        <span class="text-split">
+          {{((channelGrowthRequestsSummary.repeatSummary.tags.social.count/channelGrowthRequestsSummary.summary.tags.social.count)*100 | numFloor) || 0}}%
+        </span>
+      </td>
+      <td class="text-info">
+        {{channelGrowthRequestsSummary.summary.tags.wordofmouth.count | number: 0}}
+        <span class="text-split">
+          {{((channelGrowthRequestsSummary.repeatSummary.tags.wordofmouth.count/channelGrowthRequestsSummary.summary.tags.wordofmouth.count)*100 | numFloor) || 0}}%
+        </span>
+      </td>
+      <td class="text-info">
+        {{channelGrowthRequestsSummary.summary.tags.untracked.count | number: 0}}
+        <span class="text-split">
+          {{((channelGrowthRequestsSummary.repeatSummary.tags.untracked.count/channelGrowthRequestsSummary.summary.tags.untracked.count)*100 | numFloor) || 0}}%
         </span>
       </td>
 
