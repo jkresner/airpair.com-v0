@@ -3,7 +3,7 @@
 
 # user = data.users[13]  # bchristie
 
-# cloneDeep = require 'lodash.cloneDeep'
+# cloneDeep = require('lodash').cloneDeep
 # ObjectId = require('mongoose').Types.ObjectId
 
 # svc = new (require '../../../lib/services/orders')(user)

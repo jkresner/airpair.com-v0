@@ -1,4 +1,4 @@
-global._ = require 'underscore'
+global._ = require 'lodash'
 Factory = require('factory-lady')
 Order = require('../../lib/models/order')
 {ObjectId} = require('mongoose').Types

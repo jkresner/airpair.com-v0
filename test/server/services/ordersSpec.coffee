@@ -1,7 +1,7 @@
 {http,_,sinon,chai,expect} = require '../test-lib-setup'
 {app, data}                                    = require '../test-app-setup'
 
-cloneDeep = require 'lodash.cloneDeep'
+cloneDeep = require('lodash').cloneDeep
 ObjectId = require('mongoose').Types.ObjectId
 canSchedule          = require './../../../lib/mix/canSchedule'
 

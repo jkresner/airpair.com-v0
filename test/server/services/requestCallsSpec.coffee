@@ -2,7 +2,7 @@
 {app, data, nock} = require '../test-app-setup'
 
 async     = require 'async'
-cloneDeep = require 'lodash.clonedeep'
+cloneDeep = require('lodash').cloneDeep
 moment    = require 'moment'
 ObjectId  = require('mongoose').Types.ObjectId
 

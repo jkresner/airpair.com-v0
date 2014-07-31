@@ -1,4 +1,4 @@
-global._ = require 'underscore'
+global._ = require 'lodash'
 Factory = require('factory-lady')
 UserModel = require('../../lib/models/user')
 
