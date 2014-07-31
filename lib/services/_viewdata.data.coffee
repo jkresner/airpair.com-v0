@@ -57,28 +57,31 @@ module.exports =
     'basarat':        convert 'basarat', 'javascript-prototypal-inheritance', so: '390330/basarat'
     'larskotthoff':   convert 'larskotthoff', 'quickstart-to-d3js', so: '1172002/lars-kotthoff'
     'mariovisic':     convert 'mariovisic', "activerecord-without-active-record", tw: 'mariovisic'    
-
     'urish':          convert 'urish', 'angularjs-performance-pitfalls', in: 'sy5n2q8o2i49/H_-Va_zs6e'
     'antonioribeiro': convert 'antonioribeiro', 'laravel-apps-and-composer-packages', so: '1959747/antonio-carlos-ribeiro'
+    
+
     'al_the_x':       convert 'al_the_x', 'pair-programming-coding-dojo', in: 'sy5n2q8o2i49/yTIUuanj7P'
+    
     'arafalov':       convert 'arafalov', 'discovering-your-inned-search-engine', tw: 'arafalov'
+    
     'kn0tch':         convert 'kn0tch', 'containerizing-production-app', tw: 'kn0tch'
+    
     'fluffyjack':     convert 'fluffyjack', 'is-swift-that-swift', in: 'sy5n2q8o2i49/oNxzjUMtdW'
     'bantik':         convert 'bantik', 'open-source-and-women', tw: 'bantik'
     'jayfields':      convert 'jayfields', 'effectiv-unit-tests', tw: 'thejayfields'
     'acuppy2':        _.extend (convert 'acuppy', 'taming-chaotic-specs-rspec', in: 'sy5n2q8o2i49/OfJ8u7KW5E'), { utc: "2014-08-27T17:00:00.000Z",  }
-    auser:           convert 'auser', 'testing-AngularJS', gh: 'auser'
-    
-    cherylyeoh:      convert 'cherylyeoh', 'big-data-for-ecommerce-personalization', tw: 'cherylyeoh'
-    joannecheng:     convert 'joannecheng', 'visualization-with-D3js', tw: 'joannecheng'
-
-    'toddmotto':      d: '!Sat, 9th Aug 12:00 GMT', n: 'Todd Motto', c: "HTML5 Google Developer Expert", t: "Learning AngularJS <br />in 1 Day", tw: 'toddmotto', tags: ['angularjs'], u: 'toddmotto', g: 'b56bb22b3a4b83c6b534b4c114671380', a: "Angular is a client-side MVC/MVVM framework built in JavaScript, essential for modern single page web applications (and even websites). This session is a full end to end crash course from my experiences, advice and best practices I've picked up from using it."   
-    'andrew_weiss':   d: '!Thu, 21st Aug 17:00 GMT', n: 'Andrew Weiss', c: "Consultant at Mircrosoft", t: "Cross-Platform Configuration w PowerShell", in: 'sy5n2q8o2i49/KhUQbZLqfq', tags: ['powershell'], u: 'andrew_weiss', g: '487151c85bfb33f3249c5668874719d2', a: "Join me for a crash course in PowerShell and its configuration management capabilities. In this session, you’ll learn how PowerShell can be used to create consistent, Windows and Linux based development environments. We’ll also explore some of the fundamentals of the popular application distribution system known as Docker and how we can use PowerShell to provision and manage our Docker hosts."
-    '2upmedia':       d: 'Tue, 26th Aug 18:00 GMT', n: 'Jorge Colon', c: "PHP Wiz kiz", t: "Emulate staging servers w <br />Vagrant, CentOS & LAMP", in: 'sy5n2q8o2i49/cPXFL7mBie', tags: ['vagrant','centos','lamp'], u: '2upmedia', g: 'b93914137ae67057880798210dc80e20', a: "Some developers still use FTP and a live server, some have graduated to running a development environment locally, but the savvy emulate the live server locally with a virtual server. Vagrant makes this so easy. We'll go through how to install Vagrant, configuring a basic Vagrant configuration, then install LAMP on CentOS."
-
-    'abeisgreat':     d: '!Sat, 30th Aug 16:00 GMT', n: 'Abe Haskins', c: "Angularfire Contributor", t: "Fast Client-Side Apps w AngularFire", gh: 'abeisgreat', tags: ['firebase','angularjs'], u: 'abeisgreat', g: 'fbb79df0f24e736c8e37f9f195a738cc', a: "Description coming soon"
+    'auser':          convert 'auser', 'testing-AngularJS', gh: 'auser'
+    'markbates':      convert 'markbates', 'why-consider-go', tw: 'markbates'
+    'cherylyeoh':     convert 'cherylyeoh', 'big-data-for-ecommerce-personalization', tw: 'cherylyeoh'
+    'joannecheng':    convert 'joannecheng', 'visualization-with-D3js', tw: 'joannecheng'
+    'toddmotto':      convert 'toddmotto', 'angularjs-in-one-day', tw: 'toddmotto'
+    'andrew_weiss':   convert 'andrew_weiss', 'configuration-with-powershell', in: 'sy5n2q8o2i49/KhUQbZLqfq'
+    '2upmedia':       convert '2upmedia', 'emulate-staging-servers-with-vagrant', in: 'sy5n2q8o2i49/cPXFL7mBie'
+    'poccadot':       convert 'poccadot', 'mobile-ux', tw: 'poccadot'  
+    'abeisgreat':     convert 'abeisgreat', 'fast-mvp-with-angularfire', gh: 'abeisgreat'
+    'jenniferbowie':  convert 'jenniferbowie', 'increase-usability',  tw: 'Screen_Space'
     'ronlichty':      d: '!Sat, 30th Aug 22:00 GMT', n: 'Ron Lichty', c: "Agile Book Author", t: "Crash Course: Managing Software People and Teams", tw: 'ronlichty', tags: ['agile','extreme-programming'], u: 'ronlichty', g: '4974bd42e635147b1fee8323f122acc9', a: "Description coming soon"
-    'mikegrassotti':  d: '!Sun, 31st Aug 16:00 GMT', n: 'Michael Grassotti', c: "All-time Ember.js #1 Answerer", t: "Something<br />Ember.js", so: '983357/mike-grassotti', tags: ['ember.js'], u: 'mikegrassotti', g: '9b9536f792ccd2b3641d8e3f9a157167', a: "Description coming soon"
     'u':              d: '', n: '', c: "", t: "", in: '', tags: [''], u: '', g: '', a: ""
     'count':          80
 
