@@ -1,7 +1,25 @@
-h1 {{ workshop.n }}
-p {{ workshop.b }}
-h2 {{ workshop.t}}
-p {{ workshop.a }}
-p Level: {{ workshop.l }}
-pre {{ workshop.tags }}
-a.btn(ng-hide="ordered()") Add to Calendar
+.hero.behind-nav.hero-landing-top
+  .container.hero-content.text-bright.animated.fadeInDown
+    .row
+      .col-md-12
+        img.img-circle(src="//secure.gravatar.com/avatar/{{workshop.g}}?s=180", alt="{{workshop.n}}", width="50%")
+        h2 {{workshop.n}}
+        h1 {{tworkshop.}}
+      .col-sm-8.col-sm-offset-2
+        p {{workshop.a}}
+        h6.title
+          span &#183;&nbsp;
+          span(ng-repeat="tag in workshop.tags") {{tag}}&nbsp;&#183;&nbsp;
+        a.btn(href="#", ng-hide="attending()", ng-click="attend()") Attend this Session
+        span(ng-show="attending()") You Are Attending
+
+div(style="clear: both;")
+.bg-gray
+ .container.p-b-4
+ h2.text-thin.text-center.m-t-4 Register
+ p(style="margin: 40px; text-align: center;") This speaker series is free for anyone that has ever purchased an AirPair. If you have not bought an AirPair, simply buy one to regsiter. To register simply book an hour and get access to these amazing talks.
+.bg-gray
+  .container.p-b-4
+    h2.text-thin.text-center.m-t-4 About {{workshop.n}}
+    p(style="margin: 40px; text-align: center;") {{workshop.b}}
+

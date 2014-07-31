@@ -21,15 +21,15 @@ module.exports = class WorkshopsService extends DomainService
     query = attendees:
       $elemMatch:
         userId: userId
-    console.log "query", query
     @searchMany query, @data.view.public, (err, workshops) ->
       callback(err, workshops)
 
 
-  addAttendee: (id, userId, requestId, callback) ->
+  addAttendee: (slug, userId, requestId, callback) ->
     userId = @usr._id unless userId?
-    query = _id: id
+    query = slug: slug
     @searchOne query, @data.view.public, (err, workshop) =>
+      callback(err, workshop) unless workshop?
       if err? then callback(err, workshop)
       orderQuery =
         userId: userId
@@ -41,10 +41,9 @@ module.exports = class WorkshopsService extends DomainService
           attendee =
             userId: userId
             orderId: order._id
-          console.log "workshop", workshop
           workshop.attendees ?= []
           workshop.attendees.push(attendee)
-          @update(id, workshop, callback)
+          @update(workshop._id, workshop, callback)
         else
           callback(err, order)
 

@@ -100,7 +100,7 @@ module.exports = class ViewDataService
 
   workshop: (id, cb) ->
     workshop = _.find Data.workshops, (s) -> s.slug == id
-    workshopRequestId = OrdersQuery.workshop.requestId
+    workshopRequestId = OrdersQuery.airconf.requestId
     cb null, -> { workshops: Data.workshops, workshop, workshopRequestId }
 
   airconfreg: (cb) ->

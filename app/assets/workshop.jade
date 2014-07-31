@@ -24,27 +24,59 @@ html(ng-app='ngAirPair')
         requestId: !{ workshopRequestId ? JSON.stringify(workshopRequestId) : 'null'}
       };
 
-  body(ng-controller='SessionController')
-    .wrapper(role="navigation")
-      .nav.navbar.navbar-default.navbar-static-top.internal
-        .container-fluid
-          .navbar-header
-            span.navbar-brand-img
-              img(src="/images/logos/airpair.png", alt="", width="140px")
-            button(type="button", class="navbar-toggle pull-right", data-toggle="collapse", data-target="#nav-mobile")
-              span.sr-only Toggle navigation
-              span.icon-bar
-              span.icon-bar
-              span.icon-bar
-          .collapse.navbar-collapse#nav-mobile
-            ul.nav.navbar-nav.nav-public
-              li
-                a.scroll(href="/workshops") Workshops
-            ul.nav.navbar-nav.navbar-right
-              li(ng-show='session.isSignedIn()')
-                a.scroll(href="#") Hi {{ session.name() }}
-
+  body#home(ng-controller='SessionController')
+    .subscribe(style="position: fixed; right: 20px; top: 15px; z-index: 125; text-align: right; float: right; width: 500px;")
+      .control-group
+        .controls
+          .input-prepend
+            .scroll(href="#") Hi {{ session.name() }}
+            span.add-on(style="color: gray;") Schedule Updates
+            input(type="text", name="rake", placeholder="By email", value="", data-error-style="inline", style="width: 220px;")
+            button#btnSubscribe.btn.btn-primary(style="height: 30px; margin-top: -4px;") Subscribe
+    .subscribe(style="width: 100%; height: 70px; background: black; opacity: 0.7; position: fixed; z-index: 112;")
     div(ng-view)
+    .bg-gray
+      .container.p-b-4
+        h2.text-thin.text-center.m-t-4 Sponsor
+        p(style="margin: 40px; text-align: center;") Twilio
+
+  footer
+    p &#169; airpair, Inc. &#183; (800) 487-0668 &#183;
+      a(href="mailto:team@airpair.com") Email Us &#183;
+      a(href="/experts") Experts &#183;
+      a(href="/tutorials") Tutorials &#183;
+      a(href="/privacy") Privacy Policy
+    style.
+      .subscribe { display:none }
+      code { background:none;padding:none;margin:none; }
+      code { padding:0; }
+      .testimonial { width:48%;padding:10px;border-bottom:none!important;vertical-align:top;padding-top:0px!important }
+      .testimonial .col-sm-8 { height:280px; }
+      #experts .coloumn { padding-left:10px;padding-right:10px;  }
+      #experts h3 { font-size:18px!important;padding-bottom:0;margin-bottom:4px }
+      #experts h4 { font-size:12px!important;padding-top:0;margin-top:0;color:gray; }
+      #experts h5 { font-size:14px!important;color:#CE5323;font-weight:bold;margin-left:0;margin-right:0; }
+      .description { height:230px!important; }
+      .description h6 { margin-top:0!important;padding-top:0!important;font-weight:bold }
+      .btn-slate { font-weight:normal; }
+      .btn-slate:hover { font-weight:bold; }
+      .social-icons { padding-top:2px; }
+      .social-icons a { width:32px;height:32px;display:inline-block;background-color:#d3d3d3;background-size:100%;background-position:center;background-repeat:no-repeat;margin-right:1px }
+      .social-icons a:hover { border-bottom:solid 1px orange; }
+      .social-icons span { width:32px;height:32px;display:inline-block;background-color:#d3d3d3;background-size:100%;background-position:center;margin-right:1px }
+      .ap { background:url('/images/icons/ap-white.png') }
+      .title span { display:inline-block;background:;color:white; }
+      a.ap { background-color:#ce5323 }
+      .gh { background:url('/images/icons/gh-white.png') }
+      a.gh { background-color:#3b3b3b }
+      .tw { background:url('/images/icons/tw-white.png') }
+      a.tw { background-color:#00afea }
+      .bb { background:url('/images/icons/bb-white.png') }
+      a.bb { background-color:#1a4f7e }
+      .so { background:url('/images/icons/so-white.png') }
+      a.so { background-color:#ffa43c }
+      .in { background:url('/images/icons/in-white.png') }
+      a.in { background-color:#0081af }
 
     script.
       require('scripts/site/workshop');

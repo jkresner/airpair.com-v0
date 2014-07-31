@@ -1,8 +1,8 @@
 Config = ($routeProvider, $locationProvider, RestangularProvider) ->
   $routeProvider
-   .when '/airconf/:id',
+   .when '/airconf2014/:id',
      templateUrl: '/templates/workshop/detail'
-     controller: 'WorkshopDetailController'
+     controller: 'WorkshopController'
 
   $locationProvider.html5Mode(true)
   RestangularProvider.setBaseUrl('/api')
@@ -16,6 +16,6 @@ angular
   ])
 
 require("./services/session")
-require("./services/order")
+require("./services/workshop")
 require("./controllers/sessionController")
-require("./controllers/workshopDetailController")
+require("./controllers/workshopController")

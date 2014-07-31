@@ -23,7 +23,7 @@ module.exports = (app) ->
   app.get '/adm/matching', authd, adm, render 'admin'
   app.get '/site', authd, render 'site'
   app.get '/experts/me', authd, render 'site'
-  app.get '/airconf/:id', authd, render 'workshop', ['params.id']
+  app.get '/airconf2014/:id', authd, render 'workshop', ['params.id']
 
   app.get '/templates/admin/automatch', authd, render 'templates/admin/automatch'
   app.get '/templates/experts/me', authd, render 'templates/experts/me'
