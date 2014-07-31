@@ -9,6 +9,7 @@ RequestsSvc = require '../services/requests'
 SettingsSvc = require '../services/settings'
 stripePK = config.payment.stripe.publishedKey
 TagsSvc = require '../services/tags'
+WorkshopsService = require '../services/workshops'
 
 module.exports = class ViewDataService
 
@@ -99,9 +100,9 @@ module.exports = class ViewDataService
       cb null, -> { workshops: Data.workshops }
 
   workshop: (id, cb) ->
-    workshop = _.find Data.workshops, (s) -> s.slug == id
-    workshopRequestId = OrdersQuery.airconf.requestId
-    cb null, -> { workshops: Data.workshops, workshop, workshopRequestId }
+    new WorkshopsService(@usr).getWorkshopBySlug id, (error, workshop)->
+      workshopRequestId = OrdersQuery.airconf.requestId
+      cb null, -> { workshop, workshopRequestId }
 
   airconfreg: (cb) ->
     new CompanysSvc(@usr).getById 'me', (e, company) =>
