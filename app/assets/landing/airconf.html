@@ -89,7 +89,6 @@
         </div>
       </section>
       <section id="social">
-        <!-- Go to www.addthis.com/dashboard to customize your tools -->
         <div class="addthis_sharing_toolbox"></div>
       </section>
     </div>
@@ -197,9 +196,9 @@
       <a href="javascript:alert('Panel registrations open Fri Aug 1 in batches for the attendees who bought their tickets first.')" class="keynote one left loginRequired" style="background:#dff2ef;color:#4d4e4e">
         <ul>
           <li class="left"><img src="/images/avatars/of.png" alt="Obie Fernandez" /></li>
-          <li class="right"><img src="//secure.gravatar.com/avatar/1eb7539f1f0a62f74ea3f7a0fa0f486f?s=110" alt="Chad Pytel" /></li>
-          <li class="left"><img src="/images/landing/airconf/mikemasonca.png" alt="Mike Mason" /></li>
           <li class="right"><img src="/images/landing/airconf/rabble.png" alt="Evan Henshaw-Plath" /></li>
+          <li class="left"><img src="/images/landing/airconf/mikemasonca.png" alt="Mike Mason" /></li>
+          <li class="right"><img src="//secure.gravatar.com/avatar/1eb7539f1f0a62f74ea3f7a0fa0f486f?s=110" alt="Chad Pytel" /></li>
         </ul>
         <summary>
           <label><time datetime="2014-08-05T19:00:00.000Z"></time></label>
@@ -323,7 +322,7 @@
   #experts .description a { height:40px;margin-top:18px;padding-top:4px;width:80% }
   #experts .user-info { height:250px;display:block; }
   #experts time { color:gray; }
-  #experts time span { font-size:10px; }
+  #experts time span { font-size:10px;font-weight:200 }
 
   @media (max-width:800px) {
     #experts .sessionCol { margin:30px 4% 30px 0; }
@@ -375,10 +374,10 @@
   {{#with danielroseman}}{{> workshopSummary }}{{/with}}
   {{#with ryanbigg}}{{> workshopSummary }}{{/with}}
   {{#with abedra}}{{> workshopSummary }}{{/with}}
+  {{#with uxceo}}{{> workshopSummary }}{{/with}}
   {{#with jefflinwood}}{{> workshopSummary }}{{/with}}
-  {{#with cherylquirion}}{{> workshopSummary }}{{/with}}
   {{#with philsturgeon}}{{> workshopSummary }}{{/with}}
-  {{#with mhartl}}{{> workshopSummary }}{{/with}}
+  {{#with cherylquirion}}{{> workshopSummary }}{{/with}}
   {{#with annisgrey}}{{> workshopSummary }}{{/with}}
   {{#with jenius}}{{> workshopSummary }}{{/with}}
 
@@ -386,8 +385,8 @@
 
   {{#with arunoda}}{{> workshopSummary }}{{/with}}
   {{#with peterarmstrong}}{{> workshopSummary }}{{/with}}
-  {{#with searls}}{{> workshopSummary }}{{/with}}
   {{#with domenic}}{{> workshopSummary }}{{/with}}
+  {{#with searls}}{{> workshopSummary }}{{/with}}
   {{#with adymo}}{{> workshopSummary }}{{/with}}
   {{#with matsko}}{{> workshopSummary }}{{/with}}
   {{#with felienne}}{{> workshopSummary }}{{/with}}
@@ -405,19 +404,21 @@
   {{#with hcatlin}}{{> workshopSummary }}{{/with}}
   {{#with joshowens}}{{> workshopSummary }}{{/with}}
   {{#with evgenyz}}{{> workshopSummary }}{{/with}}
+  {{#with mhartl}}{{> workshopSummary }}{{/with}}
   {{#with acuppy}}{{> workshopSummary }}{{/with}}
   {{#with dzello}}{{> workshopSummary }}{{/with}}
-  {{#with andrew_weiss}}{{> workshopSummary }}{{/with}}
-  {{#with al_the_x}}{{> workshopSummary }}{{/with}}
-  {{#with jayfields}}{{> workshopSummary }}{{/with}}
+  {{#with kfaustino}}{{> workshopSummary }}{{/with}}
   {{#with amirrajan}}{{> workshopSummary }}{{/with}}
   {{#with basarat}}{{> workshopSummary }}{{/with}}
-  {{#with mariovisic}}{{> workshopSummary }}{{/with}}
-  {{#with larskotthoff}}{{> workshopSummary }}{{/with}}
+  {{#with andrew_weiss}}{{> workshopSummary }}{{/with}}
   {{#with fluffyjack}}{{> workshopSummary }}{{/with}}
+  {{#with larskotthoff}}{{> workshopSummary }}{{/with}}
+  {{#with mariovisic}}{{> workshopSummary }}{{/with}}
 
 <h2 class="text-thin text-center m-t-3">Week 4 Speakers</h2><hr>
 
+  {{#with al_the_x}}{{> workshopSummary }}{{/with}}
+  {{#with jayfields}}{{> workshopSummary }}{{/with}}
   {{#with urish}}{{> workshopSummary }}{{/with}}
   {{#with antonioribeiro}}{{> workshopSummary }}{{/with}}
   {{#with 2upmedia}}{{> workshopSummary }}{{/with}}
@@ -534,7 +535,7 @@
       if (utc!='') {
         localTime = moment(utc).format('ddd Do MMM ha ZZ')
 
-        $time.html( localTime.replace(offset,'<span>('+offset+')</span>') );
+        $time.html( localTime.replace(offset,'<span>'+offset+'</span>') );
       }
       else
       {
@@ -557,12 +558,10 @@
 
 </script>
 
-<!-- Go to www.addthis.com/dashboard to customize your tools -->
-<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-519d1944598d7aed"></script>
-
-
 <script src="/javascripts/landing.js" defer onload="initPage()"></script>
 
 {{> confSigninModal }}
+
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-519d1944598d7aed"></script>
 
 </html>
