@@ -28,48 +28,6 @@ namespace 'onetime', ->
   desc('one time scripts for data updates')
   task 'createAirconfWorkshops', {async: true},  ->
     require("./scripts/env")
-    async = require("async")
-    ViewData = require './lib/services/_viewdata.data'
+    AirConfSchedule = require './lib/services/airConfSchedule'
     console.log "Creating workshops for airconf"
-
-    recordsUpdated = 0
-    async.each _.values(ViewData.workshops), (workshop, callback)->
-      if workshop.slug?
-        speaker =
-          name: workshop.n
-          shortBio: workshop.c
-          fullBio: workshop.b
-          username: workshop.u
-          gravatar: workshop.g
-          so: workshop.so
-          tw: workshop.tw
-          ln: workshop.ln
-          gh: workshop.gh
-
-        workshopData =
-          slug: workshop.slug
-          title: workshop.t
-          description: workshop.a
-          difficulty: workshop.l
-          speakers: [speaker]
-          time: workshop.utc
-          attendees: []
-          duration: "1 hour"
-          price: 0
-          tags: workshop.tags
-
-        Workshop.find { slug: workshop.slug }, (err, requests) ->
-          unless _.some(requests)
-            new Workshop(workshopData).save (err, record) =>
-              recordsUpdated++
-              callback()
-          else
-            callback()
-      else
-        callback()
-    , (err) ->
-      if err?
-        console.log "Error", err
-      else
-        console.log "Success", recordsUpdated, "records updated"
-      complete()
+    AirConfSchedule.update(complete)

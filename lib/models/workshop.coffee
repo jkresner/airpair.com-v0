@@ -20,5 +20,6 @@ schema = new Schema
   price:           { required: true, type: Number }
   tags:            { type: [String], default: [] }
   public:          { type: Boolean, default: false }
+  youtube:         String
 
 module.exports = mongoose.model 'Workshop', schema

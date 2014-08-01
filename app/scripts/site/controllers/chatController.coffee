@@ -2,7 +2,8 @@ ChatController = ($scope, $firebase, session) ->
   workshop = session.data.workshop
 
   # use slug to key the chat stream
-  ref = new Firebase("https://airpair-chat.firebaseio.com/chat/#{workshop.slug}");
+  firebaseSlug = workshop.slug.replace(".", "")
+  ref = new Firebase("https://airpair-chat.firebaseio.com/chat/#{firebaseSlug}")
 
   $scope.messages = $firebase(ref.limit(15))
   $scope.user = session.data.user.google._json

@@ -1,6 +1,8 @@
 DomainService = require './_svc'
 OrdersService = require './../services/orders'
 
+allWorkshops = {}
+
 module.exports = class WorkshopsService extends DomainService
 
   model: require './../models/workshop'
@@ -10,6 +12,9 @@ module.exports = class WorkshopsService extends DomainService
   constructor: (user) ->
     @ordersService = new OrdersService user
     super user
+
+  getAllCached: (callback) =>
+    callback(null, allWorkshops)
 
   getWorkshopBySlug: (slug, callback) ->
     query = slug: slug
@@ -46,4 +51,19 @@ module.exports = class WorkshopsService extends DomainService
           @update(workshop._id, workshop, callback)
         else
           callback(err, order)
+
+setWorkshopCache = _.once (service)->
+    service.getAll (err, workshops) ->
+      if err? then callback(err, workshops)
+      moment = require('moment-timezone')
+      enhancedWorkshops = _.map workshops, (workshop) ->
+        workshop.calutc = moment(workshop.time).tz('Etc/GMT+3').format('YYYYMMDDTHHmmss') + "Z"
+        workshop.calend = moment(workshop.time).tz('Etc/GMT+2').format('YYYYMMDDTHHmmss') + "Z"
+        # subtract a day so week starts on monday
+        workshop["WK" + moment(workshop.time).subtract('days', 1).format("ggggww")] = true
+        workshop
+      allWorkshops = _.sortBy enhancedWorkshops, (workshop) ->
+        moment(workshop.time).format("YYYYMMDDTHHmmss")
+      console.log allWorkshops
+setWorkshopCache(new WorkshopsService)
 
