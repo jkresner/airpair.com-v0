@@ -1,56 +1,42 @@
 {{#if hasRequests }}
-
-<h2><b></b> Your requests <b></b></h2>
-
 <table class="requests table table-striped">
   <thead>
     <tr>
-      <th>Created</th>
-      <th>Status</th>
-      {{! <th>For</th> }}
-      <th>Tags</th>
-      <th>Suggested</th>
-      <th>Scheduled</th>
-      <th class="reqOptions"></th>
+      <th class="req-created">Request Created</th>
+      <th class="req-status">Status</th>
+      <th class="req-tags">Tags</th>
+      <th class="req-suggested">Suggested</th>
+      <th class="req-scheduled">Scheduled</th>
+      <th class="req-options"></th>
     </tr>
   </thead>
-  <tbody></tbody>
+  <tbody>
+  {{!-- see RequestRow.hbs for content --}}
+  </tbody>
 </table>
 
 {{else }}
 
-<div id="noRequests" style="width:640px;padding:20px;background:white;margin:auto">
-
-{{!-- <h2><b>{</b> No requests ... ! <b>}</b></h2>
- --}}
-
-<h2>Welcome to AirPair</h2>
-
-<p>Stay tuned for a new AirPair experience coming one piece at a time this July/August.</p>
-
-<p>Interested in our product journey? Read <a href="/news/06-14/why-a-fresh-start-on-product" target="_blank">"Why we're starting fresh with product"</a></p>
-
-{{!-- <p style="padding:20px 0;font-weight:bold">I see you have no requests. Here's 10 reasons to <a href="/find-an-expert">create a request</a> NOW:</p>
-<ul>
-  <li>Get the help you need quickly and painlessly.</li>
-  <li>Choose the cure, not a bandaid and learn how to fix problems with help from an expert developer.</li>
-  <li>Have your project or business validated by a savvy engineer.</li>
-  <li>Push through barriers.</li>
-  <li>Avoid wasting time on frustrating bugs.</li>
-  <li>Keep your skills up to date.</li>
-  <li>Incorporate expert feedback to minimize technical debt.</li>
-  <li>Two heads are better than one.</li>
-  <li>Help a dev pay his bills.</li>
-  <li>It's something to share with your friends :-)</li>
-</ul> --}}
-
-
-<div style="clear:both;padding:30px 0">
-
+<div class="row">
+<div class="col-xs-6 col-xs-offset-3">
+  <div id="noRequests" class="center-block">
+    <h2 class="text-center">Welcome to AirPair</h2>
+    <p class="text-center">Stay tuned for a new AirPair experience coming one piece at a time this August.</p>
+    <p class="text-center">
+      <a class="button" href="/find-an-expert">Find an expert, NOW.</a>
+    </p>
+  </div>
 </div>
-<br />
-<p><a class="button" href="/find-an-expert">Find an expert, NOW.</a></p>
-<p><a href="http://www.airpair.com/customer-faq" target="_blank">FAQs</a></p>
-</div>
-
 {{/if }}
+
+<div class="row">
+  <div class="col-xs-4 col-xs-offset-4">
+    <div id="airconf-promo" class="text-center">
+      <a href="/airconf"><img src="/images/landing/airconf/full-logo.png" class="img-responsive"></img></a>
+      <br>
+      <h3>You're <a href="/airconf">invited</a> to our virtual conference</h3>
+      <h4>Over 80+ expert panels, workshops and talks by leaders of software</h4>
+      <p><a href="/airconf" class="btn btn-primary">Register Now</a></p>
+    </div>
+  </div>
+</div>

@@ -1,18 +1,17 @@
-<td>{{ created }}</td>
-<td><span class="label label-status label-{{ status }}">{{ status }}</a></td>
-{{! <td>{{ contactName / {{ company.name </td> }}
-<td>
+<td class="req-created">{{ created }}</td>
+<td class="req-status"><span class="label label-status label-{{ status }}">{{ status }}</a></td>
+<td class="req-tags">
   {{#each tags}}
-    <span class="label label-tag">{{short}}</span>
+    <span class="label tag">{{soId}}</span>
   {{/each}}
 </td>
-<td>
+<td class="req-suggested">
   {{#each suggested }}
-    {{#with expert}} <img class="border-{{../expertStatus}}" src="{{ pic }}" />{{/with}}
+    {{#with expert}} <img title="{{name}}" class="border-{{../expertStatus}}" src="{{ pic }}" />{{/with}}
   {{/each}}
 </td>
-<td>{{ callCompleteCount }} / {{ callCount }}</td>
-<td>
+<td class="req-scheduled">{{ callCompleteCount }} / {{ callCount }}</td>
+<td class="req-options">
   <a href="/review/{{ _id }}" target="_blank" class="btn btn-info">View</a>
   <a href="/find-an-expert/edit/{{ _id }}" data-id="{{ _id }}" class="edit btn btn-warning">Update</a>
 </td>

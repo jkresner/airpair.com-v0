@@ -1028,7 +1028,7 @@ table th[class*="span"],
 
 
 
-.label-tag { padding:12px 6px!important;background-color:#99923F!important;font-weight:normal;margin-bottom:4px }
+.label-tag { padding:12px 6px !important;background-color:#99923F!important;font-weight:normal;margin-bottom:4px }
 .label-status { padding:6px 10px; }
 .label-received { background-color:#3A87AD }
 .label-incomplete { background-color:#b94a48 }
