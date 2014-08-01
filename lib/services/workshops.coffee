@@ -64,6 +64,7 @@ setWorkshopCache = _.once (service)->
         workshop
       allWorkshops = _.sortBy enhancedWorkshops, (workshop) ->
         moment(workshop.time).format("YYYYMMDDTHHmmss")
+      allWorkshops.count = 80
       console.log allWorkshops
 setWorkshopCache(new WorkshopsService)
 
