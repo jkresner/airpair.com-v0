@@ -43,9 +43,10 @@ namespace 'onetime', ->
             fullBio: workshop.b
             username: workshop.u
             gravatar: workshop.g
+            bb: workshop.bb
             so: workshop.so
             tw: workshop.tw
-            ln: workshop.ln
+            in: workshop.in
             gh: workshop.gh
 
           workshopData =

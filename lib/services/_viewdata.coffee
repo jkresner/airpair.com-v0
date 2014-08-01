@@ -95,9 +95,11 @@ module.exports = class ViewDataService
   airconf: (cb) ->
     if @usr?
       new OrdersSvc(@usr).getAirConfRegisration (e, registration) =>
-        cb e, -> { workshops: Data.workshops, registration }
+        new WorkshopsService(@usr).getAllCached (ee, workshops) =>
+          cb ee, -> { workshops: workshops, registration }
     else
-      cb null, -> { workshops: Data.workshops }
+      new WorkshopsService(@usr).getAllCached (e, workshops) =>
+        cb e, -> { workshops: workshops }
 
   workshop: (id, cb) ->
     new WorkshopsService(@usr).getWorkshopBySlug id, (error, workshop)->
@@ -109,7 +111,7 @@ module.exports = class ViewDataService
       new OrdersSvc(@usr).getAirConfRegisration (eee, registration) =>
         new SettingsSvc(@usr).getByUserId @usr._id, (ee, settings) =>
           hasCard = _.find(settings.paymentMethods, (p) -> p.type == 'stripe')?
-          cb eee, -> { workshops: Data.workshops, hasCard, registration, company, stripePK }
+          cb eee, -> { hasCard, registration, company, stripePK }
 
   airconfpromo: (id, cb) ->
     AirConfDiscounts.lookup id, (e, promo) =>
