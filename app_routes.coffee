@@ -23,9 +23,14 @@ module.exports = (app) ->
   app.get '/adm/matching', authd, adm, render 'admin'
   app.get '/site', authd, render 'site'
   app.get '/experts/me', authd, render 'site'
+  app.get '/airconf2014/me', authd, render 'workshop', ['params.id']
+  app.get '/airconf2014/:id', authd, render 'workshop', ['params.id']
+
   app.get '/templates/admin/automatch', authd, render 'templates/admin/automatch'
   app.get '/templates/experts/me', authd, render 'templates/experts/me'
   app.get '/adm/templates/orders_daily', authd, render 'adm/templates/orders_daily'
+  app.get '/templates/workshop/detail', authd, render 'templates/workshop/detail'
+  app.get '/templates/workshop/schedule', authd, render 'templates/workshop/schedule'
 
   app.get '/workshops', (req, r) -> r.redirect req.url.replace('/workshops','/airconf2014')
 
@@ -70,6 +75,7 @@ module.exports = (app) ->
   require('./lib/api/videos')(app)
   require('./lib/api/chat')(app)
   require('./lib/api/landingPage')(app)
+  require('./lib/api/workshops')(app)
 
   app.get '/paypal/success/:id', authd, render 'payment/paypalSuccess', ['params.id']
   app.get '/paypal/cancel/:id', authd, render 'payment/paypalCancel', ['params.id']

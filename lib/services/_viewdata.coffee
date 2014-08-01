@@ -4,10 +4,12 @@ CompanysSvc = require '../services/companys'
 Data = require './_viewdata.data'
 ExpertsSvc = require '../services/experts'
 OrdersSvc = require '../services/orders'
+OrdersQuery = require '../services/orders.query'
 RequestsSvc = require '../services/requests'
 SettingsSvc = require '../services/settings'
 stripePK = config.payment.stripe.publishedKey
 TagsSvc = require '../services/tags'
+WorkshopsService = require '../services/workshops'
 
 module.exports = class ViewDataService
 
@@ -97,9 +99,10 @@ module.exports = class ViewDataService
     else
       cb null, -> { workshops: Data.workshops }
 
-  airconfsession: (id, cb) ->
-    workshop = _.find Data.workshops, (s) -> s.slug == id
-    cb null, -> { workshops: Data.workshops, workshop }
+  workshop: (id, cb) ->
+    new WorkshopsService(@usr).getWorkshopBySlug id, (error, workshop)->
+      workshopRequestId = OrdersQuery.airconf.requestId
+      cb null, -> { workshop, workshopRequestId }
 
   airconfreg: (cb) ->
     new CompanysSvc(@usr).getById 'me', (e, company) =>

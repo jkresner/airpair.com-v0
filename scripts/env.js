@@ -13,7 +13,8 @@ models = {
   Room: require('../lib/models/room'),
   Settings: require('../lib/models/settings'),
   Tag: require('../lib/models/tag'),
-  User: require('../lib/models/user')
+  User: require('../lib/models/user'),
+  Workshop: require('../lib/models/workshop')
 }
 
 for(key in models) {

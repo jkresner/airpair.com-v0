@@ -1,6 +1,6 @@
-SessionFactory = ($http) ->
+SessionFactory = ($http, $window) ->
   session =
-    data: {}
+    data: $window.session
 
     isSignedIn: ->
       @data.user? && @data.user._id?
@@ -13,17 +13,9 @@ SessionFactory = ($http) ->
       if @isSignedIn()
         @data.user.google.displayName
 
-    updateSession: ->
-      $http.get('/api/session')
-        .success (data) =>
-          @data = data
-        .error (data) ->
-          console.error('Error: ' + data)
-
-  session.updateSession()
   session
 
 angular
   .module('ngAirPair')
-  .factory('Session', ['$http', SessionFactory])
+  .factory('Session', ['$http', '$window', SessionFactory])
 
