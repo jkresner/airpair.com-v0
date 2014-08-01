@@ -30,6 +30,7 @@ class AirConfSchedule
         callback(workshops)
 
   update: (callback) ->
+    moment = require 'moment-timezone'
     async = require("async")
     console.log "Creating workshops for airconf"
     recordsUpdated = 0
@@ -55,7 +56,7 @@ class AirConfSchedule
             description: workshop.a
             difficulty: workshop.l
             speakers: [speaker]
-            time: workshop.utc
+            time: moment.tz(workshop.utc, 'Etc/GMT+7').format()
             attendees: []
             duration: "1 hour"
             price: 0
