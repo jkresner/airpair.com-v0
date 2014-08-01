@@ -17,6 +17,7 @@ angular
   .config(['$routeProvider', '$locationProvider', 'RestangularProvider', Config])
   .run(['$rootScope', ($rootScope) ->
     $rootScope._ = window._
+    $rootScope.moment = window.moment
   ])
 
 require("./services/session")

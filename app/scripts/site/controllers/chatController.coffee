@@ -1,15 +1,21 @@
 ChatController = ($scope, $firebase, session) ->
-  ref = new Firebase('https://airpair-chat.firebaseio.com/chat');
+  workshop = session.data.workshop
+
+  # use slug to key the chat stream
+  ref = new Firebase("https://airpair-chat.firebaseio.com/chat/#{workshop.slug}");
 
   $scope.messages = $firebase(ref.limit(15))
-  $scope.username = session.name()
+  $scope.user = session.data.user.google._json
 
   $scope.addMessage = ->
-    console.log "addMessage called"
     $scope.messages.$add
-      from: $scope.username, content: $scope.message
+      from: $scope.user.name
+      pic: $scope.user.picture
+      content: $scope.message
+      timestamp: new Date
 
     $scope.message = ""
+
 
 angular
   .module('ngAirPair')
