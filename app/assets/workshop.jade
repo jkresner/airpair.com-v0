@@ -17,6 +17,9 @@ html(ng-app='ngAirPair')
     link(rel='stylesheet', type='text/css', href='//fonts.googleapis.com/css?family=Open+Sans:400,300,600')
 
     script(src="/javascripts/site.js")
+    script(src='https://cdn.firebase.com/v0/firebase.js')
+    script(src='https://cdn.firebase.com/libs/angularfire/0.5.0/angularfire.min.js')
+
     script(type="text/javascript").
       window.session = {
         user: !{ session ? JSON.stringify(session) : 'null'},
@@ -43,6 +46,19 @@ html(ng-app='ngAirPair')
               img(src="/images/logos/airpair.png", alt="", width="140px")
 
     div(ng-view)
+    .bg-gray
+      .container.p-b-4
+        h2.text-thin.text-center.m-t-4 Chat
+        .well(ng-app='chat', ng-controller='ChatController')
+          div(ng-cloak='ng-cloak', ng-repeat='message in messages')
+            em {{message.from}}:
+            | {{message.content}}
+          br
+          form.form-inline(ng-submit='addMessage()')
+            input(type='text', ng-model='message', placeholder='Message...')
+            button.btn(type='submit')
+              i.icon-reply  Send
+
     .bg-gray
       .container.p-b-4
         h2.text-thin.text-center.m-t-4 Sponsor
@@ -85,6 +101,8 @@ html(ng-app='ngAirPair')
       a.so { background-color:#ffa43c }
       .in { background:url('/images/icons/in-white.png') }
       a.in { background-color:#0081af }
+
+
 
     script.
       require('scripts/site/workshop');

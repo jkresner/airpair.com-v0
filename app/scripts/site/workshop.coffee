@@ -13,7 +13,7 @@ Config = ($routeProvider, $locationProvider, RestangularProvider) ->
   RestangularProvider.setRestangularFields(id: "_id")
 
 angular
-  .module('ngAirPair', ['ngRoute', 'restangular'])
+  .module('ngAirPair', ['ngRoute', 'firebase', 'restangular'])
   .config(['$routeProvider', '$locationProvider', 'RestangularProvider', Config])
   .run(['$rootScope', ($rootScope) ->
     $rootScope._ = window._
@@ -23,3 +23,4 @@ require("./services/session")
 require("./services/workshop")
 require("./controllers/sessionController")
 require("./controllers/workshopController")
+require("./controllers/chatController")
