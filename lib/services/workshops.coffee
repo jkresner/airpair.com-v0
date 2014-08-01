@@ -59,8 +59,8 @@ setWorkshopCache = _.once (service)->
       enhancedWorkshops = _.map workshops, (workshop) ->
         workshop.calutc = moment(workshop.time).tz('Etc/GMT+3').format('YYYYMMDDTHHmmss') + "Z"
         workshop.calend = moment(workshop.time).tz('Etc/GMT+2').format('YYYYMMDDTHHmmss') + "Z"
-        # handlebars doesn't like numbers in keys
-        workshop["WK" + moment(workshop.time).format("ggggww")] = true
+        # subtract a day so week starts on monday
+        workshop["WK" + moment(workshop.time).subtract('days', 1).format("ggggww")] = true
         workshop
       allWorkshops = _.sortBy enhancedWorkshops, (workshop) ->
         moment(workshop.time).format("YYYYMMDDTHHmmss")

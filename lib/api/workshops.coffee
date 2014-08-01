@@ -1,3 +1,5 @@
+AirConfSchedule = require '../services/airConfSchedule'
+
 class WorkshopsApi extends require('./_api')
 
   Svc: require './../services/workshops'
@@ -5,6 +7,7 @@ class WorkshopsApi extends require('./_api')
   routes: (app, route) ->
     app.get     "/api/#{route}/user", @loggedIn, @ap, @listByUser
     app.get     "/api/#{route}/:slug", @loggedIn, @ap, @detail
+    app.get     "/api/adm/#{route}/refresh", @loggedIn, @admin, @ap, @refresh
     app.post    "/api/#{route}/:slug/attendees", @loggedIn, @ap, @createAttendee
 
   detail: (req) =>
@@ -15,5 +18,9 @@ class WorkshopsApi extends require('./_api')
 
   listByUser: =>
     @svc.getListByAttendee(null, @cbSend)
+
+  refresh: =>
+    AirConfSchedule.update(@cbSend)
+
 
 module.exports = (app) -> new WorkshopsApi app, 'workshops'

@@ -6,6 +6,7 @@
 <title>AirConf Promo Console | AirPair</title>
 <meta name="viewport" content="width=device-width">
 <link rel="stylesheet" href="/css/adm.css">
+script(src="https://code.jquery.com/jquery-2.1.1.min.js")
 style.
   input, textarea {
     display: block;
@@ -24,6 +25,22 @@ style.
 .container
   img(src="/images/landing/airconf/full-logo.png")
   h1 AirConf Promo Console
+  .row
+    .col-md-8
+      div
+        p.text-right
+          a#refresh.btn(href="/api/adm/workshops/refresh") Import Workshop Data
+        p#message.text-right.text-info
+        script(type="text/javascript").
+          $( document ).ready(function() {
+            $("#refresh").click(function(){
+              var href = $(this).attr("href");
+              $.ajax(href).done(function(data){
+                $("#message").text(data.message + " * you have to restart the servers, too.");
+              });
+              return false;
+            });
+          });
   .row
     .col-md-8
       label Subject
