@@ -19,17 +19,19 @@ module.exports = (app) ->
   app.get '/book/me', authd, render 'bookme'
 
   # angular site pages
+  require('./lib/api/workshops')(app) # keep above :tag/workshops
+
   app.get '/admin', authd, adm, render 'admin'
   app.get '/adm/matching', authd, adm, render 'admin'
   app.get '/site', authd, render 'site'
   app.get '/experts/me', authd, render 'site'
   app.get '/workshops/me', authd, render 'workshop', ['params.id']
-  app.get '/:tag/workshops/:id', authd, render 'workshop', ['params.id']
+  app.get '/:tag/workshops/:id', render 'workshop', ['params.id']
 
   app.get '/templates/admin/automatch', authd, render 'templates/admin/automatch'
   app.get '/templates/experts/me', authd, render 'templates/experts/me'
   app.get '/adm/templates/orders_daily', authd, render 'adm/templates/orders_daily'
-  app.get '/templates/workshop/detail', authd, render 'templates/workshop/detail'
+  app.get '/templates/workshop/detail', render 'templates/workshop/detail'
   app.get '/templates/workshop/schedule', authd, render 'templates/workshop/schedule'
 
   app.get '/workshops', (req, r) -> r.redirect req.url.replace('/workshops','/airconf2014')
@@ -75,7 +77,6 @@ module.exports = (app) ->
   require('./lib/api/videos')(app)
   require('./lib/api/chat')(app)
   require('./lib/api/landingPage')(app)
-  require('./lib/api/workshops')(app)
 
   app.get '/paypal/success/:id', authd, render 'payment/paypalSuccess', ['params.id']
   app.get '/paypal/cancel/:id', authd, render 'payment/paypalCancel', ['params.id']

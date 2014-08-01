@@ -1,4 +1,5 @@
 WorkshopController = ($scope, Session, Workshop) ->
+  $scope.session = Session
   $scope.workshop = Session.data.workshop
 
   $scope.attend = ->
