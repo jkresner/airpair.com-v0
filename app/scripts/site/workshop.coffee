@@ -1,10 +1,10 @@
 Config = ($routeProvider, $locationProvider, RestangularProvider) ->
   $routeProvider
-   .when '/airconf2014/me',
+   .when '/workshops/me',
      templateUrl: '/templates/workshop/schedule'
      controller: 'WorkshopController'
 
-   .when '/airconf2014/:id',
+   .when '/:tag/workshops/:id',
      templateUrl: '/templates/workshop/detail'
      controller: 'WorkshopController'
 
