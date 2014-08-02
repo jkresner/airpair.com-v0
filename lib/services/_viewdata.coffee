@@ -102,15 +102,9 @@ module.exports = class ViewDataService
         cb e, -> { workshops: workshops }
 
   workshop: (id, cb) ->
-    if @usr?
+    new WorkshopsService(@usr).getWorkshopBySlug id, (error, workshop) =>
       new OrdersSvc(@usr).getAirConfRegisration (e, registration) =>
-        new WorkshopsService(@usr).getWorkshopBySlug id, (error, workshop)->
-          workshopRequestId = OrdersQuery.airconf.requestId
-          cb null, -> { workshop, workshopRequestId, registration }
-    else
-      new WorkshopsService(@usr).getWorkshopBySlug id, (error, workshop)->
-        workshopRequestId = OrdersQuery.airconf.requestId
-        cb null, -> { workshop, workshopRequestId }
+        cb null, -> { workshop, registration, workshopRequestId : OrdersQuery.airconf.requestId }
 
   airconfreg: (cb) ->
     new CompanysSvc(@usr).getById 'me', (e, company) =>
