@@ -299,23 +299,9 @@
 
 
 {{> InitPage }}
-{{> confSubscribeScript }}
 
+<script src="/javascripts/airconf.js"></script>
 <script type="text/javascript">
-
-  function fixFloatAction()
-  {
-    // Fixed #floataction subscribe on scroll
-    var floataction = $('#floataction').offset().top - 20;
-
-    $(window).scroll(function(e){
-      if (window.scrollY > floataction) {
-        $('#floataction').addClass('affix');
-      } else {
-        $('#floataction').removeClass('affix');
-      }
-    });
-  }
 
   function initPage()
   {
@@ -325,38 +311,6 @@
     initStaticPage('airconf');
 
     if (typeof bindLoginModal !== 'undefined') { bindLoginModal(); }
-
-    $('.user-badge').each(function (idx) {
-      this.$badge = jQuery(this);
-      this.$badge.mouseover(function (emover) {
-        this.btn = $(this).find('.btn-slate');
-        this.btn.data('act', this.btn.html())
-        this.btn.html("More info");
-      }).mouseout(function (emout) {
-        this.btn = $(this).find('.btn-slate');
-        this.btn.html(this.btn.data('act'));
-      });
-    });
-
-    $('time').each(function (idx, time) {
-      $time = $(time);
-      utc = $time.attr('datetime');
-      offset = moment().format('ZZ')
-      if (utc!='') {
-        format = 'ddd Do MMM ha ZZ';
-        if ($time.hasClass('long'))
-        {
-          format = 'ddd Do MMM h:mma ZZ';
-        }
-
-        localTime = moment(utc, 'YYYY-MM-DDTHH:mm:ss.SSSZ').format(format);
-        $time.html( localTime.replace(offset,'<span>'+offset+'</span>') );
-      }
-      else
-      {
-        $time.html( 'Confirming time' );
-      }
-    });
   }
 
 </script>
