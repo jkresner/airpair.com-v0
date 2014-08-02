@@ -15,6 +15,7 @@ module.exports =
   # AirConfDiscounts: require("./airConfDiscounts")
 
   getAirConfRegisration: (cb) ->
+    if !@usr? then return cb()
     @searchMany {userId: @usr._id}, { fields: @Data.view.history }, (e, r) =>
       if e? then cb(e, r)
 

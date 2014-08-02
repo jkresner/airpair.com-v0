@@ -1,25 +1,41 @@
 
 .hero.talk
   .container
-    .row
-      .col-md-6
+    .details
+      .col
         div(ng-repeat="speaker in workshop.speakers")
           h2 {{speaker.name}}
           p {{speaker.fullBio}}
-      .col-sm-6
+      .col
         h1 {{ workshop.title }}
         p {{workshop.description}}
         span(ng-repeat="tag in workshop.tags")  { {{tag}} }
-    .row.viewer
-       hr
-       img.slide(src="/images/landing/airconf/slides/{{workshop.slug}}.jpg")
-
-       .actions
-          div(ng-show="session.isSignedIn()")
-            div(ng-show="showRsvp()")
-              a.btn(href="#", ng-click="attend()") RSVP
-            div(ng-hide="registered()")
-              a.btn(href="/airconf-registration", target='_self') Register Now
-            span(ng-show="attending()") You Are Attending
-          div(ng-hide="session.isSignedIn()")
-            a.btn.loginRequired(href="/airconf-registration") Register Now
+     .viewer
+        br
+        time(datetime="{{workshop.time}}",ng-show="showLocalTimes()")
+        hr
+        div(ng-show="session.isSignedIn()")
+          div(ng-show="showRsvp()")
+            a.btn.btn-orange.btn-rsvp(href="#", ng-click="attend()") RSVP
+            br
+            span to see this {{ workshop.title }} live
+            .player
+              img.slide(src="/images/landing/airconf/slides/{{workshop.slug}}.jpg")
+          div(ng-hide="registered()")
+            a.btn.btn-orange(href="/airconf-registration", target='_self') Register for AirConf now to watch talk
+            .player
+              img.slide.unregistered(src="/images/landing/airconf/slides/{{workshop.slug}}.jpg")
+          div.attending(ng-show="attending()")
+            p.attending You are attending {{ workshop.title }}!
+            p You will be able to ask questions and watch the talk live (or after the event) on this page.
+            p We will email you 24 hours before to let you know if there is space and how to get into the "front row".
+            .player
+              img.slide(src="/images/landing/airconf/slides/{{workshop.slug}}.jpg")
+        div(ng-hide="session.isSignedIn()")
+          a.btn.btn-orange.loginRequired(href="/airconf-registration",data-return="/airconf-registration") Register to watch talk
+          br
+          span Already got an AirConf ticket? &nbsp
+          a.loginRequired(href="{{$location}}") Sign in to RSVP
+          hr
+          a.loginRequired(href="/airconf-registration",data-return="/airconf-registration")
+            img.slide.anonymous(src="/images/landing/airconf/slides/{{workshop.slug}}.jpg")

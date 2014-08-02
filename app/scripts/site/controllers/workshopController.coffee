@@ -2,6 +2,10 @@ WorkshopController = ($scope, Session, Workshop) ->
   $scope.session = Session
   $scope.workshop = Session.data.workshop
 
+  $scope.showLocalTimes = ->
+    showLocalTimes()
+    true
+
   $scope.registered = ->
     Session.data.registration?
 

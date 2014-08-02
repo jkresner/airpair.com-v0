@@ -1,22 +1,47 @@
 body#airconf {
 
-  .nav {
-    height:40px
+  header { background:#dff2ef;height:40px }
+  header {
+    a { width:100px;margin:auto;display:block }
+    img { width:140px;margin-left:-14px }
   }
 
-  .talk { height:900px; }
+  .talk { height:1400px; }
   .talk {
-    h1 { color:#151821 }
-    h2 { color:#232835 }
-    .container { background:white; }
-    p { font-size:12px }
+    .container { background:white;height:1300px;width:1000px }
+    h1 { color:#151821;font-size:18px;font-weight:normal }
+    h2 { color:#232835;font-size:18px;font-weight:normal }
+    p { font-size:12px;color:gray }
 
-    .slide { width:800px;opacity:0.2;border:solid 1px black }
-    .viewer { max-width:900px;margin:auto }
+    .col { width:44%;margin:1% 2%;display:inline-block;vertical-align:top }
+
+    .slide { max-width:800px;width:90%;border:solid 1px black }
+    .anonymous { opacity:0.2; }
+    .unregistered { opacity:0.4; }
+    .btn-orange { margin-bottom:6px }
+    .btn-rsvp { width:240px }
+    .viewer { max-width:900px;width:90%;margin:auto }
+    .player { background:black;margin-top:20px }
+
+    p.attending { color:green;max-width:80%;font-weight:bold;font-size:14px }
 
     .viewer {
-      .actions { z-index:200;margin-top:-250px }
+      // .actions { z-index:200;margin-top:-250px }
       .loginRequired { width:50% }
+    }
+
+    @media (max-width:1024px) {
+      .container { height:auto;width:800px;padding-bottom:200px }
+    }
+
+    @media (max-width:800px) {
+      .container { width:640px }
+      .col { display:block;width:100%;margin-top:35px }
+    }
+
+    @media (max-width:640px) {
+      .container { width:100% }
+      .col { display:block;width:100%;margin-top:35px }
     }
   }
 
