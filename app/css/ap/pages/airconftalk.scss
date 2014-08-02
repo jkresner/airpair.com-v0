@@ -1,0 +1,23 @@
+body#airconf {
+
+  .nav {
+    height:40px
+  }
+
+  .talk { height:900px; }
+  .talk {
+    h1 { color:#151821 }
+    h2 { color:#232835 }
+    .container { background:white; }
+    p { font-size:12px }
+
+    .slide { width:800px;opacity:0.2;border:solid 1px black }
+    .viewer { max-width:900px;margin:auto }
+
+    .viewer {
+      .actions { z-index:200;margin-top:-250px }
+      .loginRequired { width:50% }
+    }
+  }
+
+}
