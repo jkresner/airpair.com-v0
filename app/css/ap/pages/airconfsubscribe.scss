@@ -1,0 +1,65 @@
+#floataction.affix { width:100%;z-index:100;opacity:0.95;top:30px; }
+#floataction { background:#90d1cc;height:66px;padding-top:0px; }
+#floataction {
+  .container { width:1024px;margin:auto; }
+  img { width:280px;margin-top:-32px;float:left; }
+  .form-group { float:left;margin:1px 0 0 20px;font-size:20px;color:#4d4e4e;width:680px; }
+  label { display:block;font-size:14px;margin:3px 0px; }
+  input { display:inline;height:32px;padding:3px }
+  button { font-size:16px }
+
+
+  @media (max-width:1024px) {
+    .container { width:800px }
+    img { width:180px;margin-top:-7px }
+    .form-group { margin:5px 0 0 20px;width:570px; }
+    label { font-size:11px;font-weight:normal; }
+    .col-md-4 { width:32%;display:inline-block }
+    .col-md-8 { width:67%;display:inline-block }
+    button { font-size:14px }
+  }
+
+  @media (max-width:801px) {
+    .container { width:640px;padding:0 0 5px 0 }
+    img { display:none }
+    .form-group { margin:5px 0 0 0px;width:100%; }
+    label { font-size:13px;display:block;margin:5px auto;width:84%;text-align:center; }
+    input { width:94%;margin:auto;display:block }
+    button { padding-top:4px;padding-bottom:5px;margin:1px 0;width:96% }
+  }
+
+  @media (max-width:640px) {
+    .container { text-align:center;width:80%;padding-top:5px;height:114px }
+    label { font-size:11px;margin:2px auto }
+    .form-group { width:100%;text-align:center;margin:0;padding:0;font-size:16px; }
+    .col-md-4 { display:block }
+    .col-md-8 { display:block }
+    input { width:100%; }
+    button { width:100%; }
+  }
+}
+
+@media (max-width:801px) {
+  #floataction { height:auto }
+  section.subscribe .col-md-4 { width:100%!important }
+  section.subscribe .col-md-8 { width:100%!important }
+}
+
+.subscribe { display:none }
+section.subscribe {
+  button { padding:0px 20px;background:#FF5F20;border:2px solid #ce5424;border-radius:2px;height:32px;
+    color:white;font-weight:400;text-transform:none;display:block }
+
+  input { border:1px solid #999;border-radius:2px;padding:4px }
+}
+
+section.subscribe .col-md-4 { padding:1px; }
+section.subscribe .col-md-8 { padding:1px; }
+
+
+#fullaction {
+  .container { padding:15px;width:100%;background:#D5E2D5 }
+  h3 { text-align:center;font-size: 14pt;font-weight: 800;margin: 0;margin-bottom: 5px; }
+  input { margin:5px;height:35px;width:100%; }
+  button { margin:5px;height:35px;width:90%; }
+}

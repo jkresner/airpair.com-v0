@@ -1,0 +1,59 @@
+body#airconf {
+
+  h2 { text-align:center;margin:40px auto; }
+  .btn { font-size:18px;margin:auto;color:white;height:50px;font-weight:300;text-transform:none;padding-top:10px; }
+
+  a.btn-orange {
+    background:#ce5424;
+    &:hover { font-weight:600; }
+  }
+
+  a.btn-teal {
+    background:#90d1cc;line-height:30px;
+    &:hover { font-weight:600; }
+  }
+
+  .hero { background:url('/images/landing/airconf/bg-2.jpg');height:480px;margin-top:0!important;text-align:center }
+  .hero {
+    .logo { margin:50px 0 30px 0 }
+    section { height:90px;margin-bottom:40px;color:#dff2ef }
+    h2 { font-size:32px;font-weight:600;margin:16px auto;color:#dff2ef; }
+    p { font-size:18px;margin:auto;font-weight:400 }
+
+    @media (max-width:1024px) {
+      h2 { font-size:26px;font-weight:400 }
+      @-moz-document url-prefix() {
+        h2 { font-weight:300; }
+      }
+    }
+
+    @media (max-width:801px) {
+      .logo { margin:50px 0 20px 0 }
+      section { height:110px;width:100%;color:#dff2ef; }
+      section span { display:block; }
+      h2 { width:500px; }
+      p { font-size:16px;width:500px; }
+    }
+
+    @media (max-width:640px) {
+      .logo { width:60%; }
+      h2 { width:96%; }
+      p { width:96%; }
+    }
+
+    @media (max-width:480px) {
+      .logo { width:80%; }
+      section { height:130px;top:190px; }
+      h2 { font-size:22px; }
+    }
+  }
+
+  #about { padding:10px 0 30px 10px }
+  #about p { width:80%;margin:20px auto;text-align:center;font-size:16px;max-width:1020px; }
+  #about hr { width:80%;max-width:1020px; }
+}
+
+@-moz-document url-prefix() {
+  body#airconf .hero h2 { font-weight:400!important; }
+  body#airconf .hero p { font-weight:300!important; }
+}

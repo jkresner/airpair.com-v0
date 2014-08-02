@@ -8,237 +8,36 @@
     <meta name="MobileOptimized" content="320">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <meta name="author" content="airpair, inc.">
-    <meta name="keywords" content="AirConf, World's Top Software Experts in Your Living Room">
+    <meta name="keywords" content="AirConf, Virtual Software Conference, Software Training Workshops">
     <meta name="description" content="Virtual Software Developer Conference">
+    <link rel="canonical" href="http://www.airpair.com/airconf2014" />
     <meta property="og:url" content="https://www.airpair.com/airconf2014" />
+    <meta property="og:image" content="https://www.airpair.com/images/landing/airconf/og.png" />
     <meta property="og:title" content="AirConf - Virtual workshops & panels by top software experts" />
     <meta property="og:description" content="Welome to AirConf, a month long speaker series broadcasting world-wide via Google Hangouts with coding book authors, top Stack Overflow answerers, framework core team members and more." />
-    <meta property="og:image" content="https://www.airpair.com/images/landing/airconf/og.png" />
-    <link rel="canonical" href="http://www.airpair.com/airconf2014" />
     <link rel="stylesheet" href="/css/ap.css">
     <link rel='stylesheet' type='text/css' href='//fonts.googleapis.com/css?family=Open+Sans:400,300,600' >
   </head>
 <body id="airconf">
 
-<style type="text/css">
-
-  h2 { text-align:center;margin:40px auto; }
-  a.btn-orange { font-size:22px;background:#ce5424;margin:auto;color:white;height:50px;font-weight:300;text-transform:none;padding-top:10px; }
-  a.btn-orange:hover { font-weight:500;color:white; }
-  a.btn-teal { font-size:18px;background:#90d1cc;margin:auto;color:white;height:50px;font-weight:300;text-transform:none;padding-top:10px;line-height: 30px; }
-  a.btn-teal:hover { font-weight:500;color:white; }
-</style>
-
-<style type="text/css">
-
-  .hero { background:url('/images/landing/airconf/bg-2.jpg');height:480px;margin-top:0!important;text-align:center }
-  .hero img { margin:50px 0 40px 0 }
-  .hero section { height:110px;margin-bottom:40px }
-  /*.hero section div.bg { height:110px;background:black;opacity:0.3  }*/
-  .hero section div.about { height:110px;position:absolute;top:240px;width:100%;color:#dff2ef; }
-  .hero section h2 { font-size:32px;font-weight:600;margin:16px auto;color:#dff2ef; }
-  .hero section p { font-size:18px;margin:auto;font-weight:400 }
-  .hero a { font-size:24px;background:#ce5424;margin:auto;width:400px;color:white;height:60px;font-weight:300;padding-top:12px;text-transform:none }
-  .hero a:hover { background:#90d1cc; }
-
-  @-moz-document url-prefix() {
-    .hero section h2 { font-weight:400; }
-    .hero section p { font-weight:300; }
-  }
-
-  @media (max-width:1024px) {
-    .hero section h2 { font-size:26px;font-weight:400 }
-    @-moz-document url-prefix() {
-      .hero section h2 { font-weight:300; }
-    }
-  }
-
-  @media (max-width:801px) {
-    .hero section { height:146px  }
-    .hero section div.about { height:140px;position:absolute;top:230px;width:100%;color:#dff2ef; }
-    .hero section div.about span { display:block; }
-    .hero section div.about h2 { width:500px; }
-    .hero section div.about p { font-size:16px;width:500px; }
-  }
-
-  @media (max-width:640px) {
-    .hero section div.about { top:220px }
-    .hero section div.about h2 { width:96%; }
-    .hero section div.about p { width:96%; }
-    .hero img { width:60%; }
-    .hero a { width:60%; }
-  }
-
-  @media (max-width:480px) {
-    .hero section div.about { top:200px }
-    .hero section div.about h2 { font-size:22px; }
-    .hero section div.about p { }
-    .hero img { width:80%; }
-    .hero a { width:80%; }
-  }
-</style>
-
-    <!-- HERO -->
-    <div class="hero behind-nav hero-landing-top">
-      <img src="/images/landing/airconf/full-logo.png" />
-      <section>
-        <!-- <div class="bg"></div> -->
-        <div class="about">
-          <h2><span>Virtual workshops & panels </span> by the world's top software experts</h2>
-          <p><span>Broadcasting Worldwide <span> Aug 4 - 31, via G+ Hangouts</p>
-        </div>
-      </section>
-      <section id="social">
-        <div class="addthis_sharing_toolbox"></div>
-      </section>
-    </div>
-
-<div id="about">
-  <p>Assemble with more than {{workshops.count}} software leaders and thousands of attendees, right from your living room!</p>
-  <p>Join the evolution of software thought, in a first time opportunity to access so many top developers in one condensed event.</p>
-  <hr />
-</div>
-
-
-<style type="text/css">
-  #about { padding:10px 0 30px 10px; }
-  #about p { width:80%;margin:20px auto;text-align:center;font-size:16px;max-width:1020px; }
-  #about hr { width:80%;max-width:1020px; }
-</style>
-
-
-<div id="floataction">
-  <div class="subscribe">
-    <div class="container">
-        <img src="/images/landing/airconf/full-logo.png" />
-        <div class="form-group">
-          <label class="control-label">Space is limited. Subscribe to be notified when we release the next batch of tickets.</label>
-          <div class="row">
-            <div class="col-md-8"><input type="text" name="subscribe" placeholder="Your email address" value="" data-error-style="inline" class="form-control"></div>
-            <div class="col-md-4"><button class="btn btn-primary btnSubscribe">Reserve My Seat</button></div>
-          </div>
-        </div>
-    </div>
+  <div class="hero">
+    <img class="logo" src="/images/landing/airconf/full-logo.png" />
+    <section>
+      <h2><span>Virtual workshops & panels </span> by the world's top software experts</h2>
+      <p><span>Broadcasting Worldwide <span> Aug 4 - 31, via G+ Hangouts</p>
+    </section>
+    <div class="addthis_sharing_toolbox"></div>
   </div>
-</div>
 
-  {{> confSubscribe }}
+  <div id="about">
+    <p>Assemble with more than {{workshops.count}} software leaders and thousands of attendees, right from your living room!</p>
+    <p>Join the evolution of software thought, in a first time opportunity to access so many top developers in one condensed event.</p>
+    <hr />
+  </div>
 
-<style>
-
-  .subscribe { display:none }
-  .subscribe button {
-    padding:2px 20px;
-    background: #FF5F20;
-    border: 2px solid #ce5424;
-    border-radius: 2px;
-    height:32px;
-    color: white;
-    font-weight: 800;
-    text-transform: none;
-    display:block;
-  }
-  #floataction .subscribe { background:#90d1cc;height:66px;display:none;padding-top:0px; }
-  #floataction .subscribe img { width:280px;margin-top:-32px;float:left; }
-  #floataction .subscribe .container { width:1024px;margin:auto; }
-  #floataction .subscribe .container p { text-align:center;padding:16px;font-size:22px; }
-  #floataction .subscribe .form-group { float:left;margin:1px 0 0 20px;font-size:20px;color:#4d4e4e;width:680px; }
-  #floataction .subscribe label { display:block;font-size:14px;margin:3px 0px; }
-  #floataction .subscribe input { display:inline;height:32px;padding:3px }
-  .subscribe .col-md-4 { padding:0; }
-  .subscribe .col-md-8 { padding:0; }
-
-  #floataction .subscribe.affix { width:100%;z-index:100;opacity:0.95;top:30px; }
-
-  @media (max-width:1024px) {
-    #floataction .subscribe .container { width:800px }
-    #floataction .subscribe label { font-size:11px;font-weight:normal; }
-    .subscribe .col-md-4 { width:30%;display:inline-block }
-    .subscribe .col-md-8 { width:60%;display:inline-block }
-    #floataction .subscribe input { }
-    #floataction .subscribe img { width:180px;margin-top:-7px }
-    #floataction .subscribe .form-group { margin:5px 0 0 20px;width:66%; }
-  }
-
-  @media (max-width:801px) {
-    #floataction .form-group { margin:5px 0 0 0px }
-    #floataction .subscribe { height:106px }
-    .subscribe .col-md-4 { width:100% }
-    .subscribe .col-md-8 { width:100% }
-    #floataction .subscribe .container { width:640px }
-    #floataction .subscribe label { font-size:13px;display:block;margin:5px auto;width:84%;text-align:center; }
-    #floataction .subscribe input { width:84%;margin:auto;display:block }
-    #floataction .btnSubscribe { height:28px;padding-top:4px;padding-bottom:5px;margin:1px auto;width:84% }
-    #floataction .subscribe img { display:none }
-    #floataction .subscribe .form-group { margin:5px 0 0 20px;width:100%; }
-  }
-
-  @media (max-width:640px) {
-    #floataction .subscribe label { font-size:11px;margin:2px auto }
-    #floataction .subscribe .container { text-align:center;width:100%;padding-top:5px;height:90px }
-    #floataction .subscribe .form-group { width:100%;text-align:center;margin:0;padding:0;font-size:16px; }
-  }
-
-</style>
-
-<script type="text/javascript">
-
-  function showSubscribe() {
-      //storage('subscribed', false );
-      //console.log('showSubscribe', (storage('subscribed') !== 'true'));
-
-      if (storage('subscribed') !== 'true')
-      {
-        $('.subscribe').show();
-
-        // Fixed #floataction subscribe on scroll
-        var subscribe = $('#floataction .subscribe').offset().top - 20;
-
-        // console.log('showing', subscribe);
-
-        $(window).scroll(function(e){
-          if (window.scrollY > subscribe) {
-            $('#floataction .subscribe').addClass('affix');
-          } else {
-            $('#floataction .subscribe').removeClass('affix');
-          }
-        });
-
-        // console.log('binding', $('.btnSubscribe'));
-
-        $('.btnSubscribe').click(function(e){
-          $input = $($(this).closest('.container').find('input'));
-          $button = $($(this).closest('.container').find('button'));
-          email = $input.val()
-          console.log('click', $input, email);
-          if (validateEmail(email))
-          {
-            $input.parent().removeClass('has-error');
-            $button.html('Thanks');
-
-            $.post("/api/landing/mailchimp/subscribe", { "listId": "39f4769300", "email": email })
-              .done(function(data) {
-                $('.subscribeform .container').html("<p>Thank you. Check your email.</p>");
-                addjs.trackEvent('airconf', 'airconfSubscribe', email);
-                storage('subscribed', true);
-                $('.subscribe').fadeOut(1500);
-              })
-              .fail(function(resp, data) {
-                d = JSON.parse(resp.responseText);
-                console.log('args', arguments);
-                $input.parent().addClass('has-error'); alert(d.error);
-              });
-
-          } else {
-            $input.parent().addClass('has-error');
-          }
-        });
-      }
-
-    }
-
-</script>
-
+  <div id="floataction" class="subscribe">
+    {{> confSubscribe }}
+  </div>
 
 
 <style type="text/css">
@@ -543,7 +342,7 @@
       <p>AirConf tickets get you unprecedented access to {{workshops.count}}+ top experts in the field — open source core team members, technical author and noted entrepreneurs — who can not only help you with problems and challenges specific to your project, but can also help you better understand the future of the frameworks, libraries and languages that power your codebases.</p>
       <br />
 
-      <div id="bottomaction">
+      <div id="fullaction">
         <div class="subscribe">
           <div class="container">
             <form class="centered p-b-1 p-t-2" onsubmit="return false">
@@ -560,37 +359,6 @@
     <div class="m-t-2" style="text-align: center"><div class="addthis_sharing_toolbox"></div></div>
   </div>
 
-  <style type="text/css">
-      #bottomaction .container {
-        padding:15px;width:100%;background:#D5E2D5
-      }
-      #bottomaction h3 {
-        text-align:center;
-        font-size: 14pt;
-        font-weight: 800;
-        margin: 0;
-        margin-bottom: 5px;
-      }
-      .subscribe input {
-        border: 1px solid #999;
-        border-radius: 2px;
-        padding: 4px;
-      }
-      #bottomaction input {
-        margin: 5px;
-        height: 35px;
-        width: 100%;
-      }
-
-      #bottomaction button {
-        margin: 5px;
-        height: 35px;
-        width: 90%;
-      }
-
-
-  </style>
-
   <footer>
     <p>&copy; airpair, Inc. · (800) 487-0668 · <a href="mailto:team@airpair.com">Email Us</a> · <a href="/privacy">Privacy Policy</a></p>
   </footer>
@@ -599,11 +367,28 @@
 
 
 {{> InitPage }}
+{{> confSubscribeScript }}
 
 <script type="text/javascript">
+
+  function fixFloatAction()
+  {
+    // Fixed #floataction subscribe on scroll
+    var floataction = $('#floataction').offset().top - 20;
+
+    $(window).scroll(function(e){
+      if (window.scrollY > floataction) {
+        $('#floataction').addClass('affix');
+      } else {
+        $('#floataction').removeClass('affix');
+      }
+    });
+  }
+
   function initPage()
   {
     showSubscribe();
+    fixFloatAction();
 
     initStaticPage('airconf');
 
@@ -627,13 +412,12 @@
       offset = moment().format('ZZ')
       if (utc!='') {
         format = 'ddd Do MMM ha ZZ';
-        console.log($time.hasClass('long'));
         if ($time.hasClass('long'))
         {
           format = 'ddd Do MMM h:mma ZZ';
         }
 
-        localTime = moment(utc).format(format);
+        localTime = moment(utc, 'YYYY-MM-DDTHH:mm:ss.SSSZ').format(format);
         $time.html( localTime.replace(offset,'<span>'+offset+'</span>') );
       }
       else
@@ -641,18 +425,6 @@
         $time.html( 'Confirming time' );
       }
     });
-
-{{#if session.authenticated }}
-    $('a.session').click(function (e) {
-      // if ($(this).attr('href') == '/airconf/')
-      // {
-      e.preventDefault();
-      alert("Talk registrations open Fri Jul 31. Spots will be released in batches to attendees that bought tickets first.");
-      false;
-      // }
-    });
-{{/if}}
-
   }
 
 </script>
@@ -661,6 +433,6 @@
 
 {{> confSigninModal }}
 
-<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-519d1944598d7aed"></script>
+<!-- <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-519d1944598d7aed"></script> -->
 
 </html>
