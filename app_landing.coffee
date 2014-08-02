@@ -30,7 +30,6 @@ module.exports = (app, render) ->
   app.get '/airconf-subscribe', render 'landing/airconfsubscribe'
   app.get '/airconf-so-subscribe', render 'landing/airconfsubscribe'
   app.get '/airconf-promo/:id', render 'landing/airconfpromo', ['params.id']
-  app.get '/speakers', render 'landing/airconf'
 
   app.get '/railsconf2014', render 'landing/railsconf'
   app.get '/rails/consulting', render 'landing/railsconsulting'
