@@ -2,8 +2,11 @@ WorkshopController = ($scope, Session, Workshop) ->
   $scope.session = Session
   $scope.workshop = Session.data.workshop
 
-  $scope.attend = ->
-    Workshop.attendSession(Session.data.workshop.slug)
+  $scope.registered = ->
+    Session.data.registration?
+
+  $scope.showRsvp = ->
+    Session.data.registration? && !$scope.attending()
 
   $scope.attending = ->
     attending = _.find Workshop.attendingWorkshops, (workshop) ->
@@ -15,6 +18,9 @@ WorkshopController = ($scope, Session, Workshop) ->
 
   $scope.allAttending = ->
     Workshop.attendingWorkshops
+
+  $scope.attend = ->
+    Workshop.attendSession(Session.data.workshop.slug)
 
 angular
   .module('ngAirPair')

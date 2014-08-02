@@ -15,8 +15,11 @@
        img.slide(src="/images/landing/airconf/slides/{{workshop.slug}}.jpg")
 
        .actions
-         div(ng-show="session.isSignedIn()")
-           a.btn(href="#", ng-hide="attending()", ng-click="attend()") RSVP
-           span(ng-show="attending()") You Are Attending
-         div(ng-hide="session.isSignedIn()")
-           a.btn.btn-orange.loginRequired(href="#") RSVP Now
+          div(ng-show="session.isSignedIn()")
+            div(ng-show="showRsvp()")
+              a.btn(href="#", ng-click="attend()") RSVP
+            div(ng-hide="registered()")
+              a.btn(href="/airconf-registration", target='_self') Register Now
+            span(ng-show="attending()") You Are Attending
+          div(ng-hide="session.isSignedIn()")
+            a.btn.loginRequired(href="/airconf-registration") Register Now
