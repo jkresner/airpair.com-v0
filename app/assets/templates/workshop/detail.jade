@@ -1,3 +1,4 @@
+
 .hero.behind-nav.hero-landing-top
   .container.hero-content.text-bright.animated.fadeInDown
     .row
@@ -11,8 +12,11 @@
         h1 {{workshop.title}}
       .col-sm-8.col-sm-offset-2
         p {{workshop.description}}
-        a.btn(href="#", ng-hide="attending()", ng-click="attend()") Attend this Session
-        span(ng-show="attending()") You Are Attending
+        div(ng-show="session.isSignedIn()")
+          a.btn(href="#", ng-hide="attending()", ng-click="attend()") RSVP
+          span(ng-show="attending()") You Are Attending
+        div(ng-hide="session.isSignedIn()")
+          a.btn.loginRequired(href="#") RSVP Now
 
 div(style="clear: both;")
 .bg-gray

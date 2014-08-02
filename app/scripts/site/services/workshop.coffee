@@ -9,9 +9,10 @@ ngWorkshop = ($http, Session, Restangular) ->
     attendingWorkshops: []
 
     fetchAttendingWorkshops: ->
-      Restangular.all('workshops/user').getList().then (workshops)=>
-        for workshop in workshops
-          @attendingWorkshops.push(workshop)
+      if Session.isSignedIn()
+        Restangular.all('workshops/user').getList().then (workshops)=>
+          for workshop in workshops
+            @attendingWorkshops.push(workshop)
 
     attendSession: (slug)->
       $http.post("/api/workshops/#{slug}/attendees", {requestId})

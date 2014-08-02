@@ -3,7 +3,7 @@ SessionFactory = ($http, $window) ->
     data: $window.session
 
     isSignedIn: ->
-      @data.user? && @data.user._id?
+      @data? && @data.user? && @data.user._id?
 
     id: ->
       if @isSignedIn()
