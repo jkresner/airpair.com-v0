@@ -7,10 +7,10 @@ WorkshopController = ($scope, Session, Workshop) ->
     true
 
   $scope.registered = ->
-    Session.data.registration?
+    Session.data.registration? && Session.data.registration.paid
 
   $scope.showRsvp = ->
-    Session.data.registration? && !$scope.attending()
+    Session.data.registration? && Session.data.registration.paid && !$scope.attending()
 
   $scope.attending = ->
     attending = _.find Workshop.attendingWorkshops, (workshop) ->
