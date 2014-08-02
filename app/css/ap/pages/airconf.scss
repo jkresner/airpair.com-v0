@@ -1,0 +1,104 @@
+body#airconf {
+
+  h2 { text-align:center;margin:40px auto; }
+  .btn { font-size:18px;margin:auto;color:white;height:50px;font-weight:300;text-transform:none;padding-top:12px; }
+
+  a.btn-orange {
+    background:#ce5424;
+    &:hover { font-weight:600; }
+  }
+
+  a.btn-teal {
+    background:#90d1cc;
+    &:hover { font-weight:600; }
+  }
+
+  .hero { background:url('/images/landing/airconf/bg-2.jpg');height:480px;margin-top:0!important;text-align:center }
+  .hero {
+    .logo { margin:50px 0 30px 0 }
+    section { height:90px;margin-bottom:40px;color:#dff2ef }
+    h2 { font-size:32px;font-weight:600;margin:16px auto;color:#dff2ef; }
+    p { font-size:18px;margin:auto;font-weight:400 }
+
+    @media (max-width:1024px) {
+      h2 { font-size:26px;font-weight:400 }
+      @-moz-document url-prefix() {
+        h2 { font-weight:300; }
+      }
+    }
+
+    @media (max-width:801px) {
+      .logo { margin:50px 0 20px 0 }
+      section { height:110px;width:100%;color:#dff2ef; }
+      section span { display:block; }
+      h2 { width:500px; }
+      p { font-size:16px;width:500px; }
+    }
+
+    @media (max-width:640px) {
+      .logo { width:60%; }
+      h2 { width:96%; }
+      p { width:96%; }
+    }
+
+    @media (max-width:480px) {
+      .logo { width:80%; }
+      section { height:130px;top:190px; }
+      h2 { font-size:22px; }
+    }
+  }
+
+  #about { padding:10px 0 30px 10px }
+  #about {
+    p { width:80%;margin:20px auto;text-align:center;font-size:16px;max-width:1020px; }
+    hr { width:80%;max-width:1020px; }
+  }
+
+
+  #experts { text-align:center }
+  #experts {
+    .sessionCol { width:202px;display:inline-block;margin:30px 10px;border:solid 1px #d3d3d3;border-radius:5px;padding:8px 2px;background:#ECF7F5;height:310px; }
+    .sessionCol:hover { background:black }
+    .sessionCol:hover .description { font-size:11px;display:block; }
+    .sessionCol:hover .user-info { display:none; }
+    .description { height:250px;font-size:11px;display:none;color:white;border:solid 1px black; }
+    .description h6 { margin-top:0!important;padding-top:0!important;font-weight:bold }
+    .description a { margin-top:18px;width:84% }
+    .user-info { height:250px;display:block; }
+    time { color:gray; }
+    time span { font-size:10px;font-weight:200 }
+    .coloumn { padding-left:10px;padding-right:10px;  }
+    h2 { clear:both }
+    h3 { font-size:18px!important;padding-bottom:0;margin-bottom:4px;font-weight:bold }
+    h4 { font-size:12px!important;padding-top:0;margin-top:0;color:gray }
+    h5 { font-size:14px!important;color:#CE5323;font-weight:bold;margin-left:0;margin-right:0; }
+    .tags span { display:inline-block;color:#232835; }
+    .social-icons { padding-top:2px; }
+    a.ap { background:url('/images/icons/ap-white.png');background-color:#ce5323 }
+    a.gh { background:url('/images/icons/gh-white.png');background-color:#3b3b3b }
+    a.tw { background:url('/images/icons/tw-white.png');background-color:#00afea }
+    a.bb { background:url('/images/icons/bb-white.png');background-color:#1a4f7e }
+    a.so { background:url('/images/icons/so-white.png');background-color:#ffa43c }
+    a.in { background:url('/images/icons/in-white.png');background-color:#0081af }
+    .social-icons a { width:32px;height:32px;display:inline-block;background-size:100%;background-position:center;background-repeat:no-repeat;margin:6px 0 0 0 }
+    .social-icons a:hover { ;background-color:orange }
+
+    @media (max-width:800px) {
+      .sessionCol { margin:30px 4% 30px 0; }
+    }
+
+    @media (max-width:640px) {
+      .sessionCol { margin:30px 4% 30px 5%; }
+    }
+
+    @media (max-width:480px) {
+      .sessionCol { margin:30px auto; }
+    }
+  }
+
+}
+
+@-moz-document url-prefix() {
+  body#airconf .hero h2 { font-weight:400!important; }
+  body#airconf .hero p { font-weight:300!important; }
+}
