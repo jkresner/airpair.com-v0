@@ -19,8 +19,27 @@ style.
     border: 1px solid silver;
     padding: 20px
   }
+
+  .attendees span {
+    display:inline-block;
+    width:20px;
+    font-weight:bold;
+  }
+
+  .attendees li {
+    list-style:none
+  }
+
 </head>
 <body>
+
+.container
+ul.attendees
+  - each w in workshops
+    li
+      span
+        = w.attendees.length
+      = w.title
 
 .container
   img(src="/images/landing/airconf/full-logo.png")

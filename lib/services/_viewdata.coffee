@@ -120,11 +120,13 @@ module.exports = class ViewDataService
       # set on the session ? or pass through query string
       cb null, -> { promo }
 
-  airconfpromoconsole: (code, cb) ->
-    AirConfDiscounts.lookup code, (e, promo) =>
-      console.log 'AirConfDiscounts.lookup', promo
-      if e then promo = _.extend e, promo
-      cb null, -> { promo }
+
+  airconfconsole: (code, cb) ->
+    new WorkshopsService(@usr).getAll (error, workshops) =>
+      AirConfDiscounts.lookup code, (e, promo) =>
+        console.log 'AirConfDiscounts.lookup', promo
+        if e then promo = _.extend e, promo
+        cb null, -> { promo, workshops }
 
   so10: (id, cb) ->
     id = 'c++' if id is 'c%2b%rub2b'

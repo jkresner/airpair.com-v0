@@ -49,7 +49,7 @@ module.exports = (app) ->
   app.get '/review/book/:id', authd, render 'review', ['params.id']
 
   # admin pages
-  app.get '/adm/airconf/promoconsole/:code', authd, adm, render 'adm/airconfpromoconsole', ['params.code']
+  app.get '/adm/airconf/:code', authd, adm, render 'adm/airconfconsole', ['params.code']
   app.get '/adm/tags*', authd, adm, render 'adm/tags'
   app.get '/adm/marketingtags', authd, adm, render 'adm/marketingtags'
   app.get '/adm/orders*', authd, adm, render 'adm/orders'
