@@ -31,6 +31,9 @@ module.exports = (app, render) ->
   app.get '/airconf-so-subscribe', render 'landing/airconfsubscribe'
   app.get '/airconf-promo/:id', render 'landing/airconfpromo', ['params.id']
 
+  # link from neo4j website
+  app.get '/airconf/spreadsheets-graph-databases', (req, r) -> r.redirect '/neo4j/workshops/spreadsheets-graph-databases'
+
   app.get '/railsconf2014', render 'landing/railsconf'
   app.get '/rails/consulting', render 'landing/railsconsulting'
   app.get '/googleio-specials', render 'landing/googleio'
