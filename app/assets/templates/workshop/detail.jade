@@ -12,7 +12,7 @@
         span(ng-repeat="tag in workshop.tags")  { {{tag}} }
      .viewer
         br
-        time(datetime="{{workshop.time}}",ng-show="showLocalTimes()")
+        time(datetime="{{workshop.time | date:'yyyy-MM-dd HH:mm:ss Z'}}",ng-show="showLocalTimes()")
         hr
         div(ng-show="session.isSignedIn()")
           div(ng-show="showRsvp()")
