@@ -20,11 +20,12 @@ function setCalendarTimes() {
     var $time = $(time);
     var timeString = $time.attr('datetime');
     var format = 'YYYYMMDDTHHmmss';
-    var localTime = moment(timeString).format(format) + "Z";
-    var localTimeEnd = moment(timeString).add('hours', 1).format(format) + "Z";
+    var localTime = moment(timeString, 'ddd MMM Do YYYY HH:mmZ').format(format);
+    var localTimeEnd = moment(timeString, 'ddd MMM Do YYYY HH:mmZ').add('hours', 1).format(format);
     var href = $time.attr("href");
     href = href.replace("CALSTART", localTime);
     href = href.replace("CALEND", localTimeEnd);
+    console.log(timeString, "/", localTime)
     $time.attr("href", href);
   });
 }
