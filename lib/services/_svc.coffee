@@ -8,7 +8,6 @@ module.exports = class DomainService
   constructor: (user) ->
     @usr = user
 
-
   searchMany: (query, opts, cb) =>
     opts = {} if !opts?
     {fields,options} = opts
@@ -16,6 +15,12 @@ module.exports = class DomainService
       if e && @logging then $log 'svc.search.err', query, e
       cb e, r
 
+  searchManyPopulate: (query, opts, reference, cb) =>
+    opts = {} if !opts?
+    {fields,options} = opts
+    @model.find(query,fields,options).populate(reference).lean().exec (e, r) =>
+      if e && @logging then $log 'svc.search.err', query, e
+      cb e, r
 
   searchOne: (query, opts, cb) =>
     opts = {} if !opts?

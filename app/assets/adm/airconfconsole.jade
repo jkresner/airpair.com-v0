@@ -35,11 +35,15 @@ style.
 
 .container
 ul.attendees
-  - each w in workshops
+  - each workshop in workshops
     li
       span
-        = w.attendees.length
-      = w.title
+        = workshop.attendees.length
+      = workshop.title
+      ul
+        li
+          - each attendee in workshop.attendees
+            span= attendee.userId.google._json.email
 
 .container
   img(src="/images/landing/airconf/full-logo.png")

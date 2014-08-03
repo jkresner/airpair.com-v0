@@ -122,7 +122,7 @@ module.exports = class ViewDataService
 
 
   airconfconsole: (code, cb) ->
-    new WorkshopsService(@usr).getAll (error, workshops) =>
+    new WorkshopsService(@usr).searchManyPopulate {}, {}, 'attendees.userId', (error, workshops) =>
       AirConfDiscounts.lookup code, (e, promo) =>
         console.log 'AirConfDiscounts.lookup', promo
         if e then promo = _.extend e, promo
