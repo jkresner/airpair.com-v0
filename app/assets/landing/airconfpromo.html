@@ -172,7 +172,7 @@
 
     <p id="invalidCode" style="color:red;display:none;text-align:center;font-size:18px">Your code is expired or invalid</p>
 
-    <div id="subscription" style="display:none">
+    <div id="subscription">
       <form class="subscribe centered p-b-1 p-t-2" onsubmit="return false">
         <h3><span class="offer"></span> for <span class="organization"></span></h3>
         <p id="merge" style="display: none"><b style="font-family:courier;font-weight:300;color:red">11 #<span class="promoCode"></span></b> codes remaining. Tickets normally $150</p>
@@ -324,7 +324,7 @@
         }
       }
       else {
-        $('#subscription').show();
+        $('.subscribe').show();
       }
     }
 
