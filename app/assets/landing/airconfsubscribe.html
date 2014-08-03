@@ -189,7 +189,7 @@
     <p class="lead">At AirPair, we've organized the largest collection of technical experts in the world that want to help you and <em>your</em> business. While we've paired thousands of people individually with our experts, it's never been possible to get direct access to our top experts all at one event. Until now.</p>
     <p class="lead">This August, we'd like to invite you to get unprecedented access to top experts in the field &mdash; open-source core team members, technical author and noted entrepreneurs &mdash; who can not only help you with problems and challenges specific to your project, but can also help you better understand the future of the frameworks, libraries and languages that power your codebases.</p>
 
-    <div id="subscription" style="display:none">
+    <div id="subscription">
       <form class="subscribe centered p-b-1 p-t-2" onsubmit="return false">
         <h3>Space is limited. To be notified when we open registration, register below</h3>
         <div class="row" style="padding: 10px">
@@ -346,7 +346,7 @@
 
     function showSubscribe() {
       if (storage('subscribed') !== 'true') {
-        $('#subscription').show();
+        $('.subscribe').show();
       }
       else {
         subscribedCallback()
