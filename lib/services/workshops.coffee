@@ -53,7 +53,8 @@ module.exports = class WorkshopsService extends DomainService
           callback(err, order)
 
 setWorkshopCache = _.once (service)->
-    service.getAll (err, workshops) ->
+    data = require './workshops.query'
+    service.searchMany {}, data.view.public, (err, workshops) ->
       if err? then callback(err, workshops)
       moment = require('moment-timezone')
       enhancedWorkshops = _.map workshops, (workshop) ->
