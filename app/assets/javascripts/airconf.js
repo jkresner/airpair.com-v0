@@ -22,13 +22,16 @@ function showLocalTimes()
     utc = $time.attr('datetime');
     offset = moment().format('ZZ')
     if (utc!='') {
-      format = 'ddd Do MMM ha ZZ';
+      timeString = utc.split('GMT')[0]
       if ($time.hasClass('long'))
       {
         format = 'ddd Do MMM h:mma ZZ';
       }
-
-      localTime = moment(utc, 'YYYY-MM-DDTHH:mm:ss.SSSZ').format(format);
+      else
+      {
+        format = 'ddd Do MMM ha ZZ';
+      }
+      localTime = moment(timeString, 'ddd MMM Do YYYY HH:mm').format(format);
       $time.html( localTime.replace(offset,'<span>'+offset+'</span>') );
     }
     else
