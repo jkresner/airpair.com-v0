@@ -58,8 +58,6 @@ setWorkshopCache = _.once (service)->
       if err? then callback(err, workshops)
       moment = require('moment-timezone')
       enhancedWorkshops = _.map workshops, (workshop) ->
-        workshop.calutc = moment(workshop.time).tz('Etc/GMT+3').format('YYYYMMDDTHHmmss') + "Z"
-        workshop.calend = moment(workshop.time).tz('Etc/GMT+2').format('YYYYMMDDTHHmmss') + "Z"
         # subtract a day so week starts on monday
         workshop["WK" + moment(workshop.time).subtract('days', 1).format("ggggww")] = true
         workshop

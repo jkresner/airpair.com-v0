@@ -15,6 +15,20 @@ function storage(k, v) {
   }
 }
 
+function setCalendarTimes() {
+  $('.calendar').each(function (idx, time) {
+    var $time = $(time);
+    var timeString = $time.attr('datetime');
+    var format = 'YYYYMMDDTHHmmss';
+    var localTime = moment(timeString).format(format) + "Z";
+    var localTimeEnd = moment(timeString).add('hours', 1).format(format) + "Z";
+    var href = $time.attr("href");
+    href = href.replace("CALSTART", localTime);
+    href = href.replace("CALEND", localTimeEnd);
+    $time.attr("href", href);
+  });
+}
+
 function showLocalTimes()
 {
   $('time').each(function (idx, time) {
