@@ -25,7 +25,6 @@ function setCalendarTimes() {
     var href = $time.attr("href");
     href = href.replace("CALSTART", localTime);
     href = href.replace("CALEND", localTimeEnd);
-    console.log(timeString, "/", localTime)
     $time.attr("href", href);
   });
 }
@@ -38,15 +37,12 @@ function showLocalTimes()
     offset = moment().format('ZZ')
     if (utc!='') {
       timeString = utc.split('GMT')[0]
-      if ($time.hasClass('long'))
-      {
+      if ($time.hasClass('long')) {
         format = 'ddd Do MMM h:mma ZZ';
-      }
-      else
-      {
+      } else {
         format = 'ddd Do MMM ha ZZ';
       }
-      localTime = moment(timeString).format(format);
+      localTime = moment(timeString, 'ddd MMM Do YYYY HH:mmZ').format(format);
       $time.html( localTime.replace(offset,'<span>'+offset+'</span>') );
     }
     else
