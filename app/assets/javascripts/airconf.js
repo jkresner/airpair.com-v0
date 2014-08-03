@@ -31,7 +31,7 @@ function showLocalTimes()
       {
         format = 'ddd Do MMM ha ZZ';
       }
-      localTime = moment(timeString, 'ddd MMM Do YYYY HH:mm').format(format);
+      localTime = moment(timeString, 'ddd MMM Do YYYY HH:mmZ').format(format);
       $time.html( localTime.replace(offset,'<span>'+offset+'</span>') );
     }
     else
