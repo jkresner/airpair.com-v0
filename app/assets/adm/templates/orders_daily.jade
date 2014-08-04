@@ -1,3 +1,29 @@
 
 .container
   h3.text-thin Day by Day
+
+
+  table.table.table-hover
+    thead
+      th 
+      th Sat
+      th Sun
+      th Mon
+      th Tue
+      th Wed
+      th Thu
+      th Fri
+
+    tr(ng-repeat="week in weeks")
+      td.text-muted Orders
+      td {{week.days[0].summary.numOrders}}
+      td {{week.days[1].summary.numOrders}}
+      td {{week.days[2].summary.numOrders}}
+      td {{week.days[3].summary.numOrders}}
+      td {{week.days[4].summary.numOrders}}
+      td {{week.days[5].summary.numOrders}}
+      td {{week.days[6].summary.numOrders}}
+
+
+
+

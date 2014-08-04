@@ -197,6 +197,8 @@ module.exports = (pageData) ->
 
 
         isWithinDate: (order, start, end) ->
+          if moment.isMoment(start) then start = start.toDate()
+          if moment.isMoment(end) then end = end.toDate()
           orderDate = new Date(order.utc)
           return orderDate > start && orderDate < end
 
@@ -1012,15 +1014,33 @@ module.exports = (pageData) ->
 
         daily: (start, end = moment()) ->
 
+          calcDay = (day) ->
+            day.summary =
+              numOrders: day.orders.length
+
+
+
+
+
           weeks = $moment.getWeeksByFriday(start, end)
 
           # Get data for each week
           for week in weeks
             week.data = apData.orders.filter week.start, week.end
+            console.log "week.data", week.data
             week.days = $moment.daysOfWeek moment(week.start)
+            for day in week.days
+              # Group orders by day
+              day.orders = []
+              for order in week.data.orders
+                if apData.orders.isWithinDate(order, day.start, day.end)
+                  day.orders.push order
+              # Calc summary for day
+              calcDay day
 
 
-          # Group data by day
+
+
 
 
 
@@ -1356,9 +1376,10 @@ module.exports = (pageData) ->
 
   controller("DailyCtrl", ['$scope', '$moment', 'apData', ($scope, $moment, apData ) ->
 
+    $scope.weeks = apData.ads.daily moment().subtract('w', 3)
 
 
-    console.log "daily report", apData.ads.daily moment().subtract('w', 3)
+    console.log "daily report", $scope.weeks
 
   ])
 
