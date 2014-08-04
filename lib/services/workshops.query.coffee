@@ -13,6 +13,7 @@ class QueryHelper
         updatedAt: 1
         price: 1
         tags: 1
+        youtube: 1
         public: 1
 
 module.exports = new QueryHelper()

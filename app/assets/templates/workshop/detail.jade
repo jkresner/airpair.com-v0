@@ -32,6 +32,10 @@
             p We will email you 24 hours before to let you know if there is space and how to get into the "front row".
             .player
               img.slide(src="/images/landing/airconf/slides/{{workshop.slug}}.jpg")
+          div.started(ng-show="started()")
+            .player
+              iframe(width="785", height="443", src="//www.youtube.com/embed/SX-rp2y36mA", frameborder="0", allowfullscreen)
+
         div(ng-hide="session.isSignedIn()")
           a.btn.btn-orange.loginRequired(href="/airconf-registration",data-return="/airconf-registration") Register to watch talk
           br
