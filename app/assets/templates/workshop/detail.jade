@@ -19,7 +19,7 @@
           div(ng-show="showRsvp()")
             a.btn.btn-orange.btn-rsvp(href="#", ng-click="attend()") RSVP
             br
-            span to see this {{ workshop.title }} live
+            span to see {{ workshop.title }} live
             .player
               img.slide(src="/images/landing/airconf/slides/{{workshop.slug}}.jpg")
           div(ng-hide="registered()")
