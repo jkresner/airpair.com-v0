@@ -1,4 +1,4 @@
-WorkshopController = ($scope, Session, Workshop) ->
+WorkshopController = ($scope, $sce, Session, Workshop) ->
   $scope.session = Session
   $scope.workshop = Session.data.workshop
 
@@ -10,12 +10,17 @@ WorkshopController = ($scope, Session, Workshop) ->
     Session.data.registration? && Session.data.registration.paid
 
   $scope.showRsvp = ->
-    Session.data.registration? && Session.data.registration.paid && !$scope.attending()
+    Session.data.registration? && Session.data.registration.paid && !$scope.attending() && !$scope.started()
+
+  $scope.started = ->
+    attending = _.find Workshop.attendingWorkshops, (workshop) ->
+      workshop.slug == Session.data.workshop.slug
+    attending && Session.data.workshop.youtube? && Session.data.workshop.youtube.length > 0
 
   $scope.attending = ->
     attending = _.find Workshop.attendingWorkshops, (workshop) ->
       workshop.slug == Session.data.workshop.slug
-    attending?
+    attending? && !$scope.started()
 
   $scope.attendingAny = ->
     _.any(Workshop.attendingWorkshops)
@@ -26,6 +31,10 @@ WorkshopController = ($scope, Session, Workshop) ->
   $scope.attend = ->
     Workshop.attendSession(Session.data.workshop.slug)
 
+  $scope.youtubeUrl = ->
+    url = "//www.youtube.com/embed/#{Session.data.workshop.youtube}"
+    $sce.trustAsResourceUrl(url)
+
 angular
   .module('ngAirPair')
-  .controller('WorkshopController', ['$scope', 'Session', 'Order', WorkshopController])
+  .controller('WorkshopController', ['$scope', '$sce', 'Session', 'Order', WorkshopController])
