@@ -13,6 +13,7 @@
      .viewer
         br
         time(datetime="{{workshop.time | date:'EEE MMM dd yyyy HH:mmZ'}}",ng-show="showLocalTimes()")
+        .addthis_sharing_toolbox.m-t-1
         hr
         div(ng-show="session.isSignedIn()")
           div(ng-show="showRsvp()")
