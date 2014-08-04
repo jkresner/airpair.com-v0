@@ -30,7 +30,7 @@
             p.attending You are attending {{ workshop.title }}!
             p You will be able to ask questions and watch the talk live (or after the event) on this page.
             p We will email you 24 hours before to let you know if there is space and how to get into the "front row".
-            .player
+            .player(ng-hide="started()")
               img.slide(src="/images/landing/airconf/slides/{{workshop.slug}}.jpg")
           div.started(ng-show="started()")
             .player

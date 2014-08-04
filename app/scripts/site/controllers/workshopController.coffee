@@ -20,7 +20,7 @@ WorkshopController = ($scope, $sce, Session, Workshop) ->
   $scope.attending = ->
     attending = _.find Workshop.attendingWorkshops, (workshop) ->
       workshop.slug == Session.data.workshop.slug
-    attending? && !$scope.started()
+    attending?
 
   $scope.attendingAny = ->
     _.any(Workshop.attendingWorkshops)
