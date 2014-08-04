@@ -61,12 +61,13 @@ body#airconf {
     .sessionCol:hover { background:black }
     .sessionCol:hover .description { font-size:11px;display:block; }
     .sessionCol:hover .user-info { display:none; }
-    .description { height:250px;font-size:11px;display:none;color:white;border:solid 1px black; }
-    .description h6 { margin-top:0!important;padding-top:0!important;font-weight:bold }
-    .description a { margin-top:18px;width:84% }
-    .user-info { height:250px;display:block; }
-    time { color:gray; }
+    time { color:gray;display:block;margin-bottom:8px }
     time span { font-size:10px;font-weight:200 }
+    .description { height:226px;font-size:11px;display:none;color:white;border:solid 1px black; }
+    .description h6 { margin-top:0!important;padding-top:0!important;font-weight:bold; }
+    .description a { margin-top:18px;width:84% }
+    .user-info { height:226px;display:block; }
+    .user-info h5 { display:block;height:30px }
     .coloumn { padding-left:10px;padding-right:10px;  }
     h2 { clear:both }
     h3 { font-size:18px!important;padding-bottom:0;margin-bottom:4px;font-weight:bold }
