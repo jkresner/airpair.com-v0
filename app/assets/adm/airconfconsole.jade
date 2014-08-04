@@ -40,10 +40,16 @@ ul.attendees
       span
         = workshop.attendees.length
       = workshop.title
-      ul
+      &nbsp;|&nbsp;
+      = workshop.slug
+      ul.slug
         li
-          - each attendee in workshop.attendees
-            span= attendee.userId.google._json.email
+          label Add Attendee
+          input.user-email
+          a.add-attendee(href="/api/workshops/#{workshop.slug}/attendees") Register Attendee
+        - each attendee in workshop.attendees
+          li
+              span= attendee.userId.google._json.email
 
 .container
   img(src="/images/landing/airconf/full-logo.png")
@@ -60,6 +66,21 @@ ul.attendees
               var href = $(this).attr("href");
               $.ajax(href).done(function(data){
                 $("#message").text(data.message + " * you have to restart the servers, too.");
+              });
+              return false;
+            });
+
+            $(".add-attendee").click(function(){
+              var $this = $(this);
+              var href = $this.attr("href");
+              var email = $this.prev().val();
+              $.ajax({
+                type: "POST",
+                url: href,
+                data: { requestId: "53ce8a703441d602008095b6", userEmail: email },
+                success: function(data){
+                  $this.parents("ul.slug").append("<li><span>" + email + "</span></li>");
+                }
               });
               return false;
             });

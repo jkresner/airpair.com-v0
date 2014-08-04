@@ -123,6 +123,11 @@ module.exports = class ViewDataService
 
   airconfconsole: (code, cb) ->
     new WorkshopsService(@usr).searchManyPopulate {}, {}, 'attendees.userId', (error, workshops) =>
+      workshops = _.sortBy workshops, (workshop) ->
+        if workshop.time?
+          moment(workshop.time).format("YYYYMMDDTHHmmss")
+        else
+          "2015"
       AirConfDiscounts.lookup code, (e, promo) =>
         console.log 'AirConfDiscounts.lookup', promo
         if e then promo = _.extend e, promo

@@ -1,10 +1,11 @@
 DomainService = require './_svc'
+UserService   = require './users'
 StripeService = require './wrappers/stripe'
 stripeSvc     = new StripeService()
 
 module.exports = class SettingsService extends DomainService
 
-  model: require './../models/settings'
+  model: require '../models/settings'
 
 
   getByUserId: (userId, cb) =>
@@ -12,7 +13,10 @@ module.exports = class SettingsService extends DomainService
       r = {} if !r? # if first time we're creating settings record
       cb e, r
 
-
+  getByEmail: (email, cb) =>
+    users = new UserService(@usr)
+    users.searchOne { "google._json.email": email }, {}, (e,r) ->
+      cb e, r
 
   _save: (data, callback) =>
     ups = _.omit data, '_id'

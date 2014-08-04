@@ -33,24 +33,25 @@ module.exports = class WorkshopsService extends DomainService
   addAttendee: (slug, userId, requestId, callback) ->
     userId = @usr._id unless userId?
     query = slug: slug
-    @searchOne query, @data.view.public, (err, workshop) =>
-      callback(err, workshop) unless workshop?
-      if err? then callback(err, workshop)
+    @searchOne query, {}, (err, workshop) =>
+      callback(err, {}) unless workshop?
+      if err? then callback(err, {})
       orderQuery =
         userId: userId
         requestId: requestId
 
       @ordersService.searchOne orderQuery, {}, (err, order) =>
-        if err? then callback(err, workshop)
+        if err? then callback(err, {})
         if order?
           attendee =
             userId: userId
             orderId: order._id
+          console.log workshop
           workshop.attendees ?= []
           workshop.attendees.push(attendee)
           @update(workshop._id, workshop, callback)
         else
-          callback(err, order)
+          callback(err, {success: false, message: "Order not found"})
 
 setWorkshopCache = _.once (service)->
     data = require './workshops.query'

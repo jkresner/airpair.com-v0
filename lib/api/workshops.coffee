@@ -1,4 +1,5 @@
 AirConfSchedule = require '../services/airConfSchedule'
+SettingsService = require '../services/settings'
 
 class WorkshopsApi extends require('./_api')
 
@@ -14,7 +15,12 @@ class WorkshopsApi extends require('./_api')
     @svc.getWorkshopBySlug req.params.slug, @cbSend
 
   createAttendee: (req, res, next) =>
-    @svc.addAttendee req.params.slug, @data.userId, @data.requestId, @cbSend
+    if @data.userEmail?
+      settings = new SettingsService(@usr)
+      settings.getByEmail @data.userEmail, (err, user) =>
+        @svc.addAttendee req.params.slug, user._id, @data.requestId, @cbSend
+    else
+      @svc.addAttendee req.params.slug, @data.userId, @data.requestId, @cbSend
 
   listByUser: =>
     @svc.getListByAttendee(null, @cbSend)
