@@ -1,4 +1,7 @@
+body#airconf { background:black }
+
 body#airconf {
+
 
   header { background:#dff2ef;height:40px }
   header {
@@ -6,9 +9,9 @@ body#airconf {
     img { width:140px;margin-left:-14px }
   }
 
-  .talk { height:1400px; }
+  .talk { min-height:1000px; }
   .talk {
-    .container { background:white;height:1300px;width:1000px }
+    .container { background:white;min-height:1000px;width:1000px }
     h1 { color:#151821;font-size:18px;font-weight:normal }
     h2 { color:#232835;font-size:18px;font-weight:normal }
     p { font-size:12px;color:gray }
