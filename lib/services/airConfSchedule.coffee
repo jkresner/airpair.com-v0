@@ -57,7 +57,6 @@ class AirConfSchedule
             difficulty: workshop.l
             speakers: [speaker]
             time: moment.tz(workshop.utc, 'Etc/GMT+7').format()
-            attendees: []
             duration: "1 hour"
             price: 0
             tags: workshop.tags
