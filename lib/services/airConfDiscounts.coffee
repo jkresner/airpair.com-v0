@@ -7,9 +7,8 @@ class AirConfDiscounts
   lookup: (promoCode, cb) ->
     restler.get(config.defaults.airconf.discountCodesUrl)
       .on 'success', (data, response) ->
-        entry = null
-        if e.gsx$code?
-          entry = _.find(data.feed.entry, (e) -> e.gsx$code.$t == promoCode)
+        entry = _.find data.feed.entry, (e) ->
+          e.gsx$code? && e.gsx$code.$t == promoCode
         if entry?
           if not beforeExpiration(entry)
             return cb({message: "Code expired."}, {valid: false})
