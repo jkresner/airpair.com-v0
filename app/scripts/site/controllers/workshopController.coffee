@@ -33,8 +33,6 @@ WorkshopController = ($scope, $sce, Session, Workshop) ->
 
   $scope.youtubeUrl = ->
     url = "//www.youtube.com/embed/#{Session.data.workshop.youtube}"
-    console.log url
-    console.log $sce.trustAsResourceUrl(url)
     $sce.trustAsResourceUrl(url)
 
 angular
