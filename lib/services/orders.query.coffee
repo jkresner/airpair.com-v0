@@ -20,8 +20,8 @@ class QueryHelper
           pic:            '//0.gravatar.com/avatar/543d49f405c7e3cbd78f8e1a6d1c091d'
     pairCreditLineItem:
       type: 'credit'
-      total: 0
-      unitPrice: 0
+      total: -150
+      unitPrice: -150
       qty: 1
       suggestion:
         suggestedRate:  { credit: { expert: 0 } }

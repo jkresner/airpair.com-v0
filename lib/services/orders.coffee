@@ -97,6 +97,20 @@ module.exports = class OrdersService extends DomainService
     @searchMany query, @historySelect, (error, orders) ->
       callback error, orders
 
+  getCredit: (id, callback) =>
+    userId = if id? && Roles.isAdmin(@usr) then id else @usr._id
+    @searchMany {userId}, { fields: @Data.view.history }, (err, orders) ->
+      credit = _.reduce orders, (orderCredit, order) ->
+        unless order.paymentStatus == "paidout"
+          orderCredit += _.reduce order.lineItems, (lineCredit, lineItem) =>
+            if lineItem.type == "credit"
+              lineCredit += lineItem.qty * lineItem.unitPrice
+            lineCredit
+          , 0
+        orderCredit
+      , 0
+      callback null, {credit}
+
   getForHistory: (id, cb) =>
     userId = if id? && Roles.isAdmin(@usr) then id else @usr._id
     @searchMany {userId}, { fields: @Data.view.history }, cb
