@@ -18,6 +18,10 @@ html(ng-app='ngAirPair')
     meta(property='og:description', content=workshop.description)
     link(rel='stylesheet', href='/css/ap.css')
     link(rel='stylesheet', type='text/css', href='//fonts.googleapis.com/css?family=Open+Sans:400,300,600')
+    script(src="/javascripts/site.js")
+    script(src="/javascripts/airconf.js")
+    script(src='https://cdn.firebase.com/v0/firebase.js')
+    script(src='https://cdn.firebase.com/libs/angularfire/0.5.0/angularfire.min.js')
 
   body#airconf(ng-controller='SessionController')
     header
@@ -25,25 +29,6 @@ html(ng-app='ngAirPair')
         img(src="/images/landing/airconf/full-logo.png", alt="AirConf")
 
     div(ng-view)
-
-    .bg-gray
-      .container.p-b-4
-        h2.text-thin.text-center.m-t-4 Session Chat
-        #chat(ng-controller='ChatController')
-          div.row
-            form.form-inline(ng-submit='addMessage()')
-              .col-xs-1#pic
-                img.img-responsive(ng-src="{{user.picture}}")
-              .col-xs-11#message
-                input(type='text', ng-model='message', placeholder='Hit enter to submit message...')
-          div.row.scrollable(ng-cloak='ng-cloak', ng-repeat="message in messages | orderByPriority | reverse")
-            .col-xs-1#pic
-              img.img-responsive(ng-src="{{message.pic}}")
-            .col-xs-11#message
-              {{message.content}}
-              #timestamp
-                strong {{message.from}} &nbsp;
-                {{ moment(message.timestamp).fromNow() }}
 
     div(ng-hide="isSignedIn()")
       .modal.fade(id="loginModal", tabindex="-1", role="dialog", aria-labelledby="loginTitle", aria-hidden="true", style="opacity:0.95")
@@ -59,10 +44,7 @@ html(ng-app='ngAirPair')
               button(type="button", class="btn btn-default", data-dismiss="modal") Close
 
 
-    script(src="/javascripts/site.js")
-    script(src="/javascripts/airconf.js")
-    script(src='https://cdn.firebase.com/v0/firebase.js')
-    script(src='https://cdn.firebase.com/libs/angularfire/0.5.0/angularfire.min.js')
+
 
     script(type="text/javascript").
       window.session = {
