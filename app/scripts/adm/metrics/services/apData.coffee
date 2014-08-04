@@ -32,7 +32,22 @@ angular.module('AirpairAdmin').factory('apData', ['$moment', '$filter', '$http',
           summary: @calcSummary(visibleOrders)
         }
 
-        # console.log "data", data
+        return data
+
+      filterByTags: (start, end, searchText, dataSet = @data) ->
+
+        visibleOrders = []
+        for order in dataSet
+          if @isWithinDate(order, start, end)
+            visibleOrders.push order
+        if searchText
+          visibleOrders = $helpers.search visibleOrders, searchText
+
+
+        data = {
+          orders: visibleOrders
+          summary: @calcSummary(visibleOrders)
+        }
 
         return data
 
@@ -851,42 +866,135 @@ angular.module('AirpairAdmin').factory('apData', ['$moment', '$filter', '$http',
 
 
 
+
+    # REQUESTS
+    # Get all requests to client and then filter
+
+    requests:
+
+      load: (start, end, callback) ->
+        startDate = start.format('YYYY-MM-DD')
+        endDate = end.clone().add("d", 1).format('YYYY-MM-DD')
+        api = {}
+
+        # Get requests
+        $http.get("/api/admin/requests/#{startDate}/#{endDate}").success (data, status, headers, config) =>
+          console.log "API requests", data.length
+          @dataRequests = api.requests = data
+          callback(api)
+
+
+      loadAll: (callback) ->
+        if not @dataRequests
+          @load moment("2013-05-01"), moment(), callback
+        else
+          callback()
+
+
+      filter: (start, end, searchString, callback) ->
+
+        filteredRequests = []
+
+        for val, i in @dataRequests
+          date = moment ObjectId2Date(val._id)
+          if date.isAfter(start) and date.isBefore(end)
+            filteredRequests.push val
+
+        if searchString? and searchString isnt ''
+          filteredRequests = $helpers.search filteredRequests, searchString
+
+        filtered =  {
+          requests: filteredRequests
+        }
+
+        if callback? then callback filtered
+        return filtered
+
+
+
+
+
+
+      isWithinDate: (item, start, end) ->
+
+        if item.utc?
+          date = moment(item.utc)
+        else
+          date = moment ObjectId2Date(item._id)
+
+        return date.isAfter(start) and date.isBefore(end)
+
+
+
+
+
+
+
+
+    # Ad Metrics
+    #----------------------------------------------
+
     ads:
 
-      daily: (start, end = moment()) ->
+      # Get Daily Metrics
 
-        calcDay = (day) ->
+      daily: (start, end = moment(), searchString) ->
+
+
+        # Method to Calc week summary
+        calcWeek = (week) ->
+          week.data = apData.orders.filterByTags week.start, week.end, searchString
+          _.extend week.data, apData.requests.filter week.start, week.end, searchString
+
+
+          _.extend week.data.summary,
+            numOrders: week.data.orders.length
+            numRequests: week.data.requests.length
+            numRevenue: week.data.summary.totalRevenue
+
+          _.extend week.data.summary,
+            conOrdersToRequests: week.data.summary.numOrders/week.data.summary.numRequests or 0
+
+          week.days = $moment.daysOfWeek moment(week.start)
+
+
+        # Method to calc day summary
+        calcDay = (day, week) ->
+
+          # Orders
+          day.orders = []
+          for order in week.data.orders
+            if apData.orders.isWithinDate(order, day.start, day.end)
+              day.orders.push order
+          day.ordersSummary = apData.orders.calcSummary day.orders
+
+          # Requests
+          day.requests = []
+          for request in week.data.requests
+            if apData.requests.isWithinDate(request, day.start, day.end)
+              day.requests.push request
+
+          # Calc day summary
           day.summary =
-            numOrders: day.orders.length
+            numOrders: if day.orders? then day.orders.length else 0
+            numRequests: if day.requests? then day.requests.length else 0
+            numRevenue: day.ordersSummary.totalRevenue
 
-
-
+          _.extend day.summary,
+            conOrdersToRequests: day.summary.numOrders/day.summary.numRequests or 0
 
 
         weeks = $moment.getWeeksByFriday(start, end)
 
-        # Get data for each week
-        for week in weeks
-          week.data = apData.orders.filter week.start, week.end
-          console.log "week.data", week.data
-          week.days = $moment.daysOfWeek moment(week.start)
-          for day in week.days
-            # Group orders by day
-            day.orders = []
-            for order in week.data.orders
-              if apData.orders.isWithinDate(order, day.start, day.end)
-                day.orders.push order
+        apData.requests.loadAll ->
+          # Calc summary for week
+          for week in weeks
+            calcWeek week
             # Calc summary for day
-            calcDay day
+            for day in week.days
+              calcDay day, week
 
-
-
-
-
-
-
-
-
+        # Return weeks now, update as more data is loaded and crunched
         return weeks
 
 
@@ -905,29 +1013,6 @@ angular.module('AirpairAdmin').factory('apData', ['$moment', '$filter', '$http',
   apData.orders.data = _.sortBy(apData.orders.data, (o) -> moment(o.utc))
   apData.orders.calcCredits()
 
-
-  # Delete records from date
-  # deleteFrom = "2014-07-24"
-  # numNew = 0
-  # first = null
-  # _.each apData.orders.data, (order, index) ->
-  #   if not order
-  #     console.log "ORDER UNDEFINED?? ", order, index
-  #     return
-  #   if moment(order.utc).isAfter(moment(deleteFrom))
-  #     if not first then first = index
-  #     console.log "DELETE order", index
-  #     numNew++
-  # apData.orders.data.splice(first, numNew)
-
-
-
-
-
-
-
-
-  # apData.orders.findRepeatCustomers()
 
   console.log "apData", apData
 

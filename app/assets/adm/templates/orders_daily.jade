@@ -1,28 +1,74 @@
 
 .container
-  h3.text-thin Day by Day
+  .row
+    .col-sm-3
+      h3.text-thin.m-b-2 Day by Day
+    .col-sm-4.m-t-1
+      input.form-control(ng-model="searchString" type="text" placeholder="Search all orders")
+    .col-sm-4.m-t-1
+      .input-group
+        span.input-group-addon Start
+        input.form-control(type="date" name="startdate" ng-model="dateStart" placeholder="yyyy-MM-dd" min="2013-01-01" max="" style="width:160px" required)
+        span.input-group-addon End
+        input.form-control(type="date" name="enddate" ng-model="dateEnd" placeholder="yyyy-MM-dd" min="2013-01-01" max="" style="width:160px" required)
+
 
 
   table.table.table-hover
-    thead
-      th 
-      th Sat
-      th Sun
-      th Mon
-      th Tue
-      th Wed
-      th Thu
-      th Fri
+    tr.row-divide(ng-repeat-start="week in weeks")
+      td.text-bold {{week.str}}
+      td.text-muted Sat
+      td.text-muted Sun
+      td.text-muted Mon
+      td.text-muted Tue
+      td.text-muted Wed
+      td.text-muted Thu
+      td.text-muted Fri
+      td.text-muted Total
 
-    tr(ng-repeat="week in weeks")
+    tr
+      td.text-muted Requests
+      td.text-success {{week.days[0].summary.numRequests}}
+      td.text-success {{week.days[1].summary.numRequests}}
+      td.text-success {{week.days[2].summary.numRequests}}
+      td.text-success {{week.days[3].summary.numRequests}}
+      td.text-success {{week.days[4].summary.numRequests}}
+      td.text-success {{week.days[5].summary.numRequests}}
+      td.text-success {{week.days[6].summary.numRequests}}
+      td.text-success.text-bold {{week.data.summary.numRequests}}
+    
+    tr
+      td
+      td.text-orange {{week.days[0].summary.conOrdersToRequests*100 | number: 0}}%
+      td.text-orange {{week.days[1].summary.conOrdersToRequests*100 | number: 0}}%
+      td.text-orange {{week.days[2].summary.conOrdersToRequests*100 | number: 0}}%
+      td.text-orange {{week.days[3].summary.conOrdersToRequests*100 | number: 0}}%
+      td.text-orange {{week.days[4].summary.conOrdersToRequests*100 | number: 0}}%
+      td.text-orange {{week.days[5].summary.conOrdersToRequests*100 | number: 0}}%
+      td.text-orange {{week.days[6].summary.conOrdersToRequests*100 | number: 0}}%
+      td.text-orange.text-bold {{week.data.summary.conOrdersToRequests*100 | number: 0}}%
+    
+    tr
       td.text-muted Orders
-      td {{week.days[0].summary.numOrders}}
-      td {{week.days[1].summary.numOrders}}
-      td {{week.days[2].summary.numOrders}}
-      td {{week.days[3].summary.numOrders}}
-      td {{week.days[4].summary.numOrders}}
-      td {{week.days[5].summary.numOrders}}
-      td {{week.days[6].summary.numOrders}}
+      td.text-success {{week.days[0].summary.numOrders}}
+      td.text-success {{week.days[1].summary.numOrders}}
+      td.text-success {{week.days[2].summary.numOrders}}
+      td.text-success {{week.days[3].summary.numOrders}}
+      td.text-success {{week.days[4].summary.numOrders}}
+      td.text-success {{week.days[5].summary.numOrders}}
+      td.text-success {{week.days[6].summary.numOrders}}
+      td.text-success.text-bold {{week.data.summary.numOrders}}
+
+    tr(ng-repeat-end)
+      td.text-muted Revenue
+      td.text-success ${{week.days[0].summary.numRevenue}}
+      td.text-success ${{week.days[1].summary.numRevenue}}
+      td.text-success ${{week.days[2].summary.numRevenue}}
+      td.text-success ${{week.days[3].summary.numRevenue}}
+      td.text-success ${{week.days[4].summary.numRevenue}}
+      td.text-success ${{week.days[5].summary.numRevenue}}
+      td.text-success ${{week.days[6].summary.numRevenue}}
+      td.text-success.text-bold ${{week.data.summary.numRevenue}}
 
 
 

@@ -22,4 +22,18 @@ angular.module('AirpairAdmin').factory('$helpers', () ->
           num = (newNum - oldNum) / oldNum
         return num
 
+    search: (list, searchString) ->
+      filteredList = []
+      for item in list
+        matchList = []
+        matchList.push c for c in item.campaigns if item.campaigns
+        matchList.push t.name for t in item.marketingTags if item.marketingTags
+        for str in matchList
+          if str.indexOf(searchString) > -1
+            filteredList.push item
+            break
+
+      return filteredList
+
+
 )

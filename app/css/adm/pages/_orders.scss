@@ -220,7 +220,11 @@
 
 
 
-
+.row-divide {
+  td {
+    border-top: 1px solid #999 !important;
+  }
+}
 
 
 .row-small {
