@@ -942,6 +942,8 @@ angular.module('AirpairAdmin').factory('apData', ['$moment', '$filter', '$http',
         dayTotal = (dayStr, data) ->
           numViews = 0
           _.each data.values, (campaign, campaignName) ->
+            if searchString and campaignName.indexOf(searchString) == -1 then return
+            # if searchString then console.log "search match", campaignName, searchString
             _.each campaign, (count, date) ->
               if date is dayStr
                 numViews += count
@@ -953,8 +955,8 @@ angular.module('AirpairAdmin').factory('apData', ['$moment', '$filter', '$http',
             for day in week.days
               day.summary.numViews = dayTotal day.start.format('YYYY-MM-DD'), data
               week.data.summary.numViews += day.summary.numViews
-              console.log "day.summary.numViews", day.summary.numViews
-            console.log "week.data.summary.numViews", week.data.summary.numViews
+              # console.log "day.summary.numViews", day.summary.numViews
+            # console.log "week.data.summary.numViews", week.data.summary.numViews
           callback()
 
         # Get all data within date range
@@ -986,7 +988,7 @@ angular.module('AirpairAdmin').factory('apData', ['$moment', '$filter', '$http',
             numRevenue: week.data.summary.totalRevenue
 
           _.extend week.data.summary,
-            conOrdersToRequests: week.data.summary.numOrders/week.data.summary.numRequests or 0
+            conOrdersToRequests: $helpers.calcConversion week.data.summary.numRequests, week.data.summary.numOrders
 
           week.days = $moment.daysOfWeek moment(week.start)
 
@@ -1014,7 +1016,7 @@ angular.module('AirpairAdmin').factory('apData', ['$moment', '$filter', '$http',
             numRevenue: day.ordersSummary.totalRevenue
 
           _.extend day.summary,
-            conOrdersToRequests: day.summary.numOrders/day.summary.numRequests or 0
+            conOrdersToRequests: $helpers.calcConversion day.summary.numRequests, day.summary.numOrders
 
 
         weeks = $moment.getWeeksByFriday(start, end)

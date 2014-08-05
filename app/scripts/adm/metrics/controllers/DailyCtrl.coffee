@@ -25,7 +25,7 @@ angular.module('AirpairAdmin').controller("DailyCtrl", ['$scope', '$moment', 'ap
     updateRange()
   $scope.$watch "dateEnd", () -> updateRange()
   $scope.$watch "searchString", (n, o) ->
-    if n isnt o and n.length > 2
+    if n isnt o
       updateRange(n)
 
 ])
