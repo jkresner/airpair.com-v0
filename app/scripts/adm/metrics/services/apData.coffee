@@ -590,7 +590,7 @@ angular.module('AirpairAdmin').factory('apData', ['$moment', '$filter', '$http',
             console.log "calc metrics"
             metricsRepeated = []
             metrics = []
-            # TAGS = []
+            TAGS = []
             # console.log "dataSet #{type}", dataSet
             for order in dataSet
               metric =
@@ -618,8 +618,8 @@ angular.module('AirpairAdmin').factory('apData', ['$moment', '$filter', '$http',
                   # stackoverflowads: {total:0, revenue: 0}
 
               _.each order.marketingTags, (tag) ->
-                # console.log "tag.group", tag.group
-                # TAGS.push tag.group
+                console.log "tag.group", tag.group
+                TAGS.push tag.group
                 channelTags = _.where order.marketingTags, { type: "channel" }
                 tagName = tag.group.replace('-', '')
                 if tag.type is "channel"
@@ -635,7 +635,7 @@ angular.module('AirpairAdmin').factory('apData', ['$moment', '$filter', '$http',
 
               metricsRepeated.push metric if metric.isRepeat
               metrics.push metric
-            # console.log "tag.groups", _.groupBy TAGS, (num) -> num
+            console.log "tag.groups", _.groupBy TAGS, (num) -> num
 
             _(metrics).reverse()
             _(metricsRepeated).reverse()
@@ -936,29 +936,49 @@ angular.module('AirpairAdmin').factory('apData', ['$moment', '$filter', '$http',
 
     ads:
 
-      # Get Daily Metrics
 
-      daily: (start, end = moment(), searchString) ->
+      mixpanelWeeks: (weeks, start, end, searchString, callback) ->
 
+        dayTotal = (dayStr, data) ->
+          numViews = 0
+          _.each data.values, (campaign, campaignName) ->
+            _.each campaign, (count, date) ->
+              if date is dayStr
+                numViews += count
+          return numViews
 
+        processData = (data) ->
+          for week in weeks
+            week.data.summary.numViews = 0
+            for day in week.days
+              day.summary.numViews = dayTotal day.start.format('YYYY-MM-DD'), data
+              week.data.summary.numViews += day.summary.numViews
+              console.log "day.summary.numViews", day.summary.numViews
+            console.log "week.data.summary.numViews", week.data.summary.numViews
+          callback()
 
-
-        $mixpanel.segmentation
+        # Get all data within date range
+        $mixpanel.api.segmentation
           from_date: start.format('YYYY-MM-DD')
           to_date: end.format('YYYY-MM-DD')
           event: "view"
           on: 'properties["utm_campaign"]'
-        , (data) ->
-          console.log "mixpanel", data
+        , (res) ->
+          console.log "mixpanel", res
+          processData res.data
 
 
+
+
+      # Get Daily Metrics
+
+      daily: (start, end = moment(), searchString, callback) ->
 
 
         # Method to Calc week summary
         calcWeek = (week) ->
           week.data = apData.orders.filterByTags week.start, week.end, searchString
           _.extend week.data, apData.requests.filter week.start, week.end, searchString
-
 
           _.extend week.data.summary,
             numOrders: week.data.orders.length
@@ -999,20 +1019,21 @@ angular.module('AirpairAdmin').factory('apData', ['$moment', '$filter', '$http',
 
         weeks = $moment.getWeeksByFriday(start, end)
 
-        apData.requests.loadAll ->
+        apData.requests.loadAll =>
           # Calc summary for week
           for week in weeks
             calcWeek week
             # Calc summary for day
             for day in week.days
               calcDay day, week
+          # Get mixpanel data
+          @mixpanelWeeks weeks, start, end, searchString, callback
+
+
+
 
         # Return weeks now, update as more data is loaded and crunched
         return weeks
-
-
-
-
 
 
 

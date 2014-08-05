@@ -11,8 +11,11 @@ angular.module('AirpairAdmin').controller("DailyCtrl", ['$scope', '$moment', 'ap
 
   updateRange = (searchString) ->
     return if not $scope.dateStart or not $scope.dateEnd
-    $scope.weeks = apData.ads.daily moment($scope.dateStart), moment($scope.dateEnd), searchString
+    $scope.weeks = apData.ads.daily moment($scope.dateStart), moment($scope.dateEnd), searchString, ->
+      $scope.$apply() if not $scope.$$phase
+
     console.log "daily report", $scope.weeks
+
 
 
   # Watch date ranges

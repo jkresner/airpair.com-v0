@@ -27,6 +27,16 @@
       td.text-muted Total
 
     tr
+      td.text-muted Traffic
+      td.text-success {{week.days[0].summary.numViews}}
+      td.text-success {{week.days[1].summary.numViews}}
+      td.text-success {{week.days[2].summary.numViews}}
+      td.text-success {{week.days[3].summary.numViews}}
+      td.text-success {{week.days[4].summary.numViews}}
+      td.text-success {{week.days[5].summary.numViews}}
+      td.text-success {{week.days[6].summary.numViews}}
+      td.text-success.text-bold {{week.data.summary.numViews}}
+    tr
       td.text-muted Requests
       td.text-success {{week.days[0].summary.numRequests}}
       td.text-success {{week.days[1].summary.numRequests}}
