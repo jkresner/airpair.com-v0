@@ -14,3 +14,7 @@ module.exports =
       Roles = require '../identity/roles'
       $log 'isAdmin', Roles, @session
       Roles.isAdmin(@session).toString()
+
+    hbs.registerHelper 'urlEncode', (value) ->
+      new hbs.handlebars.SafeString value
+      encodeURIComponent(value)
