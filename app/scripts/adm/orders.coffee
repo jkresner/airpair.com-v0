@@ -29,6 +29,7 @@ module.exports = (pageData) ->
 
   # Services
   require "./metrics/services/$moment"
+  require "./metrics/services/$mixpanel"
   require "./metrics/services/$helpers"
   require "./metrics/services/apData"
 

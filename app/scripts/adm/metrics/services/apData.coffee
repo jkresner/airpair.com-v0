@@ -9,7 +9,7 @@ ObjectId2Date = require 'lib/mix/objectId2Date'
 
 # Airpair Data Service
 #----------------------------------------------
-angular.module('AirpairAdmin').factory('apData', ['$moment', '$filter', '$http', '$helpers', ($moment, $filter, $http, $helpers) ->
+angular.module('AirpairAdmin').factory('apData', ['$moment', '$filter', '$http', '$helpers', '$mixpanel', ($moment, $filter, $http, $helpers, $mixpanel) ->
 
   window.apData =
     orders:
@@ -939,6 +939,19 @@ angular.module('AirpairAdmin').factory('apData', ['$moment', '$filter', '$http',
       # Get Daily Metrics
 
       daily: (start, end = moment(), searchString) ->
+
+
+
+
+        $mixpanel.segmentation
+          from_date: start.format('YYYY-MM-DD')
+          to_date: end.format('YYYY-MM-DD')
+          event: "view"
+          on: 'properties["utm_campaign"]'
+        , (data) ->
+          console.log "mixpanel", data
+
+
 
 
         # Method to Calc week summary
