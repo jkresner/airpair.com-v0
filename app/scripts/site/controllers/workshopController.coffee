@@ -1,6 +1,10 @@
-WorkshopController = ($scope, $sce, Session, Workshop) ->
+WorkshopController = ($scope, $sce, Restangular, Session, Workshop) ->
   $scope.session = Session
   $scope.workshop = Session.data.workshop
+  Workshop.getAudienceFor(Session.data.workshop.slug)
+
+  $scope.audience = ->
+    Workshop.attendees
 
   $scope.showLocalTimes = ->
     showLocalTimes()
@@ -40,4 +44,4 @@ WorkshopController = ($scope, $sce, Session, Workshop) ->
 
 angular
   .module('ngAirPair')
-  .controller('WorkshopController', ['$scope', '$sce', 'Session', 'Order', WorkshopController])
+  .controller('WorkshopController', ['$scope', '$sce', 'Restangular', 'Session', 'Order', WorkshopController])

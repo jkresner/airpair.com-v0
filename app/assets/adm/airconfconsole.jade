@@ -46,7 +46,7 @@ ul.attendees
         li
           label Add Attendee
           input.user-email
-          a.add-attendee(href="/api/workshops/#{workshop.slug}/attendees") Register Attendee
+          a.add-attendee(ng-href="/api/workshops/#{workshop.slug}/attendees") Register Attendee
         - each attendee in workshop.attendees
           li
               span= attendee.userId.google._json.email
