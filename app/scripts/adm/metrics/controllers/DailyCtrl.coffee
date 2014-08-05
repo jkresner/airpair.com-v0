@@ -1,7 +1,7 @@
 
 # DAILY
 
-angular.module('AirpairAdmin').controller("DailyCtrl", ['$scope', '$moment', 'apData', ($scope, $moment, apData ) ->
+angular.module('AirpairAdmin').controller("DailyCtrl", ['$scope', '$moment', '$timeout', 'apData', ($scope, $moment, $timeout, apData ) ->
 
 
   _.extend $scope,
@@ -9,9 +9,10 @@ angular.module('AirpairAdmin').controller("DailyCtrl", ['$scope', '$moment', 'ap
     dateEnd: moment().toDate()
 
 
-  updateRange = (searchString) ->
+  updateRange = ->
+    console.log "updateRange(#{$scope.searchString})"
     return if not $scope.dateStart or not $scope.dateEnd
-    $scope.weeks = apData.ads.daily moment($scope.dateStart), moment($scope.dateEnd), searchString, ->
+    $scope.weeks = apData.ads.daily moment($scope.dateStart), moment($scope.dateEnd), $scope.searchString, ->
       $scope.$apply() if not $scope.$$phase
 
     console.log "daily report", $scope.weeks
@@ -24,8 +25,29 @@ angular.module('AirpairAdmin').controller("DailyCtrl", ['$scope', '$moment', 'ap
     if first then return first = false
     updateRange()
   $scope.$watch "dateEnd", () -> updateRange()
+
+
+
+  # Delayed action method
+  delay = (->
+    timer = 0
+    (callback, ms) ->
+      clearTimeout timer
+      timer = setTimeout(callback, ms)
+      return
+  )()
+
+  # Delayed Search
   $scope.$watch "searchString", (n, o) ->
     if n isnt o
-      updateRange(n)
+      delay ->
+        return updateRange()
+      , 500
+
+
+
+
+
+
 
 ])
