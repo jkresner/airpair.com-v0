@@ -450,7 +450,9 @@ class exports.RequestSuggestedView extends BB.BadassView
     @listenTo @model, 'change', @render
     @listenTo @orders, 'sync', @render
   render: ->
-    @$el.html '<legend>Suggested</legend>'
+    tags = _.map(@mget('tags'), 'soId')
+    automatchURL = "/adm/matching?tags=#{tags.join(',')}&budget=#{@mget('budget')}&pricing=#{@mget('pricing')}"
+    @$el.html '<legend>Suggested <a href="' + automatchURL + '" target="_blank">AutoMatch</a></legend>'
     suggested = @model.sortedSuggestions()
     if !suggested? then return
     else if suggested.length == 0
