@@ -10,7 +10,7 @@ ngWorkshop = ($http, Session, Restangular) ->
 
     fetchAttendingWorkshops: ->
       if Session.isSignedIn()
-        Restangular.all('workshops/user').getList().then (workshops)=>
+        Restangular.all('workshops/user').getList().then (workshops) =>
           for workshop in workshops
             @attendingWorkshops.push(workshop)
 

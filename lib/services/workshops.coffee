@@ -16,6 +16,14 @@ module.exports = class WorkshopsService extends DomainService
   getAllCached: (callback) =>
     callback(null, allWorkshops)
 
+  getAttendeesBySlug: (slug, callback) =>
+    @model.findOne(slug: slug).populate('attendees.userId').lean().exec (error, workshop) ->
+      attendees = _.map(workshop.attendees, (attendee) ->
+        name: attendee.userId.google._json.name
+        picture: attendee.userId.google._json.picture
+      )
+      callback error, attendees
+
   getWorkshopBySlug: (slug, callback) ->
     query = slug: slug
     @searchOne query, @data.view.public, (error, workshop) ->
@@ -28,7 +36,6 @@ module.exports = class WorkshopsService extends DomainService
         userId: userId
     @searchMany query, @data.view.public, (err, workshops) ->
       callback(err, workshops)
-
 
   addAttendee: (slug, userId, requestId, callback) ->
     userId = @usr._id unless userId?

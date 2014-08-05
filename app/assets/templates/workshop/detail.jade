@@ -35,6 +35,8 @@
           div.started(ng-show="started()")
             .player
               iframe(width="785", height="443", ng-src="{{youtubeUrl()}}", frameborder="0", allowfullscreen)
+            .audience
+              .attendee(ng-repeat="attendee in audience") {{ attendee.name }}
         div(ng-hide="session.isSignedIn()")
           a.btn.btn-orange.loginRequired(href="/airconf-registration",data-return="/airconf-registration") Register to watch talk
           br
