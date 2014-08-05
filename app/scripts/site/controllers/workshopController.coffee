@@ -1,9 +1,10 @@
 WorkshopController = ($scope, $sce, Restangular, Session, Workshop) ->
   $scope.session = Session
   $scope.workshop = Session.data.workshop
+  Workshop.getAudienceFor(Session.data.workshop.slug)
 
-  $scope.audience =
-    Restangular.all("workshops/#{Session.data.workshop.slug}/attendees").getList().$object
+  $scope.audience = ->
+    Workshop.attendees
 
   $scope.showLocalTimes = ->
     showLocalTimes()
