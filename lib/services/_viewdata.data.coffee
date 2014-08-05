@@ -3,7 +3,7 @@ module.exports =
   keynotes:
     'wk1':
       slug:         'future-of-consulting'
-      datetime:     'Tue Aug 05 2014 19:00:00 GMT'
+      time:         'Tue Aug 05 2014 19:00:00 GMT'
       calStart:     '20140805T190000Z'
       calEnd:       '20140805T200000Z'
       title:        'The Future of Consulting'
