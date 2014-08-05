@@ -21,26 +21,20 @@
             br
             span to see {{ workshop.title }} live
             .player
-              img.slide(ng-src="/images/landing/airconf/slides/{{workshop.slug}}.jpg")
+              img.slide(src="/images/landing/airconf/slides/{{workshop.slug}}.jpg")
           div(ng-hide="registered()")
             a.btn.btn-orange(href="/airconf-registration", target='_self') Register for AirConf to watch talk
             .player
-              img.slide.unregistered(ng-src="/images/landing/airconf/slides/{{workshop.slug}}.jpg")
+              img.slide.unregistered(src="/images/landing/airconf/slides/{{workshop.slug}}.jpg")
           div.attending(ng-show="attending()")
             p.attending You are attending {{ workshop.title }}!
             p You will be able to ask questions and watch the talk live (or after the event) on this page.
             p We will email you 24 hours before to let you know if there is space and how to get into the "front row".
             .player(ng-hide="started()")
-              img.slide(ng-src="/images/landing/airconf/slides/{{workshop.slug}}.jpg")
+              img.slide(src="/images/landing/airconf/slides/{{workshop.slug}}.jpg")
           div.started(ng-show="started()")
             .player
               iframe(width="785", height="443", ng-src="{{youtubeUrl()}}", frameborder="0", allowfullscreen)
-
-          #audience.text-center.m-t-1(ng-show="audience().length")
-            h3 Audience Members
-            .attendee(ng-repeat="attendee in audience()")
-              img(ng-src="{{ attendee.picture }}" title="{{ attendee.name }}" style="border-radius: 15px")
-
         div(ng-hide="session.isSignedIn()")
           a.btn.btn-orange.loginRequired(href="/airconf-registration",data-return="/airconf-registration") Register to watch talk
           br
@@ -48,10 +42,10 @@
           a.loginRequired(href="{{$location}}") Sign in to RSVP
           hr
           a.loginRequired(href="/airconf-registration",data-return="/airconf-registration")
-            img.slide.anonymous(ng-src="/images/landing/airconf/slides/{{workshop.slug}}.jpg")
+            img.slide.anonymous(src="/images/landing/airconf/slides/{{workshop.slug}}.jpg")
 
         div(ng-if="attending()")
-          h3.m-t-2 Session Chat
+          h3.m-t-4 Session Chat
           #chat(ng-controller='ChatController')
             div.row
               form.form-inline(ng-submit='addMessage()')

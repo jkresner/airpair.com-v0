@@ -6,11 +6,10 @@ class WorkshopsApi extends require('./_api')
   Svc: require './../services/workshops'
 
   routes: (app, route) ->
-    app.get "/api/#{route}/user", @loggedIn, @ap, @listByUser
-    app.get "/api/#{route}/:slug", @loggedIn, @ap, @detail
-    app.get "/api/adm/#{route}/refresh", @loggedIn, @admin, @ap, @refresh
-    app.get "/api/#{route}/:slug/attendees", @loggedIn, @ap, @listAttendees
-    app.post "/api/#{route}/:slug/attendees", @loggedIn, @ap, @createAttendee
+    app.get     "/api/#{route}/user", @loggedIn, @ap, @listByUser
+    app.get     "/api/#{route}/:slug", @loggedIn, @ap, @detail
+    app.get     "/api/adm/#{route}/refresh", @loggedIn, @admin, @ap, @refresh
+    app.post    "/api/#{route}/:slug/attendees", @loggedIn, @ap, @createAttendee
 
   detail: (req) =>
     @svc.getWorkshopBySlug req.params.slug, @cbSend
@@ -22,9 +21,6 @@ class WorkshopsApi extends require('./_api')
         @svc.addAttendee req.params.slug, user._id, @data.requestId, @cbSend
     else
       @svc.addAttendee req.params.slug, @data.userId, @data.requestId, @cbSend
-
-  listAttendees: (req, res, next) =>
-    @svc.getAttendeesBySlug req.params.slug, @cbSend
 
   listByUser: =>
     @svc.getListByAttendee(null, @cbSend)
