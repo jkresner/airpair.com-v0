@@ -58,7 +58,7 @@
               .col-xs-1.pic
                 img.img-responsive(ng-src="{{message.pic}}")
               .col-xs-11.message
-                {{message.content}}
+                span(ng-bind-html="message.content | linky:'_blank'")
                 .timestamp
                   strong {{message.from}} &nbsp;
                   {{ moment(message.timestamp).fromNow() }}
