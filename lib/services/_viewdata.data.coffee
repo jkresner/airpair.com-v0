@@ -1,5 +1,27 @@
 module.exports =
 
+  keynotes:
+    'wk1':
+      slug:         'future-of-consulting'
+      datetime:     'Tue Aug 05 2014 19:00:00 GMT'
+      calStart:     '20140805T190000Z'
+      calEnd:       '20140805T200000Z'
+      title:        'The Future of Consulting'
+      description:  'Remote teams are becoming more popular each year. With increasing access to high quality distributed talent, consultancies like Thoughtworks and Pivotal Labs now go beyond outsourcing. The top consultancies leave clients with new skills as well as deliverables. Will this be enough going forward?'
+      speakers: [
+        { name: 'Obie Fernadez', company: 'AirPair', title: 'CTO', pic: '/images/avatars/of.png', tw: 'obie' }
+        { name: 'Evan Henshaw-Plath', company: 'Neo', title: 'CTO', pic: '/images/landing/airconf/rabble.png', tw: 'rabble' }
+        { name: 'Mike Mason', company: 'ThoughtWorks', title: 'Head of Technology', pic: '/images/landing/airconf/mikemasonca.png', tw: 'mikemasonca' }
+        { name: 'Chad Pytel', company: 'ThoughtBot', title: 'CEO', pic: '//secure.gravatar.com/avatar/1eb7539f1f0a62f74ea3f7a0fa0f486f?s=110', tw: 'cpytel' }
+      ]
+    'wk2':
+      slug:         'engineering-vs-entrepreneurship'
+      speakers: [
+        name: 'Jonathon Kresner', tw: 'hackerpreneur'
+        name: 'Deep Nishar', tw: 'deepnishar'
+        name: 'Charlie Cheever', tw: 'ccheever'
+      ]
+
   so15:
     'jquery':     name: 'Yehuda Katz', me: 'wycats', claim: 'Rails Core Team Member'
     'ruby-on-rails':name: 'Yehuda Katz', me: 'wycats', claim: 'Rails Core Team Member'
@@ -25,10 +47,6 @@ module.exports =
     'express':    name: 'Peter Lyson', me: 'focusaurus', claim: 'All-time Express #1 Answerer'
     'mysql':      name: 'Alex Bolenok', me: 'quassnoi', claim: 'All-time MySql Top Answerer'
     'twilio':     name: 'Jeff Linwood', me: 'jefflinwood', claim: 'Twilio book author'
-    # 'asp.net':    name: 'Amir Rajan', me: 'amirrajan', claim: 'ASP .net AirPair Expert'
-    # 'c++':        name: 'Steve Purves', me: 'stevejpurves', claim: 'C++ AirPair Expert'
-    # 'java':       name: 'Marko Topolnik', me: 'marko', claim: 'Java Top Answerer'
-    # 'c#':         name: 'John Feminella', me: 'john-feminella', claim: 'C# Top Answerer'
 
 
   so10:

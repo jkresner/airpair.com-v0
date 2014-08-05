@@ -93,18 +93,19 @@ module.exports = class ViewDataService
       cb e, -> { companys, stripePK }
 
   airconf: (cb) ->
-    if @usr?
-      new OrdersSvc(@usr).getAirConfRegisration (e, registration) =>
-        new WorkshopsService(@usr).getAllCached (ee, workshops) =>
-          cb ee, -> { workshops: workshops, registration }
-    else
-      new WorkshopsService(@usr).getAllCached (e, workshops) =>
-        cb e, -> { workshops: workshops }
+    new OrdersSvc(@usr).getAirConfRegisration (e, registration) =>
+      new WorkshopsService(@usr).getAllCached (ee, workshops) =>
+        cb ee, -> { workshops, registration, keynotes: Data.keynotes }
 
   workshop: (id, cb) ->
     new WorkshopsService(@usr).getWorkshopBySlug id, (error, workshop) =>
       new OrdersSvc(@usr).getAirConfRegisration (e, registration) =>
         cb null, -> { workshop, registration, workshopRequestId : OrdersQuery.airconf.requestId }
+
+  airconfkeynote: (id, cb) ->
+    workshop = Data.keynotes.wk1
+    new OrdersSvc(@usr).getAirConfRegisration (e, registration) =>
+      cb null, -> { workshop, registration, workshopRequestId : OrdersQuery.airconf.requestId }
 
   airconfreg: (cb) ->
     new CompanysSvc(@usr).getById 'me', (e, company) =>
