@@ -23,9 +23,9 @@
           div.attending(ng-show="registered()")
             p.attending  {{ workshop.title }}!
             p You will be able to ask questions and watch the talk live (or after the event) on this page.
-            .player(ng-hide="started()")
+            .player(ng-hide="keynoteStarted()")
               img.slide(src="/images/landing/airconf/slides/{{workshop.slug}}.jpg")
-          div.started(ng-show="started()")
+          div.started(ng-show="keynoteStarted()")
             .player
               iframe(width="785", height="443", ng-src="{{youtubeUrl()}}", frameborder="0", allowfullscreen)
         div(ng-hide="session.isSignedIn()")

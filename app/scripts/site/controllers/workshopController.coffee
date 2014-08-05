@@ -17,6 +17,9 @@ WorkshopController = ($scope, $sce, Session, Workshop) ->
       workshop.slug == Session.data.workshop.slug
     attending && Session.data.workshop.youtube? && Session.data.workshop.youtube.length > 0
 
+  $scope.keynoteStarted = ->
+    Session.data.workshop.youtube?
+
   $scope.attending = ->
     attending = _.find Workshop.attendingWorkshops, (workshop) ->
       workshop.slug == Session.data.workshop.slug

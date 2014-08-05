@@ -2,6 +2,7 @@ module.exports =
 
   keynotes:
     'wk1':
+      youtube:      '3DRTOKW3e1w'
       slug:         'future-of-consulting'
       time:         'Tue Aug 05 2014 19:00:00 GMT'
       calStart:     '20140805T190000Z'
