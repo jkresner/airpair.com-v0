@@ -32,6 +32,7 @@ module.exports = (app) ->
   app.get '/templates/experts/me', authd, render 'templates/experts/me'
   app.get '/adm/templates/orders_daily', authd, render 'adm/templates/orders_daily'
   app.get '/templates/workshop/detail', render 'templates/workshop/detail'
+  app.get '/templates/workshop/keynote', render 'templates/workshop/keynote'
   app.get '/templates/workshop/schedule', authd, render 'templates/workshop/schedule'
 
   app.get '/workshops', (req, r) -> r.redirect req.url.replace('/workshops','/airconf2014')

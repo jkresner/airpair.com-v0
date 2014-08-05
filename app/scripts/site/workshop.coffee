@@ -8,6 +8,10 @@ Config = ($routeProvider, $locationProvider, RestangularProvider) ->
      templateUrl: '/templates/workshop/detail'
      controller: 'WorkshopController'
 
+   .when '/airconf2014/keynote/:id',
+     templateUrl: '/templates/workshop/keynote'
+     controller: 'WorkshopController'
+
   $locationProvider.html5Mode(true)
   RestangularProvider.setBaseUrl('/api')
   RestangularProvider.setRestangularFields(id: "_id")
