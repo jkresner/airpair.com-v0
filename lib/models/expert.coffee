@@ -53,5 +53,6 @@ schema = new Schema
   status:         String
   hours:          String
   bookMe:         { required: false, type: Bookme }
+  creditRequestIds: { type: [ObjectId] }  # Requests that credits can be applied for
 
 module.exports = mongoose.model 'Expert', schema

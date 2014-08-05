@@ -23,6 +23,7 @@ module.exports = class Router extends S.AirpairSessionRouter
       request: new M.Request _id: @defaultFragment
       order: new M.Order()
       settings: new M.Settings()
+      credit: new M.Credit()
       expert: new M.Expert _id: 'me'
     v =
       requestView: new V.RequestView( request: d.request, settings: d.settings, session: @app.session, expert: d.expert, isProd: pageData.isProd )
@@ -32,7 +33,7 @@ module.exports = class Router extends S.AirpairSessionRouter
       error: => @empty(v.requestView)
       success: =>
         if d.request.isCustomer(@app.session)
-          @app.bookView = new V.BookView( model: d.order, request: d.request, session: @app.session, isProd: pageData.isProd ).render()
+          @app.bookView = new V.BookView( model: d.order, request: d.request, session: @app.session, isProd: pageData.isProd, credit: d.credit ).render()
 
     @setOrFetch d.request, pageData.request, opts
 
@@ -41,6 +42,7 @@ module.exports = class Router extends S.AirpairSessionRouter
 
     if @app.session.authenticated()
       @setOrFetch d.settings, pageData.settings
+      @setOrFetch d.credit, pageData.credit
 
     _.extend d, v
 
