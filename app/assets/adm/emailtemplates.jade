@@ -1,0 +1,85 @@
+doctype html
+html
+  head
+    title AirConf | Email Template Console
+    meta(name="viewport", content="width=device-width")
+    link(rel="stylesheet", href="/css/adm.css")
+    script(src="https://code.jquery.com/jquery-2.1.1.min.js")
+
+style.
+  input, textarea {
+    display: block;
+    width: 100%;
+  }
+  textarea {
+    height: 400px;
+  }
+  .template {
+    border: 1px solid silver;
+    padding: 20px;
+  }
+
+body
+  ul
+    li.template
+      .container
+        form.new(action="#")
+          label(for="slug_new") Internal Name
+          input.slug(id="slug_new")
+
+          label(for="subject_new") Subject
+          input.subject(id="subject_new")
+
+          label(for="html_new") HTML Template
+          textarea.html(id="html_new")
+
+          label(for="text_new") Text Template
+          textarea.text(id="text_new")
+          .message
+          a.save(href="/api/emailtemplates") Save Template
+
+    - each template in templates
+      li.template
+        .container
+          form(action="#")
+            label Template: #{template.slug}
+            br
+            input.slug(type="hidden", id="slug#{template.slug}", value=template.slug)
+
+            label(for="subject#{template.slug}") Subject
+            input.subject(id="subject#{template.slug}", value=template.subject)
+
+            label(for="html#{template.slug}") HTML Template
+            textarea.html(id="html#{template.slug}")= template.html
+
+            label(for="text#{template.slug}") Text Template
+            textarea.text(id="text#{template.slug}")= template.text
+            .message
+            a.save(href="/api/emailtemplates") Save Template
+
+  script(type="text/javascript").
+    $( document ).ready(function() {
+      $(".save").click(function(){
+        var $this = $(this);
+        var href = $this.attr("href");
+        var $form = $this.parent("form")
+        var data = {
+          slug: $form.find(".slug").val(),
+          subject: $form.find(".subject").val(),
+          html: $form.find(".html").val(),
+          text: $form.find(".text").val()
+        }
+        $.ajax({
+          type: "POST",
+          url: href,
+          data: data,
+          success: function(data){
+            $form.find(".message").text("Saved");
+            if ($form.hasClass("new")) {
+              location.reload();
+            }
+          }
+        });
+        return false;
+      });
+    });
