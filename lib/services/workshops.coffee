@@ -18,11 +18,15 @@ module.exports = class WorkshopsService extends DomainService
 
   getAttendeesBySlug: (slug, callback) =>
     @model.findOne(slug: slug).populate('attendees.userId').lean().exec (error, workshop) ->
-      attendees = _.map(workshop.attendees, (attendee) ->
+      if error then return callback error
+
+      # reduce to just attendee names and pic
+      attendees = _.map(workshop?.attendees or [], (attendee) ->
         name: attendee.userId.google._json.name
         picture: attendee.userId.google._json.picture
       )
-      callback error, attendees
+
+      callback(null, attendees)
 
   getWorkshopBySlug: (slug, callback) ->
     query = slug: slug
