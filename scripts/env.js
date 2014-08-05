@@ -14,7 +14,8 @@ models = {
   Settings: require('../lib/models/settings'),
   Tag: require('../lib/models/tag'),
   User: require('../lib/models/user'),
-  Workshop: require('../lib/models/workshop')
+  Workshop: require('../lib/models/workshop'),
+  EmailTemplate: require('../lib/models/emailTemplate')
 }
 
 for(key in models) {

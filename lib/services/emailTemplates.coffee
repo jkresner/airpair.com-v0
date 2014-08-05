@@ -1,8 +1,10 @@
 DomainService = require './_svc'
+Mailman = require '../mail/mailman'
 
 module.exports = class EmailTemplates extends DomainService
 
   model: require './../models/emailTemplate'
+  mailman: Mailman
 
   constructor: (user) ->
     super user
@@ -14,3 +16,10 @@ module.exports = class EmailTemplates extends DomainService
       else
         @create data, callback
 
+  send: (slug, data, callback) ->
+    @searchOne {slug: slug}, {}, (err, template) =>
+      if template?
+        options = _.extend(data, template)
+        @mailman.sendEmail options, callback
+      else
+        callback(err, template)

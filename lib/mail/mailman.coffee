@@ -32,15 +32,14 @@ class Mailman
 
   renderDynamicEmail: (options, callback) ->
     async.parallel {
-      Html: renderDynamicHandlebars options, options.html
-      Text: renderDynamicHandlebars options, options.text
+      Html: async.apply renderDynamicHandlebars, options, options.html
+      Text: async.apply renderDynamicHandlebars, options, options.text
     }, (error, results) -> callback(error, results)
 
   sendEmail: (options, callback) =>
-    @renderEmail(options, options.templateName, (e, rendered) ->
+    @renderEmail options, options.templateName, (e, rendered) ->
       rendered.Subject = options.subject
       ses.send options.to, rendered, callback
-    )
 
   sendEmailToAdmins: (options, callback) ->
     options.to = roles.getAdminEmails()
