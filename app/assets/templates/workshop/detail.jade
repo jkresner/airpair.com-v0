@@ -35,8 +35,11 @@
           div.started(ng-show="started()")
             .player
               iframe(width="785", height="443", ng-src="{{youtubeUrl()}}", frameborder="0", allowfullscreen)
-            .audience
-              .attendee(ng-repeat="attendee in audience") {{ attendee.name }}
+            .audience.text-center.m-t-1(ng-if="audience.length > 0")
+              h3 Audience
+              .attendee(ng-repeat="attendee in audience" style="display: inline-block; width: 5%")
+                img.img-responsive(src="{{ attendee.picture }}" title="{{ attendee.name }}" style="border-radius: 15px")
+
         div(ng-hide="session.isSignedIn()")
           a.btn.btn-orange.loginRequired(href="/airconf-registration",data-return="/airconf-registration") Register to watch talk
           br
