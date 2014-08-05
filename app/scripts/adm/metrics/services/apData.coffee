@@ -955,8 +955,10 @@ angular.module('AirpairAdmin').factory('apData', ['$moment', '$filter', '$http',
             for day in week.days
               day.summary.numViews = dayTotal day.start.format('YYYY-MM-DD'), data
               week.data.summary.numViews += day.summary.numViews
-              # console.log "day.summary.numViews", day.summary.numViews
-            # console.log "week.data.summary.numViews", week.data.summary.numViews
+              _.extend day.summary,
+                conViewsToRequests: $helpers.calcConversion day.summary.numViews, day.summary.numRequests
+            _.extend week.data.summary,
+              conViewsToRequests: $helpers.calcConversion week.data.summary.numViews, week.data.summary.numRequests
           callback()
 
         # Get all data within date range

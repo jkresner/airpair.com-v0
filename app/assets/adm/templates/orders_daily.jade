@@ -37,6 +37,16 @@
       td.text-success {{week.days[6].summary.numViews}}
       td.text-success.text-bold {{week.data.summary.numViews}}
     tr
+      td
+      td.text-orange {{week.days[0].summary.conViewsToRequests*100 | number: 2}}%
+      td.text-orange {{week.days[1].summary.conViewsToRequests*100 | number: 2}}%
+      td.text-orange {{week.days[2].summary.conViewsToRequests*100 | number: 2}}%
+      td.text-orange {{week.days[3].summary.conViewsToRequests*100 | number: 2}}%
+      td.text-orange {{week.days[4].summary.conViewsToRequests*100 | number: 2}}%
+      td.text-orange {{week.days[5].summary.conViewsToRequests*100 | number: 2}}%
+      td.text-orange {{week.days[6].summary.conViewsToRequests*100 | number: 2}}%
+      td.text-orange.text-bold {{week.data.summary.conViewsToRequests*100 | number: 2}}%
+    tr
       td.text-muted Requests
       td.text-success {{week.days[0].summary.numRequests}}
       td.text-success {{week.days[1].summary.numRequests}}
