@@ -122,7 +122,7 @@
     <div class="keynote one left" style="background:#dff2ef;color:#4d4e4e">
       <ul>{{#each speakers}}<li><img src="{{pic}}" alt="{{name}}" /></li>{{/each}}</ul>
       <summary>
-        <label><time class="long" datetime="{{datetime}}"></time></label>
+        <label><time class="long" datetime="{{time}}"></time></label>
         <h3>{{title}}</h3>
         <p>{{description}}</p>
         <small>
@@ -130,7 +130,7 @@
         </small>
       </summary>
       <div>
-        <label><time class="long" datetime="{{datetime}}"></time></label>
+        <label><time class="long" datetime="{{time}}"></time></label>
         <h3>{{title}}</h3>
         <a class="add-to-cal btn btn-block btn-teal" target="_blank" href="https://www.google.com/calendar/render?action=TEMPLATE&text=AirConf+Keynote+-+{{title}}&dates={{calStart}}/{{calEnd}}&output=xml">Add to Calendar</a>
         <a href="/airconf2014/keynote/{{slug}}" class="loginRequired btn btn-block btn-orange">View panel</a>
@@ -162,32 +162,26 @@
         </ul>
       </div>
 
-      <div class="keynote three left" style="background:#90d1cc;color:black">
-        <ul>
-          <li><img src="//secure.gravatar.com/avatar/780d02a99798886da48711d8104801a4?s=140" alt="Jonathon kresner" /></li>
-          <li><img src="/images/landing/airconf/deepnishar.png" alt="Dipchand Nishard" /></li>
-          <li><img src="//pbs.twimg.com/profile_images/478058149673328640/Xu23QIML_400x400.jpeg" alt="Yoela Palkin" /></li>
-          <li><img src="/images/landing/airconf/ccheever.png" alt="Charlie Cheever" /></li>
-        </ul>
-        <summary>
-          <label><time class="long" datetime="Mon Aug 18 2014 18:30:00 GMT"></time></label>
-          <h3>Engineering vs Entrepreneurship</h3>
-          <p>Software Engineering is a precise discipline. Often early in a company's lifetime, thing needs to be scrappy and fast. Are Software Engineering and Entrepreneurship at odds? Is there a way to have both
-          quality and speed and can the two co-exist at the same time?</p>
-          <small style="color:#FCFCFC">
-            <label>Jonathon Kresner</label> AirPair<span> CEO</span>
-            <br /><label>Deep Nishar</label> LinkedIn<span> SVP Product/UX</span>
-            <br /><label>Yoela Palkin</label> Founder<span> BaskitLabs</span>
-            <br /><label>Charlie Cheever</label> Quora<span> Cofounder</span>
-          </small>
-        </summary>
-        <div class="detail">
-          <label><time class="long" datetime="Mon Aug 18 2014 18:30:00 GMT"></time></label>
-          <h3>Engineering vs Entrepreneurship</h3>
-          <a class="add-to-cal btn btn-block btn-teal" target="_blank" href="https://www.google.com/calendar/render?action=TEMPLATE&text=AirConf+Keynote+-+Engineering+vs+Entrepreneurship&dates=20140811T183000Z/20140811T193000Z&details=Remote+teams+are+becoming+more+popular+each+year.+The+top+consultancies+leave+clients+with+new+skills+as+well+as+deliverables.+Will this+be+enough+going+forward.&location=https://www.airpair.com/airconf2014&output=xml">Add to Calendar</a>
-          <!-- <a href="javascript:alert('Panel registrations open Fri Aug 1 in batches for the attendees who bought their tickets first.')" class="loginRequired btn btn-block btn-orange">Register for panel</a> -->
-        </div>
+
+    {{#with wk2}}
+     <div class="keynote three left" style="background:#90d1cc;color:black">
+      <ul>{{#each speakers}}<li><img src="{{pic}}" alt="{{name}}" /></li>{{/each}}</ul>
+      <summary>
+        <label><time class="long" datetime="{{time}}"></time></label>
+        <h3>{{title}}</h3>
+        <p>{{description}}</p>
+        <small>
+          {{#each speakers}}<h6><label>{{name}}</label> {{company}} <span> {{title}}</span></h6>{{/each}}
+        </small>
+      </summary>
+      <div>
+        <label><time class="long" datetime="{{time}}"></time></label>
+        <h3>{{title}}</h3>
+        <a class="add-to-cal btn btn-block btn-teal" target="_blank" href="https://www.google.com/calendar/render?action=TEMPLATE&text=AirConf+Keynote+-+{{title}}&dates={{calStart}}/{{calEnd}}&output=xml">Add to Calendar</a>
+        <a href="/airconf2014/keynote/{{slug}}" class="loginRequired btn btn-block btn-orange">View panel</a>
       </div>
+    </div>
+    {{/with}}
 
       <div class="keynote four right" style="background:#7e7f7f;color:white">
         <summary>

@@ -17,10 +17,16 @@ module.exports =
       ]
     'wk2':
       slug:         'engineering-vs-entrepreneurship'
+      time:         'Mon Aug 18 2014 18:30:00 GMT'
+      calStart:     '20140811T183000Z'
+      calEnd:       '20140811T193000Z'
+      title:        'Engineering vs Entrepreneurship'
+      description:  "Software Engineering is a precise discipline. Often early in a company's lifetime, thing needs to be scrappy and fast. Are Software Engineering and Entrepreneurship at odds? Is there a way to have both quality and speed and can the two co-exist at the same time?"
       speakers: [
-        name: 'Jonathon Kresner', tw: 'hackerpreneur'
-        name: 'Deep Nishar', tw: 'deepnishar'
-        name: 'Charlie Cheever', tw: 'ccheever'
+        { name: 'Jonathon Kresner', company: 'AirPair', title: 'CEO', pic: '//0.gravatar.com/avatar/780d02a99798886da48711d8104801a4', tw: 'hackerpreneur' }
+        { name: 'Deep Nishar', company: 'LinkedIn', title: 'SVP Product/UX', pic: '/images/landing/airconf/deepnishar.png', tw: 'deepnishar' }
+        { name: 'Yoela Palkin', company: 'BaskitLabs', title: 'Founder', pic: '//0.gravatar.com/avatar/a1305e9ae99d801228b18e5f1dbb3098', tw: 'yoelapalkin'}
+        { name: 'Charlie Cheever', company: 'Quora', title: 'Cofounder', pic: '/images/landing/airconf/ccheever.png', tw: 'ccheever'}
       ]
 
   so15:
