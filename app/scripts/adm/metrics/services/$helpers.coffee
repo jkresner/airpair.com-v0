@@ -26,8 +26,6 @@ angular.module('AirpairAdmin').factory('$helpers', () ->
       if first is 0 then return 0
       return second/first or 0
 
-
-
     search: (list, searchString) ->
       filteredList = []
       for item in list

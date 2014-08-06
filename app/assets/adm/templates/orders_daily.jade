@@ -1,10 +1,12 @@
 
 .container
   .row
-    .col-sm-3
+    .col-sm-2
       h3.text-thin.m-b-2 Day by Day
-    .col-sm-4.m-t-1
+    .col-sm-3.m-t-1
       input.form-control(ng-model="searchString" type="text" placeholder="Search all orders")
+    .col-sm-2.m-t-1
+      button.btn.btn-default(ng-model="newOnly" btn-checkbox) New Only
     .col-sm-4.m-t-1
       .input-group
         span.input-group-addon Start

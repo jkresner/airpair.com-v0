@@ -10,9 +10,9 @@ angular.module('AirpairAdmin').controller("DailyCtrl", ['$scope', '$moment', '$t
 
 
   updateRange = ->
-    console.log "updateRange(#{$scope.searchString})"
+    console.log "updateRange(search: #{$scope.searchString}, newOnly: #{$scope.newOnly})"
     return if not $scope.dateStart or not $scope.dateEnd
-    $scope.weeks = apData.ads.daily moment($scope.dateStart), moment($scope.dateEnd), $scope.searchString, ->
+    $scope.weeks = apData.ads.daily moment($scope.dateStart), moment($scope.dateEnd), $scope.searchString, $scope.newOnly, ->
       $scope.$apply() if not $scope.$$phase
 
     console.log "daily report", $scope.weeks
@@ -44,6 +44,8 @@ angular.module('AirpairAdmin').controller("DailyCtrl", ['$scope', '$moment', '$t
         return updateRange()
       , 500
 
+  # Watch new only toggle
+  $scope.$watch "newOnly", (n, o) -> if n isnt o then updateRange()
 
 
 
