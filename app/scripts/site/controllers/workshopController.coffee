@@ -1,7 +1,9 @@
 WorkshopController = ($scope, $sce, Restangular, Session, Workshop) ->
   $scope.session = Session
   $scope.workshop = Session.data.workshop
-  Workshop.getAudienceFor(Session.data.workshop.slug)
+
+  if Session.isSignedIn()
+    Workshop.getAudienceFor(Session.data.workshop.slug)
 
   $scope.audience = ->
     Workshop.attendees

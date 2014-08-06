@@ -9,14 +9,10 @@ ChatDirective = ($firebase, session) ->
 
   ## ngModel should have a slug attribute
   link: (scope, element, attributes) ->
-    if session.isSignedIn()
-      # use slug to key the chat stream
-      firebaseSlug = scope.ngModel.slug.replace(".", "")
-      ref = new Firebase("https://airpair-chat.firebaseio.com/chat/#{firebaseSlug}")
-
-      scope.messages = $firebase(ref.limit(15))
+    if not session.isSignedIn()
+      $(element).find('#chat_entry').remove()
+    else
       scope.user = session.data.user.google._json
-
       scope.addMessage = ->
         scope.messages.$add
           from: scope.user.name
@@ -25,6 +21,11 @@ ChatDirective = ($firebase, session) ->
           timestamp: new Date
 
         scope.message = ""
+
+    # use slug to key the chat stream
+    firebaseSlug = scope.ngModel.slug.replace(".", "")
+    ref = new Firebase("https://airpair-chat.firebaseio.com/chat/#{firebaseSlug}")
+    scope.messages = $firebase(ref.limit(15)).$asArray()
 
 angular
   .module('ngAirPair')
