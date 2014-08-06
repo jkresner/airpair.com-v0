@@ -71,15 +71,16 @@ describe "REST api orders", ->
         }
 
         async.parallel [
-          (cb) => Factory.create 'order', { userId: jkId, lineItems: [lineItem]}, cb
-          (cb) => Factory.create 'order', { userId: jkId, lineItems: [lineItem, _.extend({}, lineItem, {unitPrice: 50, total: 50})]}, cb
-          (cb) => Factory.create 'order', { userId: jkId, lineItems: [_.extend({}, lineItem, {type: "private", unitPrice: 150, total: 150})]}, cb
-        ], =>
+          (cb) => Factory.create 'order', { userId: jkId, lineItems: [lineItem]}, (order) => cb(null, order)
+          (cb) => Factory.create 'order', { userId: jkId, lineItems: [lineItem, _.extend({}, lineItem, {unitPrice: 50, total: 50})]}, (order) => cb(null, order)
+          (cb) => Factory.create 'order', { userId: jkId, lineItems: [_.extend({}, lineItem, {type: "private", unitPrice: 150, total: 150})]}, (order) => cb(null, order)
+        ], (error, orders) =>
           http(app).get("/api/orders/credit")
             .expect(200)
             .end (err, res) =>
               body = res.body
-              expect(body.credit).to.eq -110
+              requestId = orders[0].requestId
+              expect(body.credits[requestId]).to.eq -110
               done()
 
   describe "GET /api/orders/expert/:expertId", ->
