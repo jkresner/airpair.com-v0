@@ -44,31 +44,12 @@ style.
 
 </head>
 <body>
-
 .container
   a(href="/airconf2014",target="_self")
     img.logo(src="/images/landing/airconf/full-logo.png")
   h1 AirConf Admin
-  ul.attendees
-    - each workshop in workshops
-      li
-        span
-          = workshop.attendees.length
-        = workshop.title
-        &nbsp;|&nbsp;
-        = workshop.slug
-        ul.slug
-          li
-            label Add Attendee
-            input.user-email
-            a.add-attendee(ng-href="/api/workshops/#{workshop.slug}/attendees") Register Attendee
-          - each attendee in workshop.attendees
-            li
-                span= attendee.userId.google._json.email
 
 .container
-  img(src="/images/landing/airconf/full-logo.png")
-  h1 AirConf Promo Console
   .row
     .col-md-8
       div
