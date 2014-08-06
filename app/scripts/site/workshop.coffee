@@ -17,11 +17,10 @@ Config = ($routeProvider, $locationProvider, RestangularProvider) ->
   RestangularProvider.setRestangularFields(id: "_id")
 
 angular
-  .module('ngAirPair', ['ngRoute', 'firebase', 'restangular', 'ngSanitize','ngAnimate','cgBusy'])
+  .module('ngAirPair', ['ngRoute', 'firebase', 'restangular', 'ngSanitize','ngAnimate','cgBusy','angularMoment'])
   .config(['$routeProvider', '$locationProvider', 'RestangularProvider', Config])
   .run(['$rootScope', ($rootScope) ->
     $rootScope._ = window._
-    $rootScope.moment = window.moment
   ])
 
 require("./services/session")

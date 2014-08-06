@@ -15,4 +15,5 @@ h3.m-t-2(ng-bind="title")
         span(ng-bind-html="message.content | linky:'_blank'")
         .timestamp
           strong {{message.from}} &nbsp;
-          {{ moment(message.timestamp).fromNow() }}
+          span(ng-if="message.sent_at" am-time-ago="message.sent_at")
+          span(ng-if="message.timestamp" am-time-ago="message.timestamp")

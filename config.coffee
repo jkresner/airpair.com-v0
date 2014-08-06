@@ -46,8 +46,10 @@ exports.config =
         # Files in `vendor` directories are compiled before other files
         # even if they aren't specified in order.
         before: [
+          'vendor/scripts/moment.js'
           'vendor/scripts/angular.js'
           'vendor/scripts/angular-busy.js'
+          'vendor/scripts/angular-moment.js'
           'vendor/scripts/angular-tagger.js'
           'vendor/scripts/console-helper.js'
           'vendor/scripts/jquery.js'
