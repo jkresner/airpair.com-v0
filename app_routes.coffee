@@ -10,6 +10,7 @@ module.exports = (app) ->
   require('./lib/auth/base')(app)
 
   require('./app_landing')(app, render)
+  require('./app_redirects')(app, render)
 
   renderHome = (req, r, n) ->
     if req.isAuthenticated() then n()
@@ -35,8 +36,6 @@ module.exports = (app) ->
   app.get '/templates/workshop/detail', render 'templates/workshop/detail'
   app.get '/templates/workshop/keynote', render 'templates/workshop/keynote'
   app.get '/templates/workshop/schedule', authd, render 'templates/workshop/schedule'
-
-  app.get '/workshops', (req, r) -> r.redirect req.url.replace('/workshops','/airconf2014')
 
   # pages
   app.get '/login', render 'login'

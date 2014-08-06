@@ -45,19 +45,24 @@ class Mailman
     options.to = roles.getAdminEmails()
     @sendEmail options, callback
 
-  sendAutoNotification: (expert, request) ->
-    console.log 'sending an automatched expert request!!!'
+  sendEmailToPipeliners: (options, callback) ->
+    options.to = roles.getPipelinerEmails()
+    @sendEmail options, callback
 
   admNewRequest: (request) ->
     fullName = ''  #temporary until fix bookme flow
     if request.company? then fullName = request.company.contacts[0].fullName
-    @sendEmailToAdmins
+    @sendEmailToPipeliners
       templateName: "admNewRequest"
       subject: "New request: #{fullName} #{request.budget}$"
       request: request
       tags: request.tags.map((o) -> o.short).join(' ')
       (e) -> if e then $log 'admNewRequest error', e
 
+
+  # obie can we name this so it's not confused with notifications to other types of users?
+  sendAutoNotification: (expert, request) ->
+    console.log 'sending an automatched expert request!!!'
 
   ###
     the options object should have these properties:

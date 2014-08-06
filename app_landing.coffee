@@ -33,10 +33,6 @@ module.exports = (app, render) ->
 
   app.get '/airconf2014/keynote/:id', render 'landing/airconfkeynote', ['params.id']
 
-  # link from neo4j website
-  app.get '/airconf/spreadsheets-graph-databases', (req, r) -> r.redirect '/neo4j/workshops/spreadsheets-graph-databases'
-  app.get '/solr/workshops/discovering-your-inned-search-engine', (req, r) -> r.redirect '/solr/workshops/discovering-your-inner-search-engine'
-
   app.get '/railsconf2014', render 'landing/railsconf'
   app.get '/rails/consulting', render 'landing/railsconsulting'
   app.get '/googleio-specials', render 'landing/googleio'
