@@ -18,7 +18,7 @@
 
   table.table.table-hover
     tr.row-divide(ng-repeat-start="week in weeks")
-      td.text-bold {{week.str}}
+      td.text-bold(style="width:13%") {{week.str}}
       td.text-muted Sat
       td.text-muted Sun
       td.text-muted Mon
@@ -29,7 +29,7 @@
       td.text-muted Total
 
     tr
-      td.text-muted Traffic
+      td.text-muted Views
       td.text-success {{week.days[0].summary.numViews}}
       td.text-success {{week.days[1].summary.numViews}}
       td.text-success {{week.days[2].summary.numViews}}
@@ -39,7 +39,7 @@
       td.text-success {{week.days[6].summary.numViews}}
       td.text-success.text-bold {{week.data.summary.numViews}}
     tr
-      td
+      td.text-muted.text-invisible Requests/Views
       td.text-orange {{week.days[0].summary.conViewsToRequests*100 | number: 2}}%
       td.text-orange {{week.days[1].summary.conViewsToRequests*100 | number: 2}}%
       td.text-orange {{week.days[2].summary.conViewsToRequests*100 | number: 2}}%
@@ -60,7 +60,7 @@
       td.text-success.text-bold {{week.data.summary.numRequests}}
     
     tr
-      td
+      td.text-muted.text-invisible Orders/Requests
       td.text-orange {{week.days[0].summary.conOrdersToRequests*100 | number: 0}}%
       td.text-orange {{week.days[1].summary.conOrdersToRequests*100 | number: 0}}%
       td.text-orange {{week.days[2].summary.conOrdersToRequests*100 | number: 0}}%

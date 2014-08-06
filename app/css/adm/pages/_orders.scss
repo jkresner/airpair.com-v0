@@ -220,6 +220,17 @@
 
 
 
+.text-invisible {
+  opacity: 0;
+  -webkit-transition: opacity .15s linear;
+          transition: opacity .15s linear;
+  &:hover {
+    opacity: 1;
+  }
+}
+
+
+
 .row-divide {
   td {
     border-top: 1px solid #999 !important;
