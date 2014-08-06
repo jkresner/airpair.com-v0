@@ -956,14 +956,37 @@ angular.module('AirpairAdmin').factory('apData', ['$moment', '$filter', '$http',
       mixpanelWeeks: (weeks, start, end, searchString, callback) ->
 
         dayTotal = (dayStr, data) ->
+
           numViews = 0
-          _.each data.values, (campaign, campaignName) ->
-            if searchString and campaignName.indexOf(searchString) == -1 then return
-            # if searchString then console.log "search match", campaignName, searchString
-            _.each campaign, (count, date) ->
-              if date is dayStr
-                numViews += count
-          return numViews
+
+          if not searchString
+            _.each data.campaign.values, (campaign, campaignName) ->
+              numViews += campaign[dayStr] or 0
+            return numViews
+
+
+          else
+            matched =
+              campaign: []
+              channel: []
+
+            _.each data.campaign.values, (campaignDays, campaignName) ->
+              if campaignName.indexOf(searchString) > -1
+                matched.campaign.push campaignName
+            _.each data.channel.values, (channel, channelName) ->
+              if channelName.indexOf(searchString) > -1
+                matched.channel.push channelName
+
+            type = if matched.campaign.length > matched.channel.length then 'campaign' else 'channel'
+            console.info "matched #{type}", matched
+            matches = matched[type]
+            for matchedName in matches
+              views = data[type].values[matchedName][dayStr]
+              numViews += views or 0
+
+            return numViews
+
+
 
         processData = (data) ->
           for week in weeks
@@ -983,9 +1006,22 @@ angular.module('AirpairAdmin').factory('apData', ['$moment', '$filter', '$http',
           to_date: end.format('YYYY-MM-DD')
           event: "view"
           on: 'properties["utm_campaign"]'
-        , (res) ->
-          console.log "mixpanel", res
-          processData res.data
+        , (campaignData) ->
+
+          console.log "mixpanel campaigns", campaignData
+
+          $mixpanel.api.segmentation
+            from_date: start.format('YYYY-MM-DD')
+            to_date: end.format('YYYY-MM-DD')
+            event: "view"
+            on: 'properties["utm_source"]'
+          , (channelData) ->
+            console.log "mixpanel channels", channelData
+
+            processData {
+              campaign: campaignData.data
+              channel: channelData.data
+            }
 
 
 
