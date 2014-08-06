@@ -9,6 +9,7 @@ class LandingPageApi extends require('./_api')
     app.post "/api/#{route}/airconf/order", @ap, @loggedIn, @airconfCreateOrder
     app.post "/api/#{route}/airconf/promo", @ap, @loggedIn, @airconfPromoLookup
     app.post "/api/#{route}/mailchimp/subscribe", @ap, @mailchimpSubscribe
+    app.post "/api/#{route}/mailchimp/retarget", @ap, @mailchimpRetarget
     app.post "/api/#{route}/purchase", @ap, @createCustomer # generic, client decides $$
 
   airconfCreateOrder: =>
@@ -50,6 +51,9 @@ class LandingPageApi extends require('./_api')
 
   mailchimpSubscribe: =>
     @Chimp.subscribe config.mailchimp.airconfListId, @data.email, { Paid: 'No' }, @cbSend
+
+  mailchimpRetarget: =>
+    @Chimp.subscribe "1945d147e6", @data.email, {}, @cbSend
 
 
 module.exports = (app) -> new LandingPageApi app, 'landing'

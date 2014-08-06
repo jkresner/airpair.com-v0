@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="/css/ap.css">
     <link rel='stylesheet' type='text/css' href='//fonts.googleapis.com/css?family=Open+Sans:400,300,600' >
   </head>
-  <body class="page-wide-only">
+  <body class="page-wide-only page-retarget">
 
     <div class="container">
             <div class="navbar-brand-img">
@@ -402,17 +402,13 @@
 
       submitEmail =  function($form) {
         email = $form.find('.input-email').val()
+
         if (validateEmail(email)) {
           $.ajax({
             type: "POST",
-            url: "https://us7.api.mailchimp.com/2.0/lists/subscribe.json",
+            url: "/api/landing/mailchimp/retarget",
             data: {
-              "apikey": "b888ee9284cd0d57f425867c0bde3fe0-us7",
-              "id": "1945d147e6",
-              "email": {
-                "email": email
-              },
-              "double_optin": false
+              email: email
             },
             crossDomain: true,
             success: onSuccess($form),
@@ -420,6 +416,7 @@
               console.error(status, err);
             }
           });
+
         } else {
           $form.find(".signup-email .alert").slideDown()
           console.warn("not and email '"+email+"'" );
