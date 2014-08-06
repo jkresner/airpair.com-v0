@@ -7,9 +7,17 @@ adminIds = [
   '105976516028706632944' #OF gravatar: c5f6a1b002347ea69a0cba7e4c0da508
   '116906489186772028226' #DU gravatar: e9b01bb34761b9927cf29753e8927010
   '103040640713677687595' #EM gravatar:
-  '109891111190378092113' #JM gravatar:
+  '104255454895680152796' #JM gravatar:
 ]
 
+pipelinerIds = [
+  '114831291174925522786' #TEAM
+  '117132380360243205600' #JK gravatar: 19183084115c4a79d34cdc3110adef37
+  '105314633561185226973' #IL gravatar: 7345f338d4e79f7d22dac6403beb300c
+  '110496794584456738170' #PG gravatar: 2b22b4cd4f65cbef1331cf07e82e6b27
+  '105976516028706632944' #OF gravatar: c5f6a1b002347ea69a0cba7e4c0da508
+  '116906489186772028226' #DU gravatar: e9b01bb34761b9927cf29753e8927010
+]
 
 matchmakerIds = [
   '101062250088370367878' #SP
@@ -25,6 +33,7 @@ initials['110496794584456738170'] = 'pg'
 initials['105976516028706632944'] = 'of'
 initials['116906489186772028226'] = 'du'
 initials['103040640713677687595'] = 'em'
+initials['104255454895680152796'] = 'jm'
 initials['108148963133977375684'] = 'tb'
 initials['101062250088370367878'] = 'sp' # (Steve Purves)
 initials['114831291174925522786'] = 'support' # (Saidur Hossain)
@@ -61,6 +70,9 @@ module.exports =
       if _.idsEqual s.expert.userId, user._id
         return true
     false
+
+  getPipelinerEmails: ->
+    _.map pipelinerIds, (id) -> "#{initials[id]}@airpair.com"
 
   getAdminEmails: ->
     _.map adminIds, (id) -> "#{initials[id]}@airpair.com"
