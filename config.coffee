@@ -49,7 +49,7 @@ exports.config =
           'vendor/scripts/moment.js'
           'vendor/scripts/angular.js'
           'vendor/scripts/angular-busy.js'
-          'vendor/scripts/angular-moment.js'
+          'vendor/scripts/angular-m-oment.js'
           'vendor/scripts/angular-tagger.js'
           'vendor/scripts/console-helper.js'
           'vendor/scripts/jquery.js'
