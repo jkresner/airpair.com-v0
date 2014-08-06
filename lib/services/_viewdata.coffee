@@ -103,7 +103,7 @@ module.exports = class ViewDataService
         cb null, -> { workshop, registration, workshopRequestId : OrdersQuery.airconf.requestId }
 
   airconfkeynote: (id, cb) ->
-    workshop = Data.keynotes.wk1
+    workshop = _.find _.values(Data.keynotes), (k) -> k.slug == id
     new OrdersSvc(@usr).getAirConfRegisration (e, registration) =>
       cb null, -> { workshop, registration, workshopRequestId : OrdersQuery.airconf.requestId }
 
