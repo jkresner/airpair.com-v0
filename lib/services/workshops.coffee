@@ -40,11 +40,9 @@ module.exports = class WorkshopsService extends DomainService
       callback(err, workshops)
 
   addAttendee: (slug, userId, requestId, callback) ->
-    if userId?
-      email = ""
-    else
-      userId = @usr._id
-      email = @usr.google._json.email
+    isAdminRequest = userId?
+    userId ?= @usr._id
+    email = @usr.google._json.email
     query = slug: slug
     @searchOne query, {}, (err, workshop) =>
       callback(err, {}) unless workshop?
@@ -62,8 +60,11 @@ module.exports = class WorkshopsService extends DomainService
           workshop.attendees ?= []
           workshop.attendees.push(attendee)
           @update workshop._id, workshop, (workshopErr, workshop) =>
-            @emailTemplatesService.send requestId, {workshop, to: email}, (err, template) =>
+            if isAdminRequest
               callback(workshopErr, workshop)
+            else
+              @emailTemplatesService.send requestId, {workshop, to: email}, (err, template) =>
+                callback(workshopErr, workshop)
         else
           callback(err, {success: false, message: "Order not found"})
 
