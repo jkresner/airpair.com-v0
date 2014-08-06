@@ -99,6 +99,7 @@ module.exports = class ViewDataService
 
   workshop: (id, cb) ->
     new WorkshopsService(@usr).getWorkshopBySlug id, (error, workshop) =>
+      if !workshop? then return cb {status: 404}, -> {}
       new OrdersSvc(@usr).getAirConfRegisration (e, registration) =>
         cb null, -> { workshop, registration, workshopRequestId : OrdersQuery.airconf.requestId }
 

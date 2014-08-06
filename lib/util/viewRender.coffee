@@ -38,7 +38,10 @@ module.exports =
         args.push (e, getViewData) =>
           if e
             if vdSvc.logging then $log 'viewData', fnName, 'e', e
-            next e
+            if e.status? && e.status == 404
+              resp.render('404.html', { status: 404, url: req.url })
+            else
+              next e
           else
             data =
               isProd: config.isProd.toString()
