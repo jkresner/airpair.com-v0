@@ -1,17 +1,18 @@
 h3.m-t-2(ng-bind="title")
-#chat
-  div.row
+#chat(cg-busy="messages.$loaded()")
+  .row#chat_entry
     form.form-inline(ng-submit='addMessage()')
       .col-xs-1.pic
         img.img-responsive(ng-src="{{user.picture}}")
       .col-xs-11.message
-        input(type='text', ng-model='message', placeholder='Hit enter to submit message...')
-  hr
-  div.row.scrollable(ng-cloak='ng-cloak', ng-repeat="message in messages | orderByPriority | reverse")
-    .col-xs-1.pic
-      img.img-responsive(ng-src="{{message.pic}}")
-    .col-xs-11.message
-      span(ng-bind-html="message.content | linky:'_blank'")
-      .timestamp
-        strong {{message.from}} &nbsp;
-        {{ moment(message.timestamp).fromNow() }}
+        input(type='text' ng-model='message' placeholder='Hit enter to submit message...')
+
+  #messages
+    .row(ng-repeat="message in messages | reverse")
+      .col-xs-1.pic
+        img.img-responsive(ng-src="{{message.pic}}")
+      .col-xs-11.message
+        span(ng-bind-html="message.content | linky:'_blank'")
+        .timestamp
+          strong {{message.from}} &nbsp;
+          {{ moment(message.timestamp).fromNow() }}

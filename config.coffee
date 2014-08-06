@@ -47,6 +47,7 @@ exports.config =
         # even if they aren't specified in order.
         before: [
           'vendor/scripts/angular.js'
+          'vendor/scripts/angular-busy.js'
           'vendor/scripts/angular-tagger.js'
           'vendor/scripts/console-helper.js'
           'vendor/scripts/jquery.js'
@@ -63,7 +64,7 @@ exports.config =
     stylesheets:
       defaultExtension: 'scss'
       joinTo:
-        'css/ap.css': /(css\/ap\/)/
+        'css/ap.css': /(css\/ap\/|css\/shared)/
         'css/adm.css': /(css\/adm\/|css\/shared)/
         'css/ap-old.css': /(css\/ap-old)/
         'css/adm-old.css': /(css\/adm-old|vendor\/css\/shared)/
@@ -74,6 +75,7 @@ exports.config =
           'vendor/css/adm-bb/bootstrap.css'
           'vendor/css/adm-bb/bootstrap-responsive.css'
           'vendor/css/ap/epik.css'
+          'vendor/css/shared/angular-busy.css'
           'vendor/css/shared/angular-tagger.css'
           'vendor/css/shared/jquery.datepicker.css'
           'vendor/css/shared/jquery.timepicker.css'
