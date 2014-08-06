@@ -17,11 +17,14 @@ module.exports =
     (req, resp, next) ->
 
       renderTemplate = (name, data={}) ->
-        resp.render "#{name}.html", data, (err, html) ->
-          if err?
-            resp.render "#{fileName}.jade", data
-          else
-            resp.end(html)
+        if req.method == "HEAD"
+          resp.end("")
+        else
+          resp.render "#{name}.html", data, (err, html) ->
+            if err?
+              resp.render "#{fileName}.jade", data
+            else
+              resp.end(html)
 
 
       vdSvc = new ViewDataSvc req.user
