@@ -11,7 +11,7 @@ describe "RequestsService", ->
     request = data.requests[3]
     delete request._id
 
-    sendMailMock = sinon.stub svc.mailman, 'sendEmailToAdmins', ->
+    sendMailMock = sinon.stub svc.mailman, 'sendEmailToPipeliners', ->
 
     callback = (e) ->
       if e then return done e
