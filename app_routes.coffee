@@ -58,6 +58,7 @@ module.exports = (app) ->
   app.get '/adm/ang/orders*', authd, adm, render 'adm/ordersang'
   app.get '/adm/companys*', authd, adm, render 'adm/companys'
   app.get '/adm/experts*', authd, adm, render 'adm/experts'
+  app.get '/adm/emailtemplates', authd, adm, render 'adm/emailtemplates'
   app.get '/adm/pipeline*', authd, adm, render 'adm/pipeline'
 
   app.get '/schedule/:id/*', authd, mm, render 'schedule', ['params.id']
@@ -79,6 +80,7 @@ module.exports = (app) ->
   require('./lib/api/videos')(app)
   require('./lib/api/chat')(app)
   require('./lib/api/landingPage')(app)
+  require('./lib/api/emailTemplates')(app)
 
   app.get '/paypal/success/:id', authd, render 'payment/paypalSuccess', ['params.id']
   app.get '/paypal/cancel/:id', authd, render 'payment/paypalCancel', ['params.id']

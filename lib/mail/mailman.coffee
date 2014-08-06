@@ -12,21 +12,34 @@ renderHandlebars = (data, templatePath, callback) ->
     rendered = templateFn data
     callback null, rendered
 
+renderDynamicHandlebars = (data, templateData, callback) ->
+  templateFn = handlebars.compile templateData
+  rendered = templateFn data
+  callback null, rendered
+
 class Mailman
 
   renderEmail: (d, templateName, callback) ->
-    htmlPath = "#{__dirname}/templates/#{templateName}.html.hbs"
-    txtPath = "#{__dirname}/templates/#{templateName}.txt.hbs"
+    if templateName?
+      htmlPath = "#{__dirname}/templates/#{templateName}.html.hbs"
+      txtPath = "#{__dirname}/templates/#{templateName}.txt.hbs"
+      async.parallel {
+        Html: async.apply renderHandlebars, d, htmlPath
+        Text: async.apply renderHandlebars, d, txtPath
+      }, (error, results) -> callback(error, results)
+    else
+      @renderDynamicEmail(d, callback)
+
+  renderDynamicEmail: (options, callback) ->
     async.parallel {
-      Html: async.apply renderHandlebars, d, htmlPath
-      Text: async.apply renderHandlebars, d, txtPath
+      Html: async.apply renderDynamicHandlebars, options, options.html
+      Text: async.apply renderDynamicHandlebars, options, options.text
     }, (error, results) -> callback(error, results)
 
   sendEmail: (options, callback) =>
-    @renderEmail(options, options.templateName, (e, rendered) ->
+    @renderEmail options, options.templateName, (e, rendered) ->
       rendered.Subject = options.subject
       ses.send options.to, rendered, callback
-    )
 
   sendEmailToAdmins: (options, callback) ->
     options.to = roles.getAdminEmails()

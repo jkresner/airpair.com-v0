@@ -10,6 +10,7 @@ SettingsSvc = require '../services/settings'
 stripePK = config.payment.stripe.publishedKey
 TagsSvc = require '../services/tags'
 WorkshopsService = require '../services/workshops'
+EmailTemplatesService = require '../services/emailTemplates'
 
 module.exports = class ViewDataService
 
@@ -102,6 +103,10 @@ module.exports = class ViewDataService
       if !workshop? then return cb {status: 404}, -> {}
       new OrdersSvc(@usr).getAirConfRegisration (e, registration) =>
         cb null, -> { workshop, registration, workshopRequestId : OrdersQuery.airconf.requestId }
+
+  emailtemplates: (cb) ->
+    new EmailTemplatesService(@usr).getAll (error, templates) =>
+      cb null, -> { templates }
 
   airconfkeynote: (id, cb) ->
     workshop = _.find _.values(Data.keynotes), (k) -> k.slug == id

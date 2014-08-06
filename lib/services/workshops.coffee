@@ -1,5 +1,6 @@
 DomainService = require './_svc'
 OrdersService = require './../services/orders'
+EmailTemplatesService = require './../services/emailTemplates'
 
 allWorkshops = {}
 
@@ -11,6 +12,7 @@ module.exports = class WorkshopsService extends DomainService
 
   constructor: (user) ->
     @ordersService = new OrdersService user
+    @emailTemplatesService = new EmailTemplatesService user
     super user
 
   getAllCached: (callback) =>
@@ -38,7 +40,9 @@ module.exports = class WorkshopsService extends DomainService
       callback(err, workshops)
 
   addAttendee: (slug, userId, requestId, callback) ->
-    userId = @usr._id unless userId?
+    isAdminRequest = userId?
+    userId ?= @usr._id
+    email = @usr.google._json.email
     query = slug: slug
     @searchOne query, {}, (err, workshop) =>
       callback(err, {}) unless workshop?
@@ -53,10 +57,14 @@ module.exports = class WorkshopsService extends DomainService
           attendee =
             userId: userId
             orderId: order._id
-          console.log workshop
           workshop.attendees ?= []
           workshop.attendees.push(attendee)
-          @update(workshop._id, workshop, callback)
+          @update workshop._id, workshop, (workshopErr, workshop) =>
+            if isAdminRequest
+              callback(workshopErr, workshop)
+            else
+              @emailTemplatesService.send requestId, {workshop, to: email}, (err, template) =>
+                callback(workshopErr, workshop)
         else
           callback(err, {success: false, message: "Order not found"})
 
