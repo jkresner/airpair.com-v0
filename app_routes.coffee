@@ -28,6 +28,7 @@ module.exports = (app) ->
   app.get '/workshops/me', authd, render 'workshop', ['params.id']
   app.get '/:tag/workshops/:id', render 'workshop', ['params.id']
 
+  # TODO add wildcards
   app.get '/templates/admin/automatch', authd, render 'templates/admin/automatch'
   app.get '/templates/experts/me', authd, render 'templates/experts/me'
   app.get '/adm/templates/orders_daily', authd, render 'adm/templates/orders_daily'
