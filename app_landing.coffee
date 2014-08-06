@@ -35,6 +35,7 @@ module.exports = (app, render) ->
 
   # link from neo4j website
   app.get '/airconf/spreadsheets-graph-databases', (req, r) -> r.redirect '/neo4j/workshops/spreadsheets-graph-databases'
+  app.get 'solr/workshops/discovering-your-inned-search-engine', app.get (req, r) -> r.redirect 'discovering-your-inner-search-engine'
 
   app.get '/railsconf2014', render 'landing/railsconf'
   app.get '/rails/consulting', render 'landing/railsconsulting'
