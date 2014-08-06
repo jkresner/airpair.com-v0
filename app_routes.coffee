@@ -30,6 +30,7 @@ module.exports = (app) ->
 
   # TODO add wildcards
   app.get '/templates/admin/automatch', authd, render 'templates/admin/automatch'
+  app.get '/templates/shared/chat_template', authd, render 'templates/shared/chat_template'
   app.get '/templates/experts/me', authd, render 'templates/experts/me'
   app.get '/adm/templates/orders_daily', authd, render 'adm/templates/orders_daily'
   app.get '/templates/workshop/detail', render 'templates/workshop/detail'
