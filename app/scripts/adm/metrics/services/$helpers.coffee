@@ -36,8 +36,20 @@ angular.module('AirpairAdmin').factory('$helpers', () ->
           if str.indexOf(searchString) > -1
             filteredList.push item
             break
-
       return filteredList
 
+
+    # Create a list of returning customers in orders.
+    calcRepeatCustomers: (data, callback) ->
+      customers = {}
+      for order in data
+        if not customers[order.userId]
+          customers[order.userId] =
+            orderDates: []
+        customers[order.userId].orderDates.push order.utc
+      # Delete non returning customers
+      _.each customers, (cust, id) -> if cust.orderDates.length < 2 then delete customers[id]
+      if callback then callback(customers)
+      return customers
 
 )

@@ -12,6 +12,14 @@ ObjectId2Date = require 'lib/mix/objectId2Date'
 angular.module('AirpairAdmin').factory('apData', ['$moment', '$filter', '$http', '$helpers', '$mixpanel', ($moment, $filter, $http, $helpers, $mixpanel) ->
 
   window.apData =
+
+
+
+
+
+    # ORDERS
+    #----------------------------------------------
+
     orders:
       data: window.pageData.orders
       get: () ->
@@ -143,22 +151,23 @@ angular.module('AirpairAdmin').factory('apData', ['$moment', '$filter', '$http',
 
       # Create a list of returning customers in orders.
       calcRepeatCustomers: (callback) ->
-        return @repeatCustomers if @repeatCustomers
-        console.time("calcRepeatCustomers")
-        customers = {}
+        if not @repeatCustomers
+          console.time("calcRepeatCustomers")
+          customers = {}
 
-        for order in @data
-          if not customers[order.userId]
-            customers[order.userId] =
-              orderDates: []
-          customers[order.userId].orderDates.push order.utc
+          for order in @data
+            if not customers[order.userId]
+              customers[order.userId] =
+                orderDates: []
+            customers[order.userId].orderDates.push order.utc
 
-        # Save for later
-        @customers = _.clone customers
-        _.each customers, (cust, id) -> if cust.orderDates.length < 2 then delete customers[id]
-        console.timeEnd("calcRepeatCustomers")
-        @repeatCustomers = customers
-        if callback then callback(customers)
+          # Save for later
+          @customers = _.clone customers
+          _.each customers, (cust, id) -> if cust.orderDates.length < 2 then delete customers[id]
+          console.timeEnd("calcRepeatCustomers")
+          @repeatCustomers = customers
+
+        if callback then callback(@repeatCustomers)
         return @repeatCustomers
 
 
@@ -864,9 +873,11 @@ angular.module('AirpairAdmin').factory('apData', ['$moment', '$filter', '$http',
 
 
 
-    # REQUESTS
-    # Get all requests to client and then filter
 
+    # REQUESTS
+    #
+    # Get all requests to client and then filter
+    #----------------------------------------------
     requests:
 
       load: (start, end, callback) ->
@@ -888,34 +899,46 @@ angular.module('AirpairAdmin').factory('apData', ['$moment', '$filter', '$http',
           callback()
 
 
-      filter: (start, end, searchString, callback) ->
-
+      filter: (start, end, searchString, newOnly, callback) ->
         filteredRequests = []
-
-        for val, i in @dataRequests
-          date = moment ObjectId2Date(val._id)
+        for item in @dataRequests
+          date = moment ObjectId2Date(item._id)
           if date.isAfter(start) and date.isBefore(end)
-            filteredRequests.push val
-
+            if newOnly
+              if not item.isRepeat then filteredRequests.push item
+            else
+              filteredRequests.push item
         if searchString? and searchString isnt ''
           filteredRequests = $helpers.search filteredRequests, searchString
-
-        filtered =  {
+        filtered =
           requests: filteredRequests
-        }
-
         if callback? then callback filtered
         return filtered
 
 
       isWithinDate: (item, start, end) ->
-
         if item.utc?
           date = moment(item.utc)
         else
           date = moment ObjectId2Date(item._id)
-
         return date.isAfter(start) and date.isBefore(end)
+
+
+      getRepeats: (callback) ->
+        if not @repeatCustomers
+          @repeatCustomers = $helpers.calcRepeatCustomers @dataRequests
+        if callback then callback(@repeatCustomers)
+        return @repeatCustomers
+
+
+      # Add an isRepeat val on each order if the customer is a repeat
+      markRepeats: ->
+        if @repeatMarked then return @dataRequests
+        for request in @dataRequests
+          if @repeatCustomers[request.userId]
+            request.isRepeat = true
+        @repeatMarked = true
+        return @data
 
 
 
@@ -968,13 +991,12 @@ angular.module('AirpairAdmin').factory('apData', ['$moment', '$filter', '$http',
 
 
       # Get Daily Metrics
-
       daily: (start, end = moment(), searchString, newOnly, callback) ->
 
         # Method to Calc week summary
         calcWeek = (week) ->
           week.data = apData.orders.filterByTags week.start, week.end, searchString, newOnly
-          _.extend week.data, apData.requests.filter week.start, week.end, searchString
+          _.extend week.data, apData.requests.filter week.start, week.end, searchString, newOnly
 
           _.extend week.data.summary,
             numOrders: week.data.orders.length
@@ -1019,8 +1041,8 @@ angular.module('AirpairAdmin').factory('apData', ['$moment', '$filter', '$http',
         # Start crunching ---
         apData.requests.loadAll =>
           if newOnly
-            apData.orders.calcRepeatCustomers ->
-              apData.orders.markRepeatOrders()
+            apData.orders.calcRepeatCustomers -> apData.orders.markRepeatOrders()
+            apData.requests.getRepeats -> apData.requests.markRepeats()
           # Calc summary for week
           for week in weeks
             calcWeek week
