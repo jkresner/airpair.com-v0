@@ -21,12 +21,15 @@ body#airconfreg {
     padding:5px;
   }
 
-
   #paybutton:hover {
     font-weight: bold;
   }
 
-  .btn-orange:hover { color:white; }
+  a.btn-orange {
+    color:white;
+    background:#ce5424;
+    &:hover { font-weight:600; }
+  }
 
   .hero { background:url('/images/landing/airconf/bg.jpg');height:540px;margin-top:0!important;text-align:center }
   .hero img { margin:40px 0 40px 0;z-index:2;position:relative;  }
