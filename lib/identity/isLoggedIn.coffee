@@ -19,6 +19,8 @@ module.exports = (options) ->
       if options.isApi
         return res.send 403, {}
       else
+        if req.method == "HEAD"
+          return res.end("")
         return res.redirect url
 
     next()
