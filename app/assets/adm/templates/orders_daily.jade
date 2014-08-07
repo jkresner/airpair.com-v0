@@ -102,14 +102,14 @@
     
     tr
       td.text-muted.text-invisible Orders/Requests
-      td.text-orange {{week.days[0].summary.conOrdersToRequests*100 | number: 0}}%
-      td.text-orange {{week.days[1].summary.conOrdersToRequests*100 | number: 0}}%
-      td.text-orange {{week.days[2].summary.conOrdersToRequests*100 | number: 0}}%
-      td.text-orange {{week.days[3].summary.conOrdersToRequests*100 | number: 0}}%
-      td.text-orange {{week.days[4].summary.conOrdersToRequests*100 | number: 0}}%
-      td.text-orange {{week.days[5].summary.conOrdersToRequests*100 | number: 0}}%
-      td.text-orange {{week.days[6].summary.conOrdersToRequests*100 | number: 0}}%
-      td.text-orange.text-bold {{week.data.summary.conOrdersToRequests*100 | number: 0}}%
+      td.text-orange {{week.days[0].summary.conRequestsToOrders*100 | number: 0}}%
+      td.text-orange {{week.days[1].summary.conRequestsToOrders*100 | number: 0}}%
+      td.text-orange {{week.days[2].summary.conRequestsToOrders*100 | number: 0}}%
+      td.text-orange {{week.days[3].summary.conRequestsToOrders*100 | number: 0}}%
+      td.text-orange {{week.days[4].summary.conRequestsToOrders*100 | number: 0}}%
+      td.text-orange {{week.days[5].summary.conRequestsToOrders*100 | number: 0}}%
+      td.text-orange {{week.days[6].summary.conRequestsToOrders*100 | number: 0}}%
+      td.text-orange.text-bold {{week.data.summary.conRequestsToOrders*100 | number: 0}}%
     
     tr
       td.text-muted Orders
@@ -121,8 +121,17 @@
       td.text-success {{week.days[5].summary.numOrders}}
       td.text-success {{week.days[6].summary.numOrders}}
       td.text-success.text-bold {{week.data.summary.numOrders}}
-
-    tr(ng-repeat-end)
+    tr
+      td.text-muted.text-invisible Revenue/Orders
+      td.text-orange ${{week.days[0].summary.conOrdersToRevenue | number: 0}}
+      td.text-orange ${{week.days[1].summary.conOrdersToRevenue | number: 0}}
+      td.text-orange ${{week.days[2].summary.conOrdersToRevenue | number: 0}}
+      td.text-orange ${{week.days[3].summary.conOrdersToRevenue | number: 0}}
+      td.text-orange ${{week.days[4].summary.conOrdersToRevenue | number: 0}}
+      td.text-orange ${{week.days[5].summary.conOrdersToRevenue | number: 0}}
+      td.text-orange ${{week.days[6].summary.conOrdersToRevenue | number: 0}}
+      td.text-orange.text-bold ${{week.data.summary.conOrdersToRevenue | number: 0}}
+    tr
       td.text-muted Revenue
       td.text-success ${{week.days[0].summary.numRevenue}}
       td.text-success ${{week.days[1].summary.numRevenue}}
@@ -132,6 +141,16 @@
       td.text-success ${{week.days[5].summary.numRevenue}}
       td.text-success ${{week.days[6].summary.numRevenue}}
       td.text-success.text-bold ${{week.data.summary.numRevenue}}
+    tr(ng-repeat-end)
+      td.text-muted.text-invisible Impressions/Requests
+      td.text-orange {{week.days[0].summary.conImpsToReqs*100 | number: 2}}%
+      td.text-orange {{week.days[1].summary.conImpsToReqs*100 | number: 2}}%
+      td.text-orange {{week.days[2].summary.conImpsToReqs*100 | number: 2}}%
+      td.text-orange {{week.days[3].summary.conImpsToReqs*100 | number: 2}}%
+      td.text-orange {{week.days[4].summary.conImpsToReqs*100 | number: 2}}%
+      td.text-orange {{week.days[5].summary.conImpsToReqs*100 | number: 2}}%
+      td.text-orange {{week.days[6].summary.conImpsToReqs*100 | number: 2}}%
+      td.text-orange.text-bold {{week.data.summary.conImpsToReqs*100 | number: 2}}%
 
 
 

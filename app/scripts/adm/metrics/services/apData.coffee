@@ -1005,9 +1005,11 @@ angular.module('AirpairAdmin').factory('apData', ['$moment', '$filter', '$http',
               _.extend day.summary,
                 conImpsToClicks: $helpers.calcConversion day.summary.numImps, day.summary.numClicks
                 conClicksToViews: $helpers.calcConversion day.summary.numClicks, day.summary.numViews
+                conImpsToReqs: $helpers.calcConversion day.summary.numImps, day.summary.numRequests
             _.extend week.data.summary,
               conImpsToClicks: $helpers.calcConversion week.data.summary.numImps, week.data.summary.numClicks
               conClicksToViews: $helpers.calcConversion week.data.summary.numClicks, week.data.summary.numViews
+              conImpsToReqs: $helpers.calcConversion week.data.summary.numImps, week.data.summary.numRequests
 
 
           callback()
@@ -1099,7 +1101,8 @@ angular.module('AirpairAdmin').factory('apData', ['$moment', '$filter', '$http',
             numRevenue: week.data.summary.totalRevenue
 
           _.extend week.data.summary,
-            conOrdersToRequests: $helpers.calcConversion week.data.summary.numRequests, week.data.summary.numOrders
+            conRequestsToOrders: $helpers.calcConversion week.data.summary.numRequests, week.data.summary.numOrders
+            conOrdersToRevenue: $helpers.calcConversion week.data.summary.numOrders, week.data.summary.numRevenue
 
           week.days = $moment.daysOfWeek moment(week.start)
 
@@ -1127,7 +1130,8 @@ angular.module('AirpairAdmin').factory('apData', ['$moment', '$filter', '$http',
             numRevenue: day.ordersSummary.totalRevenue
 
           _.extend day.summary,
-            conOrdersToRequests: $helpers.calcConversion day.summary.numRequests, day.summary.numOrders
+            conRequestsToOrders: $helpers.calcConversion day.summary.numRequests, day.summary.numOrders
+            conOrdersToRevenue: $helpers.calcConversion day.summary.numOrders, day.summary.numRevenue
 
 
         weeks = $moment.getWeeksByFriday(start, end)
