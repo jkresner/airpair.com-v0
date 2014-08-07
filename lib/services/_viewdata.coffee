@@ -103,7 +103,8 @@ module.exports = class ViewDataService
     workshopsService.getWorkshopBySlug id, (error, workshop) =>
       if !workshop? then return cb {status: 404}, -> {}
       workshopsService.getAttendeesBySlug id, (error, attendees) =>
-        workshopsService.getListByAttendee @usr._id, (error, attendingWorkshops) =>
+        userId = if @usr? then @usr._id else ""
+        workshopsService.getListByAttendee userId, (error, attendingWorkshops) =>
           new OrdersSvc(@usr).getAirConfRegisration (e, registration) =>
             cb null, -> {
               template
