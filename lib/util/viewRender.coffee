@@ -21,6 +21,13 @@ module.exports =
     (req, resp, next) ->
       resp.sendfile "./public/#{fileName}.html"
 
+  renderTemplate: (req, res) ->
+    res.render "templates/#{req.params.scope}/#{req.params.template}.jade", (err, html) ->
+      if err? && /Failed to lookup view/.test(err.message)
+        res.render('404.html', { status: 404, url: req.url })
+      else
+        res.send(html)
+
   render: (fileName, propList=[]) ->
     (req, resp, next) ->
 

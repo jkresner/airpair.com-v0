@@ -2,7 +2,7 @@ authz            = require './lib/identity/authz'
 authd            = authz.LoggedIn()
 adm              = authz.Admin()
 mm               = authz.Matchmaker()
-{ file, render } = require './lib/util/viewRender'
+{ file, render, renderTemplate } = require './lib/util/viewRender'
 
 module.exports = (app) ->
 
@@ -29,14 +29,9 @@ module.exports = (app) ->
   app.get '/workshops/me', authd, render 'workshop', ['params.id']
   app.get '/:tag/workshops/:id', render 'workshop', ['params.id', {template: 'workshop/detail'}, {template: 'shared/chat_template'}]
 
-  # TODO add wildcards
+  # angular templates
   app.get '/adm/templates/orders_daily', authd, render 'adm/templates/orders_daily'
-  app.get '/templates/admin/automatch', authd, render 'templates/admin/automatch'
-  app.get '/templates/shared/chat_template', render 'templates/shared/chat_template'
-  app.get '/templates/experts/me', authd, render 'templates/experts/me'
-  app.get '/templates/workshop/detail', render 'templates/workshop/detail'
-  app.get '/templates/workshop/keynote', render 'templates/workshop/keynote'
-  app.get '/templates/workshop/schedule', authd, render 'templates/workshop/schedule'
+  app.get '/templates/:scope/:template', authd, renderTemplate
 
   # pages
   app.get '/login', render 'login'
