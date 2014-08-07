@@ -3,7 +3,10 @@ ViewDataSvc = require '../services/_viewdata'
 
 prerender = (resp, filename, callback) =>
   resp.render "templates/#{filename}.jade", (err, rendered) =>
-    callback(err, {name: filename, html: rendered})
+    if (err)
+      throw err
+    else
+      callback(err, {name: filename, html: rendered})
 
 getProp = (req, resp, path, callback) =>
   if _.isPlainObject(path) && path.template?
