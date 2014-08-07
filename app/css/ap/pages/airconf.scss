@@ -13,6 +13,10 @@ body#airconf {
     &:hover { font-weight:600; }
   }
 
+ .addthis_sharing_toolbox {
+   min-height: 36px;
+  }
+
   .hero { background:url('/images/landing/airconf/bg-2.jpg');height:480px;margin-top:0!important;text-align:center }
   .hero {
     .logo { margin:50px 0 30px 0 }
