@@ -1,0 +1,78 @@
+body#airconfreg {
+
+  .route { display:none }
+  .control-group { margin-bottom:10px; }
+  .control-group input { width:220px; }
+  input.mm { width:107px }
+  input.yyyy { width:107px }
+
+  h1 { text-align:center;margin:10px auto 20px auto; }
+  h2 { text-align:left;margin:40px auto }
+  h3 { color:#ce5424;font-size:20px;font-weight:bold }
+
+  #paybutton {
+    font-size:22px;
+    background:#ce5424;
+    margin:auto;
+    color:white;
+    height:50px;
+    font-weight:normal;
+    text-transform:none;
+    padding:5px;
+  }
+
+
+  #paybutton:hover {
+    font-weight: bold;
+  }
+
+  .btn-orange:hover { color:white; }
+
+  .hero { background:url('/images/landing/airconf/bg.jpg');height:540px;margin-top:0!important;text-align:center }
+  .hero img { margin:40px 0 40px 0;z-index:2;position:relative;  }
+
+  .whitebg { position:absolute;top:180px;left:25%;background:white;width:50%;padding:20px; }
+
+  .card-required { display:none }
+  .muted { color:gray;font-size:11px; }
+  .stripeLogo { width:100px;float:right }
+
+  .blackbg { background:black;height:800px }
+
+  .invalid { border: 2px solid red }
+   #payment-form input:invalid { border: 2px solid red }
+
+  h6 a { font-weight:bold }
+
+  @-moz-document url-prefix() {
+  }
+
+  @media (max-width:1024px) {
+    .whitebg { left:20%;width:60%; }
+  }
+
+  @media (max-width:801px) {
+    .whitebg { left:15%;width:70%; }
+  }
+
+  @media (max-width:640px) {
+    .control-group input { width:100%; }
+    input.mm { width:50px }
+    input.yyyy { width:60px }
+    .whitebg { width:100%;margin:auto;position:auto;left:auto;padding:5% 10%;top:160px; }
+    .muted { display:block; }
+    .individual { display:block;padding-top:5px }
+    .hero img { width:64%;margin:50px auto; }
+    .stripeLogo { width:60px;float:right;margin:-5px 5px 0 0; }
+  }
+
+  @media (max-width:480px) {
+    .whitebg { top:120px; }
+  }
+
+  .clickable span {
+    cursor: pointer;
+    border-bottom: 1px dashed silver;
+  }
+
+}
