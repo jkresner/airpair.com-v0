@@ -24,24 +24,25 @@ html(ng-app='ngAirPair')
       a(href="/airconf2014",target="_self")
         img(src="/images/landing/airconf/full-logo.png", alt="AirConf")
     .container
-      .chatCol
-        chat(title="" slug="airconf2014-foyer")
-      .infoCol
-        h1 Welcome to The Foyer
-        p Network with other attendees and ask AirPair staff questions about AirConf. No one has ever done this before and we're making it better and better with your feedback as we go.
+      .row
+        .col-md-8
+          chat(title="The Foyer" slug="airconf2014-foyer")
+        .col-md-4
+          h2.m-t-1(style="font-weight: bold") Welcome
+          p Network with other attendees and ask AirPair staff questions about AirConf. No one has ever done this before and we're making it better and better with your feedback as we go.
+          h2.m-t-2(style="font-weight: bold") Frequently asked Questions
+          label What's the best way to follow the changing schedule?
+          p If you haven't yet, subscribe to the
+            b &nbsp;
+              a(href="http://airpair.us7.list-manage1.com/track/click?u=707a79398ffed7972e1e87db6&id=f17c414d03&e=69dfe6dc4d") AirConf iCal
+          label How do I see talk recordings?
+          p Simply visit the talk page. If you RSVP'ed, the recording will show.
 
-        h2(style="font-weight: bold") Frequently asked Questions
-        h5(style="font-weight: bold") What's the best way to follow the changing schedule?
-        p If you haven't yet, subscribe to the
-          b &nbsp;
-            a(href="http://airpair.us7.list-manage1.com/track/click?u=707a79398ffed7972e1e87db6&id=f17c414d03&e=69dfe6dc4d") AirConf iCal
-        h5(style="font-weight: bold") How do I see talk recordings?
-        p Simply visit the talk page. If you RSVP'ed, the recording will show.
 
-
-        h2(style="font-weight: bold") Foyer Exhbitors
-          img.img-responsive(src="/images/landing/airconf/sponsors/leanpub.png")
-          img.img-responsive(src="/images/landing/airconf/sponsors/keenio.png")
+          h2.m-t-2(style="font-weight: bold") Foyer Exhbitors
+          div(style="padding: 10px 40px 0 0")
+            img.img-responsive(src="/images/landing/airconf/sponsors/leanpub.png")
+            img.img-responsive(src="/images/landing/airconf/sponsors/keenio.png")
 
     script(type="text/javascript").
       window.session = {

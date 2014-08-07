@@ -25,7 +25,7 @@ module.exports = (app, render) ->
       render('landing/airconf')(req, r, n)
 
   app.get '/airconf2014', render 'landing/airconf'
-  app.get '/airconf2014/foyer', authd, render 'landing/airconf_foyer'
+  app.get '/airconf2014/foyer', render 'landing/airconf_foyer'
   app.get '/airconf', (req, r) -> r.redirect req.url.replace('/airconf','/airconf2014')
   app.get '/airconf-registration', authd, render 'landing/airconfreg'
   app.get '/airconf-subscribe', render 'landing/airconfsubscribe'

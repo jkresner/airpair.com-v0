@@ -2,6 +2,9 @@ SessionFactory = ($http, $window) ->
   session =
     data: $window.session
 
+    authToken: ->
+      @data.user.authToken
+
     isSignedIn: ->
       @data? && @data.user? && @data.user._id?
 

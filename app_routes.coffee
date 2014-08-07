@@ -31,7 +31,9 @@ module.exports = (app) ->
 
   # angular templates
   app.get '/adm/templates/orders_daily', authd, render 'adm/templates/orders_daily'
-  app.get '/templates/:scope/:template', authd, renderTemplate
+
+  # catchall for templates not pre-rendered
+  app.get '/templates/:scope/:template', renderTemplate
 
   # pages
   app.get '/login', render 'login'
