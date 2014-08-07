@@ -1,5 +1,6 @@
 defaults =
   airconf:
+    firebaseSecret: 'xEJfxuGTt6HnvdX56jWlVZlZkHdE2czmtUvs33xD'
     discountCodesUrl: 'http://spreadsheets.google.com/feeds/list/1oTVraiCyHBg6JrFpGMGf0wppXYVznDGJ3rLqYqvAawE/od6/public/values?alt=json'
     scheduleUrl: 'https://spreadsheets.google.com/feeds/list/19SMSYKdZJjRBw-Rfxc3Wl7XH41ItCkdmIsFYf4DePsY/1/public/values?alt=json'
 

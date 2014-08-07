@@ -2,8 +2,7 @@ ChatDirective = ($firebase, session) ->
   templateUrl: '/templates/shared/chat_template'
 
   scope:
-    authToken: '@' # string attr value passed in
-    title: '@'
+    title: '@' # string attr value passed in
     slug: '@'  # optional, default is to grab from ngModel.slug
     ngModel: '='  # bind by reference passed in
 
@@ -27,9 +26,15 @@ ChatDirective = ($firebase, session) ->
     else
       scope.user = session.data.user.google._json
 
+      console.log session.data.user
+
       # authenticate firebase session
-      ref.auth scope.authToken, (error) ->
-        if error then console.log("Firebase login failed!", error)
+      ref.auth session.data.user.fba, (error) ->
+        if error
+          console.log("Firebase login failed!", error)
+        else
+          debugger
+
 
       scope.addMessage = ->
         scope.messages.$add
