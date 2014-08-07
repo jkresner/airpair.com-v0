@@ -35,8 +35,10 @@ module.exports = class ViewDataService
 
       # todo: this probably doesn't need to be done for each request
       tokenGenerator = new FirebaseTokenGenerator(config.defaults.airconf.firebaseSecret);
+
       # todo: quick and dirty authorization as chat admin -- are you using an airpair.com email address?
-      u.fba = tokenGenerator.createToken(admin: u.email?.indexOf("@airpair.com"))
+      isAdmin = _.contains(u.google._json.email, "@airpair.com")
+      u.fba = tokenGenerator.createToken(user_id: u.googleId, admin: isAdmin)
 
       if full
         u

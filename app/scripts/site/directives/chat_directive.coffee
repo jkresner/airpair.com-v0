@@ -26,22 +26,20 @@ ChatDirective = ($firebase, session) ->
     else
       scope.user = session.data.user.google._json
 
-      console.log session.data.user
-
       # authenticate firebase session
       ref.auth session.data.user.fba, (error) ->
         if error
-          console.log("Firebase login failed!", error)
-        else
-          debugger
-
+          console.log("Firebase login failed! Chat is read-only.", error)
 
       scope.addMessage = ->
-        scope.messages.$add
+        msg =
           from: scope.user.name
           pic: scope.user.picture
           content: scope.message
+          user_id: session.data.user.googleId
           sent_at: Firebase.ServerValue.TIMESTAMP
+
+        scope.messages.$add msg
 
         # reset input
         scope.message = ""
