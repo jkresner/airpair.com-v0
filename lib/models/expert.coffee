@@ -26,6 +26,7 @@ Bookme =
   rate:           { required: true, type: Number     }  # experts external rate
   rake:           { required: true, type: Number     }  # allow the expert commission deals
   coupons:        [Coupon]                              # allow the expert to hand out promotions
+  creditRequestIds: { type: [ObjectId] }  # Requests that credits can be applied for
 
 
 schema = new Schema
@@ -53,6 +54,5 @@ schema = new Schema
   status:         String
   hours:          String
   bookMe:         { required: false, type: Bookme }
-  creditRequestIds: { type: [ObjectId] }  # Requests that credits can be applied for
 
 module.exports = mongoose.model 'Expert', schema
