@@ -55,7 +55,9 @@ html(ng-app='ngAirPair')
         user: !{ session ? JSON.stringify(session) : 'null'},
         workshop: !{ workshop ? JSON.stringify(workshop) : 'null'},
         requestId: !{ workshopRequestId ? JSON.stringify(workshopRequestId) : 'null'},
-        registration: !{ registration ? JSON.stringify(registration) : 'null'}
+        registration: !{ registration ? JSON.stringify(registration) : 'null'},
+        attendees: !{ attendees ? JSON.stringify(attendees) : '[]'},
+        attendingWorkshops: !{ attendingWorkshops ? JSON.stringify(attendingWorkshops) : '[]'}
       };
 
       function bindLoginModal() {

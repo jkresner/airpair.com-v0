@@ -99,10 +99,21 @@ module.exports = class ViewDataService
         cb ee, -> { workshops, registration, keynotes: Data.keynotes }
 
   workshop: (id, template, chatTemplate, cb) ->
-    new WorkshopsService(@usr).getWorkshopBySlug id, (error, workshop) =>
+    workshopsService = new WorkshopsService(@usr)
+    workshopsService.getWorkshopBySlug id, (error, workshop) =>
       if !workshop? then return cb {status: 404}, -> {}
-      new OrdersSvc(@usr).getAirConfRegisration (e, registration) =>
-        cb null, -> { template, chatTemplate, workshop, registration, workshopRequestId : OrdersQuery.airconf.requestId }
+      workshopsService.getAttendeesBySlug id, (error, attendees) =>
+        workshopsService.getListByAttendee @usr._id, (error, attendingWorkshops) =>
+          new OrdersSvc(@usr).getAirConfRegisration (e, registration) =>
+            cb null, -> {
+              template
+              chatTemplate
+              workshop
+              attendees
+              attendingWorkshops
+              registration
+              workshopRequestId : OrdersQuery.airconf.requestId
+            }
 
   emailtemplates: (cb) ->
     new EmailTemplatesService(@usr).getAll (error, templates) =>
