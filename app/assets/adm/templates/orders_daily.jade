@@ -40,6 +40,16 @@
       td.text-success {{week.days[6].summary.numImps}}
       td.text-success.text-bold {{week.data.summary.numImps}}
     tr
+      td.text-muted.text-invisible Clicks/Impressions
+      td.text-orange {{week.days[0].summary.conImpsToClicks*100 | number: 2}}%
+      td.text-orange {{week.days[1].summary.conImpsToClicks*100 | number: 2}}%
+      td.text-orange {{week.days[2].summary.conImpsToClicks*100 | number: 2}}%
+      td.text-orange {{week.days[3].summary.conImpsToClicks*100 | number: 2}}%
+      td.text-orange {{week.days[4].summary.conImpsToClicks*100 | number: 2}}%
+      td.text-orange {{week.days[5].summary.conImpsToClicks*100 | number: 2}}%
+      td.text-orange {{week.days[6].summary.conImpsToClicks*100 | number: 2}}%
+      td.text-orange.text-bold {{week.data.summary.conImpsToClicks*100 | number: 2}}%
+    tr
       td.text-muted Clicks
       td.text-success {{week.days[0].summary.numClicks}}
       td.text-success {{week.days[1].summary.numClicks}}
@@ -49,6 +59,16 @@
       td.text-success {{week.days[5].summary.numClicks}}
       td.text-success {{week.days[6].summary.numClicks}}
       td.text-success.text-bold {{week.data.summary.numClicks}}
+    tr
+      td.text-muted.text-invisible Views/Clicks
+      td.text-orange {{week.days[0].summary.conClicksToViews*100 | number: 2}}%
+      td.text-orange {{week.days[1].summary.conClicksToViews*100 | number: 2}}%
+      td.text-orange {{week.days[2].summary.conClicksToViews*100 | number: 2}}%
+      td.text-orange {{week.days[3].summary.conClicksToViews*100 | number: 2}}%
+      td.text-orange {{week.days[4].summary.conClicksToViews*100 | number: 2}}%
+      td.text-orange {{week.days[5].summary.conClicksToViews*100 | number: 2}}%
+      td.text-orange {{week.days[6].summary.conClicksToViews*100 | number: 2}}%
+      td.text-orange.text-bold {{week.data.summary.conClicksToViews*100 | number: 2}}%
     tr
       td.text-muted Views
       td.text-success {{week.days[0].summary.numViews}}

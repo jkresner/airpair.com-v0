@@ -47,10 +47,13 @@ angular.module('AirpairAdmin').factory('apData', ['$moment', '$filter', '$http',
         visibleOrders = []
         for order in dataSet
           if @isWithinDate(order, start, end)
-            if newOnly
-              if not order.isRepeat then visibleOrders.push order
+            if order.marketingTags[0]?.name is "airconf"
+              # console.log "airconf", order
             else
-              visibleOrders.push order
+              if newOnly
+                if not order.isRepeat then visibleOrders.push order
+              else
+                visibleOrders.push order
 
         if searchText
           visibleOrders = $helpers.search visibleOrders, searchText
@@ -956,24 +959,29 @@ angular.module('AirpairAdmin').factory('apData', ['$moment', '$filter', '$http',
       getAdData: (weeks, start, end, searchString, callback) ->
 
         dayTotal = (channels) ->
-          imps = 0
-          clicks = 0
-          if not channels then return {
+          totals =
             imps: 0
             clicks: 0
-          }
-          _.each channels, (campaign) ->
-            _.each campaign, (nums) ->
-              imps += nums.imp
-              clicks += nums.clicks
-          return {
-            imps: imps
-            clicks: clicks
-          }
+          if not channels then return totals
+          if not searchString
+            _.each channels, (campaign) ->
+              _.each campaign, (nums) ->
+                totals.imps += nums.imps
+                totals.clicks += nums.clicks
+          else
+            matched = {}
+            _.each channels, (campaigns, channelName) ->
+              if channelName.indexOf(searchString) > -1
+                _.extend matched, campaigns
+              else
+                _.each campaigns, (nums, campaignName) ->
+                  if campaignName.indexOf(searchString) > -1
+                    matched[campaignName] = nums
+            _.each matched, (nums) ->
+              totals.imps += nums.imps
+              totals.clicks += nums.clicks
 
-
-
-
+          return totals
 
 
         $fb = new Firebase 'https://airpair-admin.firebaseio.com/ads'
@@ -984,12 +992,23 @@ angular.module('AirpairAdmin').factory('apData', ['$moment', '$filter', '$http',
           adData = snap.val()
 
           for week in weeks
+            week.data.summary.numImps = 0
+            week.data.summary.numClicks = 0
             for day in week.days
-              date = day.start.format('YYYY-MM-DD')
+              date = day.start.format 'YYYY-MM-DD'
               dayNums = dayTotal adData[date]
-              console.log "dayNums", dayNums
               day.summary.numImps = dayNums.imps
               day.summary.numClicks = dayNums.clicks
+
+              week.data.summary.numImps += dayNums.imps
+              week.data.summary.numClicks += dayNums.clicks
+              _.extend day.summary,
+                conImpsToClicks: $helpers.calcConversion day.summary.numImps, day.summary.numClicks
+                conClicksToViews: $helpers.calcConversion day.summary.numClicks, day.summary.numViews
+            _.extend week.data.summary,
+              conImpsToClicks: $helpers.calcConversion week.data.summary.numImps, week.data.summary.numClicks
+              conClicksToViews: $helpers.calcConversion week.data.summary.numClicks, week.data.summary.numViews
+
 
           callback()
 
@@ -1019,7 +1038,7 @@ angular.module('AirpairAdmin').factory('apData', ['$moment', '$filter', '$http',
               if channelName.indexOf(searchString) > -1
                 matched.channel.push channelName
             type = if matched.campaign.length > matched.channel.length then 'campaign' else 'channel'
-            console.info "matched #{type}", matched
+            # console.info "matched #{type}", matched
             matches = matched[type]
             for matchedName in matches
               views = data[type].values[matchedName][dayStr]
