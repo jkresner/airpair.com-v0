@@ -20,7 +20,6 @@ html(ng-app='ngAirPair')
     script(src='//cdn.firebase.com/libs/angularfire/0.8.0/angularfire.min.js')
 
   body#airconfFoyer(ng-controller='SessionController',style="background:black")
-
     .hero
       a(href="/airconf2014",target="_self")
         img(src="/images/landing/airconf/full-logo.png", alt="AirConf")
@@ -31,18 +30,18 @@ html(ng-app='ngAirPair')
         h1 Welcome to The Foyer
         p Network with other attendees and ask AirPair staff questions about AirConf. No one has ever done this before and we're making it better and better with your feedback as we go.
 
-        h2 Frequently asked Questions
-        label What's the best way to follow the changing schedule?
+        h2(style="font-weight: bold") Frequently asked Questions
+        h5(style="font-weight: bold") What's the best way to follow the changing schedule?
         p If you haven't yet, subscribe to the
           b &nbsp;
             a(href="http://airpair.us7.list-manage1.com/track/click?u=707a79398ffed7972e1e87db6&id=f17c414d03&e=69dfe6dc4d") AirConf iCal
-        label How do I see talk recordings?
+        h5(style="font-weight: bold") How do I see talk recordings?
         p Simply visit the talk page. If you RSVP'ed, the recording will show.
 
 
-        h2 Foyer Exhbitors
-          img(src="/images/landing/airconf/sponsors/leanpub.png")
-          img(src="/images/landing/airconf/sponsors/keenio.png")
+        h2(style="font-weight: bold") Foyer Exhbitors
+          img.img-responsive(src="/images/landing/airconf/sponsors/leanpub.png")
+          img.img-responsive(src="/images/landing/airconf/sponsors/keenio.png")
 
     script(type="text/javascript").
       window.session = {

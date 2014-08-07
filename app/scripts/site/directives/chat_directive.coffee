@@ -34,7 +34,7 @@ ChatDirective = ($firebase, session) ->
 
     firebaseSlug = firebaseSlug.replace(".", "")
     ref = new Firebase("https://airpair-chat.firebaseio.com/chat/#{firebaseSlug}")
-    scope.messages = $firebase(ref.limit(15)).$asArray()
+    scope.messages = $firebase(ref.limit(200)).$asArray()
 
 angular
   .module('ngAirPair')
