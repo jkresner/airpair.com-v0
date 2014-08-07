@@ -43,7 +43,9 @@ class exports.RequestView extends BB.ModelSaveView
   events: { 'click .save': 'save' }
   initialize: ->
     @listenTo @settings, 'change', @render
+    @listenTo @credit, 'change', @render
   render: ->
+    console.log "credit", @credit
     if @settings.paymentMethod('stripe')?
       @e = addjs.events.customerRequest
       fName = @expert.get('name').split(' ')[0]

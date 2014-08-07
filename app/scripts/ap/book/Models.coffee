@@ -5,6 +5,7 @@ exports = {}
 exports.User = Shared.User
 exports.Expert = Shared.Expert
 exports.Settings = Shared.Settings
+exports.Credit = Shared.Credit
 
 exports.Company = class Company extends Shared.Company
 

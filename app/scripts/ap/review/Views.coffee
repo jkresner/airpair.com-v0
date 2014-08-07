@@ -50,9 +50,7 @@ class exports.OrderView extends BB.ModelSaveView
     'click .pay': 'pay'
   initialize: (args) ->
     @listenTo @model, 'change', @render
-    @listenTo @credit, 'change', @render
   render: ->
-    console.log "credit", @credit
     @model.setTotal()
     @$('#summary').html @tmpl @model.toJSON()
     @$('#pay').toggle @mget('total') isnt 0
@@ -125,7 +123,7 @@ class exports.BookView extends BB.BadassView
     @$el.html @tmpl useSandbox: !@isProd
     window.PAYPAL = require '/scripts/providers/paypal'
     @embeddedPPFlow = new PAYPAL.apps.DGFlow trigger: 'submitBtn',type:'light'
-    @orderView = new exports.OrderView model: @model, credit: @credit
+    @orderView = new exports.OrderView model: @model
     @listenTo @request, 'change', @render
     @listenTo @model, 'change', =>
       @$('#selecthours').toggle @mget('total') is 0
