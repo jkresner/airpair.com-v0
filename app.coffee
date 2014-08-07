@@ -67,8 +67,8 @@ app.use (err, req, res, next) ->
     goog = req.user.google
     userInfo = req.user._id + ' ' + goog._json.email + ' ' + goog.displayName
 
-  console.log "handleError #{userInfo} #{req.url} #{str}"
-  winston.error "handleError #{userInfo} #{req.url} #{str}" if config.isProd
+  console.log "handleError #{userInfo} #{req.method} #{req.url} #{str}"
+  winston.error "handleError #{userInfo} #{req.method} #{req.url} #{str}" if config.isProd
   res.status(500).sendfile "./public/500.html"
 
 process.on 'uncaughtException', (err) ->
