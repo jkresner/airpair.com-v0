@@ -45,13 +45,21 @@ html(ng-app='ngAirPair')
             .modal-footer
               button(type="button", class="btn btn-default", data-dismiss="modal") Close
 
+    script(type="text/ng-template" id="/templates/#{template.name}").
+      !{template.html}
+
+    script(type="text/ng-template" id="/templates/#{chatTemplate.name}").
+      !{chatTemplate.html}
+
 
     script(type="text/javascript").
       window.session = {
         user: !{ session ? JSON.stringify(session) : 'null'},
         workshop: !{ workshop ? JSON.stringify(workshop) : 'null'},
         requestId: !{ workshopRequestId ? JSON.stringify(workshopRequestId) : 'null'},
-        registration: !{ registration ? JSON.stringify(registration) : 'null'}
+        registration: !{ registration ? JSON.stringify(registration) : 'null'},
+        attendees: !{ attendees ? JSON.stringify(attendees) : '[]'},
+        attendingWorkshops: !{ attendingWorkshops ? JSON.stringify(attendingWorkshops) : '[]'}
       };
 
       function bindLoginModal() {

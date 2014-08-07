@@ -32,7 +32,7 @@ module.exports = (app, render) ->
   app.get '/airconf-so-subscribe', render 'landing/airconfsubscribe'
   app.get '/airconf-promo/:id', render 'landing/airconfpromo', ['params.id']
 
-  app.get '/airconf2014/keynote/:id', render 'landing/airconfkeynote', ['params.id']
+  app.get '/airconf2014/keynote/:id', render 'landing/airconfkeynote', ['params.id', {template: 'workshop/keynote'}, {template: 'shared/chat_template'}]
 
   app.get '/railsconf2014', render 'landing/railsconf'
   app.get '/rails/consulting', render 'landing/railsconsulting'

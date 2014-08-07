@@ -120,10 +120,18 @@ module.exports = class ViewDataService
     new EmailTemplatesService(@usr).getAll (error, templates) =>
       cb null, -> { templates }
 
-  airconfkeynote: (id, cb) ->
+  airconfkeynote: (id, template, chatTemplate, cb) ->
     workshop = _.find _.values(Data.keynotes), (k) -> k.slug == id
     new OrdersSvc(@usr).getAirConfRegisration (e, registration) =>
-      cb null, -> { workshop, registration, workshopRequestId : OrdersQuery.airconf.requestId }
+      cb null, -> {
+        template
+        chatTemplate
+        workshop
+        registration
+        attendees: []
+        attendingWorkshops: []
+        workshopRequestId : OrdersQuery.airconf.requestId
+      }
 
   airconfreg: (cb) ->
     new CompanysSvc(@usr).getById 'me', (e, company) =>
