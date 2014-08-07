@@ -1,11 +1,19 @@
+async = require 'async'
 ViewDataSvc = require '../services/_viewdata'
 
-getProp = (obj, path) =>
-  props = path.split '.'
-  r = obj
-  for prop in props
-    r = r[prop]
-  r
+prerender = (resp, filename, callback) =>
+  resp.render "templates/#{filename}.jade", (err, rendered) =>
+    callback(err, {name: filename, html: rendered})
+
+getProp = (req, resp, path, callback) =>
+  if _.isPlainObject(path) && path.template?
+    prerender(resp, path.template, callback)
+  else
+    props = path.split '.'
+    r = req
+    for prop in props
+      r = r[prop]
+    callback(null, r)
 
 module.exports =
 
@@ -35,26 +43,27 @@ module.exports =
       if !vdSvc[fnName]?
         renderTemplate fileName, { segmentioKey: config.analytics.segmentio.writeKey }
       else
-        args = _.map propList, (prop) ->
-          getProp req, prop
-
-        args.push (e, getViewData) =>
-          if e
-            if vdSvc.logging then $log 'viewData', fnName, 'e', e
-            if e.status? && e.status == 404
-              resp.render('404.html', { status: 404, url: req.url })
+        async.map propList
+        , (prop, callback) ->
+          getProp(req, resp, prop, callback)
+        , (err, args) =>
+          args.push (e, getViewData) =>
+            if e
+              if vdSvc.logging then $log 'viewData', fnName, 'e', e
+              if e.status? && e.status == 404
+                resp.render('404.html', { status: 404, url: req.url })
+              else
+                next e
             else
-              next e
-          else
-            data =
-              isProd: config.isProd.toString()
-              session: vdSvc.session false
-              reqUrl: req.url
-              segmentioKey: config.analytics.segmentio.writeKey
-            data = _.extend data, getViewData()
+              data =
+                isProd: config.isProd.toString()
+                session: vdSvc.session false
+                reqUrl: req.url
+                segmentioKey: config.analytics.segmentio.writeKey
+              data = _.extend data, getViewData()
 
-            if vdSvc.logging then $log 'viewData', fnName, data
+              if vdSvc.logging then $log 'viewData', fnName, data
 
-            renderTemplate fileName, data
+              renderTemplate fileName, data
 
-        vdSvc[fnName].apply vdSvc, args
+          vdSvc[fnName].apply vdSvc, args
