@@ -23,6 +23,16 @@ angular.module('AirpairAdmin').controller("DailyCtrl", ['$scope', '$moment', '$t
 
 
 
+
+
+
+
+
+
+
+
+
+
   # Watch date ranges
   first = true
   $scope.$watch "dateStart", () ->

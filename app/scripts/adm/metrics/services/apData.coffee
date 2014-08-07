@@ -953,37 +953,77 @@ angular.module('AirpairAdmin').factory('apData', ['$moment', '$filter', '$http',
     ads:
 
 
+      getAdData: (weeks, start, end, searchString, callback) ->
+
+        dayTotal = (channels) ->
+          imps = 0
+          clicks = 0
+          if not channels then return {
+            imps: 0
+            clicks: 0
+          }
+          _.each channels, (campaign) ->
+            _.each campaign, (nums) ->
+              imps += nums.imp
+              clicks += nums.clicks
+          return {
+            imps: imps
+            clicks: clicks
+          }
+
+
+
+
+
+
+        $fb = new Firebase 'https://airpair-admin.firebaseio.com/ads'
+
+        $fb.on 'value', (snap) ->
+          console.log "value", snap.val()
+
+          adData = snap.val()
+
+          for week in weeks
+            for day in week.days
+              date = day.start.format('YYYY-MM-DD')
+              dayNums = dayTotal adData[date]
+              console.log "dayNums", dayNums
+              day.summary.numImps = dayNums.imps
+              day.summary.numClicks = dayNums.clicks
+
+          callback()
+
+
+
+
+
+
+
+
       mixpanelWeeks: (weeks, start, end, searchString, callback) ->
 
         dayTotal = (dayStr, data) ->
-
           numViews = 0
-
           if not searchString
             _.each data.campaign.values, (campaign, campaignName) ->
               numViews += campaign[dayStr] or 0
             return numViews
-
-
           else
             matched =
               campaign: []
               channel: []
-
             _.each data.campaign.values, (campaignDays, campaignName) ->
               if campaignName.indexOf(searchString) > -1
                 matched.campaign.push campaignName
             _.each data.channel.values, (channel, channelName) ->
               if channelName.indexOf(searchString) > -1
                 matched.channel.push channelName
-
             type = if matched.campaign.length > matched.channel.length then 'campaign' else 'channel'
             console.info "matched #{type}", matched
             matches = matched[type]
             for matchedName in matches
               views = data[type].values[matchedName][dayStr]
               numViews += views or 0
-
             return numViews
 
 
@@ -1087,6 +1127,7 @@ angular.module('AirpairAdmin').factory('apData', ['$moment', '$filter', '$http',
               calcDay day, week
           # Get mixpanel data
           @mixpanelWeeks weeks, start, end, searchString, callback
+          @getAdData weeks, start, end, searchString, callback
 
 
 
