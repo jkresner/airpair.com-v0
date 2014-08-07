@@ -1,0 +1,38 @@
+body#airconfFoyer {
+
+  h1 { font-size:24px }
+
+  h2 { font-size:20px;color:#90d1cc }
+
+  .hero { background:url('/images/landing/airconf/bg-2.jpg');height:240px;margin-top:0!important;text-align:center }
+  .hero {
+    img { width:200px;margin:20px auto 0 auto }
+
+    @media (max-width:801px) {
+      img { margin:50px 0 20px 0 }
+    }
+
+    @media (max-width:640px) {
+      img { width:60%; }
+    }
+
+    @media (max-width:480px) {
+      img { width:80%; }
+    }
+  }
+
+  .container { background:white;min-height:1000px;width:1000px;margin-top:-130px;border-radius:10px;vertical-align:top;padding-top:10px }
+
+  .chatCol { display:inline-block;border-right:solid 1px #d3d3d3;width:580px;padding-right:20px;margin-right:20px;vertical-align:top }
+  .chatCol {
+    img { width:60px }
+  }
+
+
+  .infoCol { display:inline-block;width:360px;vertical-align:top }
+  .infoCol {
+    label { font-size:13px;color:#7e7f7f;display:block;margin:20px 0 0 0;font-weight:normal }
+    img { width:50%;display:block;margin:45px auto }
+  }
+
+}
