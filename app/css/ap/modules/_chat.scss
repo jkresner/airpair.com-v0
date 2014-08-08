@@ -5,24 +5,35 @@
   display: block;
 
   h3 {
-    margin-bottom: 10px;
+    margin-top: 10px;
+    margin-bottom: 15px;
     text-align: center;
   }
 
-  & > .row {
-    margin-bottom: 10px
+  & .row {
+    margin-bottom: 10px;
+    min-height: 25px;
   }
 
   .pic {
-    max-width: 75px;
-    padding-right: 10px;
     img {
-      border-radius: 25%;
+      border-radius: 15px;
+      min-width: 45px !important;
+    }
+    &.ng-hide {
+      display: block !important;
+      visibility: hidden;
     }
   }
 
   #messages {
-    .row { margin-bottom: 10px }
+    .icon {
+      text-align: center;
+    }
+    .fa {
+      color: rgb(221, 74, 20);
+      font-size: 25px;
+    }
   }
 
   .message {
@@ -30,6 +41,10 @@
     border-radius: 15px;
     margin-left: -10px;
     padding: 4px 15px;
+
+    &.question {
+      font-weight: bold;
+    }
   }
 
   .timestamp {

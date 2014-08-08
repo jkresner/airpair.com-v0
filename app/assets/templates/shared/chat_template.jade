@@ -8,15 +8,35 @@
         input(type='text' ng-model='message' placeholder='Hit enter to submit message...')
 
   #messages(cg-busy="messages.$loaded()")
-    .row(ng-repeat="message in messages | reverse")
+    .row(ng-repeat="message in messages | orderBy:'-sent_at'")
       .col-xs-2.pic
         img.img-responsive(ng-src="{{message.pic}}")
-      .col-xs-10.message
+      .col-xs-8.message(ng-class="{question: isQuestion(message)}")
         span(ng-bind-html="message.content | linky:'_blank'")
         .timestamp
           strong {{message.from}} &nbsp;
           span(ng-if="message.sent_at" am-time-ago="message.sent_at")
           span(ng-if="message.timestamp" am-time-ago="message.timestamp")
-          | &nbsp; &mdash; &nbsp;
-          a(ng-show="canDelete(message)" ng-click="delete(message)" href="#") delete
+          | &nbsp;&nbsp;&nbsp;
 
+          span(ng-show="canMarkAsQuestion(message)")
+            | &nbsp;
+            a(ng-click="markAsQuestion(message)" href="#") mark as question
+
+          span(ng-show="canVoteUp(message)")
+            | &nbsp;
+            a(ng-click="voteForQuestion(message)" href="#") vote up
+
+          span(ng-show="canFlag(message)")
+            | &nbsp;&nbsp;&nbsp;
+            a(ng-click="flag(message)" href="#") flag
+
+          span(ng-show="canDelete(message)")
+            | &nbsp;&nbsp;&nbsp;
+            a(ng-click="delete(message)" href="#") delete
+
+      .col-xs-2.icon
+        span(ng-show="isQuestion(message)")
+          i.fa.fa-question-circle
+          .timestamp
+            span(ng-bind="voteCount(message)")

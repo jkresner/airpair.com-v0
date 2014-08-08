@@ -1,40 +1,40 @@
 doctype html
 html(ng-app='ngAirPair' ng-strict-di)
-  head
-    title AirPair Admin
-    meta(charset="utf-8")
-    meta(http-equiv="X-UA-Compatible", content="IE=edge,chrome=1")
+	head
+		title AirPair Admin
+		meta(charset="utf-8")
+		meta(http-equiv="X-UA-Compatible", content="IE=edge,chrome=1")
 
-    script(src="/javascripts/adm.js")
+		script(src="/javascripts/adm.js")
 
-    link(rel="canonical", href="http://www.airpair.com/admin")
-    link(rel="stylesheet", href="/css/adm.css")
-    link(rel='stylesheet', type='text/css', href='//fonts.googleapis.com/css?family=Open+Sans:400,300,600')
-    link(rel='stylesheet', type='text/css', href='//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css')
+		link(rel="canonical" href="http://www.airpair.com/admin")
+		link(rel="stylesheet" href="/css/adm.css")
+		link(rel='stylesheet' type='text/css' href='//fonts.googleapis.com/css?family=Open+Sans:400,300,600')
+		link(rel='stylesheet' type='text/css' href='//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css')
 
-  body
-    .nav.navbar.navbar-default.navbar-static-top(role="navigation", ng-controller='HeaderController')
-      .container
-        .navbar-header
-          span.navbar-brand-img
-            img(src="/images/logos/airpair.png", alt="", width="140px")
-          button(type="button", class="navbar-toggle pull-right", data-toggle="collapse", data-target="#nav-mobile")
-            span.sr-only Toggle navigation
-            span.icon-bar
-            span.icon-bar
-            span.icon-bar
-        .collapse.navbar-collapse#nav-mobile
-          ul.nav.navbar-nav.nav-public
-            li
-              a.scroll(href="/site") Site
-            li
-              a.scroll(href="/admin/automatch") Expert Settings
-          ul.nav.navbar-nav.navbar-right
-            li(ng-show='session.isSignedIn()')
-              a.scroll(href="#") Hi {{ session.name() }}
+	body
+		.nav.navbar.navbar-default.navbar-static-top(role="navigation", ng-controller='HeaderController')
+			.container
+				.navbar-header
+					span.navbar-brand-img
+						img(src="/images/logos/airpair.png", alt="", width="140px")
+					button(type="button", class="navbar-toggle pull-right", data-toggle="collapse", data-target="#nav-mobile")
+						span.sr-only Toggle navigation
+						span.icon-bar
+						span.icon-bar
+						span.icon-bar
+				.collapse.navbar-collapse#nav-mobile
+					ul.nav.navbar-nav.nav-public
+						li
+							a.scroll(href="/site") Site
+						li
+							a.scroll(href="/admin/automatch") Expert Settings
+					ul.nav.navbar-nav.navbar-right
+						li(ng-show='session.isSignedIn()')
+							a.scroll(href="#") Hi {{ session.name() }}
 
-    .site-container
-      div(ng-view)
+		.site-container
+			div(ng-view)
 
-    script.
-      require('scripts/adm/admin');
+		script.
+			require('scripts/adm/admin');
