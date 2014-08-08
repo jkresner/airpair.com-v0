@@ -17,8 +17,8 @@ ChatDirective = ($firebase, session) ->
     return if not firebaseSlug
 
     # get a firebase reference
-    firebaseSlug = firebaseSlug.replace(".", "")
-    ref = new Firebase("https://airpair-chat.firebaseio.com/chat/#{firebaseSlug}")
+    firebaseSlug = firebaseSlug.replace(".", "") # better replace logic
+    ref = new Firebase(session.data.firebasePath + firebaseSlug)
 
     if not session.isSignedIn()
       # read-only mode

@@ -53,6 +53,7 @@ html(ng-app='ngAirPair')
 
     script(type="text/javascript").
       window.session = {
+        firebasePath: "#{config.airconf.chat.firebasePath}",
         user: !{ session ? JSON.stringify(session) : 'null'},
         workshop: !{ workshop ? JSON.stringify(workshop) : 'null'},
         requestId: !{ workshopRequestId ? JSON.stringify(workshopRequestId) : 'null'},
