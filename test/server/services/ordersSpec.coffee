@@ -43,7 +43,7 @@ describe 'OrdersService', ->
 
     expect(canSchedule orders, call).to.equal false
 
-  setupCredit = (callback) ->
+  setupBookme = (withCredit, callback) ->
     ticketRequestId = "53ce8a703441d602008095b6"
     bookMe =
       rate: "200"
@@ -94,12 +94,15 @@ describe 'OrdersService', ->
               email: "team@airpair.com",
               pic: "//0.gravatar.com/avatar/543d49f405c7e3cbd78f8e1a6d1c091d"
         ]
-        Factory.create 'order', {userId, lineItems, requestId: ticketRequestId}, (ticketOrder) =>
-          callback(@user, @expert, @expertUser, ticketOrder)
+        if withCredit
+          Factory.create 'order', {userId, lineItems, requestId: ticketRequestId}, (ticketOrder) =>
+            callback(@user, @expert, @expertUser, ticketOrder)
+        else
+          callback(@user, @expert, @expertUser, null)
 
   describe '_creditAvailable', ->
     it "shows the available credit for a given request" , (done) ->
-      setupCredit (user, expert) =>
+      setupBookme true, (user, expert) =>
         suggested =
           expert: expert
           suggestedRate: 220
@@ -111,7 +114,7 @@ describe 'OrdersService', ->
 
   describe '_useCredit', ->
     it "adds a line item for used credit on a credit order" , (done) ->
-      setupCredit (user, expert, expertUser, ticketOrder) =>
+      setupBookme true, (user, expert, expertUser, ticketOrder) =>
         suggested =
           expert: expert
           suggestedRate: 220
@@ -127,7 +130,7 @@ describe 'OrdersService', ->
             done()
 
     it "marks the credit order paidout if all the credit is used" , (done) ->
-      setupCredit (user, expert, expertUser, ticketOrder) =>
+      setupBookme true, (user, expert, expertUser, ticketOrder) =>
         suggested =
           expert: expert
           suggestedRate: 220
@@ -141,20 +144,41 @@ describe 'OrdersService', ->
             done()
 
   describe 'confirmBookme', ->
+    stripeReply = {
+      "id":"ch_4NWz6ANL8qUMxC","object":"charge","created":1405015533,"livemode":false,
+      "paid":true,"amount":18000,"currency":"usd","refunded":false,
+      "card":{"id":"card_35N0JRtcbhMuNs","object":"card","last4":"4242","brand":"Visa","funding":"credit","exp_month":10,"exp_year":2014,"fingerprint":"DMfzzf5aobPBRDZg","country":"US","name":null,"address_line1":null,"address_line2":null,"address_city":null,"address_state":null,"address_zip":null,"address_country":null,"cvc_check":null,"address_line1_check":null,"address_zip_check":null,"customer":"cus_35N03uIhfJPhzU","type":"Visa"},
+      "captured":true,"refunds":[],"balance_transaction":"txn_4NWzim2o2r8xRP",
+      "failure_message":null,"failure_code":null,"amount_refunded":0,
+      "customer":"cus_35N03uIhfJPhzU","invoice":null,"description":null,
+      "dispute":null,"metadata":{},"statement_description":null,
+      "receipt_email":"bqchristie@gmail.com"
+    }
+
+    it "charges the customer" , (done) ->
+      nock('https://api.stripe.com:443')
+        .post('/v1/charges', "customer=&amount=30000&currency=usd")
+        .reply 200, stripeReply
+
+      setupBookme false, (user, expert, expertUser, ticketOrder) =>
+        svc = new (require '../../../lib/services/orders')(expertUser)
+        suggested =
+          expert: expert
+          suggestedRate: 220
+          expertStatus: "available"
+        Factory.create 'request', {userId: user._id, suggested, budget: 300}, (request) =>
+          svc.confirmBookme request, {expertStatus: 'available'}, (err, request) =>
+            svc.searchOne { requestId: request._id }, {}, (err, order) =>
+              expect(order.total).to.equal(300)
+              done()
+
+
     it "only charges the remainder after applying credit" , (done) ->
       nock('https://api.stripe.com:443')
         .post('/v1/charges', "customer=&amount=2000&currency=usd")
-        .reply 200,
-          {"id":"ch_4NWz6ANL8qUMxC","object":"charge","created":1405015533,"livemode":false,
-          "paid":true,"amount":18000,"currency":"usd","refunded":false,
-          "card":{"id":"card_35N0JRtcbhMuNs","object":"card","last4":"4242","brand":"Visa","funding":"credit","exp_month":10,"exp_year":2014,"fingerprint":"DMfzzf5aobPBRDZg","country":"US","name":null,"address_line1":null,"address_line2":null,"address_city":null,"address_state":null,"address_zip":null,"address_country":null,"cvc_check":null,"address_line1_check":null,"address_zip_check":null,"customer":"cus_35N03uIhfJPhzU","type":"Visa"},
-          "captured":true,"refunds":[],"balance_transaction":"txn_4NWzim2o2r8xRP",
-          "failure_message":null,"failure_code":null,"amount_refunded":0,
-          "customer":"cus_35N03uIhfJPhzU","invoice":null,"description":null,
-          "dispute":null,"metadata":{},"statement_description":null,
-          "receipt_email":"bqchristie@gmail.com"}
+        .reply 200, stripeReply
 
-      setupCredit (user, expert, expertUser, ticketOrder) =>
+      setupBookme true, (user, expert, expertUser, ticketOrder) =>
         svc = new (require '../../../lib/services/orders')(expertUser)
         suggested =
           expert: expert
