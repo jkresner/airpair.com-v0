@@ -9,7 +9,7 @@ defaults =
   status: 'received'
   budget: 100
   pricing: 'private'
-  hours: 'a lot'
+  hours: 1
   events: {}
   tags: []
 

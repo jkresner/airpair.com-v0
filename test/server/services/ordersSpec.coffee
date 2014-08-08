@@ -1,9 +1,11 @@
-{http,_,sinon,chai,expect} = require '../test-lib-setup'
-{app, data}                                    = require '../test-app-setup'
+{http, _, sinon, chai, expect, Factory} = require './../test-lib-setup'
+{app,data,passportMock,nock} = require './../test-app-setup'
+{app, data} = require '../test-app-setup'
+async = require 'async'
 
 cloneDeep = require('lodash').cloneDeep
 ObjectId = require('mongoose').Types.ObjectId
-canSchedule          = require './../../../lib/mix/canSchedule'
+canSchedule = require './../../../lib/mix/canSchedule'
 
 svc = new (require '../../../lib/services/orders')()
 
@@ -40,3 +42,127 @@ describe 'OrdersService', ->
     orders[0].lineItems[0].redeemedCalls.push callId: call._id, qtyRedeemed: call.duration
 
     expect(canSchedule orders, call).to.equal false
+
+  setupCredit = (callback) ->
+    ticketRequestId = "53ce8a703441d602008095b6"
+    bookMe =
+      rate: "200"
+      rake: "40"
+      urlSlug: "aslak"
+      urlBlog: ""
+      noIndex: true
+      enabled: true
+      coupons: []
+      creditRequestIds: [ticketRequestId]
+
+    async.parallel [
+      (cb) => Factory.create 'user', (@user) => cb()
+      (cb) => Factory.create 'user', {googleId: "111111111111"}, (@expertUser) => cb()
+    ], =>
+      userId = @user._id
+      async.parallel [
+        (cb) => Factory.create 'aslakExpert', {userId: @expertUser._id, bookMe}, (@expert) => cb()
+        (cb) => Factory.create 'settings', {userId}, (@settings) => cb()
+      ], =>
+
+        lineItems = [
+          type: "ticket"
+          total: 1
+          unitPrice: 150
+          qty: 1
+          suggestion:
+            suggestedRate: { ticket: { expert: 0 } },
+            expert:
+              userId: "52b3c4ff66a6f999a465fe3e",
+              name: "Ticket",
+              username: "airconf",
+              rate: 150,
+              email: "team@airpair.com",
+              pic: "//0.gravatar.com/avatar/543d49f405c7e3cbd78f8e1a6d1c091d"
+
+          type: "credit"
+          total: 0
+          unitPrice: -280
+          qty: 1
+          suggestion:
+            suggestedRate: { credit: { expert: 0 } },
+            expert:
+              userId: "52b3c4ff66a6f999a465fe3e",
+              name: "Credit",
+              username: "paircredit",
+              rate: 150,
+              email: "team@airpair.com",
+              pic: "//0.gravatar.com/avatar/543d49f405c7e3cbd78f8e1a6d1c091d"
+        ]
+        Factory.create 'order', {userId, lineItems, requestId: ticketRequestId}, (ticketOrder) =>
+          callback(@user, @expert, @expertUser, ticketOrder)
+
+  describe '_creditAvailable', ->
+    it "shows the available credit for a given request" , (done) ->
+      setupCredit (user, expert) =>
+        suggested =
+          expert: expert
+          suggestedRate: 220
+          expertStatus: "available"
+        Factory.create 'request', {userId: user._id, suggested}, (request) =>
+          svc._creditAvailable request, (err, credit) =>
+            expect(credit).to.equal(-100)
+            done()
+
+  describe '_useCredit', ->
+    it "adds a line item for used credit on a credit order" , (done) ->
+      setupCredit (user, expert, expertUser, ticketOrder) =>
+        suggested =
+          expert: expert
+          suggestedRate: 220
+          expertStatus: "available"
+        Factory.create 'request', {userId: user._id, suggested}, (request) =>
+          svc._useCredit request, -100, (err, orders) =>
+            expect(orders[0]._id.toString()).to.equal(ticketOrder._id.toString())
+            newLineItem = _.last(orders[0].lineItems)
+            expect(newLineItem.total).to.equal(100)
+            expect(newLineItem.unitPrice).to.equal(100)
+            expect(newLineItem.qty).to.equal(1)
+            expect(newLineItem.type).to.equal('credit')
+            done()
+
+    it "marks the credit order paidout if all the credit is used" , (done) ->
+      setupCredit (user, expert, expertUser, ticketOrder) =>
+        suggested =
+          expert: expert
+          suggestedRate: 220
+          expertStatus: "available"
+        Factory.create 'request', {userId: user._id, suggested, budget: 280}, (request) =>
+          svc._useCredit request, -280, (err, orders) =>
+            expect(orders[0]._id.toString()).to.equal(ticketOrder._id.toString())
+            newLineItem = _.last(orders[0].lineItems)
+            expect(newLineItem.unitPrice).to.equal(280)
+            expect(orders[0].paymentStatus).to.equal('paidout')
+            done()
+
+  describe 'confirmBookme', ->
+    it "only charges the remainder after applying credit" , (done) ->
+      nock('https://api.stripe.com:443')
+        .post('/v1/charges', "customer=&amount=2000&currency=usd")
+        .reply 200,
+          {"id":"ch_4NWz6ANL8qUMxC","object":"charge","created":1405015533,"livemode":false,
+          "paid":true,"amount":18000,"currency":"usd","refunded":false,
+          "card":{"id":"card_35N0JRtcbhMuNs","object":"card","last4":"4242","brand":"Visa","funding":"credit","exp_month":10,"exp_year":2014,"fingerprint":"DMfzzf5aobPBRDZg","country":"US","name":null,"address_line1":null,"address_line2":null,"address_city":null,"address_state":null,"address_zip":null,"address_country":null,"cvc_check":null,"address_line1_check":null,"address_zip_check":null,"customer":"cus_35N03uIhfJPhzU","type":"Visa"},
+          "captured":true,"refunds":[],"balance_transaction":"txn_4NWzim2o2r8xRP",
+          "failure_message":null,"failure_code":null,"amount_refunded":0,
+          "customer":"cus_35N03uIhfJPhzU","invoice":null,"description":null,
+          "dispute":null,"metadata":{},"statement_description":null,
+          "receipt_email":"bqchristie@gmail.com"}
+
+      setupCredit (user, expert, expertUser, ticketOrder) =>
+        svc = new (require '../../../lib/services/orders')(expertUser)
+        suggested =
+          expert: expert
+          suggestedRate: 220
+          expertStatus: "available"
+        Factory.create 'request', {userId: user._id, suggested, budget: 300}, (request) =>
+          svc.confirmBookme request, {expertStatus: 'available'}, (err, request) =>
+            svc.searchOne { requestId: request._id }, {}, (err, order) =>
+              expect(order.total).to.equal(20)
+              done()
+

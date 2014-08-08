@@ -10,6 +10,7 @@ Factory = require 'factory-lady'
 require ("../factory/expertFactory")
 require ("../factory/requestFactory")
 require ("../factory/orderFactory")
+require ("../factory/settingsFactory")
 
 before (done) ->
   return done() if mongoose.connections[0]._listening
