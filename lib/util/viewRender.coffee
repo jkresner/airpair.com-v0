@@ -66,6 +66,7 @@ module.exports =
                 next e
             else
               data =
+                firebase: req.firebase
                 isProd: config.isProd.toString()
                 session: vdSvc.session false
                 reqUrl: req.url

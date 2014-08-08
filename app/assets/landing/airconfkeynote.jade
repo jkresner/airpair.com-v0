@@ -54,6 +54,7 @@ html(ng-app='ngAirPair')
 
     script(type="text/javascript").
       window.session = {
+        firebase: !{ firebase ? JSON.stringify(firebase) : 'null' },
         user: !{ session ? JSON.stringify(session) : 'null'},
         workshop: !{ workshop ? JSON.stringify(workshop) : 'null'},
         requestId: !{ workshopRequestId ? JSON.stringify(workshopRequestId) : 'null'},

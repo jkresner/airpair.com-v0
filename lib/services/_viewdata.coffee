@@ -29,10 +29,12 @@ module.exports = class ViewDataService
       if u.github then delete u.github.token
       if u.stack then delete u.stack.token
       u.authenticated = true
+
       if full
         u
       else
         _.pick u, ['_id','google','googleId','authenticated']
+
     else
       authenticated : false
 

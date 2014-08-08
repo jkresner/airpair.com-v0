@@ -39,6 +39,7 @@
     "css-brunch": "> 1.0 < 1.5",
     "express": "3.x",
     "express-validator": "~1.0.1",
+    "firebase-token-generator": "^1.1.2",
     "googleapis": "~0.6.1",
     "handlebars": "2.x.x",
     "handlebars-brunch": "> 1.0 < 1.5",

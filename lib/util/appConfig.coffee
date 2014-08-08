@@ -6,6 +6,10 @@ defaults =
 module.exports =
   dev:
     defaults: defaults
+    airconf:
+      chat:
+        firebasePath: 'https://airconf.firebaseio.com/chat/'
+        firebaseSecret: 'PHQmJ3cVtcvdsWkb76fKTvIagbM5Ut1KFrDzSLmw'
     env: 'dev'
     isProd: false
     mongoUri: process.env.MONGOHQ_URL || "mongodb://localhost/airpair_dev"
@@ -67,6 +71,10 @@ module.exports =
 
   test:
     defaults: defaults
+    airconf:
+      chat:
+        firebasePath: 'https://airconf.firebaseio.com/chat/'
+        firebaseSecret: 'PHQmJ3cVtcvdsWkb76fKTvIagbM5Ut1KFrDzSLmw'
     env: 'test'
     isProd: false
     mongoUri: process.env.MONGOHQ_URL || "mongodb://localhost/airpair_test"
@@ -128,6 +136,10 @@ module.exports =
 
   staging:
     defaults: defaults
+    airconf:
+      chat:
+        firebasePath: 'https://airconf.firebaseio.com/chat/'
+        firebaseSecret: 'PHQmJ3cVtcvdsWkb76fKTvIagbM5Ut1KFrDzSLmw'
     env: 'staging'
     isProd: false
     mongoUri: process.env.MONGOHQ_URL || "mongodb://localhost/airpair_staging"
@@ -188,6 +200,10 @@ module.exports =
 
   prod:
     defaults: defaults
+    airconf:
+      chat:
+        firebasePath: 'https://airpair-chat.firebaseio.com/chat/'
+        firebaseSecret: 'xEJfxuGTt6HnvdX56jWlVZlZkHdE2czmtUvs33xD'
     env: 'prod'
     isProd: true
     mongoUri: process.env.MONGOHQ_URL || "mongodb://localhost/airpair_prod"

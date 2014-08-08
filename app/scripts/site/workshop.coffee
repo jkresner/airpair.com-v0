@@ -28,4 +28,6 @@ require("./services/workshop")
 require("./controllers/sessionController")
 require("./controllers/workshopController")
 require("./directives/chat_directive")
+
+# todo: move to config for chat_directive
 require("./filters/reverse")
