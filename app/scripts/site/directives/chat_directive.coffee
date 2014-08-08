@@ -16,8 +16,6 @@ ChatDirective = ($firebase, session) ->
     # guard against misconfiguration
     return if not firebaseSlug
 
-    console.log session.data.firebase
-
     # get a firebase reference
     firebaseSlug = firebaseSlug.replace(".", "") # better replace logic
     ref = new Firebase(session.data.firebase.path + firebaseSlug)
@@ -27,6 +25,13 @@ ChatDirective = ($firebase, session) ->
       $(element).find('#chat_entry').remove()
     else
       scope.user = session.data.user.google._json
+      scope.isAdmin = session.data.firebase.isAdmin
+
+      scope.canDelete = (message) ->
+        @isAdmin or (message.user_id == session.data.user.googleId)
+
+      scope.delete = (message) ->
+        @messages.$remove message
 
       # authenticate firebase session
       ref.auth session.data.firebase.token, (error) ->

@@ -17,3 +17,6 @@ h3(ng-bind="title")
           strong {{message.from}} &nbsp;
           span(ng-if="message.sent_at" am-time-ago="message.sent_at")
           span(ng-if="message.timestamp" am-time-ago="message.timestamp")
+          | &nbsp; &mdash; &nbsp;
+          a(ng-show="canDelete(message)" ng-click="delete(message)" href="#") delete
+
