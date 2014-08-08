@@ -28,7 +28,7 @@ module.exports = (app) ->
   app.get '/site', authd, render 'site'
   app.get '/experts/me', authd, render 'site'
   app.get '/workshops/me', authd, render 'workshop', ['params.id']
-  app.get '/:tag/workshops/:id', fbAuth, render 'workshop', ['params.id', {template: 'workshop/detail'}, {template: 'shared/chat_template'}]
+  app.get '/:tag/workshops/:id', fbAuth(), render 'workshop', ['params.id', {template: 'workshop/detail'}, {template: 'shared/chat_template'}]
 
   # angular templates
   app.get '/adm/templates/orders_daily', authd, render 'adm/templates/orders_daily'

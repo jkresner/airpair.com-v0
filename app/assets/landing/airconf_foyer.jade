@@ -46,8 +46,7 @@ html(ng-app='ngAirPair')
 
     script(type="text/javascript").
       window.session = {
-        firebaseAuth: "#{req.session.fba}"
-        firebasePath: "#{config.airconf.chat.firebasePath}",
+        firebase: !{ firebase ? JSON.stringify(firebase) : 'null' },
         user: !{ session ? JSON.stringify(session) : 'null'}
       };
 

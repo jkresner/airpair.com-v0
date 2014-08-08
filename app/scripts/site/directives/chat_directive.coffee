@@ -16,9 +16,11 @@ ChatDirective = ($firebase, session) ->
     # guard against misconfiguration
     return if not firebaseSlug
 
+    console.log session.data.firebase
+
     # get a firebase reference
     firebaseSlug = firebaseSlug.replace(".", "") # better replace logic
-    ref = new Firebase(session.data.firebasePath + firebaseSlug)
+    ref = new Firebase(session.data.firebase.path + firebaseSlug)
 
     if not session.isSignedIn()
       # read-only mode
@@ -27,7 +29,7 @@ ChatDirective = ($firebase, session) ->
       scope.user = session.data.user.google._json
 
       # authenticate firebase session
-      ref.auth session.data.user.fba, (error) ->
+      ref.auth session.data.firebase.token, (error) ->
         if error
           console.log("Firebase login failed! Chat is read-only.", error)
 
