@@ -3,7 +3,6 @@ AirConfDiscounts  = require '../services/airConfDiscounts'
 CompanysSvc = require '../services/companys'
 Data = require './_viewdata.data'
 ExpertsSvc = require '../services/experts'
-FirebaseTokenGenerator = require "firebase-token-generator"
 OrdersSvc = require '../services/orders'
 OrdersQuery = require '../services/orders.query'
 RequestsSvc = require '../services/requests'
@@ -31,19 +30,10 @@ module.exports = class ViewDataService
       if u.stack then delete u.stack.token
       u.authenticated = true
 
-      console.log u
-
-      # todo: this probably doesn't need to be done for each request
-      tokenGenerator = new FirebaseTokenGenerator(config.airconf.chat.firebaseSecret)
-
-      # todo: quick and dirty authorization as chat admin -- are you using an airpair.com email address?
-      isAdmin = _.contains(u.google._json.email, "@airpair.com")
-      u.fba = tokenGenerator.createToken(user_id: u.googleId, admin: isAdmin)
-
       if full
         u
       else
-        _.pick u, ['_id','google','googleId','authenticated','fba']
+        _.pick u, ['_id','google','googleId','authenticated']
 
     else
       authenticated : false
