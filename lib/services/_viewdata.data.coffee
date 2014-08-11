@@ -17,7 +17,7 @@ module.exports =
       ]
     'wk2':
       slug:         'engineering-vs-entrepreneurship'
-      time:         'Mon Aug 18 2014 18:30:00 GMT'
+      time:         'Mon Aug 11 2014 18:30:00 GMT'
       calStart:     '20140811T183000Z'
       calEnd:       '20140811T193000Z'
       title:        'Engineering vs Entrepreneurship'
