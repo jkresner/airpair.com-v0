@@ -7,11 +7,13 @@ html(ng-app='ngAirPair')
     div(ng-view)
     include ./templates/workshop/login
 
+
     script(type="text/ng-template" id="/templates/#{template.name}").
       !{template.html}
 
     script(type="text/ng-template" id="/templates/#{chatTemplate.name}").
       !{chatTemplate.html}
+
 
     script(type="text/javascript").
       window.session = {

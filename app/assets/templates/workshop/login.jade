@@ -1,19 +1,17 @@
-doctype html
-html(ng-app='ngAirPair')
-  include ./templates/workshop/head
+div(ng-hide="isSignedIn()")
+  .modal.fade(id="loginModal", tabindex="-1", role="dialog", aria-labelledby="loginTitle", aria-hidden="true", style="opacity:0.95")
+    .modal-dialog
+      .modal-content
+        .modal-header
+          h4.modal-title#loginTitle(style="font-weight:bold;font-size:22px") Attend AirConf 2014
+        .modal-body(style="text-align:center;padding:60px")
+          p(style="font-size:16px;margin-bottom:60px;") AirConf is broadcasted via Google+ Hangouts
+          a.btn.btn-block.btn-orange.btn-signin.trackAirConfLogin(href="#") Sign in with Google to access AirConf
+          p(style="font-size:12px;margin:10px 0 0 0") *Your Google email be use to invite you to live workshops.
+        .modal-footer
+          button(type="button", class="btn btn-default", data-dismiss="modal") Close
 
-  body#airconf(ng-controller='SessionController')
-    include ./templates/workshop/nav
-    div(ng-view)
-    include ./templates/workshop/login
-
-    script(type="text/ng-template" id="/templates/#{template.name}").
-      !{template.html}
-
-    script(type="text/ng-template" id="/templates/#{chatTemplate.name}").
-      !{chatTemplate.html}
-
-    script(type="text/javascript").
+script(type="text/javascript").
       window.session = {
         firebase: !{ firebase ? JSON.stringify(firebase) : 'null' },
         user: !{ session ? JSON.stringify(session) : 'null'},
@@ -47,5 +45,3 @@ html(ng-app='ngAirPair')
         });
       }
       bindLoginModal();
-
-      require('scripts/site/workshop');
