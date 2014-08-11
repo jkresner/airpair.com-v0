@@ -1,21 +1,64 @@
 body#airconf {
-
-
-  header { background:#dff2ef;height:40px }
-  header {
-    a { width:100px;margin:auto;display:block }
-    img { width:140px;margin-left:-14px }
-  }
-
-  .talk { min-height:1000px }
   .talk {
-    .container { background:white;min-height:1000px;width:1000px }
-    h1 { color:#151821;font-size:18px;font-weight:normal }
-    h2 { color:#232835;font-size:18px;font-weight:normal }
-    p { font-size:12px;color:gray }
+    background-color: black;
+    background: url('/images/landing/airconf/bg-2.jpg');
+    margin-top: 0 !important;
+    text-align: center;
 
-    .col { width:44%;margin:1% 2%;display:inline-block;vertical-align:top }
-    .col p { text-align:justify;margin-bottom:10px }
+    .container {
+      background:white;
+      min-height: 1000px;
+    }
+
+    section {
+      color: #dff2ef;
+      height: 90px;
+      margin-bottom: 40px;
+    }
+
+    h1 {
+      color:#151821;
+      font-size:14pt;
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+
+    time {
+      color: #555;
+      font-size: 10pt;
+      display: block;
+    }
+
+    h2 {
+      font-size:12pt;
+      font-weight:600;
+      margin:16px auto;
+    }
+
+    p {
+      color: #555;
+      font-size:10pt;
+      font-weight:400;
+
+      &.description {
+        padding: 10px;
+        text-align:justify;
+        .tags { color: #777; }
+      }
+    }
+
+    .panelists {
+      margin-top: 10px
+    }
+
+    &.panel {
+      .speaker {
+        img { border-radius: 25px }
+        padding: 20px;
+      }
+    }
+
+    .logo { margin:50px 0 30px 0 }
 
     .slide { max-width:800px;width:90%;border:solid 1px black }
     .anonymous { opacity:0.2; }
@@ -32,19 +75,30 @@ body#airconf {
       .loginRequired { width:50% }
     }
 
-    @media (max-width:1024px) {
-      .container { height:auto;width:800px;padding-bottom:200px }
-    }
-
     @media (max-width:800px) {
-      .container { width:640px }
-      .col { display:block;width:100%;margin-top:35px }
+      .col { margin-top:35px }
     }
 
     @media (max-width:640px) {
-      .container { width:100% }
-      .col { display:block;width:100%;margin-top:35px }
+      .col { margin-top:35px }
+    }
+
+    @media (max-width:801px) {
+      .logo { margin:50px 0 20px 0 }
+      section { height:110px;width:100%;color:#dff2ef; }
+      section span { display:block; }
+    }
+
+    @media (max-width:640px) {
+      .logo { width:60%; }
+      h2 { width:96%; }
+      p { width:96%; }
+    }
+
+    @media (max-width:480px) {
+      .logo { width:80%; }
+      section { height:130px;top:190px; }
+      h2 { font-size:22px; }
     }
   }
-
 }

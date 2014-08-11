@@ -1,18 +1,15 @@
-
-.hero.talk
+.talk
   .container
-    .details
-      .col
+    .row.details
+      .col.col-md-6
+        include details
+      .col.col-md-6
         div(ng-repeat="speaker in workshop.speakers")
-          h2 {{speaker.name}}
-          p {{speaker.fullBio}}
-      .col
-        h1 {{ workshop.title }}
-        p {{workshop.description}}
-        span(ng-repeat="tag in workshop.tags")  { {{tag}} }
-     .viewer
-        br
-        time(datetime="{{workshop.time | date:'EEE MMM dd yyyy HH:mmZ'}}",ng-show="showLocalTimes()")
+          h1 {{speaker.name}}
+          p.description {{speaker.fullBio}}
+
+    .row.viewer
+      .col-md-12
         .addthis_sharing_toolbox.m-t-1
         hr
         div(ng-show="session.isSignedIn()")
@@ -41,7 +38,6 @@
             .attendee(ng-repeat="attendee in audience() | uniq:'name'")
               img(ng-src="{{ attendee.picture }}" title="{{ attendee.name }}" style="border-radius: 15px")
 
-        div(ng-hide="session.isSignedIn()")
           a.btn.btn-orange.loginRequired(href="/airconf-registration",data-return="/airconf-registration") Register to watch talk
           br
           span Already got an AirConf ticket? &nbsp

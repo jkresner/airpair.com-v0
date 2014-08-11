@@ -1,5 +1,11 @@
 body#airconf {
-  background:black;
+  background: white;
+
+  header { background:#dff2ef;height:40px }
+  header {
+    a { width:100px;margin:auto;display:block }
+    img { width:140px;margin-left:-14px }
+  }
 
   h2 { text-align:center;margin:40px auto; }
   .btn { font-size:18px;margin:auto;color:white;height:50px;font-weight:300;text-transform:none;padding-top:12px; }
@@ -127,8 +133,8 @@ body#airconf {
 }
 
 @-moz-document url-prefix() {
-  body#airconf .hero h2 { font-weight:400!important; }
-  body#airconf .hero p { font-weight:300!important; }
+  body#airconf .talk h2 { font-weight:400!important; }
+  body#airconf .talk p { font-weight:300!important; }
 }
 
 .attendee {

@@ -7,13 +7,11 @@ html(ng-app='ngAirPair')
     div(ng-view)
     include ./templates/workshop/login
 
-
     script(type="text/ng-template" id="/templates/#{template.name}").
       !{template.html}
 
     script(type="text/ng-template" id="/templates/#{chatTemplate.name}").
       !{chatTemplate.html}
-
 
     script(type="text/javascript").
       window.session = {
@@ -25,29 +23,5 @@ html(ng-app='ngAirPair')
         attendees: !{ attendees ? JSON.stringify(attendees) : '[]'},
         attendingWorkshops: !{ attendingWorkshops ? JSON.stringify(attendingWorkshops) : '[]'}
       };
-
-      function bindLoginModal() {
-        if(typeof addjs === 'undefined') {
-          var AddJS = require("scripts/providers/addjs/index");
-          window.addjs = new AddJS('!{segmentioKey}');
-        }
-        addjs.trackEvent('page', 'view', window.location.pathname, 'workshop detail');
-        addjs.trackSession({});
-
-        $("body").on('click', ".loginRequired", function(e) {
-          e.preventDefault();
-          var return_to = window.location.pathname;
-          if ($(this).data('return')) { return_to = $(this).data('return'); }
-
-          elemId = window.location.pathname + ':' + $(this).attr('id');
-          addjs.trackEvent('airconf', 'airconfExplore', elemId);
-          $('#loginModal').modal({ keyboard: false });
-          $(".trackAirConfLogin").click(function(e) {
-            addjs.trackEvent('airconf', 'airconfLogin', elemId);
-            addjs.redirectToLogin(e, "auth/google?return_to=" + return_to);
-          });
-        });
-      }
-      bindLoginModal();
 
       require('scripts/site/workshop');

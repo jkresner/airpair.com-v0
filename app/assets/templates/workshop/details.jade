@@ -1,0 +1,5 @@
+h1 {{ workshop.title }}
+time(datetime="{{workshop.time | date:'EEE MMM dd yyyy HH:mmZ'}}", ng-show="showLocalTimes()" format="dddd, MMMM Do YYYY, h:mm a")
+p.description
+  | {{ workshop.description }}
+  span.tags(ng-repeat="tag in workshop.tags")  {&nbsp;{{tag}}&nbsp;}

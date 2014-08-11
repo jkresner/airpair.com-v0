@@ -9,7 +9,7 @@ Config = ($routeProvider, $locationProvider, RestangularProvider) ->
      controller: 'WorkshopController'
 
    .when '/airconf2014/keynote/:id',
-     templateUrl: '/templates/workshop/keynote'
+     templateUrl: '/templates/workshop/panel'
      controller: 'WorkshopController'
 
   $locationProvider.html5Mode(true)
