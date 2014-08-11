@@ -16,6 +16,7 @@ module.exports =
         { name: 'Chad Pytel', company: 'ThoughtBot', title: 'CEO', pic: '//secure.gravatar.com/avatar/1eb7539f1f0a62f74ea3f7a0fa0f486f?s=110', tw: 'cpytel' }
       ]
     'wk2':
+      youtube:      'S2rxUJ-hC44'
       slug:         'engineering-vs-entrepreneurship'
       time:         'Mon Aug 11 2014 18:30:00 GMT'
       calStart:     '20140811T183000Z'
