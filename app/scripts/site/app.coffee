@@ -4,7 +4,7 @@ Config = ($routeProvider, $locationProvider, RestangularProvider) ->
      templateUrl: '/templates/settings/notifications'
      controller: 'NotificationSettingsController'
    .when '/coming',
-     templateUrl: '/templates/coming'
+     templateUrl: '/templates/shared/coming'
      controller: 'ComingController'
 
   $locationProvider.html5Mode(true)

@@ -77,6 +77,7 @@
               .col-xs-4
                 input(type="checkbox", ng-checked="tagHasLevel(tag, 'expert')", ng-model="tag.levelExpert", ng-change="update()", ng-delay="500")
         .type {{tag.name}}
-          .all-levels
+          .all-levels.active(ng-show="tag.levelAny()")
+          .all-levels.inactive(ng-hide="tag.levelAny()")
 
 //-pre(ng-bind='expertOrderStats() | json')

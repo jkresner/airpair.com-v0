@@ -37,15 +37,6 @@ NotificationSettingsController = ($scope, Expert) ->
   $scope.$watchGroup [Expert.minRate(), Expert.rate()], (newValue, oldValue) =>
     $('.hourly .slider').val([values.indexOf(Expert.minRate()), values.indexOf(Expert.rate())])
 
-  $scope.$watch Expert.tags(), (newValue, oldValue) ->
-    $('form.tags .type').each ->
-      allTags = $(this).parents(".level").find('input[type="checkbox"]')
-      uncheckedTags = allTags.not(":checked")
-      if uncheckedTags.size() > 0
-        $(this).children('.all-levels').removeClass('active')
-      else
-        $(this).children('.all-levels').addClass('active')
-
   $('form.tags').on 'click', '.type', ->
     allTags = $(this).parents(".level").find('input[type="checkbox"]')
     uncheckedTags = allTags.not(":checked")

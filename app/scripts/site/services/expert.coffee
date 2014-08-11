@@ -66,6 +66,8 @@ ngExpert = ($http, $rootScope, Restangular) ->
         tag.levelBeginner = tagGetterSetter(tag, 'beginner')
         tag.levelIntermediate = tagGetterSetter(tag, 'intermediate')
         tag.levelExpert = tagGetterSetter(tag, 'expert')
+        tag.levelAny = ->
+          tag.levelBeginner() || tag.levelIntermediate() || tag.levelExpert()
 
     tagGetterSetter = (tag, level) ->
       (value) ->
