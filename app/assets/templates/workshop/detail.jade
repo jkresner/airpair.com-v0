@@ -38,7 +38,7 @@
 
           #audience.text-center.m-t-1(ng-show="audience().length")
             h3 Audience Members
-            .attendee(ng-repeat="attendee in audience()")
+            .attendee(ng-repeat="attendee in audience() | uniq:'name'")
               img(ng-src="{{ attendee.picture }}" title="{{ attendee.name }}" style="border-radius: 15px")
 
         div(ng-hide="session.isSignedIn()")
