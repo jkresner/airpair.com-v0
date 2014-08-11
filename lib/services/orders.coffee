@@ -158,7 +158,7 @@ module.exports = class OrdersService extends DomainService
       props.utm_content  = order.utm.utm_content
       props.utm_campaign = order.utm.utm_campaign
 
-    trackCallback = (response) =>
+    trackCallback = (error, response) =>
       if response? && _.some(response.results)
         mixpanelId = response.results[0]['$distinct_id']
         segmentio.track

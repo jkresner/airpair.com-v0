@@ -13,7 +13,14 @@ class Mixpanel
     md5sum.update( reducedParams + config.analytics.mixpanel.secret)
     params.sig = md5sum.digest('hex')
     restler.get("http://mixpanel.com/api/2.0/engage/", {query: params})
-      .on 'complete',  (data) ->
-        callback(data)
+      .on('success',  (data) -> callback(null, data))
+      .on('error', (error, response) -> callback(error, null))
+      .on('fail', (data, response) -> callback(response, null))
+
+  addProperties: (email, object, callback) ->
+    @user email, (error, response) =>
+      if response? && _.some(response, response.results)
+        object.mixpanel = response.results[0]?.$properties
+      callback(error, object)
 
 module.exports = new Mixpanel()

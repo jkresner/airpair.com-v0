@@ -5,6 +5,7 @@ DomainService    = require './_svc'
 RatesSvc         = require './rates'
 SettingsSvc      = require './settings'
 MarketingTagsSvc = require './marketingtags'
+Mixpanel         = require './mixpanel'
 expertPick       = require '../mix/expertForSuggestion'
 objectIdWithTimestamp = require '../mix/objectIdWithTimestamp'
 
@@ -74,20 +75,28 @@ module.exports = class RequestsService extends DomainService
           @_addViewEvent r, "expert view"
           @rates.addRequestSuggestedRates r #important to get rates before strip query
           r = Data.select r, 'associated'
-          # $log 'expert view', r
+          cb e, r
+        else if Roles.isAdmin @usr
+          @rates.addRequestSuggestedRates r, true
+          async.each r.company.contacts, (contact, callback) =>
+            Mixpanel.addProperties contact.email, contact, (error, request) =>
+              callback e, contact
+          , (error, contacts) =>
+            cb error, r
         else if Roles.isRequestOwner @usr, r
           @_addViewEvent r, "customer view"
           @rates.addRequestSuggestedRates r, true
-        else if Roles.isAdmin @usr
-          # $log 'admin view', r
-          @rates.addRequestSuggestedRates r, true
+          cb e, r
         else if @usr?
           @_addViewEvent r, "unassigned view"
           r = Data.select r, 'associated'
+          cb e, r
         else
           @_addViewEvent r, "anon view"
           r = Data.select r, 'public'
-      cb e, r
+          cb e, r
+      else
+        cb e, r
 
 
   # log event when the request is viewed

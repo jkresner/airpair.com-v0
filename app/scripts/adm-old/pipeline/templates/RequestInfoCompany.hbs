@@ -58,6 +58,40 @@
           {{/if}}
         </td>
       </tr>
+      {{#if mixpanel}}
+      {{#with mixpanel}}
+      {{#if utm_campaign}}
+      <tr>
+        <th>Campaign</th>
+        <td> {{utm_campaign}} </td>
+      </tr>
+      {{/if}}
+      {{#if utm_content}}
+      <tr>
+        <th>Content</th>
+        <td> {{utm_content}} </td>
+      </tr>
+      {{/if}}
+      {{#if utm_medium}}
+      <tr>
+        <th>Medium</th>
+        <td> {{utm_medium}} </td>
+      </tr>
+      {{/if}}
+      {{#if utm_source}}
+      <tr>
+        <th>Source</th>
+        <td> {{utm_source}} </td>
+      </tr>
+      {{/if}}
+      {{#if utm_term}}
+      <tr>
+        <th>Term</th>
+        <td> {{utm_term}} </td>
+      </tr>
+      {{/if}}
+      {{/with}}
+      {{/if}}
     </table>
 
     {{/each}}
