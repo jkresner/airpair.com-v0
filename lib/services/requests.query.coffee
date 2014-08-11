@@ -39,7 +39,7 @@ class QueryHelper
       'availability': 1
       'tags': 1
       'status': 1
-      # 'budget': 1
+      'budget': 1
       'pricing': 1
       'suggested': 1
 
