@@ -90,6 +90,31 @@ namespace 'onetime', ->
           console.log "Success", recordsUpdated, "records updated"
         complete()
 
+  task 'addMinRateToExpert', {async: true},  ->
+    require("./scripts/env")
+    async = require("async")
+    console.log "Adding minRate to expert"
+    recordsUpdated = 0
+    values = [10, 40, 70, 110, 160, 230]
+    Expert.find {}, (err, experts) ->
+      async.each experts, (expert, callback)->
+        if !expert.minRate? && expert.rate?
+          recordsUpdated++
+          index = values.indexOf(expert.rate)
+          index-- if expert.rate > 10
+          index = 5 if expert.rate > 230
+          expert.minRate = values[index]
+          expert.minRate = 0 if !expert.minRate?
+          expert.save(callback)
+        else
+          callback(null, expert)
+      , (err) ->
+        if err?
+          console.log "Error", err
+        else
+          console.log "Success", recordsUpdated, "records updated"
+        complete()
+
   task 'addLevelsToExpertTags', {async: true},  ->
     require("./scripts/env")
     async = require("async")
