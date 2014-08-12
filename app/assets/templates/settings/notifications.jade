@@ -28,13 +28,20 @@
         label(ng-show="status()") Send me AirPairs!
         label(ng-hide="status()") Busy ATM
         input(type="checkbox", id="status", ng-checked="status()", ng-model="status", ng-change="update()")
-      .hours
+      .hours(ng-show="status()")
         select.top(ng-model="hoursAvailable", ng-change="update()", ng-options="h for h in hourRange")
         label Hrs/Week
-      .times
+      .date(ng-hide="status()")
+        input.top#busyUntil(ng-model="busyUntil", ng-change="update()", type="date")
+        label Busy Until
+      .times(ng-show="status()")
         .top
           input(id="availability", type="text", placeholder="What days and times are you available to AirPair?", ng-model="availability", ng-change="update()", ng-delay="500")
         label(for="availability") Best Times
+      .times(ng-hide="status()")
+        .top
+          input(id="availability", type="text", placeholder="Brieftly, what are you doing while away?", ng-model="availability", ng-change="update()", ng-delay="500")
+        label(for="availability") Why You're Busy
 
   .section
     .title

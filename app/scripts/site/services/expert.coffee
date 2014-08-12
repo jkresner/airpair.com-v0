@@ -94,9 +94,19 @@ ngExpert = ($http, $rootScope, Restangular) ->
         data.expert.hours = value.toString()
       data.expert? && data.expert.hours
 
+    busyUntil: (value) ->
+      if value?
+        data.expert.busyUntil = value
+      # horrible hack, but angular blows up if you return
+      # a date object from a getter and the angular date
+      # input requires a date object #itsabug
+      data.expert? && $('#busyUntil').val(moment(data.expert.busyUntil).format("YYYY-MM-DD"))
+      data.expert? && moment(data.expert.busyUntil).format()
+
     status: (value) ->
       if value?
         data.expert.status = if value then "ready" else "busy"
+        data.expert.availability = ""
       data.expert? && data.expert.status == "ready"
 
     setRate: (min, max) ->
