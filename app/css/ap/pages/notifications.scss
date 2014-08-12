@@ -166,6 +166,24 @@
     .slider-col {
       margin-left: 275px;
     }
+    .slider-col .tag {
+      background: #DFF2EF;
+      height: 35px;
+      left: -27px;
+      padding: 10px;
+      position: relative;
+      top: -20px;
+      width: 93px;
+
+      .pointer {
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 10px 10px 0 10px;
+        border-color: #DFF2EF transparent transparent transparent;
+        margin-top: 5px;
+      }
+    }
     .type {
       background: #DFF2EF;
       border: 1px solid #C8D6D3;

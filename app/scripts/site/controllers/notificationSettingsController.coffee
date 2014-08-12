@@ -20,7 +20,11 @@ NotificationSettingsController = ($scope, Expert) ->
         encoder: (value) ->
           values[value]
 
+  movePublicRateTag = (index) =>
+    $(".slider-col .tag").css('margin-left', "#{values.indexOf(parseInt(index)) * 20}%")
+
   $('.hourly .slider').change (event, value) =>
+    movePublicRateTag(value[1])
     Expert.setRate(value[0], value[1])
     Expert.update()
 
@@ -36,6 +40,7 @@ NotificationSettingsController = ($scope, Expert) ->
 
   $scope.$watchGroup [Expert.minRate(), Expert.rate()], (newValue, oldValue) =>
     $('.hourly .slider').val([values.indexOf(Expert.minRate()), values.indexOf(Expert.rate())])
+    movePublicRateTag(Expert.rate())
 
   $('form.tags').on 'click', '.type', ->
     allTags = $(this).parents(".level").find('input[type="checkbox"]')
