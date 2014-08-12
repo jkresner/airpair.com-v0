@@ -18,6 +18,7 @@
         span.sub-label Air Pairs
 
   .section
+    .updated Updated {{ updatedAt() }}
     h1 notification status
 
     form.availability(ng-model-options="{ getterSetter: true }")
@@ -44,6 +45,7 @@
         label(for="availability") Why You're Busy
 
   .section
+    .updated Updated {{ updatedAt() }}
     .title
       h1 notification price range
     .slider-row.hourly
@@ -63,6 +65,7 @@
             .col-xs-2.text-center $230
 
   .section
+    .updated Updated {{ updatedAt() }}
     h1 subscription settings
     .slider-row.header
       .slider-wrapper

@@ -87,6 +87,7 @@ module.exports = class ExpertsService extends DomainService
 
 
   update: (id, data, cb) =>
+    data.updatedAt = new Date()
     if data.bookMe? && data.bookMe.enabled
       data.bookMe.urlSlug = data.bookMe.urlSlug.toLowerCase()
     super id, data, cb

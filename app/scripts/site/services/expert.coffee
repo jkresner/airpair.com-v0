@@ -82,6 +82,9 @@ ngExpert = ($http, $rootScope, Restangular) ->
     constructor:  ->
       @fetchExpert()
 
+    updatedAt: ->
+      data.expert? && moment(data.expert.updatedAt).fromNow()
+
     fetchExpert: ->
       Restangular.one('experts', 'me').get().then (expert) =>
         data.expert = expert
@@ -144,6 +147,7 @@ ngExpert = ($http, $rootScope, Restangular) ->
       averagePerHour: averagePerHour()
 
     update: ->
+      data.expert.updatedAt = new Date
       data.expert.save()
 
   new Expert

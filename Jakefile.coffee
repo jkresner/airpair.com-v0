@@ -63,6 +63,26 @@ namespace 'onetime', ->
           recordsUpdated++
           expert.availability = ""
           expert.save(callback)
+        else
+          callback(null, expert)
+      , (err) ->
+        if err?
+          console.log "Error", err
+        else
+          console.log "Success", recordsUpdated, "records updated"
+        complete()
+
+  task 'addUpdatedAtToExpert', {async: true},  ->
+    require("./scripts/env")
+    ObjectId2Date = require("./lib/mix/objectId2Date")
+    async = require("async")
+    console.log "Adding updatedAt to expert"
+    recordsUpdated = 0
+    Expert.find {}, (err, experts) ->
+      async.each experts, (expert, callback)->
+        recordsUpdated++
+        expert.updatedAt = ObjectId2Date(expert._id)
+        expert.save(callback)
       , (err) ->
         if err?
           console.log "Error", err

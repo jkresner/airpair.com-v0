@@ -57,5 +57,6 @@ schema = new Schema
   hours:          String
   bookMe:         { required: false, type: Bookme }
   busyUntil:      { type: Date, default: Date }
+  updatedAt:      { type: Date, default: Date }
 
 module.exports = mongoose.model 'Expert', schema
