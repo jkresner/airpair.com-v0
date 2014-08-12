@@ -10,7 +10,7 @@ module.exports =
       title:        'The Future of Consulting'
       description:  'Remote teams are becoming more popular each year. With increasing access to high quality distributed talent, consultancies like Thoughtworks and Pivotal Labs now go beyond outsourcing. The top consultancies leave clients with new skills as well as deliverables. Will this be enough going forward?'
       speakers: [
-        { name: 'Obie Fernadez', company: 'AirPair', title: 'CTO', pic: '/images/avatars/of.png', tw: 'obie' }
+        { name: 'Obie Fernandez', company: 'AirPair', title: 'CTO', pic: '/images/avatars/of.png', tw: 'obie' }
         { name: 'Evan Henshaw-Plath', company: 'Neo', title: 'CTO', pic: '/images/landing/airconf/rabble.png', tw: 'rabble' }
         { name: 'Mike Mason', company: 'ThoughtWorks', title: 'Head of Technology', pic: '/images/landing/airconf/mikemasonca.png', tw: 'mikemasonca' }
         { name: 'Chad Pytel', company: 'ThoughtBot', title: 'CEO', pic: '//secure.gravatar.com/avatar/1eb7539f1f0a62f74ea3f7a0fa0f486f?s=110', tw: 'cpytel' }

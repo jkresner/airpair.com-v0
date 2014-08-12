@@ -1,24 +1,18 @@
 body#airconf {
+  min-height: 1000px;
+
   .talk {
     background-color: black;
     background: url('/images/landing/airconf/bg-2.jpg');
     margin-top: 0 !important;
-    text-align: center;
 
     .container {
       background:white;
-      min-height: 1000px;
-    }
-
-    section {
-      color: #dff2ef;
-      height: 90px;
-      margin-bottom: 40px;
     }
 
     h1 {
       color:#151821;
-      font-size:14pt;
+      font-size:16pt;
       font-weight: 600;
       margin-bottom: 5px;
     }
@@ -58,35 +52,33 @@ body#airconf {
       }
     }
 
+    .container.viewer {
+      background:black;
+      padding: 0 !important;
+    }
+
+    .already {
+      line-height: 16pt;
+      margin-top: 5px;
+    }
+
     .logo { margin:50px 0 30px 0 }
 
-    .slide { max-width:800px;width:90%;border:solid 1px black }
     .anonymous { opacity:0.2; }
     .unregistered { opacity:0.4; }
-    .btn-orange { margin-bottom:6px }
-    .btn-rsvp { width:240px }
-    .viewer { max-width:900px;width:90%;margin:auto }
-    .player { background:black;margin-top:20px }
 
     p.attending { color:green;max-width:80%;font-weight:bold;font-size:14px }
 
     .viewer {
-      // .actions { z-index:200;margin-top:-250px }
       .loginRequired { width:50% }
     }
 
-    @media (max-width:800px) {
-      .col { margin-top:35px }
+    @media (max-width:1024px) {
+      .col-md-5.text-center { text-align: left }
     }
 
     @media (max-width:640px) {
       .col { margin-top:35px }
-    }
-
-    @media (max-width:801px) {
-      .logo { margin:50px 0 20px 0 }
-      section { height:110px;width:100%;color:#dff2ef; }
-      section span { display:block; }
     }
 
     @media (max-width:640px) {

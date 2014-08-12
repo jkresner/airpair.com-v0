@@ -8,16 +8,11 @@ body#airconf {
   }
 
   h2 { text-align:center;margin:40px auto; }
-  .btn { font-size:18px;margin:auto;color:white;height:50px;font-weight:300;text-transform:none;padding-top:12px; }
 
-  a.btn-orange {
-    background:#ce5424;
-    &:hover { font-weight:600; }
-  }
-
-  a.btn-teal {
-    background:#90d1cc;
-    &:hover { font-weight:600; }
+  a.btn {
+    color:white;
+    &.btn-orange { background: #ce5424 }
+    &.btn-teal { background: #90d1cc }
   }
 
  .addthis_sharing_toolbox {

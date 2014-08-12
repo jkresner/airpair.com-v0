@@ -1,17 +1,17 @@
-h3(ng-bind="title")
-#chat(cg-busy="messages.$loaded()")
+#chat
+  h3(ng-bind="title")
   .row#chat_entry
     form.form-inline(ng-submit='addMessage()')
-      .col-xs-1.pic
+      .col-xs-2.pic
         img.img-responsive(ng-src="{{user.picture}}")
-      .col-xs-11.message
+      .col-xs-10.message
         input(type='text' ng-model='message' placeholder='Hit enter to submit message...')
 
-  #messages
+  #messages(cg-busy="messages.$loaded()")
     .row(ng-repeat="message in messages | reverse")
-      .col-xs-1.pic
+      .col-xs-2.pic
         img.img-responsive(ng-src="{{message.pic}}")
-      .col-xs-11.message
+      .col-xs-10.message
         span(ng-bind-html="message.content | linky:'_blank'")
         .timestamp
           strong {{message.from}} &nbsp;

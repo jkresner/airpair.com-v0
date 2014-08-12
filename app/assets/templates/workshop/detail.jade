@@ -1,49 +1,41 @@
 .talk
   .container
     .row.details
-      .col.col-md-6
-        include details
-      .col.col-md-6
+      .col-md-8
+        h1 {{ workshop.title }}
+        time(datetime="{{workshop.time | date:'EEE MMM dd yyyy HH:mmZ'}}", ng-show="showLocalTimes()" format="dddd, MMMM Do YYYY, h:mm a")
+        p.description
+          | {{ workshop.description }}
+          span.tags(ng-repeat="tag in workshop.tags")  {&nbsp;{{tag}}&nbsp;}
+
+        .row
+          .col-md-5.m-b-1(ng-if="!session.isSignedIn()")
+            .register
+              a.btn.btn-orange.loginRequired(href="/airconf-registration" data-return="/airconf-registration") Register to Watch
+            .already
+              strong Already got an AirConf ticket?
+              .sign-in-to-rsvp
+                a.loginRequired(href="{{$location}}") Sign in to RSVP
+
+          .col-md-5.m-b-2(ng-if="showRsvp()")
+            a.btn.btn-orange.btn-rsvp(href="#", ng-click="attend()") RSVP to Watch
+
+          .col-md-7.m-b-2
+            .addthis_sharing_toolbox
+
+      .col-md-4
         div(ng-repeat="speaker in workshop.speakers")
           h1 {{speaker.name}}
           p.description {{speaker.fullBio}}
 
-    .row.viewer
-      .col-md-12
-        .addthis_sharing_toolbox.m-t-1
-        hr
-        div(ng-show="session.isSignedIn()")
-          div(ng-show="showRsvp()")
-            a.btn.btn-orange.btn-rsvp(href="#", ng-click="attend()") RSVP
-            br
-            span to see {{ workshop.title }} live
-            .player
-              img.slide(ng-src="/images/landing/airconf/slides/{{workshop.slug}}.jpg")
-          div(ng-hide="registered()")
-            a.btn.btn-orange(href="/airconf-registration", target='_self') Register for AirConf to watch talk
-            .player
-              img.slide.unregistered(ng-src="/images/landing/airconf/slides/{{workshop.slug}}.jpg")
-          div.attending(ng-show="attending()")
-            p.attending You are attending {{ workshop.title }}!
-            p You will be able to ask questions and watch the talk live (or after the event) on this page.
-            p We will email you 24 hours before to let you know if there is space and how to get into the "front row".
-            .player(ng-hide="started()")
-              img.slide(ng-src="/images/landing/airconf/slides/{{workshop.slug}}.jpg")
-          div.started(ng-show="started()")
-            .player
-              iframe(width="785", height="443", ng-src="{{youtubeUrl()}}", frameborder="0", allowfullscreen)
+  .container.viewer
+    include viewer
 
-          #audience.text-center.m-t-1(ng-show="audience().length")
-            h3 Audience Members
-            .attendee(ng-repeat="attendee in audience() | uniq:'name'")
-              img(ng-src="{{ attendee.picture }}" title="{{ attendee.name }}" style="border-radius: 15px")
+  .container.audience
+    #audience.text-center.m-t-1(ng-show="audience().length")
+      h3 Audience Members
+      .attendee(ng-repeat="attendee in audience() | uniq:'name'")
+        img(ng-src="{{ attendee.picture }}" title="{{ attendee.name }}" style="border-radius: 15px")
 
-          a.btn.btn-orange.loginRequired(href="/airconf-registration",data-return="/airconf-registration") Register to watch talk
-          br
-          span Already got an AirConf ticket? &nbsp
-          a.loginRequired(href="{{$location}}") Sign in to RSVP
-          hr
-          a.loginRequired(href="/airconf-registration",data-return="/airconf-registration")
-            img.slide.anonymous(ng-src="/images/landing/airconf/slides/{{workshop.slug}}.jpg")
-
-        chat(ng-model="workshop" title="Session Chat")
+  .container.chat
+      chat(ng-model="workshop" title="Session Chat")

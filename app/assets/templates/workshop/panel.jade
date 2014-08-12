@@ -1,46 +1,24 @@
 .talk.panel
   .container
-    .row.details
-      .col.col-md-5
-        include details
-      .col.col-md-7
-        .row.panelists
-          .col-xs-3(ng-repeat="speaker in workshop.speakers")
-            .speaker
-              img.img-responsive(ng-src="{{speaker.pic}}")
-              h4 {{speaker.name}}
-              p.description {{speaker.fullBio}}
+    .row.m-b-1
+      .col-md-7
+        h1 Keynote Panel: {{ workshop.title }}
+        time(datetime="{{workshop.time | date:'EEE MMM dd yyyy HH:mmZ'}}", ng-show="showLocalTimes()" format="dddd, MMMM Do YYYY, h:mm a")
+        p.description
+          | {{ workshop.description }}&nbsp;
+          em with {{ _.map(workshop.speakers, 'name').toSentence() }}
 
-    .row.sharing
-      .addthis_sharing_toolbox.m-t-1
+        div(ng-if="!session.isSignedIn()")
+          a.btn.btn-orange.loginRequired(href="/airconf-registration" data-return="/airconf-registration") Register to Watch
+          br
+          span Already got an AirConf ticket? &nbsp;
+          a.loginRequired(href="{{$location}}") Sign in to RSVP
 
-    .row.viewer
-      div.started(ng-show="registered() && keynoteStarted()")
-        .player
-          iframe(width="785", height="443", ng-src="{{youtubeUrl()}}", frameborder="0", allowfullscreen)
+      .col-md-5.text-center
+        .addthis_sharing_toolbox.m-t-2
 
-      div(ng-hide="session.isSignedIn()")
-        a.btn.btn-orange.loginRequired(href="/airconf-registration",data-return="/airconf-registration") Register to watch talk
-        br
-        span Already got an AirConf ticket? &nbsp
-        a.loginRequired(href="{{$location}}") Sign in to RSVP
-        hr
-        a.loginRequired(href="/airconf-registration",data-return="/airconf-registration")
-          img.slide.anonymous(ng-src="/images/landing/airconf/slides/{{workshop.slug}}.jpg")
+  .container.viewer
+    include viewer
 
-
-      div(ng-show="session.isSignedIn()")
-        div(ng-hide="registered()")
-          a.btn.btn-orange(href="/airconf-registration", target='_self') Register for AirConf to watch talk
-          .player
-            img.slide.unregistered(ng-src="/images/landing/airconf/slides/{{workshop.slug}}.jpg")
-          p.attending  {{ workshop.title }}!
-          p You will be able to ask questions and watch the talk live (or after the event) on this page.
-          .player(ng-hide="keynoteStarted()")
-            img.slide(ng-src="/images/landing/airconf/slides/{{workshop.slug}}.jpg")
-
-
-
-    .row
-      .col-md-12
-        chat(ng-model="workshop" title="Session Chat")
+  .container.chat
+    chat(ng-model="workshop" title="Session Chat")

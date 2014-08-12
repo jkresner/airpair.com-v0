@@ -23,6 +23,9 @@ angular
     $rootScope._ = window._
   ])
 
+Array.prototype.toSentence = ->
+  @slice(0, @length - 1).join(', ') + " and " + @slice(-1)
+
 require("./services/session")
 require("./services/workshop")
 require("./controllers/sessionController")
