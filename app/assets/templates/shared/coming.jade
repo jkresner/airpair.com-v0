@@ -2,8 +2,10 @@
   .section
     h1 help us make this page a winner
   .section.help
-    form.question
+    form.question(ng-hide="saved")
       p What features would you like to see here?
-      textarea(placeholder="we love your honest feedback")
-      a.btn(href="#") Submit
+      textarea(ng-model="feedback", placeholder="we love your honest feedback")
+      a.btn(href="#", ng-click="save()") Submit
+    form.question(ng-show="saved")
+      p Thank you for your feedback!
 

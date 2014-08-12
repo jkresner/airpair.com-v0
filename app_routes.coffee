@@ -63,6 +63,7 @@ module.exports = (app) ->
 
   # api
   require('./lib/api/session')(app)
+  require('./lib/api/feedback')(app)
   require('./lib/api/users')(app)
   require('./lib/api/companys')(app)
   require('./lib/api/tags')(app)
