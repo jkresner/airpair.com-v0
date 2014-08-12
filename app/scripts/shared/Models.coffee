@@ -156,5 +156,7 @@ class exports.Order extends BB.BadassModel
   createdDateString: ->
     moment(@get('utc')).format 'MMM DD'
 
+class exports.Credit extends BB.BadassModel
+  urlRoot: '/api/orders/credit'
 
 module.exports = exports

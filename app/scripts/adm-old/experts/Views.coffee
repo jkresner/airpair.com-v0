@@ -52,6 +52,9 @@ class exports.BookMeView extends BB.ModelSaveView
       c = @model.get('bookMe').coupons
       if c && c[0] then @elm('code1').val(c[0].code); @elm('rate1').val(c[0].rate)
       if c && c[1] then @elm('code2').val(c[1].code); @elm('rate2').val(c[1].rate)
+      creditCodes = @model.get('bookMe').creditRequestIds
+      creditCodes ?= []
+      @elm('creditRequests').select2({tags: creditCodes}).select2("val", creditCodes)
     @
   setEnabled: (e) ->
     bm =_.clone @model.get('bookMe')
@@ -64,8 +67,10 @@ class exports.BookMeView extends BB.ModelSaveView
     d = @getValsFromInputs @viewData
     d.enabled = @elm('enabled').val() == 'true'
     d.coupons = []
+    d.creditRequestIds = []
     if @elm('code1').val() then d.coupons.push { code: @elm('code1').val(), rate: @elm('rate1').val() }
     if @elm('code2').val() then d.coupons.push { code: @elm('code2').val(), rate: @elm('rate2').val() }
+    if @elm('creditRequests').val() then d.creditRequestIds.push @elm('creditRequests').val().split(",")...
     d
 
 class exports.TagSubscriptionsView extends BB.ModelSaveView

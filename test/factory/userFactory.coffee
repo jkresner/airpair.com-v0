@@ -2,9 +2,9 @@ global._ = require 'lodash'
 Factory = require('factory-lady')
 UserModel = require('../../lib/models/user')
 
-Factory.define 'dhhUser', UserModel,
+Factory.define 'user', UserModel, defaults =
   googleId: '100025457193287284665'
-  github:
+  google:
     provider: "github"
     id: 979542
     displayName: "Jonathon Kresner"
@@ -45,3 +45,5 @@ Factory.define 'dhhUser', UserModel,
       token: "b5cd0b93ae366fa45756b5d1dcbd1eef2225445b"
       attributes:
         refreshToken: null
+
+Factory.define 'dhhUser', UserModel, _.extend {}, defaults

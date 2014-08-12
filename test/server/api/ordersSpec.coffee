@@ -2,6 +2,7 @@
 {app,data,passportMock,nock} = require './../test-app-setup'
 {ObjectId} = require('mongoose').Types
 async = require 'async'
+users = require '../../data/users'
 
 require('./../../../lib/api/requests')(app)
 require('./../../../lib/api/orders')(app)
@@ -51,7 +52,37 @@ describe "REST api orders", ->
             expect(d.total).to.equal 180
             done()
 
-  # todo: this spec belongs elsewhere
+  describe "GET /api/orders/credit", ->
+    it "should get the total amount of credit available to a user", (done) ->
+      passportMock.setSession 'jk'
+      jkId = users[1]._id
+      Factory.create 'dhhExpert', (dhh) =>
+        lineItem = {
+          total: -80
+          unitPrice: -80
+          qty: 1
+          redeemedCalls: [
+            callId: new ObjectId()
+            qtyRedeemed: 1
+            qtyCompleted: 1
+          ]
+          type: "credit"
+          suggestion: { expert: {_id: dhh._id.toString()} }
+        }
+
+        async.parallel [
+          (cb) => Factory.create 'order', { userId: jkId, lineItems: [lineItem]}, (order) => cb(null, order)
+          (cb) => Factory.create 'order', { userId: jkId, lineItems: [lineItem, _.extend({}, lineItem, {unitPrice: 50, total: 50})]}, (order) => cb(null, order)
+          (cb) => Factory.create 'order', { userId: jkId, lineItems: [_.extend({}, lineItem, {type: "private", unitPrice: 150, total: 150})]}, (order) => cb(null, order)
+        ], (error, orders) =>
+          http(app).get("/api/orders/credit")
+            .expect(200)
+            .end (err, res) =>
+              body = res.body
+              requestId = orders[0].requestId
+              expect(body.credits[requestId]).to.eq -110
+              done()
+
   describe "GET /api/orders/expert/:expertId", ->
     it "should get orders that an expert was associated with", (done) ->
       passportMock.setSession 'jk'

@@ -97,43 +97,50 @@ module.exports = class OrdersService extends DomainService
     @searchMany query, @historySelect, (error, orders) ->
       callback error, orders
 
+  getCredit: (userId, callback) =>
+    userId ?= @usr._id
+    @searchMany {userId: userId}, {}, (err, orders) =>
+      credits = _.reduce orders, (orderCredits, order) =>
+        orderCredits[order.requestId] ?= 0
+        orderCredits[order.requestId] += @_orderCredit(order)
+        orderCredits
+      , {}
+      callback err, {credits}
+
   getForHistory: (id, cb) =>
     userId = if id? && Roles.isAdmin(@usr) then id else @usr._id
     @searchMany {userId}, { fields: @Data.view.history }, cb
-
-
 
   confirmBookme: (request, expertReview, callback) ->
     @settingsSvc.getByUserId request.userId, (ee, settings) =>
       if ee then return callback ee
       pm = _.find settings.paymentMethods, (p) -> p.type == 'stripe'
-      # $log 'settings', settings._id
       @requestSvc.updateSuggestionByExpert request, expertReview, (e, r) =>
         # $log 'request updated', r.status, r.suggested
         if e then return callback e
         if expertReview.expertStatus != 'available' then return callback e,r
 
-        order = { requestId: request._id, paymentMethod: pm, lineItems: [] }
-        order.total = request.hours * request.budget
-        order.company =
-          _id: request.company._id
-          name: request.company.name
-          contacts: request.company.contacts
+        @_creditAvailable r, (err, creditAvailable) =>
+          @_useCredit r, creditAvailable, (err, orders) =>
+            order = { requestId: request._id, paymentMethod: pm, lineItems: [] }
+            total = request.hours * request.budget
+            order.total = total + creditAvailable
+            order.company =
+              _id: request.company._id
+              name: request.company.name
+              contacts: request.company.contacts
 
-        # expertBookMe = { rake: 10 }
-
-        toPick = ['_id','userId','name','username','rate','email','pic','paymentMethod']
-        order.lineItems.push
-          type: request.pricing
-          total: order.total
-          unitPrice: request.budget
-          qty: parseInt request.hours
-          suggestion:
-            _id: request.suggested[0]._id
-            suggestedRate: r.suggested[0].suggestedRate
-            expert: _.pick request.suggested[0].expert, toPick
-
-        @create order, (eeee,rrrr) -> callback(eeee,r)
+            toPick = ['_id','userId','name','username','rate','email','pic','paymentMethod']
+            order.lineItems.push
+              type: request.pricing
+              total: order.total
+              unitPrice: request.budget
+              qty: parseInt request.hours
+              suggestion:
+                _id: request.suggested[0]._id
+                suggestedRate: r.suggested[0].suggestedRate
+                expert: _.pick request.suggested[0].expert, toPick
+            @create order, (eeee,rrrr) -> callback(eeee,r)
 
   trackPayment: (order, type) ->
     props =
@@ -384,6 +391,65 @@ module.exports = class OrdersService extends DomainService
       modifiedOrders = @_markComplete orders, call
       @_saveLineItems modifiedOrders, cb
 
+  # calculates the credit available for the request
+  # uses the allowed creditRequestIds on the expert
+  # and finds user orders with credit that match
+  # returns 0 or a negative number
+  _creditAvailable: (request, callback) ->
+    @getCredit request.userId, (err, customerCredits) =>
+      expert = request.suggested[0].expert
+      expertCreditIds = expert.bookMe.creditRequestIds || []
+      total = request.hours * request.budget
+      credit = _.reduce expertCreditIds, (sum, id) =>
+        sum += (customerCredits.credits[id] || 0)
+      , 0
+      creditAvailable = if credit + total >= 0 then credit else -total
+      callback(err, creditAvailable)
+
+  _useCredit: (request, totalCredit, callback) ->
+    return callback(null, []) if totalCredit == 0
+    creditToApply = Math.abs(totalCredit)
+    suggestion = request.suggested[0]
+    expertCreditIds = suggestion.expert.bookMe.creditRequestIds || []
+    @searchMany {userId: request.userId}, {}, (err, orders) =>
+      creditOrders = _.select orders, (order) =>
+        order.requestId.toString() in expertCreditIds && @_orderCredit(order) < 0
+      creditOrders = _.map creditOrders, (order) =>
+        if creditToApply > 0
+          orderCredit = @_orderCredit(order)
+          lineItemCredit = 0
+          if orderCredit + creditToApply >= 0
+            lineItemCredit = Math.abs(orderCredit)
+            creditToApply += orderCredit
+          else
+            lineItemCredit = Math.abs(creditToApply)
+            creditToApply = 0
+          toPick = ['_id','userId','name','username','rate','email','pic','paymentMethod']
+          if lineItemCredit + orderCredit == 0
+            order.paymentStatus = "paidout"
+          order.lineItems.push
+            type: 'credit'
+            total: lineItemCredit
+            unitPrice: lineItemCredit
+            qty: 1
+            suggestion:
+              _id: suggestion._id
+              suggestedRate: suggestion.suggestedRate
+              expert: _.pick suggestion.expert, toPick
+        order
+      saveOrder = (order, cb) =>
+        update = $set: { paymentStatus: order.paymentStatus, lineItems: order.lineItems }
+        @model.findByIdAndUpdate order._id, update, cb
+      async.map orders, saveOrder, callback
+
+  _orderCredit: (order) ->
+    return 0 if order.paymentStatus == "paidout"
+    _.reduce order.lineItems, (orderCredit, lineItem) =>
+      if lineItem.type == "credit"
+        orderCredit += lineItem.qty * lineItem.unitPrice
+      orderCredit
+    , 0
+
   # adds the appropriate redeemedCall object to orders that match the call's
   # criteria (same type, same expert).
   # the math.min stuff allows a 3 hour call to be spread across more than one
@@ -426,11 +492,9 @@ module.exports = class OrdersService extends DomainService
   # TODO batch update?
   _saveLineItems: (orders, callback) =>
     saveOrder = (order, cb) =>
-      # update = $set: { lineItems: order.toJSON().lineItems }
       update = $set: { lineItems: order.lineItems }
       @model.findByIdAndUpdate order._id, update, cb
     async.map orders, saveOrder, callback
-
 
 
   """ Don't want to fill OrdersService files with obscure AirConf logic, this was best I could think of """

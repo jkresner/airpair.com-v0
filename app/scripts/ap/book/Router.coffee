@@ -21,16 +21,18 @@ module.exports = class Router extends S.AirpairSessionRouter
       expert: new M.Expert()
       settings: new M.Settings()
       request: new M.Request()
+      credit: new M.Credit()
 
     if expert._id?
       v =
         infoFormView: new V.InfoFormView model: d.company, request: d.request
         expertView: new V.ExpertView model: d.expert, request: d.request, session: @app.session
-        requestView: new V.RequestView model: d.request, settings: d.settings, expert: d.expert, company: d.company
+        requestView: new V.RequestView model: d.request, settings: d.settings, expert: d.expert, company: d.company, credit: d.credit
 
     if !session._id? && expert._id?
       v.welcomeView = new V.WelcomeView model: d.expert
     else if session._id?
+      @setOrFetch d.credit, pageData.credit
       @setOrFetch d.settings, settings, success: (model, resp) =>
         if !model.paymentMethod('stripe')?
           v.stripeRegisterView = new V.StripeRegisterView model: d.settings, session: @app.session, expert: d.expert

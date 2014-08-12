@@ -4,9 +4,10 @@
 
 """
   Some funky hack rules about how AirConf orders work
-  # 1) the status of "paid" means the users has claimed their pairing credit which exists in the firs lineItem
-  # 2) Users register for talks using the other lineItems
-  # 3) The total of other non-airconf purchases drives a discount for conference attendance
+  # 1) the status of "paidout" means the users has claimed their pairing credit which exists in the firsy lineItem
+  # 2) The total of other non-airconf purchases drives a discount for conference attendance
+  # 3) Credit is stored on a type: 'credit' lineItem as a negative number. As credit is used positive 'credit' lineItems are
+  #    added to offset the value (at which point we will mark the order 'paidout'
 """
 module.exports =
 
@@ -29,11 +30,11 @@ module.exports =
       d.totalOtherPurchaes += o.total for o in _.without(r, confOrder)
 
       if confOrder?
-        d.confCredit = @Data.airconf.pairCredit if confOrder.status != 'paidout'
+        d.confCredit = @Data.airconf.pairCredit if confOrder.paymentStatus != 'paidout'
         for li in confOrder.lineItems
           d.workshops.push li if li.type == 'opensource'
       else
-        d.discount = d.totalOtherPurchaes/10 % 10;
+        d.discount = d.totalOtherPurchaes/10 % 10
 
       # $log 'getConfOrder', d
       cb e, d

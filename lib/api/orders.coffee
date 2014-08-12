@@ -9,6 +9,7 @@ class OrdersApi extends require('./_api')
     app.get     "/api/admin/#{route}", @admin, @ap, @list
     app.get     "/api/#{route}/request/:id", @admin, @ap, @getByRequestId
     app.get     "/api/#{route}/me", @loggedIn, @ap, @getByMe
+    app.get     "/api/#{route}/credit", @loggedIn, @ap, @getCredit
     app.get     "/api/#{route}/expert/:expertId", @loggedIn, @ap, @expertList
     app.put     "/api/#{route}/:id", @admin, @ap, @update
     app.delete  "/api/#{route}/:id", @admin, @ap, @delete
@@ -17,6 +18,7 @@ class OrdersApi extends require('./_api')
   getByRequestId: (req, res) => @svc.getByRequestId req.params.id, @cbSend
   getByMe: (req, res) => @svc.getByUserId req.user._id, @cbSend
   expertList: (req) => @svc.getByExpert req.params.expertId, @cbSend
+  getCredit: (req) => @svc.getCredit req.user._id, @cbSend
 
   create: (req, res, next) =>
     order = _.pick req.body, ['total','requestId']

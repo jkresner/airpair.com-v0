@@ -43,6 +43,7 @@ class exports.RequestView extends BB.ModelSaveView
   events: { 'click .save': 'save' }
   initialize: ->
     @listenTo @settings, 'change', @render
+    @listenTo @credit, 'change', @render
   render: ->
     if @settings.paymentMethod('stripe')?
       @e = addjs.events.customerRequest
@@ -56,8 +57,7 @@ class exports.RequestView extends BB.ModelSaveView
       @$(".pricingNDA span").html @model.nda-@model.private
 
       @$(".save").mouseover(=>
-        hrs = parseInt @elm('hours').val()
-        @$('.save').html "You will be charged $#{@getBudget()*hrs} if #{fName} accepts"
+        @$('.save').html "You will be charged $#{@totalAfterCredit()} if #{fName} accepts"
       ).mouseout(=>
         @update()
       )
@@ -66,10 +66,36 @@ class exports.RequestView extends BB.ModelSaveView
     pricing = @$("[name='pricing']:checked").val()
     budget = parseInt(@expert.get('bookMe').rate) + @model[pricing]
     total = hrs * budget
-    if hrs == 1
-      @$('.save').html "Request #{hrs} hour for $#{total} <span>( #{pricing} )</span>"
+    totalAfterCredit = @totalAfterCredit()
+    creditApplied = total - totalAfterCredit
+    if creditApplied > 0
+      if hrs == 1
+        @$('.save').html "Request #{hrs} hour for $#{totalAfterCredit} <span>($#{creditApplied} airpair credit applied)</span>"
+      else
+        @$('.save').html "Request #{hrs} hours for $#{totalAfterCredit} <span>($#{creditApplied} airpair credit applied)</span>"
     else
-      @$('.save').html "Request #{hrs} hours for $#{total} <span>( $#{budget}/#{pricing} hr )</span>"
+      if hrs == 1
+        @$('.save').html "Request #{hrs} hour for $#{total} <span>( #{pricing} )</span>"
+      else
+        @$('.save').html "Request #{hrs} hours for $#{total} <span>( $#{budget}/#{pricing} hr )</span>"
+
+  total: =>
+    hrs = parseInt @elm('hours').val()
+    pricing = @$("[name='pricing']:checked").val()
+    budget = parseInt(@expert.get('bookMe').rate) + @model[pricing]
+    hrs * budget
+
+  creditAvailable: =>
+    creditRequests = @expert.get('bookMe').creditRequestIds || []
+    credit = _.reduce creditRequests, (sum, id) =>
+      sum += (@credit.get('credits')[id] || 0)
+    , 0
+    total = @total()
+    if credit + total >= 0 then credit else -total
+
+  totalAfterCredit: =>
+    @creditAvailable() + @total()
+
   selectRB: (e) =>
     rb = $(e.currentTarget)
     group = rb.parent()

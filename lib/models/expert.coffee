@@ -26,6 +26,7 @@ Bookme =
   rate:           { required: true, type: Number     }  # experts external rate
   rake:           { required: true, type: Number     }  # allow the expert commission deals
   coupons:        [Coupon]                              # allow the expert to hand out promotions
+  creditRequestIds: { type: [ObjectId] }  # Requests that credits can be applied for
 
 
 schema = new Schema
