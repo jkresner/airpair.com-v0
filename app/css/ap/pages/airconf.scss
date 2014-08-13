@@ -60,9 +60,8 @@ body#airconf {
     hr { width:80%;max-width:1020px; }
   }
 
-
-  #experts { text-align:center }
-  #experts {
+  #experts, #expertsToday { text-align:center }
+  #experts, #expertsToday {
     .sessionCol { width:202px;display:inline-block;margin:30px 10px;border:solid 1px #d3d3d3;border-radius:5px;padding:8px 2px;background:#ECF7F5;height:310px; }
     .sessionCol:hover { background:black }
     .sessionCol:hover .description { font-size:11px;display:block; }
