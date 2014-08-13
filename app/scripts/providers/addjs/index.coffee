@@ -38,6 +38,10 @@ module.exports = class Addjs
       value: value
       bounce: bounce
 
+  trackCustomEvent: (action, props) ->
+    analytics.track action, props
+
+
   trackPageView: (name, data) ->
     # segment.io automatically tracks page views
     # only use this method for client side page
