@@ -1,8 +1,8 @@
 #chat {
-  text-align: left;
+  display: block;
   min-height: 310px;
   margin-bottom: 50px;
-  display: block;
+  text-align: left;
 
   h3 {
     margin-top: 10px;
@@ -16,9 +16,10 @@
   }
 
   .pic {
+    min-width: 45px !important;
+    max-width: 90px;
     img {
       border-radius: 15px;
-      min-width: 45px !important;
     }
     &.ng-hide {
       display: block !important;
@@ -32,18 +33,23 @@
     }
     .fa {
       color: rgb(221, 74, 20);
-      font-size: 25px;
+      font-size: 17pt;
+      padding: 5px;
     }
   }
 
   .message {
-    background: white;
     border-radius: 15px;
-    margin-left: -10px;
+    margin-left: -2%;
     padding: 4px 15px;
 
-    &.question {
-      font-weight: bold;
+    input {
+      margin-top: 5px;
+    }
+
+    &.question > .message-content {
+      font-size: 14pt;
+      font-weight: 600;
     }
   }
 
@@ -58,6 +64,6 @@
     border-radius: 5px;
     width:98%;
     padding: 5px;
-    &:focus { outline: none !important; }
+    &:focus { outline: none !important }
   }
 }

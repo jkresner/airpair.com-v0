@@ -35,17 +35,16 @@ ChatDirective = ($firebase, session) ->
       # ⇊ ⇊ ⇊ authorization functions  ⇊ ⇊ ⇊
 
       scope.canDelete = (message) ->
-        @isAdmin or (message.user_id == session.data.user.googleId)
+        @isAdmin or (message.user_id == @user.id)
 
       scope.canFlag = (message) ->
-        message.user_id != session.data.user.googleId
+        message.user_id != @user.id
 
       scope.canMarkAsQuestion = (message) ->
-        @canDelete(message) and not @isQuestion(message)
+        @canDelete(message) and not @isQuestion(message) and not message.unmarked_as_question
 
       scope.canVoteUp = (message) ->
-        voter_id = session.data.user.googleId
-        @isQuestion(message) and not _.find(message.voters, (v) -> v.id == voter_id)
+        @isQuestion(message) and not @isVoter(message)
 
       # ⇊ ⇊ ⇊ click handlers ⇊ ⇊ ⇊
 
@@ -54,21 +53,21 @@ ChatDirective = ($firebase, session) ->
         false
 
       scope.markAsQuestion = (message) ->
-        message.voters = [_.pick(scope.user, 'id', 'name', 'link', 'picture')]
+        message.voters = [_.pick(@user, 'id', 'name', 'link', 'picture')]
         @messages.$save(message)
         false
 
       scope.voteForQuestion = (message) ->
-        message.voters.push _.pick(scope.user, 'name', 'link', 'picture')
+        message.voters.push _.pick(@user, 'id', 'name', 'link', 'picture')
         @messages.$save(message)
         false
 
       scope.addMessage = ->
         msg =
-          from: scope.user.name
-          pic: scope.user.picture
-          content: scope.message
-          user_id: session.data.user.googleId
+          from: @user.name
+          pic: @user.picture
+          content: @message
+          user_id: @user.id
           sent_at: Firebase.ServerValue.TIMESTAMP
           voters: []
 
@@ -77,10 +76,13 @@ ChatDirective = ($firebase, session) ->
         # reset input
         scope.message = ""
 
+      scope.isVoter = (message) ->
+        _.find(message.voters, (v) -> v.id == scope.user.id)
+
     # ⇈ ⇈ ⇈ end of if not session.isSignedIn() ⇈ ⇈ ⇈
 
     scope.isQuestion = (message) ->
-      message.voters? and message.voters.length > 0
+      (message.voters? and message.voters.length > 0)
 
     scope.showPic = (index) ->
       @messages[index].user_id != @messages[index - 1]?.user_id

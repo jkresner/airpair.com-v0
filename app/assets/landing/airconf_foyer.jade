@@ -27,7 +27,8 @@ html(ng-app='ngAirPair')
     .container
       .row
         .col-md-8
-          chat(title="The Foyer" slug="airconf2014-foyer")
+          .m-t-1
+            chat(title="The Foyer" slug="airconf2014-foyer")
 
         .col-md-4
           h2.m-t-1(style="font-weight: bold") Welcome
@@ -42,9 +43,10 @@ html(ng-app='ngAirPair')
 
 
           h2.m-t-2(style="font-weight: bold") Foyer Exhbitors
-          div(style="padding: 10px 40px 0 0")
-            img.img-responsive(src="/images/landing/airconf/sponsors/leanpub.png")
-            img.img-responsive(src="/images/landing/airconf/sponsors/keenio.png")
+          .row(style="padding: 10px 40px 0 0")
+            .col-xs-8
+              img.img-responsive(src="/images/landing/airconf/sponsors/leanpub.png")
+              img.img-responsive(src="/images/landing/airconf/sponsors/keenio.png")
 
     script(type="text/javascript").
       window.session = {

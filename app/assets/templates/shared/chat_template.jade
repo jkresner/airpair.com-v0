@@ -12,7 +12,7 @@
       .col-xs-2.pic
         img.img-responsive(ng-src="{{message.pic}}")
       .col-xs-8.message(ng-class="{question: isQuestion(message)}")
-        span(ng-bind-html="message.content | linky:'_blank'")
+        span.message-content(ng-bind-html="message.content | linky:'_blank'")
         .timestamp
           strong {{message.from}} &nbsp;
           span(ng-if="message.sent_at" am-time-ago="message.sent_at")
@@ -20,11 +20,11 @@
           | &nbsp;&nbsp;&nbsp;
 
           span(ng-show="canMarkAsQuestion(message)")
-            | &nbsp;
+            | &nbsp;&nbsp;&nbsp;
             a(ng-click="markAsQuestion(message)" href="#") mark as question
 
           span(ng-show="canVoteUp(message)")
-            | &nbsp;
+            | &nbsp;&nbsp;&nbsp;
             a(ng-click="voteForQuestion(message)" href="#") vote up
 
           span(ng-show="canFlag(message)")

@@ -4,7 +4,13 @@ body#airconfFoyer {
 
   h2 { font-size:20px;color:#90d1cc }
 
-  .hero { background:url('/images/landing/airconf/bg-2.jpg');height:240px;margin-top:0!important;text-align:center }
+  .hero {
+    background: url('/images/landing/airconf/bg-2.jpg');
+    height: 130px;
+    margin-top: 0 !important;
+    text-align:center;
+  }
+
   .hero {
     img { width:200px;margin:20px auto 0 auto }
 
@@ -21,7 +27,11 @@ body#airconfFoyer {
     }
   }
 
-  .container { background:white;min-height:1000px;width:1000px;margin-top:-130px;border-radius:10px;vertical-align:top;padding-top:10px }
+  .container {
+    background:white;
+    min-height:1000px;
+    border-radius:10px;
+  }
 
   .chatCol { display:inline-block;border-right:solid 1px #d3d3d3;width:580px;padding-right:20px;margin-right:20px;vertical-align:top }
   .chatCol {
