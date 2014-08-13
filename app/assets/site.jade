@@ -94,6 +94,10 @@ html(ng-app='ngAirPair' ng-strict-di)
 
     .site-container
       .view-container(ng-view)
+    script(type="text/javascript").
+      window.session = {
+        user: !{ session ? JSON.stringify(session) : 'null'},
+      };
 
     script.
       require('scripts/site/app');

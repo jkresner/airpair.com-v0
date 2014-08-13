@@ -45,7 +45,7 @@ module.exports = class ViewDataService
     cb null, -> { showFaqLink: true }
 
   site: (cb) ->
-    cb null, => { session: @session(true) }
+    cb null, => {}
 
   settings: (cb) ->
     cb null, -> { stripePK }
