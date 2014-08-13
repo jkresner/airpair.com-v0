@@ -41,7 +41,7 @@ html(ng-app='ngAirPair' ng-strict-di)
               li
                 a.scroll(href="/coming") Training
               li
-                a.scroll(href="/workshops") Workshops
+                a.scroll(href="/workshops", target="_self") Workshops
             ul.nav.navbar-nav.navbar-right
               li(ng-show='session.isSignedIn()')
                 a.scroll(href="#") Hi {{ session.name() }}
@@ -74,11 +74,11 @@ html(ng-app='ngAirPair' ng-strict-di)
             li.sidebar-name
               a(href='#') {{ session.name() }}
             li
-              a(href='/dashboard') Dashboard
+              a(href='/dashboard', target="_self") Dashboard
             li
-              a(href='/be-an-expert') Profile
+              a(href='/be-an-expert', target="_self") Profile
             li
-              a(href='/coming') Notifications
+              a(href='/settings/notifications') Notifications
             li
               a(href='/coming') My Airpairs
             li
@@ -86,11 +86,11 @@ html(ng-app='ngAirPair' ng-strict-di)
             li
               a(href='/coming') Airpair{}Me
             li
-              a(href='/customer-faq') FAQ
+              a(href='/customer-faq', target="_self") FAQ
             li
-              a(href='/expert-faq') Expert Tips
+              a(href='/expert-faq', target="_self") Expert Tips
             li.last
-              a(href='/logout') Logout
+              a(href='/logout', target="_self") Logout
 
     .site-container
       .view-container(ng-view)
