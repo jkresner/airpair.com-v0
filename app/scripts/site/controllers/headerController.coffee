@@ -1,7 +1,12 @@
-HeaderController = ($scope, Session, Expert) ->
+HeaderController = ($rootScope, $scope, Session, Expert) ->
   $scope.session = Session
-  $scope.expert = Expert
+  Expert.get()
+  $rootScope.$on 'event:expert-fetched', =>
+    $scope.expert = $rootScope.expert
+    $scope.helper =
+      status: (value) =>
+        $scope.expert.status == "ready"
 
 angular
   .module('ngAirPair')
-  .controller('HeaderController', ['$scope', 'Session', 'Expert', HeaderController])
+  .controller('HeaderController', ['$rootScope', '$scope', 'Session', 'Expert', HeaderController])

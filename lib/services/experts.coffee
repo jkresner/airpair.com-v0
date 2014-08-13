@@ -104,7 +104,6 @@ module.exports = class ExpertsService extends DomainService
         suggestions = ->
           _.compact _.map requests, (request) =>
              _.find request.suggested, (suggestion) ->
-               console.log ">>>>>>>>>>>>>>>>>>>", suggestion.expert._id, expertId
                _.idsEqual(suggestion.expert._id, expertId)
 
         respondedCount = =>

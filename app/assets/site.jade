@@ -48,22 +48,22 @@ html(ng-app='ngAirPair' ng-strict-di)
       .nav.navbar.navbar-default.navbar-static-top.expert
         .container-fluid
           .navbar-header
-            span.label(ng-show="expert.status()") Available to Airpair
-            span.label(ng-hide="expert.status()") Busy until
-            span.editable(ng-show="expert.status()")
-              ng-pluralize(count="expert.hoursAvailable()", when="{'0': 'Not available. ', '1': '1 hr/week ', 'other': '{{ expert.hoursAvailable() }} hrs/week '}")
-              &nbsp;{{ expert.availability() }}
+            span.label(ng-show="helper.status()") Available to Airpair
+            span.label(ng-hide="helper.status()") Busy until
+            span.editable(ng-show="helper.status()")
+              ng-pluralize(count="expert.hours", when="{'0': 'Not available. ', '1': '1 hr/week ', 'other': '{{ expert.hours }} hrs/week '}")
+              &nbsp;{{ expert.availability }}
               a(href="/settings/notifications")
-            span.editable(ng-hide="expert.status()")
-              {{ expert.busyUntil() | date : 'MMM, d yyyy'}}
-              &nbsp;{{ expert.availability() }}
+            span.editable(ng-hide="helper.status()")
+              {{ expert.busyUntil | date : 'MMM, d yyyy'}}
+              &nbsp;{{ expert.availability }}
               a(href="/settings/notifications")
             .navbar-info
-              span.info {{ expert.orderStats().paidOrderCount }}
+              span.info {{ expert.stats.paidOrderCount }}
               span.sub-label Air Pairs
-              span.info ${{ expert.orderStats().totalAmountReceived }}
+              span.info ${{ expert.stats.totalAmountReceived }}
               span.sub-label earnings
-              span.info ${{ expert.orderStats().averagePerHour | number:0 }}
+              span.info ${{ expert.stats.averagePerHour | number:0 }}
               span.sub-label average/hr
 
       .sidebar-wrapper

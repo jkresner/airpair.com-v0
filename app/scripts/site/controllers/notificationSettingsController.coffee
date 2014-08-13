@@ -1,54 +1,109 @@
-NotificationSettingsController = ($scope, Expert) ->
-  _.forIn Expert, (value, key) -> $scope[key] = value
+NotificationSettingsController = ($rootScope, $scope, Expert) ->
   $scope.hourRange = _.map(new Array(20), (a, i) -> (i+1).toString())
-  values = [10, 40, 70, 110, 160, 230]
 
-  $(".hourly .slider").noUiSlider
-    start: [ 3, 4 ]
-    step: 1
-    margin: 0
-    connect: true
-    direction: "ltr"
-    orientation: "horizontal"
-    behaviour: "tap-drag"
-    range:
-      min: 0
-      max: 5
-    serialization:
-      format:
-        decimals: 0
-        encoder: (value) ->
-          values[value]
+  Expert.get()
 
-  movePublicRateTag = (index) =>
-    $(".slider-col .tag").css('margin-left', "#{values.indexOf(parseInt(index)) * 20}%")
+  $rootScope.$on 'event:expert-fetched', =>
+    $scope.expert = $rootScope.expert
+    $scope.helper = new Helper($rootScope.expert)
 
-  $('.hourly .slider').change (event, value) =>
-    movePublicRateTag(value[1])
-    Expert.setRate(value[0], value[1])
-    Expert.update()
+  class Helper
 
-  $('.send-toggle').click (event, value) =>
-    $(".send-toggle .toggle.on").toggleClass("active", !$("#status").prop("checked"))
-    $(".send-toggle .toggle.off").toggleClass("active", !!$("#status").prop("checked"))
-    $("#status").click()
-    true
+    data = {}
 
-  $scope.$watch Expert.status(), (newValue, oldValue) =>
-    $(".send-toggle .toggle.on").toggleClass("active", !!Expert.status())
-    $(".send-toggle .toggle.off").toggleClass("active", !Expert.status())
+    constructor: (expert) ->
+      data.expert = expert
+      @initializeTags()
+      # angular needs a date object for date input
+      data.expert.busyUntil = new Date(data.expert.busyUntil)
 
-  $scope.$watchGroup [Expert.minRate(), Expert.rate()], (newValue, oldValue) =>
-    movePublicRateTag(Expert.rate())
+      values = [10, 40, 70, 110, 160, 230]
+      movePublicRateTag = (index) =>
+        $(".slider-col .tag").css('margin-left', "#{values.indexOf(parseInt(index)) * 20}%")
+      $(".hourly .slider").noUiSlider
+        start: [ 3, 4 ]
+        step: 1
+        margin: 0
+        connect: true
+        direction: "ltr"
+        orientation: "horizontal"
+        behaviour: "tap-drag"
+        range:
+          min: 0
+          max: 5
+        serialization:
+          format:
+            decimals: 0
+            encoder: (value) ->
+              values[value]
 
-  $('form.tags').on 'click', '.type', ->
-    allTags = $(this).parents(".level").find('input[type="checkbox"]')
-    uncheckedTags = allTags.not(":checked")
-    if uncheckedTags.size() > 0
-      uncheckedTags.click()
-    else
-      allTags.click()
+      $('.hourly .slider').val([values.indexOf(data.expert.minRate), values.indexOf(data.expert.rate)])
+      movePublicRateTag(data.expert.rate)
+
+      $('.hourly .slider').change (event, value) =>
+        movePublicRateTag(value[1])
+        data.expert.minRate = value[0]
+        data.expert.rate = value[1]
+        @update()
+
+
+
+    updatedAt: ->
+      data.expert? && moment(data.expert.updatedAt).fromNow()
+
+    busyUntil: (value) ->
+      if value?
+        data.expert.busyUntil = value
+      # horrible hack, but angular blows up if you return
+      # a date object from a getter and the angular date
+      # input requires a date object #itsabug
+      data.expert? && $('#busyUntil').val(moment(data.expert.busyUntil).format("YYYY-MM-DD"))
+      data.expert? && moment(data.expert.busyUntil).format()
+
+    status: (value) ->
+      if value?
+        data.expert.status = if value then "ready" else "busy"
+        data.expert.availability = ""
+      data.expert? && data.expert.status == "ready"
+
+    toggleStatus: () ->
+      data.expert.availability = ""
+      @status(!@status())
+      @update()
+
+    tagHasLevel: (tag, level) ->
+      _.include(tag.levels, level)
+
+    update: ->
+      data.expert.updatedAt = new Date
+      data.expert.save()
+
+    initializeTags: ->
+      _.each data.expert.tags, (tag) =>
+        tag.levelBeginner = @tagGetterSetter(tag, 'beginner')
+        tag.levelIntermediate = @tagGetterSetter(tag, 'intermediate')
+        tag.levelExpert = @tagGetterSetter(tag, 'expert')
+        tag.levelAny = ->
+          tag.levelBeginner() || tag.levelIntermediate() || tag.levelExpert()
+        tag.levelAll = ->
+          tag.levelBeginner() && tag.levelIntermediate() && tag.levelExpert()
+        tag.toggleTagLevels = =>
+          value = !tag.levelAll()
+          tag.levelBeginner(value)
+          tag.levelIntermediate(value)
+          tag.levelExpert(value)
+          @update()
+
+    tagGetterSetter: (tag, level) ->
+      (value) ->
+        if value?
+          if value
+            _.include(tag.levels, level) || tag.levels.push(level)
+          else
+            tag.levels = _.without(tag.levels, level)
+        else
+          _.include(tag.levels, level)
 
 angular
   .module('ngAirPair')
-  .controller('NotificationSettingsController', ['$scope', 'Expert', NotificationSettingsController])
+  .controller('NotificationSettingsController', ['$rootScope', '$scope', 'Expert', NotificationSettingsController])
