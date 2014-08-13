@@ -27,6 +27,12 @@ body#airconfFoyer {
     }
   }
 
+  a.btn {
+    color:white;
+    &.btn-orange { background: #ce5424 }
+    &.btn-teal { background: #90d1cc }
+  }
+
   .container {
     background:white;
     min-height:1000px;

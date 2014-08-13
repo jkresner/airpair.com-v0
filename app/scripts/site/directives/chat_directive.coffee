@@ -84,8 +84,8 @@ ChatDirective = ($firebase, session) ->
     scope.isQuestion = (message) ->
       (message.voters? and message.voters.length > 0)
 
-    scope.showPic = (index) ->
-      @messages[index].user_id != @messages[index - 1]?.user_id
+    scope.hidePic = (index) ->
+      @messages[index].user_id == @messages[index - 1]?.user_id
 
     scope.voteCount = (message) ->
       return unless @isQuestion(message)

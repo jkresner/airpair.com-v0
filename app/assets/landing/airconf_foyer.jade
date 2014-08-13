@@ -33,11 +33,14 @@ html(ng-app='ngAirPair')
         .col-md-4
           h2.m-t-1(style="font-weight: bold") Welcome
           p Network with other attendees and ask AirPair staff questions about AirConf. No one has ever done this before and we're making it better and better with your feedback as we go.
+          p(ng-hide="isSignedIn()  ")
+            a.btn.btn-orange.loginRequired(href="/airconf-registration" data-return="/airconf-registration") Register to Attend Talks
           h2.m-t-2(style="font-weight: bold") Frequently asked Questions
           label What's the best way to follow the changing schedule?
           p If you haven't yet, subscribe to the
             b &nbsp;
               a(href="http://airpair.us7.list-manage1.com/track/click?u=707a79398ffed7972e1e87db6&id=f17c414d03&e=69dfe6dc4d") AirConf iCal
+            | to always have the most up to date schedule.
           label How do I see talk recordings?
           p Simply visit the talk page. If you RSVP'ed, the recording will show.
 
