@@ -2,6 +2,7 @@
   display: block;
   min-height: 310px;
   margin-bottom: 50px;
+  padding: 30px;
   text-align: left;
 
   h3 {
@@ -10,26 +11,23 @@
     text-align: center;
   }
 
-  & .row {
-    margin-bottom: 10px;
-    min-height: 25px;
-  }
-
   .pic {
-    min-width: 45px !important;
-    max-width: 90px;
+    min-width: 35px !important;
+    max-width: 50px !important;
+    padding: 5px;
     img {
       border-radius: 15px;
     }
     &.ng-hide {
       display: block !important;
       visibility: hidden;
+      img { max-height: 0 }
     }
   }
 
   #messages {
     .icon {
-      text-align: center;
+      text-align: right;
     }
     .fa {
       color: rgb(221, 74, 20);
@@ -40,16 +38,11 @@
 
   .message {
     border-radius: 15px;
-    margin-left: -2%;
+    margin-left: -1%;
     padding: 4px 15px;
 
     input {
       margin-top: 5px;
-    }
-
-    &.question > .message-content {
-      font-size: 14pt;
-      font-weight: 600;
     }
   }
 
@@ -65,5 +58,28 @@
     width:98%;
     padding: 5px;
     &:focus { outline: none !important }
+  }
+
+  #messages {
+    & > .row {
+      border-radius: 15px;
+      min-height: 25px;
+      padding-bottom: 5px;
+    }
+    & > .row.question { background: #fea }
+    & > .row.shrink {
+      padding-top: -5px;
+      padding-bottom: 2px;
+    }
+  }
+
+  .row.question {
+    .message-content {
+      font-size: 14pt;
+      font-weight: 600;
+    }
+    &.shrink {
+      padding-bottom: 10px;
+    }
   }
 }

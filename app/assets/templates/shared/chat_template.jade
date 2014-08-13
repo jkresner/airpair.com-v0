@@ -8,10 +8,10 @@
         input(type='text' ng-model='message' placeholder='Hit enter to submit message...')
 
   #messages(cg-busy="messages.$loaded()")
-    .row(ng-repeat="message in messages | orderBy:'-sent_at'")
+    .row(ng-repeat="message in messages | orderBy:'-sent_at'" ng-class="{question: isQuestion(message), shrink: hidePic($index)}" ng-class-odd="'odd'")
       .col-xs-2.pic(ng-hide="hidePic($index)")
         img.img-responsive(ng-src="{{message.pic}}")
-      .col-xs-8.message(ng-class="{question: isQuestion(message)}")
+      .col-xs-8.message
         span.message-content(ng-bind-html="message.content | linky:'_blank'")
         .timestamp
           strong {{message.from}} &nbsp;
