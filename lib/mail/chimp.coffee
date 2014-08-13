@@ -14,6 +14,17 @@ class Chimp
 
     @API.lists.subscribe params, @successHandler(cb), @errorHandler(listId, email, mergeVars, cb)
 
+  # optionally pass a callback function
+  subscribeSilent: (listId, email, mergeVars, cb) ->
+    params =
+      id: listId
+      email: { email: email }
+      merge_vars: mergeVars
+      update_existing: true
+      double_optin: false
+
+    @API.lists.subscribe params, @successHandler(cb), @errorHandler(listId, email, mergeVars, cb)
+
   successHandler: (cb) ->
     (result) ->
       cb(null, result) if cb?
