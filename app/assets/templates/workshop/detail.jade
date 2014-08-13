@@ -6,7 +6,10 @@
         time(datetime="{{workshop.time | date:'EEE MMM dd yyyy HH:mmZ'}}", ng-show="showLocalTimes()" format="dddd, MMMM Do YYYY, h:mm a")
         p.description
           | {{ workshop.description }}
-          span.tags(ng-repeat="tag in workshop.tags")  {&nbsp;{{tag}}&nbsp;}
+          span.tags(ng-repeat="tag in workshop.tags")
+            | {&nbsp;
+            a(href="/{{tag}}/workshops" target="_self") {{tag}}
+            | &nbsp;}
 
         .row
           .col-md-5.m-b-1(ng-if="!session.isSignedIn()")
