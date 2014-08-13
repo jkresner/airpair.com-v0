@@ -39,7 +39,6 @@ NotificationSettingsController = ($scope, Expert) ->
     $(".send-toggle .toggle.off").toggleClass("active", !Expert.status())
 
   $scope.$watchGroup [Expert.minRate(), Expert.rate()], (newValue, oldValue) =>
-    $('.hourly .slider').val([values.indexOf(Expert.minRate()), values.indexOf(Expert.rate())])
     movePublicRateTag(Expert.rate())
 
   $('form.tags').on 'click', '.type', ->

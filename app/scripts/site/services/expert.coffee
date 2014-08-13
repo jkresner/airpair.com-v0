@@ -21,7 +21,7 @@ ngExpert = ($http, $rootScope, Restangular) ->
         else
           _.include(tag.levels, level)
 
-    constructor:  ->
+    constructor: ->
       @fetchExpert()
 
     updatedAt: ->
@@ -31,6 +31,10 @@ ngExpert = ($http, $rootScope, Restangular) ->
       Restangular.one('experts', 'me').get().then (expert) =>
         data.expert = expert
         initializeTags()
+        # hack for slider, not good form
+        values = [10, 40, 70, 110, 160, 230]
+        $('.hourly .slider').val([values.indexOf(@minRate()), values.indexOf(@rate())])
+        $(".slider-col .tag").css('margin-left', "#{values.indexOf(@rate()) * 20}%")
 
     hoursAvailable: (value) ->
       if value?
