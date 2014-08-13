@@ -9,7 +9,7 @@ Config = ($routeProvider, $locationProvider, RestangularProvider) ->
      controller: 'WorkshopController'
 
    .when '/airconf2014/keynote/:id',
-     templateUrl: '/templates/workshop/keynote'
+     templateUrl: '/templates/workshop/panel'
      controller: 'WorkshopController'
 
   $locationProvider.html5Mode(true)
@@ -22,6 +22,9 @@ angular
   .run(['$rootScope', ($rootScope) ->
     $rootScope._ = window._
   ])
+
+Array.prototype.toSentence = ->
+  @slice(0, @length - 1).join(', ') + " and " + @slice(-1)
 
 require("./services/session")
 require("./services/workshop")

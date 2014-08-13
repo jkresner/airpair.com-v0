@@ -37,7 +37,9 @@ function showLocalTimes()
     offset = moment().format('ZZ')
     if (utc!='') {
       timeString = utc.split('GMT')[0]
-      if ($time.hasClass('long')) {
+      if ($time.attr('format')) {
+        format = $time.attr('format');
+      } else if ($time.hasClass('long')) {
         format = 'ddd Do MMM h:mma ZZ';
       } else {
         format = 'ddd Do MMM ha ZZ';

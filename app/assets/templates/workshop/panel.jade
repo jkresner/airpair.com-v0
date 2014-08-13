@@ -1,0 +1,24 @@
+.talk.panel
+  .container
+    .row.m-b-1
+      .col-md-7
+        h1 Keynote Panel: {{ workshop.title }}
+        time(datetime="{{workshop.time | date:'EEE MMM dd yyyy HH:mmZ'}}", ng-show="showLocalTimes()" format="dddd, MMMM Do YYYY, h:mm a")
+        p.description
+          | {{ workshop.description }}&nbsp;
+          em with {{ _.map(workshop.speakers, 'name').toSentence() }}
+
+        div(ng-if="!session.isSignedIn()")
+          a.btn.btn-orange.loginRequired(href="/airconf-registration" data-return="/airconf-registration") Register to Watch
+          br
+          span Already got an AirConf ticket? &nbsp;
+          a.loginRequired(href="{{$location}}") Sign in to RSVP
+
+      .col-md-5.text-center
+        .addthis_sharing_toolbox.m-t-2
+
+  .container.viewer
+    include viewer
+
+  .container.chat
+    chat(ng-model="workshop" title="Session Chat")

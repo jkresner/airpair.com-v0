@@ -38,6 +38,7 @@ module.exports =
         if req.method == "HEAD"
           resp.end("")
         else
+          console.log "Rendering", "#{name}.html"
           resp.render "#{name}.html", data, (err, html) ->
             if err?
               resp.render "#{fileName}.jade", data
