@@ -1,5 +1,0 @@
-.player(ng-show="started() && registered()")
-  iframe(width="100%" height="443" ng-src="{{youtubeUrl()}}" frameborder="0" allowfullscreen)
-.player(ng-hide="started()")
-  a.loginRequired(href="/airconf-registration" data-return="/airconf-registration")
-    img.slide.img-responsive(ng-src="/images/landing/airconf/slides/{{workshop.slug}}.jpg")

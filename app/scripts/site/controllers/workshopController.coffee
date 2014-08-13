@@ -29,9 +29,7 @@ WorkshopController = ($scope, $sce, Restangular, Session, Workshop) ->
     Session.data.registration? && Session.data.registration.paid && !$scope.attending() && !$scope.started()
 
   $scope.started = ->
-    attending = _.find Workshop.attendingWorkshops, (workshop) ->
-      workshop.slug == Session.data.workshop.slug
-    attending && Session.data.workshop.youtube? && Session.data.workshop.youtube.length > 0
+    @attending() && Session.data.workshop.youtube? && Session.data.workshop.youtube.length > 0
 
   $scope.keynoteStarted = ->
     Session.data.workshop.youtube?
