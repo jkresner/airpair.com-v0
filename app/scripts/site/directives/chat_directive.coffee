@@ -4,6 +4,7 @@ ChatDirective = ($firebase, session) ->
   scope:
     title: '@' # string attr value passed in
     slug: '@'  # optional, default is to grab from ngModel.slug
+    questions: '@' # boolean flag to turn on questions
     ngModel: '='  # bind by reference passed in
 
   restrict: 'E'
@@ -41,7 +42,7 @@ ChatDirective = ($firebase, session) ->
         message.user_id != @user.id
 
       scope.canMarkAsQuestion = (message) ->
-        @canDelete(message) and not @isQuestion(message) and not message.unmarked_as_question
+        @questions and @canDelete(message) and not @isQuestion(message) and not message.unmarked_as_question
 
       scope.canVoteUp = (message) ->
         @isQuestion(message) and not @isVoter(message)
@@ -58,7 +59,7 @@ ChatDirective = ($firebase, session) ->
         false
 
       scope.voteForQuestion = (message) ->
-        message.voters.push _.pick(@user, 'id', 'name', 'link', 'picture')
+        message.voters.$add _.pick(@user, 'id', 'name', 'link', 'picture')
         @messages.$save(message)
         false
 
