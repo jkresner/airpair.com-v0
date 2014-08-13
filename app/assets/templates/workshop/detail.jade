@@ -26,7 +26,9 @@
       .col-md-4
         div(ng-repeat="speaker in workshop.speakers")
           h1 {{speaker.name}}
+          a(href="http://airpair.me/{{speaker.username}}" ng-if="speaker.username") Book an AirPair session with {{speaker.name}}
           p.description {{speaker.fullBio}}
+
 
   .container.viewer
     .player(ng-show="started() && registered()")
