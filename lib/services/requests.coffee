@@ -178,7 +178,7 @@ module.exports = class RequestsService extends DomainService
   update: (id, data, cb) =>
     super id, data, (e, r) =>
       if !e?
-        @rates.addRequestSuggestedRates r
+        @rates.addRequestSuggestedRates r, true
 
         @mTagsSvc.copyToOrders id, r.marketingTags, r.owner, ->
 
