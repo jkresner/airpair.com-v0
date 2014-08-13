@@ -148,13 +148,20 @@ class exports.RequestFarmView extends BB.ModelSaveView
   shorten: (e) ->
     $input = $(e.target).next()
     encodedLnk = encodeURIComponent $input.val()
-    $.ajax(url:"#{@bitlyUrl}/shorten?access_token=#{@accessToken}&longUrl=#{encodedLnk}").done (r) =>
-      $input.val "http://airpa.ir/#{r.data.hash}"
+    setShareData = =>
       tmplData = link: $input.val(), tags: @fd.tagsStr, hrRate: @fd.hrRate
       if $input.attr('id') is 'farm-linkedin-group'
         @$('#linkedInJobPostMessage').html @tmplLinkedIn tmplData
       if $input.attr('id') is 'farm-tweet-airpair'
         window.open @tmplTwitter(tmplData)
+
+    # don't shorten if we already did
+    if /airpa\.ir/.test(encodedLnk)
+      setShareData()
+    else
+      $.ajax(url:"#{@bitlyUrl}/shorten?access_token=#{@accessToken}&longUrl=#{encodedLnk}").done (r) =>
+        $input.val "http://airpa.ir/#{r.data.hash}"
+        setShareData()
     false
 
 
