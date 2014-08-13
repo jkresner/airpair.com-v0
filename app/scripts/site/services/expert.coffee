@@ -3,64 +3,6 @@ ngExpert = ($http, $rootScope, Restangular) ->
 
     data = {}
 
-    expertId = ->
-      data.expert? && data.expert._id
-
-    requests = ->
-      data.requests || []
-
-    orders = ->
-      data.orders || []
-
-    fetchExpertRequests = ->
-      Restangular.all("requests/expert/#{expertId()}").getList().then (requests) =>
-        data.requests = requests
-
-    fetchExpertOrders = ->
-      Restangular.all("orders/expert/#{expertId()}").getList().then (orders) =>
-        data.orders = orders
-
-    requestCount = -> requests().length
-
-    suggestions = ->
-      _.map requests(), (request) =>
-         _.find request.suggested, (suggestion) ->
-           suggestion.expert._id == expertId()
-
-    respondedCount = ->
-      _.select(suggestions(), (suggestion) ->
-        suggestion.expertStatus not in ["waiting", "opened"]
-      ).length
-
-    responseRate = ->
-      if requestCount() > 0
-        (respondedCount() / requestCount()) * 100
-      else
-        0
-
-    paidOrders = ->
-      _.select orders(), (order) ->
-        order.payment? && order.payment.paid
-
-    totalAmountReceived = ->
-      _.reduce(paidOrders(), (sum, order) ->
-        sum + order.total - order.profit
-      , 0)
-
-    orderHours = ->
-      _.reduce(paidOrders(), (sum, order) ->
-        itemSum = _.reduce(order.lineItems, (sum2, lineItem) ->
-          sum2 + lineItem.qty
-        , 0)
-        sum + itemSum
-      , 0)
-
-    averagePerHour = ->
-      if orderHours() > 0
-        totalAmountReceived() / orderHours()
-      else
-        0
-
     initializeTags = ->
       _.each data.expert.tags, (tag) =>
         tag.levelBeginner = tagGetterSetter(tag, 'beginner')
@@ -89,8 +31,6 @@ ngExpert = ($http, $rootScope, Restangular) ->
       Restangular.one('experts', 'me').get().then (expert) =>
         data.expert = expert
         initializeTags()
-        fetchExpertRequests(expert._id)
-        fetchExpertOrders(expert._id)
 
     hoursAvailable: (value) ->
       if value?
@@ -138,13 +78,13 @@ ngExpert = ($http, $rootScope, Restangular) ->
       data.expert? && data.expert.availability
 
     requestStats: ->
-      responseRate: responseRate()
-      requestCount: requestCount()
+      responseRate: data.expert?.stats.responseRate
+      requestCount: data.expert?.stats.requestCount
 
     orderStats: ->
-      paidOrderCount: paidOrders().length
-      totalAmountReceived: totalAmountReceived()
-      averagePerHour: averagePerHour()
+      paidOrderCount: data.expert?.stats.paidOrderCount
+      totalAmountReceived: data.expert?.stats.totalAmountReceived
+      averagePerHour: data.expert?.stats.averagePerHour
 
     update: ->
       data.expert.updatedAt = new Date
