@@ -30,6 +30,20 @@ module.exports =
         { name: 'Charlie Cheever', company: 'Quora', title: 'Cofounder', pic: '/images/landing/airconf/ccheever.png', tw: 'ccheever'}
       ]
 
+    'wk3':
+      slug:         'will-pairing-ever-be-mainstream'
+      time:         'Mon Aug 18 2014 20:30:00 GMT'
+      calStart:     '20140818T203000Z'
+      calEnd:       '20140818T213000Z'
+      title:        'Will Pairing Ever be Mainstream?'
+      description:  "Does pairing make sense for non-coding disciplines. What makes pair programming a compelling value proposition when writing software? What makes pairing hard and what cultural roadblocks exist in both software and non-software industry that is hindering more adoption."
+      speakers: [
+        { name: 'Edward Hieatt', company: 'Pivotal Labs', title: 'COO', pic: '//airpair-blog.s3.amazonaws.com/wp-content/uploads/2013/12/Edward-Hieatt_avatar-96x96.jpg', tw: 'edwardhieatt' }
+        { name: 'Desi McAdam', company: 'Thoughtbot', title: 'Director', pic: '//secure.gravatar.com/avatar/33da3da6b969021eb6b17eaadd48a53e?s=140', tw: 'desi' }
+        { name: 'Joshua Kerievsky', company: 'Industrial Logic', title: 'CEO', pic: '//secure.gravatar.com/avatar/050efd8d626e05697dea0d0edeb8bea8?s=140', tw: 'joshuakerievsky' }
+        { name: 'Dave Hoover', company: 'DevBootcamp', title: 'Founder', pic: '//secure.gravatar.com/avatar/f3729d9dc86df0fc4f1ab7b20aa8e531?s=140', tw: 'davehoover' }
+      ]
+
   so15:
     'jquery':     name: 'Yehuda Katz', me: 'wycats', claim: 'Rails Core Team Member'
     'ruby-on-rails':name: 'Yehuda Katz', me: 'wycats', claim: 'Rails Core Team Member'
