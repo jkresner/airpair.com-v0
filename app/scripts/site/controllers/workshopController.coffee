@@ -15,11 +15,6 @@ WorkshopController = ($scope, $sce, Restangular, Session, Workshop) ->
     else
       Workshop.getAudienceFor(Session.data.workshop.slug)
 
-  # specifically for marketing metrics
-  else
-    console.log "About to track custom event"
-    addjs.trackCustomEvent 'WorkshopViewByPublic', {slug: Session.data.workshop.slug}
-
   $scope.audience = ->
     Workshop.attendees
 
@@ -49,11 +44,32 @@ WorkshopController = ($scope, $sce, Restangular, Session, Workshop) ->
 
   $scope.attend = ->
     Workshop.attendSession(Session.data.workshop.slug)
+    # specifically for marketing metrics
+    addjs.trackCustomEvent 'WorkshopRSVP', {slug: Session.data.workshop.slug}
 
   $scope.youtubeUrl = ->
     url = "//www.youtube.com/embed/#{Session.data.workshop.youtube}"
     $sce.trustAsResourceUrl(url)
 
+  ###
+  Workshop Metrics
+  ###
+  props =
+    slug: Session.data.workshop.slug
+    started: $scope.started()
+
+  if Session.isSignedIn()
+    if $scope.registered()
+      addjs.trackCustomEvent 'WorkshopViewByRegisteredAttendee', props
+    else
+      addjs.trackCustomEvent 'WorkshopViewByUnregisteredUser', props
+
+  else
+    addjs.trackCustomEvent 'WorkshopViewByPublic', props
+
+###
+Angular Declarations
+###
 angular
   .module('ngAirPair')
   .controller('WorkshopController', ['$scope', '$sce', 'Restangular', 'Session', 'Order', WorkshopController])
