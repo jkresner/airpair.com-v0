@@ -23,6 +23,7 @@ class Twitter
 
   # Completed action
   done: (req, res) =>
+    console.log ">>>>>>>>>>>>>>>>>>>", "here"
     #res.send req.user
     res.redirect '/be-an-expert'
 

@@ -10,6 +10,7 @@ module.exports = (options) ->
   setReturnTo = if options.setReturnTo is undefined then true else options.setReturnTo
 
   (req, res, next) ->
+    console.log req.method, req.path
 
     if !req.isAuthenticated || !req.isAuthenticated()
 

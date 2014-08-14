@@ -27,6 +27,7 @@ module.exports = (app) ->
   # angular
   app.get '/adm/matching', authd, adm, render 'admin'
   app.get '/site', authd, render 'site'
+  app.get '/be-an-expert*', render 'site'
   app.get '/settings/notifications', authd, render 'site'
   app.get '/coming', authd, render 'site'
   app.get '/adm/templates/orders_daily', authd, render 'adm/templates/orders_daily'
@@ -36,7 +37,6 @@ module.exports = (app) ->
 
   # pages
   app.get '/login', render 'login'
-  app.get '/be-an-expert*', render 'beexpert'
   app.get '/find-an-expert*', render 'request'
   app.get '/dashboard*', authd, render 'dashboard'
   app.get '/settings*', authd, render 'settings'

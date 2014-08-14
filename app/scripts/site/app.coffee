@@ -1,5 +1,8 @@
 Config = ($routeProvider, $locationProvider, RestangularProvider) ->
   $routeProvider
+   .when '/be-an-expert',
+     templateUrl: '/templates/settings/expert_connect'
+     controller: 'ExpertSettingsController'
    .when '/settings/notifications',
      templateUrl: '/templates/settings/notifications'
      controller: 'NotificationSettingsController'
@@ -22,5 +25,6 @@ require("./directives/ngDelay")
 require("./services/session")
 require("./services/expert")
 require("./controllers/headerController")
+require("./controllers/expertSettingsController")
 require("./controllers/notificationSettingsController")
 require("./controllers/comingController")
