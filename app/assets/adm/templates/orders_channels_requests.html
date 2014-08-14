@@ -10,7 +10,7 @@
   <div class="row">
 
     <div class="col-sm-4">
-      <h3 class="text-thin">Orders by Channels
+      <h3 class="text-thin">Requests by Channels
       </h3>
     </div>
     <div class="col-sm-4">
@@ -182,7 +182,7 @@
     </tr>
  -->
 
-    <tr class="row-summary active">
+<!--     <tr class="row-summary active">
       <td></td>
       <td><strong>Revenue</strong></td>
       <td>
@@ -293,7 +293,7 @@
 
       <td></td>
     </tr>
-
+ -->
 <!--
     <tr class="active">
       <td></td>
@@ -321,18 +321,17 @@
       <td><a href="/adm/pipeline/request/{{order.requestId}}" target="blank" ng-class="{'text-orange': order.isRepeat}">{{order.name}}</a></td>
       <td><b>{{order.total | numFloor}}</b></td>
 
-      <td class="text-info a{{order.tags.ad.total}}">{{order.tags.ad.total  | numFloor}}</td>
-      <td class="text-info a{{order.tags.affiliate.total}}">{{order.tags.affiliate.total  | numFloor}}</td>
-      <td class="text-info a{{order.tags.direct.total}}">{{order.tags.direct.total  | numFloor}}</td>
-      <td class="text-info a{{order.tags.event.total}}">{{order.tags.event.total  | numFloor}}</td>
-      <td class="text-info a{{order.tags.incubator.total}}">{{order.tags.incubator.total  | numFloor}}</td>
-      <td class="text-info a{{order.tags.newsletterairpair.total}}">{{order.tags.newsletterairpair.total  | numFloor}}</td>
-      <td class="text-info a{{order.tags.press.total}}">{{order.tags.press.total  | numFloor}}</td>
-      <td class="text-info a{{order.tags.seo.total}}">{{order.tags.seo.total  | numFloor}}</td>
-      <td class="text-info a{{order.tags.social.total}}">{{order.tags.social.total  | numFloor}}</td>
-      <td class="text-info a{{order.tags.wordofmouth.total}}">{{order.tags.wordofmouth.total  | numFloor}}</td>
-      <td class="text-info a{{order.tags.untracked.total}}">{{order.tags.untracked.total  | numFloor}}</td>
-      <!-- <td class="text-info">{{order.tags.stackoverflowads.total | number: 0}}</td> -->
+      <td class="text-info a{{order.tags.ad.budget}}">{{ order.tags.ad.budget  | numFloor}}</td>
+      <td class="text-info a{{order.tags.affiliate.budget}}">{{ order.tags.affiliate.budget  | numFloor}}</td>
+      <td class="text-info a{{order.tags.direct.budget}}">{{ order.tags.direct.budget  | numFloor}}</td>
+      <td class="text-info a{{order.tags.event.budget}}">{{ order.tags.event.budget  | numFloor}}</td>
+      <td class="text-info a{{order.tags.incubator.budget}}">{{ order.tags.incubator.budget  | numFloor}}</td>
+      <td class="text-info a{{order.tags.newsletterairpair.budget}}">{{ order.tags.newsletterairpair.budget  | numFloor}}</td>
+      <td class="text-info a{{order.tags.press.budget}}">{{ order.tags.press.budget  | numFloor}}</td>
+      <td class="text-info a{{order.tags.seo.budget}}">{{ order.tags.seo.budget  | numFloor}}</td>
+      <td class="text-info a{{order.tags.social.budget}}">{{ order.tags.social.budget  | numFloor}}</td>
+      <td class="text-info a{{order.tags.wordofmouth.budget}}">{{ order.tags.wordofmouth.budget  | numFloor}}</td>
+      <td class="text-info a{{order.tags.untracked.budget}}">{{ order.tags.untracked.budget  | numFloor}}</td>
       <td>
         <span ng-repeat="tag in order.campaigns" class="label marketingtag campaign">{{tag}}</span>
       </td>

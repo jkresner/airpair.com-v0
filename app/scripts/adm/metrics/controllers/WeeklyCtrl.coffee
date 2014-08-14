@@ -41,7 +41,7 @@ angular.module('AirpairAdmin').controller("WeeklyCtrl", ['$scope', '$location', 
     $scope.channelGrowthSummary = apData.orders.getChannelGrowthSummary($scope.channelGrowth)
 
 
-    apData.orders.getGrowthRequests ->
+    apData.orders.getGrowthRequests moment($scope.dateStart), moment($scope.dateEnd), ->
       $scope.channelGrowthRequests = apData.orders.getChannelGrowth(moment($scope.dateStart), moment($scope.dateEnd), "requests")
       $scope.channelGrowthRequestsSummary = apData.orders.getChannelGrowthSummary($scope.channelGrowthRequests)
       $scope.$apply() if not $scope.$$phase

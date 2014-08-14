@@ -197,10 +197,10 @@ angular.module('AirpairAdmin').factory('apData', ['$moment', '$filter', '$http',
 
 
 
-      getGrowthRequests: (callback = ->) ->
+      getGrowthRequests: (start, end, callback = ->) ->
 
-        startDate = @growthStart.format('YYYY-MM-DD')
-        endDate = @growthEnd.clone().add("d", 1).format('YYYY-MM-DD')
+        startDate = start.format('YYYY-MM-DD')
+        endDate = end.clone().add("d", 1).format('YYYY-MM-DD')
 
         count = 0
         api = {}
@@ -269,15 +269,15 @@ angular.module('AirpairAdmin').factory('apData', ['$moment', '$filter', '$http',
 
         console.time("Total getGrowth")
 
-        @growthStart = start
-        @growthEnd = end
+        # @growthStart = start
+        # @growthEnd = end
 
         @calcRepeatCustomers()
 
         # Get API requests first
         console.time("api calls")
 
-        @getGrowthRequests =>
+        @getGrowthRequests start, end, =>
           console.timeEnd("api calls")
 
           console.log "... api calls completed. Crunching data.."
@@ -565,7 +565,7 @@ angular.module('AirpairAdmin').factory('apData', ['$moment', '$filter', '$http',
 
 
       getChannelMetrics: (start, end, type = 'orders') ->
-        console.log "getChannelMetrics = ", type
+        console.log "getChannelMetrics ==", type
         end = moment(end).endOf("day")
 
         @calcRepeatCustomers()
@@ -600,9 +600,11 @@ angular.module('AirpairAdmin').factory('apData', ['$moment', '$filter', '$http',
             metricsRepeated = []
             metrics = []
             TAGS = []
-            # console.log "dataSet #{type}", dataSet
+            console.log "dataSet #{type}", dataSet
             for order in dataSet
+              # console.log "request"
               metric =
+                budget: order.budget or 0
                 utc: order.utc
                 name: order.company.contacts[0].fullName
                 userId: order.company.contacts[0]._id
@@ -627,7 +629,7 @@ angular.module('AirpairAdmin').factory('apData', ['$moment', '$filter', '$http',
                   # stackoverflowads: {total:0, revenue: 0}
 
               _.each order.marketingTags, (tag) ->
-                console.log "tag.group", tag.group
+                # console.log "tag.group", tag.group
                 TAGS.push tag.group
                 channelTags = _.where order.marketingTags, { type: "channel" }
                 tagName = tag.group.replace('-', '')
@@ -637,6 +639,7 @@ angular.module('AirpairAdmin').factory('apData', ['$moment', '$filter', '$http',
                   # tags.push tagName
                   metric.tags[tagName] = tag
                   metric.tags[tagName].total = metric.total/channelTags.length
+                  metric.tags[tagName].budget = metric.budget
                   metric.hasTags = true
                 if tag.type is "campaign"
                   metric.campaigns.push(tag.name)

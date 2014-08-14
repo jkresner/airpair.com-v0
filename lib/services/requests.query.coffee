@@ -76,5 +76,6 @@ class QueryHelper
       'calls.recordings.type': 1
       'userId': 1
       'marketingTags': 1
+      'budget': 1
 
 module.exports = new QueryHelper()

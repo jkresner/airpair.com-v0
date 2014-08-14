@@ -1,0 +1,157 @@
+
+.container
+  .row
+    .col-sm-2
+      h3.text-thin.m-b-2 Day by Day
+    .col-sm-3.m-t-1
+      input.form-control(ng-model="searchString" type="text" placeholder="Search all orders")
+      .spinner(ng-show="loading" style="position: absolute;top: 2px;right: 18px;")
+    .col-sm-2.m-t-1
+      button.btn.btn-default(ng-model="newOnly" btn-checkbox) New Only
+    .col-sm-4.m-t-1
+      .input-group
+        span.input-group-addon Start
+        input.form-control(type="date" name="startdate" ng-model="dateStart" placeholder="yyyy-MM-dd" min="2013-01-01" max="" style="width:160px" required)
+        span.input-group-addon End
+        input.form-control(type="date" name="enddate" ng-model="dateEnd" placeholder="yyyy-MM-dd" min="2013-01-01" max="" style="width:160px" required)
+
+
+
+  table.table.table-hover
+    tr.row-divide(ng-repeat-start="week in weeks")
+      td.text-bold(style="width:13%") {{week.str}}
+      td.text-muted Sat
+      td.text-muted Sun
+      td.text-muted Mon
+      td.text-muted Tue
+      td.text-muted Wed
+      td.text-muted Thu
+      td.text-muted Fri
+      td.text-muted Total
+
+    tr
+      td.text-muted Impressions
+      td.text-success {{week.days[0].summary.numImps}}
+      td.text-success {{week.days[1].summary.numImps}}
+      td.text-success {{week.days[2].summary.numImps}}
+      td.text-success {{week.days[3].summary.numImps}}
+      td.text-success {{week.days[4].summary.numImps}}
+      td.text-success {{week.days[5].summary.numImps}}
+      td.text-success {{week.days[6].summary.numImps}}
+      td.text-success.text-bold {{week.data.summary.numImps}}
+    tr
+      td.text-muted.text-invisible Clicks/Impressions
+      td.text-orange {{week.days[0].summary.conImpsToClicks*100 | number: 2}}%
+      td.text-orange {{week.days[1].summary.conImpsToClicks*100 | number: 2}}%
+      td.text-orange {{week.days[2].summary.conImpsToClicks*100 | number: 2}}%
+      td.text-orange {{week.days[3].summary.conImpsToClicks*100 | number: 2}}%
+      td.text-orange {{week.days[4].summary.conImpsToClicks*100 | number: 2}}%
+      td.text-orange {{week.days[5].summary.conImpsToClicks*100 | number: 2}}%
+      td.text-orange {{week.days[6].summary.conImpsToClicks*100 | number: 2}}%
+      td.text-orange.text-bold {{week.data.summary.conImpsToClicks*100 | number: 2}}%
+    tr
+      td.text-muted Clicks
+      td.text-success {{week.days[0].summary.numClicks}}
+      td.text-success {{week.days[1].summary.numClicks}}
+      td.text-success {{week.days[2].summary.numClicks}}
+      td.text-success {{week.days[3].summary.numClicks}}
+      td.text-success {{week.days[4].summary.numClicks}}
+      td.text-success {{week.days[5].summary.numClicks}}
+      td.text-success {{week.days[6].summary.numClicks}}
+      td.text-success.text-bold {{week.data.summary.numClicks}}
+    tr
+      td.text-muted.text-invisible Views/Clicks
+      td.text-orange {{week.days[0].summary.conClicksToViews*100 | number: 2}}%
+      td.text-orange {{week.days[1].summary.conClicksToViews*100 | number: 2}}%
+      td.text-orange {{week.days[2].summary.conClicksToViews*100 | number: 2}}%
+      td.text-orange {{week.days[3].summary.conClicksToViews*100 | number: 2}}%
+      td.text-orange {{week.days[4].summary.conClicksToViews*100 | number: 2}}%
+      td.text-orange {{week.days[5].summary.conClicksToViews*100 | number: 2}}%
+      td.text-orange {{week.days[6].summary.conClicksToViews*100 | number: 2}}%
+      td.text-orange.text-bold {{week.data.summary.conClicksToViews*100 | number: 2}}%
+    tr
+      td.text-muted Views
+      td.text-success {{week.days[0].summary.numViews}}
+      td.text-success {{week.days[1].summary.numViews}}
+      td.text-success {{week.days[2].summary.numViews}}
+      td.text-success {{week.days[3].summary.numViews}}
+      td.text-success {{week.days[4].summary.numViews}}
+      td.text-success {{week.days[5].summary.numViews}}
+      td.text-success {{week.days[6].summary.numViews}}
+      td.text-success.text-bold {{week.data.summary.numViews}}
+    tr
+      td.text-muted.text-invisible Requests/Views
+      td.text-orange {{week.days[0].summary.conViewsToRequests*100 | number: 2}}%
+      td.text-orange {{week.days[1].summary.conViewsToRequests*100 | number: 2}}%
+      td.text-orange {{week.days[2].summary.conViewsToRequests*100 | number: 2}}%
+      td.text-orange {{week.days[3].summary.conViewsToRequests*100 | number: 2}}%
+      td.text-orange {{week.days[4].summary.conViewsToRequests*100 | number: 2}}%
+      td.text-orange {{week.days[5].summary.conViewsToRequests*100 | number: 2}}%
+      td.text-orange {{week.days[6].summary.conViewsToRequests*100 | number: 2}}%
+      td.text-orange.text-bold {{week.data.summary.conViewsToRequests*100 | number: 2}}%
+    tr
+      td.text-muted Requests
+      td.text-success {{week.days[0].summary.numRequests}}
+      td.text-success {{week.days[1].summary.numRequests}}
+      td.text-success {{week.days[2].summary.numRequests}}
+      td.text-success {{week.days[3].summary.numRequests}}
+      td.text-success {{week.days[4].summary.numRequests}}
+      td.text-success {{week.days[5].summary.numRequests}}
+      td.text-success {{week.days[6].summary.numRequests}}
+      td.text-success.text-bold {{week.data.summary.numRequests}}
+    
+    tr
+      td.text-muted.text-invisible Orders/Requests
+      td.text-orange {{week.days[0].summary.conRequestsToOrders*100 | number: 0}}%
+      td.text-orange {{week.days[1].summary.conRequestsToOrders*100 | number: 0}}%
+      td.text-orange {{week.days[2].summary.conRequestsToOrders*100 | number: 0}}%
+      td.text-orange {{week.days[3].summary.conRequestsToOrders*100 | number: 0}}%
+      td.text-orange {{week.days[4].summary.conRequestsToOrders*100 | number: 0}}%
+      td.text-orange {{week.days[5].summary.conRequestsToOrders*100 | number: 0}}%
+      td.text-orange {{week.days[6].summary.conRequestsToOrders*100 | number: 0}}%
+      td.text-orange.text-bold {{week.data.summary.conRequestsToOrders*100 | number: 0}}%
+    
+    tr
+      td.text-muted Orders
+      td.text-success {{week.days[0].summary.numOrders}}
+      td.text-success {{week.days[1].summary.numOrders}}
+      td.text-success {{week.days[2].summary.numOrders}}
+      td.text-success {{week.days[3].summary.numOrders}}
+      td.text-success {{week.days[4].summary.numOrders}}
+      td.text-success {{week.days[5].summary.numOrders}}
+      td.text-success {{week.days[6].summary.numOrders}}
+      td.text-success.text-bold {{week.data.summary.numOrders}}
+    tr
+      td.text-muted.text-invisible Revenue/Orders
+      td.text-orange ${{week.days[0].summary.conOrdersToRevenue | number: 0}}
+      td.text-orange ${{week.days[1].summary.conOrdersToRevenue | number: 0}}
+      td.text-orange ${{week.days[2].summary.conOrdersToRevenue | number: 0}}
+      td.text-orange ${{week.days[3].summary.conOrdersToRevenue | number: 0}}
+      td.text-orange ${{week.days[4].summary.conOrdersToRevenue | number: 0}}
+      td.text-orange ${{week.days[5].summary.conOrdersToRevenue | number: 0}}
+      td.text-orange ${{week.days[6].summary.conOrdersToRevenue | number: 0}}
+      td.text-orange.text-bold ${{week.data.summary.conOrdersToRevenue | number: 0}}
+    tr
+      td.text-muted Revenue
+      td.text-success ${{week.days[0].summary.numRevenue}}
+      td.text-success ${{week.days[1].summary.numRevenue}}
+      td.text-success ${{week.days[2].summary.numRevenue}}
+      td.text-success ${{week.days[3].summary.numRevenue}}
+      td.text-success ${{week.days[4].summary.numRevenue}}
+      td.text-success ${{week.days[5].summary.numRevenue}}
+      td.text-success ${{week.days[6].summary.numRevenue}}
+      td.text-success.text-bold ${{week.data.summary.numRevenue}}
+    tr(ng-repeat-end)
+      td.text-muted.text-invisible Impressions/Requests
+      td.text-orange {{week.days[0].summary.conImpsToReqs*100 | number: 2}}%
+      td.text-orange {{week.days[1].summary.conImpsToReqs*100 | number: 2}}%
+      td.text-orange {{week.days[2].summary.conImpsToReqs*100 | number: 2}}%
+      td.text-orange {{week.days[3].summary.conImpsToReqs*100 | number: 2}}%
+      td.text-orange {{week.days[4].summary.conImpsToReqs*100 | number: 2}}%
+      td.text-orange {{week.days[5].summary.conImpsToReqs*100 | number: 2}}%
+      td.text-orange {{week.days[6].summary.conImpsToReqs*100 | number: 2}}%
+      td.text-orange.text-bold {{week.data.summary.conImpsToReqs*100 | number: 2}}%
+
+
+
+
