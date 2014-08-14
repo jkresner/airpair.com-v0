@@ -5,13 +5,13 @@ class LandingPageApi extends require('./_api')
   AirConfDiscounts: require('../services/airConfDiscounts')
   Stripe: require('stripe')(config.payment.stripe.secretKey)
 
-  routes: (app, route) ->
-    app.post "/api/#{route}/airconf/order", @ap, @loggedIn, @airconfCreateOrder
-    app.post "/api/#{route}/airconf/promo", @ap, @loggedIn, @airconfPromoLookup
-    app.post "/api/#{route}/mailchimp/subscribe", @ap, @mailchimpSubscribe
-    app.post "/api/#{route}/mailchimp/retarget", @ap, @mailchimpRetarget
-    app.post "/api/#{route}/mailchimp/article", @ap, @mailchimpArticle
-    app.post "/api/#{route}/purchase", @ap, @createCustomer # generic, client decides $$
+  routes: (app) ->
+    app.post "/landing/airconf/order", @ap, @loggedIn, @airconfCreateOrder
+    app.post "/landing/airconf/promo", @ap, @loggedIn, @airconfPromoLookup
+    app.post "/landing/mailchimp/subscribe", @ap, @mailchimpSubscribe
+    app.post "/landing/mailchimp/retarget", @ap, @mailchimpRetarget
+    app.post "/landing/mailchimp/article", @ap, @mailchimpArticle
+    app.post "/landing/purchase", @ap, @createCustomer # generic, client decides $$
 
   airconfCreateOrder: =>
     @svc.createAirConfOrder @data, @cbSend
@@ -61,4 +61,4 @@ class LandingPageApi extends require('./_api')
     @Chimp.subscribeSilent "7d42af393a", @data.email, {Tech: @data.tech}, @cbSend
 
 
-module.exports = (app) -> new LandingPageApi app, 'landing'
+module.exports = (app) -> new LandingPageApi(app)

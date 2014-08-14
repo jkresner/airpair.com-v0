@@ -1,6 +1,6 @@
-viewData = new (require './lib/services/_viewdata')()
-tagsData = require './test/data/tags'
-tagModel = require './lib/models/tag'
+viewData = new (require '../lib/services/_viewdata')()
+tagsData = require '../test/data/tags'
+tagModel = require '../lib/models/tag'
 
 module.exports = (app) ->
 

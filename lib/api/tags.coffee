@@ -3,11 +3,11 @@ class TagsApi extends require('./_api')
 
   Svc: require './../services/tags'
 
-  routes: (app, route) ->
-    app.get     "/api/#{route}", @loggedIn, @ap, @list
-    app.post    "/api/#{route}", @loggedIn, @ap, @create
-    app.put     "/api/#{route}/:id", @loggedIn, @ap, @update
-    app.delete  "/api/#{route}/:id", @loggedIn, @ap, @delete
+  routes: (app) ->
+    app.get     "/tags", @loggedIn, @ap, @list
+    app.post    "/tags", @loggedIn, @ap, @create
+    app.put     "/tags/:id", @loggedIn, @ap, @update
+    app.delete  "/tags/:id", @loggedIn, @ap, @delete
 
 
   create: (req, res, next) => @svc.create @data.addMode, @data, (e, r) =>
@@ -17,4 +17,4 @@ class TagsApi extends require('./_api')
       @cSend(res, next)(e,r)
 
 
-module.exports = (app) -> new TagsApi app, 'tags'
+module.exports = (app) -> new TagsApi(app)

@@ -5,12 +5,12 @@ class WorkshopsApi extends require('./_api')
 
   Svc: require './../services/workshops'
 
-  routes: (app, route) ->
-    app.get "/api/#{route}/user", @loggedIn, @ap, @listByUser
-    app.get "/api/#{route}/:slug", @loggedIn, @ap, @detail
-    app.get "/api/adm/#{route}/refresh", @loggedIn, @admin, @ap, @refresh
-    app.get "/api/#{route}/:slug/attendees", @loggedIn, @ap, @listAttendees
-    app.post "/api/#{route}/:slug/attendees", @loggedIn, @ap, @createAttendee
+  routes: (app) ->
+    app.get  "/workshops/user", @loggedIn, @ap, @listByUser
+    app.get  "/workshops/:slug", @loggedIn, @ap, @detail
+    app.get  "/adm/workshops/refresh", @loggedIn, @admin, @ap, @refresh
+    app.get  "/workshops/:slug/attendees", @loggedIn, @ap, @listAttendees
+    app.post "/workshops/:slug/attendees", @loggedIn, @ap, @createAttendee
 
   detail: (req) =>
     @svc.getWorkshopBySlug req.params.slug, @cbSend
@@ -35,4 +35,4 @@ class WorkshopsApi extends require('./_api')
     AirConfSchedule.update(@cbSend)
 
 
-module.exports = (app) -> new WorkshopsApi app, 'workshops'
+module.exports = (app) -> new WorkshopsApi(app)

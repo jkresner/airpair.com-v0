@@ -8,11 +8,11 @@ class Api
 
   # set important authorization-related properties
   # and read routes handled by this Api object
-  constructor: (app, route) ->
+  constructor: (app) ->
     @admin    = authz.Admin isApi: true
     @mm       = authz.Matchmaker isApi: true
     @loggedIn = authz.LoggedIn isApi: true
-    @routes app, route
+    @routes app
 
   # Standardized middleware routine
   ap: (req, res, next) =>
@@ -37,7 +37,7 @@ class Api
     # finally, call next callback in the middleware chain
     next()
 
-  routes: (app, route) ->
+  routes: (app) ->
     $log 'override in child class'
 
   # default http operations

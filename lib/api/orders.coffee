@@ -3,16 +3,16 @@ class OrdersApi extends require('./_api')
 
   Svc: require './../services/orders'
 
-  routes: (app, route) ->
-    app.post    "/api/#{route}", @loggedIn, @ap, @create
-    app.post    "/api/#{route}/package", @ap, @createAnonCharge
-    app.get     "/api/admin/#{route}", @admin, @ap, @list
-    app.get     "/api/#{route}/request/:id", @admin, @ap, @getByRequestId
-    app.get     "/api/#{route}/me", @loggedIn, @ap, @getByMe
-    app.get     "/api/#{route}/credit", @loggedIn, @ap, @getCredit
-    app.get     "/api/#{route}/expert/:expertId", @loggedIn, @ap, @expertList
-    app.put     "/api/#{route}/:id", @admin, @ap, @update
-    app.delete  "/api/#{route}/:id", @admin, @ap, @delete
+  routes: (app) ->
+    app.post    "/orders", @loggedIn, @ap, @create
+    app.post    "/orders/package", @ap, @createAnonCharge
+    app.get     "/admin/orders", @admin, @ap, @list
+    app.get     "/orders/request/:id", @admin, @ap, @getByRequestId
+    app.get     "/orders/me", @loggedIn, @ap, @getByMe
+    app.get     "/orders/credit", @loggedIn, @ap, @getCredit
+    app.get     "/orders/expert/:expertId", @loggedIn, @ap, @expertList
+    app.put     "/orders/:id", @admin, @ap, @update
+    app.delete  "/orders/:id", @admin, @ap, @delete
 
 
   getByRequestId: (req, res) => @svc.getByRequestId req.params.id, @cbSend
@@ -61,4 +61,4 @@ class OrdersApi extends require('./_api')
       res.send 400, 'updating orders not yet implemented'
 
 
-module.exports = (app) -> new OrdersApi app, 'orders'
+module.exports = (app) -> new OrdersApi(app)

@@ -9,20 +9,20 @@ class RequestApi extends Api
 
   Svc: require './../services/requests'
 
-  routes: (app, route) ->
-    app.get    "/api/#{route}", @loggedIn, @ap, @list
-    app.get    "/api/#{route}/:id", @ap, @detail
-    app.get    "/api/#{route}/expert/:expertId", @loggedIn, @ap, @expertList
-    app.get    "/api/admin/#{route}/active", @admin, @ap, @active
-    app.get    "/api/admin/#{route}/inactive", @admin, @ap, @inactive
-    app.get    "/api/admin/#{route}/inactive", @admin, @ap, @inactive
-    app.get    "/api/admin/#{route}/:sddmmyy/:eddmmyy", @admin, @ap, @getByDates
-    app.put    "/api/#{route}/:id", @loggedIn, @ap, @update
-    app.put    "/api/#{route}/:id/suggestion", @loggedIn, @ap, @updateSuggestion
-    app.post   "/api/#{route}/:id/suggestion", @loggedIn, @ap, @addSelfSuggestion
-    app.post   "/api/#{route}", @loggedIn, @ap, @create
-    app.post   "/api/#{route}/book", @loggedIn, @ap, @createBookme
-    app.delete "/api/#{route}/:id", @admin, @ap, @delete
+  routes: (app) ->
+    app.get    "/requests", @loggedIn, @ap, @list
+    app.get    "/requests/:id", @ap, @detail
+    app.get    "/requests/expert/:expertId", @loggedIn, @ap, @expertList
+    app.get    "/admin/requests/active", @admin, @ap, @active
+    app.get    "/admin/requests/inactive", @admin, @ap, @inactive
+    app.get    "/admin/requests/inactive", @admin, @ap, @inactive
+    app.get    "/admin/requests/:sddmmyy/:eddmmyy", @admin, @ap, @getByDates
+    app.put    "/requests/:id", @loggedIn, @ap, @update
+    app.put    "/requests/:id/suggestion", @loggedIn, @ap, @updateSuggestion
+    app.post   "/requests/:id/suggestion", @loggedIn, @ap, @addSelfSuggestion
+    app.post   "/requests", @loggedIn, @ap, @create
+    app.post   "/requests/book", @loggedIn, @ap, @createBookme
+    app.delete "/requests/:id", @admin, @ap, @delete
 
   list: (req) => @svc.getByUserId req.user._id, @cbSend
   expertList: (req) => @svc.getBySuggestedExpert req.params.expertId, @cbSend
@@ -61,4 +61,4 @@ class RequestApi extends Api
         res.send 403
 
 
-module.exports = (app) -> new RequestApi app, 'requests'
+module.exports = (app) -> new RequestApi(app)
