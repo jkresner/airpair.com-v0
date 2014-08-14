@@ -33,6 +33,11 @@ module.exports = class WorkshopsService extends DomainService
     @searchOne query, @data.view.public, (error, workshop) ->
       callback error, workshop
 
+  getWorkshopsByTag: (tag, callback) ->
+    query = tags: tag
+    @searchMany query, @data.view.public, (error, workshop) ->
+      callback error, workshop
+
   getListByAttendee: (userId, callback) ->
     userId = @usr._id unless userId?
     query = attendees:

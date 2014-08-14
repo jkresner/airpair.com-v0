@@ -98,9 +98,14 @@ module.exports = class ViewDataService
   airconf: (cb) ->
     new OrdersSvc(@usr).getAirConfRegisration (e, registration) =>
       new WorkshopsService(@usr).getAllCached (ee, workshops) =>
-        today = new Date()
-        talksToday = _.select(workshops, (w) -> w.time && moment(w.time).isSame(today, 'day'))
+        today = moment()
+        talksToday = _.select(workshops, (w) -> w.time && moment(w.time).subtract(8, 'hours').isSame(today, 'day'))
         cb ee, -> { workshops, registration, keynotes: Data.keynotes, talksToday }
+
+  airconf_tag: (tag, cb) ->
+    new OrdersSvc(@usr).getAirConfRegisration (e, registration) =>
+      new WorkshopsService(@usr).getWorkshopsByTag tag, (ee, workshops) =>
+        cb ee, -> { workshops, tag, registration }
 
   workshop: (id, template, chatTemplate, cb) ->
     workshopsService = new WorkshopsService(@usr)

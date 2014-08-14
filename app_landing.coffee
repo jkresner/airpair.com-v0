@@ -25,13 +25,21 @@ module.exports = (app, render) ->
       r.status 404
       render('landing/airconf')(req, r, n)
 
-  app.get '/airconf2014', render 'landing/airconf'
+  ###
+  AIRCONF ROUTES
+  ###
+  app.get '/workshops/me', authd, render 'workshop', ['params.id']
+
   app.get '/airconf2014/foyer', fbAuth(), render 'landing/airconf_foyer'
+  app.get '/airconf2014', render 'landing/airconf'
   app.get '/airconf', (req, r) -> r.redirect req.url.replace('/airconf','/airconf2014')
   app.get '/airconf-registration', authd, render 'landing/airconfreg'
   app.get '/airconf-subscribe', render 'landing/airconfsubscribe'
   app.get '/airconf-so-subscribe', render 'landing/airconfsosubscribe'
   app.get '/airconf-promo/:id', render 'landing/airconfpromo', ['params.id']
+  app.get '/:tag/workshops', render 'landing/airconf_tag', ['params.tag']
+  app.get '/:tag/workshops/:id', fbAuth(), render 'workshop', ['params.id', {template: 'workshop/detail'}, {template: 'shared/chat_template'}]
+
 
   app.get '/airconf2014/keynote/:id', fbAuth(), render 'keynote', ['params.id', {template: 'workshop/panel'}, {template: 'shared/chat_template'}]
 
