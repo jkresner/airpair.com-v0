@@ -2,19 +2,21 @@
 google       = require('./wrappers/google')
 ONE_HOUR     = 3600000 # milliseconds
 
+
+# https://developers.google.com/google-apps/calendar/v3/reference/colors/get
 owner2colorIndex =
-  tb: undefined # default color for the calendar, #9A9CFF
-  '': 1  # blue
-  il: 2  # green
-  '': 3  # purple
-  ds: 4  # red
-  '': 5  # yellow
-  jk: 6  # orange
-  '': 7  # turqoise
-  du: 8  # gray
-  of: 9  # bold blue
-  pg: 10 # bold green
-  '': 11 # bold red
+  ad: undefined # default color for the calendar, #9A9CFF
+  '': 1  #a4bdfc blue
+  il: 2  #7ae7bf green
+  '': 3  #dbadff purple
+  of: 4  #ff887c red
+  '': 5  #fbd75b yellow
+  jk: 6  #ffb878 orange
+  '': 7  #46d6db turqoise
+  du: 8  #e1e1e1 gray
+  '': 9  #5484ed bold blue
+  pg: 10 #51b749 bold green
+  '': 11 #dc2127 bold red
 
 capitalizeFirstLetter = (str) ->
   str[0].toUpperCase() + str.slice(1)
