@@ -29,8 +29,7 @@ function setCalendarTimes() {
   });
 }
 
-function showLocalTimes()
-{
+function showLocalTimes() {
   $('time').each(function (idx, time) {
     $time = $(time);
     utc = $time.attr('datetime');
@@ -66,7 +65,9 @@ function fixFloatAction() {
       }
     });
   }
-  catch(e) { //noop }
+  catch(e) {
+    //noop
+  }
 }
 
 function showSubscribe() {
