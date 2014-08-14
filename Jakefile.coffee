@@ -51,9 +51,87 @@ namespace 'onetime', ->
           ordersService.update order._id, {lineItems}, asyncCallback
         else
           asyncCallback()
+
+  task 'addAvailabilityToExpert', {async: true},  ->
+    require("./scripts/env")
+    async = require("async")
+    console.log "Adding availability to expert"
+    recordsUpdated = 0
+    Expert.find {}, (err, experts) ->
+      async.each experts, (expert, callback)->
+        unless expert.availability?
+          recordsUpdated++
+          expert.availability = ""
+          expert.save(callback)
+        else
+          callback(null, expert)
       , (err) ->
         if err?
           console.log "Error", err
         else
           console.log "Success", recordsUpdated, "records updated"
+        complete()
 
+  task 'addUpdatedAtToExpert', {async: true},  ->
+    require("./scripts/env")
+    ObjectId2Date = require("./lib/mix/objectId2Date")
+    async = require("async")
+    console.log "Adding updatedAt to expert"
+    recordsUpdated = 0
+    Expert.find {}, (err, experts) ->
+      async.each experts, (expert, callback)->
+        recordsUpdated++
+        expert.updatedAt = ObjectId2Date(expert._id)
+        expert.save(callback)
+      , (err) ->
+        if err?
+          console.log "Error", err
+        else
+          console.log "Success", recordsUpdated, "records updated"
+        complete()
+
+  task 'addMinRateToExpert', {async: true},  ->
+    require("./scripts/env")
+    async = require("async")
+    console.log "Adding minRate to expert"
+    recordsUpdated = 0
+    values = [10, 40, 70, 110, 160, 230]
+    Expert.find {}, (err, experts) ->
+      async.each experts, (expert, callback)->
+        if !expert.minRate? && expert.rate?
+          recordsUpdated++
+          index = values.indexOf(expert.rate)
+          index-- if expert.rate > 10
+          index = 5 if expert.rate > 230
+          expert.minRate = values[index]
+          expert.minRate = 0 if !expert.minRate?
+          expert.save(callback)
+        else
+          callback(null, expert)
+      , (err) ->
+        if err?
+          console.log "Error", err
+        else
+          console.log "Success", recordsUpdated, "records updated"
+        complete()
+
+  task 'addLevelsToExpertTags', {async: true},  ->
+    require("./scripts/env")
+    async = require("async")
+    console.log "Adding levels to expert tags"
+    recordsUpdated = 0
+    Expert.find {}, (err, experts) ->
+      async.each experts, (expert, callback)->
+        recordsUpdated++
+        tags = _.map expert.tags, (tag) ->
+          newTag = _.clone(tag)
+          newTag.levels = ['beginner', 'intermediate', 'expert']
+          newTag
+        expert.tags = tags
+        expert.save(callback)
+      , (err) ->
+        if err?
+          console.log "Error", err
+        else
+          console.log "Success", recordsUpdated, "records updated"
+        complete()

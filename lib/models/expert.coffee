@@ -1,6 +1,6 @@
 mongoose = require 'mongoose'
 Schema   = mongoose.Schema
-ObjectId = Schema.ObjectId;
+ObjectId = Schema.ObjectId
 
 
 # This object Allows our experts to charge different amount to different customers
@@ -47,12 +47,16 @@ schema = new Schema
   tw:             {}          # twitter
   tags:           [{}]
   rate:           Number
+  minRate:        Number
   timezone:       String
   location:       String
   brief:          String
   karma:          { required: true, type: Number, default: 0 }
   status:         String
+  availability:   String
   hours:          String
   bookMe:         { required: false, type: Bookme }
+  busyUntil:      { type: Date, default: Date }
+  updatedAt:      { type: Date, default: Date }
 
 module.exports = mongoose.model 'Expert', schema

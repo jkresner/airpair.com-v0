@@ -8,6 +8,7 @@ Config = ($routeProvider, $locationProvider, RestangularProvider) ->
   $locationProvider.html5Mode(true)
 
   RestangularProvider.setBaseUrl('/api')
+  RestangularProvider.setRestangularFields(id: "_id")
 
 angular
   .module('ngAirPair', ['ngRoute','tagger','restangular'])

@@ -1,14 +1,26 @@
-window.app = angular.module('ngAirPair', ['ngRoute'])
-app.config ($routeProvider, $locationProvider) ->
+Config = ($routeProvider, $locationProvider, RestangularProvider) ->
   $routeProvider
-   .when '/experts/me',
-     templateUrl: '/templates/experts/me'
-     controller: 'ExpertSettingsController'
+   .when '/settings/notifications',
+     templateUrl: '/templates/settings/notifications'
+     controller: 'NotificationSettingsController'
+   .when '/coming',
+     templateUrl: '/templates/shared/coming'
+     controller: 'ComingController'
 
   $locationProvider.html5Mode(true)
+  RestangularProvider.setBaseUrl('/api')
+  RestangularProvider.setRestangularFields(id: "_id")
 
-require("./services/session")(app)
-require("./controllers/headerController")(app)
-require("./controllers/expertSettingsController")(app)
+angular
+  .module('ngAirPair', ['ngRoute', 'restangular'])
+  .config(['$routeProvider', '$locationProvider', 'RestangularProvider', Config])
+  .run(['$rootScope', ($rootScope) ->
+    $rootScope._ = window._
+  ])
 
-module.exports = -> app
+require("./directives/ngDelay")
+require("./services/session")
+require("./services/expert")
+require("./controllers/headerController")
+require("./controllers/notificationSettingsController")
+require("./controllers/comingController")

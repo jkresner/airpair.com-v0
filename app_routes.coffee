@@ -26,7 +26,8 @@ module.exports = (app) ->
   app.get '/admin', authd, adm, render 'admin'
   app.get '/adm/matching', authd, adm, render 'admin'
   app.get '/site', authd, render 'site'
-  app.get '/experts/me', authd, render 'site'
+  app.get '/settings/notifications', authd, render 'site'
+  app.get '/coming', authd, render 'site'
 
   # angular templates
   app.get '/adm/templates/orders_daily', authd, render 'adm/templates/orders_daily'
@@ -62,6 +63,7 @@ module.exports = (app) ->
 
   # api
   require('./lib/api/session')(app)
+  require('./lib/api/feedback')(app)
   require('./lib/api/users')(app)
   require('./lib/api/companys')(app)
   require('./lib/api/tags')(app)

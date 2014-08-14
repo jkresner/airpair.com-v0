@@ -1,5 +1,6 @@
 DomainService   = require './_svc'
 RequestService  = require './requests'
+OrdersService   = require './orders'
 RatesService    = require './rates'
 
 module.exports = class ExpertsService extends DomainService
@@ -21,10 +22,12 @@ module.exports = class ExpertsService extends DomainService
     query = if id is 'me' then userId: @usr._id else _id: id
 
     @searchOne query, {}, (e, r) =>
-      if e? || r? then return callback e, r
-      @searchOne {email: @usr.google._json.email}, {}, (ee,rr) =>
-        if !rr? then rr = {}
-        callback ee, rr
+      if e? || r?
+        @_addDetails(r, callback)
+      else
+        @searchOne {email: @usr.google._json.email}, {}, (ee,rr) =>
+          if !rr? then rr = {}
+          @_addDetails(rr, callback)
 
   getBySubscriptions: (tagId, level, cb) =>
     @searchMany { tags: { $elemMatch: { '_id': tagId, 'subscription.auto': { $elemMatch: { $in: [level] } } } } }, { fields: @admSelect }, cb
@@ -87,6 +90,60 @@ module.exports = class ExpertsService extends DomainService
 
 
   update: (id, data, cb) =>
+    data.updatedAt = new Date()
     if data.bookMe? && data.bookMe.enabled
       data.bookMe.urlSlug = data.bookMe.urlSlug.toLowerCase()
     super id, data, cb
+
+  _addDetails: (expert, callback) =>
+    if !expert? || !expert._id? then return callback null, expert
+    expertId = expert._id.toString()
+    new RequestService(@usr).getBySuggestedExpert expertId, (err, requests) =>
+      if err? then return callback err, expert
+      new OrdersService(@usr).getByExpert expertId, (err, orders) =>
+        suggestions = ->
+          _.compact _.map requests, (request) =>
+             _.find request.suggested, (suggestion) ->
+               _.idsEqual(suggestion.expert._id, expertId)
+
+        respondedCount = =>
+          _.select(suggestions(), (suggestion) ->
+            suggestion.expertStatus not in ["waiting", "opened"]
+          ).length
+
+        responseRate = =>
+          if requests.length > 0
+            (respondedCount() / requests.length) * 100
+          else
+            0
+
+        paidOrders = =>
+          _.select orders, (order) ->
+            order.payment? && order.payment.paid
+
+        totalAmountReceived = =>
+          _.reduce(paidOrders(), (sum, order) ->
+            sum + order.total - order.profit
+          , 0)
+
+        orderHours = =>
+          _.reduce(paidOrders(), (sum, order) ->
+            itemSum = _.reduce(order.lineItems, (sum2, lineItem) ->
+              sum2 + lineItem.qty
+            , 0)
+            sum + itemSum
+          , 0)
+
+        averagePerHour = ->
+          if orderHours() > 0
+            totalAmountReceived() / orderHours()
+          else
+            0
+
+        expert.stats =
+          responseRate: responseRate()
+          requestCount: requests.length
+          paidOrderCount: paidOrders().length
+          totalAmountReceived: totalAmountReceived()
+          averagePerHour: averagePerHour()
+        callback(err, expert)

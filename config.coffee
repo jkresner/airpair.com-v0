@@ -39,6 +39,7 @@ exports.config =
        'javascripts/providers.js': /^app\/scripts\/providers/
        'javascripts/landing.js': /jquery|jquery.cookie|moment|lodash|providers\/(addjs|olark|segmentio|optimizely)|bootstrap3\/dropdown|bootstrap3\/collapse|bootstrap3\/modal|select2/
        'javascripts/site.js': /(scripts\/angular|lodash|moment|jquery|providers\/(addjs|segmentio))|^app\/scripts\/site|bootstrap3\/modal/
+
        'test/javascripts/test.js': /^test(\/|\\)(?=integration)/
        'test/javascripts/test-data.js': /^test(\/|\\)(?=data)/
        'test/javascripts/test-vendor.js': /^test(\/|\\)(?=vendor)/
@@ -61,12 +62,13 @@ exports.config =
           'vendor/scripts/backbone.badass.js',
           'vendor/scripts/picker.js',
           'vendor/scripts/picker.date.js',
-          'vendor/scripts/jquery.timepicker.js'
+          'vendor/scripts/jquery.timepicker.js',
+          'vendor/scripts/jquery.nouislider.min.js'
         ]
     stylesheets:
       defaultExtension: 'scss'
       joinTo:
-        'css/ap.css': /(css\/ap\/|css\/shared)/
+        'css/ap.css': /(css\/ap\/|vendor\/css\/ap\/|css\/shared)/
         'css/adm.css': /(css\/adm\/|css\/shared)/
         'css/ap-old.css': /(css\/ap-old)/
         'css/adm-old.css': /(css\/adm-old|vendor\/css\/shared)/

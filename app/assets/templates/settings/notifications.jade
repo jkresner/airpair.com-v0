@@ -1,0 +1,93 @@
+.page.expert-me
+  .section
+    .info
+      .received
+      div
+        span {{ expert.stats.requestCount }}
+      div
+        span.sub-label requests received
+      .response
+      div
+        span {{ expert.stats.responseRate | number:0 }}%
+      div
+        span.sub-label response rate
+      .pairs
+      div
+        span {{ expert.stats.paidOrderCount }}
+      div
+        span.sub-label Air Pairs
+
+  .section
+    .updated Updated {{ helper.updatedAt() }}
+    h1 notification status
+
+    form.availability
+      .expert-status
+        .send-toggle.top
+          .toggle.on(ng-class="helper.status() ? 'active' : ''", ng-click="helper.toggleStatus()")
+          .toggle.off(ng-class="helper.status() ? '' : 'active'", ng-click="helper.toggleStatus()")
+        label(ng-show="helper.status()") Send me AirPairs!
+        label(ng-hide="helper.status()") Busy ATM
+        input#status(type="checkbox", ng-checked="expert.status", ng-model="expert.status", ng-change="helper.update()", ng-true-value="'ready'" ng-false-value="'busy'")
+      .hours(ng-show="helper.status()")
+        select.top(ng-model="expert.hours", ng-change="helper.update()", ng-options="h for h in hourRange")
+        label Hrs/Week
+      .date(ng-hide="helper.status()")
+        input.top#busyUntil(ng-model="expert.busyUntil", ng-change="helper.update()", type="date")
+        label Busy Until
+      .times(ng-show="helper.status()")
+        .top
+          input(id="availability", type="text", placeholder="What days and times are you available to AirPair?", ng-model="expert.availability", ng-change="helper.update()", ng-delay="500")
+        label(for="availability") Best Times
+      .times(ng-hide="helper.status()")
+        .top
+          input(id="availability", type="text", placeholder="Briefly, what are you doing while away?", ng-model="expert.availability", ng-change="helper.update()", ng-delay="500")
+        label(for="availability") Why You're Busy
+
+  .section
+    .updated Updated {{ helper.updatedAt() }}
+    .title
+      h1 notification price range
+    .slider-row.hourly
+      .slider-wrapper
+        .slider-col
+          .tag Public Rate
+            .pointer
+        .slider.slider-col
+      .type Hourly Range
+
+    .slider-row.header
+      .slider-wrapper
+        .slider-col
+          .row.dispersed
+            .col-xs-2.text-center $10
+            .col-xs-2.text-center $40
+            .col-xs-2.text-center $70
+            .col-xs-2.text-center $110
+            .col-xs-2.text-center $160
+            .col-xs-2.text-center $230
+
+  .section
+    .updated Updated {{ helper.updatedAt() }}
+    h1 subscription settings
+    .slider-row.header
+      .slider-wrapper
+        .slider-col
+          .row
+            .col-xs-4 Beginner
+            .col-xs-4 Intermediate
+            .col-xs-4 Expert
+      .type What types of airpairs
+    form.tags(ng-model-options="{ getterSetter: true }")
+      .slider-row.level(ng-repeat="tag in expert.tags")
+        .slider-wrapper
+          .slider-col
+            .row
+              .col-xs-4
+                input(type="checkbox", ng-checked="helper.tagHasLevel(tag, 'beginner')", ng-model="tag.levelBeginner", ng-change="helper.update()", ng-delay="500")
+              .col-xs-4
+                input(type="checkbox", ng-checked="helper.tagHasLevel(tag, 'intermediate')", ng-model="tag.levelIntermediate", ng-change="helper.update()", ng-delay="500")
+              .col-xs-4
+                input(type="checkbox", ng-checked="helper.tagHasLevel(tag, 'expert')", ng-model="tag.levelExpert", ng-change="helper.update()", ng-delay="500")
+        .type(ng-click="tag.toggleTagLevels()") {{tag.name}}
+          .all-levels(ng-class="tag.levelAny() ? 'active' : ''")

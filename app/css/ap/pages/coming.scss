@@ -1,0 +1,38 @@
+.page.coming {
+  overflow: auto;
+  h1 {
+    border-bottom: 1px solid #DFF2EF;
+    padding-bottom: 22px;
+  }
+  p {
+    height: 60px;
+    font-size: 18px;
+  }
+  textarea {
+    border: 0;
+    height: 200px;
+  }
+  form.question {
+    border: 1px solid #ccc;
+    height: 364px;
+    padding: 15px;
+    width: 35%;
+
+    a.btn {
+      background-color: #90D1CC;
+      color: #fff;
+      height: 50px;
+      line-height: 40px;
+      margin-top: 10px;
+      width: 100%;
+    }
+
+  }
+  .section.help {
+    background-image: url('/images/pages/coming/background.jpg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center 140px;
+    min-height: 525px;
+  }
+}

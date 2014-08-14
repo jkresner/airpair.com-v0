@@ -26,7 +26,7 @@ class exports.WelcomeView extends BB.BadassView
     addjs.trackEvent @e.category, @e.name, @e.uri, @timer.timeSpent()
     setTimeout @oauthRedirect, 400
   oauthRedirect: ->
-    window.location = "/auth/google?return_to=/be-an-expert&mixpanelId=#{mixpanel.get_distinct_id()}"
+    window.location = "/auth/google?return_to=/be-an-expert"
 
 
 #############################################################################

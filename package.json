@@ -25,6 +25,7 @@
       "loader": "./node-loaders/coffee-script"
     }
   },
+
   "dependencies": {
     "analytics-node": "1.0.0",
     "async": "0.2.9",
