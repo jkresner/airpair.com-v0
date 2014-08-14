@@ -611,7 +611,7 @@ angular.module('AirpairAdmin').factory('apData', ['$moment', '$filter', '$http',
                 tags: {}
                 total: order.total
                 campaigns: []
-                requestId: order.requestId
+                requestId: order.requestId or order._id
                 isRepeat: if @findRepeatCustomers([order.userId], order.utc) > 0 then true else false
                 hasTags: false
                 tags:
