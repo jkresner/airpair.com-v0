@@ -54,18 +54,19 @@ function showLocalTimes()
   });
 }
 
-function fixFloatAction()
-{
+function fixFloatAction() {
   // Fixed #floataction subscribe on scroll
-  var floataction = $('#floataction').offset().top - 20;
-
-  $(window).scroll(function(e){
-    if (window.scrollY > floataction) {
-      $('#floataction').addClass('affix');
-    } else {
-      $('#floataction').removeClass('affix');
-    }
-  });
+  try {
+    var floataction = $('#floataction').offset().top - 20;
+    $(window).scroll(function(e){
+      if (window.scrollY > floataction) {
+        $('#floataction').addClass('affix');
+      } else {
+        $('#floataction').removeClass('affix');
+      }
+    });
+  }
+  catch(e) { //noop }
 }
 
 function showSubscribe() {
