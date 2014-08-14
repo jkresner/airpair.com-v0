@@ -51,6 +51,11 @@ module.exports =
         order.lineItems = [ @Data.airconf.ticketLineItem, @Data.airconf.pairCreditLineItem ]
         @create order, (e, order) =>
           @Chimp.subscribe config.mailchimp.airconfListId, orderEmail, { Paid: 'Yes' }
+
+          segmentio.track
+            userId: @usr.google._json.email
+            event: 'RegisteredForAirconf'
+
           cb(e, order)
 
       if order.stripeCreate?

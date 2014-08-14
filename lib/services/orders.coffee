@@ -164,7 +164,7 @@ module.exports = class OrdersService extends DomainService
         segmentio.track
           userId: mixpanelId
           event: 'customerPayment'
-          proerties: props
+          properties: props
 
         # add event to request's log
         # TODO: when mongo can't find an ID, it returns null as the result.

@@ -14,6 +14,12 @@ class Chimp
 
     @API.lists.subscribe params, @successHandler(cb), @errorHandler(listId, email, mergeVars, cb)
 
+    segmentio.track
+      userId: email
+      event: 'AddedToMailchimpList'
+      properties:
+        listId: listId
+
   # optionally pass a callback function
   subscribeSilent: (listId, email, mergeVars, cb) ->
     params =
