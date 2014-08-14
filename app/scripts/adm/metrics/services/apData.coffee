@@ -595,7 +595,7 @@ angular.module('AirpairAdmin').factory('apData', ['$moment', '$filter', '$http',
 
         cleanMetrics = () =>
           console.log "cleanMetrics #{type}"
-          if not metrics
+          if not metrics or type is 'requests'
             console.log "calc metrics"
             metricsRepeated = []
             metrics = []
@@ -674,7 +674,7 @@ angular.module('AirpairAdmin').factory('apData', ['$moment', '$filter', '$http',
 
 
         filterMetrics = (start, end) =>
-          # console.log "filterMetrics", metrics
+          # console.log "filterMetrics", start
           # Filter by date
           if start and end
             metricsFiltered = []

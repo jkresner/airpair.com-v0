@@ -11,10 +11,12 @@ angular.module('AirpairAdmin').controller("ChannelsRequestsCtrl", ['$scope', '$l
 
   # $scope.metrics = apData.orders.getChannelMetrics($scope.dateStart, $scope.dateEnd)
   updateRange = ->
+    # console.log "updateRange"
     return if not $scope.dateStart or not $scope.dateEnd
     apData.orders.getGrowthRequests moment($scope.dateStart), moment($scope.dateEnd), ->
       $scope.metrics = apData.orders.getChannelMetrics($scope.dateStart, $scope.dateEnd, "requests")
       $scope.$apply() if not $scope.$$phase
+      # console.log "updateRange Gotten.", $scope.metrics
 
   # Watch date updates
   $scope.$watch "dateStart", () -> updateRange()
