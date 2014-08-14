@@ -90,4 +90,4 @@
               .col-xs-4
                 input(type="checkbox", ng-checked="helper.tagHasLevel(tag, 'expert')", ng-model="tag.levelExpert", ng-change="helper.update()", ng-delay="500")
         .type(ng-click="tag.toggleTagLevels()") {{tag.name}}
-          .all-levels.active(ng-class="tag.levelAny() ? 'active' : ''")
+          .all-levels(ng-class="tag.levelAny() ? 'active' : ''")
