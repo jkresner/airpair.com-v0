@@ -15,6 +15,11 @@ WorkshopController = ($scope, $sce, Restangular, Session, Workshop) ->
     else
       Workshop.getAudienceFor(Session.data.workshop.slug)
 
+  # specifically for marketing metrics
+  else
+    console.log "About to track custom event"
+    addjs.trackCustomEvent 'WorkshopViewByPublic', {slug: Session.data.workshop.slug}
+
   $scope.audience = ->
     Workshop.attendees
 
