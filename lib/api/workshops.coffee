@@ -17,17 +17,19 @@ class WorkshopsApi extends require('./_api')
 
   createAttendee: (req, res, next) =>
     if @data.userEmail?
-      settings = new SettingsService(@usr)
+      # if an admin is manually adding a user to a session
+      settings = new SettingsService(req.user)
       settings.getByEmail @data.userEmail, (err, user) =>
         @svc.addAttendee req.params.slug, user._id, @data.requestId, @cbSend
     else
+      # user is RSVP'ing for a workshop
       @svc.addAttendee req.params.slug, @data.userId, @data.requestId, @cbSend
 
   listAttendees: (req, res, next) =>
     @svc.getAttendeesBySlug req.params.slug, @cbSend
 
-  listByUser: =>
-    @svc.getListByAttendee(null, @cbSend)
+  listByUser: (req, res, next) =>
+    @svc.getListByAttendee(req.user._id, @cbSend)
 
   refresh: =>
     AirConfSchedule.update(@cbSend)

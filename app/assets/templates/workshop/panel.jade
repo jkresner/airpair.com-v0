@@ -18,9 +18,9 @@
         .addthis_sharing_toolbox.m-t-2
 
   .container.viewer
-    .player(ng-show="keynoteStarted() && registered()")
+    .player(ng-show="started() && registered()")
       iframe(width="100%" height="443" ng-src="{{youtubeUrl()}}" frameborder="0" allowfullscreen)
-    .player(ng-hide="keynoteStarted()")
+    .player(ng-hide="started()")
       img.slide.img-responsive(ng-src="/images/landing/airconf/slides/{{workshop.slug}}.jpg")
 
 

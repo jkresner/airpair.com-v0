@@ -39,7 +39,6 @@ module.exports = class WorkshopsService extends DomainService
       callback error, workshop
 
   getListByAttendee: (userId, callback) ->
-    userId = @usr._id unless userId?
     query = attendees:
       $elemMatch:
         userId: userId
