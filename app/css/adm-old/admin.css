@@ -4,10 +4,9 @@ a.delete { color:red; }
 
 .label-owner { margin:10px 10px 10px 0;min-width:20px;text-align:center;font-weight:normal; }
 .label-jk { background-color: #FFB878; }
-.label-tb { background-color: #9A9CFF; }
+.label-ad { background-color: #9A9CFF; }
 .label-il { background-color: #7AE7BF; }
 .label-pg { background-color: #51B749; }
-.label-ds { background-color: #FF887C; }
 .label-of { background-color: #FF887C; }
 .label-du { background-color: #e1e1e1; }
 .label-prev { background-color: #5484ed; }

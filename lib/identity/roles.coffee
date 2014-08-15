@@ -8,6 +8,7 @@ adminIds = [
   '116906489186772028226' #DU gravatar: e9b01bb34761b9927cf29753e8927010
   '103040640713677687595' #EM gravatar:
   '104255454895680152796' #JM gravatar:
+  '111060036231434960159' #AD gravatar: 67b599407bb2258ff3a6a419d89778b6
 ]
 
 pipelinerIds = [
@@ -17,6 +18,7 @@ pipelinerIds = [
   '110496794584456738170' #PG gravatar: 2b22b4cd4f65cbef1331cf07e82e6b27
   '105976516028706632944' #OF gravatar: c5f6a1b002347ea69a0cba7e4c0da508
   '116906489186772028226' #DU gravatar: e9b01bb34761b9927cf29753e8927010
+  '111060036231434960159' #AD gravatar: 67b599407bb2258ff3a6a419d89778b6
 ]
 
 matchmakerIds = [
@@ -44,6 +46,7 @@ initials['103614010394533051287'] = 'lt' # (Lissanthea Taylor)
 initials['105922668830552511365'] = 'ds' # (Dilys Sun)
 initials['112300854530824394263'] = 'mi' # (M Ioffee)
 initials['102299765632981130643'] = 'er' # (E Roman)
+initials['111060036231434960159'] = 'ad' # (A Desai)
 
 module.exports =
 
@@ -86,6 +89,7 @@ module.exports =
     pg: 'Prateek'
     of: 'Obie'
     du: 'Daniel'
+    ad: 'Ajay'
     tb: 'Tyler'
     lt: 'Lissanthea'
     ds: 'Dilys'
