@@ -1,0 +1,39 @@
+.page.expert-me
+  .section
+    .updated Updated {{ helper.updatedAt() }}
+    h1 Expert Preferences
+    label Tags
+    p
+      select.select2(ui-select2="tagOptions" multiple ng-model="myTags" data-placeholder="Type a technology name" ng-model-options="{ getterSetter: true }", ng-change="helper.update()")
+        option(ng-repeat="(id, tag) in tags" value="{{ tag._id }}"){{ tag.name }}
+    label What appeals to you about AirPairing? (this will appear on your profile)
+    p
+      textarea.standard(ng-model="expert.brief", ng-change="helper.update()" ng-delay="500")
+
+  .section
+    h1 Expert Status
+    form.availability
+      .expert-status
+        .send-toggle.top
+          .toggle.on(ng-class="helper.status() ? 'active' : ''", ng-click="helper.toggleStatus()")
+          .toggle.off(ng-class="helper.status() ? '' : 'active'", ng-click="helper.toggleStatus()")
+        label(ng-show="helper.status()") Send me AirPairs!
+        label(ng-hide="helper.status()") Busy ATM
+        input#status(type="checkbox", ng-checked="expert.status", ng-model="expert.status", ng-change="helper.update()", ng-true-value="'ready'" ng-false-value="'busy'")
+
+      .hours
+        select.top(ng-model="expert.hours", ng-change="helper.update()", ng-options="h for h in hourRange")
+        label Hrs/Week
+
+  .section
+    h1 Expert Pricing
+    label(for="rate") Preferred rate / hr &nbsp;
+    span(ng-repeat="rate in rates")
+      label(for="rate{{rate}}") ${{rate}} &nbsp;
+      input(type="radio" value="{{rate}}" id="rate{{rate}}" ng-model="expert.rate", ng-change="helper.update()")
+      span &nbsp;&nbsp;
+
+  .section
+    p Be sure to set your 
+      a(href="/settings/notifications") Notifications 
+      | as well

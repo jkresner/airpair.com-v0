@@ -213,6 +213,11 @@
     }
   }
 
+  .select2-container, select.select2 {
+    min-height: 33px;
+    width: 280px;
+  }
+
   .slider-row {
     .noUi-target {
       border-radius: 0;
@@ -255,6 +260,11 @@
       width: 20px;
       top: -10px;
     }
+  }
+
+  .standard {
+    width: 300px;
+    height: 150px;
   }
 
   .updated {
