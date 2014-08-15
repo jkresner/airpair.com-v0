@@ -1,30 +1,17 @@
 ngWorkshop = ($http, Session, Restangular) ->
   class Workshop
-    requestId = Session.data.requestId
-
-    attendingWorkshops: []
-    attendees: []
-
-    setArray: (arrayName, data) ->
-      @[arrayName].length = 0 # wat?
-      for datum in data
-        @[arrayName].push(datum)
-
-    fetchAttendingWorkshops: ->
-      if Session.isSignedIn()
-        Restangular.all('workshops-for-user').getList().then (workshops) =>
-          @setArray("attendingWorkshops", workshops)
-
-    getAudienceFor: (slug) ->
-        Restangular.all("workshops/#{slug}/attendees").getList()
-        .then (attendees) =>
-          @setArray("attendees", attendees)
+    attendees: Session.data.attendees
+    attendingWorkshops: Session.data.attendingWorkshops
 
     attendSession: (slug) ->
-      $http.post("/api/workshops/#{slug}/attendees", {requestId})
-        .success (data, status)=>
-          @fetchAttendingWorkshops()
-          @getAudienceFor(slug)
+      $http.post("/api/workshops/#{slug}/attendees")
+        .success (data, status) =>
+          @attendees.push
+            id: Session.data.user.google._json.id
+            name: Session.data.user.google._json.name
+            picture: Session.data.user.google._json.picture
+
+          @attendingWorkshops.push(Session.data.workshop)
 
   new Workshop
 

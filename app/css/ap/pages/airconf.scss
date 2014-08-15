@@ -1,13 +1,38 @@
 body#airconf {
   background: white;
 
-  header { background:#dff2ef;height:40px }
   header {
-    a { width:100px;margin:auto;display:block }
-    img { width:140px;margin-left:-14px }
+    background: #dff2ef;
+    height:60px;
+    a.logo {
+      width: 100px;
+      margin: auto;
+      display: block;
+    }
+    img { width:140px }
   }
 
-  h2 { text-align:center;margin:40px auto; }
+  @media (min-width:801px) {
+    header { height: 35px }
+    a.logo { padding: 0 }
+  }
+
+  @media (max-width:800px) {
+    header { height: 45px }
+    a.logo { padding-top: 20px }
+  }
+
+  #header-login {
+    position: absolute;
+    color: #689;
+    text-align: right;
+    margin: 3px;
+    width: 100%;
+    right: 20px;
+    top: 5px;
+  }
+
+  h2 { text-align:center; margin:40px auto; }
 
   a.btn {
     color:white;

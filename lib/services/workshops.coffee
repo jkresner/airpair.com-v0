@@ -52,6 +52,7 @@ module.exports = class WorkshopsService extends DomainService
       if error then return callback(error)
 
       attendees = _.map(workshop?.attendees or [], (attendee) ->
+        id: attendee.userId.google._json.id
         name: attendee.userId.google._json.name
         picture: attendee.userId.google._json.picture
       )
@@ -74,7 +75,7 @@ module.exports = class WorkshopsService extends DomainService
     @searchMany query, WorkshopsQuery.view.public, (err, workshops) ->
       callback(err, workshops)
 
-  addAttendee: (slug, userId, requestId, callback) ->
+  addAttendee: (slug, userId, callback) ->
     isAdminRequest = userId?
     userId ?= @usr._id
     email = @usr.google._json.email
@@ -84,7 +85,7 @@ module.exports = class WorkshopsService extends DomainService
       if err? then callback(err, {})
       orderQuery =
         userId: userId
-        requestId: requestId
+        requestId: OrdersQuery.airconf.requestId
 
       @ordersService.searchOne orderQuery, {}, (err, order) =>
         if err? then callback(err, {})
@@ -98,7 +99,7 @@ module.exports = class WorkshopsService extends DomainService
             if isAdminRequest
               callback(workshopErr, workshop)
             else
-              @emailTemplatesService.send requestId, {workshop, to: email}, (err, template) =>
+              @emailTemplatesService.send OrdersQuery.airconf.requestId, {workshop, to: email}, (err, template) =>
                 callback(workshopErr, workshop)
         else
           callback(err, {success: false, message: "Order not found"})

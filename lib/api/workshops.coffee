@@ -24,10 +24,10 @@ class WorkshopsApi extends require('./_api')
       # if an admin is manually adding a user to a session
       settings = new SettingsService(req.user)
       settings.getByEmail @data.userEmail, (err, user) =>
-        @svc.addAttendee req.params.slug, user._id, @data.requestId, @cbSend
+        @svc.addAttendee req.params.slug, user._id, @cbSend
     else
       # user is RSVP'ing for a workshop
-      @svc.addAttendee req.params.slug, @data.userId, @data.requestId, @cbSend
+      @svc.addAttendee req.params.slug, @data.userId, @cbSend
 
   listAttendees: (req, res, next) =>
     @svc.getAttendeesBySlug req.params.slug, @cbSend

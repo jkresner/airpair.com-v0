@@ -10,6 +10,10 @@ body#airconf {
       background:white;
     }
 
+    .row.details {
+      padding-top: 10px;
+    }
+
     h1 {
       color:#151821;
       font-size:16pt;
@@ -59,11 +63,6 @@ body#airconf {
     .container.viewer {
       background:black;
       padding: 0 !important;
-    }
-
-    .already {
-      line-height: 16pt;
-      margin-top: 5px;
     }
 
     .logo { margin:50px 0 30px 0 }

@@ -14,16 +14,18 @@
             | &nbsp;}
 
         .row
-          .col-md-5.m-b-1(ng-if="!session.isSignedIn()")
+          .col-md-5.m-b-1(ng-if="!registered()")
             .register
-              a.btn.btn-orange.loginRequired(href="/airconf-registration" data-return="/airconf-registration") Register to Watch
-            .already
-              strong Already got an AirConf ticket?
-              .sign-in-to-rsvp
-                a.loginRequired(href="{{$location}}") Sign in to RSVP
+              a.btn.btn-orange(href="/airconf-registration" target="_self" ng-class="{loginRequired: !session.isSignedIn()}") Register to Watch
 
-          .col-md-5.m-b-2(ng-if="showRsvp()")
-            a.btn.btn-orange.btn-rsvp(href="#", ng-click="attend()") RSVP to Watch
+            .already.m-t-1.m-b-1(ng-if="!session.isSignedIn()")
+              strong Already purchased an AirConf ticket?&nbsp;
+              br
+              a.loginRequired(href="/login" data-return="{{$location}}") Sign in to RSVP
+
+          .col-md-5.m-b-1(ng-if="showRsvp()")
+            .rsvp
+              a.btn.btn-orange.btn-rsvp(href="#", ng-click="attend()") RSVP to Watch
 
           .col-md-7.m-b-2
             .addthis_sharing_toolbox
@@ -36,11 +38,19 @@
 
 
   .container.viewer
-    .player(ng-show="started() && registered()")
-      iframe(width="100%" height="443" ng-src="{{youtubeUrl()}}" frameborder="0" allowfullscreen)
-    .player(ng-hide="started()")
-      a.loginRequired(href="/airconf-registration" data-return="/airconf-registration")
+    .player(ng-if="!registered()")
+      a(href="/airconf-registration" target="_self" ng-class="{loginRequired: !session.isSignedIn()}")
         img.slide.img-responsive(ng-src="/images/landing/airconf/slides/{{workshop.slug}}.jpg")
+
+    .player(ng-if="registered() && !attending()")
+      img.slide.img-responsive(ng-src="/images/landing/airconf/slides/{{workshop.slug}}.jpg" ng-click="attend()")
+
+    .player(ng-if="registered() && attending() && !started()")
+      img.slide.img-responsive(ng-src="/images/landing/airconf/slides/{{workshop.slug}}.jpg")
+
+    .player(ng-show="registered() && attending() && started()")
+      iframe(width="100%" height="443" ng-src="{{youtubeUrl()}}" frameborder="0" allowfullscreen)
+
 
 
   .container.audience

@@ -2,19 +2,6 @@ WorkshopController = ($scope, $sce, Restangular, Session, Workshop) ->
   $scope.session = Session
   $scope.workshop = Session.data.workshop
 
-  if Session.isSignedIn()
-    attendingWorkshops = Session.data.attendingWorkshops
-    if attendingWorkshops?
-      Workshop.setArray('attendingWorkshops', attendingWorkshops)
-    else
-      Workshop.fetchAttendingWorkshops()
-
-    attendees = Session.data.attendees
-    if attendees?
-      Workshop.setArray('attendees', attendees)
-    else
-      Workshop.getAudienceFor(Session.data.workshop.slug)
-
   $scope.audience = ->
     Workshop.attendees
 
@@ -23,7 +10,7 @@ WorkshopController = ($scope, $sce, Restangular, Session, Workshop) ->
     true
 
   $scope.registered = ->
-    Session.data.registration?
+    Session.isSignedIn() and Session.data.registration? and Session.data.registration.paid
 
   $scope.showRsvp = ->
     @registered() and not @attending()
@@ -36,17 +23,14 @@ WorkshopController = ($scope, $sce, Restangular, Session, Workshop) ->
     moment().range(start, moment(start).add(1, 'hour')).contains(new Date)
 
   $scope.attending = ->
-    attending = _.find Workshop.attendingWorkshops, (workshop) ->
-      workshop.slug == Session.data.workshop.slug
-    attending?
-
-  $scope.attendingAny = ->
-    _.any(Workshop.attendingWorkshops)
+    debugger
+    _.find(Workshop.attendees, (u) -> Session.data.user.google._json.id == u.id)?
 
   $scope.allAttending = ->
     Workshop.attendingWorkshops
 
   $scope.attend = ->
+    debugger
     Workshop.attendSession(Session.data.workshop.slug)
     # specifically for marketing metrics
     addjs.trackCustomEvent 'WorkshopRSVP', {slug: Session.data.workshop.slug}
@@ -68,7 +52,6 @@ WorkshopController = ($scope, $sce, Restangular, Session, Workshop) ->
       addjs.trackCustomEvent 'WorkshopViewByRegisteredAttendee', props
     else
       addjs.trackCustomEvent 'WorkshopViewByUnregisteredUser', props
-
   else
     addjs.trackCustomEvent 'WorkshopViewByPublic', props
 
