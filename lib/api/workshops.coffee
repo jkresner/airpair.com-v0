@@ -11,8 +11,8 @@ class WorkshopsApi extends require('./_api')
     app.get  "/adm/workshop/registrants", @loggedIn, @admin, @ap, @getAllRegisteredAirconfUsers
     app.get  "/adm/workshop/registrants.csv", @loggedIn, @admin, @ap, @getAllRegisteredAirconfUsersAsCSV
     app.get  "/adm/workshops/refresh", @loggedIn, @admin, @ap, @refresh
-    app.get  "/workshops/user", @loggedIn, @ap, @listByUser
-    app.get  "/workshops/:slug", @loggedIn, @ap, @detail
+    app.get  "/workshops-for-user", @loggedIn, @ap, @listByUser
+    app.get  "/workshops/:slug", @loggedIn, @ap, @detail # todo: obsolete?
     app.get  "/workshops/:slug/attendees", @loggedIn, @ap, @listAttendees
     app.post "/workshops/:slug/attendees", @loggedIn, @ap, @createAttendee
 

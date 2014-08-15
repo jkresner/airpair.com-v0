@@ -12,7 +12,7 @@ ngWorkshop = ($http, Session, Restangular) ->
 
     fetchAttendingWorkshops: ->
       if Session.isSignedIn()
-        Restangular.all('workshops/user').getList().then (workshops) =>
+        Restangular.all('workshops-for-user').getList().then (workshops) =>
           @setArray("attendingWorkshops", workshops)
 
     getAudienceFor: (slug) ->
