@@ -25,7 +25,7 @@ renderView = (req, res, name, data={}) ->
     console.log "Rendering", "#{name}.html"
     res.render "#{name}.html", data, (err, html) ->
       if err?
-        res.render "#{fileName}.jade", data
+        res.render "#{name}.jade", data
       else
         res.end(html)
 
