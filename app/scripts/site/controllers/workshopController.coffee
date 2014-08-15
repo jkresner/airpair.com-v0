@@ -23,7 +23,7 @@ WorkshopController = ($scope, $sce, Restangular, Session, Workshop) ->
     true
 
   $scope.registered = ->
-    Session.data.registration? && Session.data.registration.paid
+    Session.data.registration?
 
   $scope.showRsvp = ->
     @registered() and not @attending()
