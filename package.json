@@ -25,7 +25,6 @@
       "loader": "./node-loaders/coffee-script"
     }
   },
-
   "dependencies": {
     "analytics-node": "1.0.0",
     "async": "0.2.9",
@@ -49,6 +48,7 @@
     "jade": "1.4.2",
     "jake": "latest",
     "javascript-brunch": "> 1.0 < 1.5",
+    "json2csv": "^2.2.1",
     "lodash": "2.4.1",
     "mailchimp-api": "2.0.6",
     "mixpanel": "0.0.18",

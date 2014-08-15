@@ -1,14 +1,18 @@
 AirConfSchedule = require '../services/airConfSchedule'
 SettingsService = require '../services/settings'
 
+json2csv = require 'json2csv'
+
 class WorkshopsApi extends require('./_api')
 
   Svc: require './../services/workshops'
 
   routes: (app) ->
+    app.get  "/adm/workshop/registrants", @loggedIn, @admin, @ap, @getAllRegisteredAirconfUsers
+    app.get  "/adm/workshop/registrants.csv", @loggedIn, @admin, @ap, @getAllRegisteredAirconfUsersAsCSV
+    app.get  "/adm/workshops/refresh", @loggedIn, @admin, @ap, @refresh
     app.get  "/workshops/user", @loggedIn, @ap, @listByUser
     app.get  "/workshops/:slug", @loggedIn, @ap, @detail
-    app.get  "/adm/workshops/refresh", @loggedIn, @admin, @ap, @refresh
     app.get  "/workshops/:slug/attendees", @loggedIn, @ap, @listAttendees
     app.post "/workshops/:slug/attendees", @loggedIn, @ap, @createAttendee
 
@@ -30,6 +34,14 @@ class WorkshopsApi extends require('./_api')
 
   listByUser: (req, res, next) =>
     @svc.getListByAttendee(req.user._id, @cbSend)
+
+  getAllRegisteredAirconfUsers: (req, res, next) =>
+    @svc.getAllRegisteredAirconfUsers(@cbSend)
+
+  getAllRegisteredAirconfUsersAsCSV: (req, res, next) =>
+    @svc.getAllRegisteredAirconfUsers (err, users) =>
+      json2csv data: users, fields: ['date','name', 'company', 'email','gplus','picture','revenue','rsvpCount','rsvpSessions'], (err, csv) =>
+        @cbSend(err, csv)
 
   refresh: =>
     AirConfSchedule.update(@cbSend)

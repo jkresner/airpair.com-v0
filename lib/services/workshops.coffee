@@ -1,25 +1,54 @@
 DomainService = require './_svc'
-OrdersService = require './../services/orders'
 EmailTemplatesService = require './../services/emailTemplates'
+
+Order = require '../models/order'
+OrdersService = require './orders'
+OrdersQuery = require './orders.query'
+
+Workshop = require '../models/workshop'
+WorkshopsQuery = require './workshops.query'
 
 allWorkshops = {}
 
 module.exports = class WorkshopsService extends DomainService
 
-  model: require './../models/workshop'
-  data: require './workshops.query'
-  orderData: require './orders.query'
+  model: Workshop
 
   constructor: (user) ->
-    @ordersService = new OrdersService user
+    @ordersService = new OrdersService(user)
     @emailTemplatesService = new EmailTemplatesService user
     super user
+
+  getAllRegisteredAirconfUsers: (callback) =>
+    Workshop.find().populate('attendees.userId').lean().exec (error, workshops) ->
+      attendees = {}
+      _.each workshops, (w) ->
+        _.each w.attendees, (attendee) ->
+          user = attendee.userId
+          if user.google? and user.google._json?
+            attendees[user.google._json.email] ||= []
+            attendees[user.google._json.email].push(w.slug)
+
+      query = Order.find(requestId: OrdersQuery.airconf.requestId)
+      query.populate('userId').lean().exec (error, orders) ->
+        users = _.map orders, (order) ->
+          date: order.utc
+          name: order.userId?.google?.displayName
+          company: order.company?.name
+          email: order.userId?.google?._json.email
+          gplus: order.userId?.google?._json.link
+          picture: order.userId?.google?._json.picture
+          revenue: order.profit
+          rsvpCount: attendees[order.userId?.google?._json.email]?.length or 0
+          rsvpSessions: attendees[order.userId?.google?._json.email]?.join(',') or ""
+
+        callback(null, _.flatten(users))
 
   getAllCached: (callback) =>
     callback(null, allWorkshops)
 
   getAttendeesBySlug: (slug, callback) =>
-    @model.findOne(slug: slug).populate('attendees.userId').lean().exec (error, workshop) ->
+    Workshop.findOne(slug: slug).populate('attendees.userId').lean().exec (error, workshop) ->
       if error then return callback(error)
 
       attendees = _.map(workshop?.attendees or [], (attendee) ->
@@ -30,19 +59,19 @@ module.exports = class WorkshopsService extends DomainService
 
   getWorkshopBySlug: (slug, callback) ->
     query = slug: slug
-    @searchOne query, @data.view.public, (error, workshop) ->
+    @searchOne query, WorkshopsQuery.view.public, (error, workshop) ->
       callback error, workshop
 
   getWorkshopsByTag: (tag, callback) ->
     query = tags: tag
-    @searchMany query, @data.view.public, (error, workshop) ->
+    @searchMany query, WorkshopsQuery.view.public, (error, workshop) ->
       callback error, workshop
 
   getListByAttendee: (userId, callback) ->
     query = attendees:
       $elemMatch:
         userId: userId
-    @searchMany query, @data.view.public, (err, workshops) ->
+    @searchMany query, WorkshopsQuery.view.public, (err, workshops) ->
       callback(err, workshops)
 
   addAttendee: (slug, userId, requestId, callback) ->
@@ -74,17 +103,17 @@ module.exports = class WorkshopsService extends DomainService
         else
           callback(err, {success: false, message: "Order not found"})
 
-setWorkshopCache = _.once (service)->
-    data = require './workshops.query'
-    service.searchMany {}, data.view.public, (err, workshops) ->
-      if err? then callback(err, workshops)
-      moment = require('moment-timezone')
-      enhancedWorkshops = _.map workshops, (workshop) ->
-        # subtract a day so week starts on monday
-        workshop["WK" + moment(workshop.time).subtract('days', 1).format("ggggww")] = true
-        workshop
-      allWorkshops = _.sortBy enhancedWorkshops, (workshop) ->
-        moment(workshop.time).format("YYYYMMDDTHHmmss")
-      allWorkshops.count = 80
+setWorkshopCache = _.once (service) ->
+  service.searchMany {}, WorkshopsQuery.view.public, (err, workshops) ->
+    if err? then callback(err, workshops)
+    moment = require('moment-timezone')
+    enhancedWorkshops = _.map workshops, (workshop) ->
+      # subtract a day so week starts on monday
+      workshop["WK" + moment(workshop.time).subtract('days', 1).format("ggggww")] = true
+      workshop
+    allWorkshops = _.sortBy enhancedWorkshops, (workshop) ->
+      moment(workshop.time).format("YYYYMMDDTHHmmss")
+    allWorkshops.count = 80
+
 setWorkshopCache(new WorkshopsService)
 
