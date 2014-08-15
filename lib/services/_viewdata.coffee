@@ -96,14 +96,14 @@ module.exports = class ViewDataService
       cb e, -> { companys, stripePK }
 
   airconf: (cb) ->
-    new OrdersSvc(@usr).getAirConfRegisration (e, registration) =>
+    new OrdersSvc(@usr).getAirConfRegistration (e, registration) =>
       new WorkshopsService(@usr).getAllCached (ee, workshops) =>
         today = moment()
         talksToday = _.select(workshops, (w) -> w.time && moment(w.time).subtract(8, 'hours').isSame(today, 'day'))
         cb ee, -> { workshops, registration, keynotes: Data.keynotes, talksToday }
 
   airconf_tag: (tag, cb) ->
-    new OrdersSvc(@usr).getAirConfRegisration (e, registration) =>
+    new OrdersSvc(@usr).getAirConfRegistration (e, registration) =>
       new WorkshopsService(@usr).getWorkshopsByTag tag, (ee, workshops) =>
         cb ee, -> { workshops, tag, registration }
 
@@ -114,7 +114,7 @@ module.exports = class ViewDataService
       workshopsService.getAttendeesBySlug id, (error, attendees) =>
         userId = if @usr? then @usr._id else ""
         workshopsService.getListByAttendee userId, (error, attendingWorkshops) =>
-          new OrdersSvc(@usr).getAirConfRegisration (e, registration) =>
+          new OrdersSvc(@usr).getAirConfRegistration (e, registration) =>
             cb null, -> {
               template
               chatTemplate
@@ -131,7 +131,7 @@ module.exports = class ViewDataService
 
   keynote: (id, template, chatTemplate, cb) ->
     workshop = _.find _.values(Data.keynotes), (k) -> k.slug == id
-    new OrdersSvc(@usr).getAirConfRegisration (e, registration) =>
+    new OrdersSvc(@usr).getAirConfRegistration (e, registration) =>
       cb null, -> {
         template
         chatTemplate
@@ -144,7 +144,7 @@ module.exports = class ViewDataService
 
   airconfreg: (cb) ->
     new CompanysSvc(@usr).getById 'me', (e, company) =>
-      new OrdersSvc(@usr).getAirConfRegisration (eee, registration) =>
+      new OrdersSvc(@usr).getAirConfRegistration (eee, registration) =>
         new SettingsSvc(@usr).getByUserId @usr._id, (ee, settings) =>
           hasCard = _.find(settings.paymentMethods, (p) -> p.type == 'stripe')?
           cb eee, -> { hasCard, registration, company, stripePK }

@@ -15,7 +15,7 @@ module.exports =
   # Chimp: require("../mail/chimp")
   # AirConfDiscounts: require("./airConfDiscounts")
 
-  getAirConfRegisration: (cb) ->
+  getAirConfRegistration: (cb) ->
     if !@usr? then return cb()
     @searchMany {userId: @usr._id}, { fields: @Data.view.history }, (e, r) =>
       if e? then cb(e, r)
