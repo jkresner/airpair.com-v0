@@ -3,12 +3,12 @@ class MarketingTagsApi extends require('./_api')
 
   Svc: require '../services/marketingtags'
 
-  routes: (app, route) ->
-    app.get     "/api/#{route}", @admin, @ap, @list
-    app.get     "/api/#{route}/:id", @admin, @ap, @detail
-    app.post    "/api/#{route}", @admin, @ap, @create
-    app.put     "/api/#{route}/:id", @admin, @ap, @update
-    app.delete  "/api/#{route}/:id", @admin, @ap, @delete
+  routes: (app) ->
+    app.get     "/marketingtags", @admin, @ap, @list
+    app.get     "/marketingtags/:id", @admin, @ap, @detail
+    app.post    "/marketingtags", @admin, @ap, @create
+    app.put     "/marketingtags/:id", @admin, @ap, @update
+    app.delete  "/marketingtags/:id", @admin, @ap, @delete
 
 
-module.exports = (app) -> new MarketingTagsApi app, 'marketingtags'
+module.exports = (app) -> new MarketingTagsApi(app)

@@ -55,10 +55,10 @@ else
 
 app.use passport.session()
 
-require('./app_routes')(app)
+require('./routes/app')(app)
 
 if config.env is 'test'
-  require('./app_test_routes')(app)
+  require('./routes/test')(app)
 
 app.use (err, req, res, next) ->
   str = (err and err.stack) or inspect err, {depth: 20}

@@ -2,14 +2,14 @@ class ExpertApi extends require('./_api')
 
   Svc: require('./../services/experts')
 
-  routes: (app, route) ->
-    app.get  "/api/#{route}", @admin, @ap, @list
-    app.get  "/api/#{route}/:id", @loggedIn, @ap, @detail
-    app.get  "/api/#{route}/request/:id", @loggedIn, @ap, @detailOnRequest
-    app.post "/api/#{route}", @loggedIn, @ap, @create
-    app.put  "/api/#{route}/:id", @loggedIn, @ap, @update
+  routes: (app) ->
+    app.get  "/experts", @admin, @ap, @list
+    app.get  "/experts/:id", @loggedIn, @ap, @detail
+    app.get  "/experts/request/:id", @loggedIn, @ap, @detailOnRequest
+    app.post "/experts", @loggedIn, @ap, @create
+    app.put  "/experts/:id", @loggedIn, @ap, @update
 
   detailOnRequest: (req) => @svc.detailOnRequest req.params.id, @cbSend
 
 
-module.exports = (app) -> new ExpertApi app, 'experts'
+module.exports = (app) -> new ExpertApi(app)

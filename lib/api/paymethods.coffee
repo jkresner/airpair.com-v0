@@ -3,11 +3,11 @@ class PayMethodsApi extends require('./_api')
 
   Svc: require './../services/payMethods'
 
-  routes: (app, route) ->
-    app.get     "/api/#{route}", @admin, @ap, @list
-    app.post    "/api/#{route}", @admin, @ap, @create
-    app.put     "/api/#{route}/:id", @admin, @ap, @update
-    app.delete  "/api/#{route}/:id", @admin, @ap, @delete
+  routes: (app) ->
+    app.get     "/paymethods", @admin, @ap, @list
+    app.post    "/paymethods", @admin, @ap, @create
+    app.put     "/paymethods/:id", @admin, @ap, @update
+    app.delete  "/paymethods/:id", @admin, @ap, @delete
 
 
   create: (req, res) =>
@@ -23,4 +23,4 @@ class PayMethodsApi extends require('./_api')
       @svc.unshare req.params.id, unshare.email, @cbSend
 
 
-module.exports = (app) -> new PayMethodsApi app, 'paymethods'
+module.exports = (app) -> new PayMethodsApi(app)

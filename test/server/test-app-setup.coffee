@@ -29,6 +29,7 @@ app.configure ->
   # app.use passport.initialize()
   app.use passportMock.initialize(app)
   app.use passport.session()
+  app.use '/api', require('../../routes/api')
 
 data = require './../data/all'
 

@@ -1,16 +1,16 @@
 async = require 'async'
 ViewDataSvc = require '../services/_viewdata'
 
-prerender = (resp, filename, callback) =>
-  resp.render "templates/#{filename}.jade", (err, rendered) =>
+prerender = (res, filename, callback) =>
+  res.render "templates/#{filename}.jade", (err, rendered) =>
     if (err)
       throw err
     else
       callback(err, {name: filename, html: rendered})
 
-getProp = (req, resp, path, callback) =>
+getProp = (req, res, path, callback) =>
   if _.isPlainObject(path) && path.template?
-    prerender(resp, path.template, callback)
+    prerender(res, path.template, callback)
   else
     props = path.split '.'
     r = req
@@ -18,11 +18,64 @@ getProp = (req, resp, path, callback) =>
       r = r[prop]
     callback(null, r)
 
+renderView = (req, res, name, data={}) ->
+  if req.method == "HEAD"
+    res.end("")
+  else
+    console.log "Rendering", "#{name}.html"
+    res.render "#{name}.html", data, (err, html) ->
+      if err?
+        res.render "#{fileName}.jade", data
+      else
+        res.end(html)
+
+render = (fileName, propList=[]) ->
+  (req, res, next) ->
+
+    vdSvc = new ViewDataSvc req.user
+
+    # convention we just rip out the path to get viewDataFunction
+    fnName = fileName.replace('adm/', '').replace('payment/', '').replace('landing/', '')
+
+    if !vdSvc[fnName]?
+      renderView req, res, fileName, { segmentioKey: config.analytics.segmentio.writeKey }
+    else
+      async.map propList
+      , (prop, callback) ->
+        getProp(req, res, prop, callback)
+      , (err, args) =>
+        args.push (e, getViewData) =>
+          if e
+            if vdSvc.logging then $log 'viewData', fnName, 'e', e
+            if e.status? && e.status == 404
+              res.render('404.html', { status: 404, url: req.url })
+            else
+              next e
+          else
+            data =
+              firebase: req.firebase
+              isProd: config.isProd.toString()
+              session: vdSvc.session false
+              reqUrl: req.url
+              segmentioKey: config.analytics.segmentio.writeKey
+            data = _.extend data, getViewData()
+
+            if vdSvc.logging then $log 'viewData', fnName, data
+
+            renderView(req, res, fileName, data)
+
+        vdSvc[fnName].apply vdSvc, args
+
+
+
 module.exports =
 
+  redirect: (app, origin, destination) ->
+    app.get origin, (req, r) -> r.redirect req.url.replace(origin,destination)
+
   file: (fileName) ->
-    (req, resp, next) ->
-      resp.sendfile "./public/#{fileName}.html"
+    (req, res, next) ->
+      res.sendfile "./public/#{fileName}.html"
 
   renderTemplate: (req, res) ->
     res.render "templates/#{req.params.scope}/#{req.params.template}.jade", (err, html) ->
@@ -31,50 +84,9 @@ module.exports =
       else
         res.send(html)
 
-  render: (fileName, propList=[]) ->
-    (req, resp, next) ->
+  render: render
 
-      renderTemplate = (name, data={}) ->
-        if req.method == "HEAD"
-          resp.end("")
-        else
-          console.log "Rendering", "#{name}.html"
-          resp.render "#{name}.html", data, (err, html) ->
-            if err?
-              resp.render "#{fileName}.jade", data
-            else
-              resp.end(html)
+  renderHome: (req, r, n) ->
+    if req.isAuthenticated() then n()
+    else render('home')(req, r, n)
 
-      vdSvc = new ViewDataSvc req.user
-
-      # convention we just rip out the path to get viewDataFunction
-      fnName = fileName.replace('adm/', '').replace('payment/', '').replace('landing/', '')
-
-      if !vdSvc[fnName]?
-        renderTemplate fileName, { segmentioKey: config.analytics.segmentio.writeKey }
-      else
-        async.map propList
-        , (prop, callback) ->
-          getProp(req, resp, prop, callback)
-        , (err, args) =>
-          args.push (e, getViewData) =>
-            if e
-              if vdSvc.logging then $log 'viewData', fnName, 'e', e
-              if e.status? && e.status == 404
-                resp.render('404.html', { status: 404, url: req.url })
-              else
-                next e
-            else
-              data =
-                firebase: req.firebase
-                isProd: config.isProd.toString()
-                session: vdSvc.session false
-                reqUrl: req.url
-                segmentioKey: config.analytics.segmentio.writeKey
-              data = _.extend data, getViewData()
-
-              if vdSvc.logging then $log 'viewData', fnName, data
-
-              renderTemplate fileName, data
-
-          vdSvc[fnName].apply vdSvc, args

@@ -6,11 +6,11 @@ class RequestCallsApi extends require('./_api')
 
   Svc: require './../services/requestCalls'
 
-  routes: (app, route) ->
-    app.get     "/api/#{route}/calls/:permalink", @loggedIn, @ap, @detail
-    app.get     "/api/admin/#{route}/calls/:sddmmyy/:eddmmyy", @admin, @ap, @getOnAir
-    app.post    "/api/#{route}/:requestId/calls", @mm, @validate, @ap, @create
-    app.put     "/api/#{route}/:requestId/calls/:callId", @mm, @validate, @ap, @update
+  routes: (app) ->
+    app.get     "/requests/calls/:permalink", @loggedIn, @ap, @detail
+    app.get     "/admin/requests/calls/:sddmmyy/:eddmmyy", @admin, @ap, @getOnAir
+    app.post    "/requests/:requestId/calls", @mm, @validate, @ap, @create
+    app.put     "/requests/:requestId/calls/:callId", @mm, @validate, @ap, @update
 
   detail: (req) =>
     @svc.getByCallPermalink req.params.permalink, @cSend
@@ -58,4 +58,4 @@ class RequestCallsApi extends require('./_api')
       res.send call
 
 
-module.exports = (app) -> new RequestCallsApi app, 'requests'
+module.exports = (app) -> new RequestCallsApi(app)
