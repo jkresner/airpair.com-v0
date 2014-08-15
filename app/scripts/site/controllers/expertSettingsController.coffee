@@ -1,6 +1,4 @@
-ExpertSettingsController = ($rootScope, $scope, Session, Expert, Tag) ->
-  Expert.get()
-  Tag.all()
+ExpertSettingsController = ($rootScope, $scope, Session, CurrentExpert, Tag) ->
 
   $scope.hourRange = _.map(new Array(20), (a, i) -> (i+1).toString())
   $scope.rates = [10, 40, 70, 110, 160, 230]
@@ -36,9 +34,9 @@ ExpertSettingsController = ($rootScope, $scope, Session, Expert, Tag) ->
   $scope.allowContinue = ->
     $scope.user.github? || $scope.user.bitbucket? || $scope.user.twitter?
 
-  $rootScope.$on 'event:tags-fetched', =>
+  Tag.all().then (tags) =>
     # create a dictionary for faster lookup
-    $scope.tags = _.reduce $rootScope.tags, (memo, tag) =>
+    $scope.tags = _.reduce tags, (memo, tag) =>
       memo[tag._id] =
         _id: tag._id
         name: tag.name
@@ -46,32 +44,20 @@ ExpertSettingsController = ($rootScope, $scope, Session, Expert, Tag) ->
         soId: tag.soId
       memo
     , {}
-
-  $rootScope.$on 'event:expert-fetched', =>
-    $scope.expert = $rootScope.expert
-    $scope.helper = new Helper($scope.expert)
     setExpertTagList(_.pluck($scope.expert.tags, '_id'))
 
-  class Helper
-    constructor: (@expert) ->
-    status: (value) ->
-      if value?
-        @expert.status = if value then "ready" else "busy"
-        @expert.availability = ""
-      @expert.status == "ready"
+  $scope.expert = CurrentExpert
+  $scope.update= =>
+    $scope.expert.updatedAt = new Date
+    $scope.expert.save()
 
-    toggleStatus: () ->
-      @expert.availability = ""
-      @status(!@status())
-      @update()
+  $scope.toggleStatus = () =>
+    $scope.expert.availability = ""
+    $scope.expert.isReady(!@isReady())
 
-    update: ->
-      @expert.updatedAt = new Date
-      @expert.save()
 
-    updatedAt: ->
-      moment(@expert.updatedAt).fromNow()
+  window.expert = $scope.expert
 
 angular
   .module('ngAirPair')
-  .controller('ExpertSettingsController', ['$rootScope', '$scope', 'Session', 'Expert', 'Tag', ExpertSettingsController])
+  .controller('ExpertSettingsController', ['$rootScope', '$scope', 'Session', 'CurrentExpert', 'Tag', ExpertSettingsController])

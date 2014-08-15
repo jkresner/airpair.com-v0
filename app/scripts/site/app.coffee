@@ -29,6 +29,7 @@ require("./directives/ngDelay")
 
 require("./services/session")
 require("./services/expert")
+require("./services/currentExpert")
 require("./services/tag")
 
 require("./controllers/headerController")
