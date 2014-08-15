@@ -31,6 +31,10 @@ WorkshopController = ($scope, $sce, Restangular, Session, Workshop) ->
   $scope.started = ->
     Session.data.workshop.youtube? && Session.data.workshop.youtube.length > 0
 
+  $scope.live = ->
+    start = new Date(Session.data.workshop.time)
+    moment().range(start, moment(start).add(1, 'hour')).contains(new Date)
+
   $scope.attending = ->
     attending = _.find Workshop.attendingWorkshops, (workshop) ->
       workshop.slug == Session.data.workshop.slug
@@ -57,6 +61,7 @@ WorkshopController = ($scope, $sce, Restangular, Session, Workshop) ->
   props =
     slug: Session.data.workshop.slug
     started: $scope.started()
+    live: $scope.live()
 
   if Session.isSignedIn()
     if $scope.registered()

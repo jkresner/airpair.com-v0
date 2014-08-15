@@ -20,13 +20,17 @@ body#airconf {
     time {
       color: #555;
       font-size: 10pt;
-      display: block;
     }
 
     h2 {
       font-size:12pt;
       font-weight:600;
       margin:16px auto;
+    }
+
+    .live {
+      color: red;
+      font-weight: 600;
     }
 
     p {
