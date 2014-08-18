@@ -35,6 +35,9 @@ Thumbs.db
 # NPM packages folder.
 node_modules/
 
+# Bower packages
+bower_components/
+
 # Brunch folder for temporary files.
 tmp/
 
