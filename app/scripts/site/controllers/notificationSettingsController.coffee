@@ -30,8 +30,8 @@ NotificationSettingsController = ($rootScope, $scope, CurrentExpert) ->
 
   $('.hourly .slider').change (event, value) =>
     movePublicRateTag(value[1])
-    $scope.expert.minRate = value[0]
-    $scope.expert.rate = value[1]
+    $scope.expert.minRate = parseInt(value[0])
+    $scope.expert.rate = parseInt(value[1])
     $scope.expert.update()
 
 
