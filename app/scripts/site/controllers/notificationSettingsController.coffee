@@ -2,7 +2,6 @@ NotificationSettingsController = ($rootScope, $scope, CurrentExpert) ->
   $scope.hourRange = _.map(new Array(20), (a, i) -> (i+1).toString())
 
   $scope.expert = CurrentExpert
-  $scope.helper = new Helper($scope.expert)
 
   values = [10, 40, 70, 110, 160, 230]
   movePublicRateTag = (index) =>
@@ -24,14 +23,16 @@ NotificationSettingsController = ($rootScope, $scope, CurrentExpert) ->
         encoder: (value) ->
           values[value]
 
-  $('.hourly .slider').val([values.indexOf($scope.expert.minRate), values.indexOf($scope.expert.rate)])
-  movePublicRateTag($scope.expert.rate)
+  $scope.initSlider = ->
+    $('.hourly .slider').val([values.indexOf($scope.expert.minRate), values.indexOf($scope.expert.rate)])
+    movePublicRateTag($scope.expert.rate)
+    $scope.expert.rate?
 
   $('.hourly .slider').change (event, value) =>
     movePublicRateTag(value[1])
     $scope.expert.minRate = value[0]
     $scope.expert.rate = value[1]
-    $scope.helper.update()
+    $scope.expert.update()
 
 
 angular

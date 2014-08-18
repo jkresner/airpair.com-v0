@@ -47,16 +47,9 @@ ExpertSettingsController = ($rootScope, $scope, Session, CurrentExpert, Tag) ->
     setExpertTagList(_.pluck($scope.expert.tags, '_id'))
 
   $scope.expert = CurrentExpert
-  $scope.update= =>
-    $scope.expert.updatedAt = new Date
-    $scope.expert.save()
-
-  $scope.toggleStatus = () =>
-    $scope.expert.availability = ""
-    $scope.expert.isReady(!@isReady())
+  window.expert = CurrentExpert
 
 
-  window.expert = $scope.expert
 
 angular
   .module('ngAirPair')

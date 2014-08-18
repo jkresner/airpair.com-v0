@@ -4,25 +4,25 @@
     h1 Expert Preferences
     label Tags
     p
-      select.select2(ui-select2="tagOptions" multiple ng-model="myTags" data-placeholder="Type a technology name" ng-model-options="{ getterSetter: true }", ng-change="update()")
+      select.select2(ui-select2="tagOptions" multiple ng-model="myTags" data-placeholder="Type a technology name" ng-model-options="{ getterSetter: true }", ng-change="expert.update()")
         option(ng-repeat="(id, tag) in tags" value="{{ tag._id }}"){{ tag.name }}
     label What appeals to you about AirPairing? (this will appear on your profile)
     p
-      textarea.standard(ng-model="expert.brief", ng-change="update()" ng-delay="500")
+      textarea.standard(ng-model="expert.brief", ng-change="expert.update()" ng-delay="500")
 
   .section
     h1 Expert Status
     form.availability
       .expert-status
         .send-toggle.top
-          .toggle.on(ng-class="expert.isReady() ? 'active' : ''", ng-click="expert.toggleStatus()")
-          .toggle.off(ng-class="expert.isReady() ? '' : 'active'", ng-click="expert.toggleStatus()")
+          .toggle.on(ng-class="expert.isReady() ? 'active' : ''", ng-click="toggleStatus()")
+          .toggle.off(ng-class="expert.isReady() ? '' : 'active'", ng-click="toggleStatus()")
         label(ng-show="expert.isReady()") Send me AirPairs!
         label(ng-hide="expert.isReady()") Busy ATM
-        input#status(type="checkbox", ng-checked="expert.status", ng-model="expert.status", ng-change="update()", ng-true-value="'ready'" ng-false-value="'busy'")
+        input#status(type="checkbox", ng-checked="expert.status", ng-model="expert.status", ng-change="expert.update()", ng-true-value="'ready'" ng-false-value="'busy'")
 
       .hours
-        select.top(ng-model="expert.hours", ng-change="update()", ng-options="h for h in hourRange")
+        select.top(ng-model="expert.hours", ng-change="expert.update()", ng-options="h for h in hourRange")
         label Hrs/Week
 
   .section
@@ -30,7 +30,7 @@
     label(for="rate") Preferred rate / hr &nbsp;
     span(ng-repeat="rate in rates")
       label(for="rate{{rate}}") ${{rate}} &nbsp;
-      input(type="radio" value="{{rate}}" id="rate{{rate}}" ng-model="expert.rate", ng-change="update()")
+      input(type="radio" value="{{rate}}" id="rate{{rate}}" ng-model="expert.rate", ng-change="expert.update()")
       span &nbsp;&nbsp;
 
   .section
