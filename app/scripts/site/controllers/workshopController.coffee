@@ -26,14 +26,12 @@ WorkshopController = ($scope, $sce, Restangular, Session, Workshop) ->
     moment().range(start, moment(start).add(1, 'hour')).contains(new Date)
 
   $scope.attending = ->
-    debugger
     _.find(Workshop.attendees, (u) -> Session.data.user.google._json.id == u.id)?
 
   $scope.allAttending = ->
     Workshop.attendingWorkshops
 
   $scope.attend = ->
-    debugger
     Workshop.attendSession(Session.data.workshop.slug)
     # specifically for marketing metrics
     addjs.trackCustomEvent 'WorkshopRSVP', {slug: Session.data.workshop.slug}
