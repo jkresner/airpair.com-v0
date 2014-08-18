@@ -45,18 +45,18 @@ html(ng-app='ngAirPair' ng-strict-di)
             ul.nav.navbar-nav.navbar-right
               li(ng-show='session.isSignedIn()')
                 a.scroll(href="#") Hi {{ session.name() }}
-      .nav.navbar.navbar-default.navbar-static-top.expert
+      .nav.navbar.navbar-default.navbar-static-top.expert(ng-show="expert.name")
         .container-fluid
           .navbar-header
             span.label(ng-show="expert.isReady()") Available to Airpair
             span.label(ng-hide="expert.isReady()") Busy until
             span.editable(ng-show="expert.isReady()")
               ng-pluralize(count="expert.hours", when="{'0': 'Not available. ', '1': '1 hr/week ', 'other': '{{ expert.hours }} hrs/week '}")
-              &nbsp;{{ expert.availability }}
+              | &nbsp;{{ expert.availability }}
               a(href="/settings/notifications")
             span.editable(ng-hide="expert.isReady()")
-              {{ expert.busyUntil | date : 'MMM, d yyyy'}}
-              &nbsp;{{ expert.availability }}
+              | {{ expert.busyUntil | date : 'MMM, d yyyy'}}
+              | &nbsp;{{ expert.availability }}
               a(href="/settings/notifications")
             .navbar-info
               span.info {{ expert.stats.paidOrderCount }}
