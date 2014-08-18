@@ -31,6 +31,7 @@ module.exports =
       ]
 
     'wk3':
+      youtube:      'qHGBTjKWVZM'
       slug:         'will-pairing-ever-be-mainstream'
       time:         'Mon Aug 18 2014 20:30:00 GMT'
       calStart:     '20140818T203000Z'
