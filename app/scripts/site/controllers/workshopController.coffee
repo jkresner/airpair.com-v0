@@ -15,6 +15,9 @@ WorkshopController = ($scope, $sce, Restangular, Session, Workshop) ->
   $scope.registered = ->
     Session.isSignedIn() and Session.data.registration? and Session.data.registration.paid
 
+  $scope.showCountdown = ->
+    new Date(@workshop.time) > new Date
+
   $scope.showRsvp = ->
     @registered() and not @attending()
 
