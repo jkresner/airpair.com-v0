@@ -31,6 +31,7 @@ module.exports = class DomainService
 
   getAll: (cb) => @searchMany {}, {}, cb
   getByUserId: (userId, cb) => @searchMany {userId}, {}, cb
+  getOneByUserId: (userId, cb) => @searchOne {userId}, {}, cb
   getById: (id, cb) => @searchOne {_id: id}, {}, cb
 
 

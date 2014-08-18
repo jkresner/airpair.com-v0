@@ -53,6 +53,7 @@ ngExpert = (Restangular, Expert) ->
 
     update: =>
       @updatedAt = new Date
+      @timezone = new Date().toString().substring(25, 45)
       # using Restangular $object loses scope
       # so create a copy before saving
       Restangular.copy(@).save()

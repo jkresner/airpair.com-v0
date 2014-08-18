@@ -27,7 +27,7 @@ module.exports = (app) ->
   # angular
   app.get '/adm/matching', authd, adm, render 'admin'
   app.get '/site', authd, render 'site'
-  app.get '/be-an-expert*', render 'site'
+  app.get '/be-an-expert*', authd, render 'site'
   app.get '/settings/notifications', authd, render 'site'
   app.get '/coming', authd, render 'site'
   app.get '/adm/templates/orders_daily', authd, render 'adm/templates/orders_daily'
