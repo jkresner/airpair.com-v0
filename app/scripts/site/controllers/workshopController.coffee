@@ -9,6 +9,9 @@ WorkshopController = ($scope, $sce, Restangular, Session, Workshop) ->
     showLocalTimes()
     true
 
+  $scope.startsAt = () ->
+    moment(@workshop.time).unix() - moment().unix()
+
   $scope.registered = ->
     Session.isSignedIn() and Session.data.registration? and Session.data.registration.paid
 

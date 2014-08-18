@@ -4,7 +4,11 @@
       .col-md-7
         h1 Keynote Panel: {{ workshop.title }}
         time(datetime="{{workshop.time | date:'EEE MMM dd yyyy HH:mmZ'}}", ng-show="showLocalTimes()" format="dddd, MMMM Do YYYY, h:mm a")
-        span.live(ng-show="live()") &nbsp;WATCH NOW LIVE
+        span.live(ng-if="live()") &nbsp;WATCH NOW LIVE
+        span.live(ng-if="!live()")
+          timer(countdown="startsAt()" interval="1000")
+            | &nbsp; Begins in {{days}} day{{daysS}}, {{hours}} hour{{hoursS}}, {{minutes}} minute{{minutesS}}
+
 
         p.description
           | {{ workshop.description }}&nbsp;
