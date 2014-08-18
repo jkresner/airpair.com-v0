@@ -1,7 +1,10 @@
-NotificationSettingsController = ($rootScope, $scope, CurrentExpert) ->
+NotificationSettingsController = ($location, $rootScope, $scope, CurrentExpert) ->
   $scope.hourRange = _.map(new Array(20), (a, i) -> (i+1).toString())
 
   $scope.expert = CurrentExpert
+
+  # redirect to be an expert if the user is not an expert
+  $location.path("/be-an-expert") unless $scope.expert.exists?
 
   values = [10, 40, 70, 110, 160, 230]
   movePublicRateTag = (index) =>
@@ -24,9 +27,9 @@ NotificationSettingsController = ($rootScope, $scope, CurrentExpert) ->
           values[value]
 
   $scope.initSlider = ->
-    $('.hourly .slider').val([values.indexOf($scope.expert.minRate), values.indexOf($scope.expert.rate)])
+    $('.hourly .slider').val([values.indexOf(parseInt($scope.expert.minRate)), values.indexOf(parseInt($scope.expert.rate))])
     movePublicRateTag($scope.expert.rate)
-    $scope.expert.rate?
+    $scope.expert.name?
 
   $('.hourly .slider').change (event, value) =>
     movePublicRateTag(value[1])
@@ -34,7 +37,6 @@ NotificationSettingsController = ($rootScope, $scope, CurrentExpert) ->
     $scope.expert.rate = parseInt(value[1])
     $scope.expert.update()
 
-
 angular
   .module('ngAirPair')
-  .controller('NotificationSettingsController', ['$rootScope', '$scope', 'CurrentExpert', NotificationSettingsController])
+  .controller('NotificationSettingsController', ['$location', '$rootScope', '$scope', 'CurrentExpert', NotificationSettingsController])

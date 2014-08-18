@@ -29,9 +29,9 @@
     h1 Expert Pricing
     label(for="rate") Preferred rate / hr &nbsp;
     span(ng-repeat="rate in rates")
+      br
       label(for="rate{{rate}}") ${{rate}} &nbsp;
       input(type="radio" value="{{rate}}" id="rate{{rate}}" ng-model="expert.rate", ng-change="expert.update()")
-      span &nbsp;&nbsp;
 
   .section
     p Be sure to set your 

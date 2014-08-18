@@ -1,4 +1,4 @@
-ngExpert = (Restangular, Expert) ->
+ngExpert = ($location, Restangular, Expert) ->
   ExpertModel = ->
     self: ->
       @
@@ -58,14 +58,19 @@ ngExpert = (Restangular, Expert) ->
       # so create a copy before saving
       Restangular.copy(@).save()
 
-  response = {}
-  currentExpert = Expert.get('me').then (expert) ->
-    # bind our model to the promise object. Magic!
-    model = _.bind(ExpertModel, response)
-    response = _.extend(response, expert, model().self())
-    response.init()
+  response = { exists: true }
+  Expert.get('me').then (expert) ->
+    if expert.name?
+      # bind our model to the promise object. Magic!
+      model = _.bind(ExpertModel, response)
+      _.extend(response, expert, model().self())
+      response.init()
+    else
+      _.extend(response, { exists: null })
+      # redirect to be an expert if the user is not an expert
+      $location.path("/be-an-expert")
   response
 
 angular
   .module('ngAirPair')
-  .factory('CurrentExpert', ['Restangular', 'Expert', ngExpert])
+  .factory('CurrentExpert', ['$location', 'Restangular', 'Expert', ngExpert])
