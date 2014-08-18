@@ -72,10 +72,6 @@ body#airconf {
 
     p.attending { color:green;max-width:80%;font-weight:bold;font-size:14px }
 
-    .viewer {
-      .loginRequired { width:50% }
-    }
-
     @media (max-width:1024px) {
       .col-md-5.text-center { text-align: left }
     }
