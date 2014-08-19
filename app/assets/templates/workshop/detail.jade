@@ -19,7 +19,7 @@
 
         .row
           hr(ng-if="!session.isSignedIn()")
-          .col-md-5.m-b-1(ng-if="!registered()")
+          .col-md-6.m-b-1(ng-if="!registered()")
             .register
               strong Purchase an AirConf Ticket
               p Get full access to the conference!
@@ -36,11 +36,6 @@
                 | Already have your ticket?&nbsp;
                 a.loginRequired(href="/login" data-return="{{$location}}") Sign in to RSVP
 
-          .col-md-6.m-b-1(ng-if="registered()")
-            .rsvp(ng-if="showRsvp()")
-              a.btn.btn-orange.btn-rsvp(href="#", ng-click="attend()") RSVP to Watch
-            .addthis_sharing_toolbox(ng-if="registered()")
-
           .col-md-6.m-b-1(ng-if="!registered()")
             strong Not quite convinced yet?
             p Sign up for the free AirConf newsletter instead.
@@ -54,6 +49,12 @@
               input(type="submit" value="Sign Up" class="btn btn-teal")
               p
                 small We promise to not sell or spam your email address.
+
+          .col-md-5.m-b-1(ng-if="showRsvp()")
+            .rsvp
+              a.btn.btn-orange.btn-rsvp(href="#", ng-click="attend()") RSVP to Watch
+          .col-md-7.m-b-1(ng-if="registered()")
+            .addthis_sharing_toolbox(ng-if="registered()")
 
       .col-md-4
         div(ng-repeat="speaker in workshop.speakers")
