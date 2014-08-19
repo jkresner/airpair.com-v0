@@ -25,13 +25,12 @@ WorkshopController = ($scope, $sce, Restangular, Session, Workshop) ->
     Session.data.workshop.youtube? && Session.data.workshop.youtube.length > 0
 
   $scope.subscribeToMailingList = ->
-    console.log @emailAddress
     xhr = $.post("/api/landing/mailchimp/subscribe", {listId: "39f4769300", email: @emailAddress})
     xhr.done (data) ->
       $('.cta-section').html("<p>Thank you. Please check your email and <strong>click the confirmation link</strong> to complete your subscription.</p>")
       addjs.trackCustomEvent('SubcribedToNewsletterFromTalkPage')
       if window.localStorage
-       window.localStorage['subscribed'] = true
+        window.localStorage['subscribed'] = true
 
     xhr.fail (resp, data) ->
       console.log('failed to subscribe', arguments)
