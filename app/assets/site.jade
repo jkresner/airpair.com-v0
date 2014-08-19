@@ -76,8 +76,8 @@ html(ng-app='ngAirPair' ng-strict-di)
             li
               a(href='/dashboard', target="_self") Dashboard
             li
-              a(href='/be-an-expert') Profile
-            li
+              a(href='/be-an-expert') Expert Profile
+            li(ng-show="expert.name")
               a(href='/settings/notifications') Notifications
             li
               a(href='/coming') My Airpairs
