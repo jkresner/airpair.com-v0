@@ -4,6 +4,7 @@ class LandingPageApi extends require('./_api')
   Chimp: require('../mail/chimp')
   AirConfDiscounts: require('../services/airConfDiscounts')
   Stripe: require('stripe')(config.payment.stripe.secretKey)
+  Mailman: require '../mail/mailman'
 
   routes: (app) ->
     app.post "/landing/airconf/order", @ap, @loggedIn, @airconfCreateOrder
@@ -11,6 +12,7 @@ class LandingPageApi extends require('./_api')
     app.post "/landing/mailchimp/subscribe", @ap, @mailchimpSubscribe
     app.post "/landing/mailchimp/retarget", @ap, @mailchimpRetarget
     app.post "/landing/mailchimp/article", @ap, @mailchimpArticle
+    app.post "/landing/blog/signup", @ap, @blogSignUp
     app.post "/landing/purchase", @ap, @createCustomer # generic, client decides $$
 
   airconfCreateOrder: =>
@@ -57,8 +59,27 @@ class LandingPageApi extends require('./_api')
     @Chimp.subscribeSilent "1945d147e6", @data.email, {}, @cbSend
 
   mailchimpArticle: =>
-    console.log "DATA", @data
     @Chimp.subscribeSilent "7d42af393a", @data.email, {Tech: @data.tech}, @cbSend
+
+  blogSignUp: =>
+    console.log "Package purchased", @data
+    options =
+      expert: @data.expert
+      package: @data.package
+      customerEmail: @data.email
+
+    @Mailman.notifyAnAdmin options, =>
+      console.log "Igor notified"
+      @cbSend {status: "Airpair notified"}
+
+
+
+
+
+
+
+
+
 
 
 module.exports = (app) -> new LandingPageApi(app)

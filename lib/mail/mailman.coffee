@@ -41,6 +41,17 @@ class Mailman
       rendered.Subject = options.subject
       ses.send options.to, rendered, callback
 
+  notifyAnAdmin: (options, callback) ->
+    # options.Subject = "New package signup from article"
+    # ses.send "cy@saidur.com", options, callback
+    options.to = "cy@saidur.com"
+    options.templateName = "blogNewPurchase"
+    @renderEmail options, options.templateName, (e, rendered) ->
+      rendered.Subject = "New package purchased from article"
+      ses.send options.to, rendered, callback
+
+
+
   sendEmailToAdmins: (options, callback) ->
     options.to = roles.getAdminEmails()
     @sendEmail options, callback
