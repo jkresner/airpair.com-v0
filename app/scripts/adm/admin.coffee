@@ -18,5 +18,5 @@ angular
   ])
 
 require("../site/services/session")
-require("../site/controllers/headerController")
+require("./controllers/headerController")
 require("./controllers/automatchController")
