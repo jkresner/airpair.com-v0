@@ -53,6 +53,7 @@ exports.config =
           'vendor/scripts/angular-busy.js'
           'vendor/scripts/angular-m-oment.js'
           'vendor/scripts/angular-tagger.js'
+          'vendor/scripts/angular-segmentio.js'
           'vendor/scripts/console-helper.js'
           'vendor/scripts/jquery-cookie.js'
           'vendor/scripts/lodash.js'

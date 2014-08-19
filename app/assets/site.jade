@@ -97,6 +97,7 @@ html(ng-app='ngAirPair' ng-strict-di)
     script(type="text/javascript").
       window.session = {
         user: !{ session ? JSON.stringify(session) : 'null'},
+        segmentioKey: !{ session ? JSON.stringify(segmentioKey) : 'null'},
       };
 
     script.

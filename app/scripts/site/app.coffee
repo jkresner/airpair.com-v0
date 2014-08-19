@@ -15,7 +15,7 @@ Config = ($routeProvider, $locationProvider, RestangularProvider) ->
   RestangularProvider.setRestangularFields(id: "_id")
 
 angular
-  .module('ngAirPair', ['ngRoute', 'restangular', 'ui.select2'])
+  .module('ngAirPair', ['ngRoute', 'restangular', 'ui.select2', 'segmentio'])
   .config(['$routeProvider', '$locationProvider', 'RestangularProvider', Config])
   .run(['$rootScope', ($rootScope) ->
     $rootScope._ = window._
@@ -24,6 +24,7 @@ angular
 require("./directives/select2")
 require("./directives/ngDelay")
 
+require("./services/segmentio")
 require("./services/session")
 require("./services/expert")
 require("./services/currentExpert")

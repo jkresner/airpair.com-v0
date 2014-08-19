@@ -27,8 +27,6 @@ module.exports = (grep) ->
   # require.list().filter((_) -> /test$/.test _).map(require)
 
   tests = [
-    './beexpert/connect_test'
-    './beexpert/infoform_test'
     './pipeline/requestform_test'
     './request/infoform_test'
     './request/requestform_test'
