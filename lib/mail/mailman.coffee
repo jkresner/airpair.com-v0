@@ -42,9 +42,7 @@ class Mailman
       ses.send options.to, rendered, callback
 
   notifyAnAdmin: (options, callback) ->
-    # options.Subject = "New package signup from article"
-    # ses.send "cy@saidur.com", options, callback
-    options.to = "cy@saidur.com"
+    options.to = "il@airpair.com"
     options.templateName = "blogNewPurchase"
     @renderEmail options, options.templateName, (e, rendered) ->
       rendered.Subject = "New package purchased from article"

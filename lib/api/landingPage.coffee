@@ -62,14 +62,13 @@ class LandingPageApi extends require('./_api')
     @Chimp.subscribeSilent "7d42af393a", @data.email, {Tech: @data.tech}, @cbSend
 
   blogSignUp: =>
-    console.log "Package purchased", @data
     options =
       expert: @data.expert
       package: @data.package
       customerEmail: @data.email
-
+      price: @data.price
+      url: @data.url
     @Mailman.notifyAnAdmin options, =>
-      console.log "Igor notified"
       @cbSend {status: "Airpair notified"}
 
 
