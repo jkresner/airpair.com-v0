@@ -18,27 +18,51 @@
             | &nbsp;}
 
         .row
+          hr(ng-if="!session.isSignedIn()")
           .col-md-5.m-b-1(ng-if="!registered()")
             .register
-              a.btn.btn-orange(href="/airconf-registration" target="_self" ng-class="{loginRequired: !session.isSignedIn()}") Register to Watch
+              strong Purchase an AirConf Ticket
+              p Get full access to the conference!
+              ul
+                li Participate in 80+ talks with top experts
+                li Get $150 AirPair credit to collaborate with experts on your project
+                li Front row access to LIVE talks
+                li Access to our exclusive video archive
+              .registration-link.m-t-1
+                a.btn.btn-orange(href="/airconf-registration" data-return="/airconf-registration" target="_self" ng-class="{loginRequired: !session.isSignedIn()}") Purchase a Ticket ($150)
 
             .already.m-t-1.m-b-1(ng-if="!session.isSignedIn()")
-              strong Already purchased an AirConf ticket?&nbsp;
-              br
-              a.loginRequired(href="/login" data-return="{{$location}}") Sign in to RSVP
+              strong
+                | Already have your ticket?&nbsp;
+                a.loginRequired(href="/login" data-return="{{$location}}") Sign in to RSVP
 
-          .col-md-5.m-b-1(ng-if="showRsvp()")
-            .rsvp
+          .col-md-6.m-b-1(ng-if="registered()")
+            .rsvp(ng-if="showRsvp()")
               a.btn.btn-orange.btn-rsvp(href="#", ng-click="attend()") RSVP to Watch
+            .addthis_sharing_toolbox(ng-if="registered()")
 
-          .col-md-7.m-b-2
-            .addthis_sharing_toolbox
+          .col-md-6.m-b-1(ng-if="!registered()")
+            strong Not quite convinced yet?
+            p Sign up for the free AirConf newsletter instead.
+            ul
+              li Get video highlights emailed to you weekly.
+              li Be the first to know about newly scheduled talks.
+              li Learn about free keynote panels and other special AirConf events.
+            form#newsletter-subscribe.m-t-1(ng-submit="subscribeToMailingList()")
+              input(type="email" placeholder="Enter email address" ng-model="emailAddress")
+              | &nbsp;
+              input(type="submit" value="Sign Up" class="btn btn-teal")
+              p
+                small We promise to not sell or spam your email address.
 
       .col-md-4
         div(ng-repeat="speaker in workshop.speakers")
           h1 {{speaker.name}}
           a(href="http://airpair.me/{{speaker.username}}" ng-if="speaker.username") Book an AirPair session with {{speaker.name}}
           p.description {{speaker.fullBio}}
+          .pitch(ng-if="!registered()")
+            strong What is AirConf?
+            iframe.m-t-1(width="100%" height="215" src="//www.youtube.com/embed/q2MZYe-F8EY" frameborder="0" allowfullscreen)
 
 
   .container.viewer
