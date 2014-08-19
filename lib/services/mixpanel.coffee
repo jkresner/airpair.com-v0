@@ -20,7 +20,9 @@ class Mixpanel
   addProperties: (email, object, callback) ->
     @user email, (error, response) =>
       if response? && _.some(response, response.results)
-        object.mixpanel = response.results[0]?.$properties
+        properties = response.results[0]?.$properties || {}
+        object.mixpanel = _.pick(properties, ["utm_campaign", "utm_campaign_first", "utm_capaign_first", "utm_content", "utm_medium", "utm_source", "utm_term"])
+        object.mixpanel
       callback(error, object)
 
 module.exports = new Mixpanel()
