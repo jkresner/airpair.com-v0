@@ -15,8 +15,8 @@
     form.availability
       .expert-status
         .send-toggle.top
-          .toggle.on(ng-class="expert.isReady() ? 'active' : ''", ng-click="toggleStatus()")
-          .toggle.off(ng-class="expert.isReady() ? '' : 'active'", ng-click="toggleStatus()")
+          .toggle.on(ng-class="expert.isReady() ? 'active' : ''", ng-click="expert.toggleStatus()")
+          .toggle.off(ng-class="expert.isReady() ? '' : 'active'", ng-click="expert.toggleStatus()")
         label(ng-show="expert.isReady()") Send me AirPairs!
         label(ng-hide="expert.isReady()") Busy ATM
         input#status(type="checkbox", ng-checked="expert.status", ng-model="expert.status", ng-change="expert.update()", ng-true-value="'ready'" ng-false-value="'busy'")
