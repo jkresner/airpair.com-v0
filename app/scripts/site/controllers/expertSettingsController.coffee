@@ -1,4 +1,4 @@
-ExpertSettingsController = ($rootScope, $scope, Session, CurrentExpert, Tag) ->
+ExpertSettingsController = ($rootScope, $scope, $timeout, Session, CurrentExpert, Tag) ->
 
   $scope.hourRange = _.map(new Array(20), (a, i) -> (i+1).toString())
   $scope.rates = [10, 40, 70, 110, 160, 230]
@@ -19,6 +19,19 @@ ExpertSettingsController = ($rootScope, $scope, Session, CurrentExpert, Tag) ->
     # that the same object be returned
     expertTagList.length = 0
     expertTagList.push value for value in values
+
+  $scope.alert = { show: false, message: "" }
+  $scope.showAlert = (message) =>
+    $scope.alert.show = true
+    $scope.alert.message = message
+    $timeout =>
+      $scope.alert.show = false
+      $scope.alert.message = ""
+    , 2000
+
+  $scope.updateExpert = ->
+    $scope.expert.update()
+    $scope.showAlert("Settings saved.")
 
   $scope.myTags = (values) =>
     if values? && $scope.expert?
@@ -47,10 +60,7 @@ ExpertSettingsController = ($rootScope, $scope, Session, CurrentExpert, Tag) ->
     setExpertTagList(_.pluck($scope.expert.tags, '_id'))
 
   $scope.expert = CurrentExpert
-  window.expert = CurrentExpert
-
-
 
 angular
   .module('ngAirPair')
-  .controller('ExpertSettingsController', ['$rootScope', '$scope', 'Session', 'CurrentExpert', 'Tag', ExpertSettingsController])
+  .controller('ExpertSettingsController', ['$rootScope', '$scope', '$timeout', 'Session', 'CurrentExpert', 'Tag', ExpertSettingsController])

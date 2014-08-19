@@ -3,9 +3,6 @@ Config = ($routeProvider, $locationProvider, RestangularProvider) ->
    .when '/be-an-expert',
      templateUrl: '/templates/settings/expert_connect'
      controller: 'ExpertSettingsController'
-   .when '/be-an-expert/info',
-     templateUrl: '/templates/settings/expert_info'
-     controller: 'ExpertSettingsController'
    .when '/settings/notifications',
      templateUrl: '/templates/settings/notifications'
      controller: 'NotificationSettingsController'

@@ -122,6 +122,23 @@
     }
   }
 
+  .message {
+    background-color: #CE5424;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 115%;
+    padding: 10px;
+    position: absolute;
+    top: -50px;
+    width: 100%;
+  }
+
+  .message.inline {
+    display: block;
+    margin: 20px 0;
+    position: inherit;
+    top: 0;
+  }
   .slider-row.header {
     .slider-col {
       font-size: 14px;
