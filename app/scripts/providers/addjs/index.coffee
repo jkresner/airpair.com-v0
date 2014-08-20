@@ -13,7 +13,6 @@ module.exports = class Addjs
 
   alias: ->
     if @peopleProps? && @peopleProps.email?
-      console.log 'Addjs alias', @peopleProps.email
       analytics.alias(@peopleProps.email, null, null, @identify)
     else
       console.log 'Aliasing new user Failed'

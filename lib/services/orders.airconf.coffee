@@ -12,6 +12,7 @@ Some funky hack rules about how AirConf orders work:
 ###
 
 OrdersQuery = require './orders.query'
+Mixpanel = require('./mixpanel')
 
 module.exports =
 
@@ -56,9 +57,12 @@ module.exports =
         @create order, (e, order) =>
           @Chimp.subscribe config.mailchimp.airconfListId, orderEmail, { Paid: 'Yes' }
 
-          segmentio.track
-            userId: @usr.google._json.email
-            event: 'RegisteredForAirconf'
+          Mixpanel.user @usr.google._json.email, (error, response) =>
+            if response? && _.some(response.results)
+              mixpanelId = response.results[0]['$distinct_id']
+              segmentio.track
+                userId: mixpanelId
+                event: 'RegisteredForAirconf'
 
           cb(e, order)
 

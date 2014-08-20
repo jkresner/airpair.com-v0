@@ -1,4 +1,5 @@
-mcapi = require('mailchimp-api');
+mcapi = require('mailchimp-api')
+Mixpanel = require('../services/mixpanel')
 
 class Chimp
 
@@ -14,11 +15,14 @@ class Chimp
 
     @API.lists.subscribe params, @successHandler(cb), @errorHandler(listId, email, mergeVars, cb)
 
-    segmentio.track
-      userId: email
-      event: 'AddedToMailchimpList'
-      properties:
-        listId: listId
+    Mixpanel.user email, (error, response) =>
+      if response? && _.some(response.results)
+        mixpanelId = response.results[0]['$distinct_id']
+        segmentio.track
+          userId: mixpanelId
+          event: 'AddedToMailchimpList'
+          properties:
+            listId: listId
 
   # optionally pass a callback function
   subscribeSilent: (listId, email, mergeVars, cb) ->
