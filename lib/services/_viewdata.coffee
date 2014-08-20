@@ -47,6 +47,9 @@ module.exports = class ViewDataService
   site: (cb) ->
     cb null, => { session: @session(true) }
 
+  external: (template, cb) ->
+    cb null, -> { template }
+
   settings: (cb) ->
     cb null, -> { stripePK }
 

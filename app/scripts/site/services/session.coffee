@@ -1,5 +1,6 @@
 SessionFactory = ($http, $window, segmentio) ->
   segmentio.load($window.session.segmentioKey)
+
   session =
     data: $window.session
 

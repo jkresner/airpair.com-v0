@@ -34,10 +34,12 @@ exports.config =
       joinTo:
        'javascripts/vendor.js': /^vendor\/scripts(\/|\\)(?!angular)/
        'javascripts/ap.js': /(scripts\/ap|scripts\/shared|scripts\/providers|lib\/mix)/
-       'javascripts/adm.js': /(scripts\/angular|lodash|moment|scripts\/adm\/|scripts\/site\/|lib\/mix|mixpanel_data)/
        'javascripts/adm-old.js': /(scripts\/adm-old|scripts\/shared|scripts\/providers|lib\/mix)/
        'javascripts/providers.js': /^app\/scripts\/providers/
        'javascripts/landing.js': /jquery|jquery.cookie|moment|lodash|providers\/(addjs|olark|segmentio|optimizely)|bootstrap3\/dropdown|bootstrap3\/collapse|bootstrap3\/modal|select2/
+
+       'javascripts/adm.js': /(scripts\/angular|lodash|moment|scripts\/adm\/|scripts\/site\/|lib\/mix|mixpanel_data)/
+       'javascripts/external.js': /(scripts\/angular|lodash|moment|jquery|providers\/(addjs|segmentio))|^app\/scripts\/(site|external)|bootstrap3\/modal|select2/
        'javascripts/site.js': /(scripts\/angular|lodash|moment|jquery|providers\/(addjs|segmentio))|^app\/scripts\/site|bootstrap3\/modal|select2/
 
        'test/javascripts/test.js': /^test(\/|\\)(?=integration)/

@@ -54,6 +54,7 @@ render = (fileName, propList=[]) ->
           else
             data =
               firebase: req.firebase
+              returnTo: req.session.returnTo
               isProd: config.isProd.toString()
               session: vdSvc.session false
               reqUrl: req.url
