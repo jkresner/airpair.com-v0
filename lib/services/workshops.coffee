@@ -81,8 +81,14 @@ module.exports = class WorkshopsService extends DomainService
     email = @usr.google._json.email
     query = slug: slug
     @searchOne query, {}, (err, workshop) =>
-      callback(err, {}) unless workshop?
-      if err? then callback(err, {})
+      # something went wrong, abort
+      if !workshop? or err?
+        return callback(err, {})
+
+      # don't dupe RSVPs. Front end does that sometimes
+      if _.find(workshop.attendees, (a) -> a.userId is userId)
+        return callback(null, workshop)
+
       orderQuery =
         userId: userId
         requestId: OrdersQuery.airconf.requestId
