@@ -50,7 +50,7 @@ module.exports =
       time:         'Mon Aug 25 2014 18:00:00 GMT'
       calStart:     '20140825T180000Z'
       calEnd:       '20140825T190000Z'
-      title:        'Developer Writing Tips &amp; Tricks'
+      title:        'Developer Writing Tips & Tricks'
       description:  "Strong personal brands get better consulting rates. What are the best strategies for building a personal developer brand through writing? In this panel we ask well-known technical bloggers and book authors for their best tips and tricks."
       speakers: [
         { name: 'Michael Lopp', company: 'Palantir', title: 'Author', pic: 'http://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Michael_Lopp_%28Apple_Inc.%29.jpg/200px-Michael_Lopp_%28Apple_Inc.%29.jpg', tw: 'rands' }
