@@ -17,18 +17,18 @@ app = express()
 mongoSessionStore = require('./app_mongoose')(express)
 
 consolidate      = require('consolidate')
-hbs              = require('hbs')
-hbsPartials      = require './lib/util/hbsPartials'
-hbsHelpers       = require './lib/util/hbsHelpers'
-# Eventually all global partials should be in '/app/partials'
-hbsPartials.register __dirname, ['/app/partials','/app/partials/airconf','/app/scripts/shared/templates']
+
+hbs = require('hbs')
+hbsHelpers = require './lib/util/hbsHelpers'
 hbsHelpers.register hbs
+hbs.registerPartials __dirname + '/app/partials'
+hbs.registerPartials __dirname + '/app/partials/airconf'
+hbs.registerPartials __dirname + '/app/scripts/shared/templates'
 
 app.engine 'html', hbs.__express
 app.engine 'jade', consolidate.jade
 app.set 'views', __dirname + '/public'
 app.set 'view engine', 'hbs'
-
 
 app.use express.compress() # gzip
 app.use express.static(__dirname + '/public')
