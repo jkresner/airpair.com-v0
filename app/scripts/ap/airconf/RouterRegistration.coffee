@@ -39,6 +39,9 @@ module.exports = class Router extends S.AirpairSessionRouter
       @navTo 'thanks'
     else
       @navTo 'register'
+
   register: ->
+    addjs.trackCustomEvent('AirConfRegistrationFormLoaded')
 
   thanks: ->
+    addjs.trackCustomEvent('AirConfThanksForSubscribing')

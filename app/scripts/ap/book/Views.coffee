@@ -30,8 +30,8 @@ class exports.StripeRegisterView extends SV.StripeRegisterView
   stripeCustomerSuccess: (model, resp, opts) =>
     @model.unset 'stripeCreate'
     name = @session.get('google').displayName
+    addjs.identify paymentInfoSet: 'stripe'
     addjs.trackEvent 'book', 'customerSetStripeInfo', name
-    addjs.trackSession paymentInfoSet: 'stripe'
     @successAction()
   successAction: =>
     $('#card').hide()
@@ -131,7 +131,7 @@ class exports.InfoFormView extends RV.InfoFormView
     if @isReturnCustomer
       @e.name = "customerInfoRepeat"
     addjs.trackEvent @e.category, @e.name, @elm('fullName').val(), @timer.timeSpent()
-    addjs.trackSession isCustomer : 'Y'
+    addjs.identify isCustomer : 'Y'
     router.navTo 'thanks'
     @request.urlRoot = '/api/requests'
     @request.save 'company', model.attributes

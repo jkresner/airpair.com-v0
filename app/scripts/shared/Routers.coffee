@@ -13,7 +13,7 @@ class exports.AirpairRouter extends BB.BadassAppRouter
   preConstructorHook: (pageData) ->
     unless addjs?
       window.addjs = new AddJS(pageData.segmentioKey)
-      addjs.trackSession()
+      addjs.identify()
       addjs.bindTrackLinks()
 
   # load external providers like google analytics, user-voice etc.
@@ -43,7 +43,7 @@ class exports.AirpairSessionRouter extends BB.SessionRouter
         event = addjs.events.signUp
         addjs.trackEvent event.category, event.name, window.location.pathname, 0
       else
-        addjs.trackSession()
+        addjs.identify()
         addjs.bindTrackLinks()
 
   # load external providers like google analytics, user-voice etc.

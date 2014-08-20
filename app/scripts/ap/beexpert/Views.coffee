@@ -84,8 +84,8 @@ class exports.InfoFormView extends BB.ModelSaveView
     rb.prev().addClass 'checked'
   renderSuccess: (model, response, options) =>
     router.navTo 'thanks'
+    addjs.identify isExpert : 'Y'
     addjs.trackEvent @e.category, @e.name, @model.get('name'), @timer.timeSpent()
-    addjs.trackSession isExpert : 'Y'
   getViewData: ->
     homepage: @elm('homepage').val()
     brief: @elm('brief').val()
