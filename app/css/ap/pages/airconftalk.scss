@@ -1,4 +1,4 @@
-body#airconf {
+body.airconf {
   min-height: 1000px;
 
   .talk {
@@ -15,8 +15,8 @@ body#airconf {
     }
 
     h1 {
-      color:#151821;
-      font-size:16pt;
+      color: #151821;
+      font-size: 16pt;
       font-weight: 600;
       margin-bottom: 5px;
     }
