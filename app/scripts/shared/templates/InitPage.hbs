@@ -7,7 +7,7 @@ function initStaticPage(name, sessionParams) {
     window.addjs = new AddJS('{{segmentioKey}}');
   }
   addjs.bindTrackLinks()
+  addjs.identify(sessionParams);
   addjs.trackEvent('page', 'view', window.location.pathname, name);
-  addjs.trackSession(sessionParams || {});
 }
 </script>

@@ -149,24 +149,16 @@
 
 <script src="/javascripts/airconf.js"></script>
 <script type="text/javascript">
-
-  function initPage()
-  {
+  function initPage() {
     showSubscribe();
     fixFloatAction();
     showLocalTimes();
     setCalendarTimes();
     initStaticPage('airconf');
-
-    if (typeof bindLoginModal !== 'undefined') { bindLoginModal(); }
   }
-
 </script>
 
 <script src="/javascripts/landing.js" defer onload="initPage()"></script>
-
-{{> confSigninModal }}
-
 <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-519d1944598d7aed"></script>
 
 </html>

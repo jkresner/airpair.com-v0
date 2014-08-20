@@ -163,8 +163,8 @@ class exports.StripeRegisterView extends BB.BadassView
   stripeCustomerSuccess: (model, resp, opts) =>
     @model.unset 'stripeCreate'
     name = @session.get('google').displayName
+    addjs.identify paymentInfoSet: 'stripe'
     addjs.trackEvent 'request', 'customerSetStripeInfo', name
-    addjs.trackSession paymentInfoSet: 'stripe'
     @successAction()
   successAction: => # give the power to override this action so we can put the view in different flows
     router.navTo '#'

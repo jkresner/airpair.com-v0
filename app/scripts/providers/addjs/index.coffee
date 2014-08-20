@@ -13,11 +13,12 @@ module.exports = class Addjs
 
   alias: ->
     if @peopleProps? && @peopleProps.email?
-      analytics.alias(@peopleProps.email, null, null, @trackSession)
+      console.log 'Addjs alias', @peopleProps.email
+      analytics.alias(@peopleProps.email, null, null, @identify)
     else
-      console.log("Aliasing new user Failed")
+      console.log 'Aliasing new user Failed'
 
-  trackSession: (additionalProperties={}) =>
+  identify: (additionalProperties={}) =>
     if @peopleProps? && @peopleProps.email?
       properties =
         avatar: @peopleProps.picture
@@ -41,7 +42,6 @@ module.exports = class Addjs
   trackCustomEvent: (action, props) ->
     analytics.track action, props
 
-
   trackPageView: (name, data) ->
     # segment.io automatically tracks page views
     # only use this method for client side page
@@ -51,6 +51,9 @@ module.exports = class Addjs
   trackLink: (link, name, options) ->
     analytics.trackLink(link, name, options)
 
+  ###
+  TODO: The following two functions do not belong in this file!
+  ###
   bindTrackLinks: ->
     parent = @
     jQuery(".trackBookLogin").click (e) ->

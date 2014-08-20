@@ -84,8 +84,8 @@ class exports.InfoFormView extends BB.EnhancedFormView
   renderSuccess: (model, response, options) =>
     if @isReturnCustomer
       @e.name = "customerInfoRepeat"
+    addjs.identify isCustomer : 'Y'
     addjs.trackEvent @e.category, @e.name, @elm('fullName').val(), @timer.timeSpent()
-    addjs.trackSession isCustomer : 'Y'
     router.navTo 'request'
   setToggleIndividual: =>
     $lnk = @$('.individual')

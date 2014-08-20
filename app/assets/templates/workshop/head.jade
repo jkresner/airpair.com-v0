@@ -33,5 +33,5 @@ head
       var AddJS = require("scripts/providers/addjs/index");
       window.addjs = new AddJS('!{segmentioKey}');
     }
+    addjs.identify();
     addjs.trackEvent('page', 'view', window.location.pathname);
-    addjs.trackSession({});
