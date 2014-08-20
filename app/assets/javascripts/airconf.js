@@ -39,9 +39,9 @@ function showLocalTimes() {
       if ($time.attr('format')) {
         format = $time.attr('format');
       } else if ($time.hasClass('long')) {
-        format = 'ddd Do MMM h:mma ZZ';
+        format = 'dddd, MMM Do ha (Z)';
       } else {
-        format = 'ddd Do MMM ha ZZ';
+        format = 'ddd, MMM Do ha (Z)';
       }
       localTime = moment(timeString, 'ddd MMM Do YYYY HH:mmZ').format(format);
       $time.html( localTime.replace(offset,'<span>'+offset+'</span>') );
