@@ -89,6 +89,7 @@ module.exports = (app) ->
   app.get '/airconf2014', render 'landing/airconf'
   app.get '/airconf', (req, r) -> r.redirect req.url.replace('/airconf','/airconf2014')
   app.get '/airconf-registration', authd, render 'landing/airconfreg'
+  app.get '/airconf-registration/thanks', authd, render 'landing/airconfreg'
   app.get '/airconf-subscribe', render 'landing/airconfsubscribe'
   app.get '/airconf-so-subscribe', render 'landing/airconfsosubscribe'
   app.get '/airconf-promo/:id', render 'landing/airconfpromo', ['params.id']

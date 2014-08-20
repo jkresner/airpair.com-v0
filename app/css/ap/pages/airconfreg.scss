@@ -1,5 +1,4 @@
 body#airconfreg {
-
   .route { display:none }
   .control-group { margin-bottom:10px; }
   .control-group input { width:220px; }
@@ -25,13 +24,12 @@ body#airconfreg {
     font-weight: bold;
   }
 
-  a.btn-orange {
-    color:white;
-    background:#ce5424;
-    &:hover { font-weight:600; }
+  .hero {
+    background:url('/images/landing/airconf/bg.jpg');
+    height:540px;
+    margin-top: 0!important;
+    text-align:center
   }
-
-  .hero { background:url('/images/landing/airconf/bg.jpg');height:540px;margin-top:0!important;text-align:center }
   .hero img { margin:40px 0 40px 0;z-index:2;position:relative;  }
 
   .whitebg { position:absolute;top:180px;left:25%;background:white;width:50%;padding:20px; }
@@ -76,6 +74,13 @@ body#airconfreg {
   .clickable span {
     cursor: pointer;
     border-bottom: 1px dashed silver;
+  }
+
+  #thanks {
+    .nextsteps {
+      text-align: center;
+    }
+    margin-bottom: 25px;
   }
 
 }

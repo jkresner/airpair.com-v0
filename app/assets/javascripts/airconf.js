@@ -56,7 +56,7 @@ function showLocalTimes() {
 function fixFloatAction() {
   // Fixed #floataction subscribe on scroll
   try {
-    var floataction = $('#floataction').offset().top - 20;
+    var floataction = $('#floataction').offset().top - 40;
     $(window).scroll(function(e){
       if (window.scrollY > floataction) {
         $('#floataction').addClass('affix');

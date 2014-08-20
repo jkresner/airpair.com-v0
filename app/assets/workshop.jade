@@ -2,7 +2,7 @@ doctype html
 html(ng-app='ngAirPair')
   include ./templates/workshop/head
 
-  body#airconf(ng-controller='SessionController')
+  body.airconf(ng-controller='SessionController')
     include ./templates/workshop/nav
     div(ng-view)
     include ./templates/workshop/login
