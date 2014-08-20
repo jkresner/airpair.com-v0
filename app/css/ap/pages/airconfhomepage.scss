@@ -55,6 +55,23 @@ body#airconf-homepage {
     max-width: 1002px;
   }
 
+  @media (max-width:560px) {
+    .keynote {
+      transform: scale(.8);
+      margin: -10px !important;
+    }
+  }
+
+  @media (max-width:460px) {
+    .keynote {
+      transform: scale(.70);
+      margin: -25px !important;
+      summary {
+        font-size: 16px;
+      }
+    }
+  }
+
   .keynote {
     border-radius:26px;
     margin-bottom:20px;
