@@ -44,7 +44,7 @@
       <summary>
         <h3><a href="/airconf2014/keynote/{{slug}}" class="login-required" target="_self">{{title}}</a></h3>
         <p>{{description}}</p>
-        {{#each speakers}}<div class="panelist"><label>{{name}}</label> {{company}} <span> {{title}}</span></div>{{/each}}
+        {{#each speakers}}<div class="panelist"><label>{{name}}</label> {{company}} - <span> {{title}}</span></div>{{/each}}
       </summary>
     </div>
     {{/with}}
@@ -54,7 +54,7 @@
       <summary>
         <h3><a href="/airconf2014/keynote/{{slug}}" class="login-required" target="_self">{{title}}</a></h3>
         <p>{{description}}</p>
-        {{#each speakers}}<div class="panelist"><label>{{name}}</label> {{company}} <span> {{title}}</span></div>{{/each}}
+        {{#each speakers}}<div class="panelist"><label>{{name}}</label> {{company}} - <span> {{title}}</span></div>{{/each}}
       </summary>
       <ul>{{#each speakers}}<li><img src="{{pic}}" alt="{{name}}" /></li>{{/each}}</ul>
     </div>
@@ -66,28 +66,23 @@
       <summary>
         <h3><a href="/airconf2014/keynote/{{slug}}" class="login-required" target="_self">{{title}}</a></h3>
         <p>{{description}}</p>
-        {{#each speakers}}<div class="panelist"><label>{{name}}</label> {{company}} <span> {{title}}</span></div>{{/each}}
+        {{#each speakers}}<div class="panelist"><label>{{name}}</label> {{company}} - <span> {{title}}</span></div>{{/each}}
       </summary>
     </div>
     {{/with}}
 
+    {{#with wk4}}
     <div class="keynote four right" style="background:#dff2ef;color:#4d4e4e">
       <summary>
-        <h3><a href="/airconf2014/keynote/developer-writing-tips-and-tricks" class="login-required" target="_self">Developer Writing Tips &amp; Tricks</a></h3>
+        <h3><a href="/airconf2014/keynote/{{slug}}" class="login-required" target="_self">{{title}}</a></h3>
         <label>Watch live for free on <a class="add-to-cal" target="_blank" href="https://www.google.com/calendar/render?action=TEMPLATE&text=AirConf+Keynote+-+Developer+Writing+Tips+Tricks&dates=20140825T180000Z/20140825T190000Z&details=In+this+panel+we+ask+a+well-known+technical bloggers+and+book+authors+for+their+tips+and+tricks.&location=https://www.airpair.com/airconf2014&output=xml"><time class="long" datetime="Mon Aug 25 2014 18:00:00 GMT"></time></a></label>
-        <p>Strong personal brands get better consulting rates. What are the best strategies for building a personal developer brand through writing? In this panel we ask a well-known technical bloggers and book authors for their tips and tricks.</p>
-        <div class="panelist"><label>Peter Armstrong</label> Leanpub<span> Co-founder</span></div>
-        <div class="panelist"><label>Matt Raible</label> Blogger<span> raibledesigns.com </span></div>
-        <div class="panelist"><label>Corey Haines</label> 4 Rules of Simple Design  <span>Author</span></div>
-        <div class="panelist"><label>John D. Cook</label> Blogger<span> johndcook.com</span></div>
+        <p>{{description}}</p>
+        {{#each speakers}}<div class="panelist"><label>{{name}}</label> {{company}} - <span> {{title}}</span></div>{{/each}}
       </summary>
-      <ul>
-        <li><img src="//secure.gravatar.com/avatar/f1217c714da50e49f1640aeff622c9b5?s=140" alt="Peter Armstrong" /></li>
-        <li><img src="//secure.gravatar.com/avatar/72a2082c6a4dd79ad68befb3db911616?s=140" alt="Matt Raible" /></li>
-        <li><img src="//secure.gravatar.com/avatar/a7f4f9dcbbf1d46d660b0a6c98435751?s=140" alt="John D. Cook" /></li>
-        <li><img src="//secure.gravatar.com/avatar/3d7807bb66e1a0c68c73ab2daaa77d8f?s=140" alt="Corey Haines" /></li>
-      </ul>
+      <ul>{{#each speakers}}<li><img src="{{pic}}" alt="{{name}}" /></li>{{/each}}</ul>
     </div>
+    {{/with}}
+
   </div>
   {{/with}}
 

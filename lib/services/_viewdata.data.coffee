@@ -45,6 +45,21 @@ module.exports =
         { name: 'Dave Hoover', company: 'DevBootcamp', title: 'Founder', pic: '//secure.gravatar.com/avatar/f3729d9dc86df0fc4f1ab7b20aa8e531?s=140', tw: 'davehoover' }
       ]
 
+    'wk4':
+      slug:         'developer-writing-tips-and-tricks'
+      time:         'Mon Aug 25 2014 18:00:00 GMT'
+      calStart:     '20140825T180000Z'
+      calEnd:       '20140825T190000Z'
+      title:        'Developer Writing Tips &amp; Tricks'
+      description:  "Strong personal brands get better consulting rates. What are the best strategies for building a personal developer brand through writing? In this panel we ask well-known technical bloggers and book authors for their best tips and tricks."
+      speakers: [
+        { name: 'Michael Lopp', company: 'Palantir', title: 'Author', pic: 'http://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Michael_Lopp_%28Apple_Inc.%29.jpg/200px-Michael_Lopp_%28Apple_Inc.%29.jpg', tw: 'rands' }
+        { name: 'Matt Raible', company: 'Raible Designs', title: 'Blogger', pic: '//secure.gravatar.com/avatar/72a2082c6a4dd79ad68befb3db911616?s=140', tw: 'mraible' }
+        { name: 'Corey Haines', company: '4 Rules of Simple Design', title: 'Author', pic: '//secure.gravatar.com/avatar/3d7807bb66e1a0c68c73ab2daaa77d8f?s=140', tw: 'coreyhaines' }
+        { name: 'John D. Cook', company: 'johndcook.com', title: 'Blogger', pic: '//secure.gravatar.com/avatar/a7f4f9dcbbf1d46d660b0a6c98435751?s=140', tw: 'johndcook' }
+        { name: 'Peter Armstrong', company: 'Leanpub', title: 'Founder', pic: '//secure.gravatar.com/avatar/f1217c714da50e49f1640aeff622c9b5?s=140', tw: 'peterarmstrong' }
+      ]
+
   so15:
     'jquery':     name: 'Yehuda Katz', me: 'wycats', claim: 'Rails Core Team Member'
     'ruby-on-rails':name: 'Yehuda Katz', me: 'wycats', claim: 'Rails Core Team Member'
