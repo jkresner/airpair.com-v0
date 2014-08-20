@@ -74,25 +74,37 @@ body#airconf-homepage {
   }
 
   @media (max-width:360px) {
-    #keynotes h2 {
+    #keynotes {
       margin: 0 !important;
-      padding: 0 !important;
+      width: 100% !important;
     }
+    // #keynotes h2 {
+    //   margin: 0 !important;
+    //   padding: 0 !important;
+    // }
     .keynote {
-      transform: scale(0.65);
-      margin: -5px -75px -70px -75px !important;
+      transform: scale(0.85);
+      float: none !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+      height: auto !important;
+      width: 340px !important;
+      ul { display: none !important }
       summary {
-        font-size: 18px;
+        font-size: 20px;
+        width: 280px !important;
+        box-sizing: border-box;
       }
     }
   }
 
   .keynote {
+    box-sizing: border-box;
     border-radius:26px;
     margin-bottom:20px;
     padding:0px;
     text-decoration:none;
-    height: 240px;
+    min-height: 240px;
     width:470px;
 
     &.left { float:left; margin-left:16px; }
@@ -106,6 +118,7 @@ body#airconf-homepage {
     }
 
     ul {
+      box-sizing: border-box;
       height:240px;
       width:60px;
       padding:0 5px 0 0;
