@@ -33,11 +33,11 @@ SessionFactory = ($http, $window, segmentio) ->
 
     alias: ->
       if @googleData? && @googleData.email?
-        segmentio.alias(@googleData.email, null, null, @trackSession)
+        segmentio.alias(@googleData.email, null, null, @identify)
       else
         console.log("Aliasing new user Failed")
 
-    trackSession: (additionalProperties={}) =>
+    identify: (additionalProperties={}) =>
       if @googleData? && @googleData.email?
         properties =
           avatar: @googleData.picture

@@ -1,4 +1,6 @@
 ExpertSettingsController = ($rootScope, $scope, $timeout, Session, CurrentExpert, Tag) ->
+  $scope.user = Session.data.user
+  $scope.session = Session
 
   $scope.hourRange = _.map(new Array(20), (a, i) -> (i+1).toString())
   $scope.rates = [10, 40, 70, 110, 160, 230]
@@ -43,7 +45,6 @@ ExpertSettingsController = ($rootScope, $scope, $timeout, Session, CurrentExpert
       setExpertTagList(values)
     expertTagList
 
-  $scope.user = Session.data.user
   $scope.allowContinue = ->
     $scope.user.github? || $scope.user.bitbucket? || $scope.user.twitter?
 
