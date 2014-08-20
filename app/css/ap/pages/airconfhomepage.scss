@@ -33,6 +33,7 @@ body#airconf-homepage {
       section { height:130px;top:190px; }
       h2 { font-size:22px; }
     }
+
   }
 
   h4#about {
@@ -68,6 +69,20 @@ body#airconf-homepage {
       margin: -25px !important;
       summary {
         font-size: 16px;
+      }
+    }
+  }
+
+  @media (max-width:360px) {
+    #keynotes h2 {
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+    .keynote {
+      transform: scale(0.65);
+      margin: -5px -75px -70px -75px !important;
+      summary {
+        font-size: 18px;
       }
     }
   }
@@ -126,19 +141,5 @@ body#airconf-homepage {
       margin: 15px 17px 15px 18px;
       vertical-align: top;
     }
-  }
-
-  .keynote small { color: black; display:block;font-size:13px;font-weight:normal; }
-  .keynote.left small { color:#989999;margin-top:30px  }
-  .keynote.left small label { color:#232835 }
-  .keynote.left small span { color:#4d4e4e }
-  .keynote.right small { color:#d3d3d3;margin-top:30px  }
-  .keynote.right small label { color:#dff2ef }
-  .keynote.right small span { color:white }
-  .keynote .detail { display:none;width:340px;margin:15px 15px 15px 20px;vertical-align:top;color:white; }
-  .keynote .btn { font-size:20px;width:268px;height:50px;margin:20px auto!important; }
-
-  @-moz-document url-prefix() {
-    .keynote h3 { font-weight:300 }
   }
 }
