@@ -28,7 +28,8 @@ module.exports = (app) ->
   app.get '/adm/matching', authd, adm, render 'admin'
   app.get '/site', authd, render 'site'
   app.get '/login', render 'external', [{template: 'external/login'}]
-  app.get '/be-an-expert*', authConditionalRender ['external', [{template: 'external/beexpert'}]], ['site']
+  app.get '/be-an-expert', authConditionalRender ['external', [{template: 'external/beexpert'}]], '/settings/expert'
+  app.get '/settings/expert', authConditionalRender "/be-an-expert", ['site']
   app.get '/settings/notifications', authd, render 'site'
   app.get '/coming', authd, render 'site'
   app.get '/adm/templates/orders_daily', authd, render 'adm/templates/orders_daily'

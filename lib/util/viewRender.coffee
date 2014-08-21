@@ -88,9 +88,17 @@ module.exports =
   render: render
 
   authConditionalRender: (loggedOutParams, loggedInParams) ->
+    # renders the logged in or logged out page if an array is passed
+    # will redirect if a string is passed
     (req, res, next) ->
       if req.isAuthenticated()
-        render.apply(this, loggedInParams)(req, res, next)
+        if _.isString(loggedInParams)
+          res.redirect(loggedInParams)
+        else
+          render.apply(this, loggedInParams)(req, res, next)
       else
-        render.apply(this, loggedOutParams)(req, res, next)
+        if _.isString(loggedOutParams)
+          res.redirect(loggedOutParams)
+        else
+          render.apply(this, loggedOutParams)(req, res, next)
 

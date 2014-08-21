@@ -68,7 +68,7 @@ ngExpert = ($location, Restangular, Expert) ->
     else
       _.extend(response, { exists: null })
       # redirect to be an expert if the user is not an expert
-      $location.path("/be-an-expert")
+      $location.path("/settings/expert")
   response
 
 angular

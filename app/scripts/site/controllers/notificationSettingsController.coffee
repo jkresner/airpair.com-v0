@@ -4,7 +4,7 @@ NotificationSettingsController = ($location, $rootScope, $scope, CurrentExpert) 
   $scope.expert = CurrentExpert
 
   # redirect to be an expert if the user is not an expert
-  $location.path("/be-an-expert") unless $scope.expert.exists?
+  $location.path("/settings/expert") unless $scope.expert.exists?
 
   values = [10, 40, 70, 110, 160, 230]
   movePublicRateTag = (index) =>
