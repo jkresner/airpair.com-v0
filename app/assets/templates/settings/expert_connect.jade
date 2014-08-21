@@ -21,11 +21,12 @@
 
 
       .col-md-6
-        .message.inline(ng-hide="allowContinue()") You must connect at least github, bitbucket or twitter to continue.
         label Tags
         p
-          select.select2(ui-select2="tagOptions" multiple ng-model="myTags" data-placeholder="Type a technology name" ng-model-options="{ getterSetter: true }", ng-change="updateExpert()" ng-disabled="!allowContinue()")
+          select.select2(ui-select2="tagOptions" multiple ng-model="myTags" data-placeholder="Type a technology name" ng-model-options="{ getterSetter: true }", ng-disabled="!allowContinue()")
             option(ng-repeat="(id, tag) in tags" value="{{ tag._id }}"){{ tag.name }}
         label What appeals to you about AirPairing? (this will appear on your profile)
         p
-          textarea.standard(ng-model="expert.brief", ng-change="updateExpert()" ng-delay="500" ng-disabled="!allowContinue()")
+          textarea.standard(ng-model="expert.brief", ng-disabled="!allowContinue()")
+        button.btn(disabled="true" ng-hide="allowContinue()") You must connect at least github, bitbucket or twitter to continue.
+        button.btn(ng-show="allowContinue()" ng-click="updateExpert()") Save
