@@ -158,7 +158,7 @@ module.exports = class OrdersService extends DomainService
       props.utm_content  = order.utm.utm_content
       props.utm_campaign = order.utm.utm_campaign
 
-    trackCallback = (error, response) =>
+    Mixpanel.user @usr.google._json.email, (error, response) =>
       if response? && _.some(response.results)
         mixpanelId = response.results[0]['$distinct_id']
         segmentio.track
@@ -178,8 +178,6 @@ module.exports = class OrdersService extends DomainService
           @requestSvc.update request.id, { events: request.events }, (e) =>
             if e
               return winston.error 'trackPayment.@requestSvc.update.error ' + e.stack
-
-    Mixpanel.user(@usr.google._json.email, trackCallback)
 
 
   markPaymentReceived: (id, paymentDetail, callback) ->

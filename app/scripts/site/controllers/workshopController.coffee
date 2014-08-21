@@ -25,7 +25,12 @@ WorkshopController = ($scope, $sce, Restangular, Session, Workshop) ->
     Session.data.workshop.youtube? && Session.data.workshop.youtube.length > 0
 
   $scope.subscribeToMailingList = ->
-    xhr = $.post("/api/landing/mailchimp/subscribe", {listId: "39f4769300", email: @emailAddress})
+    params =
+      listId: "39f4769300"
+      email: @emailAddress
+      distinctId: mixpanel.get_distinct_id()
+
+    xhr = $.post("/api/landing/mailchimp/subscribe", params)
     xhr.done (data) ->
       $('.cta-section').html("<p>Thank you. Please check your email and <strong>click the confirmation link</strong> to complete your subscription.</p>")
       addjs.trackCustomEvent('SubcribedToNewsletterFromTalkPage')

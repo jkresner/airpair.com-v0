@@ -6,23 +6,26 @@ class Chimp
   API: new mcapi.Mailchimp(config.mailchimp.apiKey)
 
   # optionally pass a callback function
-  subscribe: (listId, email, mergeVars, cb) ->
+  subscribe: (data, mergeVars, cb) ->
+    getDistinctId = (result) =>
+      if data.distinctId?
+        console.log 'Chimp: passed a distinctId to track', data.distinctId
+        @track(data.distinctId, data.listId)
+        cb(null, result)
+      else
+        console.log 'Chimp: looking up a distinctId on Mixpanel by email', data.email
+        Mixpanel.user data.email, (error, response) =>
+          if response? && _.some(response.results)
+            @track(response.results[0]['$distinct_id'], data.listId)
+          cb(null, result)
+
     params =
-      id: listId
-      email: { email: email }
+      id: data.listId
+      email: { email: data.email }
       merge_vars: mergeVars
       update_existing: true
 
-    @API.lists.subscribe params, @successHandler(cb), @errorHandler(listId, email, mergeVars, cb)
-
-    Mixpanel.user email, (error, response) =>
-      if response? && _.some(response.results)
-        mixpanelId = response.results[0]['$distinct_id']
-        segmentio.track
-          userId: mixpanelId
-          event: 'AddedToMailchimpList'
-          properties:
-            listId: listId
+    @API.lists.subscribe params, getDistinctId, @errorHandler(data.listId, data.email, mergeVars, cb)
 
   # optionally pass a callback function
   subscribeSilent: (listId, email, mergeVars, cb) ->
@@ -37,7 +40,7 @@ class Chimp
 
   successHandler: (cb) ->
     (result) ->
-      cb(null, result) if cb?
+      cb(null, result)
 
   errorHandler: (listId, email, mergeVars, cb) ->
     (err) ->
@@ -46,5 +49,12 @@ class Chimp
       else
         $log "Chimp: subscribe failed !!!", listId, email, mergeVars, err
       cb(err) if cb?
+
+  track: (mixpanelId, listId) ->
+    segmentio.track
+      userId: mixpanelId
+      event: 'AddedToMailchimpList'
+      properties: { listId }
+
 
 module.exports = new Chimp()

@@ -53,7 +53,7 @@ class LandingPageApi extends require('./_api')
       console.log "customer charged #{amount}"
 
   mailchimpSubscribe: =>
-    @Chimp.subscribe config.mailchimp.airconfListId, @data.email, { Paid: 'No' }, @cbSend
+    @Chimp.subscribe @data, { Paid: 'No' }, @cbSend
 
   mailchimpRetarget: =>
     @Chimp.subscribeSilent "1945d147e6", @data.email, {}, @cbSend

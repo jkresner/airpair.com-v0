@@ -55,14 +55,22 @@ module.exports =
         order.requestId = @Data.airconf.requestId
         order.lineItems = [ @Data.airconf.ticketLineItem, @Data.airconf.pairCreditLineItem ]
         @create order, (e, order) =>
-          @Chimp.subscribe config.mailchimp.airconfListId, orderEmail, { Paid: 'Yes' }
-
+          # lookup a distinct id with the user's email
           Mixpanel.user @usr.google._json.email, (error, response) =>
             if response? && _.some(response.results)
               mixpanelId = response.results[0]['$distinct_id']
-              segmentio.track
-                userId: mixpanelId
-                event: 'RegisteredForAirconf'
+              # add to airconf newsletter mailing list
+              data =
+                listId: config.mailchimp.airconfListId
+                email: @usr.google._json.email
+                distinctId: mixpanelId
+              @Chimp.subscribe data, { Paid: 'Yes' }, =>
+                setTimeout ->
+                  # track the airconf registration
+                  segmentio.track
+                    userId: mixpanelId
+                    event: 'RegisteredForAirconf'
+                , 5000
 
           cb(e, order)
 
