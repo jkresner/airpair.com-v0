@@ -74,6 +74,7 @@ module.exports = (app) ->
   app.get '/so17/:id', render 'landing/so17', ['params.id']
   app.get '/so18', render 'landing/so18'
   app.get '/so19/:id', render 'landing/so17', ['params.id']
+  app.get '/so20/:id', render 'landing/so17', ['params.id']
   app.get '/bsa02', render 'landing/bsa02'
   app.get '/railsconf2014', render 'landing/railsconf'
   app.get '/rails/consulting', render 'landing/railsconsulting'
