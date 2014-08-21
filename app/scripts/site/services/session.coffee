@@ -1,4 +1,4 @@
-SessionFactory = ($http, $window, segmentio) ->
+SessionFactory = ($http, $window, $location, segmentio) ->
   segmentio.load($window.session.segmentioKey)
 
   session =
@@ -32,23 +32,25 @@ SessionFactory = ($http, $window, segmentio) ->
       if @isSignedIn()
         @data.user.google._json
 
-    alias: ->
-      if @googleData? && @googleData.email?
-        segmentio.alias(@googleData.email, null, null, @identify)
-      else
-        console.log("Aliasing new user Failed")
+    aliasOnce: ->
+      # only alias if the newUser flag is set
+      # Mixpanel messes up if you alias multiple times
+      if $location.search().newUser? && @googleData()? && @googleData().email?
+        # clear the query string
+        $location.search('newUser', null)
+        segmentio.alias(@googleData().email, null, null, @identify)
 
     identify: (additionalProperties={}) =>
-      if @googleData? && @googleData.email?
+      if @googleData()? && @googleData().email?
         properties =
-          avatar: @googleData.picture
-          email: @googleData.email
-          name: @googleData.name
-          lastName: @googleData.family_name
-          firstName: @googleData.given_name
-          createdAt: @googleData.created_at
+          avatar: @googleData().picture
+          email: @googleData().email
+          name: @googleData().name
+          lastName: @googleData().family_name
+          firstName: @googleData().given_name
+          createdAt: @googleData().created_at
         properties[key] = val for key, val of additionalProperties
-        segmentio.identify @googleData.email, properties
+        segmentio.identify @googleData().email, properties
       else
         segmentio.identify(additionalProperties)
 
@@ -64,8 +66,9 @@ SessionFactory = ($http, $window, segmentio) ->
     trackLink: (link, name, options) ->
       segmentio.trackLink(link, name, options)
 
+  session.aliasOnce()
   session
 
 angular
   .module('ngAirPair')
-  .factory('Session', ['$http', '$window', 'segmentio', SessionFactory])
+  .factory('Session', ['$http', '$window', '$location', 'segmentio', SessionFactory])
