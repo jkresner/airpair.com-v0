@@ -3,7 +3,7 @@ authd = authz.LoggedIn()
 adm = authz.Admin()
 fbAuth = require '../lib/identity/fbAuth'
 mm = authz.Matchmaker()
-{ redirect, file, render, renderTemplate, renderHome } = require '../lib/util/viewRender'
+{ redirect, file, render, renderTemplate, authConditionalRender } = require '../lib/util/viewRender'
 
 module.exports = (app) ->
 
@@ -20,7 +20,7 @@ module.exports = (app) ->
   redirect app, '/php/workshops/php-town-crier', '/php/workshops/breaking-up-with-lamp'
 
   ### main site ###
-  app.get '/', renderHome, render 'dashboard'
+  app.get '/', authConditionalRender ['home'], ['dashboard']
   app.get '/book/me', authd, render 'bookme'
   app.get '/admin', authd, adm, render 'admin'
 
@@ -28,7 +28,7 @@ module.exports = (app) ->
   app.get '/adm/matching', authd, adm, render 'admin'
   app.get '/site', authd, render 'site'
   app.get '/login', render 'external', [{template: 'external/login'}]
-  app.get '/be-an-expert*', authd, render 'site'
+  app.get '/be-an-expert*', authConditionalRender ['external', [{template: 'external/beexpert'}]], ['site']
   app.get '/settings/notifications', authd, render 'site'
   app.get '/coming', authd, render 'site'
   app.get '/adm/templates/orders_daily', authd, render 'adm/templates/orders_daily'

@@ -3,6 +3,9 @@ Config = ($routeProvider, $locationProvider, RestangularProvider) ->
    .when '/login',
      templateUrl: '/templates/external/login'
      controller: 'LoginController'
+   .when '/be-an-expert',
+     templateUrl: '/templates/external/beexpert'
+     controller: 'ExpertController'
 
   $locationProvider.html5Mode(true)
   RestangularProvider.setBaseUrl('/api')
@@ -19,3 +22,4 @@ require("../site/services/segmentio")
 require("../site/services/session")
 
 require("./controllers/loginController")
+require("./controllers/expertController")

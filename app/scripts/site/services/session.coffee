@@ -54,7 +54,7 @@ SessionFactory = ($http, $window, $location, segmentio) ->
       else
         segmentio.identify(additionalProperties)
 
-    trackEvent: (action, props) ->
+    trackEvent: (action, props={}) ->
       segmentio.track action, props
 
     trackPageView: (name, data) ->

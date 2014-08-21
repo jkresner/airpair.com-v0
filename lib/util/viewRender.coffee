@@ -87,7 +87,10 @@ module.exports =
 
   render: render
 
-  renderHome: (req, r, n) ->
-    if req.isAuthenticated() then n()
-    else render('home')(req, r, n)
+  authConditionalRender: (loggedOutParams, loggedInParams) ->
+    (req, res, next) ->
+      if req.isAuthenticated()
+        render.apply(this, loggedInParams)(req, res, next)
+      else
+        render.apply(this, loggedOutParams)(req, res, next)
 
