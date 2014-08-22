@@ -17,13 +17,14 @@ module.exports = class TagsService extends DomainService
     else @model( tag ).save callback
 
   leanList: (cb) =>
-    fields =
-      '_id': 1
-      'name': 1
-      'short': 1
-      'soId': 1
+    opts =
+      fields:
+        '_id': 1
+        'name': 1
+        'short': 1
+        'soId': 1
 
-    @searchMany {}, fields, cb
+    @searchMany {}, opts, cb
 
 
   getStackoverflowTag: (tag, callback) =>
