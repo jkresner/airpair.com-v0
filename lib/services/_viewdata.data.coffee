@@ -61,8 +61,8 @@ module.exports =
       ]
 
   so15:
-    'jquery':     name: 'Yehuda Katz', me: 'wycats', claim: 'Rails Core Team Member'
-    'ruby-on-rails':name: 'Yehuda Katz', me: 'wycats', claim: 'Rails Core Team Member'
+    'jquery':     name: 'Ryan Bigg', me: 'ryanbigg', claim: 'Rails AirPair Expert'
+    'ruby-on-rails':name: 'Ryan Bigg', me: 'ryanbigg', claim: 'Rails AirPair Expert'
     'python':     name: 'Martijn Pieters', me: 'zopatista', claim: 'All-time Python #1 Answerer'
     'laravel':    name: 'Antonio Carlos Ribeiro', me: 'antonioribeiro', claim: 'All-time Laravel #1 Answerer'
     'typescript': name: 'Basarat Ali', me: 'basarat', claim: 'Typescript Top Answerer'
@@ -72,7 +72,7 @@ module.exports =
     'scheme':     name: 'Chris K. Jester-Young', me: 'cky', claim: 'Scheme Top Answerer'
     'd3.js':      name: 'Lars Kotthoff', me: 'larskotthoff', claim: 'd3.js Top Answerer'
     'google-chrome':name: 'Todd Motto', me: 'toddmotto', claim: 'Google Chrome GDE'
-    'ruby':       name: 'Yehuda Katz', me: 'wycats', claim: 'Rails Core Team Member'
+    'ruby':       name: 'Ryan Bigg', me: 'ryanbigg', claim: 'Rails AirPair Expert'
     'android' :   name: 'Ran Nachmany', me: 'rannachmany', claim: 'Android Google Developer Expert'
     'angularjs':  name: 'Matias Niemelä', me: 'matsko', claim: 'AngularJS Core Team'
     'php':        name: 'Phil Sturgeon', me: 'philsturgeon', claim: 'PHP Top Answerer'
@@ -88,7 +88,7 @@ module.exports =
 
 
   so10:
-    'ruby':       name: 'Yehuda Katz', me: 'wycats', claim: 'Rails Core Team Member'
+    'ruby':       name: 'Yehuda Katz', me: 'ryanbigg', claim: 'Rails Core Team Member'
     'python':     name: 'Daniel Roseman', me: 'danielroseman', claim: 'Django #1 Answerer'
     'android' :   name: 'Ran Nachmany', me: 'rannachmany', claim: 'Android Google Developer Expert'
     'angularjs':  name: 'Matias Niemelä', me: 'matsko', claim: 'AngularJS Core Team'
