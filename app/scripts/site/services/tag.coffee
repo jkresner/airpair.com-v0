@@ -1,5 +1,5 @@
 ngTag = ($rootScope, Restangular) ->
-  restangular = Restangular.service('tags')
+  restangular = Restangular.service('tags/lean')
   all: =>
     restangular.getList()
 
