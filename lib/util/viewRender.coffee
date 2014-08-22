@@ -54,6 +54,7 @@ render = (fileName, propList=[]) ->
           else
             data =
               firebase: req.firebase
+              returnTo: req.session.returnTo
               isProd: config.isProd.toString()
               session: vdSvc.session false
               reqUrl: req.url
@@ -86,7 +87,18 @@ module.exports =
 
   render: render
 
-  renderHome: (req, r, n) ->
-    if req.isAuthenticated() then n()
-    else render('home')(req, r, n)
+  authConditionalRender: (loggedOutParams, loggedInParams) ->
+    # renders the logged in or logged out page if an array is passed
+    # will redirect if a string is passed
+    (req, res, next) ->
+      if req.isAuthenticated()
+        if _.isString(loggedInParams)
+          res.redirect(loggedInParams)
+        else
+          render.apply(this, loggedInParams)(req, res, next)
+      else
+        if _.isString(loggedOutParams)
+          res.redirect(loggedOutParams)
+        else
+          render.apply(this, loggedOutParams)(req, res, next)
 

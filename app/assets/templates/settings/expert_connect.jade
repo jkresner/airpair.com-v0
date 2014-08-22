@@ -1,0 +1,32 @@
+.page.expert-me
+  .section
+    .row
+      .col-md-12
+        .message(ng-show="alert.show") {{ alert.message }}
+        .updated(ng-show="allowContinue()") Updated {{ expert.updated() }}
+        h1 Expert Profile
+    .row
+      .col-md-6
+        p We take data from your existing social profiles to rapidly fill in your airpair expert profile.
+        .control-group(ng-repeat="socialType in socialTypes")
+          hr
+          label.control-label(for="{{ socialType }}") {{ socialType }}
+          .controls
+            div(ng-show="user[socialType]")
+              a.zocial(href="/auth/{{ socialType }}" class="{{ socialType }}" target="_self") Update
+              span.muted &nbsp; Connected!
+            div(ng-hide="user[socialType]")
+              a.zocial(href="/auth/{{ socialType }}" class="{{ socialType }}" target="_self" ng-click="session.trackEvent('ExpertConnect', {service: socialType})") Connect
+              span.muted &nbsp; Connect {{ socialType }} to improve your profile.
+
+
+      .col-md-6
+        label Tags
+        p
+          select.select2(ui-select2="tagOptions" multiple ng-model="myTags" data-placeholder="Type a technology name" ng-model-options="{ getterSetter: true }", ng-disabled="!allowContinue()")
+            option(ng-repeat="(id, tag) in tags" value="{{ tag._id }}"){{ tag.name }}
+        label What appeals to you about AirPairing? (this will appear on your profile)
+        p
+          textarea.standard(ng-model="expert.brief", ng-disabled="!allowContinue()")
+        button.btn(disabled="true" ng-hide="allowContinue()") You must connect at least github, bitbucket or twitter to continue.
+        button.btn(ng-show="allowContinue()" ng-click="updateExpert()") Save

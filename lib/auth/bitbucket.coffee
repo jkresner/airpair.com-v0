@@ -25,7 +25,7 @@ class BitBucket
   # Completed action
   done: (req, res) =>
     #res.send req.user
-    res.redirect '/be-an-expert'
+    res.redirect '/settings/expert'
 
 
 module.exports = (auth, passport) -> new BitBucket(auth, passport)

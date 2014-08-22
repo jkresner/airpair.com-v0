@@ -34,11 +34,13 @@ exports.config =
       joinTo:
        'javascripts/vendor.js': /^vendor\/scripts(\/|\\)(?!angular)/
        'javascripts/ap.js': /(scripts\/ap|scripts\/shared|scripts\/providers|lib\/mix)/
-       'javascripts/adm.js': /(scripts\/angular|lodash|moment|scripts\/adm\/|scripts\/site\/|lib\/mix|mixpanel_data)/
        'javascripts/adm-old.js': /(scripts\/adm-old|scripts\/shared|scripts\/providers|lib\/mix)/
        'javascripts/providers.js': /^app\/scripts\/providers/
        'javascripts/landing.js': /jquery|jquery.cookie|moment|lodash|providers\/(addjs|olark|segmentio|optimizely)|bootstrap3\/dropdown|bootstrap3\/collapse|bootstrap3\/modal|select2/
-       'javascripts/site.js': /(scripts\/angular|lodash|moment|jquery|providers\/(addjs|segmentio))|^app\/scripts\/site|bootstrap3\/modal/
+
+       'javascripts/adm.js': /(scripts\/angular|lodash|moment|scripts\/adm\/|scripts\/site\/|lib\/mix|mixpanel_data)/
+       'javascripts/external.js': /(scripts\/angular|lodash|moment|jquery|providers\/(addjs|segmentio))|^app\/scripts\/(site|external)|bootstrap3\/modal|select2/
+       'javascripts/site.js': /(scripts\/angular|lodash|moment|jquery|providers\/(addjs|segmentio))|^app\/scripts\/site|bootstrap3\/modal|select2/
 
        'test/javascripts/test.js': /^test(\/|\\)(?=integration)/
        'test/javascripts/test-data.js': /^test(\/|\\)(?=data)/
@@ -47,13 +49,14 @@ exports.config =
         # Files in `vendor` directories are compiled before other files
         # even if they aren't specified in order.
         before: [
+          'vendor/scripts/jquery.js'
           'vendor/scripts/moment.js'
           'vendor/scripts/angular.js'
           'vendor/scripts/angular-busy.js'
           'vendor/scripts/angular-m-oment.js'
           'vendor/scripts/angular-tagger.js'
+          'vendor/scripts/angular-segmentio.js'
           'vendor/scripts/console-helper.js'
-          'vendor/scripts/jquery.js'
           'vendor/scripts/jquery-cookie.js'
           'vendor/scripts/lodash.js'
           'vendor/scripts/backbone.js'
@@ -63,7 +66,8 @@ exports.config =
           'vendor/scripts/picker.js',
           'vendor/scripts/picker.date.js',
           'vendor/scripts/jquery.timepicker.js',
-          'vendor/scripts/jquery.nouislider.min.js'
+          'vendor/scripts/jquery.nouislider.min.js',
+          'vendor/scripts/select2.js'
         ]
     stylesheets:
       defaultExtension: 'scss'

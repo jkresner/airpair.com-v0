@@ -1,0 +1,48 @@
+doctype html
+html(ng-app='ngAirPair' ng-strict-di)
+  head
+    title Sign in to AirPair / AirConf
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge,chrome=1')
+    meta(name='viewport', content='width=device-width')
+
+    link(rel='stylesheet', href='//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css')
+    script(src="/javascripts/external.js")
+
+    style.
+      .airconf-logo {
+        vertical-align: middle;
+      }
+      .airpair-logo {
+        vertical-align: middle;
+      }
+      .button {
+        background-color: #CE5323;
+        border-radius: 3px;
+        text-align: center;
+        width: 100%;
+        color: #FFFFFF;
+        font-size: 18px;
+        line-height: 24px;
+        padding: 16px 32px;
+        margin: 0;
+      }
+      .explanation {
+        font-size: 120%;
+      }
+
+  body
+    .container(ng-view)
+
+    script(type="text/ng-template" id="/templates/#{template.name}").
+      !{template.html}
+
+    script(type="text/javascript").
+      window.session = {
+        returnTo: !{ returnTo ? JSON.stringify(returnTo) : 'null'},
+        user: !{ session ? JSON.stringify(session) : 'null'},
+        segmentioKey: !{ segmentioKey ? JSON.stringify(segmentioKey) : 'null'},
+      };
+
+    script.
+      require('scripts/external/app');

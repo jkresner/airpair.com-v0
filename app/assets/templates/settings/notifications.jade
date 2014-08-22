@@ -18,34 +18,34 @@
         span.sub-label Air Pairs
 
   .section
-    .updated Updated {{ helper.updatedAt() }}
+    .updated Updated {{ expert.updated() }}
     h1 notification status
 
     form.availability
       .expert-status
         .send-toggle.top
-          .toggle.on(ng-class="helper.status() ? 'active' : ''", ng-click="helper.toggleStatus()")
-          .toggle.off(ng-class="helper.status() ? '' : 'active'", ng-click="helper.toggleStatus()")
-        label(ng-show="helper.status()") Send me AirPairs!
-        label(ng-hide="helper.status()") Busy ATM
-        input#status(type="checkbox", ng-checked="expert.status", ng-model="expert.status", ng-change="helper.update()", ng-true-value="'ready'" ng-false-value="'busy'")
-      .hours(ng-show="helper.status()")
-        select.top(ng-model="expert.hours", ng-change="helper.update()", ng-options="h for h in hourRange")
+          .toggle.on(ng-class="expert.isReady() ? 'active' : ''", ng-click="expert.toggleStatus()")
+          .toggle.off(ng-class="expert.isReady() ? '' : 'active'", ng-click="expert.toggleStatus()")
+        label(ng-show="expert.isReady()") Send me AirPairs!
+        label(ng-hide="expert.isReady()") Busy ATM
+        input#status(type="checkbox", ng-checked="expert.status", ng-model="expert.status", ng-change="expert.update()", ng-true-value="'ready'" ng-false-value="'busy'")
+      .hours(ng-show="expert.isReady()")
+        select.top(ng-model="expert.hours", ng-change="expert.update()", ng-options="h for h in hourRange")
         label Hrs/Week
-      .date(ng-hide="helper.status()")
-        input.top#busyUntil(ng-model="expert.busyUntil", ng-change="helper.update()", type="date")
+      .date(ng-hide="expert.isReady()")
+        input.top#busyUntil(ng-model="expert.busyUntil", ng-change="expert.update()", type="date")
         label Busy Until
-      .times(ng-show="helper.status()")
+      .times(ng-show="expert.isReady()")
         .top
-          input(id="availability", type="text", placeholder="What days and times are you available to AirPair?", ng-model="expert.availability", ng-change="helper.update()", ng-delay="500")
+          input(id="availability", type="text", placeholder="What days and times are you available to AirPair?", ng-model="expert.availability", ng-change="expert.update()", ng-delay="500")
         label(for="availability") Best Times
-      .times(ng-hide="helper.status()")
+      .times(ng-hide="expert.isReady()")
         .top
-          input(id="availability", type="text", placeholder="Briefly, what are you doing while away?", ng-model="expert.availability", ng-change="helper.update()", ng-delay="500")
+          input(id="availability", type="text", placeholder="Briefly, what are you doing while away?", ng-model="expert.availability", ng-change="expert.update()", ng-delay="500")
         label(for="availability") Why You're Busy
 
   .section
-    .updated Updated {{ helper.updatedAt() }}
+    .updated Updated {{ expert.updated() }}
     .title
       h1 notification price range
     .slider-row.hourly
@@ -53,7 +53,7 @@
         .slider-col
           .tag Public Rate
             .pointer
-        .slider.slider-col
+        .slider.slider-col(ng-show="initSlider()")
       .type Hourly Range
 
     .slider-row.header
@@ -68,7 +68,7 @@
             .col-xs-2.text-center $230
 
   .section
-    .updated Updated {{ helper.updatedAt() }}
+    .updated Updated {{ expert.updated() }}
     h1 subscription settings
     .slider-row.header
       .slider-wrapper
@@ -84,10 +84,10 @@
           .slider-col
             .row
               .col-xs-4
-                input(type="checkbox", ng-checked="helper.tagHasLevel(tag, 'beginner')", ng-model="tag.levelBeginner", ng-change="helper.update()", ng-delay="500")
+                input(type="checkbox", ng-checked="expert.tagHasLevel(tag, 'beginner')", ng-model="tag.levelBeginner", ng-change="expert.update()", ng-delay="500")
               .col-xs-4
-                input(type="checkbox", ng-checked="helper.tagHasLevel(tag, 'intermediate')", ng-model="tag.levelIntermediate", ng-change="helper.update()", ng-delay="500")
+                input(type="checkbox", ng-checked="expert.tagHasLevel(tag, 'intermediate')", ng-model="tag.levelIntermediate", ng-change="expert.update()", ng-delay="500")
               .col-xs-4
-                input(type="checkbox", ng-checked="helper.tagHasLevel(tag, 'expert')", ng-model="tag.levelExpert", ng-change="helper.update()", ng-delay="500")
+                input(type="checkbox", ng-checked="expert.tagHasLevel(tag, 'expert')", ng-model="tag.levelExpert", ng-change="expert.update()", ng-delay="500")
         .type(ng-click="tag.toggleTagLevels()") {{tag.name}}
           .all-levels(ng-class="tag.levelAny() ? 'active' : ''")
