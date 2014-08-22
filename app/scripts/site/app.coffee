@@ -15,7 +15,7 @@ Config = ($routeProvider, $locationProvider, RestangularProvider) ->
   RestangularProvider.setRestangularFields(id: "_id")
 
 angular
-  .module('ngAirPair', ['ngRoute', 'restangular', 'ui.select2', 'segmentio'])
+  .module('ngAirPair', ['ngRoute', 'restangular', 'ui.select2', 'segmentio', 'cgBusy'])
   .config(['$routeProvider', '$locationProvider', 'RestangularProvider', Config])
   .run(['$rootScope', ($rootScope) ->
     $rootScope._ = window._

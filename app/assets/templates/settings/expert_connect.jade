@@ -5,28 +5,28 @@
         .message(ng-show="alert.show") {{ alert.message }}
         .updated(ng-show="allowContinue()") Updated {{ expert.updated() }}
         h1 Expert Profile
+      .col-md-6
+        p.last We take data from your existing social profiles to rapidly fill in your airpair expert profile.
     .row
       .col-md-6
-        p We take data from your existing social profiles to rapidly fill in your airpair expert profile.
         .control-group(ng-repeat="socialType in socialTypes")
-          hr
-          label.control-label(for="{{ socialType }}") {{ socialType }}
-          .controls
-            div(ng-show="hasSocialKey(socialType)")
-              a.zocial(href="/auth/{{ socialType }}" class="{{ socialClass(socialType) }}" target="_self") Update
-              span.muted &nbsp; Connected!
-            div(ng-hide="hasSocialKey(socialType)")
-              a.zocial(href="/auth/{{ socialType }}" class="{{ socialClass(socialType) }}" target="_self" ng-click="session.trackEvent('ExpertConnect', {service: socialType})") Connect
-              span.muted &nbsp; Connect {{ socialType }} to improve your profile.
+          p
+            label(for="{{ socialType }}") {{ socialType }}
+            .controls
+              div(ng-show="hasSocialKey(socialType)")
+                a.zocial(href="/auth/{{ socialType }}" class="{{ socialClass(socialType) }}" target="_self") Update
+                span.muted &nbsp; Connected!
+              div(ng-hide="hasSocialKey(socialType)")
+                a.zocial(href="/auth/{{ socialType }}" class="{{ socialClass(socialType) }}" target="_self" ng-click="session.trackEvent('ExpertConnect', {service: socialType})") Connect
+                span.muted &nbsp; Connect {{ socialType }} to improve your profile.
 
 
-      .col-md-6
+      .col-md-6(cg-busy="tagRequest" ng-show="allowContinue()")
         label Tags
         p
-          select.select2(ui-select2="tagOptions" multiple ng-model="myTags" data-placeholder="Type a technology name" ng-model-options="{ getterSetter: true }", ng-disabled="!allowContinue()")
+          select.select2(ui-select2="tagOptions" multiple ng-model="myTags" data-placeholder="Type a technology name" ng-model-options="{ getterSetter: true }")")
             option(ng-repeat="(id, tag) in tags" value="{{ tag._id }}"){{ tag.name }}
         label What appeals to you about AirPairing? (this will appear on your profile)
         p
-          textarea.standard(ng-model="expert.brief", ng-disabled="!allowContinue()")
-        button.btn(disabled="true" ng-hide="allowContinue()") You must connect at least github, bitbucket or twitter to continue.
-        button.btn(ng-show="allowContinue()" ng-click="updateExpert()") Save
+          textarea.standard(ng-model="expert.brief")")
+        button.btn(ng-click="updateExpert()") Save

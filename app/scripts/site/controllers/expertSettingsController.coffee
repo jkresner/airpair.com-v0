@@ -56,7 +56,8 @@ ExpertSettingsController = ($rootScope, $scope, $timeout, Session, CurrentExpert
   $scope.allowContinue = ->
     $scope.user.github? || $scope.user.bitbucket? || $scope.user.twitter?
 
-  Tag.all().then (tags) =>
+  $scope.tagRequest = Tag.all()
+  $scope.tagRequest.then (tags) =>
     # create a dictionary for faster lookup
     $scope.tags = _.reduce tags, (memo, tag) =>
       memo[tag._id] =
