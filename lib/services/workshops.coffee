@@ -102,11 +102,13 @@ module.exports = class WorkshopsService extends DomainService
           workshop.attendees ?= []
           workshop.attendees.push(attendee)
           @update workshop._id, workshop, (workshopErr, workshop) =>
-            if isAdminRequest
-              callback(workshopErr, workshop)
-            else
+            if (new Date < new Date(workshop.time)) and not isAdminRequest
+              console.log "sending RSVP email"
               @emailTemplatesService.send OrdersQuery.airconf.requestId, {workshop, to: email}, (err, template) =>
                 callback(workshopErr, workshop)
+            else
+              callback(workshopErr, workshop)
+
         else
           callback(err, {success: false, message: "Order not found"})
 
