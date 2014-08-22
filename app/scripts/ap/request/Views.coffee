@@ -124,12 +124,14 @@ class exports.RequestFormView extends BB.ModelSaveView
     @elm('brief').on 'input', =>
       @$('#breifCount').html(@elm('brief').val().length+ ' chars')
   render: ->
+    window.model = @model
     if !@timer? then @timer = new addjs.Timer(@e.category).start()
     if @model.hasChanged('tags') then return
     @$(".stepNum").toggle !@model.get('_id')?
     @setValsFromModel ['brief','availability','hours']
     @$(":radio[value=#{@model.get('budget')}]").click().prop('checked',true)
     @$(":radio[value=#{@model.get('pricing')}]").click().prop('checked',true)
+    @$(":checkbox[name='automatch']").click().prop('checked', @model.get('automatch')?)
     @$(".pricingOpensource span").html (-1*@model.opensource)
     @$(".pricingNDA span").html @model.nda
     @showBudgetExplanation()
@@ -175,6 +177,7 @@ class exports.RequestFormView extends BB.ModelSaveView
     budget: @$("[name='budget']:checked").val()
     pricing: @$("[name='pricing']:checked").val()
     tags: @tagsInput.getViewData()
+    automatch: @$("[name='automatch']:checked").val()?
 
 
 class exports.ConfirmEmailView extends BB.EnhancedFormView
