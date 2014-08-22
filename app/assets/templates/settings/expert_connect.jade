@@ -12,11 +12,11 @@
           hr
           label.control-label(for="{{ socialType }}") {{ socialType }}
           .controls
-            div(ng-show="user[socialType]")
-              a.zocial(href="/auth/{{ socialType }}" class="{{ socialType }}" target="_self") Update
+            div(ng-show="hasSocialKey(socialType)")
+              a.zocial(href="/auth/{{ socialType }}" class="{{ socialClass(socialType) }}" target="_self") Update
               span.muted &nbsp; Connected!
-            div(ng-hide="user[socialType]")
-              a.zocial(href="/auth/{{ socialType }}" class="{{ socialType }}" target="_self" ng-click="session.trackEvent('ExpertConnect', {service: socialType})") Connect
+            div(ng-hide="hasSocialKey(socialType)")
+              a.zocial(href="/auth/{{ socialType }}" class="{{ socialClass(socialType) }}" target="_self" ng-click="session.trackEvent('ExpertConnect', {service: socialType})") Connect
               span.muted &nbsp; Connect {{ socialType }} to improve your profile.
 
 

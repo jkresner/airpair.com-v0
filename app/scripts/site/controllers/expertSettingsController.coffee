@@ -6,11 +6,19 @@ ExpertSettingsController = ($rootScope, $scope, $timeout, Session, CurrentExpert
   $scope.rates = [10, 40, 70, 110, 160, 230]
   $scope.socialTypes = [
     'github'
-    'stackoverflow'
+    'stackexchange'
     'bitbucket'
     'linkedin'
     'twitter'
   ]
+  $scope.socialClass = (type) ->
+    if type == "stackexchange" then "stackoverflow" else type
+
+  $scope.hasSocialKey = (type) ->
+    newType = _.clone(type)
+    if type == "stackexchange" then newType = "stack"
+    $scope.user[newType]?
+
   $scope.tagOptions =
     multiple: true
     formatNoMatches: 'No technology found'
