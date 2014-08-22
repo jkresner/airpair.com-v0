@@ -29,12 +29,12 @@ body.airconf {
 
   @media (min-width:801px) {
     header { height: 35px }
-    a.logo { padding: 0 }
+    a.logo { padding: 10px }
   }
 
   @media (max-width:800px) {
-    header { height: 45px }
-    a.logo { padding-top: 20px }
+    header { height: 55px }
+    a.logo { padding: 30px 0 }
   }
 
   .addthis_sharing_toolbox {
@@ -81,7 +81,7 @@ body.airconf {
     text-align: right;
     margin: 3px;
     width: 100%;
-    right: 20px;
+    right: 5%;
     top: 5px;
   }
 

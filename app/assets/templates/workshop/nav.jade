@@ -1,8 +1,8 @@
 header
   #header-login(ng-if="session.isSignedIn()")
-    {{ session.data.user.google._json.email }}&nbsp;|&nbsp;
+    strong {{ session.data.user.google._json.email }}&nbsp;&nbsp;
     a(href="/logout" target="_self")
-      | Logout
+      | logout
 
   a.logo(href="/airconf2014" target="_self")
     img(src="/images/landing/airconf/full-logo.png" alt="AirConf")
