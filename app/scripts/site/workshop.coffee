@@ -17,7 +17,7 @@ Config = ($routeProvider, $locationProvider, RestangularProvider) ->
   RestangularProvider.setRestangularFields(id: "_id")
 
 angular
-  .module('ngAirPair', ['ngRoute', 'firebase', 'restangular', 'ngSanitize','ngAnimate','cgBusy','angularMoment','timer'])
+  .module('ngAirPair', ['ngRoute', 'firebase', 'restangular', 'ngSanitize','ngAnimate','cgBusy','angularMoment','timer', 'segmentio'])
   .config(['$routeProvider', '$locationProvider', 'RestangularProvider', Config])
   .run(['$rootScope', ($rootScope) ->
     $rootScope._ = window._
@@ -26,6 +26,7 @@ angular
 Array.prototype.toSentence = ->
   @slice(0, @length - 1).join(', ') + " and " + @slice(-1)
 
+require("./services/segmentio")
 require("./services/session")
 require("./services/workshop")
 require("./controllers/sessionController")
