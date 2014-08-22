@@ -51,10 +51,17 @@
                 p
                   small We promise to not sell or spam your email address.
 
-          .col-md-5.m-b-1(ng-if="showRsvp()")
-            .rsvp
+          .col-md-6.m-b-1(ng-if="registered()")
+            .rsvp(ng-if="attending() && started()")
+              strong This talk is now available. Click play on the Youtube control to watch.
+            .rsvp(ng-if="attending() && !started()")
+              strong Thanks!
+              |  We'll send you a reminder email later. In the meantime, share with your network?
+            .rsvp(ng-if="!attending() && started()")
+              a.btn.btn-orange.btn-rsvp(href="#", ng-click="attend()") Click to Watch
+            .rsvp(ng-if="!attending() && !started()")
               a.btn.btn-orange.btn-rsvp(href="#", ng-click="attend()") RSVP to Watch
-          .col-md-7.m-b-1(ng-if="registered()")
+          .col-md-6.m-b-1(ng-if="registered()")
             .addthis_sharing_toolbox(ng-if="registered()")
 
       .col-md-4
