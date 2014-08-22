@@ -25,7 +25,7 @@ class Github
   done: (req, res) =>
     # $log 'github.done', req.callbackURL
     # res.send req.user
-    res.redirect '/settings/expert'
+    res.redirect '/be-an-expert'
 
 
 module.exports = (auth, passport) -> new Github(auth, passport)

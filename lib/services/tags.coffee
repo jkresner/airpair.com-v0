@@ -16,16 +16,6 @@ module.exports = class TagsService extends DomainService
     else if addMode is 'github' then @getGithubRepo(tag, callback)
     else @model( tag ).save callback
 
-  leanList: (cb) =>
-    opts =
-      fields:
-        '_id': 1
-        'name': 1
-        'short': 1
-        'soId': 1
-
-    @searchMany {}, opts, cb
-
 
   getStackoverflowTag: (tag, callback) =>
     encoded = encodeURIComponent tag.nameStackoverflow

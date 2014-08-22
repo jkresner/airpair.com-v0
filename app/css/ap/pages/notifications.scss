@@ -122,27 +122,6 @@
     }
   }
 
-  .last {
-    margin-bottom: 40px;
-  }
-
-  .message {
-    background-color: #90D1CC;
-    border-radius: 4px;
-    color: #fff;
-    font-size: 115%;
-    padding: 10px;
-    position: absolute;
-    top: -50px;
-    width: 100%;
-  }
-
-  .message.inline {
-    display: block;
-    margin: 20px 0;
-    position: inherit;
-    top: 0;
-  }
   .slider-row.header {
     .slider-col {
       font-size: 14px;
@@ -234,11 +213,6 @@
     }
   }
 
-  .select2-container, select.select2 {
-    min-height: 33px;
-    width: 280px;
-  }
-
   .slider-row {
     .noUi-target {
       border-radius: 0;
@@ -281,15 +255,6 @@
       width: 20px;
       top: -10px;
     }
-  }
-
-  .standard {
-    width: 300px;
-    height: 150px;
-  }
-
-  .tags {
-    width: 100%;
   }
 
   .updated {

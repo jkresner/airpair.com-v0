@@ -24,6 +24,6 @@ class Twitter
   # Completed action
   done: (req, res) =>
     #res.send req.user
-    res.redirect '/settings/expert'
+    res.redirect '/be-an-expert'
 
 module.exports = (auth, passport) -> new Twitter(auth, passport)

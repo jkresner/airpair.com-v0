@@ -3,7 +3,7 @@ authd = authz.LoggedIn()
 adm = authz.Admin()
 fbAuth = require '../lib/identity/fbAuth'
 mm = authz.Matchmaker()
-{ redirect, file, render, renderTemplate, authConditionalRender } = require '../lib/util/viewRender'
+{ redirect, file, render, renderTemplate, renderHome } = require '../lib/util/viewRender'
 
 module.exports = (app) ->
 
@@ -20,16 +20,13 @@ module.exports = (app) ->
   redirect app, '/php/workshops/php-town-crier', '/php/workshops/breaking-up-with-lamp'
 
   ### main site ###
-  app.get '/', authConditionalRender ['home'], ['dashboard']
+  app.get '/', renderHome, render 'dashboard'
   app.get '/book/me', authd, render 'bookme'
   app.get '/admin', authd, adm, render 'admin'
 
   # angular
   app.get '/adm/matching', authd, adm, render 'admin'
   app.get '/site', authd, render 'site'
-  app.get '/login', render 'external', [{template: 'external/login'}]
-  app.get '/be-an-expert', authConditionalRender ['external', [{template: 'external/beexpert'}]], '/settings/expert'
-  app.get '/settings/expert', authConditionalRender "/be-an-expert", ['site']
   app.get '/settings/notifications', authd, render 'site'
   app.get '/coming', authd, render 'site'
   app.get '/adm/templates/orders_daily', authd, render 'adm/templates/orders_daily'
@@ -39,6 +36,7 @@ module.exports = (app) ->
 
   # pages
   app.get '/login', render 'login'
+  app.get '/be-an-expert*', render 'beexpert'
   app.get '/find-an-expert*', render 'request'
   app.get '/dashboard*', authd, render 'dashboard'
   app.get '/settings*', authd, render 'settings'

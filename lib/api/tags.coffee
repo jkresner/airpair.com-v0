@@ -5,7 +5,6 @@ class TagsApi extends require('./_api')
 
   routes: (app) ->
     app.get     "/tags", @loggedIn, @ap, @list
-    app.get     "/tags/lean", @loggedIn, @ap, @leanList
     app.post    "/tags", @loggedIn, @ap, @create
     app.put     "/tags/:id", @loggedIn, @ap, @update
     app.delete  "/tags/:id", @loggedIn, @ap, @delete
@@ -17,9 +16,5 @@ class TagsApi extends require('./_api')
     else
       @cSend(res, next)(e,r)
 
-
-  leanList: (req, res, next) =>
-    console.log 'leanList'
-    @svc.leanList(@cbSend)
 
 module.exports = (app) -> new TagsApi(app)

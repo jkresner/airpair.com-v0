@@ -1,8 +1,10 @@
 ngExpert = ($rootScope, Restangular) ->
-  restangular = Restangular.service('experts')
-
-  get: (id) =>
-    restangular.one(id).get()
+  get: ->
+    unless @called?
+      @called = true
+      Restangular.one('experts', 'me').get().then (expert) ->
+        $rootScope.expert = expert
+        $rootScope.$broadcast('event:expert-fetched')
 
 angular
   .module('ngAirPair')

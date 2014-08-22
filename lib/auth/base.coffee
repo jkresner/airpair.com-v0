@@ -11,7 +11,6 @@ passport = require 'passport'
 ######## Session
 
 User = require './../models/user'
-ExpertService = require './../services/experts'
 
 passport.serializeUser (user, done) ->
   done null, user._id
@@ -29,70 +28,6 @@ passport.deserializeUser (id, done) ->
 logout = (req, res) ->
   req.logout()
   res.redirect('/')
-
-
-
-getHomepageUrl = (val) ->
-  val ?= ""
-  val.replace("https://",'').replace("http://",'')
-
-getSocialExpertData = (providerName, profile) ->
-  switch providerName
-    when 'linkedin'
-      in:
-        id: profile.id
-        displayName: profile.displayName
-
-    when 'bitbucket'
-      username: profile.id
-      bb:
-        id: profile.id
-
-    when 'stackoverflow'
-      username: profile.username,
-      homepage: getHomepageUrl(profile.website_url),
-      so:
-        id: profile.id
-        website_url: profile.website_url
-        link: profile.link.replace('http://stackoverflow.com/users/', '')
-        reputation: profile.reputation
-        profile_image: profile.profile_image
-
-    when 'twitter'
-      username: profile.username
-      tw:
-        id: profile.id
-        username: profile.username
-        pic: profile.photos[0]
-
-    when 'github'
-      username: profile.username,
-      homepage: getHomepageUrl(profile._json.blog),
-      gh:
-        id: profile.id
-        username: profile.username
-        location: profile._json.location
-        blog: profile._json.blog
-        gravatar_id: profile._json.gravatar_id
-        followers: profile._json.followers
-
-insertOrUpdateExpert = (done, user, providerName, profile) ->
-  expertService = new ExpertService(user)
-  expertService.getOneByUserId user._id, (err, expert) ->
-    if !expert?
-      expert =
-        userId:     user._id
-        name:       user.google.displayName
-        email:      user.google.emails[0].value
-        gmail:      user.google.emails[0].value
-        pic:        user.google._json.picture
-      _.extend(expert, getSocialExpertData(providerName, profile))
-      expertService.create expert, (err, expert) =>
-        done(err, expert)
-    else
-      _.extend(expert, getSocialExpertData(providerName, profile))
-      expertService.update expert._id, expert, (err, exp) =>
-        done(err, exp)
 
 exports.authnOrAuthz = (req, res, next, providerName, scope) ->
 
@@ -126,10 +61,7 @@ exports.insertOrUpdateUser = (req, done, providerName, profile) ->
   saveUser = =>
     User.findOneAndUpdate search, update, { upsert: true }, (err, user) ->
       console.log 'findOneAndUpdate', err && err.stack, JSON.stringify(user)
-      if providerName == 'google'
-        done(err, user)
-      else
-        insertOrUpdateExpert(done, user, providerName, profile)
+      done(err, user)
 
   User.findOne search, (err, user) ->
     if err then return done err
@@ -139,6 +71,7 @@ exports.insertOrUpdateUser = (req, done, providerName, profile) ->
       returnUrl = req.session.returnTo || '/'
       req.session.returnTo = "#{returnUrl}?newUser=1"
     saveUser()
+
 
 ######## Load Providers
 

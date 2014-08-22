@@ -45,13 +45,13 @@ module.exports = class ViewDataService
     cb null, -> { showFaqLink: true }
 
   site: (cb) ->
-    cb null, => { session: @session(true) }
-
-  external: (template, cb) ->
-    cb null, -> { template }
+    cb null, => {}
 
   settings: (cb) ->
     cb null, -> { stripePK }
+
+  beexpert: (cb) ->
+    cb null, => { session: @session(true) }
 
   review: (id, cb) ->
     new RequestsSvc(@usr).getByIdSmart id, (e, request) =>
