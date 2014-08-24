@@ -156,9 +156,6 @@ module.exports = class ViewDataService
       # set on the session ? or pass through query string
       cb null, -> { promo }
 
-  # todo: !!! HULK SMASH !!!
-  airconf_foyer: (cb) ->
-    cb null, -> {}
 
   airconfconsole: (code, cb) ->
     new WorkshopsService(@usr).searchManyPopulate {}, {}, 'attendees.userId', (error, workshops) =>
