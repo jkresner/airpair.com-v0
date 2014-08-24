@@ -8,7 +8,7 @@ exports.config =
     path: 'app.coffee'
     port: 3333
     base: '/'
-    run: no
+    run: yes
 
   plugins:
     sass:

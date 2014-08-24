@@ -47,9 +47,9 @@ module.exports =
 
     'wk4':
       slug:         'developer-writing-tips-and-tricks'
-      time:         'Mon Aug 25 2014 18:00:00 GMT'
-      calStart:     '20140825T180000Z'
-      calEnd:       '20140825T190000Z'
+      time:         'Tue Aug 26 2014 22:00:00 GMT'
+      calStart:     '20140826T220000Z'
+      calEnd:       '20140826T230000Z'
       title:        'Developer Writing Tips & Tricks'
       description:  "Strong personal brands get better consulting rates. What are the best strategies for building a personal developer brand through writing? In this panel we ask well-known technical bloggers and book authors for their best tips and tricks."
       speakers: [
