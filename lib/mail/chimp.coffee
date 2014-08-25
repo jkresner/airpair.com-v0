@@ -7,6 +7,7 @@ class Chimp
 
   # optionally pass a callback function
   subscribe: (data, mergeVars, cb) ->
+    winston.error "Chimp.subscribeSilent: listId null" if !data.listId?
     getDistinctId = (result) =>
       if data.distinctId?
         console.log 'Chimp: passed a distinctId to track', data.distinctId
@@ -29,6 +30,7 @@ class Chimp
 
   # optionally pass a callback function
   subscribeSilent: (listId, email, mergeVars, cb) ->
+    winston.error "Chimp.subscribeSilent: listId null" if !listId?
     params =
       id: listId
       email: { email: email }
@@ -40,7 +42,7 @@ class Chimp
 
   successHandler: (cb) ->
     (result) ->
-      cb(null, result)
+      cb(null, result) if cb?
 
   errorHandler: (listId, email, mergeVars, cb) ->
     (err) ->
