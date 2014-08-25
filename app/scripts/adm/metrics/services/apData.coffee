@@ -226,7 +226,7 @@ angular.module('AirpairAdmin').factory('apData', ['$moment', '$filter', '$http',
         # start = moment("2014-07-12")
         # end   = moment("2014-07-19")
 
-        # console.log "filterGrowthRequests", start.toDate(), "–", end.toDate()
+        console.log "filterGrowthRequests", start.toDate(), "–", end.toDate()
 
 
         data =
@@ -256,7 +256,7 @@ angular.module('AirpairAdmin').factory('apData', ['$moment', '$filter', '$http',
           calls: filteredCalls
         }
 
-        # console.log "filtered = ", filtered
+        console.log "filtered = ", filtered
         callback filtered
 
 
@@ -378,7 +378,7 @@ angular.module('AirpairAdmin').factory('apData', ['$moment', '$filter', '$http',
             @filterGrowthRequests period.intervalStart, period.intervalEnd, (data) ->
 
 
-
+              period.requests = data.requests
               period.requestsNum = data.requests.length
               period.ordersPerReq = period.ordersNum/period.requestsNum
 
@@ -565,8 +565,8 @@ angular.module('AirpairAdmin').factory('apData', ['$moment', '$filter', '$http',
 
 
       getChannelMetrics: (start, end, type = 'orders') ->
-        console.log "getChannelMetrics ==", type
-        end = moment(end).endOf("day")
+        # console.log "getChannelMetrics ==", type, start, end
+        # end = moment(end).endOf("day")
 
         @calcRepeatCustomers()
 
@@ -594,13 +594,13 @@ angular.module('AirpairAdmin').factory('apData', ['$moment', '$filter', '$http',
         # Clean up the orders/requests into metics
 
         cleanMetrics = () =>
-          console.log "cleanMetrics #{type}"
+          # console.log "cleanMetrics #{type}"
           if not metrics or type is 'requests'
-            console.log "calc metrics"
+            # console.log "calc metrics"
             metricsRepeated = []
             metrics = []
             TAGS = []
-            console.log "dataSet #{type}", dataSet
+            # console.log "dataSet #{type}", dataSet
             for order in dataSet
               # console.log "request"
               metric =
@@ -647,7 +647,7 @@ angular.module('AirpairAdmin').factory('apData', ['$moment', '$filter', '$http',
 
               metricsRepeated.push metric if metric.isRepeat
               metrics.push metric
-            console.log "tag.groups", _.groupBy TAGS, (num) -> num
+            # console.log "tag.groups", _.groupBy TAGS, (num) -> num
 
             _(metrics).reverse()
             _(metricsRepeated).reverse()
@@ -674,7 +674,7 @@ angular.module('AirpairAdmin').factory('apData', ['$moment', '$filter', '$http',
 
 
         filterMetrics = (start, end) =>
-          # console.log "filterMetrics", start
+          # console.log "filterMetrics START", start, end
           # Filter by date
           if start and end
             metricsFiltered = []
@@ -729,7 +729,7 @@ angular.module('AirpairAdmin').factory('apData', ['$moment', '$filter', '$http',
 
         weeks = $moment.getWeeksByFriday(start, end).reverse()
 
-        console.log "getChannelGrowth WEEKS", weeks, start.toDate(), end.toDate()
+        # console.log "getChannelGrowth WEEKS", weeks, start.toDate(), end.toDate()
 
 
         # Get Metrics for each week
