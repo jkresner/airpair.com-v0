@@ -46,6 +46,7 @@ module.exports =
       ]
 
     'wk4':
+      youtube:      'auymM-rlAB0'
       slug:         'developer-writing-tips-and-tricks'
       time:         'Tue Aug 26 2014 22:00:00 GMT'
       calStart:     '20140826T220000Z'
