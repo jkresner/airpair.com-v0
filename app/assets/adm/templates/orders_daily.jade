@@ -3,11 +3,12 @@
   .row
     .col-sm-2
       h3.text-thin.m-b-2 Day by Day
-    .col-sm-3.m-t-1
+    .col-sm-2.m-t-1
       input.form-control(ng-model="searchString" type="text" placeholder="Search all orders")
       .spinner(ng-show="loading" style="position: absolute;top: 2px;right: 18px;")
-    .col-sm-2.m-t-1
+    .col-sm-3.m-t-1
       button.btn.btn-default(ng-model="newOnly" btn-checkbox) New Only
+      button.btn.btn-default(ng-model="showAdData" btn-checkbox style="margin-left: 10px" ) Show Ads
     .col-sm-4.m-t-1
       .input-group
         span.input-group-addon Start
@@ -29,7 +30,7 @@
       td.text-muted Fri
       td.text-muted Total
 
-    tr
+    tr(ng-show="showAdData")
       td.text-muted Impressions
       td.text-success {{week.days[0].summary.numImps}}
       td.text-success {{week.days[1].summary.numImps}}
@@ -39,7 +40,7 @@
       td.text-success {{week.days[5].summary.numImps}}
       td.text-success {{week.days[6].summary.numImps}}
       td.text-success.text-bold {{week.data.summary.numImps}}
-    tr
+    tr(ng-show="showAdData")
       td.text-muted.text-invisible Clicks/Impressions
       td.text-orange {{week.days[0].summary.conImpsToClicks*100 | number: 2}}%
       td.text-orange {{week.days[1].summary.conImpsToClicks*100 | number: 2}}%
@@ -49,7 +50,7 @@
       td.text-orange {{week.days[5].summary.conImpsToClicks*100 | number: 2}}%
       td.text-orange {{week.days[6].summary.conImpsToClicks*100 | number: 2}}%
       td.text-orange.text-bold {{week.data.summary.conImpsToClicks*100 | number: 2}}%
-    tr
+    tr(ng-show="showAdData")
       td.text-muted Clicks
       td.text-success {{week.days[0].summary.numClicks}}
       td.text-success {{week.days[1].summary.numClicks}}
@@ -59,7 +60,7 @@
       td.text-success {{week.days[5].summary.numClicks}}
       td.text-success {{week.days[6].summary.numClicks}}
       td.text-success.text-bold {{week.data.summary.numClicks}}
-    tr
+    tr(ng-show="showAdData")
       td.text-muted.text-invisible Views/Clicks
       td.text-orange {{week.days[0].summary.conClicksToViews*100 | number: 2}}%
       td.text-orange {{week.days[1].summary.conClicksToViews*100 | number: 2}}%
