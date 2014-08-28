@@ -85,7 +85,7 @@ module.exports =
     'express':    name: 'Peter Lyson', me: 'focusaurus', claim: 'All-time Express #1 Answerer'
     'mysql':      name: 'Alex Bolenok', me: 'quassnoi', claim: 'All-time MySql Top Answerer'
     'twilio':     name: 'Jeff Linwood', me: 'jefflinwood', claim: 'Twilio book author'
-
+    'javascript': name: 'Tim Caswell', me: 'creationix', claim: 'NodeJS Contributor'
 
   so10:
     'ruby':       name: 'Yehuda Katz', me: 'ryanbigg', claim: 'Rails Core Team Member'
