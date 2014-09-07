@@ -87,7 +87,8 @@ module.exports =
     'mysql':      name: 'Alex Bolenok', me: 'quassnoi', claim: 'All-time MySql Top Answerer'
     'twilio':     name: 'Jeff Linwood', me: 'jefflinwood', claim: 'Twilio book author'
     'javascript': name: 'Tim Caswell', me: 'creationix', claim: 'NodeJS Contributor'
-
+    'java':       name: 'Marko Topolnik', me: 'marko', claim: 'Java Top Answerer'
+    
   so10:
     'ruby':       name: 'Yehuda Katz', me: 'ryanbigg', claim: 'Rails Core Team Member'
     'python':     name: 'Daniel Roseman', me: 'danielroseman', claim: 'Django #1 Answerer'
