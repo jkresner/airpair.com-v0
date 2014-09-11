@@ -24,7 +24,7 @@ class RequestApi extends Api
     app.post   "/requests/book", @loggedIn, @ap, @createBookme
     app.delete "/requests/:id", @admin, @ap, @delete
 
-    app.get    "/reports/requests/experts/tagged", @loggedIn, @ap, @taggedExpertsRequestsReport
+    app.get    "/reports/requests/experts/tagged", @admin, @ap, @taggedExpertsRequestsReport
 
   list: (req) => @svc.getByUserId req.user._id, @cbSend
   expertList: (req) => @svc.getBySuggestedExpert req.params.expertId, @cbSend
