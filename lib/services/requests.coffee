@@ -242,3 +242,23 @@ module.exports = class RequestsService extends DomainService
       if !e
         @mailman.importantRequestEvent "expert reviewed #{eR.expertStatus}", @usr, r
       cb e, r
+
+  listAllAvailableExpertsByTags: (cb) =>
+    @searchMany { suggested: { $elemMatch: {expertStatus: 'available'} } }, {fields: {suggested: 1, tags: 1}}, (err, allRequests) =>
+      if(!err)
+        projection = _.map allRequests, (request) ->
+          tags: _.map request.tags, (t) -> t.soId
+          experts: _.compact _.map request.suggested, (sugg) ->
+            if sugg.expertStatus is 'available'
+              name: sugg.expert.name
+              email: sugg.expert.email
+
+        results = []
+        _.each projection, (request) ->
+          _.each _.sortBy(request.tags, (t) -> t), (tag) ->
+            _.each request.experts, (expert) ->
+              results.push([tag, expert.name, expert.email].join())
+
+      cb err, _.uniq(_.sortBy(results, (r) -> r)).join("\n")
+
+
