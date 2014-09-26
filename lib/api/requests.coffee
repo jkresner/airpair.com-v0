@@ -24,6 +24,8 @@ class RequestApi extends Api
     app.post   "/requests/book", @loggedIn, @ap, @createBookme
     app.delete "/requests/:id", @admin, @ap, @delete
 
+    app.get    "/reports/requests/experts/tagged", @admin, @ap, @taggedExpertsRequestsReport
+
   list: (req) => @svc.getByUserId req.user._id, @cbSend
   expertList: (req) => @svc.getBySuggestedExpert req.params.expertId, @cbSend
   active: (req) => @svc.getActive @cbSend
@@ -36,6 +38,9 @@ class RequestApi extends Api
     start = moment req.params.sddmmyy, "YYYY-MM-DD"
     end = moment req.params.eddmmyy, "YYYY-MM-DD"
     @svc.getByDates start, end, @cbSend
+
+  taggedExpertsRequestsReport: (req) =>
+    @svc.listAllAvailableExpertsByTags @cbSend
 
   update: (req, res) =>
     if @data.status is "canceled" && !@data.canceledDetail
