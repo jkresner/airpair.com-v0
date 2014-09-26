@@ -90,7 +90,7 @@ module.exports =
     'java':       name: 'Marko Topolnik', me: 'marko', claim: 'Java Top Answerer'
     
   so10:
-    'ruby':       name: 'Yehuda Katz', me: 'ryanbigg', claim: 'Rails Core Team Member'
+    'ruby':       name: 'Ryan Bigg', me: 'ryanbigg', claim: 'Rails Book Author'
     'python':     name: 'Daniel Roseman', me: 'danielroseman', claim: 'Django #1 Answerer'
     'android' :   name: 'Ran Nachmany', me: 'rannachmany', claim: 'Android Google Developer Expert'
     'angularjs':  name: 'Matias Niemelä', me: 'matsko', claim: 'AngularJS Core Team'

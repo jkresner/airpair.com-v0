@@ -173,7 +173,7 @@ module.exports = class ViewDataService
     id = 'c++' if id is 'c%2b%rub2b'
     id = 'c#' if id is 'c%23'
     new TagsSvc(@usr).getBySoId id, (e, tag) =>
-      feature = name:'Yehuda Katz', me: 'wycats', claim: 'Rails Core Team Member'
+      feature = name:'Ryan Bigg', me: 'ryanbigg', claim: 'Rails Book Author'
       feature = Data.so10[id] if Data.so10[id]
       cb e, -> { tag, feature }
 
