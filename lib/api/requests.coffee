@@ -25,6 +25,7 @@ class RequestApi extends Api
     app.delete "/requests/:id", @admin, @ap, @delete
 
     app.get    "/reports/requests/experts/tagged", @admin, @ap, @taggedExpertsRequestsReport
+    app.get    "/reports/requests/events", @admin, @ap, @requestEventsReport
 
   list: (req) => @svc.getByUserId req.user._id, @cbSend
   expertList: (req) => @svc.getBySuggestedExpert req.params.expertId, @cbSend
@@ -41,6 +42,10 @@ class RequestApi extends Api
 
   taggedExpertsRequestsReport: (req) =>
     @svc.listAllAvailableExpertsByTags @cbSend
+
+  requestEventsReport: (req) =>
+    console.log "*************************\n\n\n\n\n"
+    @svc.requestEventsReport @cbSend
 
   update: (req, res) =>
     if @data.status is "canceled" && !@data.canceledDetail
