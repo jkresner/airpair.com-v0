@@ -261,4 +261,24 @@ module.exports = class RequestsService extends DomainService
 
       cb err, _.uniq(_.sortBy(results, (r) -> r)).join("\n")
 
+  requestEventsReport: (cb) =>
+    @getAll (err, allRequests) =>
+      results = [["utc","requestId","budget","hours","pricing","status","numberOfCalls","numberOfTags","numberOfSuggestions","tags","event"].join("\t")]
+      if(!err)
+        _.each allRequests, (request) ->
+          _.each request.events, (event) ->
+            a = [ event.utc,
+              request._id,
+              request.budget,
+              request.hours,
+              request.pricing,
+              request.status,
+              request.calls.length,
+              request.tags.length,
+              request.suggested.length,
+              _.map(request.tags, 'soId').join(','),
+              event.name ]
 
+            results.push a.join("\t")
+
+      cb(err, results.join("\n"))
