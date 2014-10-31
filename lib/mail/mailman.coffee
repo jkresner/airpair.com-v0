@@ -116,7 +116,6 @@ class Mailman
       rendered.Subject = "Request this!"
       $log 'expertReviewRequest.rendered', rendered
 
-      #@bug eventually: req.user.google._json.email
       ses.send "jk@airpair.com", rendered, callback
 
 module.exports = new Mailman()

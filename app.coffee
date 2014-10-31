@@ -37,9 +37,10 @@ app.use express.urlencoded()
 app.use expressValidator() # must be immediately after express.bodyParser()!
 app.use express.cookieParser()
 app.use express.session
-  cookie : { path: '/', httpOnly: true, maxAge: 2419200000 }
-  secret: 'airpair the future'
+  cookie : { httpOnly: true, maxAge: 2419200000 }
+  secret: if process.env.SESSION_SECRET? then process.env.SESSION_SECRET else 'airpair'
   store: mongoSessionStore
+  name: 'aps'
 
 # app.use (req, r, next) ->
 #   # cookie-ize incoming referrer params

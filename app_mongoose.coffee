@@ -12,7 +12,7 @@ module.exports = (express=null) ->
 
   if express?
     MongoSessionStore = require('connect-mongo')(express)
-    storeOptions = url: "#{config.mongoUri}/sessions", auto_reconnect: true
+    storeOptions = url: "#{config.mongoUri}/v1sessions", auto_reconnect: true
 
     new MongoSessionStore storeOptions
   else

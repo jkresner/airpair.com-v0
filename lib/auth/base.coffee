@@ -15,12 +15,9 @@ User = require './../models/user'
 passport.serializeUser (user, done) ->
   done null, user._id
 
-passport.deserializeUser (id, done) ->
-  User.findById id, (err, user) ->
-    # console.log '=================================================='
-    email = if user? then user.google._json.email else "anonymous"
-    console.log 'user', id, email
-    done err, user.toObject()
+passport.deserializeUser (sessionUser, done) ->
+  console.log 'user', sessionUser._id, sessionUser.email
+  done null, sessionUser
 
 ######## Shared
 
@@ -100,7 +97,7 @@ setMixPanelId = (req, r, next) ->
 module.exports = (app) ->
   app.get     '/logout', logout
   app.get     '/failed-login', (req, r) -> r.send 'something went wrong with login ...'
-  app.get     '/auth/google', setReturnTo, setMixPanelId, google.connect
+  # app.get     '/auth/google', setReturnTo, setMixPanelId, google.connect
   app.get     '/auth/google/callback', google.connect, google.done
   app.get     '/auth/github', github.connect
   app.get     '/auth/github/callback', github.connect, github.done

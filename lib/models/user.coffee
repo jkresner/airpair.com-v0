@@ -3,11 +3,11 @@ Schema   = mongoose.Schema
 
 User = new Schema
   name:         String
-  email:        String
+  email:        { type: String, unique: true, sparse: true, trim: true, lowercase: true },
   pic:          String
   githubId:     Number
   github:       {}
-  googleId:     { required: true, type: String, index: { unique: true, dropDups: true } }
+  googleId:     { type: String, sparse: true, unique: true, dropDups: true },
   google:       {}
   twitterId:    Number
   twitter:      {}

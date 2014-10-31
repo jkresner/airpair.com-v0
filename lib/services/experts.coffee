@@ -25,7 +25,7 @@ module.exports = class ExpertsService extends DomainService
       if e? || r?
         @_addDetails(r, callback)
       else
-        @searchOne {email: @usr.google._json.email}, {}, (ee,rr) =>
+        @searchOne {email: @usr.email}, {}, (ee,rr) =>
           if !rr? then rr = {}
           @_addDetails(rr, callback)
 

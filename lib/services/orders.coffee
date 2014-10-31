@@ -144,8 +144,8 @@ module.exports = class OrdersService extends DomainService
 
   trackPayment: (order, type) ->
     props =
-      usr: @usr.google._json.email
-      distinct_id: @usr.google._json.email
+      usr: @usr.email
+      distinct_id: @usr.email
       total: order.total
       profit: order.profit
       revenue: order.total
@@ -158,7 +158,7 @@ module.exports = class OrdersService extends DomainService
       props.utm_content  = order.utm.utm_content
       props.utm_campaign = order.utm.utm_campaign
 
-    Mixpanel.user @usr.google._json.email, (error, response) =>
+    Mixpanel.user @usr.email, (error, response) =>
       if response? && _.some(response.results)
         mixpanelId = response.results[0]['$distinct_id']
         segmentio.track
