@@ -13,7 +13,8 @@ passport = require 'passport'
 User = require './../models/user'
 
 passport.serializeUser (user, done) ->
-  throw Error("Should not be in v0 serializeUser anymore")
+  userId = if (user? and user._id?) then user._id else "unknown"
+  throw Error("Should not be in v0 serializeUser anymore #{userId}")
   # done null, user._id
 
 passport.deserializeUser (sessionUser, done) ->
