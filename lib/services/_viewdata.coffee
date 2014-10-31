@@ -28,6 +28,9 @@ module.exports = class ViewDataService
       if u.bitbucket then delete u.bitbucket.token
       if u.github then delete u.github.token
       if u.stack then delete u.stack.token
+      if u.cohort then delete u.cohort
+      if u.local then delete u.local
+
       u.authenticated = true
 
       if full

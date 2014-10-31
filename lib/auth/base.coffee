@@ -13,11 +13,14 @@ passport = require 'passport'
 User = require './../models/user'
 
 passport.serializeUser (user, done) ->
-  done null, user._id
+  throw Error("Should not be in v0 serializeUser anymore")
+  # done null, user._id
 
 passport.deserializeUser (sessionUser, done) ->
-  console.log 'user', sessionUser._id, sessionUser.email
-  done null, sessionUser
+  console.log '=================================================='
+  console.log 'deserializeUser.user', sessionUser.email, sessionUser._id
+  User.findById sessionUser._id, (err, user) ->
+    done err, user.toObject()
 
 ######## Shared
 
