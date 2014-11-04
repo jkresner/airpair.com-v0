@@ -5,33 +5,85 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title>AirPair Dashboard</title>
     <meta name="viewport" content="width=device-width">
-    <link rel="stylesheet" href="/css/ap-old.css">
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-
-    <style>
-      #airconf-promo {
-        margin: 80px 0
-      }
-      .req-created { text-align: center !important; width: 10% }
-      .req-status { text-align: center !important; width: 10% }
-      .req-tags { width: 15% }
-      .req-suggested { width: 35% }
-      .req-suggested img { border-radius: 2px; width:40px }
-      .req-scheduled { text-align: center !important; width: 10% }
-      .req-options { text-align: center !important; width: 20% }
-
-      .tag {
-        background-color:#99923F;
-        display: inline-block !important;
-        margin: 1px 1px 3px 3px ;
-        padding: 6px;
-      }
-    </style>
+    <link rel='stylesheet' id='google-font-css'  href='//fonts.googleapis.com/css?family=Open+Sans%3A300%2C400%2C700&#038;ver=2.0.1' type='text/css' media='all' />
+    <link rel="stylesheet" href="//www.airpair.com/v1/lib/bootstrap/bootstrap.css">
+    <link rel="stylesheet" href="//www.airpair.com/v1/css/index.css">
 </head>
 
+<header>
+  <a href="/v1" tile="v1.airpair.com"></a>
+  <ul>
+    <li><a href="/find-an-expert" target="_self"><b>Get Help!</b></a></li>
+    <li><a href="/settings" target="_self">Settings</a></li>
+    <li><a href="/be-an-expert" target="_self">Be an expert</a></li>
+    <li><a href="/posts" target="_self">Posts</a></li>
+    <li><a href="/workshops" target="_self">Workshops</a></li>
+  </ul>
+</header>
+
+<style type="text/css">
+
+  table {
+    font-size:12px;
+  }
+
+  table td {
+    padding:0;
+  }
+
+
+  table.requests img
+  {
+    border-radius:50%;width:40px;height:40px;
+  }
+
+  table.requests a.btn
+  {
+    width:70px;
+    font-size:14px;
+    padding:5px;
+  }
+
+  .label-status
+  {
+    background: none repeat scroll 0 0 #d3d3d3;
+    border: 1px solid gray;
+  }
+
+  .tag
+  {
+    background: none repeat scroll 0 0 #dff2ef;
+    border: 1px solid #c8d6d3;
+    color: #151821;
+    display:inline-block;
+    font-size: 11px;
+    font-weight: bold;
+    margin:2px;
+    padding:3px;
+  }
+
+</style>
+
 <body id="dashboardpage">
+
+
+
+<div class="main-wrap">
+  <main ng-view>
+    <header class="entry-header">
+      <p class="entry-meta">
+        Dashboard
+      </p>
+    </header>
+
+  <h1>Dashboard</h1>
+
+  <p>** We're slowly migrating over to a brand new site.</p>
+  <p>Check back every week or so as we replace all the old bits with shiny new mobile responsive <a href="/v1">AirPair v1</a> parts.</p>
+
+  <h2>Requests</h2>
+
   <div class="site-container">
-    {{> siteNav this }}
     <div class="site-inner">
       <div class="wrap">
         <div id="requests" class="route">
@@ -40,8 +92,13 @@
         </div>
       </div>
     </div>
-    {{> siteFooter }}
   </div>
+
+
+  </main>
+</div>
+
+
   <script type="text/javascript">
     window.useOlark = true;
     window.useUserVoice = true;
