@@ -19,6 +19,7 @@ module.exports = (app) ->
   redirect app, '/solr/workshops/discovering-your-inned-search-engine', '/solr/workshops/discovering-your-inner-search-engine'
   redirect app, '/php/workshops/php-town-crier', '/php/workshops/breaking-up-with-lamp'
   redirect app, '/auth/google', '/v1/auth/google'
+  redirect app, '/login', '/v1/auth/login'
 
   ### main site ###
   app.get '/', renderHome, render 'dashboard'
@@ -36,9 +37,8 @@ module.exports = (app) ->
   app.get '/templates/:scope/:template', renderTemplate
 
   # pages
-  app.get '/login', render 'login'
-  app.get '/be-an-expert*', render 'beexpert'
-  app.get '/find-an-expert*', render 'request'
+  app.get '/be-an-expert*', authd, render 'beexpert'
+  app.get '/find-an-expert*', authd, render 'request'
   app.get '/dashboard*', authd, render 'dashboard'
   app.get '/settings*', authd, render 'settings'
   app.get '/history', authd, render 'history', ['params.id']
