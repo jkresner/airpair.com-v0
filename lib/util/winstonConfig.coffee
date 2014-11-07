@@ -25,7 +25,7 @@ logEmailConfig =
   sesAccessKey:   config.mail.ses_access_key
   sesSecretKey:   config.mail.ses_secret_key
   sesFrom:        'airpair <jk@airpair.com>'
-  sesTo:          ['airpair <jk@airpair.com>', 'of <of@airpair.com>']
+  sesTo:          ['airpair <jk@airpair.com>']
   sesSubject:     'ap error'
 
 
