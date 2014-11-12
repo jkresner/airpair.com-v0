@@ -19,7 +19,7 @@ module.exports = (app) ->
   redirect app, '/solr/workshops/discovering-your-inned-search-engine', '/solr/workshops/discovering-your-inner-search-engine'
   redirect app, '/php/workshops/php-town-crier', '/php/workshops/breaking-up-with-lamp'
   redirect app, '/auth/google', '/v1/auth/google'
-  redirect app, '/login', '/v1/auth/login'
+  redirect app, '/login', '/v1/auth/login?returnTo=/find-an-expert'
 
   ### main site ###
   app.get '/', renderHome, render 'dashboard'
