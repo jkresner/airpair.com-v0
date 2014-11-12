@@ -18,7 +18,7 @@ module.exports = (app) ->
   redirect app, '/airconf/spreadsheets-graph-databases', '/neo4j/workshops/spreadsheets-graph-databases' # link from neo4j website
   redirect app, '/solr/workshops/discovering-your-inned-search-engine', '/solr/workshops/discovering-your-inner-search-engine'
   redirect app, '/php/workshops/php-town-crier', '/php/workshops/breaking-up-with-lamp'
-  redirect app, '/auth/google', '/v1/auth/google'
+  redirect app, '/auth/google', '/v1/auth/google?returnTo=/find-an-expert'
   redirect app, '/login', '/v1/auth/login?returnTo=/find-an-expert'
 
   ### main site ###
