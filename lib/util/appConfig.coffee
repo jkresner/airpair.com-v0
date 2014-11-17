@@ -264,6 +264,4 @@ module.exports =
         jk: '6JoPYqdFoAaX1oFaf30Y2JA40uQkuiq3jWksQejU'
         il: 'PGtSa73sSh5sYYmGvX7ZNLxtnlVaSvlSQ5rE0SqB'
         pg: 'rEoSqeUhfbRdXkfSbzcAEkVqfrDq62Lvr7bicVjz'
-        of: 'VevT6jyRfFULfPKxPObntQf8aItMbF58n3yMjzCP'
-        du: 'Aq0Iexi3xc13xjA3SMmrB4WBUT8n2WUZFPx3NLmz'
-        ad: 'ARXB3b8m3Xlpn15Y0NSMItjFZSpwWtkJkxjYptu4'
+        mc: 'cGMZmzxfV34nSVrnKVVgoEtD2vzZ9ooX9w8q5aMR'
