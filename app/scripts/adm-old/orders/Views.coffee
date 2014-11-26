@@ -116,15 +116,16 @@ class exports.OrdersView extends BB.BadassView
     orderCount = @collection.filteredModels.length
     expertIds = []
     for m in @collection.filteredModels #.reverse()
-      $list.append new exports.OrderRowView( model: m ).render().el
-      totalProfit += m.get 'profit'
-      totalRevenue += m.get 'total'
-      for li in m.get 'lineItems'
-        expertIds.push li.suggestion.expert._id
-        if 'pending' == m.get 'paymentStatus' then continue
-        totalHours += calcTotal [li]
-        totalRedeemed += calcRedeemed [li]
-        totalCompleted += calcCompleted [li]
+      if m.get('paymentType')
+        $list.append new exports.OrderRowView( model: m ).render().el
+        totalProfit += m.get 'profit'
+        totalRevenue += m.get 'total'
+        for li in m.get 'lineItems'
+          expertIds.push li.suggestion.expert._id
+          if 'pending' == m.get 'paymentStatus' then continue
+          totalHours += calcTotal [li]
+          totalRedeemed += calcRedeemed [li]
+          totalCompleted += calcCompleted [li]
     filteredModelsJson = _.pluck @collection.filteredModels, 'attributes'
     requestCount = _.uniq(_.pluck filteredModelsJson, 'requestId').length
     customerCount = _.uniq(_.pluck filteredModelsJson, 'userId').length

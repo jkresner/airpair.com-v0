@@ -11,7 +11,7 @@ This supports two use-cases:
   - how much time can an expert be booked given this only one order in the array
 ###
 calcExpertCredit = (orders, expertId) ->
-  orders = _.filter orders, (o) -> o.paymentStatus != 'pending'
+  orders = _.filter orders, (o) -> o.paymentStatus != 'pending' && o.paymentType?
   lisForExpert = getLineItemsForExpert orders, expertId
   byType = getBalanceByType groupExpertLineItemsByType lisForExpert
   total = calcTotal lisForExpert
