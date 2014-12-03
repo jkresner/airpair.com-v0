@@ -20,6 +20,7 @@ module.exports = (app) ->
   redirect app, '/php/workshops/php-town-crier', '/php/workshops/breaking-up-with-lamp'
   redirect app, '/auth/google', '/v1/auth/google?returnTo=/find-an-expert'
   redirect app, '/login', '/v1/auth/login?returnTo=/find-an-expert'
+  redirect app, '/settings', '/billing'
 
   ### main site ###
   app.get '/', renderHome, render 'dashboard'
@@ -40,7 +41,7 @@ module.exports = (app) ->
   app.get '/be-an-expert*', authd, render 'beexpert'
   app.get '/find-an-expert*', authd, render 'request'
   app.get '/dashboard*', authd, render 'dashboard'
-  app.get '/settings*', authd, render 'settings'
+  # app.get '/settings*', authd, render 'settings'
   app.get '/history', authd, render 'history', ['params.id']
   app.get '/history/:id', authd, render 'history', ['params.id']
   app.get '/book/:id', render 'book', ['params.id','query.code']
