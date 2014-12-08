@@ -22,6 +22,8 @@ module.exports = (app) ->
   redirect app, '/login', '/v1/auth/login?returnTo=/find-an-expert'
   redirect app, '/settings', '/billing'
 
+  app.get '/author/*', (req,res) -> res.redirect(301, '/posts/all')
+
   ### main site ###
   app.get '/', renderHome, render 'dashboard'
   app.get '/book/me', authd, render 'bookme'
