@@ -78,11 +78,12 @@ module.exports = class RequestsService extends DomainService
           cb e, r
         else if Roles.isAdmin @usr
           @rates.addRequestSuggestedRates r, true
-          async.each r.company.contacts, (contact, callback) =>
-            Mixpanel.addProperties contact.email, contact, (error, request) =>
-              callback e, contact
-          , (error, contacts) =>
-            cb error, r
+          # async.each r.company.contacts, (contact, callback) =>
+          #   Mixpanel.addProperties contact.email, contact, (error, request) =>
+          #     callback e, contact
+          # , (error, contacts) =>
+          #   cb error, r
+          cb e, r
         else if Roles.isRequestOwner @usr, r
           @_addViewEvent r, "customer view"
           @rates.addRequestSuggestedRates r, true

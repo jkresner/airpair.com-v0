@@ -47,20 +47,33 @@ class exports.RequestRowView extends BB.BadassView
     'click .edit': 'edit'
   render: ->
     d = @model.toJSON()
-    d.company.contacts[0] = {} if !d.company.contacts[0]?
 
-    tmplData = _.extend d, {
-      contactName:        d.company.contacts[0].fullName
-      contactPic:         d.company.contacts[0].pic
-      contactEmail:       d.company.contacts[0].email
-      createdDate:        @model.createdDateString()
-      createdAgoString:   moment(@model.createdDate()).fromNow()
-      createdAgoClass:    @createdAgoHtml()
-      suggestedCount:     d.suggested.length
-      suggestedFitCount:  _.filter(d.suggested, (s) -> s.status is 'chosen').length
-      callCount:          d.calls.length
-      callCompleteCount:  _.filter(d.calls, (c) -> c.recordings.length > 0).length
-    }
+    if d.by
+      tmplData = _.extend d, {
+        contactName:        d.by.name
+        contactPic:         d.by.avatar
+        contactEmail:       d.by.email
+        createdDate:        @model.createdDateString()
+        createdAgoString:   moment(@model.createdDate()).fromNow()
+        createdAgoClass:    @createdAgoHtml()
+        suggestedCount:     d.suggested.length
+        suggestedFitCount:  _.filter(d.suggested, (s) -> s.status is 'chosen').length
+        callCount:          '-'
+        callCompleteCount:  '-'
+      }
+    else
+      tmplData = _.extend d, {
+        contactName:        d.company.contacts[0].fullName
+        contactPic:         d.company.contacts[0].pic
+        contactEmail:       d.company.contacts[0].email
+        createdDate:        @model.createdDateString()
+        createdAgoString:   moment(@model.createdDate()).fromNow()
+        createdAgoClass:    @createdAgoHtml()
+        suggestedCount:     d.suggested.length
+        suggestedFitCount:  _.filter(d.suggested, (s) -> s.status is 'chosen').length
+        callCount:          d.calls.length
+        callCompleteCount:  _.filter(d.calls, (c) -> c.recordings.length > 0).length
+      }
     @$el.html @tmpl tmplData
     @
   edit: (e) ->
@@ -138,7 +151,7 @@ class exports.RequestFarmView extends BB.ModelSaveView
   initialize: ->
     @listenTo @model, 'change', @render
   render: ->
-    if !@mget('base')? then return @
+    if !@mget('base')? || !@mget('events')? then return @
     @fd = @model.getFarmData()
     @fd.url = "http://www.airpair.com/review/#{@model.id}?utm_medium=farm-link&utm_campaign=farm-#{@fd.month}&utm_term=#{@fd.term}"
     @$el.html @tmpl @model.extendJSON @fd
@@ -289,8 +302,8 @@ class CustomerMailTemplates
     available = _.filter request.get('suggested'), (s) -> s.expertStatus == 'available'
     availableSingle = available.length == 1
     tagsString = request.tagsString()
-    firstName = request.contact(0).fullName.split(' ')[0]
-    request.contact(0).firstName = firstName
+    customer = request.contact(0)
+    firstName = (customer.fullName || customer.name).split(' ')[0]
     r = request.extendJSON { session, isOpensource, available, availableSingle, firstName, tagsString }
     if r.status == 'incomplete'
       @incomplete = encodeURIComponent @tmplIncomplete r
@@ -340,23 +353,27 @@ class exports.RequestInfoView extends BB.ModelSaveView
     'click #receivedBtn': 'updateStatusToHolding'
     'change #status': 'updateStatus'
   modelProps: ['brief', 'availability', 'status', 'owner', 'canceledDetail',
-    'incompleteDetail', 'budget', 'pricing']
+    'incompleteDetail', 'budget', 'pricing','type','time','hours','experience', 'by']
   initialize: ->
     @$el.html @tmpl @model.toJSON()
     @$('#status').on 'change', @toggleCanceledIncompleteFields
     @tagsInput = new SV.TagsInputView model: @model, collection: @tags
-    @listenTo @model, "change:brief change:vailability change:status change:owner change:canceledDetail change:incompleteDetail change:budget change:pricing", @render
+    @listenTo @model, "change:brief change:availability change:status change:owner change:canceledDetail change:incompleteDetail change:budget change:pricing", @render
     @listenTo @model, 'change:tags change:company change:status', @renderMailTemplates
   render: ->
     @setValsFromModel @modelProps
     @toggleCanceledIncompleteFields()
     @
   renderMailTemplates: ->
+    customer = @model.contact(0)
+    firstName = (customer.fullName || customer.name).split(' ')[0]
     data =
       mailTmpls: new CustomerMailTemplates @model, @session
       tagsString: @model.tagsString()
       threeTagsString: @model.threeTagsString()
+      firstName: firstName
     tmplCompanyData = _.extend data, @mget('company')
+    $log('tmplCompanyData', tmplCompanyData)
     @$('#company-controls').html @tmplCompany(tmplCompanyData)
     @$('[data-toggle="popover"]').popover()
   toggleCanceledIncompleteFields: =>
@@ -474,7 +491,7 @@ class exports.RequestSuggestedView extends BB.BadassView
         s.credit = calcExpertCredit(@orders.toJSON(), s.expert._id)
         tmplData =
           requestId: @model.id
-          contact: @model.get('company').contacts[0]
+          contact: if @model.get('company') then @model.get('company').contacts[0] else @model.get('by')
           mailTemplates: mailTemplates
           tagsString: @model.tagsString()
           threeTagsString: @model.threeTagsString()
@@ -542,10 +559,11 @@ class exports.RequestEventsView extends BB.BadassView
   initialize: -> @listenTo @model, 'change', @render
   render: ->
     # most recent events at the top of the list
-    events = @model.get('events').sort (a, b) ->
-        new Date(a.utc).getTime() - new Date(b.utc).getTime()
-      .reverse()
-    @$el.html @tmpl { events: events }
+    if @model.get('events')
+      events = @model.get('events').sort (a, b) ->
+          new Date(a.utc).getTime() - new Date(b.utc).getTime()
+        .reverse()
+      @$el.html @tmpl { events: events }
 
 
 class exports.RequestNavView extends BB.BadassView
@@ -560,7 +578,7 @@ class exports.RequestView extends BB.ModelSaveView
   async: off
   el: '#request'
   tmpl: require './templates/Request'
-  viewData: ['owner','budget','pricing','status','availability','brief','canceledDetail','incompleteDetail']
+  viewData: ['owner','budget','pricing','status','availability','brief','canceledDetail','incompleteDetail','type','time','hours','experience']
   events:
     'click .save': 'save'
     'click .deleteRequest': 'deleteRequest'
@@ -583,7 +601,8 @@ class exports.RequestView extends BB.ModelSaveView
     d = @getValsFromInputs @viewData
     d.tags = @infoView.tagsInput.getViewData()
     d.marketingTags = @marketingInfoView.marketingTagsInput.getViewData()
-    delete @mget('company').mailTemplates # temp fix for old leak code
+    d.by = @infoView.mget('by')
+    # delete @mget('company').mailTemplates # temp fix for old leak code
     d
   deleteRequest: ->
     @model.destroy wait: true, success: =>

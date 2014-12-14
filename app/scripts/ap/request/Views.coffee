@@ -166,8 +166,8 @@ class exports.RequestFormView extends BB.ModelSaveView
       @e.name = "customerRequestUpdate"
 
     addjs.trackEvent @e.category, @e.name, @model.contact(0).fullName, @timer.timeSpent()
-
-    router.navTo 'confirm'
+    window.location = '/dashboard'
+    # router.navTo 'confirm'
   getViewData: ->
     brief: @elm("brief").val()
     hours: @elm("hours").val()

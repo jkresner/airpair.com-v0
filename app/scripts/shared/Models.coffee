@@ -72,6 +72,9 @@ class exports.Request extends BB.SublistModel
   toggleAvailability: (value) ->
     @toggleAttrSublistElement 'availability', value, (m) -> m is value
   contact: (index) ->
+    if @get('by')?
+      return _.extend( @get('by'), {fullName: @get('by').name})
+
     # first try lookup by fullName
     contacts = @get('company').contacts
     if !contacts? || contacts.length is 0 then return null

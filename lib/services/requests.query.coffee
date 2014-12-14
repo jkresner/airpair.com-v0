@@ -72,10 +72,11 @@ class QueryHelper
       'calls.status': 1
       'suggested.expertStatus': 1
       'suggested.expert.pic': 1
-      'tags.short': 1
+      'tags': 1
       'calls.recordings.type': 1
       'userId': 1
       'marketingTags': 1
       'budget': 1
+      'by': 1
 
 module.exports = new QueryHelper()

@@ -31,11 +31,11 @@
         <td></td>
         <td>
           {{#if ../mailTmpls.incomplete}}
-            <a id="receivedBtn" href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to={{email}}&su=MORE INFO REQUEST for your AirPair Session ({{../../threeTagsString}})&body=Hi {{firstName}},{{../../mailTmpls.incomplete}}" target="_blank" class="email btn btn-small btn-warning"><i class="icon-envelope icon-white"></i> Incomplete</a></td>
+            <a id="receivedBtn" href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to={{email}}&su=MORE INFO REQUEST for your AirPair Session ({{../../threeTagsString}})&body=Hi {{../../firstName}},{{../../mailTmpls.incomplete}}" target="_blank" class="email btn btn-small btn-warning"><i class="icon-envelope icon-white"></i> Incomplete</a></td>
           {{/if}}
 
           {{#if ../mailTmpls.received}}
-            <a id="receivedBtn" href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to={{email}}&su=Your Upcoming {{../../threeTagsString}} AirPair&body=Hi {{firstName}},{{../../mailTmpls.received}}" target="_blank" class="email btn btn-small btn-warning"><i class="icon-envelope icon-white"></i> Received</a></td>
+            <a id="receivedBtn" href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to={{email}}&su=Your Upcoming {{../../threeTagsString}} AirPair&body=Hi {{../../firstName}},{{../../mailTmpls.received}}" target="_blank" class="email btn btn-small btn-warning"><i class="icon-envelope icon-white"></i> Received</a></td>
           {{/if}}
       </tr>
       <tr>
@@ -44,7 +44,7 @@
         <td></td>
         <td>
           {{#if ../mailTmpls.review}}
-            <a href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to={{email}}&su=I've got you {{../../threeTagsString}} experts!&body=Hi {{firstName}},{{../../mailTmpls.review}}" target="_blank" class="email btn btn-small btn-warning"><i class="icon-envelope icon-white"></i> Review</a>
+            <a href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to={{email}}&su=I've got you {{../../threeTagsString}} experts!&body=Hi {{../../firstName}},{{../../mailTmpls.review}}" target="_blank" class="email btn btn-small btn-warning"><i class="icon-envelope icon-white"></i> Review</a>
           {{/if}}
         </td>
       </tr>
@@ -54,7 +54,7 @@
         <td></td>
         <td>
           {{#if ../mailTmpls.followup}}
-            <a href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to={{email}}&su=How was your {{../../tagsString}} AirPair?&body={{firstName}},{{../../mailTmpls.followup}}" target="_blank" class="email btn btn-small btn-warning"><i class="icon-envelope icon-white"></i> How was?</a>
+            <a href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to={{email}}&su=How was your {{../../tagsString}} AirPair?&body={{../../firstName}},{{../../mailTmpls.followup}}" target="_blank" class="email btn btn-small btn-warning"><i class="icon-envelope icon-white"></i> How was?</a>
           {{/if}}
         </td>
       </tr>

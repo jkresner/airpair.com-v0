@@ -31,23 +31,26 @@
 
       {{#with company}}
 
-        {{#unless ../isByIndividual }}
-        <h5>Company</h5>
+        {{#if about }}
 
-        {{#if ../associatedWithRequest}}
-          {{name}}
-        {{else}}
-          <a href="javascript:alert('You must be assigned to this request to see full details')">Hidden</a>
-        {{/if}}
+          {{#unless ../isByIndividual }}
+          <h5>Company</h5>
 
-        {{#if ../associatedWithRequest}}
-          {{#if url}}
-            <br /><a href="http://{{ url }}" target="_blank">http://{{ url }}</a>
+          {{#if ../associatedWithRequest}}
+            {{name}}
+          {{else}}
+            <a href="javascript:alert('You must be assigned to this request to see full details')">Hidden</a>
           {{/if}}
-        {{/if}}
-        <div class="about">{{markdown about}}</div>
 
-        {{/unless}}
+          {{#if ../associatedWithRequest}}
+            {{#if url}}
+              <br /><a href="http://{{ url }}" target="_blank">http://{{ url }}</a>
+            {{/if}}
+          {{/if}}
+          <div class="about">{{markdown about}}</div>
+
+          {{/unless}}
+        {{/if}}
 
         <div class="contact">
         {{#each contacts}}

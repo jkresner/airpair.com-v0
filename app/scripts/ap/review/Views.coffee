@@ -309,8 +309,10 @@ class exports.RequestInfoView extends BB.BadassView
       for s in @request.get('suggested')
         if s.expertStatus is 'available' then hasAvailableExperts = true
 
-    isIndividual = @request.get('company').name == 'Individual' ||
+    isIndividual = !@request.get('company').about ||
+      @request.get('company').name == 'Individual' ||
       @request.get('company').about.indexOf('Individual') == 0
+
 
     status = @request.get('status')
 
