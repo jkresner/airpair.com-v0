@@ -6,7 +6,7 @@ exports.config =
   server:
     env:  'dev'
     path: 'app.coffee'
-    port: 3333
+    port: 3332
     base: '/'
     run: yes
 

@@ -13,7 +13,7 @@ module.exports =
     env: 'dev'
     isProd: false
     mongoUri: process.env.MONGOHQ_URL || "mongodb://localhost/airpair_dev"
-    oauthHost: 'http://localhost:3333'
+    oauthHost: 'http://localhost:3332'
     analytics:
       segmentio:
         writeKey: 'tjld2les7x'
