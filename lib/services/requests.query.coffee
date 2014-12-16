@@ -12,10 +12,10 @@ class QueryHelper
   query:
 
     active:
-      status: $in: ['received','incomplete','waiting','review','scheduling','scheduled','holding','consumed','deferred','pending']
+      {'budget' : { '$exists': true }, status: { $in: ['received','incomplete','waiting','review','scheduling','scheduled','holding','consumed','deferred','pending'] } }
 
     inactive:
-      status: $in: ['canceled','completed']
+      {'budget' : { '$exists': true }, status: { $in: ['canceled','completed'] } }
 
 
   view:

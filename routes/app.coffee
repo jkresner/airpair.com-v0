@@ -14,18 +14,15 @@ module.exports = (app) ->
   app.use '/api', require('./api')
 
   ### REDIRECTS ###
-  redirect app, '/workshops', '/airconf2014'
   redirect app, '/airconf/spreadsheets-graph-databases', '/neo4j/workshops/spreadsheets-graph-databases' # link from neo4j website
   redirect app, '/solr/workshops/discovering-your-inned-search-engine', '/solr/workshops/discovering-your-inner-search-engine'
-  redirect app, '/php/workshops/php-town-crier', '/php/workshops/breaking-up-with-lamp'
-  redirect app, '/auth/google', '/v1/auth/google?returnTo=/find-an-expert'
-  redirect app, '/login', '/v1/auth/login?returnTo=/find-an-expert'
+  redirect app, '/auth/google', '/v1/auth/login'
+  redirect app, '/login', '/v1/auth/login'
   redirect app, '/settings', '/billing'
 
   app.get '/author/*', (req,res) -> res.redirect(301, '/posts/all')
 
   ### main site ###
-  app.get '/', renderHome, render 'dashboard'
   app.get '/book/me', authd, render 'bookme'
   app.get '/admin', authd, adm, render 'admin'
 
