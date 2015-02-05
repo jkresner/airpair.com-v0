@@ -54,9 +54,8 @@ module.exports = class DomainService
   newEvent: (evtName, evtData) ->
     byUser = 'anon'
     if @usr? && (@usr.authenticated != false)
-      byUser =
-        id: @usr._id
-        name: @usr.google.displayName
+      byUser = id: @usr._id
+      byUser.name = @usr.google.displayName if @usr.google
 
     evt =
       utc:  new moment().utc().toJSON()
