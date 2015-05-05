@@ -4,11 +4,11 @@ process.env.Env = brunch.env if !process.env.Env? && brunch?
 
 require './lib/util/globals'
 express          = require 'express'
-expressValidator = require 'express-validator'
-passport         = require 'passport'
-inspect          = require('util').inspect
+# expressValidator = require 'express-validator'
+# passport         = require 'passport'
+# inspect          = require('util').inspect
 
-console.log 'config: ', inspect(config, depth: null).white
+# console.log 'config: ', inspect(config, depth: null).white
 
 # setup our express app
 app = express()
@@ -16,17 +16,17 @@ app = express()
 # load our db
 mongoSessionStore = require('./app_mongoose')(express)
 
-consolidate      = require('consolidate')
+# consolidate      = require('consolidate')
 
 hbs = require('hbs')
 hbsHelpers = require './lib/util/hbsHelpers'
 hbsHelpers.register hbs
 hbs.registerPartials __dirname + '/app/partials'
-hbs.registerPartials __dirname + '/app/partials/airconf'
-hbs.registerPartials __dirname + '/app/scripts/shared/templates'
+# hbs.registerPartials __dirname + '/app/partials/airconf'
+# hbs.registerPartials __dirname + '/app/scripts/shared/templates'
 
 app.engine 'html', hbs.__express
-app.engine 'jade', consolidate.jade
+# app.engine 'jade', consolidate.jade
 app.set 'views', __dirname + '/public'
 app.set 'view engine', 'hbs'
 
@@ -34,7 +34,7 @@ app.use express.compress() # gzip
 app.use express.static(__dirname + '/public')
 app.use express.json()
 app.use express.urlencoded()
-app.use expressValidator() # must be immediately after express.bodyParser()!
+# app.use expressValidator() # must be immediately after express.bodyParser()!
 app.use express.cookieParser()
 app.use express.session
   cookie : { httpOnly: true, maxAge: 2419200000 }
@@ -49,12 +49,12 @@ app.use express.session
 #       r.cookie param, req.query[param]
 #   next()
 
-if config.env is 'test'
-  require('./app_test')(app)
-else
-  app.use passport.initialize()
+# if config.env is 'test'
+#   require('./app_test')(app)
+# else
+#   app.use passport.initialize()
 
-app.use passport.session()
+# app.use passport.session()
 
 require('./routes/app')(app)
 
@@ -62,7 +62,7 @@ if config.env is 'test'
   require('./routes/test')(app)
 
 app.use (err, req, res, next) ->
-  str = (err and err.stack) or inspect err, {depth: 20}
+  # str = (err and err.stack) or inspect err, {depth: 20}
   userInfo = "anonymous"
   if req.user
     goog = req.user.google

@@ -25,7 +25,7 @@ module.exports = class OrdersService extends DomainService
   stripeSvc: new StripeSvc()
   rates: new RatesSvc()
 
-  Chimp: require("../mail/chimp")
+  # Chimp: require("../mail/chimp")
   AirConfDiscounts: require("./airConfDiscounts")
 
   constructor: (user) ->

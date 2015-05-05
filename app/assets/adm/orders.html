@@ -70,7 +70,7 @@
   <script type="text/javascript">
     function initApp() {
       var pageData = { {{JSON 'session'}}, {{JSON 'orders'}}, segmentioKey: '{{{segmentioKey}}}' };
-      Router = require('/scripts/adm-old/orders/Router');
+      Router = require('scripts/adm-old/orders/Router');
       window.router = new Router(pageData);
     }
   </script>
