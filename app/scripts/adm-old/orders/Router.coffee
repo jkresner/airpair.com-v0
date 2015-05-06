@@ -27,6 +27,7 @@ module.exports = class Router extends S.AirpairSessionRouter
       ordersView: new V.OrdersView collection: d.orders, model: d.selected
       orderView: new V.OrderView model: d.selected, request: d.request
       filtersView: new V.FiltersView
+        timeString: 'all'
         collection: d.orders,
         marketingTags: d.marketingTags,
         dummyRequest: d.dummyRequest

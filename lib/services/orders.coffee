@@ -50,7 +50,7 @@ module.exports = class OrdersService extends DomainService
     @stripeSvc.createAnonCharge charge, callback
 
   getAll: (cb) =>
-    @searchMany {'paymentType': { '$exists': true } }, {}, cb
+    @searchMany {'paymentType': { '$exists': true }, 'utc': { '$gt': moment('2014/12/01'), '$lt': moment('2015/01/01') } }, {}, cb
 
   create: (order, callback) ->
     order._id = new mongoose.Types.ObjectId;

@@ -105,7 +105,7 @@ class exports.OrdersView extends BB.BadassView
     # first render default to month only
     if @firstRender
       @firstRender = false
-      return @collection.filterFilteredModels { timeString: 'Mth' }
+      return @collection.filterFilteredModels { timeString: 'all' }
 
     $list = @$('tbody').html ''
     totalRevenue = 0
@@ -143,6 +143,7 @@ class exports.OrderView extends BB.ModelSaveView
     'click .swap': 'swapExpert'
   initialize: (args) ->
     @listenTo @request, 'change', @render
+
   render: =>
     {lineItems,payment} = @model.attributes
     order = _.omit @model.attributes, ['lineItems','payment']
